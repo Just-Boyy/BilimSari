@@ -3,28 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BilimSari</title>
+  <title>BilimSari — Kirish</title>
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f5f7fb;
-      font-family: Arial, sans-serif;
-    }
-    .logo {
-      font-size: 64px;
-      font-weight: 800;
-      letter-spacing: -3px;
-      color: #111827;
-    }
-    .logo span { color: #16a34a; }
+    body { margin: 0; min-height: 100vh; font-family: Arial, sans-serif; background: linear-gradient(135deg,#eefbf3,#f7f9fc); display:flex; align-items:center; justify-content:center; padding:24px; }
+    .card { width:100%; max-width:430px; background:#fff; padding:42px 36px; border-radius:24px; box-shadow:0 20px 60px rgba(15,23,42,.10); text-align:center; }
+    .logo { font-size:48px; font-weight:800; letter-spacing:-2.5px; color:#111827; margin-bottom:10px; }
+    .logo span { color:#16a34a; }
+    .subtitle { color:#64748b; margin:0 0 30px; font-size:15px; }
+    h1 { margin:0 0 24px; font-size:26px; color:#111827; }
+    .field { text-align:left; margin-bottom:16px; }
+    label { display:block; margin-bottom:7px; font-size:14px; font-weight:600; color:#334155; }
+    input { width:100%; padding:14px 15px; border:1px solid #dbe2ea; border-radius:12px; outline:none; font-size:15px; }
+    input:focus { border-color:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.10); }
+    .forgot { display:block; text-align:right; color:#16a34a; font-size:13px; margin:4px 0 20px; text-decoration:none; }
+    button { width:100%; padding:14px; border:0; border-radius:12px; background:#16a34a; color:white; font-size:16px; font-weight:700; cursor:pointer; }
+    button:hover { background:#15803d; }
+    .register { margin:22px 0 0; color:#64748b; font-size:14px; }
+    .register a { color:#16a34a; font-weight:700; text-decoration:none; }
   </style>
 </head>
 <body>
-  <div class="logo">Bilim<span>Sari</span></div>
+  <main class="card">
+    <div class="logo">Bilim<span>Sari</span></div>
+    <p class="subtitle">Bilim olish sari birinchi qadam</p>
+    <h1>Hisobingizga kiring</h1>
+    <form onsubmit="event.preventDefault(); alert('Hozircha demo login.');">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="email@example.com" required></div>
+      <div class="field"><label for="password">Parol</label><input id="password" type="password" placeholder="••••••••" required></div>
+      <a class="forgot" href="#">Parolni unutdingizmi?</a>
+      <button type="submit">Kirish</button>
+    </form>
+    <p class="register">Hisobingiz yo‘qmi? <a href="#">Ro‘yxatdan o‘tish</a></p>
+  </main>
 </body>
 </html>
