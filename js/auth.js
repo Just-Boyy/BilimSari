@@ -1,6 +1,6 @@
 // BilimSari Auth — Backend API bilan ishlaydi
 
-const API_URL = 'http://127.0.0.1:5000/api';
+const API_URL = 'https://bilimsari-production.up.railway.app/api';
 const TOKEN_KEY = 'bilimsari_token';
 const USER_KEY = 'bilimsari_user';
 
