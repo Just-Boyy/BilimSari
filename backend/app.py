@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 app = Flask(__name__)
-CORS(app)  # Frontend bilan ishlashi uchun
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Vercel va boshqa frontendlar uchun
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'bilimsari.db')
 SECRET = os.environ.get('SECRET_KEY', 'bilimsari-dev-secret-change-me')
@@ -188,7 +188,10 @@ def logout():
 
 # ───────────────────────────── Start ─────────────────────────────
 
+# Gunicorn va lokal ishga tushirishda ham DB tayyor bo‘lsin
+init_db()
+
 if __name__ == '__main__':
-    init_db()
-    print('BilimSari API ishga tushdi → http://127.0.0.1:5000')
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    print(f'BilimSari API ishga tushdi → http://127.0.0.1:{port}')
+    app.run(host='0.0.0.0', port=port, debug=True)
