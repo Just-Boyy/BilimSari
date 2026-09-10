@@ -279,7 +279,7 @@
 
       const result = await login(email, password);
       if (result.ok) {
-        window.location.href = 'dashboard.html';
+        window.location.href = 'index.html';
       } else {
         showError(result.error);
         btn.disabled = false;
