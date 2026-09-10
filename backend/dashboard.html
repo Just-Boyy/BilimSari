@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BilimSari — Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/logo-icon-32.png">
+  <link rel="apple-touch-icon" href="assets/logo-icon-64.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fafafa;
+      color: #111;
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo img { height: 34px; display: block; }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 38px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: .2s;
+    }
+
+    .btn-outline {
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+
+    .btn-outline:hover { background: #f5f5f5; }
+
+    .btn-danger {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .btn-danger:hover { background: #fee2e2; }
+
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .welcome {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 28px;
+    }
+
+    .welcome h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #666;
+      font-size: 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 24px;
+      transition: .2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,.04);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #fff5f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 800px) {
+      .cards { grid-template-columns: 1fr; }
+      .user-name { display: none; }
+      .welcome h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo-full.png" alt="BilimSari">
+      </a>
+      <div class="user-area">
+        <span class="user-name" id="userName">—</span>
+        <button class="btn btn-danger" onclick="logout()">Chiqish</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="welcome">
+      <h1>Salom, <span id="welcomeName">Foydalanuvchi</span>! 👋</h1>
+      <p>BilimSari dashboardiga xush kelibsiz. Bu yerda kurslaringiz va progresslaringiz bo‘ladi.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>Mening kurslarim</h3>
+        <p>Hozircha kurslar yo‘q. Tez orada yangi kurslar qo‘shiladi.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✅</div>
+        <h3>Testlar</h3>
+        <p>O‘z bilimingizni tekshirish uchun testlar bo‘limi.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Progress</h3>
+        <p>O‘zlashtirish darajangiz shu yerda ko‘rinadi.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script>
+    requireAuth();
+
+    const session = getSession();
+    if (session) {
+      document.getElementById('userName').textContent = session.name;
+      document.getElementById('welcomeName').textContent = session.name;
+    }
+  </script>
+</body>
+</html>

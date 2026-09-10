@@ -2,7 +2,7 @@
 BilimSari Backend — Flask + PostgreSQL
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import hashlib
 import secrets
@@ -218,6 +218,47 @@ def logout():
     conn.close()
     return jsonify({'ok': True})
 
+
+
+
+# ───────────────────────────── Frontend (static) ─────────────────────────────
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+@app.route('/')
+def home():
+    return send_from_directory(BASE_DIR, 'index.html')
+
+
+@app.route('/index.html')
+def index_page():
+    return send_from_directory(BASE_DIR, 'index.html')
+
+
+@app.route('/login.html')
+def login_page():
+    return send_from_directory(BASE_DIR, 'login.html')
+
+
+@app.route('/register.html')
+def register_page():
+    return send_from_directory(BASE_DIR, 'register.html')
+
+
+@app.route('/dashboard.html')
+def dashboard_page():
+    return send_from_directory(BASE_DIR, 'dashboard.html')
+
+
+@app.route('/assets/<path:filename>')
+def assets(filename):
+    return send_from_directory(os.path.join(BASE_DIR, 'assets'), filename)
+
+
+@app.route('/js/<path:filename>')
+def js_files(filename):
+    return send_from_directory(os.path.join(BASE_DIR, 'js'), filename)
 
 # ───────────────────────────── Start ─────────────────────────────
 
