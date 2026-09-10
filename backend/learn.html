@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>O‘rganish — BilimSari</title>
   <meta name="theme-color" content="#58A700">
-  <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BilimSari">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/apple-touch-icon-120.png">
+  <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/png" href="assets/icon-192.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -186,7 +194,7 @@
       <button class="stat-item xp" onclick="openStat('xp')"><span class="ico" id="icoXp"></span><span id="sXp">0</span></button>
       <button class="stat-item hearts" onclick="openStat('hearts')"><span class="ico" id="icoHearts"></span><span id="sHearts">5</span></button>
       <button class="stat-item gems" onclick="openStat('gems')"><span class="ico" id="icoGems"></span><span id="sGems">0</span></button>
-    </div>
+      <button type="button" id="iosInstallBtn" onclick="showInstallGuide()" style="display:none;margin:8px auto 0;max-width:720px;width:calc(100% - 24px);height:40px;border-radius:12px;border:2px solid #58A700;background:#d7ffb8;color:#3c3c3c;font-weight:800;font-size:14px;cursor:pointer;">Ilovani o‘rnatish</button>
   </div>
 
   <div class="wrap">
@@ -213,6 +221,22 @@
 
   <div class="modal-bg" id="statModal" onclick="if(event.target===this)this.classList.remove('open')">
     <div class="sheet" id="statSheet"></div>
+  </div>
+
+  
+  <div class="modal-bg" id="installGuide" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="sheet">
+      <h3>iPhone’ga o‘rnatish</h3>
+      <p style="text-align:left;line-height:1.6">
+        <b>1.</b> Pastdagi <b>Ulashish</b> (Share) tugmasini bosing<br>
+        <b>2.</b> Pastga surib <b>«Add to Home Screen»</b> / <b>«Uy ekraniga qo‘shish»</b> ni toping<br>
+        <b>3.</b> <b>Add</b> / <b>Qo‘shish</b> ni bosing
+      </p>
+      <p style="font-size:13px;color:#999;text-align:left">
+        Eslatma: iPhone’da bu faqat <b>Safari</b> brauzerida ishlaydi (Chrome orqali emas).
+      </p>
+      <button class="unit-guide" style="width:100%;margin-top:8px" onclick="document.getElementById('installGuide').classList.remove('open')">Tushundim</button>
+    </div>
   </div>
 
   <script src="js/icons.js"></script>
@@ -327,6 +351,23 @@
     document.getElementById('icoHearts').innerHTML = icon('heart');
     document.getElementById('icoGems').innerHTML = icon('gem');
     document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
+    function isIos() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+    function isStandalone() {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+    function showInstallGuide() {
+      document.getElementById('installGuide').classList.add('open');
+    }
+    // Show install CTA on iOS Safari if not installed
+    if (isIos() && !isStandalone()) {
+      const b = document.getElementById('iosInstallBtn');
+      if (b) b.style.display = 'block';
+    }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(function(){});
+    }
     refreshStats();
     renderChips();
     renderPath();

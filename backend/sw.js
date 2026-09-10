@@ -1,16 +1,24 @@
-const CACHE = 'bilimsari-v1';
+const CACHE = 'bilimsari-v2';
 const ASSETS = [
   '/',
-  '/index.html',
+  '/learn.html',
+  '/lesson.html',
+  '/courses.html',
+  '/profile.html',
+  '/leaderboard.html',
+  '/review.html',
   '/login.html',
-  '/register.html',
-  '/dashboard.html',
-  '/js/auth.js',
+  '/index.html',
   '/manifest.json',
-  '/assets/logo-book.png',
-  '/assets/logo-full.png',
+  '/js/auth.js',
+  '/js/game.js',
+  '/js/data.js',
+  '/js/icons.js',
   '/assets/icon-192.png',
-  '/assets/icon-512.png'
+  '/assets/icon-512.png',
+  '/assets/apple-touch-icon.png',
+  '/assets/apple-touch-icon-180.png',
+  '/assets/logo-book.png'
 ];
 
 self.addEventListener('install', (e) => {
