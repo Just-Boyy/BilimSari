@@ -156,7 +156,7 @@
       font-weight: 600; padding: 6px 14px; border-radius: 20px; margin-top: 8px;
     }
     .hero-grid {
-      display: grid; grid-template-columns: 340px 1fr; gap: 28px; align-items: start;
+      display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; max-width: 420px; margin: 0 auto;
     }
     .schedule-card {
       background: #fff; border: 1px solid #eee; border-radius: 16px;
@@ -189,25 +189,6 @@
       border-radius: 20px; white-space: nowrap;
     }
     .schedule-item.active .live { background: #fff; color: #e34c3e; }
-    .hero-character {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 320px;
-      background: linear-gradient(160deg, #e8f8e0 0%, #f5fff0 50%, #fff 100%);
-      border-radius: 24px;
-      border: 1px solid rgba(88, 167, 0, 0.15);
-      box-shadow: 0 12px 40px rgba(88, 167, 0, 0.1);
-      overflow: hidden;
-      position: relative;
-    }
-    .hero-img {
-      width: auto;
-      height: min(380px, 55vw);
-      max-width: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,.12));
-    }
     .video-wrap {
       background: #111; border-radius: 16px; overflow: hidden;
       aspect-ratio: 16/10; position: relative;
@@ -412,9 +393,6 @@
         <div class="schedule-list" id="scheduleList"></div>
       </div>
 
-      <div class="hero-character">
-        <img src="assets/hero-sm.png" alt="BilimSari qahramoni" class="hero-img">
-      </div>
     </div>
   </section>
 
