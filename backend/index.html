@@ -538,19 +538,19 @@
       <ol class="install-steps">
         <li>
           <span class="step-num">1</span>
-          <span>Safari pastidagi <b>Ulashish</b> tugmasini bosing
-          <small>(kvadrat va yuqoriga strelka belgisi)</small></span>
+          <span>Ochilgan <b>Ulashish</b> oynasida pastga suring</span>
         </li>
         <li>
           <span class="step-num">2</span>
-          <span>Ro‘yxatdan <b>«Add to Home Screen»</b><br>yoki <b>«Uy ekraniga qo‘shish»</b> ni tanlang</span>
+          <span><b>«Add to Home Screen»</b> / <b>«Uy ekraniga qo‘shish»</b> ni bosing
+          <small>Agar ro‘yxatda yo‘q bo‘lsa — Safari pastidagi Ulashish (□↑) dan oching</small></span>
         </li>
         <li>
           <span class="step-num">3</span>
-          <span>Yuqoridagi <b>Add</b> / <b>Qo‘shish</b> ni bosing</span>
+          <span><b>Add</b> / <b>Qo‘shish</b> ni bosing</span>
         </li>
       </ol>
-      <p class="install-note">Muhim: faqat <b>Safari</b> da ishlaydi. Chrome orqali o‘rnatib bo‘lmaydi.</p>
+      <p class="install-note">Apple qoidasi: iPhone’da ilovani faqat shu yo‘l bilan o‘rnatish mumkin. Faqat <b>Safari</b> da ishlaydi.</p>
       <button type="button" class="install-ok" onclick="closeInstallModal()">Tushundim</button>
     </div>
   </div>
@@ -660,7 +660,24 @@
         });
         return;
       }
-      // Show custom guide (iOS / fallback)
+      // iOS: native ulashish oynasini ochishga urinish
+      if (navigator.share) {
+        navigator.share({
+          title: 'BilimSari',
+          text: 'BilimSari — o‘zbek tilida ta’lim',
+          url: window.location.href
+        }).then(function () {
+          // Ulashish oynasi yopilgach, qisqa eslatma
+          setTimeout(function () {
+            var m = document.getElementById('installModal');
+            if (m && !window.navigator.standalone) m.classList.add('open');
+          }, 400);
+        }).catch(function () {
+          var m = document.getElementById('installModal');
+          if (m) m.classList.add('open');
+        });
+        return;
+      }
       var m = document.getElementById('installModal');
       if (m) m.classList.add('open');
     }
