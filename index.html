@@ -65,14 +65,6 @@
       transform: translateY(2px);
       box-shadow: 0 2px 0 #3f7d00;
     }
-    .link {
-      display: inline-block;
-      margin-top: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #58A700;
-      text-decoration: none;
-    }
 
     /* Install sheet */
     .modal {
@@ -160,8 +152,7 @@
     <h1>BilimSari</h1>
     <p>O‘rganishni boshlash uchun ilovani o‘rnating</p>
     <button class="btn" id="dlBtn" onclick="downloadApp()">Yuklab olish</button>
-    <a class="link" href="login.html">Allaqachon o‘rnatilganmi? Kirish</a>
-  </div>
+      </div>
 
   <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
     <div class="sheet">
@@ -182,20 +173,52 @@
 
   <script>
     let deferredPrompt = null;
+    const INSTALLED_KEY = 'bilimsari_installed';
 
     function isStandalone() {
       return window.matchMedia('(display-mode: standalone)').matches
         || window.navigator.standalone === true;
     }
 
-    // Allaqachon o‘rnatilgan bo‘lsa — to‘g‘ridan-to‘g‘ri ilovaga
+    function isInstalled() {
+      if (isStandalone()) return true;
+      try { return localStorage.getItem(INSTALLED_KEY) === '1'; } catch (e) { return false; }
+    }
+
+    function markInstalled() {
+      try { localStorage.setItem(INSTALLED_KEY, '1'); } catch (e) {}
+    }
+
+    // Ilova ichida ochilgan bo‘lsa — login/ga
     if (isStandalone()) {
+      markInstalled();
       window.location.replace('login.html');
+    }
+
+    function updateButton() {
+      var btn = document.getElementById('dlBtn');
+      if (!btn) return;
+      if (isInstalled()) {
+        btn.textContent = 'Appni ochish';
+        btn.onclick = function () { window.location.href = 'login.html'; };
+      } else {
+        btn.textContent = 'Yuklab olish';
+        btn.onclick = downloadApp;
+      }
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
+      // O‘rnatish mumkin — hali o‘rnatilmagan
+      try { localStorage.removeItem(INSTALLED_KEY); } catch (e) {}
+      updateButton();
+    });
+
+    window.addEventListener('appinstalled', function () {
+      markInstalled();
+      deferredPrompt = null;
+      updateButton();
     });
 
     function isIos() {
@@ -208,7 +231,11 @@
       if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(function (r) {
-          if (r.outcome === 'accepted') deferredPrompt = null;
+          if (r.outcome === 'accepted') {
+            deferredPrompt = null;
+            markInstalled();
+            updateButton();
+          }
         });
         return;
       }
