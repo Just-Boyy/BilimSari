@@ -1,94 +1,82 @@
-// BilimSari — oddiy auth (localStorage)
-// Keyinchalik backend bilan almashtirish oson
+// BilimSari Auth — Backend API bilan ishlaydi
 
-const AUTH_KEY = 'bilimsari_users';
-const SESSION_KEY = 'bilimsari_session';
+const API_URL = 'http://127.0.0.1:5000/api';
+const TOKEN_KEY = 'bilimsari_token';
+const USER_KEY = 'bilimsari_user';
 
-function getUsers() {
-  try {
-    return JSON.parse(localStorage.getItem(AUTH_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
-
-function saveUsers(users) {
-  localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
 }
 
 function getSession() {
   try {
-    return JSON.parse(localStorage.getItem(SESSION_KEY));
+    const user = JSON.parse(localStorage.getItem(USER_KEY));
+    const token = getToken();
+    if (user && token) return { ...user, token };
+    return null;
   } catch {
     return null;
   }
 }
 
-function setSession(user) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify({
-    email: user.email,
-    name: user.name,
-    loggedAt: Date.now()
-  }));
+function setSession(token, user) {
+  localStorage.setItem(TOKEN_KEY, token);
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 function clearSession() {
-  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
 }
 
 function isLoggedIn() {
-  return !!getSession();
+  return !!getToken();
 }
 
-function register(name, email, password) {
-  email = email.trim().toLowerCase();
-  name = name.trim();
-
-  if (!name || name.length < 2) {
-    return { ok: false, error: 'Ism kamida 2 ta belgidan iborat bo‘lsin' };
+async function register(name, email, password) {
+  try {
+    const res = await fetch(`${API_URL}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      setSession(data.token, data.user);
+    }
+    return data;
+  } catch (err) {
+    return { ok: false, error: 'Serverga ulanib bo‘lmadi. Backend ishlayaptimi?' };
   }
-  if (!email || !email.includes('@')) {
-    return { ok: false, error: 'Email noto‘g‘ri' };
-  }
-  if (!password || password.length < 6) {
-    return { ok: false, error: 'Parol kamida 6 ta belgidan iborat bo‘lsin' };
-  }
-
-  const users = getUsers();
-  if (users.find(u => u.email === email)) {
-    return { ok: false, error: 'Bu email allaqachon ro‘yxatdan o‘tgan' };
-  }
-
-  const user = { name, email, password, createdAt: Date.now() };
-  users.push(user);
-  saveUsers(users);
-  setSession(user);
-
-  return { ok: true, user };
 }
 
-function login(email, password) {
-  email = email.trim().toLowerCase();
-
-  if (!email || !password) {
-    return { ok: false, error: 'Email va parolni kiriting' };
+async function login(email, password) {
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      setSession(data.token, data.user);
+    }
+    return data;
+  } catch (err) {
+    return { ok: false, error: 'Serverga ulanib bo‘lmadi. Backend ishlayaptimi?' };
   }
-
-  const users = getUsers();
-  const user = users.find(u => u.email === email);
-
-  if (!user) {
-    return { ok: false, error: 'Bunday foydalanuvchi topilmadi' };
-  }
-  if (user.password !== password) {
-    return { ok: false, error: 'Parol noto‘g‘ri' };
-  }
-
-  setSession(user);
-  return { ok: true, user };
 }
 
-function logout() {
+async function logout() {
+  const token = getToken();
+  if (token) {
+    try {
+      await fetch(`${API_URL}/logout`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    } catch (_) {}
+  }
   clearSession();
   window.location.href = 'login.html';
 }

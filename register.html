@@ -227,7 +227,7 @@
       document.getElementById('error').classList.remove('show');
     }
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
       e.preventDefault();
       hideError();
 
@@ -245,17 +245,14 @@
       btn.disabled = true;
       btn.textContent = 'Kutilmoqda...';
 
-      // Kichik kechikish — real his qilish uchun
-      setTimeout(() => {
-        const result = register(name, email, password);
-        if (result.ok) {
-          window.location.href = 'dashboard.html';
-        } else {
-          showError(result.error);
-          btn.disabled = false;
-          btn.textContent = 'Ro‘yxatdan o‘tish';
-        }
-      }, 400);
+      const result = await register(name, email, password);
+      if (result.ok) {
+        window.location.href = 'dashboard.html';
+      } else {
+        showError(result.error);
+        btn.disabled = false;
+        btn.textContent = 'Ro‘yxatdan o‘tish';
+      }
     }
   </script>
 </body>

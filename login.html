@@ -266,7 +266,7 @@
       document.getElementById('error').classList.remove('show');
     }
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
       e.preventDefault();
       hideError();
 
@@ -277,16 +277,14 @@
       btn.disabled = true;
       btn.textContent = 'Kutilmoqda...';
 
-      setTimeout(() => {
-        const result = login(email, password);
-        if (result.ok) {
-          window.location.href = 'dashboard.html';
-        } else {
-          showError(result.error);
-          btn.disabled = false;
-          btn.textContent = 'Kirish';
-        }
-      }, 400);
+      const result = await login(email, password);
+      if (result.ok) {
+        window.location.href = 'dashboard.html';
+      } else {
+        showError(result.error);
+        btn.disabled = false;
+        btn.textContent = 'Kirish';
+      }
     }
 
     function googleLogin() {
