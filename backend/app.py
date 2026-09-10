@@ -1,10 +1,9 @@
 """
-BilimSari Backend — Flask + SQLite
+BilimSari Backend — Flask + PostgreSQL
 """
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import sqlite3
 import hashlib
 import secrets
 import os
@@ -12,40 +11,55 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})  # Vercel va boshqa frontendlar uchun
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'bilimsari.db')
 SECRET = os.environ.get('SECRET_KEY', 'bilimsari-dev-secret-change-me')
 
 
 # ───────────────────────────── Database ─────────────────────────────
 
-def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+def get_connection():
+    """PostgreSQL ulanishi (Railway DATABASE_URL orqali)"""
+    database_url = os.environ.get('DATABASE_URL')
+
+    if not database_url:
+        raise RuntimeError(
+            'DATABASE_URL topilmadi. Railway’da PostgreSQL qo‘shing '
+            'yoki lokalda DATABASE_URL o‘rnating.'
+        )
+
+    # Railway ba’zan postgres:// beradi, psycopg2 postgresql:// kutadi
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+
+    conn = psycopg2.connect(database_url, cursor_factory=RealDictCursor)
     return conn
 
 
 def init_db():
-    conn = get_db()
-    conn.execute('''
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password_hash TEXT NOT NULL,
-            created_at TEXT NOT NULL
+            created_at TIMESTAMP NOT NULL DEFAULT NOW()
         )
     ''')
-    conn.execute('''
+    cur.execute('''
         CREATE TABLE IF NOT EXISTS tokens (
             token TEXT PRIMARY KEY,
-            user_id INTEGER NOT NULL,
-            expires_at TEXT NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users(id)
+            user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            expires_at TIMESTAMP NOT NULL
         )
     ''')
     conn.commit()
+    cur.close()
     conn.close()
 
 
@@ -55,13 +69,15 @@ def hash_password(password: str) -> str:
 
 def create_token(user_id: int) -> str:
     token = secrets.token_hex(32)
-    expires = (datetime.utcnow() + timedelta(days=7)).isoformat()
-    conn = get_db()
-    conn.execute(
-        'INSERT INTO tokens (token, user_id, expires_at) VALUES (?, ?, ?)',
+    expires = datetime.utcnow() + timedelta(days=7)
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        'INSERT INTO tokens (token, user_id, expires_at) VALUES (%s, %s, %s)',
         (token, user_id, expires)
     )
     conn.commit()
+    cur.close()
     conn.close()
     return token
 
@@ -69,13 +85,16 @@ def create_token(user_id: int) -> str:
 def get_user_by_token(token: str):
     if not token:
         return None
-    conn = get_db()
-    row = conn.execute('''
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('''
         SELECT u.id, u.name, u.email
         FROM tokens t
         JOIN users u ON u.id = t.user_id
-        WHERE t.token = ? AND t.expires_at > ?
-    ''', (token, datetime.utcnow().isoformat())).fetchone()
+        WHERE t.token = %s AND t.expires_at > NOW()
+    ''', (token,))
+    row = cur.fetchone()
+    cur.close()
     conn.close()
     return dict(row) if row else None
 
@@ -97,7 +116,13 @@ def auth_required(f):
 
 @app.route('/api/health', methods=['GET'])
 def health():
-    return jsonify({'ok': True, 'service': 'BilimSari API'})
+    try:
+        conn = get_connection()
+        conn.close()
+        db_ok = True
+    except Exception:
+        db_ok = False
+    return jsonify({'ok': True, 'service': 'BilimSari API', 'db': db_ok})
 
 
 @app.route('/api/register', methods=['POST'])
@@ -114,20 +139,23 @@ def register():
     if len(password) < 6:
         return jsonify({'ok': False, 'error': 'Parol kamida 6 ta belgidan iborat bo‘lsin'}), 400
 
-    conn = get_db()
-    existing = conn.execute('SELECT id FROM users WHERE email = ?', (email,)).fetchone()
-    if existing:
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute('SELECT id FROM users WHERE email = %s', (email,))
+    if cur.fetchone():
+        cur.close()
         conn.close()
         return jsonify({'ok': False, 'error': 'Bu email allaqachon ro‘yxatdan o‘tgan'}), 400
 
     pw_hash = hash_password(password)
-    now = datetime.utcnow().isoformat()
-    cur = conn.execute(
-        'INSERT INTO users (name, email, password_hash, created_at) VALUES (?, ?, ?, ?)',
-        (name, email, pw_hash, now)
+    cur.execute(
+        'INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s) RETURNING id',
+        (name, email, pw_hash)
     )
-    user_id = cur.lastrowid
+    user_id = cur.fetchone()['id']
     conn.commit()
+    cur.close()
     conn.close()
 
     token = create_token(user_id)
@@ -147,11 +175,14 @@ def login():
     if not email or not password:
         return jsonify({'ok': False, 'error': 'Email va parolni kiriting'}), 400
 
-    conn = get_db()
-    user = conn.execute(
-        'SELECT id, name, email, password_hash FROM users WHERE email = ?',
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        'SELECT id, name, email, password_hash FROM users WHERE email = %s',
         (email,)
-    ).fetchone()
+    )
+    user = cur.fetchone()
+    cur.close()
     conn.close()
 
     if not user:
@@ -179,19 +210,23 @@ def me():
 def logout():
     auth = request.headers.get('Authorization', '')
     token = auth.replace('Bearer ', '').strip()
-    conn = get_db()
-    conn.execute('DELETE FROM tokens WHERE token = ?', (token,))
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('DELETE FROM tokens WHERE token = %s', (token,))
     conn.commit()
+    cur.close()
     conn.close()
     return jsonify({'ok': True})
 
 
 # ───────────────────────────── Start ─────────────────────────────
 
-# Gunicorn va lokal ishga tushirishda ham DB tayyor bo‘lsin
-init_db()
+try:
+    init_db()
+except Exception as e:
+    print(f'DB init ogohlantirish: {e}')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    print(f'BilimSari API ishga tushdi → http://127.0.0.1:{port}')
+    print(f'BilimSari API → http://127.0.0.1:{port}')
     app.run(host='0.0.0.0', port=port, debug=True)
