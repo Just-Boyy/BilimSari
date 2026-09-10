@@ -37,7 +37,16 @@
       padding: 6px 10px; border-radius: 10px;
     }
     .stat-item:hover { background: #f5f5f5; }
-    .stat-item .ico { font-size: 18px; }
+    .stat-item .ico { display:flex; align-items:center; }
+    .stat-item .ico svg { width:20px; height:20px; }
+    .stat-item.streak { color:#ff9600; }
+    .stat-item.xp { color:#ffc800; }
+    .stat-item.hearts { color:#ff4b4b; }
+    .stat-item.gems { color:#1cb0f6; }
+    .nav-ico { display:flex; align-items:center; justify-content:center; height:24px; }
+    .nav-ico svg { width:22px; height:22px; }
+    .node-btn svg { width:26px; height:26px; }
+    .course-chip svg { width:18px; height:18px; vertical-align:middle; }
 
     .wrap { max-width: 560px; margin: 0 auto; padding: 20px 16px; }
 
@@ -173,10 +182,10 @@
 <body>
   <div class="stats-bar">
     <div class="stats-inner">
-      <button class="stat-item" onclick="openStat('streak')"><span class="ico">🔥</span><span id="sStreak">0</span></button>
-      <button class="stat-item" onclick="openStat('xp')"><span class="ico">⚡</span><span id="sXp">0</span></button>
-      <button class="stat-item" onclick="openStat('hearts')"><span class="ico">❤️</span><span id="sHearts">5</span></button>
-      <button class="stat-item" onclick="openStat('gems')"><span class="ico">💎</span><span id="sGems">0</span></button>
+      <button class="stat-item streak" onclick="openStat('streak')"><span class="ico" id="icoStreak"></span><span id="sStreak">0</span></button>
+      <button class="stat-item xp" onclick="openStat('xp')"><span class="ico" id="icoXp"></span><span id="sXp">0</span></button>
+      <button class="stat-item hearts" onclick="openStat('hearts')"><span class="ico" id="icoHearts"></span><span id="sHearts">5</span></button>
+      <button class="stat-item gems" onclick="openStat('gems')"><span class="ico" id="icoGems"></span><span id="sGems">0</span></button>
     </div>
   </div>
 
@@ -194,11 +203,11 @@
 
   <nav class="bnav">
     <div class="bnav-inner">
-      <a href="learn.html" class="active"><span>🏠</span>O‘rganish</a>
-      <a href="courses.html"><span>📚</span>Kurslar</a>
-      <a href="leaderboard.html"><span>🏆</span>Reyting</a>
-      <a href="review.html"><span>🔄</span>Takrorlash</a>
-      <a href="profile.html"><span>👤</span>Profil</a>
+      <a href="learn.html" class="active"><span class="nav-ico" data-icon="home"></span>O‘rganish</a>
+      <a href="courses.html"><span class="nav-ico" data-icon="book"></span>Kurslar</a>
+      <a href="leaderboard.html"><span class="nav-ico" data-icon="trophy"></span>Reyting</a>
+      <a href="review.html"><span class="nav-ico" data-icon="refresh"></span>Takrorlash</a>
+      <a href="profile.html"><span class="nav-ico" data-icon="user"></span>Profil</a>
     </div>
   </nav>
 
@@ -206,6 +215,7 @@
     <div class="sheet" id="statSheet"></div>
   </div>
 
+  <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script src="js/data.js"></script>
@@ -229,7 +239,7 @@
       COURSES.forEach(c => {
         const chip = document.createElement('button');
         chip.className = 'course-chip' + (c.id === courseId ? ' active' : '');
-        chip.innerHTML = c.icon + ' ' + c.name;
+        chip.innerHTML = icon(c.icon) + ' ' + c.name;
         chip.onclick = () => {
           courseId = c.id;
           localStorage.setItem('bs_current_course', courseId);
@@ -260,8 +270,9 @@
 
         const node = document.createElement('div');
         node.className = 'node' + (done ? (legendary ? ' legendary done' : ' done') : current ? ' current' : locked ? ' locked' : '');
+        const btnIcon = done ? icon('check') : locked ? icon('lock') : icon(lvl.icon || 'star');
         node.innerHTML = `
-          <button class="node-btn">${done ? '✓' : locked ? '🔒' : lvl.icon}</button>
+          <button class="node-btn">${btnIcon}</button>
           <div class="node-label">${lvl.title}</div>
         `;
         if (!locked) {
@@ -282,24 +293,24 @@
       const sheet = document.getElementById('statSheet');
       const goalPct = Math.min(100, Math.round((g.dailyXp / g.dailyGoal) * 100));
       if (type === 'streak') {
-        sheet.innerHTML = `<h3>🔥 ${g.streak} kunlik streak</h3>
+        sheet.innerHTML = `<h3>${icon('flame')} ${g.streak} kunlik streak</h3>
           <p>Har kuni kamida bitta dars bajaring — streak saqlanadi. Bugun ${g.lastActiveDate === new Date().toISOString().slice(0,10) ? 'bajarilgan ✅' : 'hali bajarilmagan ⚠️'}.</p>`;
       } else if (type === 'xp') {
-        sheet.innerHTML = `<h3>⚡ ${g.xp} XP</h3>
+        sheet.innerHTML = `<h3>${icon('zap')} ${g.xp} XP</h3>
           <p>Daraja: ${levelFromXp(g.xp)}. Kunlik maqsad: ${g.dailyXp}/${g.dailyGoal} XP</p>
           <div class="daily-bar"><span style="width:${goalPct}%"></span></div>
           <p>${goalPct >= 100 ? 'Bugungi maqsad bajarildi! 🎉' : 'Yana ' + (g.dailyGoal - g.dailyXp) + ' XP qoldi'}</p>
           <div class="goals">
-            <div class="goal ${g.dailyGoal===10?'active':''}" onclick="setGoal(10)">🟢 Oson — 10 XP</div>
-            <div class="goal ${g.dailyGoal===20?'active':''}" onclick="setGoal(20)">🟡 Oddiy — 20 XP</div>
-            <div class="goal ${g.dailyGoal===30?'active':''}" onclick="setGoal(30)">🔴 Jiddiy — 30 XP</div>
+            <div class="goal ${g.dailyGoal===10?'active':''}" onclick="setGoal(10)">Oson — 10 XP</div>
+            <div class="goal ${g.dailyGoal===20?'active':''}" onclick="setGoal(20)">Oddiy — 20 XP</div>
+            <div class="goal ${g.dailyGoal===30?'active':''}" onclick="setGoal(30)">Jiddiy — 30 XP</div>
           </div>`;
       } else if (type === 'hearts') {
-        sheet.innerHTML = `<h3>❤️ ${g.hearts}/5 yurak</h3>
+        sheet.innerHTML = `<h3>${icon('heart')} ${g.hearts}/5 yurak</h3>
           <p>Noto‘g‘ri javobda yurak kamayadi. 0 bo‘lsa darsni davom ettirish qiyinlashadi.</p>
           <button class="unit-guide" style="width:100%;margin-top:8px;" onclick="location.href='review.html'">Takrorlash orqali tiklash</button>`;
       } else {
-        sheet.innerHTML = `<h3>💎 ${g.gems} olmos</h3>
+        sheet.innerHTML = `<h3>${icon('gem')} ${g.gems} olmos</h3>
           <p>Yaxshi natijalar uchun olmos oling. Keyinchalik do‘kon va bonuslarda ishlatiladi.</p>`;
       }
       document.getElementById('statModal').classList.add('open');
@@ -311,6 +322,11 @@
       refreshStats();
     }
 
+    document.getElementById('icoStreak').innerHTML = icon('flame');
+    document.getElementById('icoXp').innerHTML = icon('zap');
+    document.getElementById('icoHearts').innerHTML = icon('heart');
+    document.getElementById('icoGems').innerHTML = icon('gem');
+    document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     refreshStats();
     renderChips();
     renderPath();

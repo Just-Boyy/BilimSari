@@ -15,13 +15,13 @@
     .sub{color:#777;margin-bottom:20px}
     .row{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;font-weight:700}
     .row.me{border-color:#58A700;background:#d7ffb8}
-    .rank{width:32px;text-align:center;font-size:18px}
+    .rank{width:32px;text-align:center;font-size:18px;display:flex;align-items:center;justify-content:center;color:#ffc800}.rank svg{width:22px;height:22px}
     .xp{margin-left:auto;color:#58A700}
     .bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e5e5e5;display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);z-index:50}
     .bnav-inner{max-width:480px;width:100%;display:flex;justify-content:space-around}
     .bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;font-size:11px;font-weight:700;color:#afafaf}
     .bnav a.active{color:#58A700}
-    .bnav a span{font-size:22px}
+    .bnav a span{font-size:22px}.nav-ico{display:flex;align-items:center;justify-content:center;height:24px}.nav-ico svg{width:22px;height:22px}
   </style>
 </head>
 <body>
@@ -31,16 +31,18 @@
     <div id="list"></div>
   </div>
   <nav class="bnav"><div class="bnav-inner">
-    <a href="learn.html"><span>🏠</span>O‘rganish</a>
-    <a href="courses.html"><span>📚</span>Kurslar</a>
-    <a href="leaderboard.html" class="active"><span>🏆</span>Reyting</a>
-    <a href="review.html"><span>🔄</span>Takrorlash</a>
-    <a href="profile.html"><span>👤</span>Profil</a>
+    <a href="learn.html"><span class="nav-ico" data-icon="home"></span>O‘rganish</a>
+    <a href="courses.html"><span class="nav-ico" data-icon="book"></span>Kurslar</a>
+    <a href="leaderboard.html" class="active"><span class="nav-ico" data-icon="trophy"></span>Reyting</a>
+    <a href="review.html"><span class="nav-ico" data-icon="refresh"></span>Takrorlash</a>
+    <a href="profile.html"><span class="nav-ico" data-icon="user"></span>Profil</a>
   </div></nav>
+  <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script>
     requireAuth();
+    document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     const session = getSession();
     const myXp = getGame().xp;
     const myName = (session && session.name) || 'Siz';
@@ -54,12 +56,12 @@
       { name: myName, xp: myXp, me: true },
     ];
     board.sort((a,b) => b.xp - a.xp);
-    const medals = ['🥇','🥈','🥉'];
+    const medals = [1,2,3];
     const list = document.getElementById('list');
     board.forEach((u, i) => {
       const row = document.createElement('div');
       row.className = 'row' + (u.me ? ' me' : '');
-      row.innerHTML = `<div class="rank">${medals[i]||(i+1)}</div><div>${u.name}${u.me?' (siz)':''}</div><div class="xp">${u.xp} XP</div>`;
+      row.innerHTML = `<div class="rank">${i<3?icon('medal'):(i+1)}</div><div>${u.name}${u.me?' (siz)':''}</div><div class="xp">${u.xp} XP</div>`;
       list.appendChild(row);
     });
   </script>

@@ -29,13 +29,13 @@
     .bnav-inner{max-width:480px;width:100%;display:flex;justify-content:space-around}
     .bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;font-size:11px;font-weight:700;color:#afafaf}
     .bnav a.active{color:#58A700}
-    .bnav a span{font-size:22px}
+    .bnav a span{font-size:22px}.nav-ico{display:flex;align-items:center;justify-content:center;height:24px}.nav-ico svg{width:22px;height:22px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
-      <div class="avatar">📚</div>
+      <div class="avatar" id="avIcon"></div>
       <h1 id="name">O‘quvchi</h1>
       <div class="lvl" id="lvl">Daraja 1</div>
     </div>
@@ -52,18 +52,21 @@
     <button class="logout" onclick="logout()">Chiqish</button>
   </div>
   <nav class="bnav"><div class="bnav-inner">
-    <a href="learn.html"><span>🏠</span>O‘rganish</a>
-    <a href="courses.html"><span>📚</span>Kurslar</a>
-    <a href="leaderboard.html"><span>🏆</span>Reyting</a>
-    <a href="review.html"><span>🔄</span>Takrorlash</a>
-    <a href="profile.html" class="active"><span>👤</span>Profil</a>
+    <a href="learn.html"><span class="nav-ico" data-icon="home"></span>O‘rganish</a>
+    <a href="courses.html"><span class="nav-ico" data-icon="book"></span>Kurslar</a>
+    <a href="leaderboard.html"><span class="nav-ico" data-icon="trophy"></span>Reyting</a>
+    <a href="review.html"><span class="nav-ico" data-icon="refresh"></span>Takrorlash</a>
+    <a href="profile.html" class="active"><span class="nav-ico" data-icon="user"></span>Profil</a>
   </div></nav>
+  <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script>
     requireAuth();
+    document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     const session = getSession();
     const g = getGame();
+    document.getElementById('avIcon').innerHTML = icon('user');
     document.getElementById('name').textContent = (session && session.name) || 'O‘quvchi';
     document.getElementById('lvl').textContent = 'Daraja ' + levelFromXp(g.xp);
     document.getElementById('xp').textContent = g.xp;
@@ -71,19 +74,19 @@
     document.getElementById('lessons').textContent = Object.values(g.completedLessons).flat().length;
     document.getElementById('gems').textContent = g.gems;
     const ACH = [
-      {id:'streak_7',icon:'🔥',title:'7 kunlik streak'},
-      {id:'streak_30',icon:'🔥',title:'30 kunlik streak'},
-      {id:'xp_1000',icon:'⚡',title:'1000 XP'},
-      {id:'xp_5000',icon:'⚡',title:'5000 XP'},
-      {id:'lessons_10',icon:'📚',title:'10 ta dars'},
-      {id:'lessons_50',icon:'📚',title:'50 ta dars'},
+      {id:'streak_7',icon:'flame',title:'7 kunlik streak'},
+      {id:'streak_30',icon:'flame',title:'30 kunlik streak'},
+      {id:'xp_1000',icon:'zap',title:'1000 XP'},
+      {id:'xp_5000',icon:'zap',title:'5000 XP'},
+      {id:'lessons_10',icon:'book',title:'10 ta dars'},
+      {id:'lessons_50',icon:'book',title:'50 ta dars'},
     ];
     const box = document.getElementById('achs');
     ACH.forEach(a => {
       const on = g.achievements.includes(a.id);
       const d = document.createElement('div');
       d.className = 'ach' + (on ? '' : ' off');
-      d.innerHTML = `<span>${a.icon}</span> ${a.title} ${on?'✅':''}`;
+      d.innerHTML = `<span style="display:inline-flex;color:${on?'#58A700':'#ccc'}">${icon(a.icon)}</span> ${a.title} ${on?'✓':''}`;
       box.appendChild(d);
     });
   </script>

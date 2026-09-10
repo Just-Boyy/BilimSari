@@ -22,7 +22,7 @@
     .bnav-inner{max-width:480px;width:100%;display:flex;justify-content:space-around}
     .bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;font-size:11px;font-weight:700;color:#afafaf}
     .bnav a.active{color:#58A700}
-    .bnav a span{font-size:22px}
+    .bnav a span{font-size:22px}.nav-ico{display:flex;align-items:center;justify-content:center;height:24px}.nav-ico svg{width:22px;height:22px}
   </style>
 </head>
 <body>
@@ -30,27 +30,29 @@
     <h1>Takrorlash</h1>
     <p class="sub">Xato qilgan savollar va mashq</p>
     <div class="card">
-      <h3>❤️ Yurak tiklash</h3>
+      <h3>Yurak tiklash</h3>
       <p>Qisqa mashq qilib 1 ta yurak qaytarib oling.</p>
       <button class="btn" onclick="heal()">Mashq qilish</button>
     </div>
     <div id="wrong"></div>
   </div>
   <nav class="bnav"><div class="bnav-inner">
-    <a href="learn.html"><span>🏠</span>O‘rganish</a>
-    <a href="courses.html"><span>📚</span>Kurslar</a>
-    <a href="leaderboard.html"><span>🏆</span>Reyting</a>
-    <a href="review.html" class="active"><span>🔄</span>Takrorlash</a>
-    <a href="profile.html"><span>👤</span>Profil</a>
+    <a href="learn.html"><span class="nav-ico" data-icon="home"></span>O‘rganish</a>
+    <a href="courses.html"><span class="nav-ico" data-icon="book"></span>Kurslar</a>
+    <a href="leaderboard.html"><span class="nav-ico" data-icon="trophy"></span>Reyting</a>
+    <a href="review.html" class="active"><span class="nav-ico" data-icon="refresh"></span>Takrorlash</a>
+    <a href="profile.html"><span class="nav-ico" data-icon="user"></span>Profil</a>
   </div></nav>
+  <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script>
     requireAuth();
+    document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     function heal() {
       restoreHeart(1);
       addXp(5);
-      alert('+1 ❤️ va +5 XP! Yuraklar: ' + getGame().hearts);
+      alert('+1 yurak va +5 XP! Yuraklar: ' + getGame().hearts);
     }
     const g = getGame();
     const box = document.getElementById('wrong');

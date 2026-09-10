@@ -15,7 +15,7 @@
     .sub{color:#777;margin-bottom:20px;font-size:15px}
     .card{background:#fff;border:2px solid #e5e5e5;border-radius:18px;padding:18px;margin-bottom:12px;cursor:pointer;transition:.15s;display:flex;gap:14px;align-items:center}
     .card:hover{border-color:#58A700;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    .ico{font-size:36px;width:52px;text-align:center}
+    .ico{width:52px;display:flex;align-items:center;justify-content:center}.ico svg{width:32px;height:32px}
     .card h3{font-size:17px;font-weight:800}
     .card p{font-size:13px;color:#777;margin-top:2px}
     .bar{height:8px;background:#e5e5e5;border-radius:99px;margin-top:10px;overflow:hidden}
@@ -24,7 +24,7 @@
     .bnav-inner{max-width:480px;width:100%;display:flex;justify-content:space-around}
     .bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;font-size:11px;font-weight:700;color:#afafaf}
     .bnav a.active{color:#58A700}
-    .bnav a span{font-size:22px}
+    .bnav a span{font-size:22px}.nav-ico{display:flex;align-items:center;justify-content:center;height:24px}.nav-ico svg{width:22px;height:22px}
   </style>
 </head>
 <body>
@@ -34,17 +34,19 @@
     <div id="list"></div>
   </div>
   <nav class="bnav"><div class="bnav-inner">
-    <a href="learn.html"><span>🏠</span>O‘rganish</a>
-    <a href="courses.html" class="active"><span>📚</span>Kurslar</a>
-    <a href="leaderboard.html"><span>🏆</span>Reyting</a>
-    <a href="review.html"><span>🔄</span>Takrorlash</a>
-    <a href="profile.html"><span>👤</span>Profil</a>
+    <a href="learn.html"><span class="nav-ico" data-icon="home"></span>O‘rganish</a>
+    <a href="courses.html" class="active"><span class="nav-ico" data-icon="book"></span>Kurslar</a>
+    <a href="leaderboard.html"><span class="nav-ico" data-icon="trophy"></span>Reyting</a>
+    <a href="review.html"><span class="nav-ico" data-icon="refresh"></span>Takrorlash</a>
+    <a href="profile.html"><span class="nav-ico" data-icon="user"></span>Profil</a>
   </div></nav>
+  <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script src="js/data.js"></script>
   <script>
     requireAuth();
+    document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     const list = document.getElementById('list');
     COURSES.forEach(c => {
       const total = allLessons(c).length;
@@ -52,7 +54,7 @@
       const el = document.createElement('div');
       el.className = 'card';
       el.onclick = () => location.href = 'learn.html?course=' + c.id;
-      el.innerHTML = `<div class="ico">${c.icon}</div>
+      el.innerHTML = `<div class="ico" style="color:${c.color}">${icon(c.icon)}</div>
         <div style="flex:1">
           <h3>${c.name}</h3>
           <p>${c.desc} · ${p.done}/${total} dars</p>

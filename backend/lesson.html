@@ -31,7 +31,7 @@
     .exit:hover { color: #777; }
     .prog-wrap { flex: 1; height: 14px; background: #e5e5e5; border-radius: 99px; overflow: hidden; }
     .prog-bar { height: 100%; width: 0%; background: #58A700; border-radius: 99px; transition: width .35s ease; }
-    .hearts { font-size: 18px; letter-spacing: 2px; white-space: nowrap; }
+    .hearts { display:flex; gap:2px; align-items:center; } .hearts svg { width:18px; height:18px; } .emoji svg { width:64px; height:64px; color:#58A700; }
 
     .main {
       flex: 1;
@@ -235,7 +235,7 @@
   </div>
 
   <div class="complete" id="completeUI">
-    <div class="emoji">🎉</div>
+    <div class="emoji" id="completeIcon"></div>
     <h1>Dars tugadi!</h1>
     <div class="stats">
       <div class="stat"><b id="cXp">+0</b><span>XP</span></div>
@@ -247,7 +247,7 @@
 
   <div class="modal-bg" id="heartsModal">
     <div class="modal">
-      <div style="font-size:48px;margin-bottom:8px;">💔</div>
+      <div id="heartModalIcon" style="margin-bottom:8px;color:#ff4b4b;display:flex;justify-content:center;"></div>
       <h2>Yuraklaringiz tugadi</h2>
       <p>Takrorlash orqali yurak tiklash mumkin yoki keyinroq qayting.</p>
       <button class="primary" onclick="practiceForHearts()">Takrorlash (+1 ❤️)</button>
@@ -255,6 +255,7 @@
     </div>
   </div>
 
+  <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script src="js/data.js"></script>
@@ -278,7 +279,14 @@
 
     function renderHearts() {
       const h = getGame().hearts;
-      document.getElementById('heartsEl').textContent = '❤️'.repeat(h) + '🖤'.repeat(Math.max(0, 5 - h));
+      const he = document.getElementById('heartsEl');
+      he.innerHTML = '';
+      for (let i = 0; i < 5; i++) {
+        const s = document.createElement('span');
+        s.style.cssText = 'display:inline-flex;color:' + (i < h ? '#ff4b4b' : '#ddd');
+        s.innerHTML = icon(i < h ? 'heart' : 'heartEmpty');
+        he.appendChild(s);
+      }
     }
 
     function updateProg() {
@@ -462,7 +470,7 @@
         addXp(gain);
         showFloatingXp(gain, document.getElementById('actionBtn'));
         fb.className = 'feedback show ok';
-        document.getElementById('fbTitle').textContent = '✅ To‘g‘ri!';
+        document.getElementById('fbTitle').textContent = 'To‘g‘ri!';
         document.getElementById('fbText').textContent = `+${gain} XP`;
         btn.className = 'continue-btn';
         btn.textContent = 'DAVOM ETISH';
@@ -471,7 +479,7 @@
         renderHearts();
         pushWrong({ id: q.id, courseId, lessonId, q: q.q || 'Moslashtirish', answer: correctText });
         fb.className = 'feedback show bad';
-        document.getElementById('fbTitle').textContent = '❌ Noto‘g‘ri';
+        document.getElementById('fbTitle').textContent = 'Noto‘g‘ri';
         document.getElementById('fbText').textContent = correctText ? ('To‘g‘ri javob: ' + correctText) : 'Qayta urinib ko‘ring';
         btn.className = 'continue-btn wrong-theme';
         btn.textContent = 'DAVOM ETISH';
@@ -506,6 +514,7 @@
 
       document.getElementById('lessonUI').style.display = 'none';
       document.getElementById('completeUI').classList.add('show');
+      document.getElementById('completeIcon').innerHTML = icon('trophy');
       document.getElementById('cXp').textContent = '+' + xpEarned;
       document.getElementById('cAcc').textContent = acc + '%';
       document.getElementById('cStreak').textContent = getGame().streak;
@@ -544,6 +553,8 @@
     // init
     if (getGame().hearts <= 0) {
       document.getElementById('heartsModal').classList.add('open');
+      const hm = document.getElementById('heartModalIcon');
+      if (hm) hm.innerHTML = icon('heartEmpty');
     }
     renderQuestion();
   </script>
