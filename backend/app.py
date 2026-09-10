@@ -260,6 +260,19 @@ def assets(filename):
 def js_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'js'), filename)
 
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory(BASE_DIR, 'manifest.json')
+
+
+@app.route('/sw.js')
+def service_worker():
+    response = send_from_directory(BASE_DIR, 'sw.js')
+    response.headers['Service-Worker-Allowed'] = '/'
+    response.headers['Cache-Control'] = 'no-cache'
+    return response
+
 # ───────────────────────────── Start ─────────────────────────────
 
 try:

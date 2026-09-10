@@ -4,8 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BilimSari — Bilim sari qadam</title>
-  <link rel="icon" type="image/png" href="assets/logo-icon-32.png">
-  <link rel="apple-touch-icon" href="assets/logo-icon-64.png">
+  <meta name="theme-color" content="#e34c3e">
+  <meta name="description" content="O‘zbek tilida zamonaviy ta’lim platformasi">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BilimSari">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -410,7 +417,7 @@
         <h2>BilimSari ilovasi</h2>
         <p>Hoziroq o‘rnating va bepul o‘rganishni boshlang. Telefon yoki kompyuteringizga qo‘shib qo‘ying.</p>
       </div>
-      <button class="btn" onclick="installApp()">Ilovani yuklash</button>
+      <button class="btn install-cta-btn" onclick="installApp()">Ilovani yuklash</button>
     </div>
   </section>
 
@@ -548,21 +555,61 @@
       if (!wasOpen) item.classList.add('open');
     }
 
+    // —— PWA / Ilova o‘rnatish ——
     let deferredPrompt = null;
+
+    function isIos() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+    function isInStandalone() {
+      return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+    }
+    function showInstallButtons() {
+      if (isInStandalone()) return;
+      document.querySelectorAll('#installBtn, .install-cta-btn').forEach(btn => {
+        if (btn) btn.style.display = 'inline-flex';
+      });
+    }
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      const btn = document.getElementById('installBtn');
-      if (btn) btn.style.display = 'inline-flex';
+      showInstallButtons();
     });
+
+    // iOS da beforeinstallprompt yo‘q — tugmalarni baribir ko‘rsatamiz
+    if (isIos() && !isInStandalone()) {
+      showInstallButtons();
+    }
+    // Desktop / Android uchun ham biroz kechiktirib tekshiramiz
+    setTimeout(showInstallButtons, 1500);
 
     function installApp() {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-      } else {
-        alert('Ilovani o‘rnatish uchun brauzeringiz menyusidan “Add to Home Screen” / “Uy ekraniga qo‘shish” ni tanlang.');
+        deferredPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            deferredPrompt = null;
+            document.querySelectorAll('#installBtn, .install-cta-btn').forEach(b => {
+              if (b) b.style.display = 'none';
+            });
+          }
+        });
+        return;
       }
+      if (isIos()) {
+        alert('iPhone/iPad da o‘rnatish:\n\n1. Pastdagi Share (Ulashish) tugmasini bosing\n2. “Add to Home Screen” / “Uy ekraniga qo‘shish” ni tanlang\n3. “Add” / “Qo‘shish” ni bosing');
+        return;
+      }
+      alert('Ilovani o‘rnatish:\n\n• Chrome / Edge: brauzer menyusidan “Install app” / “Ilovani o‘rnatish”\n• Yoki manzil satridagi o‘rnatish belgisini bosing');
+    }
+
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
     }
 
     function toggleMenu() {
