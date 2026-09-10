@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BilimSari — O‘rganish</title>
-  <meta name="theme-color" content="#e34c3e">
+  <title>O‘rganish — BilimSari</title>
+  <meta name="theme-color" content="#58A700">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="assets/icon-192.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -12,714 +12,308 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: #f7f7f7;
-      color: #111;
+      background: #f2f2f2;
+      color: #3c3c3c;
       min-height: 100vh;
+      padding-bottom: 80px;
     }
     a { text-decoration: none; color: inherit; }
 
-    /* Top bar */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
+    /* Stats bar */
+    .stats-bar {
+      position: sticky; top: 0; z-index: 40;
       background: #fff;
       border-bottom: 2px solid #e5e5e5;
-      padding: 12px 20px;
+      padding: 10px 12px;
     }
-    .topbar-inner {
-      max-width: 720px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .stats-inner {
+      max-width: 720px; margin: 0 auto;
+      display: flex; justify-content: space-around; align-items: center; gap: 8px;
     }
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .stat-item {
+      display: flex; align-items: center; gap: 6px;
+      font-weight: 800; font-size: 15px;
+      background: none; border: none; cursor: pointer;
+      padding: 6px 10px; border-radius: 10px;
     }
-    .back-btn {
-      width: 40px; height: 40px;
-      border-radius: 12px;
-      border: 2px solid #e5e5e5;
-      background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-    }
-    .back-btn:hover { background: #f5f5f5; }
-    .subject-title {
-      font-size: 18px;
-      font-weight: 800;
-    }
-    .xp-badge {
-      background: #fff5f4;
-      color: #e34c3e;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 2px solid #ffd4cf;
-    }
+    .stat-item:hover { background: #f5f5f5; }
+    .stat-item .ico { font-size: 18px; }
 
-    /* Subjects grid */
-    .view { display: none; max-width: 720px; margin: 0 auto; padding: 24px 16px 80px; }
-    .view.active { display: block; }
+    .wrap { max-width: 560px; margin: 0 auto; padding: 20px 16px; }
 
-    .page-title {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 6px;
+    .course-pick {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
     }
-    .page-sub {
-      color: #666;
-      font-size: 15px;
-      margin-bottom: 28px;
-    }
-
-    .subjects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    @media (min-width: 600px) {
-      .subjects-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    .subject-card {
-      background: #fff;
-      border: 2px solid #e5e5e5;
-      border-radius: 20px;
-      padding: 22px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: .2s;
-    }
-    .subject-card:hover {
-      border-color: #e34c3e;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(227,76,62,.12);
-    }
-    .subject-card .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-    .subject-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .subject-card .progress {
-      font-size: 12px;
-      color: #888;
-    }
-    .subject-card .bar {
-      height: 6px;
-      background: #eee;
-      border-radius: 99px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-    .subject-card .bar span {
-      display: block;
-      height: 100%;
-      background: #e34c3e;
-      border-radius: 99px;
-    }
-
-    /* Path */
-    .unit-header {
-      background: #fff;
-      border: 2px solid #e5e5e5;
-      border-radius: 16px;
-      padding: 16px 18px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .unit-header h2 {
-      font-size: 18px;
-      font-weight: 800;
-    }
-    .unit-header p {
-      font-size: 13px;
-      color: #666;
-      margin-top: 2px;
-    }
-    .unit-guide {
-      background: #e34c3e;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
+    .course-chip {
+      flex-shrink: 0;
       padding: 10px 16px;
-      font-weight: 700;
-      font-size: 13px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .unit-guide:hover { background: #c93d30; }
-
-    .path {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      padding: 10px 0 40px;
-      position: relative;
-    }
-    .path-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    .path-node + .path-node::before {
-      content: '';
-      position: absolute;
-      top: -28px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 6px;
-      height: 28px;
-      background: #e5e5e5;
-      border-radius: 4px;
-      z-index: 0;
-    }
-    .path-node.done + .path-node::before,
-    .path-node.done::after {
-      background: #e34c3e;
-    }
-    .node-btn {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 4px solid #e5e5e5;
+      border-radius: 14px;
+      border: 2px solid #e5e5e5;
       background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
+      font-weight: 700;
+      font-size: 14px;
       cursor: pointer;
-      transition: .2s;
-      box-shadow: 0 4px 0 #d0d0d0;
-      position: relative;
+      display: flex; align-items: center; gap: 8px;
     }
-    .node-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #d0d0d0; }
-    .path-node.locked .node-btn {
-      background: #e8e8e8;
-      border-color: #d0d0d0;
-      box-shadow: 0 4px 0 #c0c0c0;
-      cursor: not-allowed;
-      filter: grayscale(1);
-      opacity: .7;
+    .course-chip.active {
+      border-color: #58A700;
+      background: #d7ffb8;
+      color: #3c3c3c;
     }
-    .path-node.current .node-btn {
-      border-color: #e34c3e;
-      background: #e34c3e;
-      color: #fff;
-      box-shadow: 0 4px 0 #c93d30;
-      animation: pulse 1.6s ease infinite;
+
+    .unit-card {
+      background: #fff;
+      border: 2px solid #e5e5e5;
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
     }
-    .path-node.done .node-btn {
-      border-color: #e34c3e;
-      background: #fff5f4;
-      box-shadow: 0 4px 0 #ffb5ad;
+    .unit-card h2 { font-size: 18px; font-weight: 800; }
+    .unit-card p { font-size: 13px; color: #777; margin-top: 2px; }
+    .unit-guide {
+      background: #58A700; color: #fff; border: none;
+      border-radius: 12px; padding: 10px 14px;
+      font-weight: 800; font-size: 13px; cursor: pointer;
+      box-shadow: 0 3px 0 #3f7d00; white-space: nowrap;
+    }
+
+    .path { display: flex; flex-direction: column; align-items: center; padding: 8px 0 40px; }
+    .node {
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .node + .node::before {
+      content: ''; position: absolute; top: -22px; left: 50%;
+      transform: translateX(-50%); width: 6px; height: 22px;
+      background: #e5e5e5; border-radius: 4px;
+    }
+    .node.done + .node::before { background: #58A700; }
+
+    .node-btn {
+      width: 68px; height: 68px; border-radius: 50%;
+      border: 4px solid #e5e5e5; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; cursor: pointer;
+      box-shadow: 0 5px 0 #d0d0d0;
+      transition: transform .1s;
+    }
+    .node-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #d0d0d0; }
+    .node.locked .node-btn {
+      background: #e8e8e8; border-color: #d4d4d4; box-shadow: 0 5px 0 #c8c8c8;
+      filter: grayscale(1); opacity: .75; cursor: not-allowed;
+    }
+    .node.current .node-btn {
+      border-color: #58A700; background: #58A700; color: #fff;
+      box-shadow: 0 5px 0 #3f7d00;
+      animation: pulse 1.5s ease infinite;
+    }
+    .node.done .node-btn {
+      border-color: #58A700; background: #d7ffb8; box-shadow: 0 5px 0 #a6e06c;
+    }
+    .node.legendary .node-btn {
+      border-color: #FFC800; background: #fff4cc; box-shadow: 0 5px 0 #e6b000;
     }
     .node-label {
-      margin-top: 10px;
-      margin-bottom: 22px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      text-align: center;
-      max-width: 120px;
+      margin-top: 8px; margin-bottom: 18px;
+      font-size: 13px; font-weight: 700; color: #777; text-align: center; max-width: 110px;
     }
-    .path-node.locked .node-label { color: #aaa; }
-    .path-node.current .node-label { color: #e34c3e; font-weight: 800; }
+    .node.current .node-label { color: #58A700; font-weight: 800; }
+    .node:nth-child(odd) { margin-right: 70px; }
+    .node:nth-child(even) { margin-left: 70px; }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-    }
-
-    /* Zigzag offset */
-    .path-node:nth-child(odd) { margin-right: 80px; }
-    .path-node:nth-child(even) { margin-left: 80px; }
-
-    /* Quiz modal */
-    .quiz-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    .quiz-overlay.open { display: flex; }
-    .quiz-card {
-      background: #fff;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 480px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 28px 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.2);
-    }
-    .quiz-progress {
-      height: 10px;
-      background: #eee;
-      border-radius: 99px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    .quiz-progress span {
-      display: block;
-      height: 100%;
-      background: #e34c3e;
-      border-radius: 99px;
-      transition: width .3s;
-    }
-    .quiz-q {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      line-height: 1.35;
-    }
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .quiz-opt {
-      text-align: left;
-      padding: 14px 16px;
-      border: 2px solid #e5e5e5;
-      border-radius: 14px;
-      background: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: .15s;
-    }
-    .quiz-opt:hover { border-color: #e34c3e; background: #fff5f4; }
-    .quiz-opt.correct {
-      border-color: #22c55e;
-      background: #f0fdf4;
-      color: #15803d;
-    }
-    .quiz-opt.wrong {
-      border-color: #ef4444;
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-    .quiz-opt:disabled { cursor: default; }
-    .quiz-footer {
-      margin-top: 22px;
-      display: flex;
-      gap: 10px;
-    }
-    .quiz-footer button {
-      flex: 1;
-      height: 48px;
-      border-radius: 14px;
-      border: none;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn-skip {
-      background: #f5f5f5;
-      color: #555;
-    }
-    .btn-next {
-      background: #e34c3e;
-      color: #fff;
-    }
-    .btn-next:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    .quiz-result {
-      text-align: center;
-      padding: 20px 0;
-    }
-    .quiz-result .big {
-      font-size: 56px;
-      margin-bottom: 12px;
-    }
-    .quiz-result h3 {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .quiz-result p {
-      color: #666;
-      margin-bottom: 24px;
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
     }
 
     /* Bottom nav */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #fff;
-      border-top: 2px solid #e5e5e5;
-      display: flex;
-      justify-content: center;
-      z-index: 40;
-      padding: 6px 0 env(safe-area-inset-bottom);
+    .bnav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 2px solid #e5e5e5;
+      display: flex; justify-content: center; z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
     }
-    .bottom-nav-inner {
-      max-width: 480px;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
+    .bnav-inner {
+      max-width: 480px; width: 100%;
+      display: flex; justify-content: space-around;
     }
-    .bnav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      padding: 8px 16px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #999;
-      cursor: pointer;
-      background: none;
-      border: none;
+    .bnav a {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 2px; padding: 10px 8px; font-size: 11px; font-weight: 700; color: #afafaf;
     }
-    .bnav-item.active { color: #e34c3e; }
-    .bnav-item span { font-size: 22px; }
+    .bnav a.active { color: #58A700; }
+    .bnav a span { font-size: 22px; }
+
+    /* Modal */
+    .modal-bg {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+      z-index: 80; align-items: flex-end; justify-content: center;
+    }
+    .modal-bg.open { display: flex; }
+    .sheet {
+      background: #fff; border-radius: 20px 20px 0 0; padding: 24px 20px 32px;
+      width: 100%; max-width: 480px;
+    }
+    .sheet h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .sheet p { color: #777; font-size: 14px; margin-bottom: 16px; line-height: 1.45; }
+    .sheet .goals { display: flex; flex-direction: column; gap: 8px; }
+    .sheet .goal {
+      padding: 14px; border: 2px solid #e5e5e5; border-radius: 12px;
+      font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;
+    }
+    .sheet .goal.active { border-color: #58A700; background: #d7ffb8; }
+    .daily-bar {
+      height: 12px; background: #e5e5e5; border-radius: 99px; overflow: hidden; margin: 12px 0;
+    }
+    .daily-bar span { display: block; height: 100%; background: #58A700; border-radius: 99px; }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="topbar-left">
-        <button class="back-btn" id="backBtn" style="display:none;" onclick="showSubjects()">←</button>
-        <div class="subject-title" id="topTitle">Fanlar</div>
-      </div>
-      <div class="xp-badge" id="xpBadge">⚡ 0 XP</div>
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <button class="stat-item" onclick="openStat('streak')"><span class="ico">🔥</span><span id="sStreak">0</span></button>
+      <button class="stat-item" onclick="openStat('xp')"><span class="ico">⚡</span><span id="sXp">0</span></button>
+      <button class="stat-item" onclick="openStat('hearts')"><span class="ico">❤️</span><span id="sHearts">5</span></button>
+      <button class="stat-item" onclick="openStat('gems')"><span class="ico">💎</span><span id="sGems">0</span></button>
     </div>
   </div>
 
-  <!-- SUBJECTS -->
-  <div class="view active" id="subjectsView">
-    <h1 class="page-title">Nimani o‘rganamiz?</h1>
-    <p class="page-sub">Fan tanlang va level path bo‘ylab boshlang</p>
-    <div class="subjects-grid" id="subjectsGrid"></div>
-  </div>
-
-  <!-- PATH -->
-  <div class="view" id="pathView">
-    <div class="unit-header">
+  <div class="wrap">
+    <div class="course-pick" id="coursePick"></div>
+    <div class="unit-card">
       <div>
-        <h2 id="unitTitle">1-bo‘lim</h2>
-        <p id="unitDesc">Asoslarni o‘rganing</p>
+        <h2 id="unitTitle">Bo‘lim</h2>
+        <p id="unitDesc">—</p>
       </div>
-      <button class="unit-guide" onclick="alert('AI yordamchi tez orada ulanadi 🤖')">AI yordam</button>
+      <button class="unit-guide" onclick="location.href='review.html'">Takrorlash</button>
     </div>
     <div class="path" id="path"></div>
   </div>
 
-  <!-- QUIZ OVERLAY -->
-  <div class="quiz-overlay" id="quizOverlay">
-    <div class="quiz-card" id="quizCard"></div>
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-inner">
-      <button class="bnav-item active" onclick="location.href='learn.html'">
-        <span>🏠</span> O‘rganish
-      </button>
-      <button class="bnav-item" onclick="location.href='index.html'">
-        <span>📰</span> Asosiy
-      </button>
-      <button class="bnav-item" onclick="location.href='dashboard.html'">
-        <span>👤</span> Kabinet
-      </button>
+  <nav class="bnav">
+    <div class="bnav-inner">
+      <a href="learn.html" class="active"><span>🏠</span>O‘rganish</a>
+      <a href="courses.html"><span>📚</span>Kurslar</a>
+      <a href="leaderboard.html"><span>🏆</span>Reyting</a>
+      <a href="review.html"><span>🔄</span>Takrorlash</a>
+      <a href="profile.html"><span>👤</span>Profil</a>
     </div>
   </nav>
 
+  <div class="modal-bg" id="statModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="sheet" id="statSheet"></div>
+  </div>
+
   <script src="js/auth.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/data.js"></script>
   <script>
     requireAuth();
 
-    // —— Data ——
-    const SUBJECTS = [
-      { id: 'math', icon: '📐', name: 'Matematika', color: '#e34c3e' },
-      { id: 'english', icon: '🇬🇧', name: 'Ingliz tili', color: '#3b82f6' },
-      { id: 'physics', icon: '⚛️', name: 'Fizika', color: '#8b5cf6' },
-      { id: 'history', icon: '📜', name: 'Tarix', color: '#f59e0b' },
-      { id: 'biology', icon: '🧬', name: 'Biologiya', color: '#22c55e' },
-      { id: 'chemistry', icon: '🧪', name: 'Kimyo', color: '#06b6d4' },
-      { id: 'it', icon: '💻', name: 'Informatika', color: '#6366f1' },
-      { id: 'literature', icon: '📖', name: 'Adabiyot', color: '#ec4899' },
-    ];
+    let courseId = new URLSearchParams(location.search).get('course') || localStorage.getItem('bs_current_course') || COURSES[0].id;
+    localStorage.setItem('bs_current_course', courseId);
 
-    const LEVELS = {
-      math: [
-        { id: 1, icon: '⭐', title: 'Sonlar', type: 'lesson' },
-        { id: 2, icon: '⭐', title: 'Qo‘shish', type: 'lesson' },
-        { id: 3, icon: '🏋️', title: 'Mashq', type: 'practice' },
-        { id: 4, icon: '⭐', title: 'Ayirish', type: 'lesson' },
-        { id: 5, icon: '⭐', title: 'Ko‘paytirish', type: 'lesson' },
-        { id: 6, icon: '🏆', title: 'Test', type: 'review' },
-        { id: 7, icon: '⭐', title: 'Bo‘lish', type: 'lesson' },
-        { id: 8, icon: '⭐', title: 'Kasrlar', type: 'lesson' },
-        { id: 9, icon: '🏋️', title: 'Mashq', type: 'practice' },
-        { id: 10, icon: '🏆', title: 'Yakuniy', type: 'review' },
-      ],
-      english: [
-        { id: 1, icon: '⭐', title: 'Salomlashish', type: 'lesson' },
-        { id: 2, icon: '⭐', title: 'Oila', type: 'lesson' },
-        { id: 3, icon: '🏋️', title: 'Mashq', type: 'practice' },
-        { id: 4, icon: '⭐', title: 'Raqamlar', type: 'lesson' },
-        { id: 5, icon: '⭐', title: 'Ranglar', type: 'lesson' },
-        { id: 6, icon: '🏆', title: 'Test', type: 'review' },
-        { id: 7, icon: '⭐', title: 'Ovqat', type: 'lesson' },
-        { id: 8, icon: '⭐', title: 'Hayvonlar', type: 'lesson' },
-        { id: 9, icon: '🏋️', title: 'Mashq', type: 'practice' },
-        { id: 10, icon: '🏆', title: 'Yakuniy', type: 'review' },
-      ],
-    };
-
-    // Default path for subjects without custom levels
-    function defaultLevels(name) {
-      return [
-        { id: 1, icon: '⭐', title: 'Asoslar 1', type: 'lesson' },
-        { id: 2, icon: '⭐', title: 'Asoslar 2', type: 'lesson' },
-        { id: 3, icon: '🏋️', title: 'Mashq', type: 'practice' },
-        { id: 4, icon: '⭐', title: 'Mavzu 1', type: 'lesson' },
-        { id: 5, icon: '⭐', title: 'Mavzu 2', type: 'lesson' },
-        { id: 6, icon: '🏆', title: 'Test', type: 'review' },
-        { id: 7, icon: '⭐', title: 'Mavzu 3', type: 'lesson' },
-        { id: 8, icon: '⭐', title: 'Mavzu 4', type: 'lesson' },
-        { id: 9, icon: '🏋️', title: 'Mashq', type: 'practice' },
-        { id: 10, icon: '🏆', title: 'Yakuniy', type: 'review' },
-      ];
+    function refreshStats() {
+      const g = getGame();
+      document.getElementById('sStreak').textContent = g.streak;
+      document.getElementById('sXp').textContent = g.xp;
+      document.getElementById('sHearts').textContent = g.hearts;
+      document.getElementById('sGems').textContent = g.gems;
     }
 
-    // Sample quizzes per subject (demo)
-    const QUIZZES = {
-      math: [
-        { q: '2 + 3 = ?', options: ['4', '5', '6', '3'], answer: 1 },
-        { q: '10 − 4 = ?', options: ['5', '6', '7', '8'], answer: 1 },
-        { q: '3 × 4 = ?', options: ['10', '11', '12', '14'], answer: 2 },
-        { q: '15 ÷ 3 = ?', options: ['3', '4', '5', '6'], answer: 2 },
-        { q: '7 + 8 = ?', options: ['14', '15', '16', '13'], answer: 1 },
-      ],
-      english: [
-        { q: '“Hello” o‘zbekcha?', options: ['Xayr', 'Salom', 'Rahmat', 'Ha'], answer: 1 },
-        { q: '“Thank you” = ?', options: ['Kechirasiz', 'Rahmat', 'Iltimos', 'Salom'], answer: 1 },
-        { q: '“Cat” = ?', options: ['It', 'Mushuk', 'Qush', 'Ot'], answer: 1 },
-        { q: '“One, two, three” = ?', options: ['Bir, ikki, uch', 'Qizil, ko‘k', 'Ona, ota', 'Kun, tun'], answer: 0 },
-        { q: '“Good morning” = ?', options: ['Xayrli kech', 'Xayrli tong', 'Xayrli tun', 'Salom'], answer: 1 },
-      ],
-    };
-
-    function defaultQuiz(subjectName) {
-      return [
-        { q: `${subjectName}: 1-savol (demo)`, options: ['A', 'B', 'C', 'D'], answer: 0 },
-        { q: `${subjectName}: 2-savol (demo)`, options: ['A', 'B', 'C', 'D'], answer: 1 },
-        { q: `${subjectName}: 3-savol (demo)`, options: ['A', 'B', 'C', 'D'], answer: 2 },
-        { q: `${subjectName}: 4-savol (demo)`, options: ['A', 'B', 'C', 'D'], answer: 0 },
-        { q: `${subjectName}: 5-savol (demo)`, options: ['A', 'B', 'C', 'D'], answer: 1 },
-      ];
-    }
-
-    // Progress in localStorage
-    function progressKey(subjectId) {
-      return 'bilimsari_progress_' + subjectId;
-    }
-    function getProgress(subjectId) {
-      try {
-        return JSON.parse(localStorage.getItem(progressKey(subjectId))) || { completed: [], xp: 0 };
-      } catch { return { completed: [], xp: 0 }; }
-    }
-    function saveProgress(subjectId, data) {
-      localStorage.setItem(progressKey(subjectId), JSON.stringify(data));
-    }
-    function totalXp() {
-      return SUBJECTS.reduce((sum, s) => sum + (getProgress(s.id).xp || 0), 0);
-    }
-
-    let currentSubject = null;
-    let quizState = null;
-
-    // —— Render subjects ——
-    function renderSubjects() {
-      document.getElementById('xpBadge').textContent = '⚡ ' + totalXp() + ' XP';
-      const grid = document.getElementById('subjectsGrid');
-      grid.innerHTML = '';
-      SUBJECTS.forEach(s => {
-        const prog = getProgress(s.id);
-        const levels = LEVELS[s.id] || defaultLevels(s.name);
-        const done = prog.completed.length;
-        const pct = Math.round((done / levels.length) * 100);
-        const card = document.createElement('div');
-        card.className = 'subject-card';
-        card.onclick = () => openSubject(s);
-        card.innerHTML = `
-          <div class="icon">${s.icon}</div>
-          <h3>${s.name}</h3>
-          <div class="progress">${done}/${levels.length} level</div>
-          <div class="bar"><span style="width:${pct}%"></span></div>
-        `;
-        grid.appendChild(card);
+    function renderChips() {
+      const el = document.getElementById('coursePick');
+      el.innerHTML = '';
+      COURSES.forEach(c => {
+        const chip = document.createElement('button');
+        chip.className = 'course-chip' + (c.id === courseId ? ' active' : '');
+        chip.innerHTML = c.icon + ' ' + c.name;
+        chip.onclick = () => {
+          courseId = c.id;
+          localStorage.setItem('bs_current_course', courseId);
+          history.replaceState(null, '', 'learn.html?course=' + c.id);
+          renderChips();
+          renderPath();
+        };
+        el.appendChild(chip);
       });
     }
 
-    function showSubjects() {
-      currentSubject = null;
-      document.getElementById('subjectsView').classList.add('active');
-      document.getElementById('pathView').classList.remove('active');
-      document.getElementById('backBtn').style.display = 'none';
-      document.getElementById('topTitle').textContent = 'Fanlar';
-      renderSubjects();
-    }
-
-    function openSubject(s) {
-      currentSubject = s;
-      document.getElementById('subjectsView').classList.remove('active');
-      document.getElementById('pathView').classList.add('active');
-      document.getElementById('backBtn').style.display = 'flex';
-      document.getElementById('topTitle').textContent = s.icon + ' ' + s.name;
-      document.getElementById('unitTitle').textContent = '1-bo‘lim · ' + s.name;
-      document.getElementById('unitDesc').textContent = 'Asosiy tushunchalar va mashqlar';
-      renderPath();
-    }
-
     function renderPath() {
-      const levels = LEVELS[currentSubject.id] || defaultLevels(currentSubject.name);
-      const prog = getProgress(currentSubject.id);
+      const course = getCourse(courseId);
+      if (!course) return;
+      const lessons = allLessons(course);
+      const unit = course.units[0];
+      document.getElementById('unitTitle').textContent = unit.title;
+      document.getElementById('unitDesc').textContent = unit.desc + ' · ' + courseProgress(courseId, lessons.length).pct + '%';
+
       const path = document.getElementById('path');
       path.innerHTML = '';
-
-      levels.forEach((lvl, idx) => {
-        const done = prog.completed.includes(lvl.id);
-        const prevDone = idx === 0 || prog.completed.includes(levels[idx - 1].id);
+      lessons.forEach((lvl, idx) => {
+        const done = isLessonDone(courseId, lvl.id);
+        const prevDone = idx === 0 || isLessonDone(courseId, lessons[idx - 1].id);
         const locked = !done && !prevDone;
         const current = !done && prevDone;
+        const legendary = done && lvl.type === 'review';
 
         const node = document.createElement('div');
-        node.className = 'path-node' + (done ? ' done' : current ? ' current' : locked ? ' locked' : '');
+        node.className = 'node' + (done ? (legendary ? ' legendary done' : ' done') : current ? ' current' : locked ? ' locked' : '');
         node.innerHTML = `
-          <button class="node-btn" ${locked ? 'disabled' : ''}>${done ? '✓' : lvl.icon}</button>
+          <button class="node-btn">${done ? '✓' : locked ? '🔒' : lvl.icon}</button>
           <div class="node-label">${lvl.title}</div>
         `;
         if (!locked) {
-          node.querySelector('.node-btn').onclick = () => startQuiz(lvl);
+          node.querySelector('.node-btn').onclick = () => {
+            if (getGame().hearts <= 0) {
+              openStat('hearts');
+              return;
+            }
+            location.href = `lesson.html?course=${courseId}&lesson=${lvl.id}`;
+          };
         }
         path.appendChild(node);
       });
     }
 
-    // —— Quiz ——
-    function startQuiz(lvl) {
-      const questions = QUIZZES[currentSubject.id] || defaultQuiz(currentSubject.name);
-      quizState = {
-        level: lvl,
-        questions: questions.slice(0, 5),
-        index: 0,
-        correct: 0,
-        answered: false,
-      };
-      document.getElementById('quizOverlay').classList.add('open');
-      renderQuizStep();
-    }
-
-    function renderQuizStep() {
-      const st = quizState;
-      const card = document.getElementById('quizCard');
-
-      if (st.index >= st.questions.length) {
-        // Result
-        const xpGain = st.correct * 10;
-        const prog = getProgress(currentSubject.id);
-        if (!prog.completed.includes(st.level.id)) {
-          prog.completed.push(st.level.id);
-        }
-        prog.xp = (prog.xp || 0) + xpGain;
-        saveProgress(currentSubject.id, prog);
-        document.getElementById('xpBadge').textContent = '⚡ ' + totalXp() + ' XP';
-
-        const passed = st.correct >= Math.ceil(st.questions.length * 0.6);
-        card.innerHTML = `
-          <div class="quiz-result">
-            <div class="big">${passed ? '🎉' : '💪'}</div>
-            <h3>${passed ? 'Ajoyib!' : 'Yana urinib ko‘ring'}</h3>
-            <p>${st.correct}/${st.questions.length} to‘g‘ri · +${xpGain} XP</p>
-            <button class="btn-next" style="width:100%;height:48px;border:none;border-radius:14px;background:#e34c3e;color:#fff;font-weight:700;font-size:15px;cursor:pointer;" onclick="closeQuiz()">Davom etish</button>
-          </div>
-        `;
-        return;
-      }
-
-      const q = st.questions[st.index];
-      const pct = Math.round((st.index / st.questions.length) * 100);
-      card.innerHTML = `
-        <div class="quiz-progress"><span style="width:${pct}%"></span></div>
-        <div style="font-size:13px;color:#888;margin-bottom:8px;font-weight:600;">
-          ${st.level.title} · ${st.index + 1}/${st.questions.length}
-        </div>
-        <div class="quiz-q">${q.q}</div>
-        <div class="quiz-options" id="opts"></div>
-        <div class="quiz-footer">
-          <button class="btn-skip" onclick="closeQuiz()">Chiqish</button>
-          <button class="btn-next" id="nextBtn" disabled onclick="nextQuestion()">Keyingi</button>
-        </div>
-      `;
-      const opts = document.getElementById('opts');
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-opt';
-        btn.textContent = opt;
-        btn.onclick = () => selectAnswer(i, btn);
-        opts.appendChild(btn);
-      });
-      st.answered = false;
-    }
-
-    function selectAnswer(i, btn) {
-      if (quizState.answered) return;
-      quizState.answered = true;
-      const q = quizState.questions[quizState.index];
-      const all = document.querySelectorAll('.quiz-opt');
-      all.forEach((b, idx) => {
-        b.disabled = true;
-        if (idx === q.answer) b.classList.add('correct');
-      });
-      if (i === q.answer) {
-        quizState.correct++;
-        btn.classList.add('correct');
+    function openStat(type) {
+      const g = getGame();
+      const sheet = document.getElementById('statSheet');
+      const goalPct = Math.min(100, Math.round((g.dailyXp / g.dailyGoal) * 100));
+      if (type === 'streak') {
+        sheet.innerHTML = `<h3>🔥 ${g.streak} kunlik streak</h3>
+          <p>Har kuni kamida bitta dars bajaring — streak saqlanadi. Bugun ${g.lastActiveDate === new Date().toISOString().slice(0,10) ? 'bajarilgan ✅' : 'hali bajarilmagan ⚠️'}.</p>`;
+      } else if (type === 'xp') {
+        sheet.innerHTML = `<h3>⚡ ${g.xp} XP</h3>
+          <p>Daraja: ${levelFromXp(g.xp)}. Kunlik maqsad: ${g.dailyXp}/${g.dailyGoal} XP</p>
+          <div class="daily-bar"><span style="width:${goalPct}%"></span></div>
+          <p>${goalPct >= 100 ? 'Bugungi maqsad bajarildi! 🎉' : 'Yana ' + (g.dailyGoal - g.dailyXp) + ' XP qoldi'}</p>
+          <div class="goals">
+            <div class="goal ${g.dailyGoal===10?'active':''}" onclick="setGoal(10)">🟢 Oson — 10 XP</div>
+            <div class="goal ${g.dailyGoal===20?'active':''}" onclick="setGoal(20)">🟡 Oddiy — 20 XP</div>
+            <div class="goal ${g.dailyGoal===30?'active':''}" onclick="setGoal(30)">🔴 Jiddiy — 30 XP</div>
+          </div>`;
+      } else if (type === 'hearts') {
+        sheet.innerHTML = `<h3>❤️ ${g.hearts}/5 yurak</h3>
+          <p>Noto‘g‘ri javobda yurak kamayadi. 0 bo‘lsa darsni davom ettirish qiyinlashadi.</p>
+          <button class="unit-guide" style="width:100%;margin-top:8px;" onclick="location.href='review.html'">Takrorlash orqali tiklash</button>`;
       } else {
-        btn.classList.add('wrong');
+        sheet.innerHTML = `<h3>💎 ${g.gems} olmos</h3>
+          <p>Yaxshi natijalar uchun olmos oling. Keyinchalik do‘kon va bonuslarda ishlatiladi.</p>`;
       }
-      document.getElementById('nextBtn').disabled = false;
+      document.getElementById('statModal').classList.add('open');
     }
 
-    function nextQuestion() {
-      quizState.index++;
-      renderQuizStep();
+    function setGoal(n) {
+      updateGame(s => { s.dailyGoal = n; });
+      openStat('xp');
+      refreshStats();
     }
 
-    function closeQuiz() {
-      document.getElementById('quizOverlay').classList.remove('open');
-      quizState = null;
-      if (currentSubject) renderPath();
-      else renderSubjects();
-    }
-
-    // Init
-    renderSubjects();
+    refreshStats();
+    renderChips();
+    renderPath();
   </script>
 </body>
 </html>

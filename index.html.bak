@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BilimSari — Bilim sari qadam</title>
+  <link rel="icon" type="image/png" href="assets/logo-icon-32.png">
+  <link rel="apple-touch-icon" href="assets/logo-icon-64.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: #111;
+      line-height: 1.5;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ========== HEADER ========== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: #444;
+      transition: color .2s;
+    }
+
+    .nav a:hover { color: #e34c3e; }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .2s ease;
+      border: none;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #111;
+    }
+
+    .btn-ghost:hover { background: #f5f5f5; }
+
+    .btn-primary {
+      background: #e34c3e;
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #c93d30; }
+
+    .btn-dark {
+      background: #171717;
+      color: #fff;
+    }
+
+    .btn-dark:hover { background: #000; }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .menu-toggle svg { width: 24px; height: 24px; }
+
+    /* ========== HERO ========== */
+    .hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 72px 24px 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff5f4;
+      color: #e34c3e;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.2px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span { color: #e34c3e; }
+
+    .hero p {
+      font-size: 17px;
+      color: #555;
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-visual {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+    }
+
+    .hero-visual img {
+      width: 180px;
+      height: auto;
+      opacity: 0.9;
+    }
+
+    /* ========== FEATURES ========== */
+    .features {
+      background: #fafafa;
+      border-top: 1px solid #f0f0f0;
+      border-bottom: 1px solid #f0f0f0;
+      padding: 72px 24px;
+    }
+
+    .features-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: .2s ease;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.05);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #fff5f4;
+      color: #e34c3e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    /* ========== CTA ========== */
+    .cta {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 28px;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      border-top: 1px solid #f0f0f0;
+      padding: 28px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo img {
+      height: 28px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* ========== MOBILE ========== */
+    @media (max-width: 860px) {
+      .nav { display: none; }
+
+      .menu-toggle { display: block; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 48px 20px 56px;
+        gap: 36px;
+        text-align: center;
+      }
+
+      .hero h1 { font-size: 36px; }
+
+      .hero p { margin-left: auto; margin-right: auto; }
+
+      .hero-actions { justify-content: center; }
+
+      .hero-visual { min-height: 220px; padding: 28px; }
+
+      .hero-visual img { width: 130px; }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+
+      .section-title h2,
+      .cta h2 { font-size: 26px; }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner { padding: 12px 16px; }
+      .logo img { height: 30px; }
+      .hero h1 { font-size: 30px; }
+      .btn { height: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo-full.png" alt="BilimSari">
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Bosh sahifa</a>
+        <a href="#features">Imkoniyatlar</a>
+        <a href="#cta">Kurslar</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Kirish</a>
+        <a href="register.html" class="btn btn-primary">Ro‘yxatdan o‘tish</a>
+        <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>📚</span> O‘zbek tilida bilim platformasi
+      </div>
+      <h1>Bilim sari<br><span>birga yuraylik</span></h1>
+      <p>
+        BilimSari — o‘quvchilar va o‘qituvchilar uchun zamonaviy ta’lim platformasi.
+        Kurslar, testlar va bilimlarni bir joyda to‘plang.
+      </p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-primary">Boshlash</a>
+        <a href="#features" class="btn btn-dark">Ko‘proq bilish</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="assets/logo-icon.png" alt="BilimSari kitob">
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-inner">
+      <div class="section-title">
+        <h2>Nima uchun BilimSari?</h2>
+        <p>Oddiy, qulay va samarali ta’lim tajribasi</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>Kurslar va darslar</h3>
+          <p>Turli fanlar bo‘yicha tuzilgan kurslar. Har bir dars aniq va tushunarli.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">✅</div>
+          <h3>Testlar va mashqlar</h3>
+          <p>O‘zlashtirgan bilimingizni darhol tekshiring. Natijalar saqlanadi.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👨‍🏫</div>
+          <h3>O‘qituvchilar uchun</h3>
+          <p>O‘z kurslaringizni yarating, o‘quvchilarni kuzating va baho bering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta">
+    <h2>Hozirroq boshlang</h2>
+    <p>Hisob yarating va bilim olishni bugundan boshlang</p>
+    <a href="register.html" class="btn btn-primary" style="height:48px; padding:0 28px; font-size:15px;">
+      Ro‘yxatdan o‘tish
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <img src="assets/logo-full.png" alt="BilimSari">
+      </a>
+      <div class="footer-copy">© 2026 BilimSari. Barcha huquqlar himoyalangan.</div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // Login qilmagan foydalanuvchini login sahifasiga yuborish
+    requireAuth();
+
+    function toggleMenu() {
+      // Hozircha oddiy — keyinroq mobile menu qo‘shiladi
+      alert('Mobil menyu keyingi bosqichda qo‘shiladi');
+    }
+  </script>
+</body>
+</html>

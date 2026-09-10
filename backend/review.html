@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takrorlash — BilimSari</title>
+  <meta name="theme-color" content="#58A700">
+  <link rel="icon" type="image/png" href="assets/icon-192.png">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f2f2f2;color:#3c3c3c;padding-bottom:80px}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:560px;margin:0 auto;padding:24px 16px}
+    h1{font-size:28px;font-weight:800;margin-bottom:6px}
+    .sub{color:#777;margin-bottom:20px}
+    .card{background:#fff;border:2px solid #e5e5e5;border-radius:16px;padding:18px;margin-bottom:12px}
+    .card h3{font-size:16px;font-weight:800;margin-bottom:6px}
+    .card p{font-size:14px;color:#666;margin-bottom:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 18px;background:#58A700;color:#fff;border:none;border-radius:12px;font-weight:800;cursor:pointer;box-shadow:0 3px 0 #3f7d00}
+    .empty{text-align:center;padding:40px 20px;color:#999}
+    .bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e5e5e5;display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);z-index:50}
+    .bnav-inner{max-width:480px;width:100%;display:flex;justify-content:space-around}
+    .bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;font-size:11px;font-weight:700;color:#afafaf}
+    .bnav a.active{color:#58A700}
+    .bnav a span{font-size:22px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Takrorlash</h1>
+    <p class="sub">Xato qilgan savollar va mashq</p>
+    <div class="card">
+      <h3>❤️ Yurak tiklash</h3>
+      <p>Qisqa mashq qilib 1 ta yurak qaytarib oling.</p>
+      <button class="btn" onclick="heal()">Mashq qilish</button>
+    </div>
+    <div id="wrong"></div>
+  </div>
+  <nav class="bnav"><div class="bnav-inner">
+    <a href="learn.html"><span>🏠</span>O‘rganish</a>
+    <a href="courses.html"><span>📚</span>Kurslar</a>
+    <a href="leaderboard.html"><span>🏆</span>Reyting</a>
+    <a href="review.html" class="active"><span>🔄</span>Takrorlash</a>
+    <a href="profile.html"><span>👤</span>Profil</a>
+  </div></nav>
+  <script src="js/auth.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    requireAuth();
+    function heal() {
+      restoreHeart(1);
+      addXp(5);
+      alert('+1 ❤️ va +5 XP! Yuraklar: ' + getGame().hearts);
+    }
+    const g = getGame();
+    const box = document.getElementById('wrong');
+    if (!g.wrongQueue.length) {
+      box.innerHTML = '<div class="empty">Hozircha xato savollar yo‘q. Darslarni bajarib boring!</div>';
+    } else {
+      g.wrongQueue.slice(0, 20).forEach(w => {
+        const c = document.createElement('div');
+        c.className = 'card';
+        c.innerHTML = `<h3>${w.q || 'Savol'}</h3><p>To‘g‘ri javob: <b>${w.answer || '—'}</b></p>`;
+        box.appendChild(c);
+      });
+    }
+  </script>
+</body>
+</html>

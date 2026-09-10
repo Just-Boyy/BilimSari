@@ -261,6 +261,36 @@ def assets(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'assets'), filename)
 
 
+
+
+@app.route('/lesson.html')
+def lesson_page():
+    return send_from_directory(BASE_DIR, 'lesson.html')
+
+
+
+@app.route('/courses.html')
+def courses_page():
+    return send_from_directory(BASE_DIR, 'courses.html')
+
+
+
+@app.route('/profile.html')
+def profile_page():
+    return send_from_directory(BASE_DIR, 'profile.html')
+
+
+
+@app.route('/leaderboard.html')
+def leaderboard_page():
+    return send_from_directory(BASE_DIR, 'leaderboard.html')
+
+
+
+@app.route('/review.html')
+def review_page():
+    return send_from_directory(BASE_DIR, 'review.html')
+
 @app.route('/js/<path:filename>')
 def js_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'js'), filename)

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reyting — BilimSari</title>
+  <meta name="theme-color" content="#58A700">
+  <link rel="icon" type="image/png" href="assets/icon-192.png">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f2f2f2;color:#3c3c3c;padding-bottom:80px}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:560px;margin:0 auto;padding:24px 16px}
+    h1{font-size:28px;font-weight:800;margin-bottom:6px}
+    .sub{color:#777;margin-bottom:20px}
+    .row{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;font-weight:700}
+    .row.me{border-color:#58A700;background:#d7ffb8}
+    .rank{width:32px;text-align:center;font-size:18px}
+    .xp{margin-left:auto;color:#58A700}
+    .bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e5e5e5;display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);z-index:50}
+    .bnav-inner{max-width:480px;width:100%;display:flex;justify-content:space-around}
+    .bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;font-size:11px;font-weight:700;color:#afafaf}
+    .bnav a.active{color:#58A700}
+    .bnav a span{font-size:22px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Reyting</h1>
+    <p class="sub">XP bo‘yicha eng faol o‘quvchilar</p>
+    <div id="list"></div>
+  </div>
+  <nav class="bnav"><div class="bnav-inner">
+    <a href="learn.html"><span>🏠</span>O‘rganish</a>
+    <a href="courses.html"><span>📚</span>Kurslar</a>
+    <a href="leaderboard.html" class="active"><span>🏆</span>Reyting</a>
+    <a href="review.html"><span>🔄</span>Takrorlash</a>
+    <a href="profile.html"><span>👤</span>Profil</a>
+  </div></nav>
+  <script src="js/auth.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    requireAuth();
+    const session = getSession();
+    const myXp = getGame().xp;
+    const myName = (session && session.name) || 'Siz';
+    // Local board: user + demo peers
+    let board = [
+      { name: 'Ali', xp: 1240 },
+      { name: 'Hasan', xp: 1180 },
+      { name: 'Bek', xp: 1050 },
+      { name: 'Dilnoza', xp: 980 },
+      { name: 'Jasur', xp: 860 },
+      { name: myName, xp: myXp, me: true },
+    ];
+    board.sort((a,b) => b.xp - a.xp);
+    const medals = ['🥇','🥈','🥉'];
+    const list = document.getElementById('list');
+    board.forEach((u, i) => {
+      const row = document.createElement('div');
+      row.className = 'row' + (u.me ? ' me' : '');
+      row.innerHTML = `<div class="rank">${medals[i]||(i+1)}</div><div>${u.name}${u.me?' (siz)':''}</div><div class="xp">${u.xp} XP</div>`;
+      list.appendChild(row);
+    });
+  </script>
+</body>
+</html>
