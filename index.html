@@ -172,7 +172,10 @@
         <li><span class="num">2</span><span><b>Add to Home Screen</b> / <b>Uy ekraniga qo‘shish</b> ni tanlang</span></li>
         <li><span class="num">3</span><span><b>Add</b> / <b>Qo‘shish</b> ni bosing</span></li>
       </ol>
-      <p class="note">iPhone’da faqat <b>Safari</b> orqali ishlaydi. Android’da odatda avtomatik o‘rnatish oynasi chiqadi.</p>
+      <p class="note" id="installNote">
+      <span id="noteIos" style="display:none">iPhone’da faqat <b>Safari</b> orqali: Ulashish → Uy ekraniga qo‘shish.</span>
+      <span id="noteOther" style="display:none">Brauzer menyusidan <b>Install app</b> / <b>Ilovani o‘rnatish</b> ni bosing. Yoki manzil satridagi o‘rnatish belgisini bosing.</span>
+    </p>
       <button class="ok" onclick="closeModal()">Tushundim</button>
     </div>
   </div>
@@ -195,8 +198,13 @@
       deferredPrompt = e;
     });
 
+    function isIos() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
     function downloadApp() {
-      // Android / desktop Chrome
+      // 1) Android / Windows Chrome — bir tugmada o‘rnatish
       if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(function (r) {
@@ -204,23 +212,31 @@
         });
         return;
       }
-      // iOS: ulashish oynasini ochishga urinish
-      if (navigator.share) {
-        navigator.share({
-          title: 'BilimSari',
-          text: 'BilimSari ilovasini o‘rnating',
-          url: window.location.href
-        }).catch(function () {
-          openModal();
-        });
-        // Qo‘llanma ham ko‘rsatiladi
-        setTimeout(openModal, 500);
+
+      // 2) Faqat Apple qurilmalarda share + yo‘riqnoma
+      if (isIos()) {
+        if (navigator.share) {
+          navigator.share({
+            title: 'BilimSari',
+            text: 'BilimSari ilovasini o‘rnating',
+            url: window.location.href
+          }).catch(function () {});
+        }
+        openModal();
         return;
       }
+
+      // 3) Boshqa brauzerlar (Windows/Android, prompt yo‘q)
+      // Share ochilmasin — oddiy yo‘riqnoma
       openModal();
     }
 
     function openModal() {
+      var ios = isIos();
+      var ni = document.getElementById('noteIos');
+      var no = document.getElementById('noteOther');
+      if (ni) ni.style.display = ios ? 'inline' : 'none';
+      if (no) no.style.display = ios ? 'none' : 'inline';
       document.getElementById('modal').classList.add('open');
     }
     function closeModal() {
