@@ -89,6 +89,6 @@ function requireAuth() {
 
 function redirectIfLoggedIn() {
   if (isLoggedIn()) {
-    window.location.href = 'index.html';
+    window.location.href = 'learn.html';
   }
 }

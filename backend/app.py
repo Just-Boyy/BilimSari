@@ -251,6 +251,11 @@ def dashboard_page():
     return send_from_directory(BASE_DIR, 'dashboard.html')
 
 
+@app.route('/learn.html')
+def learn_page():
+    return send_from_directory(BASE_DIR, 'learn.html')
+
+
 @app.route('/assets/<path:filename>')
 def assets(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'assets'), filename)
