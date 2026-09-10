@@ -326,6 +326,48 @@
       .courses-grid { grid-template-columns: 1fr; }
       .hero-title h1 { font-size: 26px; }
     }
+  
+    .install-modal {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.45); align-items: flex-end; justify-content: center;
+    }
+    .install-modal.open { display: flex; }
+    .install-sheet {
+      background: #fff; width: 100%; max-width: 480px;
+      border-radius: 20px 20px 0 0; padding: 12px 20px 28px;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.15);
+    }
+    .install-handle {
+      width: 40px; height: 4px; background: #ddd; border-radius: 4px;
+      margin: 4px auto 16px;
+    }
+    .install-sheet h3 {
+      font-size: 20px; font-weight: 800; margin-bottom: 16px; text-align: center;
+    }
+    .install-steps {
+      list-style: none; padding: 0; margin: 0 0 16px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .install-steps li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 15px; line-height: 1.4; color: #333;
+    }
+    .install-steps small { display: block; color: #888; font-size: 12px; margin-top: 2px; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #58A700; color: #fff; font-weight: 800; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .install-note {
+      font-size: 13px; color: #888; background: #f5f5f5; padding: 12px;
+      border-radius: 12px; margin-bottom: 16px; line-height: 1.45;
+    }
+    .install-ok {
+      width: 100%; height: 50px; border: none; border-radius: 14px;
+      background: #58A700; color: #fff; font-weight: 800; font-size: 16px;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -343,7 +385,7 @@
         <a href="#savollar">Savollar</a>
       </nav>
       <div class="nav-actions">
-        <button class="btn btn-outline" id="installBtn" style="display:none;" onclick="installApp()">
+        <button class="btn btn-outline" id="installBtn" style="display:inline-flex;" onclick="installApp()">
           Ilovani yuklash
         </button>
         <a href="learn.html" class="btn btn-outline" style="display:inline-flex;">O‘rganish</a>
@@ -510,6 +552,31 @@
     <div class="footer-bottom">© 2026 BilimSari. Barcha huquqlar himoyalangan.</div>
   </footer>
 
+  
+  <div id="installModal" class="install-modal" onclick="if(event.target===this)closeInstallModal()">
+    <div class="install-sheet">
+      <div class="install-handle"></div>
+      <h3>Ilovani iPhone’ga o‘rnatish</h3>
+      <ol class="install-steps">
+        <li>
+          <span class="step-num">1</span>
+          <span>Safari pastidagi <b>Ulashish</b> tugmasini bosing
+          <small>(kvadrat va yuqoriga strelka belgisi)</small></span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span>Ro‘yxatdan <b>«Add to Home Screen»</b><br>yoki <b>«Uy ekraniga qo‘shish»</b> ni tanlang</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span>Yuqoridagi <b>Add</b> / <b>Qo‘shish</b> ni bosing</span>
+        </li>
+      </ol>
+      <p class="install-note">Muhim: faqat <b>Safari</b> da ishlaydi. Chrome orqali o‘rnatib bo‘lmaydi.</p>
+      <button type="button" class="install-ok" onclick="closeInstallModal()">Tushundim</button>
+    </div>
+  </div>
+
   <script src="js/auth.js"></script>
   <script>
     requireAuth();
@@ -579,7 +646,8 @@
     let deferredPrompt = null;
 
     function isIos() {
-      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+      return /iphone|ipad|ipod/i.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     }
     function isInStandalone() {
       return window.matchMedia('(display-mode: standalone)').matches
@@ -598,12 +666,8 @@
       showInstallButtons();
     });
 
-    // iOS da beforeinstallprompt yo‘q — tugmalarni baribir ko‘rsatamiz
-    if (isIos() && !isInStandalone()) {
-      showInstallButtons();
-    }
-    // Desktop / Android uchun ham biroz kechiktirib tekshiramiz
-    setTimeout(showInstallButtons, 1500);
+    if (isIos() && !isInStandalone()) showInstallButtons();
+    setTimeout(showInstallButtons, 800);
 
     function installApp() {
       if (deferredPrompt) {
@@ -618,11 +682,13 @@
         });
         return;
       }
-      if (isIos()) {
-        alert('iPhone/iPad da o‘rnatish:\n\n1. Pastdagi Share (Ulashish) tugmasini bosing\n2. “Add to Home Screen” / “Uy ekraniga qo‘shish” ni tanlang\n3. “Add” / “Qo‘shish” ni bosing');
-        return;
-      }
-      alert('Ilovani o‘rnatish:\n\n• Chrome / Edge: brauzer menyusidan “Install app” / “Ilovani o‘rnatish”\n• Yoki manzil satridagi o‘rnatish belgisini bosing');
+      // Show custom guide (iOS / fallback)
+      var m = document.getElementById('installModal');
+      if (m) m.classList.add('open');
+    }
+    function closeInstallModal() {
+      var m = document.getElementById('installModal');
+      if (m) m.classList.remove('open');
     }
 
     // Service Worker
