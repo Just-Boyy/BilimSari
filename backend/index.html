@@ -227,7 +227,7 @@
     }
 
     function downloadApp() {
-      // 1) Android / Windows Chrome — bir tugmada o‘rnatish
+      // Android / Windows / Chrome — faqat to‘g‘ridan-to‘g‘ri install
       if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(function (r) {
@@ -240,7 +240,7 @@
         return;
       }
 
-      // 2) Faqat Apple qurilmalarda share + yo‘riqnoma
+      // FAQAT Apple qurilmalarda yo‘riqnoma / share
       if (isIos()) {
         if (navigator.share) {
           navigator.share({
@@ -253,9 +253,28 @@
         return;
       }
 
-      // 3) Boshqa brauzerlar (Windows/Android, prompt yo‘q)
-      // Share ochilmasin — oddiy yo‘riqnoma
-      openModal();
+      // Apple emas, lekin install prompt hali yo‘q — biroz kutib qayta urinish
+      var btn = document.getElementById('dlBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Tayyorlanmoqda...';
+      }
+      var tries = 0;
+      var timer = setInterval(function () {
+        tries++;
+        if (deferredPrompt) {
+          clearInterval(timer);
+          if (btn) { btn.disabled = false; btn.textContent = 'Yuklab olish'; }
+          downloadApp();
+          return;
+        }
+        if (tries >= 8) {
+          clearInterval(timer);
+          if (btn) { btn.disabled = false; btn.textContent = 'Yuklab olish'; }
+          // Modal ochilmaydi — faqat qisqa xabar
+          alert('Brauzeringizda avtomatik o‘rnatish mavjud emas. Chrome yoki Edge orqali oching, yoki manzil satridagi o‘rnatish belgisini bosing.');
+        }
+      }, 400);
     }
 
     function openModal() {
