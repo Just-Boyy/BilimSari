@@ -7,6 +7,8 @@ from flask_cors import CORS
 import hashlib
 import secrets
 import os
+import json
+import urllib.request
 from datetime import datetime, timedelta
 from functools import wraps
 
@@ -14,6 +16,9 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 SECRET = os.environ.get('SECRET_KEY', 'bilimsari-dev-secret-change-me')
+BOT_TOKEN = os.environ.get('BOT_TOKEN', '8994766252:AAG_wqhRFHJNx447MmyqWAYsbzGD88kReVE')
+WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
+
 
 
 # ───────────────────────────── Database ─────────────────────────────
@@ -250,7 +255,7 @@ def telegram_auth():
 
     data = request.get_json(silent=True) or {}
     init_data = data.get('initData') or ''
-    bot_token = os.environ.get('BOT_TOKEN', '')
+    bot_token = BOT_TOKEN
 
     if not bot_token:
         return jsonify({'ok': False, 'error': 'BOT_TOKEN sozlanmagan'}), 500
@@ -427,12 +432,123 @@ def service_worker():
     response.headers['Cache-Control'] = 'no-cache'
     return response
 
+
+# ───────────────────────────── Telegram bot (webhook) ─────────────────────────────
+
+def tg_api(method, payload):
+    if not BOT_TOKEN:
+        return None
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/{method}'
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={'Content-Type': 'application/json'},
+        method='POST',
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            return json.loads(resp.read().decode('utf-8'))
+    except Exception as e:
+        print(f'Telegram API xato {method}: {e}')
+        return None
+
+
+def send_start_message(chat_id, first_name):
+    name = first_name or 'do‘st'
+    tg_api('sendMessage', {
+        'chat_id': chat_id,
+        'text': (
+            f'Salom, {name}!\n\n'
+            f'<b>BilimSari</b> — bilim olish platformasi.\n'
+            f'Kurslar, testlar, XP va streak — hammasi Telegram ichida.\n\n'
+            f'Pastdagi tugma orqali ilovani oching.'
+        ),
+        'parse_mode': 'HTML',
+        'reply_markup': {
+            'inline_keyboard': [[
+                {
+                    'text': 'Boshlash',
+                    'web_app': {'url': WEBAPP_URL},
+                }
+            ]]
+        },
+    })
+
+
+def send_help_message(chat_id):
+    tg_api('sendMessage', {
+        'chat_id': chat_id,
+        'text': (
+            'Buyruqlar:\n'
+            '/start — ilovani ochish\n'
+            '/help — yordam\n\n'
+            'O‘rganish uchun Boshlash tugmasini bosing.'
+        ),
+    })
+
+
+def setup_telegram_bot():
+    """Webhook + menu tugmasi — polling kerak emas, 24/7 Flask orqali."""
+    if not BOT_TOKEN:
+        print('BOT_TOKEN yo‘q — Telegram webhook o‘rnatilmadi')
+        return
+    webhook_url = WEBAPP_URL.rstrip('/') + '/telegram/webhook'
+    r = tg_api('setWebhook', {
+        'url': webhook_url,
+        'allowed_updates': ['message'],
+        'drop_pending_updates': False,
+    })
+    print('setWebhook:', r)
+    tg_api('setMyCommands', {
+        'commands': [
+            {'command': 'start', 'description': 'Ilovani ochish'},
+            {'command': 'help', 'description': 'Yordam'},
+        ]
+    })
+    tg_api('setChatMenuButton', {
+        'menu_button': {
+            'type': 'web_app',
+            'text': 'BilimSari',
+            'web_app': {'url': WEBAPP_URL},
+        }
+    })
+
+
+@app.route('/telegram/webhook', methods=['POST'])
+def telegram_webhook():
+    data = request.get_json(silent=True) or {}
+    message = data.get('message') or {}
+    text = (message.get('text') or '').strip()
+    chat = message.get('chat') or {}
+    chat_id = chat.get('id')
+    if not chat_id:
+        return jsonify({'ok': True})
+
+    first_name = (message.get('from') or {}).get('first_name') or chat.get('first_name') or ''
+    cmd = text.split()[0].split('@')[0] if text else ''
+
+    if cmd in ('/start', '/boshlash'):
+        send_start_message(chat_id, first_name)
+    elif cmd == '/help':
+        send_help_message(chat_id)
+    elif text:
+        send_start_message(chat_id, first_name)
+
+    return jsonify({'ok': True})
+
+
 # ───────────────────────────── Start ─────────────────────────────
 
 try:
     init_db()
 except Exception as e:
     print(f'DB init ogohlantirish: {e}')
+
+try:
+    setup_telegram_bot()
+except Exception as e:
+    print(f'Telegram webhook ogohlantirish: {e}')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
