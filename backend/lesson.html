@@ -97,6 +97,12 @@
       cursor: pointer;
       transition: .15s;
       color: #3c3c3c;
+      position: relative;
+      z-index: 2;
+      pointer-events: auto;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
     .opt:hover:not(:disabled) { background: #f7f7f7; }
     .opt:active:not(:disabled) { transform: scale(0.98); }
@@ -265,7 +271,7 @@
           <h3 id="fbTitle"></h3>
           <p id="fbText"></p>
         </div>
-        <button class="check-btn" id="actionBtn" onclick="onAction()">TEKSHIRISH</button>
+        <button type="button" class="check-btn" id="actionBtn">TEKSHIRISH</button>
       </div>
     </div>
   </div>
@@ -278,7 +284,7 @@
       <div class="stat"><b id="cAcc">0%</b><span>Aniqlik</span></div>
       <div class="stat"><b id="cStreak">0</b><span>Streak</span></div>
     </div>
-    <button class="btn" onclick="goBack()">DAVOM ETISH</button>
+    <button type="button" class="btn" id="completeContinue">DAVOM ETISH</button>
   </div>
 
   <div class="modal-bg" id="heartsModal">
@@ -286,8 +292,8 @@
       <div id="heartModalIcon" style="margin-bottom:8px;color:#ff4b4b;display:flex;justify-content:center;"></div>
       <h2>Yuraklaringiz tugadi</h2>
       <p>Takrorlash orqali yurak tiklash mumkin yoki keyinroq qayting.</p>
-      <button class="primary" onclick="practiceForHearts()">Takrorlash (+1 ❤️)</button>
-      <button class="secondary" onclick="goBack()">Chiqish</button>
+      <button type="button" class="primary" id="practiceHeartsBtn">Takrorlash (+1 ❤️)</button>
+      <button type="button" class="secondary" id="heartsExitBtn">Chiqish</button>
     </div>
   </div>
 
@@ -367,26 +373,28 @@
       if (q.type === 'mc') {
         html += '<div class="options">';
         q.options.forEach((o, i) => {
-          html += `<button class="opt" data-i="${i}" onclick="selectMc(${i})">${o}</button>`;
+          html += `<button type="button" class="opt" data-i="${i}">${o}</button>`;
         });
         html += '</div>';
       } else if (q.type === 'tf') {
         html += `<div class="tf-row">
-          <button class="opt" data-v="true" onclick="selectTf(true)">TO‘G‘RI</button>
-          <button class="opt" data-v="false" onclick="selectTf(false)">NOTO‘G‘RI</button>
+          <button type="button" class="opt" data-v="true">TO‘G‘RI</button>
+          <button type="button" class="opt" data-v="false">NOTO‘G‘RI</button>
         </div>`;
       } else if (q.type === 'fill' || q.type === 'type') {
-        html += `<input class="fill-input" id="fillInput" placeholder="Javobni yozing..." autocomplete="off" oninput="onFillInput()">`;
+        html += `<input class="fill-input" id="fillInput" placeholder="Javobni yozing..." autocomplete="off">`;
       } else if (q.type === 'match') {
         const left = q.pairs.map((p, i) => ({ t: p[0], i, side: 'L' }));
         const right = q.pairs.map((p, i) => ({ t: p[1], i, side: 'R' })).sort(() => Math.random() - 0.5);
         html += '<div class="match-grid" id="matchGrid">';
-        left.forEach(x => { html += `<div class="match-item" data-side="L" data-i="${x.i}" onclick="pickMatch(this)">${x.t}</div>`; });
-        right.forEach(x => { html += `<div class="match-item" data-side="R" data-i="${x.i}" onclick="pickMatch(this)">${x.t}</div>`; });
+        left.forEach(x => { html += `<div class="match-item" data-side="L" data-i="${x.i}">${x.t}</div>`; });
+        right.forEach(x => { html += `<div class="match-item" data-side="R" data-i="${x.i}">${x.t}</div>`; });
         html += '</div>';
       }
 
       main.innerHTML = html;
+      const fill = document.getElementById('fillInput');
+      if (fill) fill.addEventListener('input', onFillInput);
       if (q.type === 'match') {
         // auto-complete when all matched — check handled in pickMatch
         btn.style.display = 'none';
@@ -587,25 +595,39 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const xb = document.getElementById('exitBtn');
-      if (xb) xb.addEventListener('click', function (e) {
+    document.getElementById('main').addEventListener('click', function (e) {
+      const opt = e.target.closest('.opt');
+      if (opt) {
         e.preventDefault();
-        e.stopPropagation();
-        confirmExit();
-      });
+        if (opt.dataset.i !== undefined) {
+          selectMc(+opt.dataset.i);
+        } else if (opt.dataset.v !== undefined) {
+          selectTf(opt.dataset.v === 'true');
+        }
+        return;
+      }
+      const match = e.target.closest('.match-item');
+      if (match) pickMatch(match);
     });
-    // darhol ham bog‘lash (script pastida)
-    (function () {
-      const xb = document.getElementById('exitBtn');
-      if (xb) xb.onclick = function (e) {
-        e.preventDefault();
-        confirmExit();
-      };
-    })();
+
+    const actionBtnEl = document.getElementById('actionBtn');
+    if (actionBtnEl) actionBtnEl.addEventListener('click', onAction);
+
+    const exitBtnEl = document.getElementById('exitBtn');
+    if (exitBtnEl) exitBtnEl.addEventListener('click', function (e) {
+      e.preventDefault();
+      confirmExit();
+    });
+
+    const completeContinue = document.getElementById('completeContinue');
+    if (completeContinue) completeContinue.addEventListener('click', goBack);
+
+    const practiceHeartsBtn = document.getElementById('practiceHeartsBtn');
+    if (practiceHeartsBtn) practiceHeartsBtn.addEventListener('click', practiceForHearts);
+    const heartsExitBtn = document.getElementById('heartsExitBtn');
+    if (heartsExitBtn) heartsExitBtn.addEventListener('click', goBack);
 
     function confirmExit() {
-      // Telegram WebApp da window.confirm ishlamaydi — to‘g‘ridan-to‘g‘ri chiqish
       goBack();
     }
 
@@ -618,10 +640,17 @@
       restoreHeart(1);
       document.getElementById('heartsModal').classList.remove('open');
       renderHearts();
-      // continue current question
     }
 
-    // init
+    window.selectMc = selectMc;
+    window.selectTf = selectTf;
+    window.onAction = onAction;
+    window.goBack = goBack;
+    window.pickMatch = pickMatch;
+    window.onFillInput = onFillInput;
+    window.confirmExit = confirmExit;
+    window.practiceForHearts = practiceForHearts;
+
     if (getGame().hearts <= 0) {
       document.getElementById('heartsModal').classList.add('open');
       const hm = document.getElementById('heartModalIcon');
