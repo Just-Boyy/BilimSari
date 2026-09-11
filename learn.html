@@ -240,11 +240,18 @@
   </div>
 
   <script src="js/icons.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="js/telegram.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script src="js/data.js"></script>
   <script>
-    requireAuth();
+    (async function () {
+      if (window.BilimSariTG && BilimSariTG.isTelegram()) {
+        await BilimSariTG.autoAuthIfTelegram();
+      }
+      requireAuth();
+    })();
 
     let courseId = new URLSearchParams(location.search).get('course') || localStorage.getItem('bs_current_course') || COURSES[0].id;
     localStorage.setItem('bs_current_course', courseId);

@@ -261,9 +261,19 @@
     <p class="register">Hisobingiz yo‘qmi? <a href="register.html">Ro‘yxatdan o‘tish</a></p>
   </main>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="js/telegram.js"></script>
   <script src="js/auth.js"></script>
   <script>
     redirectIfLoggedIn();
+
+    // Telegram Mini App: avtomatik kirish
+    (async function () {
+      if (window.BilimSariTG && BilimSariTG.isTelegram()) {
+        const ok = await BilimSariTG.autoAuthIfTelegram();
+        if (ok) window.location.href = "learn.html";
+      }
+    })();
 
     function showError(msg) {
       const el = document.getElementById('error');

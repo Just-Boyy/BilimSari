@@ -46,8 +46,11 @@ def init_db():
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             name TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE,
-            password_hash TEXT NOT NULL,
+            email TEXT UNIQUE,
+            password_hash TEXT,
+            telegram_id BIGINT UNIQUE,
+            username TEXT,
+            photo_url TEXT,
             created_at TIMESTAMP NOT NULL DEFAULT NOW()
         )
     ''')
@@ -58,6 +61,19 @@ def init_db():
             expires_at TIMESTAMP NOT NULL
         )
     ''')
+    for stmt in [
+        "ALTER TABLE users ALTER COLUMN email DROP NOT NULL",
+        "ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS telegram_id BIGINT UNIQUE",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS username TEXT",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS photo_url TEXT",
+    ]:
+        try:
+            cur.execute(stmt)
+            conn.commit()
+        except Exception:
+            conn.rollback()
+
     conn.commit()
     cur.close()
     conn.close()
@@ -219,6 +235,67 @@ def logout():
     return jsonify({'ok': True})
 
 
+@app.route('/api/telegram/auth', methods=['POST'])
+def telegram_auth():
+    """Telegram Mini App orqali kirish / ro'yxat"""
+    from telegram_auth import validate_init_data
+
+    data = request.get_json(silent=True) or {}
+    init_data = data.get('initData') or ''
+    bot_token = os.environ.get('BOT_TOKEN', '')
+
+    if not bot_token:
+        return jsonify({'ok': False, 'error': 'BOT_TOKEN sozlanmagan'}), 500
+
+    tg_user = validate_init_data(init_data, bot_token)
+    if not tg_user or not tg_user.get('telegram_id'):
+        return jsonify({'ok': False, 'error': "Telegram ma'lumotlari yaroqsiz"}), 401
+
+    tg_id = tg_user['telegram_id']
+    name = (tg_user['first_name'] + ' ' + tg_user['last_name']).strip() or tg_user['username'] or f'User{tg_id}'
+    username = tg_user.get('username') or None
+    photo = tg_user.get('photo_url') or None
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        'SELECT id, name, email, telegram_id FROM users WHERE telegram_id = %s',
+        (tg_id,)
+    )
+    row = cur.fetchone()
+
+    if row:
+        user_id = row['id']
+        cur.execute(
+            'UPDATE users SET name = %s, username = %s, photo_url = COALESCE(%s, photo_url) WHERE id = %s',
+            (name, username, photo, user_id)
+        )
+        conn.commit()
+    else:
+        cur.execute(
+            'INSERT INTO users (name, email, password_hash, telegram_id, username, photo_url) '
+            'VALUES (%s, NULL, NULL, %s, %s, %s) RETURNING id',
+            (name, tg_id, username, photo)
+        )
+        user_id = cur.fetchone()['id']
+        conn.commit()
+
+    cur.close()
+    conn.close()
+
+    token = create_token(user_id)
+    return jsonify({
+        'ok': True,
+        'token': token,
+        'user': {
+            'id': user_id,
+            'name': name,
+            'email': None,
+            'telegram_id': tg_id,
+            'username': username,
+            'photo_url': photo,
+        }
+    })
 
 
 # ───────────────────────────── Frontend (static) ─────────────────────────────
