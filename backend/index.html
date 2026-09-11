@@ -203,8 +203,7 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="/js/telegram.js"></script>
   <script src="/js/auth.js"></script>
-  <script src="/js/data.js"></script>
-  <script>
+    <script>
     var ONBOARD_KEY = 'bs_onboarding_v1';
     var selectedName = '';
     var selectedCourse = null;
@@ -335,26 +334,47 @@
       return map[id] || '📖';
     }
 
+    var API_COURSES = [];
+
+    async function loadCourses() {
+      try {
+        var res = await fetch('/api/courses');
+        var data = await res.json();
+        if (data.ok && data.courses && data.courses.length) {
+          API_COURSES = data.courses;
+          window.COURSES = data.courses;
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
     function renderFans() {
       var list = document.getElementById('fanList');
-      list.innerHTML = '';
-      var courses = window.COURSES || [];
-      if (!courses.length) {
-        list.innerHTML = '<p style="color:#c00;text-align:center">Fanlar yuklanmadi. Sahifani yangilang.</p>';
-        return;
-      }
-      courses.forEach(function (c) {
-        var el = document.createElement('div');
-        el.className = 'fan-item';
-        el.innerHTML =
-          '<div class="fan-dot" style="background:' + (c.color || '#58A700') + '22">' +
-          fanEmoji(c.id) + '</div>' +
-          '<div><strong>' + c.name + '</strong><span>' + (c.desc || '') + '</span></div>';
-        el.onclick = function () {
-          selectedCourse = c.id;
-          finish(c.id);
-        };
-        list.appendChild(el);
+      list.innerHTML = '<p style="color:#888;text-align:center">Yuklanmoqda...</p>';
+      loadCourses().then(function (ok) {
+        list.innerHTML = '';
+        var courses = API_COURSES;
+        if (!ok || !courses.length) {
+          list.innerHTML = '<p style="color:#c00;text-align:center">Fanlar yuklanmadi. Qayta urinib ko‘ring.</p>' +
+            '<button class="btn" type="button" style="margin-top:12px" id="retryFans">Qayta yuklash</button>';
+          var rb = document.getElementById('retryFans');
+          if (rb) rb.onclick = renderFans;
+          return;
+        }
+        courses.forEach(function (c) {
+          var el = document.createElement('div');
+          el.className = 'fan-item';
+          el.innerHTML =
+            '<div class="fan-dot" style="background:' + (c.color || '#58A700') + '22">' +
+            fanEmoji(c.id) + '</div>' +
+            '<div><strong>' + c.name + '</strong><span>' + (c.desc || '') + '</span></div>';
+          el.onclick = function () {
+            selectedCourse = c.id;
+            finish(c.id);
+          };
+          list.appendChild(el);
+        });
       });
     }
 

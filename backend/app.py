@@ -74,6 +74,14 @@ def init_db():
         except Exception:
             conn.rollback()
 
+    # Fanlar (courses) jadvallari + seed
+    try:
+        from seed_courses import seed_courses
+        seed_courses(cur, conn)
+    except Exception as e:
+        print(f'Course seed xato: {e}')
+        conn.rollback()
+
     conn.commit()
     cur.close()
     conn.close()
@@ -296,6 +304,40 @@ def telegram_auth():
             'photo_url': photo,
         }
     })
+
+
+@app.route('/api/courses', methods=['GET'])
+def api_courses():
+    """Barcha fanlar (units + lessons bilan)"""
+    try:
+        from seed_courses import fetch_courses_tree, seed_courses
+        conn = get_connection()
+        cur = conn.cursor()
+        seed_courses(cur, conn)  # bo‘sh bo‘lsa to‘ldiradi
+        courses = fetch_courses_tree(cur)
+        cur.close()
+        conn.close()
+        return jsonify({'ok': True, 'courses': courses})
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e), 'courses': []}), 500
+
+
+@app.route('/api/courses/<course_id>', methods=['GET'])
+def api_course_one(course_id):
+    try:
+        from seed_courses import fetch_courses_tree, seed_courses
+        conn = get_connection()
+        cur = conn.cursor()
+        seed_courses(cur, conn)
+        courses = fetch_courses_tree(cur)
+        cur.close()
+        conn.close()
+        course = next((c for c in courses if c['id'] == course_id), None)
+        if not course:
+            return jsonify({'ok': False, 'error': 'Fan topilmadi'}), 404
+        return jsonify({'ok': True, 'course': course})
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e)}), 500
 
 
 # ───────────────────────────── Frontend (static) ─────────────────────────────

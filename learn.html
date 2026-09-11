@@ -250,11 +250,19 @@
       if (window.BilimSariTG && BilimSariTG.isTelegram()) {
         await BilimSariTG.autoAuthIfTelegram();
       }
+      // Fanlarni Postgres (API) dan yuklash
+      try {
+        const res = await fetch('/api/courses');
+        const data = await res.json();
+        if (data.ok && data.courses && data.courses.length) {
+          window.COURSES = data.courses;
+        }
+      } catch (e) {}
       requireAuth();
+      bootLearn();
     })();
 
-    let courseId = new URLSearchParams(location.search).get('course') || localStorage.getItem('bs_current_course') || COURSES[0].id;
-    localStorage.setItem('bs_current_course', courseId);
+    let courseId = new URLSearchParams(location.search).get('course') || localStorage.getItem('bs_current_course') || null;
 
     function refreshStats() {
       const g = getGame();
@@ -371,9 +379,18 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(function(){});
     }
-    refreshStats();
-    renderChips();
-    renderPath();
+    function bootLearn() {
+      courseId = new URLSearchParams(location.search).get('course') || localStorage.getItem('bs_current_course') || (COURSES[0] && COURSES[0].id);
+      if (!courseId) {
+        document.getElementById('unitTitle').textContent = 'Fan tanlanmagan';
+        return;
+      }
+      localStorage.setItem('bs_current_course', courseId);
+      refreshStats();
+      renderChips();
+      renderPath();
+    }
+
   </script>
 </body>
 </html>
