@@ -265,21 +265,17 @@
     }
 
     function renderChips() {
+      // Faqat onboardingda tanlangan bitta fan
       const el = document.getElementById('coursePick');
+      if (!el) return;
       el.innerHTML = '';
-      COURSES.forEach(c => {
-        const chip = document.createElement('button');
-        chip.className = 'course-chip' + (c.id === courseId ? ' active' : '');
-        chip.innerHTML = icon(c.icon) + ' ' + c.name;
-        chip.onclick = () => {
-          courseId = c.id;
-          localStorage.setItem('bs_current_course', courseId);
-          history.replaceState(null, '', 'learn.html?course=' + c.id);
-          renderChips();
-          renderPath();
-        };
-        el.appendChild(chip);
-      });
+      const c = getCourse(courseId) || COURSES[0];
+      if (!c) return;
+      const chip = document.createElement('button');
+      chip.className = 'course-chip active';
+      chip.innerHTML = icon(c.icon) + ' ' + c.name;
+      chip.style.cursor = 'default';
+      el.appendChild(chip);
     }
 
     function renderPath() {

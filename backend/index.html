@@ -2,60 +2,55 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>BilimSari</title>
   <meta name="theme-color" content="#58A700">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="BilimSari">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/png" href="/assets/icon-192.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
       background: #fff;
       color: #1a1a1a;
-      padding: 24px;
+      padding: 24px 20px 32px;
     }
     .box {
       width: 100%;
-      max-width: 340px;
+      max-width: 360px;
       text-align: center;
     }
     .logo {
       height: 56px;
       width: auto;
-      margin: 0 auto 20px;
+      margin: 0 auto 18px;
       display: block;
     }
     h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.4px;
       margin-bottom: 8px;
     }
-    p {
+    .sub {
       font-size: 15px;
       color: #777;
-      margin-bottom: 32px;
-      line-height: 1.4;
+      margin-bottom: 28px;
+      line-height: 1.45;
     }
     .btn {
       width: 100%;
-      height: 54px;
+      height: 52px;
       border: none;
-      border-radius: 16px;
+      border-radius: 14px;
       background: #58A700;
       color: #fff;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
       cursor: pointer;
       box-shadow: 0 4px 0 #3f7d00;
@@ -65,232 +60,306 @@
       transform: translateY(2px);
       box-shadow: 0 2px 0 #3f7d00;
     }
-
-    /* Install sheet */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 100;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .modal.open { display: flex; }
-    .sheet {
+    .btn-ghost {
       background: #fff;
-      width: 100%;
-      max-width: 420px;
-      border-radius: 20px 20px 0 0;
-      padding: 12px 20px 28px;
+      color: #333;
+      border: 2px solid #e5e5e5;
+      box-shadow: none;
+      margin-top: 12px;
     }
-    .handle {
-      width: 40px; height: 4px;
-      background: #ddd;
-      border-radius: 4px;
-      margin: 6px auto 16px;
+    .btn-ghost:active {
+      background: #f5f5f5;
+      box-shadow: none;
+      transform: none;
     }
-    .sheet h2 {
-      font-size: 20px;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 18px;
-    }
-    .steps {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-    .steps li {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      font-size: 15px;
-      line-height: 1.4;
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .name-card {
+      background: #f7f7f7;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
       text-align: left;
     }
-    .num {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: #58A700;
-      color: #fff;
-      font-weight: 800;
-      font-size: 14px;
+    .name-card .label {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .name-card .value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    input[type="text"] {
+      width: 100%;
+      height: 50px;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 16px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    input[type="text"]:focus { border-color: #58A700; }
+
+    .fan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+      margin-bottom: 8px;
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+    .fan-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 2px solid #eee;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: .15s;
+      background: #fff;
+    }
+    .fan-item:active, .fan-item.selected {
+      border-color: #58A700;
+      background: #f3faf0;
+    }
+    .fan-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 18px;
       flex-shrink: 0;
     }
-    .note {
-      font-size: 13px;
-      color: #888;
-      background: #f5f5f5;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      text-align: left;
-      line-height: 1.45;
+    .fan-item strong {
+      display: block;
+      font-size: 15px;
     }
-    .ok {
-      width: 100%;
-      height: 50px;
-      border: none;
-      border-radius: 14px;
-      background: #58A700;
-      color: #fff;
-      font-weight: 800;
-      font-size: 16px;
+    .fan-item span {
+      font-size: 12px;
+      color: #888;
+    }
+    .back {
+      display: inline-block;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #58A700;
+      font-weight: 600;
       cursor: pointer;
+      background: none;
+      border: none;
     }
   </style>
 </head>
 <body>
   <div class="box">
-    <img class="logo" src="/assets/logo-book.png" alt="BilimSari" onerror="this.src='assets/logo-book.png'">
-    <h1>BilimSari</h1>
-    <p>O‘rganishni boshlash uchun ilovani o‘rnating</p>
-    <button class="btn" id="dlBtn" onclick="downloadApp()">Yuklab olish</button>
-      </div>
+    <!-- 1. Welcome -->
+    <div class="step active" id="stepWelcome">
+      <img class="logo" src="/assets/logo-book-icon.png" alt="BilimSari"
+           onerror="this.src='/assets/logo-icon.png'">
+      <h1>BilimSari</h1>
+      <p class="sub">O‘rganishni boshlash uchun davom eting</p>
+      <button class="btn" type="button" id="btnStart">Boshlash</button>
+    </div>
 
-  <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
-    <div class="sheet">
-      <div class="handle"></div>
-      <h2>Qanday o‘rnatiladi?</h2>
-      <ol class="steps">
-        <li><span class="num">1</span><span>Pastdagi <b>Ulashish</b> (□↑) tugmasini bosing</span></li>
-        <li><span class="num">2</span><span><b>Add to Home Screen</b> / <b>Uy ekraniga qo‘shish</b> ni tanlang</span></li>
-        <li><span class="num">3</span><span><b>Add</b> / <b>Qo‘shish</b> ni bosing</span></li>
-      </ol>
-      <p class="note" id="installNote">
-      <span id="noteIos" style="display:none">iPhone’da faqat <b>Safari</b> orqali: Ulashish → Uy ekraniga qo‘shish.</span>
-      <span id="noteOther" style="display:none">Brauzer menyusidan <b>Install app</b> / <b>Ilovani o‘rnatish</b> ni bosing. Yoki manzil satridagi o‘rnatish belgisini bosing.</span>
-    </p>
-      <button class="ok" onclick="closeModal()">Tushundim</button>
+    <!-- 2. Ism -->
+    <div class="step" id="stepName">
+      <button type="button" class="back" id="backToWelcome">← Orqaga</button>
+      <h1>Ismingiz</h1>
+      <p class="sub">Telegramdagi ismingiz topildi. Shu bilan qolsinmi?</p>
+      <div class="name-card">
+        <div class="label">Telegram ismi</div>
+        <div class="value" id="tgNamePreview">—</div>
+      </div>
+      <button class="btn" type="button" id="btnKeepName">Ha, shu bilan</button>
+      <button class="btn btn-ghost" type="button" id="btnOwnName">O‘zim kiritaman</button>
+    </div>
+
+    <!-- 2b. Qo‘lda ism -->
+    <div class="step" id="stepNameManual">
+      <button type="button" class="back" id="backToName">← Orqaga</button>
+      <h1>Ism kiriting</h1>
+      <p class="sub">Qanday murojaat qilaylik?</p>
+      <input type="text" id="inputFirst" placeholder="Ism" autocomplete="given-name">
+      <input type="text" id="inputLast" placeholder="Familiya (ixtiyoriy)" autocomplete="family-name">
+      <button class="btn" type="button" id="btnSaveName">Davom etish</button>
+    </div>
+
+    <!-- 3. Fan -->
+    <div class="step" id="stepFan">
+      <button type="button" class="back" id="backFromFan">← Orqaga</button>
+      <h1>Fan tanlang</h1>
+      <p class="sub">Nima fan bo‘yicha o‘qimoqchisiz? Faqat bitta fan.</p>
+      <div class="fan-list" id="fanList"></div>
     </div>
   </div>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="js/telegram.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
   <script>
-    let deferredPrompt = null;
-    const INSTALLED_KEY = 'bilimsari_installed';
+    var ONBOARD_KEY = 'bs_onboarding_v1';
+    var selectedName = '';
+    var selectedCourse = null;
+    var cameFromManual = false;
 
-    function isStandalone() {
-      return window.matchMedia('(display-mode: standalone)').matches
-        || window.navigator.standalone === true;
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(function (el) {
+        el.classList.toggle('active', el.id === id);
+      });
     }
 
-    function isInstalled() {
-      if (isStandalone()) return true;
-      try { return localStorage.getItem(INSTALLED_KEY) === '1'; } catch (e) { return false; }
+    function getTgDisplayName() {
+      try {
+        var wa = window.Telegram && Telegram.WebApp;
+        if (wa && wa.initDataUnsafe && wa.initDataUnsafe.user) {
+          var u = wa.initDataUnsafe.user;
+          var n = ((u.first_name || '') + ' ' + (u.last_name || '')).trim();
+          return n || u.username || '';
+        }
+      } catch (e) {}
+      var s = getSession && getSession();
+      if (s && s.name) return s.name;
+      return '';
     }
 
-    function markInstalled() {
-      try { localStorage.setItem(INSTALLED_KEY, '1'); } catch (e) {}
+    function loadOnboarding() {
+      try {
+        return JSON.parse(localStorage.getItem(ONBOARD_KEY) || 'null');
+      } catch (e) {
+        return null;
+      }
     }
 
-    // Ilova ichida ochilgan bo‘lsa — login/ga
-    if (isStandalone()) {
-      markInstalled();
-      window.location.replace('login.html');
+    function saveOnboarding(data) {
+      localStorage.setItem(ONBOARD_KEY, JSON.stringify(data));
+      if (data.name) {
+        localStorage.setItem('bs_display_name', data.name);
+        try {
+          var g = JSON.parse(localStorage.getItem('bilimsari_game_v1') || '{}');
+          g.displayName = data.name;
+          localStorage.setItem('bilimsari_game_v1', JSON.stringify(g));
+        } catch (e) {}
+      }
+      if (data.courseId) {
+        localStorage.setItem('bs_current_course', data.courseId);
+      }
     }
 
-    function updateButton() {
-      var btn = document.getElementById('dlBtn');
-      if (!btn) return;
-      if (isInstalled()) {
-        btn.textContent = 'Appni ochish';
-        btn.onclick = function () { window.location.href = 'login.html'; };
+    // Allaqachon o‘tgan bo‘lsa — learn
+    (function () {
+      var o = loadOnboarding();
+      if (o && o.done && o.courseId) {
+        localStorage.setItem('bs_current_course', o.courseId);
+        window.location.replace('learn.html?course=' + encodeURIComponent(o.courseId));
+        return;
+      }
+    })();
+
+    // Telegram auth (fonda)
+    (async function () {
+      if (window.BilimSariTG && BilimSariTG.isTelegram()) {
+        await BilimSariTG.autoAuthIfTelegram();
+        var n = getTgDisplayName();
+        if (n) document.getElementById('tgNamePreview').textContent = n;
       } else {
-        btn.textContent = 'Yuklab olish';
-        btn.onclick = downloadApp;
+        var n2 = getTgDisplayName();
+        document.getElementById('tgNamePreview').textContent = n2 || 'Foydalanuvchi';
       }
-    }
+      try {
+        var wa = window.Telegram && Telegram.WebApp;
+        if (wa) { wa.ready(); wa.expand(); }
+      } catch (e) {}
+    })();
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      // O‘rnatish mumkin — hali o‘rnatilmagan
-      try { localStorage.removeItem(INSTALLED_KEY); } catch (e) {}
-      updateButton();
-    });
+    document.getElementById('btnStart').onclick = function () {
+      var n = getTgDisplayName() || 'Foydalanuvchi';
+      document.getElementById('tgNamePreview').textContent = n;
+      selectedName = n;
+      showStep('stepName');
+    };
 
-    window.addEventListener('appinstalled', function () {
-      markInstalled();
-      deferredPrompt = null;
-      updateButton();
-    });
+    document.getElementById('backToWelcome').onclick = function () {
+      showStep('stepWelcome');
+    };
 
-    function isIos() {
-      return /iphone|ipad|ipod/i.test(navigator.userAgent)
-        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    }
+    document.getElementById('btnKeepName').onclick = function () {
+      selectedName = document.getElementById('tgNamePreview').textContent || 'Foydalanuvchi';
+      cameFromManual = false;
+      renderFans();
+      showStep('stepFan');
+    };
 
-    function downloadApp() {
-      // Android / Windows / Chrome — faqat to‘g‘ridan-to‘g‘ri install
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function (r) {
-          if (r.outcome === 'accepted') {
-            deferredPrompt = null;
-            markInstalled();
-            updateButton();
-          }
-        });
+    document.getElementById('btnOwnName').onclick = function () {
+      showStep('stepNameManual');
+      var parts = (document.getElementById('tgNamePreview').textContent || '').split(' ');
+      document.getElementById('inputFirst').value = parts[0] || '';
+      document.getElementById('inputLast').value = parts.slice(1).join(' ') || '';
+      document.getElementById('inputFirst').focus();
+    };
+
+    document.getElementById('backToName').onclick = function () {
+      showStep('stepName');
+    };
+
+    document.getElementById('btnSaveName').onclick = function () {
+      var first = document.getElementById('inputFirst').value.trim();
+      var last = document.getElementById('inputLast').value.trim();
+      if (first.length < 2) {
+        alert('Ism kamida 2 ta belgidan iborat bo‘lsin');
         return;
       }
+      selectedName = (first + ' ' + last).trim();
+      cameFromManual = true;
+      renderFans();
+      showStep('stepFan');
+    };
 
-      // FAQAT Apple qurilmalarda yo‘riqnoma / share
-      if (isIos()) {
-        if (navigator.share) {
-          navigator.share({
-            title: 'BilimSari',
-            text: 'BilimSari ilovasini o‘rnating',
-            url: window.location.href
-          }).catch(function () {});
-        }
-        openModal();
-        return;
-      }
+    document.getElementById('backFromFan').onclick = function () {
+      showStep(cameFromManual ? 'stepNameManual' : 'stepName');
+    };
 
-      // Apple emas, lekin install prompt hali yo‘q — biroz kutib qayta urinish
-      var btn = document.getElementById('dlBtn');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Tayyorlanmoqda...';
-      }
-      var tries = 0;
-      var timer = setInterval(function () {
-        tries++;
-        if (deferredPrompt) {
-          clearInterval(timer);
-          if (btn) { btn.disabled = false; btn.textContent = 'Yuklab olish'; }
-          downloadApp();
-          return;
-        }
-        if (tries >= 8) {
-          clearInterval(timer);
-          if (btn) { btn.disabled = false; btn.textContent = 'Yuklab olish'; }
-          // Modal ochilmaydi — faqat qisqa xabar
-          alert('Brauzeringizda avtomatik o‘rnatish mavjud emas. Chrome yoki Edge orqali oching, yoki manzil satridagi o‘rnatish belgisini bosing.');
-        }
-      }, 400);
+    function fanEmoji(id) {
+      var map = {
+        frontend: '💻', math: '📐', english: '🇬🇧',
+        physics: '⚛️', biology: '🧬', uzbek: '📚'
+      };
+      return map[id] || '📖';
     }
 
-    function openModal() {
-      var ios = isIos();
-      var ni = document.getElementById('noteIos');
-      var no = document.getElementById('noteOther');
-      if (ni) ni.style.display = ios ? 'inline' : 'none';
-      if (no) no.style.display = ios ? 'none' : 'inline';
-      document.getElementById('modal').classList.add('open');
-    }
-    function closeModal() {
-      document.getElementById('modal').classList.remove('open');
+    function renderFans() {
+      var list = document.getElementById('fanList');
+      list.innerHTML = '';
+      (window.COURSES || []).forEach(function (c) {
+        var el = document.createElement('div');
+        el.className = 'fan-item';
+        el.innerHTML =
+          '<div class="fan-dot" style="background:' + (c.color || '#58A700') + '22">' +
+          fanEmoji(c.id) + '</div>' +
+          '<div><strong>' + c.name + '</strong><span>' + (c.desc || '') + '</span></div>';
+        el.onclick = function () {
+          selectedCourse = c.id;
+          finish(c.id);
+        };
+        list.appendChild(el);
+      });
     }
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(function () {});
+    function finish(courseId) {
+      saveOnboarding({
+        done: true,
+        name: selectedName,
+        courseId: courseId,
+        at: Date.now()
+      });
+      window.location.href = 'learn.html?course=' + encodeURIComponent(courseId);
     }
   </script>
 </body>

@@ -19,12 +19,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     name = user.first_name or 'do‘st'
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton(
-            text='📚 BilimSari’ni ochish',
+            text="📚 Boshlash",
             web_app=WebAppInfo(url=WEBAPP_URL)
-        )],
-        [InlineKeyboardButton(
-            text='🌐 Brauzerda ochish',
-            url=WEBAPP_URL
         )],
     ])
     text = (
