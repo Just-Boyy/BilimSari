@@ -33,12 +33,40 @@
     }
     .exit {
       width: 40px; height: 40px;
-      border: none; background: none;
-      font-size: 22px; cursor: pointer; color: #afafaf;
+      border: none;
+      border-radius: 12px;
+      background: #58A700;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 0 #3f7d00;
     }
-    .exit:hover { color: #777; }
-    .prog-wrap { flex: 1; height: 14px; background: #e5e5e5; border-radius: 99px; overflow: hidden; }
-    .prog-bar { height: 100%; width: 0%; background: #58A700; border-radius: 99px; transition: width .35s ease; }
+    .exit:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #3f7d00;
+    }
+    .prog-wrap {
+      flex: 1;
+      height: 14px;
+      background: #e5e5e5;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .prog-bar {
+      height: 100%;
+      width: 0%;
+      background: #58A700;
+      border-radius: 99px;
+      transition: width .35s ease, background .25s ease;
+    }
+    .prog-bar.is-correct { background: #58A700; }
+    .prog-bar.is-wrong { background: #FF4B4B; }
     .hearts { display:flex; gap:2px; align-items:center; } .hearts svg { width:18px; height:18px; } .emoji svg { width:64px; height:64px; color:#58A700; }
 
     .main {
@@ -226,7 +254,7 @@
 <body>
   <div id="lessonUI">
     <div class="top">
-      <button class="exit" onclick="confirmExit()">×</button>
+      <button type="button" class="exit" id="exitBtn" aria-label="Chiqish">×</button>
       <div class="prog-wrap"><div class="prog-bar" id="progBar"></div></div>
       <div class="hearts" id="heartsEl">❤️❤️❤️❤️❤️</div>
     </div>
@@ -302,7 +330,15 @@
 
     function updateProg() {
       const pct = (idx / questions.length) * 100;
-      document.getElementById('progBar').style.width = pct + '%';
+      const bar = document.getElementById('progBar');
+      if (bar) {
+        bar.style.width = pct + '%';
+        // yangi savolda default yashil (javobdan keyin rang o‘zgaradi)
+        if (!checked) {
+          bar.classList.remove('is-wrong');
+          bar.classList.add('is-correct');
+        }
+      }
     }
 
     function typeLabel(t) {
@@ -469,6 +505,11 @@
 
     function finishCheck(ok, correctText) {
       checked = true;
+      const bar = document.getElementById('progBar');
+      if (bar) {
+        bar.classList.remove('is-correct', 'is-wrong');
+        bar.classList.add(ok ? 'is-correct' : 'is-wrong');
+      }
       const q = questions[idx];
       const fb = document.getElementById('feedback');
       const btn = document.getElementById('actionBtn');
@@ -546,12 +587,31 @@
       }
     }
 
+    document.addEventListener('DOMContentLoaded', function () {
+      const xb = document.getElementById('exitBtn');
+      if (xb) xb.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        confirmExit();
+      });
+    });
+    // darhol ham bog‘lash (script pastida)
+    (function () {
+      const xb = document.getElementById('exitBtn');
+      if (xb) xb.onclick = function (e) {
+        e.preventDefault();
+        confirmExit();
+      };
+    })();
+
     function confirmExit() {
-      if (confirm('Darslardan chiqasizmi? Progress saqlanmaydi.')) goBack();
+      // Telegram WebApp da window.confirm ishlamaydi — to‘g‘ridan-to‘g‘ri chiqish
+      goBack();
     }
 
     function goBack() {
-      location.href = 'learn.html?course=' + encodeURIComponent(courseId);
+      const c = courseId || localStorage.getItem('bs_current_course') || '';
+      location.href = 'learn.html?course=' + encodeURIComponent(c);
     }
 
     function practiceForHearts() {
