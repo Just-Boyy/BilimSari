@@ -201,9 +201,9 @@
   </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="js/telegram.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/data.js"></script>
+  <script src="/js/telegram.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/data.js"></script>
   <script>
     var ONBOARD_KEY = 'bs_onboarding_v1';
     var selectedName = '';
@@ -328,8 +328,9 @@
 
     function fanEmoji(id) {
       var map = {
-        frontend: '💻', math: '📐', english: '🇬🇧',
-        physics: '⚛️', biology: '🧬', uzbek: '📚'
+        english: '🇬🇧', uzbek: '📖', russian: '🇷🇺',
+        geography: '🌍', math: '📐', geometry: '📏',
+        law: '⚖️', biology: '🧬', literature: '📚'
       };
       return map[id] || '📖';
     }
@@ -337,7 +338,12 @@
     function renderFans() {
       var list = document.getElementById('fanList');
       list.innerHTML = '';
-      (window.COURSES || []).forEach(function (c) {
+      var courses = window.COURSES || [];
+      if (!courses.length) {
+        list.innerHTML = '<p style="color:#c00;text-align:center">Fanlar yuklanmadi. Sahifani yangilang.</p>';
+        return;
+      }
+      courses.forEach(function (c) {
         var el = document.createElement('div');
         el.className = 'fan-item';
         el.innerHTML =
