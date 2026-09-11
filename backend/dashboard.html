@@ -193,15 +193,19 @@
     </div>
   </main>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="js/telegram.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    requireAuth();
+    (async function () {
+      await ensureSession();
 
     const session = getSession();
     if (session) {
       document.getElementById('userName').textContent = session.name;
       document.getElementById('welcomeName').textContent = session.name;
     }
+    })();
   </script>
 </body>
 </html>

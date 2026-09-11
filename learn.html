@@ -247,10 +247,7 @@
   <script src="js/data.js"></script>
   <script>
     (async function () {
-      if (window.BilimSariTG && BilimSariTG.isTelegram()) {
-        await BilimSariTG.autoAuthIfTelegram();
-      }
-      // Fanlarni Postgres (API) dan yuklash
+      await ensureSession();
       try {
         const res = await fetch('/api/courses');
         const data = await res.json();
@@ -258,7 +255,6 @@
           window.COURSES = data.courses;
         }
       } catch (e) {}
-      requireAuth();
       bootLearn();
     })();
 

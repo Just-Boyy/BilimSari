@@ -378,13 +378,25 @@
       });
     }
 
-    function finish(courseId) {
+    async function finish(courseId) {
       saveOnboarding({
         done: true,
         name: selectedName,
         courseId: courseId,
         at: Date.now()
       });
+      if (typeof ensureSession === 'function') await ensureSession();
+      if (typeof isLoggedIn === 'function' && !isLoggedIn() && selectedName) {
+        setSession('local_' + Date.now(), {
+          id: 0,
+          name: selectedName,
+          guest: true,
+          source: 'onboarding'
+        });
+      }
+      if (window.BilimSariTG && BilimSariTG.isTelegram()) {
+        await BilimSariTG.autoAuthIfTelegram();
+      }
       window.location.href = 'learn.html?course=' + encodeURIComponent(courseId);
     }
   </script>
