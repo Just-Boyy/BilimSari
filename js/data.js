@@ -360,11 +360,28 @@ function allLessons(course) {
 }
 
 function findLesson(courseId, lessonId) {
-  const c = getCourse(courseId);
-  if (!c) return null;
-  for (const u of c.units) {
-    const l = u.lessons.find(x => x.id === lessonId);
-    if (l) return { course: c, unit: u, lesson: l };
+  // Local COURSES + API orqali yuklangan window.COURSES
+  const pools = [];
+  if (typeof COURSES !== 'undefined') pools.push(COURSES);
+  if (typeof window !== 'undefined' && window.COURSES && window.COURSES !== COURSES) {
+    pools.push(window.COURSES);
+  }
+  for (const pool of pools) {
+    const c = (pool || []).find(x => x.id === courseId);
+    if (!c || !c.units) continue;
+    for (const u of c.units) {
+      const l = (u.lessons || []).find(x => x.id === lessonId);
+      if (l) return { course: c, unit: u, lesson: l };
+    }
+  }
+  // lessonId bo'yicha global qidiruv
+  for (const pool of pools) {
+    for (const c of (pool || [])) {
+      for (const u of (c.units || [])) {
+        const l = (u.lessons || []).find(x => x.id === lessonId);
+        if (l) return { course: c, unit: u, lesson: l };
+      }
+    }
   }
   return null;
 }

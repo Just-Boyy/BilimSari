@@ -109,6 +109,11 @@ function isLessonDone(courseId, lessonId) {
   return (s.completedLessons[courseId] || []).includes(lessonId);
 }
 
+// Alias — ba'zi sahifalar isLessonComplete deb chaqiradi
+function isLessonComplete(courseId, lessonId) {
+  return isLessonDone(courseId, lessonId);
+}
+
 function courseProgress(courseId, totalLessons) {
   const done = (getGame().completedLessons[courseId] || []).length;
   return { done, total: totalLessons, pct: totalLessons ? Math.round(done / totalLessons * 100) : 0 };

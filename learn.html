@@ -337,7 +337,7 @@
 
     function lessonState(course, unit, lesson, lessonIndex, unitIndex) {
       const g = getGame();
-      const done = isLessonComplete(course.id, lesson.id);
+      const done = isLessonDone(course.id, lesson.id);
       // sequential unlock across units
       let unlocked = true;
       if (lessonIndex === 0 && unitIndex === 0) unlocked = true;
@@ -345,12 +345,12 @@
         // previous lesson in same unit
         if (lessonIndex > 0) {
           const prev = unit.lessons[lessonIndex - 1];
-          unlocked = isLessonComplete(course.id, prev.id);
+          unlocked = isLessonDone(course.id, prev.id);
         } else {
           // first of unit -> last of previous unit
           const prevUnit = course.units[unitIndex - 1];
           const prevLesson = prevUnit.lessons[prevUnit.lessons.length - 1];
-          unlocked = isLessonComplete(course.id, prevLesson.id);
+          unlocked = isLessonDone(course.id, prevLesson.id);
         }
       }
       if (done) return 'done';
@@ -450,7 +450,7 @@
       (course.units || []).forEach(u => {
         (u.lessons || []).forEach(l => {
           total++;
-          if (isLessonComplete(course.id, l.id)) done++;
+          if (isLessonDone(course.id, l.id)) done++;
         });
       });
       const pct = total ? Math.round((done / total) * 100) : 0;
@@ -538,7 +538,13 @@
       } catch (e) {}
 
       refreshStats();
-      renderAll();
+      try {
+        renderAll();
+      } catch (e) {
+        console.error(e);
+        document.getElementById('units').innerHTML =
+          '<div class="empty"><h3>Yuklash xatosi</h3><p>' + (e.message || e) + '</p></div>';
+      }
     })();
   </script>
 </body>

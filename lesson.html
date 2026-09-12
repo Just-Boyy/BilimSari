@@ -342,10 +342,24 @@
       await ensureSession();
 
     const params = new URLSearchParams(location.search);
-    const courseId = params.get('course');
+    const courseId = params.get('course') || localStorage.getItem('bs_current_course');
     const lessonId = params.get('lesson');
-    const found = findLesson(courseId, lessonId);
-    if (!found) { location.href = 'learn.html'; }
+    // API kurslarini yuklab, findLesson ishlashi uchun
+    try {
+      const res = await fetch('/api/courses');
+      const data = await res.json();
+      if (data.ok && data.courses) window.COURSES = data.courses;
+    } catch (e) {}
+    let found = findLesson(courseId, lessonId);
+    if (!found && lessonId) {
+      // minimal fallback — darsni baribir ochamiz
+      found = {
+        course: { id: courseId || 'unknown', name: 'Kurs' },
+        unit: { id: 'u', title: 'Bo‘lim' },
+        lesson: { id: lessonId, title: 'Dars', type: 'lesson' }
+      };
+    }
+    if (!found) { location.href = 'learn.html'; return; }
 
     const questions = getQuestions(lessonId);
     let idx = 0;
