@@ -103,6 +103,34 @@
     }
     input[type="text"]:focus { border-color: #58A700; }
 
+    .lang-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+    .lang-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px;
+      border: 2px solid #e5e5e5;
+      border-radius: 14px;
+      cursor: pointer;
+      background: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      transition: .15s;
+    }
+    .lang-item:active, .lang-item.selected {
+      border-color: #58A700;
+      background: #f0ffe5;
+    }
+    .lang-flag {
+      font-size: 22px;
+      width: 36px;
+      text-align: center;
+    }
     .fan-list {
       display: flex;
       flex-direction: column;
@@ -164,44 +192,57 @@
       <img class="logo" src="/assets/logo-book-icon.png" alt="BilimSari"
            onerror="this.src='/assets/logo-icon.png'">
       <h1>BilimSari</h1>
-      <p class="sub">O‘rganishni boshlash uchun davom eting</p>
-      <button class="btn" type="button" id="btnStart">Boshlash</button>
+      <p class="sub" data-i18n="welcome_sub">O‘rganishni boshlash uchun davom eting</p>
+      <button class="btn" type="button" id="btnStart" data-i18n="start">Boshlash</button>
     </div>
 
-    <!-- 2. Ism -->
+    <!-- 2. Til -->
+    <div class="step" id="stepLang">
+      <button type="button" class="back" id="backToWelcomeFromLang" data-i18n="back">← Orqaga</button>
+      <h1 data-i18n="lang_title">Tilni tanlang</h1>
+      <p class="sub" data-i18n="lang_sub">Ilova qaysi tilda ishlasin?</p>
+      <div class="lang-list">
+        <div class="lang-item" data-lang="uz"><span class="lang-flag">🇺🇿</span><span data-i18n="lang_uz">O‘zbek tili</span></div>
+        <div class="lang-item" data-lang="ru"><span class="lang-flag">🇷🇺</span><span data-i18n="lang_ru">Русский язык</span></div>
+        <div class="lang-item" data-lang="en"><span class="lang-flag">🇬🇧</span><span data-i18n="lang_en">English</span></div>
+      </div>
+    </div>
+
+    <!-- 3. Ism -->
     <div class="step" id="stepName">
-      <button type="button" class="back" id="backToWelcome">← Orqaga</button>
-      <h1>Ismingiz</h1>
-      <p class="sub">Telegramdagi ismingiz topildi. Shu bilan qolsinmi?</p>
+      <button type="button" class="back" id="backToWelcome" data-i18n="back">← Orqaga</button>
+      <h1 data-i18n="name_title">Ismingiz</h1>
+      <p class="sub" data-i18n="name_sub">Telegramdagi ismingiz topildi. Shu bilan qolsinmi?</p>
       <div class="name-card">
         <div class="label">Telegram ismi</div>
         <div class="value" id="tgNamePreview">—</div>
       </div>
-      <button class="btn" type="button" id="btnKeepName">Ha, shu bilan</button>
-      <button class="btn btn-ghost" type="button" id="btnOwnName">O‘zim kiritaman</button>
+      <button class="btn" type="button" id="btnKeepName" data-i18n="keep_name">Ha, shu bilan</button>
+      <button class="btn btn-ghost" type="button" id="btnOwnName" data-i18n="own_name">O‘zim kiritaman</button>
     </div>
 
     <!-- 2b. Qo‘lda ism -->
     <div class="step" id="stepNameManual">
-      <button type="button" class="back" id="backToName">← Orqaga</button>
-      <h1>Ism kiriting</h1>
-      <p class="sub">Qanday murojaat qilaylik?</p>
-      <input type="text" id="inputFirst" placeholder="Ism" autocomplete="given-name">
-      <input type="text" id="inputLast" placeholder="Familiya (ixtiyoriy)" autocomplete="family-name">
-      <button class="btn" type="button" id="btnSaveName">Davom etish</button>
+      <button type="button" class="back" id="backToName" data-i18n="back">← Orqaga</button>
+      <h1 data-i18n="name_manual_title">Ism kiriting</h1>
+      <p class="sub" data-i18n="name_manual_sub">Qanday murojaat qilaylik?</p>
+      <input type="text" id="inputFirst" placeholder="Ism" data-i18n-placeholder="ph_first" autocomplete="given-name">
+      <input type="text" id="inputLast" placeholder="Familiya (ixtiyoriy)" data-i18n-placeholder="ph_last" autocomplete="family-name">
+      <button class="btn" type="button" id="btnSaveName" data-i18n="continue">Davom etish</button>
     </div>
 
     <!-- 3. Fan -->
     <div class="step" id="stepFan">
-      <button type="button" class="back" id="backFromFan">← Orqaga</button>
-      <h1>Fan tanlang</h1>
-      <p class="sub">Nima fan bo‘yicha o‘qimoqchisiz? Faqat bitta fan.</p>
+      <button type="button" class="back" id="backFromFan" data-i18n="back">← Orqaga</button>
+      <h1 data-i18n="fan_title">Fan tanlang</h1>
+      <p class="sub" data-i18n="fan_sub">Nima fan bo‘yicha o‘qimoqchisiz? Faqat bitta fan.</p>
       <div class="fan-list" id="fanList"></div>
     </div>
   </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="/js/telegram.js"></script>
+  <script src="/js/i18n.js"></script>
   <script src="/js/auth.js"></script>
     <script>
     var ONBOARD_KEY = 'bs_onboarding_v1';
@@ -279,14 +320,31 @@
     })();
 
     document.getElementById('btnStart').onclick = function () {
-      var n = getTgDisplayName() || 'Foydalanuvchi';
-      document.getElementById('tgNamePreview').textContent = n;
-      selectedName = n;
-      showStep('stepName');
+      showStep('stepLang');
     };
 
-    document.getElementById('backToWelcome').onclick = function () {
+    document.getElementById('backToWelcomeFromLang').onclick = function () {
       showStep('stepWelcome');
+    };
+
+    document.querySelectorAll('.lang-item').forEach(function (el) {
+      el.onclick = function () {
+        var code = el.getAttribute('data-lang') || 'uz';
+        if (window.BS_I18N) {
+          BS_I18N.setLang(code);
+          BS_I18N.apply(document);
+          var lab = document.querySelector('.name-card .label');
+          if (lab) lab.textContent = BS_I18N.t('tg_name_label');
+        }
+        var n = getTgDisplayName() || 'Foydalanuvchi';
+        document.getElementById('tgNamePreview').textContent = n;
+        selectedName = n;
+        showStep('stepName');
+      };
+    });
+
+    document.getElementById('backToWelcome').onclick = function () {
+      showStep('stepLang');
     };
 
     document.getElementById('btnKeepName').onclick = function () {
@@ -351,13 +409,13 @@
 
     function renderFans() {
       var list = document.getElementById('fanList');
-      list.innerHTML = '<p style="color:#888;text-align:center">Yuklanmoqda...</p>';
+      list.innerHTML = '<p style="color:#888;text-align:center">' + (window.BS_I18N ? BS_I18N.t('loading') : 'Yuklanmoqda...') + '</p>';
       loadCourses().then(function (ok) {
         list.innerHTML = '';
         var courses = API_COURSES;
         if (!ok || !courses.length) {
-          list.innerHTML = '<p style="color:#c00;text-align:center">Fanlar yuklanmadi. Qayta urinib ko‘ring.</p>' +
-            '<button class="btn" type="button" style="margin-top:12px" id="retryFans">Qayta yuklash</button>';
+          list.innerHTML = '<p style="color:#c00;text-align:center">' + (window.BS_I18N ? BS_I18N.t('fans_fail') : 'Fanlar yuklanmadi') + '</p>' +
+            '<button class="btn" type="button" style="margin-top:12px" id="retryFans">' + (window.BS_I18N ? BS_I18N.t('retry') : 'Qayta') + '</button>';
           var rb = document.getElementById('retryFans');
           if (rb) rb.onclick = renderFans;
           return;
@@ -383,6 +441,7 @@
         done: true,
         name: selectedName,
         courseId: courseId,
+        lang: BS_I18N.getLang(),
         at: Date.now()
       });
       if (typeof ensureSession === 'function') await ensureSession();

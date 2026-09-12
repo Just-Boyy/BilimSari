@@ -45,17 +45,19 @@
     <div id="wrong"></div>
   </div>
   <nav class="bnav"><div class="bnav-inner">
-    <a href="learn.html"><span class="nav-ico" data-icon="home"></span>O‘rganish</a>
-    <a href="courses.html"><span class="nav-ico" data-icon="book"></span>Kurslar</a>
-    <a href="leaderboard.html"><span class="nav-ico" data-icon="trophy"></span>Reyting</a>
-    <a href="review.html" class="active"><span class="nav-ico" data-icon="refresh"></span>Takrorlash</a>
-    <a href="profile.html"><span class="nav-ico" data-icon="user"></span>Profil</a>
+    <a href="learn.html"><span class="nav-ico" data-icon="home"></span data-i18n="learn">O‘rganish</a>
+    <a href="courses.html"><span class="nav-ico" data-icon="book"></span data-i18n="courses">Kurslar</a>
+    <a href="leaderboard.html"><span class="nav-ico" data-icon="trophy"></span data-i18n="rating">Reyting</a>
+    <a href="review.html" class="active"><span class="nav-ico" data-icon="refresh"></span data-i18n="review">Takrorlash</a>
+    <a href="profile.html"><span class="nav-ico" data-icon="user"></span data-i18n="profile">Profil</a>
   </div></nav>
   <script src="js/icons.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
   <script>
     requireAuth();
+    if (window.BS_I18N) BS_I18N.apply(document);
     document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     function heal() {
       restoreHeart(1);
