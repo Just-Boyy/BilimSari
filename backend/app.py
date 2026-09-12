@@ -482,9 +482,9 @@ def ai_tutor():
 
     if not XAI_API_KEY:
         return jsonify({
-            'ok': False,
-            'error': 'AI ulanmagan. Railway'da XAI_API_KEY qo‘shing.',
-            'reply': None,
+            "ok": False,
+            "error": "AI ulanmagan. Railway Variables ga XAI_API_KEY qoshin.",
+            "reply": None,
         }), 503
 
     user_content = message
