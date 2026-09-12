@@ -38,6 +38,8 @@ function saveGame(state) {
 
 function getGame() {
   const s = loadGame();
+  // Yurak/shans o'chirilgan
+  s.hearts = s.maxHearts || 5;
   // Daily reset for dailyXp
   const today = todayStr();
   if (s.dailyGoalDate !== today) {
@@ -69,19 +71,16 @@ function addGems(amount) {
 }
 
 function loseHeart() {
-  return updateGame(s => {
-    if (s.hearts > 0) s.hearts -= 1;
-  });
+  // Yurak tizimi o'chirilgan — hech narsa kamaymaydi
+  return getGame();
 }
 
 function restoreHeart(n = 1) {
-  return updateGame(s => {
-    s.hearts = Math.min(s.maxHearts, s.hearts + n);
-  });
+  return getGame();
 }
 
 function refillHearts() {
-  return updateGame(s => { s.hearts = s.maxHearts; });
+  return getGame();
 }
 
 function markLessonComplete(courseId, lessonId, accuracy) {

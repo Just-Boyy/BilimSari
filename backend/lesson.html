@@ -262,7 +262,7 @@
     <div class="top">
       <button type="button" class="exit" id="exitBtn" aria-label="Chiqish">×</button>
       <div class="prog-wrap"><div class="prog-bar" id="progBar"></div></div>
-      <div class="hearts" id="heartsEl">❤️❤️❤️❤️❤️</div>
+      <div class="hearts" id="heartsEl" style="display:none"></div>
     </div>
     <div class="main" id="main"></div>
     <div class="footer">
@@ -287,7 +287,7 @@
     <button type="button" class="btn" id="completeContinue">DAVOM ETISH</button>
   </div>
 
-  <div class="modal-bg" id="heartsModal">
+  <div class="modal-bg" id="heartsModal" style="display:none!important">
     <div class="modal">
       <div id="heartModalIcon" style="margin-bottom:8px;color:#ff4b4b;display:flex;justify-content:center;"></div>
       <h2>Yuraklaringiz tugadi</h2>
@@ -560,9 +560,7 @@
         document.getElementById('main').classList.add('bs-shake');
         setTimeout(() => document.getElementById('main').classList.remove('bs-shake'), 400);
 
-        if (getGame().hearts <= 0) {
-          setTimeout(() => document.getElementById('heartsModal').classList.add('open'), 500);
-        }
+        
       }
     }
 
@@ -688,11 +686,7 @@
     window.confirmExit = confirmExit;
     window.practiceForHearts = practiceForHearts;
 
-    if (getGame().hearts <= 0) {
-      document.getElementById('heartsModal').classList.add('open');
-      const hm = document.getElementById('heartModalIcon');
-      if (hm) hm.innerHTML = icon('heartEmpty');
-    }
+    
     renderQuestion();
     })();
   </script>

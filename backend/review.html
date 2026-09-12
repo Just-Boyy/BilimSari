@@ -37,11 +37,6 @@
   <div class="wrap">
     <h1>Takrorlash</h1>
     <p class="sub">Xato qilgan savollar va mashq</p>
-    <div class="card">
-      <h3>Yurak tiklash</h3>
-      <p>Qisqa mashq qilib 1 ta yurak qaytarib oling.</p>
-      <button class="btn" onclick="heal()">Mashq qilish</button>
-    </div>
     <div id="wrong"></div>
   </div>
   <nav class="bnav"><div class="bnav-inner">
@@ -59,11 +54,7 @@
     requireAuth();
     if (window.BS_I18N) BS_I18N.apply(document);
     document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
-    function heal() {
-      restoreHeart(1);
-      addXp(5);
-      alert('+1 yurak va +5 XP! Yuraklar: ' + getGame().hearts);
-    }
+    function heal() {}
     const g = getGame();
     const box = document.getElementById('wrong');
     if (!g.wrongQueue.length) {

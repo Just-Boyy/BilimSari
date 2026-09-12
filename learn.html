@@ -192,7 +192,6 @@
     <div class="stats-inner">
       <button class="stat-item streak" onclick="openStat('streak')"><span class="ico" id="icoStreak"></span><span id="sStreak">0</span></button>
       <button class="stat-item xp" onclick="openStat('xp')"><span class="ico" id="icoXp"></span><span id="sXp">0</span></button>
-      <button class="stat-item hearts" onclick="openStat('hearts')"><span class="ico" id="icoHearts"></span><span id="sHearts">5</span></button>
       <button class="stat-item gems" onclick="openStat('gems')"><span class="ico" id="icoGems"></span><span id="sGems">0</span></button>
       <button type="button" id="iosInstallBtn" onclick="showInstallGuide()" style="display:none;margin:8px auto 0;max-width:720px;width:calc(100% - 24px);height:40px;border-radius:12px;border:2px solid #58A700;background:#d7ffb8;color:#3c3c3c;font-weight:800;font-size:14px;cursor:pointer;">Ilovani o‘rnatish</button>
   </div>
@@ -266,8 +265,7 @@
       const g = getGame();
       document.getElementById('sStreak').textContent = g.streak;
       document.getElementById('sXp').textContent = g.xp;
-      document.getElementById('sHearts').textContent = g.hearts;
-      document.getElementById('sGems').textContent = g.gems;
+            document.getElementById('sGems').textContent = g.gems;
     }
 
     function renderChips() {
@@ -310,10 +308,6 @@
         `;
         if (!locked) {
           node.querySelector('.node-btn').onclick = () => {
-            if (getGame().hearts <= 0) {
-              openStat('hearts');
-              return;
-            }
             location.href = `lesson.html?course=${courseId}&lesson=${lvl.id}`;
           };
         }
@@ -338,10 +332,6 @@
             <div class="goal ${g.dailyGoal===20?'active':''}" onclick="setGoal(20)">Oddiy — 20 XP</div>
             <div class="goal ${g.dailyGoal===30?'active':''}" onclick="setGoal(30)">Jiddiy — 30 XP</div>
           </div>`;
-      } else if (type === 'hearts') {
-        sheet.innerHTML = `<h3>${icon('heart')} ${g.hearts}/5 yurak</h3>
-          <p>Noto‘g‘ri javobda yurak kamayadi. 0 bo‘lsa darsni davom ettirish qiyinlashadi.</p>
-          <button class="unit-guide" style="width:100%;margin-top:8px;" onclick="location.href='review.html'">Takrorlash orqali tiklash</button>`;
       } else {
         sheet.innerHTML = `<h3>${icon('gem')} ${g.gems} olmos</h3>
           <p>Yaxshi natijalar uchun olmos oling. Keyinchalik do‘kon va bonuslarda ishlatiladi.</p>`;
@@ -357,8 +347,7 @@
 
     document.getElementById('icoStreak').innerHTML = icon('flame');
     document.getElementById('icoXp').innerHTML = icon('zap');
-    document.getElementById('icoHearts').innerHTML = icon('heart');
-    document.getElementById('icoGems').innerHTML = icon('gem');
+        document.getElementById('icoGems').innerHTML = icon('gem');
     document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
     function isIos() {
       return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
