@@ -287,6 +287,49 @@
       position: fixed; width: 10px; height: 14px; top: -20px; z-index: 50;
       animation: confettiFall 2.5s linear forwards;
     }
+  
+    .q-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 800; letter-spacing: .04em;
+      color: #a855f7; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .opt-img-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+    }
+    @media (max-width: 380px) {
+      .opt-img-grid { grid-template-columns: 1fr; }
+    }
+    .opt.img-opt {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 12px 8px 10px;
+      border-radius: 16px;
+      min-height: 140px;
+      text-align: center;
+    }
+    .opt.img-opt img {
+      width: 88px; height: 88px;
+      object-fit: contain;
+      border-radius: 14px;
+      margin-bottom: 8px;
+      background: #0f172a;
+    }
+    .opt.img-opt .img-label {
+      font-size: 14px; font-weight: 700; color: #374151;
+    }
+    .opt.img-opt .img-num {
+      margin-top: 4px;
+      width: 22px; height: 22px; border-radius: 6px;
+      border: 1.5px solid #d1d5db;
+      font-size: 11px; font-weight: 800; color: #9ca3af;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .opt.img-opt.selected .img-num {
+      border-color: #1CB0F6; color: #1CB0F6;
+    }
+
   </style>
 </head>
 <body>
@@ -396,7 +439,7 @@
     }
 
     function typeLabel(t) {
-      return { mc: 'Tanlang', tf: 'To‘g‘ri / Noto‘g‘ri', fill: 'Bo‘sh joyni to‘ldiring', match: 'Moslashtiring', type: 'Yozing' }[t] || 'Savol';
+      return { mc: 'Tanlang', mc_img: 'Rasmli savol', tf: 'To‘g‘ri / Noto‘g‘ri', fill: 'Bo‘sh joyni to‘ldiring', match: 'Moslashtiring', type: 'Yozing' }[t] || 'Savol';
     }
 
     function renderQuestion() {
@@ -418,10 +461,25 @@
 
       let html = `<div class="q-type">${typeLabel(q.type)}</div><div class="q-text">${q.q || 'Mos juftlarni toping'}</div>`;
 
-      if (q.type === 'mc') {
+      if (q.badge) {
+        html = `<div class="q-badge">✦ ${q.badge}</div>` + html;
+      }
+      if (q.type === 'mc' || q.type === 'mc_img') {
         html += '<div class="options">';
         q.options.forEach((o, i) => {
           html += `<button type="button" class="opt" data-i="${i}">${o}</button>`;
+        });
+        html += '</div>';
+      } else if (q.type === 'mc_img') {
+        html += '<div class="options opt-img-grid">';
+        q.options.forEach((o, i) => {
+          const label = (typeof o === 'string') ? o : (o.label || '');
+          const img = (typeof o === 'string') ? '' : (o.img || '');
+          html += `<button type="button" class="opt img-opt" data-i="${i}">` +
+            (img ? `<img src="${img}" alt="${label}" loading="lazy">` : '') +
+            `<span class="img-label">${label}</span>` +
+            `<span class="img-num">${i+1}</span>` +
+            `</button>`;
         });
         html += '</div>';
       } else if (q.type === 'tf') {
@@ -525,10 +583,10 @@
       let ok = false;
       let correctText = '';
 
-      if (q.type === 'mc') {
+      if (q.type === 'mc' || q.type === 'mc_img') {
         if (selected === null) return;
         ok = selected === q.answer;
-        correctText = q.options[q.answer];
+        correctText = (typeof q.options[q.answer] === 'object' && q.options[q.answer]) ? (q.options[q.answer].label || '') : q.options[q.answer];
         document.querySelectorAll('.opt').forEach(el => {
           el.disabled = true;
           const i = +el.dataset.i;
