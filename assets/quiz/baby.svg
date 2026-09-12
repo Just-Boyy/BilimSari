@@ -1,13 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" rx="28" fill="#1e293b"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#EAF3FF"/>
   
-  <circle cx="100" cy="90" r="36" fill="#fcd34d"/>
-  <ellipse cx="100" cy="145" rx="40" ry="28" fill="#7dd3fc"/>
-  <circle cx="88" cy="88" r="5" fill="#1c1917"/>
-  <circle cx="112" cy="88" r="5" fill="#1c1917"/>
-  <circle cx="90" cy="86" r="2" fill="#fff"/>
-  <circle cx="114" cy="86" r="2" fill="#fff"/>
-  <ellipse cx="100" cy="102" rx="6" ry="4" fill="#f9a8d4"/>
-  <path d="M88 112 Q100 120 112 112" stroke="#1c1917" stroke-width="2.5" fill="none"/>
+  <ellipse cx="120" cy="205" rx="55" ry="16" fill="#000" opacity=".07"/>
+  <!-- body / blanket -->
+  <ellipse cx="120" cy="165" rx="55" ry="40" fill="#5B9DFF"/>
+  <ellipse cx="120" cy="160" rx="40" ry="28" fill="#7EB6FF"/>
+  <!-- head -->
+  <circle cx="120" cy="100" r="52" fill="#FFE0B2"/>
+  <!-- sparse hair -->
+  <path d="M100 58 Q110 48 120 55" stroke="#F5C06A" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M120 52 Q130 45 140 56" stroke="#F5C06A" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- eyes -->
+  <circle cx="100" cy="100" r="9" fill="#2B2B2B"/>
+  <circle cx="140" cy="100" r="9" fill="#2B2B2B"/>
+  <circle cx="103" cy="97" r="3.5" fill="#fff"/>
+  <circle cx="143" cy="97" r="3.5" fill="#fff"/>
+  <!-- cheeks -->
+  <circle cx="88" cy="115" r="9" fill="#FF9EBB" opacity=".55"/>
+  <circle cx="152" cy="115" r="9" fill="#FF9EBB" opacity=".55"/>
+  <!-- smile -->
+  <path d="M105 120 Q120 135 135 120" stroke="#2B2B2B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
 
 </svg>

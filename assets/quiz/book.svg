@@ -1,12 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" rx="28" fill="#172554"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#E7F0FF"/>
   
-  <path d="M40 50 h55 v110 h-55 a12 12 0 0 1 -12 -12 v-86 a12 12 0 0 1 12 -12z" fill="#3b82f6"/>
-  <path d="M160 50 h-55 v110 h55 a12 12 0 0 0 12 -12 v-86 a12 12 0 0 0 -12 -12z" fill="#60a5fa"/>
-  <rect x="95" y="50" width="10" height="110" fill="#1e3a8a"/>
-  <line x1="55" y1="80" x2="85" y2="80" stroke="#93c5fd" stroke-width="4"/>
-  <line x1="55" y1="100" x2="85" y2="100" stroke="#93c5fd" stroke-width="4"/>
-  <line x1="115" y1="80" x2="145" y2="80" stroke="#bfdbfe" stroke-width="4"/>
-  <line x1="115" y1="100" x2="145" y2="100" stroke="#bfdbfe" stroke-width="4"/>
+  <ellipse cx="120" cy="210" rx="50" ry="12" fill="#000" opacity=".07"/>
+  <path d="M48 70 h60 v120 h-60 a14 14 0 0 1 -14 -14 v-92 a14 14 0 0 1 14 -14z" fill="#2B7BFF"/>
+  <path d="M192 70 h-60 v120 h60 a14 14 0 0 0 14 -14 v-92 a14 14 0 0 0 -14 -14z" fill="#5AA0FF"/>
+  <rect x="108" y="70" width="24" height="120" fill="#1A4FB8"/>
+  <rect x="60" y="100" width="36" height="8" rx="3" fill="#A8D0FF"/>
+  <rect x="60" y="118" width="28" height="8" rx="3" fill="#A8D0FF"/>
+  <rect x="144" y="100" width="36" height="8" rx="3" fill="#D6EBFF"/>
+  <rect x="144" y="118" width="28" height="8" rx="3" fill="#D6EBFF"/>
 
 </svg>

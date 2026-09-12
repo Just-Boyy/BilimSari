@@ -1,11 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" rx="28" fill="#1e293b"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FFE8F0"/>
   
-  <circle cx="100" cy="70" r="28" fill="#fcd34d"/>
-  <path d="M70 105 Q100 175 130 105 Z" fill="#ec4899"/>
-  <circle cx="90" cy="68" r="4" fill="#1c1917"/>
-  <circle cx="110" cy="68" r="4" fill="#1c1917"/>
-  <path d="M90 82 Q100 90 110 82" stroke="#1c1917" stroke-width="2.5" fill="none"/>
-  <path d="M75 55 Q100 90 125 55" fill="#f59e0b"/>
+  <ellipse cx="120" cy="200" rx="70" ry="22" fill="#000" opacity=".08"/>
+  <!-- dress -->
+  <path d="M78 125 L162 125 L175 198 Q120 215 65 198 Z" fill="#FF6B9D"/>
+  <path d="M78 125 Q120 145 162 125" fill="#FF4F88"/>
+  <!-- head -->
+  <circle cx="120" cy="88" r="46" fill="#FFD29D"/>
+  <!-- hair -->
+  <path d="M74 90 Q70 35 120 32 Q170 35 166 90 Q170 120 155 130 Q140 100 120 98 Q100 100 85 130 Q70 120 74 90" fill="#FF9F43"/>
+  <path d="M74 85 Q90 70 110 68" fill="#FF9F43"/>
+  <!-- eyes -->
+  <ellipse cx="102" cy="88" rx="8" ry="10" fill="#2B2B2B"/>
+  <ellipse cx="138" cy="88" rx="8" ry="10" fill="#2B2B2B"/>
+  <circle cx="105" cy="85" r="3" fill="#fff"/>
+  <circle cx="141" cy="85" r="3" fill="#fff"/>
+  <path d="M90 72 Q102 66 112 72" stroke="#D68910" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M128 72 Q138 66 150 72" stroke="#D68910" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M102 108 Q120 122 138 108" stroke="#2B2B2B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <circle cx="92" cy="100" r="7" fill="#FF8FAB" opacity=".5"/>
+  <circle cx="148" cy="100" r="7" fill="#FF8FAB" opacity=".5"/>
 
 </svg>

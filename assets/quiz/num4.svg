@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" rx="28" fill="#ea580c"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FFE8CC"/>
   
-  <circle cx="100" cy="100" r="55" fill="#fff"/>
-  <text x="100" y="118" text-anchor="middle" font-size="64" font-family="Arial Black, Arial" font-weight="800" fill="#ea580c">4</text>
+  <ellipse cx="120" cy="205" rx="40" ry="12" fill="#000" opacity=".06"/>
+  <circle cx="120" cy="115" r="72" fill="#FF9600"/>
+  <text x="120" y="140" text-anchor="middle" font-family="Arial Rounded MT Bold, Arial Black, Arial" font-size="88" font-weight="800" fill="#ffffff">4</text>
 
 </svg>

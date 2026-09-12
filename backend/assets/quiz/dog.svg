@@ -1,16 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" rx="28" fill="#3d2e1a"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FFF3D6"/>
   
-  <ellipse cx="100" cy="125" rx="50" ry="42" fill="#fbbf24"/>
-  <circle cx="100" cy="100" r="40" fill="#fbbf24"/>
-  <ellipse cx="68" cy="88" rx="14" ry="22" fill="#d97706"/>
-  <ellipse cx="132" cy="88" rx="14" ry="22" fill="#d97706"/>
-  <circle cx="86" cy="100" r="7" fill="#1c1917"/>
-  <circle cx="114" cy="100" r="7" fill="#1c1917"/>
-  <circle cx="88" cy="98" r="2.5" fill="#fff"/>
-  <circle cx="116" cy="98" r="2.5" fill="#fff"/>
-  <ellipse cx="100" cy="112" rx="10" ry="7" fill="#292524"/>
-  <path d="M90 122 Q100 130 110 122" stroke="#292524" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <circle cx="145" cy="140" r="12" fill="#fbbf24"/>
+  <ellipse cx="120" cy="205" rx="55" ry="14" fill="#000" opacity=".07"/>
+  <ellipse cx="120" cy="155" rx="60" ry="45" fill="#F6B94A"/>
+  <circle cx="120" cy="108" r="50" fill="#FFC857"/>
+  <!-- ears -->
+  <ellipse cx="72" cy="95" rx="18" ry="32" fill="#E09520"/>
+  <ellipse cx="168" cy="95" rx="18" ry="32" fill="#E09520"/>
+  <ellipse cx="72" cy="98" rx="10" ry="20" fill="#FFDFA3"/>
+  <ellipse cx="168" cy="98" rx="10" ry="20" fill="#FFDFA3"/>
+  <!-- eyes -->
+  <circle cx="100" cy="108" r="10" fill="#2B2B2B"/>
+  <circle cx="140" cy="108" r="10" fill="#2B2B2B"/>
+  <circle cx="103" cy="104" r="3.5" fill="#fff"/>
+  <circle cx="143" cy="104" r="3.5" fill="#fff"/>
+  <!-- snout -->
+  <ellipse cx="120" cy="128" rx="16" ry="12" fill="#FFE6B0"/>
+  <ellipse cx="120" cy="125" rx="9" ry="7" fill="#2B2B2B"/>
+  <path d="M108 138 Q120 148 132 138" stroke="#2B2B2B" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- tongue -->
+  <path d="M114 142 Q120 155 126 142" fill="#FF6B8A"/>
 
 </svg>
