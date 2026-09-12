@@ -386,25 +386,54 @@
 
     const params = new URLSearchParams(location.search);
     const courseId = params.get('course') || localStorage.getItem('bs_current_course');
-    const lessonId = params.get('lesson');
-    // API kurslarini yuklab, findLesson ishlashi uchun
-    try {
-      const res = await fetch('/api/courses');
-      const data = await res.json();
-      if (data.ok && data.courses) window.COURSES = data.courses;
-    } catch (e) {}
-    let found = findLesson(courseId, lessonId);
-    if (!found && lessonId) {
-      // minimal fallback — darsni baribir ochamiz
-      found = {
-        course: { id: courseId || 'unknown', name: 'Kurs' },
-        unit: { id: 'u', title: 'Bo‘lim' },
-        lesson: { id: lessonId, title: 'Dars', type: 'lesson' }
-      };
-    }
-    if (!found) { location.href = 'learn.html'; return; }
+    const seqParam = params.get('seq');
+    const lessonIdParam = params.get('lesson');
 
-    const questions = getQuestions(lessonId);
+    if (!courseId) { location.href = 'learn.html'; return; }
+
+    // Onboarding fanini majburiy qilish
+    try {
+      const ob = JSON.parse(localStorage.getItem('bs_onboarding_v1') || '{}');
+      if (ob.courseId && ob.courseId !== courseId) {
+        location.href = 'learn.html';
+        return;
+      }
+    } catch (e) {}
+
+    let lessonMeta = { title: 'Dars', seq: Number(seqParam) || 1 };
+    let questions = [];
+
+    async function loadLessonData() {
+      if (seqParam) {
+        const res = await fetch('/api/lessons/' + encodeURIComponent(courseId) + '/' + encodeURIComponent(seqParam));
+        const data = await res.json();
+        if (!data.ok || !data.lesson) throw new Error(data.error || 'Dars topilmadi');
+        lessonMeta = data.lesson;
+        questions = data.lesson.questions || [];
+      } else if (lessonIdParam && typeof getQuestions === 'function') {
+        // eski format fallback
+        questions = getQuestions(lessonIdParam);
+      } else {
+        throw new Error('Dars ko‘rsatilmagan');
+      }
+      if (!questions.length) throw new Error('Savollar yo‘q');
+    }
+
+    try {
+      await loadLessonData();
+    } catch (e) {
+      alert(e.message || 'Dars yuklanmadi');
+      location.href = 'learn.html';
+      return;
+    }
+
+    const lessonId = courseId + '-ai-' + (lessonMeta.seq || seqParam || '1');
+    const found = {
+      course: { id: courseId, name: courseId },
+      unit: { title: lessonMeta.unit_title || '' },
+      lesson: { id: lessonId, title: lessonMeta.title || 'Dars' }
+    };
+
     let idx = 0;
     let correctCount = 0;
     let selected = null;

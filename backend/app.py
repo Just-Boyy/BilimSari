@@ -87,6 +87,13 @@ def init_db():
         print(f'Course seed xato: {e}')
         conn.rollback()
 
+    try:
+        from lesson_ai import ensure_ai_tables
+        ensure_ai_tables(cur, conn)
+    except Exception as e:
+        print(f'AI lessons table xato: {e}')
+        conn.rollback()
+
     conn.commit()
     cur.close()
     conn.close()
@@ -344,6 +351,107 @@ def api_course_one(course_id):
         if not course:
             return jsonify({'ok': False, 'error': 'Fan topilmadi'}), 404
         return jsonify({'ok': True, 'course': course})
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e)}), 500
+
+
+
+@app.route('/api/path/<course_id>', methods=['GET'])
+def api_learning_path(course_id):
+    """Tanlangan fan bo'yicha AI+DB darslar ro'yxati"""
+    try:
+        from lesson_ai import ensure_ai_tables, list_lessons, ensure_min_lessons, COURSE_META
+        conn = get_connection()
+        cur = conn.cursor()
+        ensure_ai_tables(cur, conn)
+        # kamida 1 dars
+        err = ensure_min_lessons(cur, conn, course_id, minimum=1)
+        lessons = list_lessons(cur, course_id)
+        cur.close()
+        conn.close()
+        meta = COURSE_META.get(course_id, {'name': course_id})
+        return jsonify({
+            'ok': True,
+            'course_id': course_id,
+            'course_name': meta.get('name', course_id),
+            'lessons': [
+                {
+                    'id': f'{course_id}-ai-{L["seq"]}',
+                    'seq': L['seq'],
+                    'title': L['title'],
+                    'unit_title': L.get('unit_title') or '',
+                    'type': 'lesson',
+                }
+                for L in lessons
+            ],
+            'error_gen': err,
+        })
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e), 'lessons': []}), 500
+
+
+@app.route('/api/lessons/next', methods=['POST'])
+def api_lesson_next():
+    """Keyingi darsni DB dan ol yoki AI bilan yaratib saqla"""
+    body = request.get_json(silent=True) or {}
+    course_id = (body.get('course_id') or '').strip()
+    if not course_id:
+        return jsonify({'ok': False, 'error': 'course_id kerak'}), 400
+    try:
+        from lesson_ai import get_or_create_next_lesson, ensure_ai_tables
+        conn = get_connection()
+        cur = conn.cursor()
+        ensure_ai_tables(cur, conn)
+        lesson, err = get_or_create_next_lesson(cur, conn, course_id)
+        cur.close()
+        conn.close()
+        if err:
+            return jsonify({'ok': False, 'error': err}), 502
+        qs = lesson.get('questions')
+        if isinstance(qs, str):
+            import json as _json
+            qs = _json.loads(qs)
+        return jsonify({
+            'ok': True,
+            'lesson': {
+                'id': f'{course_id}-ai-{lesson["seq"]}',
+                'seq': lesson['seq'],
+                'title': lesson['title'],
+                'unit_title': lesson.get('unit_title') or '',
+                'questions': qs,
+            }
+        })
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e)}), 500
+
+
+@app.route('/api/lessons/<course_id>/<int:seq>', methods=['GET'])
+def api_lesson_get(course_id, seq):
+    """Bitta dars + savollar (DB)"""
+    try:
+        from lesson_ai import get_lesson, ensure_ai_tables
+        import json as _json
+        conn = get_connection()
+        cur = conn.cursor()
+        ensure_ai_tables(cur, conn)
+        lesson = get_lesson(cur, course_id, seq)
+        cur.close()
+        conn.close()
+        if not lesson:
+            return jsonify({'ok': False, 'error': 'Dars topilmadi'}), 404
+        qs = lesson.get('questions')
+        if isinstance(qs, str):
+            qs = _json.loads(qs)
+        return jsonify({
+            'ok': True,
+            'lesson': {
+                'id': f'{course_id}-ai-{lesson["seq"]}',
+                'seq': lesson['seq'],
+                'title': lesson['title'],
+                'unit_title': lesson.get('unit_title') or '',
+                'questions': qs,
+            }
+        })
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e)}), 500
 
