@@ -464,22 +464,23 @@
       if (q.badge) {
         html = `<div class="q-badge">✦ ${q.badge}</div>` + html;
       }
-      if (q.type === 'mc' || q.type === 'mc_img') {
-        html += '<div class="options">';
-        q.options.forEach((o, i) => {
-          html += `<button type="button" class="opt" data-i="${i}">${o}</button>`;
-        });
-        html += '</div>';
-      } else if (q.type === 'mc_img') {
+      if (q.type === 'mc_img') {
         html += '<div class="options opt-img-grid">';
         q.options.forEach((o, i) => {
           const label = (typeof o === 'string') ? o : (o.label || '');
           const img = (typeof o === 'string') ? '' : (o.img || '');
-          html += `<button type="button" class="opt img-opt" data-i="${i}">` +
-            (img ? `<img src="${img}" alt="${label}" loading="lazy">` : '') +
-            `<span class="img-label">${label}</span>` +
-            `<span class="img-num">${i+1}</span>` +
-            `</button>`;
+          html += '<button type="button" class="opt img-opt" data-i="' + i + '">' +
+            (img ? '<img src="' + img + '" alt="' + label + '" loading="lazy">' : '') +
+            '<span class="img-label">' + label + '</span>' +
+            '<span class="img-num">' + (i+1) + '</span>' +
+            '</button>';
+        });
+        html += '</div>';
+      } else if (q.type === 'mc') {
+        html += '<div class="options">';
+        q.options.forEach((o, i) => {
+          const label = (typeof o === 'string') ? o : (o.label || String(o));
+          html += '<button type="button" class="opt" data-i="' + i + '">' + label + '</button>';
         });
         html += '</div>';
       } else if (q.type === 'tf') {
