@@ -267,12 +267,13 @@ def telegram_auth():
     tg_id = tg_user['telegram_id']
     name = (tg_user['first_name'] + ' ' + tg_user['last_name']).strip() or tg_user['username'] or f'User{tg_id}'
     username = tg_user.get('username') or None
-    photo = tg_user.get('photo_url') or None
+    # initData ichida yoki client yuborgan photo_url
+    photo = tg_user.get('photo_url') or data.get('photo_url') or None
 
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        'SELECT id, name, email, telegram_id FROM users WHERE telegram_id = %s',
+        'SELECT id, name, email, telegram_id, photo_url FROM users WHERE telegram_id = %s',
         (tg_id,)
     )
     row = cur.fetchone()
@@ -284,6 +285,8 @@ def telegram_auth():
             (name, username, photo, user_id)
         )
         conn.commit()
+        # Javobda eng so‘nggi rasm
+        photo = photo or row.get('photo_url')
     else:
         cur.execute(
             'INSERT INTO users (name, email, password_hash, telegram_id, username, photo_url) '
