@@ -437,11 +437,17 @@ def service_worker():
 
 
 
-# ───────────────────────────── AI Tutor ─────────────────────────────
+# ───────────────────────────── AI Tutor (Google Gemini) ─────────────────────────────
 
-XAI_API_KEY = os.environ.get('XAI_API_KEY') or os.environ.get('GROK_API_KEY') or ''
-XAI_BASE = os.environ.get('XAI_API_BASE', 'https://api.x.ai/v1')
-XAI_MODEL = os.environ.get('XAI_MODEL', 'grok-3-mini')
+# Google AI Studio: https://aistudio.google.com/apikey
+GOOGLE_AI_API_KEY = (
+    os.environ.get('GOOGLE_AI_API_KEY')
+    or os.environ.get('GEMINI_API_KEY')
+    or os.environ.get('GOOGLE_API_KEY')
+    or ''
+)
+GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-2.0-flash')
+
 
 def ai_system_prompt(lang: str) -> str:
     if lang == 'ru':
@@ -458,80 +464,95 @@ def ai_system_prompt(lang: str) -> str:
             'Stay educational and safe. If off-topic, gently return to learning.'
         )
     return (
-        'Sen BilimSari platformasidagi do‘stona o‘qituvchi yordamchisan. '
-        'O‘quvchilarga qisqa, tushunarli, o‘zbek tilida javob ber. '
-        'Maktab fanlari: matematika, tillar, biologiya va boshqalar. '
-        'Zararli maslahat berma. Mavzudan tashqari bo‘lsa, o‘qishga qaytar.'
+        "Sen BilimSari platformasidagi do'stona o'qituvchi yordamchisan. "
+        "O'quvchilarga qisqa, tushunarli, o'zbek tilida javob ber. "
+        "Maktab fanlari: matematika, tillar, biologiya va boshqalar. "
+        "Zararli maslahat berma. Mavzudan tashqari bo'lsa, o'qishga qaytar."
     )
 
 
 @app.route('/api/ai/tutor', methods=['POST'])
 def ai_tutor():
-    """AI o'qituvchi — savol / tushuntirish"""
+    """AI o'qituvchi — Google Gemini"""
     import requests as http_requests
 
     body = request.get_json(silent=True) or {}
     message = (body.get('message') or '').strip()
     lang = (body.get('lang') or 'uz')[:5]
-    context = (body.get('context') or '').strip()  # savol, javob, fan
+    context = (body.get('context') or '').strip()
 
     if not message:
-        return jsonify({'ok': False, 'error': 'Xabar bo‘sh'}), 400
+        return jsonify({'ok': False, 'error': 'Xabar bosh', 'reply': None}), 400
     if len(message) > 2000:
-        return jsonify({'ok': False, 'error': 'Xabar juda uzun'}), 400
+        return jsonify({'ok': False, 'error': 'Xabar juda uzun', 'reply': None}), 400
 
-    if not XAI_API_KEY:
+    if not GOOGLE_AI_API_KEY:
         return jsonify({
-            "ok": False,
-            "error": "AI ulanmagan. Railway Variables ga XAI_API_KEY qoshin.",
-            "reply": None,
+            'ok': False,
+            'error': 'AI ulanmagan. Railway Variables ga GOOGLE_AI_API_KEY qoshin (aistudio.google.com).',
+            'reply': None,
         }), 503
 
     user_content = message
     if context:
-        user_content = f'Mavzu/kontekst:\n{context}\n\nO‘quvchi:\n{message}'
+        user_content = f"Mavzu/kontekst:\n{context}\n\nO'quvchi:\n{message}"
+
+    system = ai_system_prompt(lang)
+    url = (
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{GEMINI_MODEL}:generateContent?key={GOOGLE_AI_API_KEY}"
+    )
+    payload = {
+        "system_instruction": {
+            "parts": [{"text": system}]
+        },
+        "contents": [
+            {
+                "role": "user",
+                "parts": [{"text": user_content}],
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0.6,
+            "maxOutputTokens": 600,
+        },
+    }
 
     try:
-        r = http_requests.post(
-            f'{XAI_BASE.rstrip("/")}/chat/completions',
-            headers={
-                'Authorization': f'Bearer {XAI_API_KEY}',
-                'Content-Type': 'application/json',
-            },
-            json={
-                'model': XAI_MODEL,
-                'messages': [
-                    {'role': 'system', 'content': ai_system_prompt(lang)},
-                    {'role': 'user', 'content': user_content},
-                ],
-                'temperature': 0.6,
-                'max_tokens': 600,
-            },
-            timeout=45,
-        )
+        r = http_requests.post(url, json=payload, timeout=45)
+        data = {}
+        try:
+            data = r.json()
+        except Exception:
+            data = {}
+
         if r.status_code != 200:
             detail = ''
-            try:
-                err_json = r.json()
-                detail = err_json.get('error') or err_json.get('message') or str(err_json)
-                if isinstance(detail, dict):
-                    detail = detail.get('message') or str(detail)
-            except Exception:
+            if isinstance(data, dict):
+                err = data.get('error') or {}
+                if isinstance(err, dict):
+                    detail = err.get('message') or str(err)
+                else:
+                    detail = str(err)
+            if not detail:
                 detail = (r.text or '')[:300]
             return jsonify({
                 'ok': False,
                 'error': f'AI xato {r.status_code}: {detail}',
                 'reply': None,
             }), 502
-        data = r.json()
-        reply = (
-            data.get('choices', [{}])[0]
-            .get('message', {})
-            .get('content', '')
-            .strip()
-        )
+
+        # Parse Gemini response
+        reply = ''
+        try:
+            parts = data['candidates'][0]['content']['parts']
+            reply = ''.join(p.get('text', '') for p in parts).strip()
+        except Exception:
+            reply = ''
+
         if not reply:
             return jsonify({'ok': False, 'error': 'Bosh javob', 'reply': None}), 502
+
         return jsonify({'ok': True, 'reply': reply})
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e), 'reply': None}), 500
