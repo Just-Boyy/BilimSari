@@ -18,8 +18,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: #fff;
-      color: #3c3c3c;
+      background: #f8fafc;
+      color: #1f2937;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -81,6 +81,14 @@
     .q-type {
       font-size: 13px; font-weight: 700; color: #afafaf;
       text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px;
+    }
+    .main-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 18px 16px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+      margin: 0 0 12px;
     }
     .q-text {
       font-size: 24px; font-weight: 700; line-height: 1.3; margin-bottom: 28px;
@@ -149,6 +157,12 @@
       padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
     }
     .footer-inner { max-width: 600px; margin: 0 auto; }
+    .footer-bar {
+      position: sticky; bottom: 0;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    }
     .check-btn, .continue-btn {
       width: 100%;
       height: 52px;
@@ -160,14 +174,32 @@
       letter-spacing: .3px;
       transition: .15s;
     }
+    .footer-bar {
+      position: sticky; bottom: 0;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    }
     .check-btn {
       background: #e5e5e5;
       color: #afafaf;
+    }
+    .footer-bar {
+      position: sticky; bottom: 0;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
     }
     .check-btn.active {
       background: #58A700;
       color: #fff;
       box-shadow: 0 4px 0 #3f7d00;
+    }
+    .footer-bar {
+      position: sticky; bottom: 0;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
     }
     .check-btn.active:active { transform: translateY(2px); box-shadow: 0 2px 0 #3f7d00; }
     .continue-btn {
@@ -271,7 +303,7 @@
           <h3 id="fbTitle"></h3>
           <p id="fbText"></p>
         </div>
-        <button type="button" class="check-btn" id="actionBtn">TEKSHIRISH</button>
+        <button type="button" class="check-btn" id="actionBtn">Tekshirish</button>
       </div>
     </div>
   </div>
@@ -284,7 +316,7 @@
       <div class="stat"><b id="cAcc">0%</b><span>Aniqlik</span></div>
       <div class="stat"><b id="cStreak">0</b><span>Streak</span></div>
     </div>
-    <button type="button" class="btn" id="completeContinue">DAVOM ETISH</button>
+    <button type="button" class="btn" id="completeContinue">Davom etish</button>
   </div>
 
   <div class="modal-bg" id="heartsModal" style="display:none!important">
@@ -367,7 +399,7 @@
       fb.className = 'feedback';
       const btn = document.getElementById('actionBtn');
       btn.className = 'check-btn';
-      btn.textContent = 'TEKSHIRISH';
+      btn.textContent = 'Tekshirish';
       btn.onclick = onAction;
 
       let html = `<div class="q-type">${typeLabel(q.type)}</div><div class="q-text">${q.q || 'Mos juftlarni toping'}</div>`;
@@ -394,7 +426,7 @@
         html += '</div>';
       }
 
-      main.innerHTML = html;
+      main.innerHTML = '<div class="main-card">' + html + '</div>';
       const fill = document.getElementById('fillInput');
       if (fill) fill.addEventListener('input', onFillInput);
       if (q.type === 'match') {
@@ -536,7 +568,7 @@
         document.getElementById('fbText').textContent = `+${gain} XP`;
         var expOk = document.getElementById('aiExplainBtn'); if (expOk) expOk.style.display = 'none';
         btn.className = 'continue-btn';
-        btn.textContent = 'DAVOM ETISH';
+        btn.textContent = 'Davom etish';
       } else {
         loseHeart();
         renderHearts();
@@ -556,7 +588,7 @@
         exp.style.display = 'block';
         exp.onclick = function () { explainCurrentWrong(correctText); };
         btn.className = 'continue-btn wrong-theme';
-        btn.textContent = 'DAVOM ETISH';
+        btn.textContent = 'Davom etish';
         document.getElementById('main').classList.add('bs-shake');
         setTimeout(() => document.getElementById('main').classList.remove('bs-shake'), 400);
 
