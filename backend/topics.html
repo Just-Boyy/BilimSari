@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F8FB">
+<title>Mavzular — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="subjects.html" aria-label="Orqaga">←</a>
+  <h1 id="fanNomi">Mavzular<small id="fanSinf">Yuklanmoqda...</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="ustPanel"></div>
+  <div id="ro-yxat" style="margin-top:20px">
+    <div class="skelet" style="height:90px;margin-bottom:14px"></div>
+    <div class="skelet" style="height:90px;margin-bottom:14px"></div>
+    <div class="skelet" style="height:90px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('subjects.html');
+
+  var parametr = new URLSearchParams(location.search);
+  var fan = parametr.get('fan');
+  var to_xtat = null;
+
+  if (!fan) { location.replace('subjects.html'); return; }
+
+  var YORLIQ = {
+    completed: 'Tugallandi',
+    current: 'Bugungi mavzu',
+    cooldown: 'Kutishda',
+    locked: 'Qulflangan',
+  };
+
+  var YULDUZ = '<svg class="yulduz" viewBox="0 0 72 72" aria-hidden="true">' +
+    '<path d="M36 4l8.5 16.5L63 23l-13.5 12L53 54l-17-9-17 9 3.5-19L9 23l18.5-2.5z"/></svg>';
+
+  async function yukla() {
+    var res = await API.mavzular(fan);
+    if (UI.sinfKerak(res)) return;
+
+    var ro_yxat = document.getElementById('ro-yxat');
+
+    if (!res.ok) {
+      ro_yxat.innerHTML = res.code === 'empty_subject'
+        ? UI.holat({
+            belgi: '🛠️',
+            sarlavha: 'Mavzular tayyorlanmoqda',
+            matn: 'Bu fan bo\'yicha darslar hali qo\'shilmagan.',
+            tugma: 'Fanlarga qaytish', tugmaYo_l: 'subjects.html',
+          })
+        : UI.xatoHolat(res.error, yukla);
+      return;
+    }
+
+    document.getElementById('fanNomi').innerHTML =
+      res.subject.icon + ' ' + UI.esc(res.subject.name) +
+      '<small>' + res.grade + '-sinf</small>';
+    document.title = res.subject.name + ' — BilimSari';
+
+    // Ust panel: progress yoki kutish taymeri
+    if (to_xtat) { to_xtat(); to_xtat = null; }
+    var ust = document.getElementById('ustPanel');
+
+    if (res.cooldown && res.cooldown.active) {
+      ust.innerHTML =
+        '<div class="kutish-karta">' +
+          '<h2>Keyingi mavzu qulflangan</h2>' +
+          '<p>Bir kunda bitta mavzu o\'rganiladi</p>' +
+          '<div class="taymer" id="taymer" role="timer">--:--:--</div>' +
+          '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+            UI.esc(res.cooldown.unlock_at_tashkent || '') + ' da ochiladi</p>' +
+        '</div>';
+      to_xtat = UI.taymer(document.getElementById('taymer'), res.cooldown.seconds_left,
+        function () { UI.xabar('Keyingi mavzu ochildi!', 'muvaffaqiyat'); yukla(); });
+    } else {
+      ust.innerHTML =
+        '<div class="karta-tekis">' +
+          '<div class="progress-qator">' +
+            '<span>' + res.completed + ' / ' + res.total + '</span>' +
+            '<div class="progress"><i style="width:' + res.percent + '%;background:' +
+              UI.esc(res.subject.color) + '"></i></div>' +
+            '<span>' + res.percent + '%</span>' +
+          '</div>' +
+        '</div>';
+    }
+
+    // Mavzular yo'li
+    ro_yxat.innerHTML = '<div class="yo-l">' + res.topics.map(function (m) {
+      var sinf = { completed: 'tugallangan', current: 'joriy',
+                   cooldown: 'kutish', locked: 'qulflangan' }[m.state];
+      var tugun = m.state === 'completed' ? YULDUZ
+        : (m.state === 'locked' ? '🔒' : (m.state === 'cooldown' ? '🕐' : m.seq));
+
+      var ichki =
+        '<span class="mavzu-tugun" aria-hidden="true">' + tugun + '</span>' +
+        '<h3>' + m.seq + '. ' + UI.esc(m.title) + '</h3>' +
+        '<p class="tavsif">' + UI.esc(m.summary) + '</p>' +
+        '<span class="yorliq">' + YORLIQ[m.state] + '</span>';
+
+      var ochiq = m.state === 'completed' || m.state === 'current';
+      if (ochiq) {
+        return '<a class="mavzu ' + sinf + '" href="topic.html?fan=' +
+          encodeURIComponent(fan) + '&mavzu=' + encodeURIComponent(m.slug) + '">' +
+          ichki + '</a>';
+      }
+      var sabab = m.state === 'cooldown'
+        ? 'Bu mavzu ' + UI.vaqtMatn(res.cooldown.seconds_left) + 'dan so\'ng ochiladi.'
+        : 'Avval oldingi mavzuni yakunlang.';
+      return '<div class="mavzu ' + sinf + '" role="button" tabindex="0"' +
+        ' data-sabab="' + UI.esc(sabab) + '">' + ichki + '</div>';
+    }).join('') + '</div>';
+
+    ro_yxat.querySelectorAll('[data-sabab]').forEach(function (el) {
+      function ayt() { UI.xabar(el.dataset.sabab); }
+      el.onclick = ayt;
+      el.onkeydown = function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ayt(); }
+      };
+    });
+  }
+
+  yukla();
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) yukla();
+  });
+})();
+</script>
+</body>
+</html>

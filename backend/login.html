@@ -1,314 +1,97 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BilimSari — Kirish</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="BilimSari">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/assets/apple-touch-icon-152.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/assets/apple-touch-icon-120.png">
-
-  <link rel="icon" type="image/png" href="assets/logo-icon-32.png">
-  <link rel="apple-touch-icon" href="assets/logo-icon-64.png">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #fff;
-      color: #111;
-      font-family: Arial, Helvetica, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 32px 20px;
-    }
-
-    .login-page {
-      width: 100%;
-      max-width: 520px;
-      text-align: center;
-    }
-
-    .brand {
-      display: inline-block;
-      margin-bottom: 28px;
-      line-height: 1;
-    }
-
-    .brand-full {
-      height: 52px;
-      width: auto;
-      display: block;
-    }
-
-    .subtitle {
-      margin: 0 0 40px;
-      color: #737373;
-      font-size: 16px;
-    }
-
-    .login-card {
-      width: 100%;
-      border: 1px solid #e1e1e1;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 2px 5px rgba(0,0,0,.04);
-      text-align: left;
-    }
-
-    .google-btn {
-      width: 100%;
-      height: 49px;
-      border: 1px solid #dedede;
-      border-radius: 7px;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .google-btn:hover { background: #fafafa; box-shadow: 0 2px 7px rgba(0,0,0,.06); }
-
-    .google-icon { width: 18px; height: 18px; }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 28px 0;
-      color: #737373;
-      font-size: 12px;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: "";
-      height: 1px;
-      background: #dedede;
-      flex: 1;
-    }
-
-    .field { margin-bottom: 17px; }
-
-    .label-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 9px;
-    }
-
-    label {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .forgot {
-      color: #111;
-      text-decoration: none;
-      font-size: 12px;
-    }
-
-    .forgot:hover { text-decoration: underline; }
-
-    .input-wrap { position: relative; }
-
-    .input-icon {
-      position: absolute;
-      left: 13px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #777;
-      width: 18px;
-      height: 18px;
-    }
-
-    input {
-      width: 100%;
-      height: 50px;
-      border: 1px solid #dedede;
-      border-radius: 7px;
-      outline: none;
-      padding: 0 14px 0 40px;
-      font-size: 14px;
-      color: #111;
-      transition: .2s ease;
-    }
-
-    input:focus {
-      border-color: #111;
-      box-shadow: 0 0 0 2px rgba(0,0,0,.04);
-    }
-
-    input::placeholder { color: #8a8a8a; }
-
-    .login-btn {
-      width: 100%;
-      height: 49px;
-      margin-top: 2px;
-      border: 0;
-      border-radius: 7px;
-      background: #171717;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .login-btn:hover { background: #000; }
-    .login-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .error-msg {
-      display: none;
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 13px;
-      margin-bottom: 18px;
-    }
-
-    .error-msg.show { display: block; }
-
-    .register {
-      margin: 26px 0 0;
-      text-align: center;
-      color: #737373;
-      font-size: 13px;
-    }
-
-    .register a {
-      color: #111;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .register a:hover { text-decoration: underline; }
-
-    @media (max-width: 560px) {
-      body { padding: 22px 16px; }
-      .brand-full { height: 42px; }
-      .subtitle { margin-bottom: 30px; }
-      .login-card { padding: 24px 20px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F8FB">
+<title>Kirish — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
 </head>
-<body>
-  <main class="login-page">
-    <a href="index.html" class="brand">
-      <img src="assets/logo-full.png" alt="BilimSari" class="brand-full">
-    </a>
-    <p class="subtitle">Salom! Hisobingizga kiring</p>
+<body class="no-nav">
 
-    <section class="login-card">
-      <button class="google-btn" type="button" onclick="googleLogin()">
-        <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.39-.18-2.05H12v3.88h5.38a4.6 4.6 0 0 1-1.99 3.02v2.51h3.22c1.88-1.73 2.99-4.28 2.99-7.36Z"/>
-          <path fill="#34A853" d="M12 22c2.7 0 4.96-.9 6.61-2.41l-3.22-2.51c-.9.6-2.04.96-3.39.96-2.61 0-4.82-1.76-5.61-4.13H3.06v2.59A9.99 9.99 0 0 0 12 22Z"/>
-          <path fill="#FBBC05" d="M6.39 13.91A6.01 6.01 0 0 1 6.07 12c0-.66.11-1.3.32-1.91V7.5H3.06A10 10 0 0 0 2 12c0 1.61.39 3.13 1.06 4.5l3.33-2.59Z"/>
-          <path fill="#EA4335" d="M12 5.96c1.47 0 2.79.51 3.83 1.51l2.87-2.87C16.96 2.97 14.7 2 12 2a9.99 9.99 0 0 0-8.94 5.5l3.33 2.59C7.18 7.72 9.39 5.96 12 5.96Z"/>
-        </svg>
-        Google orqali davom etish
-      </button>
+<main class="markaz">
+  <div class="logo-qator">
+    <span class="logo-belgi" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 72 72" fill="none" stroke="currentColor"
+           stroke-width="3.4" stroke-linejoin="round">
+        <path d="M36 6l8 14 16 2-12 11 3 16-15-8-15 8 3-16L12 22l16-2z"/>
+      </svg>
+    </span>
+    <b>BilimSari</b>
+  </div>
 
-      <div class="divider"><span>YOKI</span></div>
+  <h1 style="margin-bottom:6px">Xush kelibsiz</h1>
+  <p class="izoh" style="margin-bottom:24px">Davom etish uchun hisobingizga kiring.</p>
 
-      <div id="error" class="error-msg"></div>
+  <form id="forma" novalidate>
+    <div class="maydon">
+      <label for="email">Email</label>
+      <input class="kiritish" type="email" id="email" name="email" autocomplete="email"
+             placeholder="ism@example.com" required>
+    </div>
+    <div class="maydon">
+      <label for="parol">Parol</label>
+      <input class="kiritish" type="password" id="parol" name="parol"
+             autocomplete="current-password" placeholder="Parolingiz" required>
+    </div>
+    <p id="xato" class="izoh" style="color:var(--qizil);min-height:1.4em;margin:0 0 12px"></p>
+    <button class="tugma" type="submit" id="yubor">Kirish</button>
+  </form>
 
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div class="field">
-          <div class="label-row"><label for="email">Email</label></div>
-          <div class="input-wrap">
-            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-              <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
-            </svg>
-            <input id="email" type="email" placeholder="siz@example.com" required autocomplete="email">
-          </div>
-        </div>
+  <p class="izoh" style="text-align:center;margin-top:20px">
+    Hisobingiz yo'qmi? <a href="register.html"><b>Ro'yxatdan o'ting</b></a>
+  </p>
+</main>
 
-        <div class="field">
-          <div class="label-row">
-            <label for="password">Parol</label>
-            <a class="forgot" href="#" onclick="alert('Parolni tiklash keyingi bosqichda qo‘shiladi'); return false;">Parolni unutdingizmi?</a>
-          </div>
-          <div class="input-wrap">
-            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-              <rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
-            </svg>
-            <input id="password" type="password" placeholder="••••••••" required autocomplete="current-password">
-          </div>
-        </div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(function () {
+  var qaytish = new URLSearchParams(location.search).get('qaytish');
 
-        <button class="login-btn" type="submit" id="submitBtn">Kirish</button>
-      </form>
-    </section>
+  function keyingiSahifa(user) {
+    if (qaytish && /^[\w.-]+\.html(\?.*)?$/.test(qaytish)) return qaytish;
+    return (user && user.grade) ? 'dashboard.html' : 'onboarding.html';
+  }
 
-    <p class="register">Hisobingiz yo‘qmi? <a href="register.html">Ro‘yxatdan o‘tish</a></p>
-  </main>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="js/telegram.js"></script>
-  <script src="js/auth.js"></script>
-  <script>
-    redirectIfLoggedIn();
-
-    // Telegram Mini App: avtomatik kirish
-    (async function () {
-      if (window.BilimSariTG && BilimSariTG.isTelegram()) {
-        const ok = await BilimSariTG.autoAuthIfTelegram();
-        if (ok) window.location.href = "learn.html";
-      }
-    })();
-
-    function showError(msg) {
-      const el = document.getElementById('error');
-      el.textContent = msg;
-      el.classList.add('show');
+  // Telegram ichida bo'lsak avtomatik kiramiz
+  (async function () {
+    if (window.BilimSariTG && typeof BilimSariTG.autoAuthIfTelegram === 'function') {
+      try {
+        var ok = await BilimSariTG.autoAuthIfTelegram();
+        if (ok && API.kirganmi()) location.replace(keyingiSahifa(API.user()));
+      } catch (e) {}
     }
+  })();
 
-    function hideError() {
-      document.getElementById('error').classList.remove('show');
-    }
+  document.getElementById('forma').onsubmit = async function (e) {
+    e.preventDefault();
+    var xato = document.getElementById('xato');
+    var tugma = document.getElementById('yubor');
+    var email = document.getElementById('email').value.trim();
+    var parol = document.getElementById('parol').value;
 
-    async function handleLogin(e) {
-      e.preventDefault();
-      hideError();
+    xato.textContent = '';
+    if (!email || !parol) { xato.textContent = 'Email va parolni kiriting.'; return; }
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    tugma.disabled = true;
+    tugma.textContent = 'Tekshirilmoqda...';
 
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Kutilmoqda...';
+    var res = await API.kirish(email, parol);
 
-      const result = await login(email, password);
-      if (result.ok) {
-        window.location.href = 'learn.html';
-      } else {
-        showError(result.error);
-        btn.disabled = false;
-        btn.textContent = 'Kirish';
-      }
-    }
+    tugma.disabled = false;
+    tugma.textContent = 'Kirish';
 
-    function googleLogin() {
-      alert('Google orqali kirish keyingi bosqichda ulanadi.');
-    }
-  </script>
+    if (!res.ok) { xato.textContent = res.error; return; }
+
+    API.sessiyaOchish(res.token, res.user);
+    location.href = keyingiSahifa(res.user);
+  };
+})();
+</script>
 </body>
 </html>

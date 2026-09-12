@@ -1,12 +1,12 @@
 {
   "name": "BilimSari",
   "short_name": "BilimSari",
-  "description": "O‘zbek tilida zamonaviy ta’lim platformasi",
-  "start_url": "/learn.html",
+  "description": "O'zbek maktab o'quvchilari uchun raqamli ta'lim platformasi",
+  "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#58A700",
+  "background_color": "#16283C",
+  "theme_color": "#16283C",
   "orientation": "portrait-primary",
   "lang": "uz",
   "icons": [

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F8FB">
+<title>Mening fanlarim — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
+  <h1>Mening fanlarim<small id="sinfMatn">Yuklanmoqda...</small></h1>
+</div>
+
+<main class="sahifa sahifa-keng" style="padding-top:18px">
+  <div class="fanlar" id="fanlar">
+    <div class="skelet" style="height:150px"></div>
+    <div class="skelet" style="height:150px"></div>
+    <div class="skelet" style="height:150px"></div>
+    <div class="skelet" style="height:150px"></div>
+  </div>
+
+  <section class="bo-lim" id="sinfBo-lim" hidden>
+    <div class="karta-tekis" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px">
+        <h3 style="margin-bottom:3px">Sinf noto'g'rimi?</h3>
+        <p class="izoh">Sinfni o'zgartirsangiz, o'sha sinf darslari ko'rsatiladi.
+          Yig'ilgan natijalaringiz saqlanib qoladi.</p>
+      </div>
+      <a class="tugma tugma-ikkilamchi tugma-mayda" href="onboarding.html">Sinfni o'zgartirish</a>
+    </div>
+  </section>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('subjects.html');
+
+  var quti = document.getElementById('fanlar');
+
+  async function yukla() {
+    var res = await API.fanlar();
+    if (UI.sinfKerak(res)) return;
+
+    if (!res.ok) {
+      quti.style.gridTemplateColumns = '1fr';
+      quti.innerHTML = UI.xatoHolat(res.error, yukla);
+      return;
+    }
+
+    document.getElementById('sinfMatn').textContent = res.grade + '-sinf';
+    document.getElementById('sinfBo-lim').hidden = false;
+
+    if (!res.subjects.length) {
+      quti.style.gridTemplateColumns = '1fr';
+      quti.innerHTML = UI.holat({
+        belgi: '🛠️',
+        sarlavha: 'Hozircha fanlar mavjud emas',
+        matn: res.empty_message || 'Sizning sinfingiz uchun darslar tayyorlanmoqda.',
+        tugma: 'Boshqa sinfni tanlash', tugmaYo_l: 'onboarding.html',
+      });
+      return;
+    }
+
+    quti.style.gridTemplateColumns = '';
+    quti.innerHTML = res.subjects.map(function (f) {
+      var holat = f.finished
+        ? 'Hamma mavzu tugallandi'
+        : (f.current_topic
+            ? (f.current_topic.state === 'cooldown' ? 'Keyingi: ' : 'Hozir: ') +
+              UI.esc(f.current_topic.title)
+            : 'Hali boshlanmagan');
+      return '<a class="fan' + (f.finished ? ' tugagan' : '') + '"' +
+        ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
+        ' style="border-left-color:' + UI.esc(f.color) + '">' +
+        '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+        '<h3>' + UI.esc(f.name) + '</h3>' +
+        '<p class="holat">' + holat + '</p>' +
+        '<div class="progress"><i style="width:' + f.percent + '%;background:' +
+          UI.esc(f.color) + '"></i></div>' +
+        '<p class="foiz">' + f.completed_topics + ' / ' + f.total_topics + ' mavzu</p></a>';
+    }).join('');
+  }
+
+  yukla();
+})();
+</script>
+</body>
+</html>

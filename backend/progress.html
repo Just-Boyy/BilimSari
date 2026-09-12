@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F8FB">
+<title>Natijalarim — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .fan-blok { margin-bottom: 16px; }
+  .fan-bosh {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .fan-bosh .belgi { font-size: 1.4rem; }
+  .fan-bosh h3 { flex: 1; font-size: 1.05rem; }
+  .fan-bosh .son { font-size: .85rem; color: var(--matn-2); font-weight: 600; }
+  .mavzu-qator {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 0; border-top: 1px solid var(--chiziq);
+    font-size: .92rem;
+  }
+  .mavzu-qator:first-of-type { border-top: none; }
+  .mavzu-qator .nishon { flex: 0 0 auto; width: 22px; text-align: center; }
+  .mavzu-qator .nom { flex: 1; min-width: 0; }
+  .mavzu-qator .ball {
+    font-weight: 700; font-size: .82rem; color: var(--yashil);
+    background: var(--yashil-och); padding: 2px 9px; border-radius: 999px;
+  }
+  .mavzu-qator.qulf { color: var(--matn-3); }
+</style>
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
+  <h1>Natijalarim<small id="sinfMatn"></small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="tana">
+    <div class="skelet" style="height:90px;margin-bottom:16px"></div>
+    <div class="skelet" style="height:200px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('progress.html');
+
+  var NISHON = { completed: '✅', current: '🔵', cooldown: '🕐', locked: '🔒' };
+
+  async function yukla() {
+    var tana = document.getElementById('tana');
+    var d = await API.dashboard();
+    if (UI.sinfKerak(d)) return;
+
+    if (!d.ok) { tana.innerHTML = UI.xatoHolat(d.error, yukla); return; }
+    if (d.needs_onboarding) { location.href = 'onboarding.html'; return; }
+
+    document.getElementById('sinfMatn').textContent = d.grade + '-sinf';
+
+    if (!d.subjects.length) {
+      tana.innerHTML = UI.holat({
+        belgi: '📈',
+        sarlavha: 'Hozircha natija yo\'q',
+        matn: 'Sinfingiz uchun darslar qo\'shilgach, natijalaringiz shu yerda ko\'rinadi.',
+        tugma: 'Sinfni o\'zgartirish', tugmaYo_l: 'onboarding.html',
+      });
+      return;
+    }
+
+    // Har bir fan uchun mavzular ro'yxatini olamiz
+    var ro_yxatlar = await Promise.all(d.subjects.map(function (f) {
+      return API.mavzular(f.key);
+    }));
+
+    var s = d.stats;
+    tana.innerHTML =
+      '<div class="karta">' +
+        '<h2 style="margin-bottom:12px">Umumiy progress</h2>' +
+        '<div class="progress-qator">' +
+          '<span>' + s.completed_topics + ' / ' + s.total_topics + '</span>' +
+          '<div class="progress"><i style="width:' + s.percent + '%"></i></div>' +
+          '<span>' + s.percent + '%</span>' +
+        '</div>' +
+        '<div class="stat-setka" style="margin-top:16px">' +
+          '<div class="stat"><b>' + s.completed_topics + '</b><span>Tugallangan</span></div>' +
+          '<div class="stat"><b>' + s.subjects_count + '</b><span>Fan</span></div>' +
+          '<div class="stat"><b>' + s.finished_subjects + '</b><span>Tugagan fan</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bo-lim"><h2>Fanlar bo\'yicha</h2></div>' +
+      d.subjects.map(function (f, i) {
+        var r = ro_yxatlar[i];
+        var mavzular = (r && r.ok) ? r.topics : [];
+        return '<div class="karta-tekis fan-blok">' +
+          '<div class="fan-bosh">' +
+            '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+            '<h3>' + UI.esc(f.name) + '</h3>' +
+            '<span class="son">' + f.completed_topics + '/' + f.total_topics + '</span>' +
+          '</div>' +
+          '<div class="progress" style="margin-bottom:10px"><i style="width:' + f.percent +
+            '%;background:' + UI.esc(f.color) + '"></i></div>' +
+          mavzular.map(function (m) {
+            var ball = (m.quiz_score != null && m.state === 'completed')
+              ? '<span class="ball">' + m.quiz_score + '%</span>' : '';
+            return '<div class="mavzu-qator' +
+              (m.state === 'locked' || m.state === 'cooldown' ? ' qulf' : '') + '">' +
+              '<span class="nishon" aria-hidden="true">' + NISHON[m.state] + '</span>' +
+              '<span class="nom">' + m.seq + '. ' + UI.esc(m.title) + '</span>' + ball +
+              '</div>';
+          }).join('') +
+        '</div>';
+      }).join('');
+  }
+
+  yukla();
+})();
+</script>
+</body>
+</html>

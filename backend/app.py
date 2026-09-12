@@ -4,44 +4,32 @@ BilimSari Backend — Flask + PostgreSQL
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import hashlib
-import secrets
 import os
 import json
 import urllib.request
-from datetime import datetime, timedelta
-from functools import wraps
+
+import ai_tutor
+import study
+import study_api
+from auth_core import (
+    SECRET,
+    auth_required,
+    create_token,
+    hash_password,
+    needs_rehash,
+    token_from_request,
+    verify_password,
+)
+from db import add_column_if_missing, get_connection
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
+app.register_blueprint(study_api.bp)
+app.register_blueprint(ai_tutor.bp)
 
-SECRET = os.environ.get('SECRET_KEY', 'bilimsari-dev-secret-change-me')
-BOT_TOKEN = os.environ.get('BOT_TOKEN', '8994766252:AAG_wqhRFHJNx447MmyqWAYsbzGD88kReVE')
+# BOT_TOKEN faqat muhit o'zgaruvchisidan olinadi — kodda saqlanmaydi.
+BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
-
-
-
-# ───────────────────────────── Database ─────────────────────────────
-
-def get_connection():
-    """PostgreSQL ulanishi (Railway DATABASE_URL orqali)"""
-    database_url = os.environ.get('DATABASE_URL')
-
-    if not database_url:
-        raise RuntimeError(
-            'DATABASE_URL topilmadi. Railway’da PostgreSQL qo‘shing '
-            'yoki lokalda DATABASE_URL o‘rnating.'
-        )
-
-    # Railway ba’zan postgres:// beradi, psycopg2 postgresql:// kutadi
-    if database_url.startswith('postgres://'):
-        database_url = database_url.replace('postgres://', 'postgresql://', 1)
-
-    import psycopg2
-    from psycopg2.extras import RealDictCursor
-
-    conn = psycopg2.connect(database_url, cursor_factory=RealDictCursor)
-    return conn
 
 
 def init_db():
@@ -69,9 +57,6 @@ def init_db():
     for stmt in [
         "ALTER TABLE users ALTER COLUMN email DROP NOT NULL",
         "ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL",
-        "ALTER TABLE users ADD COLUMN IF NOT EXISTS telegram_id BIGINT UNIQUE",
-        "ALTER TABLE users ADD COLUMN IF NOT EXISTS username TEXT",
-        "ALTER TABLE users ADD COLUMN IF NOT EXISTS photo_url TEXT",
     ]:
         try:
             cur.execute(stmt)
@@ -79,14 +64,24 @@ def init_db():
         except Exception:
             conn.rollback()
 
-    # Fanlar (courses) jadvallari + seed
+    for column, ddl in [
+        ('telegram_id', 'BIGINT'),
+        ('username', 'TEXT'),
+        ('photo_url', 'TEXT'),
+    ]:
+        add_column_if_missing(cur, conn, 'users', column, ddl)
+
+    # Yangi o'quv tizimi: subjects / topics / user_progress + curriculum sinxroni
     try:
-        from seed_courses import seed_courses
-        seed_courses(cur, conn)
+        study.ensure_tables(cur, conn)
+        written = study.sync_curriculum(cur, conn)
+        if written:
+            print(f'Curriculum sinxronlandi: {written} ta mavzu')
     except Exception as e:
-        print(f'Course seed xato: {e}')
+        print(f'Study jadvallari xatosi: {e}')
         conn.rollback()
 
+    # Eski AI-darslar tizimi (saqlanib qoldi, ixtiyoriy qo'shimcha sifatida)
     try:
         from lesson_ai import ensure_ai_tables
         ensure_ai_tables(cur, conn)
@@ -97,55 +92,6 @@ def init_db():
     conn.commit()
     cur.close()
     conn.close()
-
-
-def hash_password(password: str) -> str:
-    return hashlib.sha256((password + SECRET).encode()).hexdigest()
-
-
-def create_token(user_id: int) -> str:
-    token = secrets.token_hex(32)
-    expires = datetime.utcnow() + timedelta(days=7)
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute(
-        'INSERT INTO tokens (token, user_id, expires_at) VALUES (%s, %s, %s)',
-        (token, user_id, expires)
-    )
-    conn.commit()
-    cur.close()
-    conn.close()
-    return token
-
-
-def get_user_by_token(token: str):
-    if not token:
-        return None
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute('''
-        SELECT u.id, u.name, u.email
-        FROM tokens t
-        JOIN users u ON u.id = t.user_id
-        WHERE t.token = %s AND t.expires_at > NOW()
-    ''', (token,))
-    row = cur.fetchone()
-    cur.close()
-    conn.close()
-    return dict(row) if row else None
-
-
-def auth_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.headers.get('Authorization', '')
-        token = auth.replace('Bearer ', '').strip() if auth.startswith('Bearer ') else None
-        user = get_user_by_token(token)
-        if not user:
-            return jsonify({'ok': False, 'error': 'Avtorizatsiya talab qilinadi'}), 401
-        request.user = user
-        return f(*args, **kwargs)
-    return decorated
 
 
 # ───────────────────────────── Routes ─────────────────────────────
@@ -214,24 +160,38 @@ def login():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        'SELECT id, name, email, password_hash FROM users WHERE email = %s',
+        'SELECT id, name, email, grade, password_hash FROM users WHERE email = %s',
         (email,)
     )
     user = cur.fetchone()
-    cur.close()
-    conn.close()
 
     if not user:
+        cur.close()
+        conn.close()
         return jsonify({'ok': False, 'error': 'Bunday foydalanuvchi topilmadi'}), 401
 
-    if user['password_hash'] != hash_password(password):
+    if not verify_password(password, user['password_hash']):
+        cur.close()
+        conn.close()
         return jsonify({'ok': False, 'error': 'Parol noto‘g‘ri'}), 401
+
+    # Eski sha256 hash — kirish paytida yangi formatga ko'chiramiz
+    if needs_rehash(user['password_hash']):
+        cur.execute(
+            'UPDATE users SET password_hash = %s WHERE id = %s',
+            (hash_password(password), user['id'])
+        )
+        conn.commit()
+
+    cur.close()
+    conn.close()
 
     token = create_token(user['id'])
     return jsonify({
         'ok': True,
         'token': token,
-        'user': {'id': user['id'], 'name': user['name'], 'email': user['email']}
+        'user': {'id': user['id'], 'name': user['name'], 'email': user['email'],
+                 'grade': user.get('grade')}
     })
 
 
@@ -244,8 +204,7 @@ def me():
 @app.route('/api/logout', methods=['POST'])
 @auth_required
 def logout():
-    auth = request.headers.get('Authorization', '')
-    token = auth.replace('Bearer ', '').strip()
+    token = token_from_request()
     conn = get_connection()
     cur = conn.cursor()
     cur.execute('DELETE FROM tokens WHERE token = %s', (token,))
@@ -280,7 +239,7 @@ def telegram_auth():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        'SELECT id, name, email, telegram_id, photo_url FROM users WHERE telegram_id = %s',
+        'SELECT id, name, email, grade, telegram_id, photo_url FROM users WHERE telegram_id = %s',
         (tg_id,)
     )
     row = cur.fetchone()
@@ -317,6 +276,7 @@ def telegram_auth():
             'telegram_id': tg_id,
             'username': username,
             'photo_url': photo,
+            'grade': (row or {}).get('grade'),
         }
     })
 
@@ -460,35 +420,26 @@ def api_lesson_get(course_id, seq):
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Xizmat ko'rsatiladigan sahifalar. Yangi sahifa qo'shsangiz shu ro'yxatga yozing.
+PAGES = {
+    'index.html', 'login.html', 'register.html', 'onboarding.html',
+    'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
+    'progress.html', 'profile.html', 'leaderboard.html',
+    # eski (AI-darslar) oqimi — ishlashda davom etadi
+    'learn.html', 'lesson.html', 'courses.html', 'review.html',
+}
+
 
 @app.route('/')
 def home():
     return send_from_directory(BASE_DIR, 'index.html')
 
 
-@app.route('/index.html')
-def index_page():
-    return send_from_directory(BASE_DIR, 'index.html')
-
-
-@app.route('/login.html')
-def login_page():
-    return send_from_directory(BASE_DIR, 'login.html')
-
-
-@app.route('/register.html')
-def register_page():
-    return send_from_directory(BASE_DIR, 'register.html')
-
-
-@app.route('/dashboard.html')
-def dashboard_page():
-    return send_from_directory(BASE_DIR, 'dashboard.html')
-
-
-@app.route('/learn.html')
-def learn_page():
-    return send_from_directory(BASE_DIR, 'learn.html')
+@app.route('/<page>')
+def serve_page(page):
+    if page in PAGES:
+        return send_from_directory(BASE_DIR, page)
+    return jsonify({'ok': False, 'error': 'Sahifa topilmadi'}), 404
 
 
 @app.route('/assets/<path:filename>')
@@ -496,39 +447,14 @@ def assets(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'assets'), filename)
 
 
-
-
-@app.route('/lesson.html')
-def lesson_page():
-    return send_from_directory(BASE_DIR, 'lesson.html')
-
-
-
-@app.route('/courses.html')
-def courses_page():
-    return send_from_directory(BASE_DIR, 'courses.html')
-
-
-
-@app.route('/profile.html')
-def profile_page():
-    return send_from_directory(BASE_DIR, 'profile.html')
-
-
-
-@app.route('/leaderboard.html')
-def leaderboard_page():
-    return send_from_directory(BASE_DIR, 'leaderboard.html')
-
-
-
-@app.route('/review.html')
-def review_page():
-    return send_from_directory(BASE_DIR, 'review.html')
-
 @app.route('/js/<path:filename>')
 def js_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'js'), filename)
+
+
+@app.route('/css/<path:filename>')
+def css_files(filename):
+    return send_from_directory(os.path.join(BASE_DIR, 'css'), filename)
 
 
 @app.route('/manifest.json')
@@ -544,128 +470,7 @@ def service_worker():
     return response
 
 
-
-# ───────────────────────────── AI Tutor (Google Gemini) ─────────────────────────────
-
-# Google AI Studio: https://aistudio.google.com/apikey
-GOOGLE_AI_API_KEY = (
-    os.environ.get('GOOGLE_AI_API_KEY')
-    or os.environ.get('GEMINI_API_KEY')
-    or os.environ.get('GOOGLE_API_KEY')
-    or ''
-)
-GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-3.5-flash-lite')
-
-
-def ai_system_prompt(lang: str) -> str:
-    if lang == 'ru':
-        return (
-            'Ты дружелюбный репетитор BilimSari для школьников. '
-            'Отвечай кратко, понятно, на русском. Помогай с предметами: '
-            'математика, языки, биология и др. Не давай вредных советов. '
-            'Если вопрос не об учёбе — вежливо верни к теме обучения.'
-        )
-    if lang == 'en':
-        return (
-            'You are a friendly BilimSari tutor for students. '
-            'Answer briefly and clearly in English. Help with school subjects. '
-            'Stay educational and safe. If off-topic, gently return to learning.'
-        )
-    return (
-        "Sen BilimSari platformasidagi do'stona o'qituvchi yordamchisan. "
-        "O'quvchilarga qisqa, tushunarli, o'zbek tilida javob ber. "
-        "Maktab fanlari: matematika, tillar, biologiya va boshqalar. "
-        "Zararli maslahat berma. Mavzudan tashqari bo'lsa, o'qishga qaytar."
-    )
-
-
-@app.route('/api/ai/tutor', methods=['POST'])
-def ai_tutor():
-    """AI o'qituvchi — Google Gemini"""
-    import requests as http_requests
-
-    body = request.get_json(silent=True) or {}
-    message = (body.get('message') or '').strip()
-    lang = (body.get('lang') or 'uz')[:5]
-    context = (body.get('context') or '').strip()
-
-    if not message:
-        return jsonify({'ok': False, 'error': 'Xabar bosh', 'reply': None}), 400
-    if len(message) > 2000:
-        return jsonify({'ok': False, 'error': 'Xabar juda uzun', 'reply': None}), 400
-
-    if not GOOGLE_AI_API_KEY:
-        return jsonify({
-            'ok': False,
-            'error': 'AI ulanmagan. Railway Variables ga GOOGLE_AI_API_KEY qoshin (aistudio.google.com).',
-            'reply': None,
-        }), 503
-
-    user_content = message
-    if context:
-        user_content = f"Mavzu/kontekst:\n{context}\n\nO'quvchi:\n{message}"
-
-    system = ai_system_prompt(lang)
-    url = (
-        f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{GEMINI_MODEL}:generateContent?key={GOOGLE_AI_API_KEY}"
-    )
-    payload = {
-        "system_instruction": {
-            "parts": [{"text": system}]
-        },
-        "contents": [
-            {
-                "role": "user",
-                "parts": [{"text": user_content}],
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.6,
-            "maxOutputTokens": 1024,
-        },
-    }
-
-    try:
-        r = http_requests.post(url, json=payload, timeout=45)
-        data = {}
-        try:
-            data = r.json()
-        except Exception:
-            data = {}
-
-        if r.status_code != 200:
-            detail = ''
-            if isinstance(data, dict):
-                err = data.get('error') or {}
-                if isinstance(err, dict):
-                    detail = err.get('message') or str(err)
-                else:
-                    detail = str(err)
-            if not detail:
-                detail = (r.text or '')[:300]
-            return jsonify({
-                'ok': False,
-                'error': f'AI xato {r.status_code}: {detail}',
-                'reply': None,
-            }), 502
-
-        # Parse Gemini response
-        reply = ''
-        try:
-            cands = data.get('candidates') or []
-            content = (cands[0] or {}).get('content') or {}
-            parts = content.get('parts') or []
-            reply = ''.join((p.get('text') or '') for p in parts if isinstance(p, dict)).strip()
-        except Exception:
-            reply = ''
-
-        if not reply:
-            return jsonify({'ok': False, 'error': 'Bosh javob', 'reply': None}), 502
-
-        return jsonify({'ok': True, 'reply': reply})
-    except Exception as e:
-        return jsonify({'ok': False, 'error': str(e), 'reply': None}), 500
+# AI yordamchi endi ai_tutor.py blueprintida (/api/ai/*)
 
 
 # ───────────────────────────── Telegram bot (webhook) ─────────────────────────────

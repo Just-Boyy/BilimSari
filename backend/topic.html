@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F8FB">
+<title>Mavzu — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .panel { display: none; }
+  .panel.faol { display: block; }
+  .quiz-progress { display: flex; gap: 4px; margin-bottom: 18px; }
+  .quiz-progress i {
+    flex: 1; height: 5px; border-radius: 3px; background: var(--chiziq);
+  }
+  .quiz-progress i.bajarildi { background: var(--feruza); }
+  .quiz-progress i.joriy { background: var(--oxra); }
+  .tugadi-ekran { text-align: center; padding: 16px 0; }
+  .tugadi-ekran .nishon-katta {
+    width: 96px; height: 96px; margin: 0 auto 16px;
+    border-radius: 50%; background: var(--yashil-och);
+    display: grid; place-items: center; color: var(--yashil);
+  }
+  .ai-rejimlar { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ai-rejimlar .tugma { flex: 1 1 140px; }
+  .qadam-yakun {
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--chiziq);
+  }
+</style>
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" id="orqaga" href="subjects.html" aria-label="Orqaga">←</a>
+  <h1 id="sarlavha">Yuklanmoqda...<small id="ostSarlavha"></small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="tana">
+    <div class="skelet" style="height:60px;margin-bottom:18px"></div>
+    <div class="skelet" style="height:260px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('subjects.html');
+
+  var parametr = new URLSearchParams(location.search);
+  var fan = parametr.get('fan');
+  var slug = parametr.get('mavzu');
+  if (!fan || !slug) { location.replace('subjects.html'); return; }
+
+  document.getElementById('orqaga').href = 'topics.html?fan=' + encodeURIComponent(fan);
+
+  var M = null;             // mavzu ma'lumotlari
+  var quizJavoblar = [];    // o'quvchi javoblari
+  var quizIndeks = 0;
+  var to_xtat = null;
+
+  // ── Yuklash ────────────────────────────────────────────
+  async function yukla() {
+    var res = await API.mavzu(fan, slug);
+    if (UI.sinfKerak(res)) return;
+
+    var tana = document.getElementById('tana');
+
+    if (!res.ok) {
+      if (res.code === 'cooldown') {
+        tana.innerHTML = kutishHtml(res.cooldown);
+        boshlaTaymer(res.cooldown);
+      } else if (res.code === 'locked') {
+        tana.innerHTML = UI.holat({
+          belgi: '🔒',
+          sarlavha: 'Bu mavzu hozircha qulflangan',
+          matn: res.error,
+          tugma: 'Mavzular ro\'yxati',
+          tugmaYo_l: 'topics.html?fan=' + encodeURIComponent(fan),
+        });
+      } else {
+        tana.innerHTML = UI.xatoHolat(res.error, yukla);
+      }
+      return;
+    }
+
+    M = res;
+    quizJavoblar = new Array((M.quiz || []).length).fill(null);
+    quizIndeks = 0;
+
+    document.getElementById('sarlavha').innerHTML =
+      UI.esc(M.title) +
+      '<small>' + M.subject.icon + ' ' + UI.esc(M.subject.name) +
+      ', ' + M.position + '-mavzu (' + M.total_topics + ' tadan)</small>';
+    document.title = M.title + ' — BilimSari';
+
+    chiz();
+  }
+
+  function kutishHtml(kutish) {
+    return '<div class="kutish-karta">' +
+      '<h2>Bugungi mavzuni yakunladingiz</h2>' +
+      '<p>Keyingi mavzu quyidagi vaqtdan so\'ng ochiladi</p>' +
+      '<div class="taymer" id="taymer" role="timer">--:--:--</div>' +
+      '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+        UI.esc((kutish && kutish.unlock_at_tashkent) || '') + ' (Toshkent vaqti)</p>' +
+      '</div>' +
+      '<a class="tugma tugma-ikkilamchi" style="margin-top:14px"' +
+      ' href="topics.html?fan=' + encodeURIComponent(fan) + '">Mavzular ro\'yxati</a>';
+  }
+
+  function boshlaTaymer(kutish) {
+    var el = document.getElementById('taymer');
+    if (!el || !kutish) return;
+    if (to_xtat) to_xtat();
+    to_xtat = UI.taymer(el, kutish.seconds_left, function () {
+      UI.xabar('Mavzu ochildi!', 'muvaffaqiyat');
+      yukla();
+    });
+  }
+
+  // ── Umumiy tuzilma ─────────────────────────────────────
+  function chiz() {
+    var p = M.progress;
+    var tugallangan = p.state === 'completed';
+
+    document.getElementById('tana').innerHTML =
+      '<div class="bosqichlar" role="tablist" aria-label="Mavzu bosqichlari">' +
+        bosqichTugma('dars', '📖', 'Mavzuni o\'rganish', p.lesson_read || tugallangan, false) +
+        bosqichTugma('quiz', '🧠', 'Quiz', p.quiz_passed || tugallangan, false) +
+        bosqichTugma('uy', '📝', 'Uyga vazifa',
+                     p.homework_status === 'passed' || tugallangan, false) +
+      '</div>' +
+      '<section class="panel" id="panelDars" role="tabpanel"></section>' +
+      '<section class="panel" id="panelQuiz" role="tabpanel"></section>' +
+      '<section class="panel" id="panelUy" role="tabpanel"></section>';
+
+    document.querySelectorAll('.bosqich').forEach(function (b) {
+      b.onclick = function () { ochish(b.dataset.bosqich); };
+    });
+
+    darsChiz();
+    quizChiz();
+    uyChiz();
+
+    // Qaysi bosqichdan boshlash kerak
+    if (tugallangan) ochish('dars');
+    else if (!p.lesson_read) ochish('dars');
+    else if (!p.quiz_passed) ochish('quiz');
+    else ochish('uy');
+  }
+
+  function bosqichTugma(kalit, nishon, matn, bajarildi) {
+    return '<button class="bosqich' + (bajarildi ? ' bajarildi' : '') + '"' +
+      ' data-bosqich="' + kalit + '" role="tab" aria-selected="false">' +
+      '<span class="nishon" aria-hidden="true">' + (bajarildi ? '✓' : nishon) + '</span>' +
+      '<span>' + matn + '</span></button>';
+  }
+
+  function ochish(kalit) {
+    var xarita = { dars: 'panelDars', quiz: 'panelQuiz', uy: 'panelUy' };
+    Object.keys(xarita).forEach(function (k) {
+      document.getElementById(xarita[k]).classList.toggle('faol', k === kalit);
+    });
+    document.querySelectorAll('.bosqich').forEach(function (b) {
+      b.setAttribute('aria-selected', String(b.dataset.bosqich === kalit));
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── 1. Dars ────────────────────────────────────────────
+  function darsChiz() {
+    var el = document.getElementById('panelDars');
+    var tugallangan = M.progress.state === 'completed';
+
+    el.innerHTML =
+      '<article class="karta dars">' + UI.darsHtml(M.lesson) + '</article>' +
+      aiHtml() +
+      '<div class="qadam-yakun">' +
+        (tugallangan
+          ? '<p class="izoh" style="text-align:center">Bu mavzuni allaqachon yakunlagansiz.</p>'
+          : '<button class="tugma" id="darsTugadi">' +
+            (M.progress.lesson_read ? 'Quizga o\'tish' : 'Darsni o\'qib bo\'ldim') +
+            '</button>') +
+      '</div>';
+
+    aiUlash();
+
+    var tugma = document.getElementById('darsTugadi');
+    if (tugma) tugma.onclick = async function () {
+      this.disabled = true;
+      var res = await API.darsO_qildi(fan, slug);
+      this.disabled = false;
+      if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
+      M.progress.lesson_read = true;
+      belgila('dars');
+      ochish('quiz');
+    };
+  }
+
+  function belgila(kalit) {
+    var b = document.querySelector('.bosqich[data-bosqich="' + kalit + '"]');
+    if (b && !b.classList.contains('bajarildi')) {
+      b.classList.add('bajarildi');
+      b.querySelector('.nishon').textContent = '✓';
+    }
+  }
+
+  // ── AI qo'shimcha tushuntirish ─────────────────────────
+  function aiHtml() {
+    return '<div class="ai-qavs">' +
+      '<h3>AI yordamida tushuntirish</h3>' +
+      '<p class="izoh">Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.</p>' +
+      '<div class="ai-rejimlar">' +
+        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="simple">Oddiyroq tushuntir</button>' +
+        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="examples">Yana misol ber</button>' +
+        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="summary">Qisqacha xulosa</button>' +
+      '</div>' +
+      '<div style="margin-top:10px;display:flex;gap:8px">' +
+        '<input class="kiritish" id="aiSavol" placeholder="Yoki savolingizni yozing..."' +
+          ' style="min-height:46px;flex:1" maxlength="500">' +
+        '<button class="tugma tugma-mayda" id="aiYubor" style="min-height:46px">So\'rash</button>' +
+      '</div>' +
+      '<div id="aiJavob"></div>' +
+    '</div>';
+  }
+
+  function aiUlash() {
+    var javobQuti = document.getElementById('aiJavob');
+
+    function kutish() {
+      javobQuti.innerHTML = '<div class="ai-javob">' + UI.yuklanmoqda('AI o\'ylayapti...') + '</div>';
+    }
+    function ko_rsat(matn, manba) {
+      javobQuti.innerHTML = '<div class="ai-javob">' + UI.matnHtml(matn) +
+        '<span class="manba">' + UI.esc(manba) + '</span></div>';
+    }
+    function xato(matn) {
+      javobQuti.innerHTML = '<div class="ai-javob" style="color:var(--qizil)">' +
+        UI.esc(matn) + '</div>';
+    }
+
+    document.querySelectorAll('[data-ai]').forEach(function (b) {
+      b.onclick = async function () {
+        kutish();
+        var res = await API.aiTushuntir(fan, slug, b.dataset.ai);
+        if (!res.ok) { xato(res.error); return; }
+        ko_rsat(res.reply, res.disclaimer || '');
+      };
+    });
+
+    var maydon = document.getElementById('aiSavol');
+    async function so_ra() {
+      var matn = maydon.value.trim();
+      if (!matn) { UI.xabar('Savolingizni yozing'); return; }
+      kutish();
+      var res = await API.aiSavol(matn, fan, slug);
+      if (!res.ok) { xato(res.error); return; }
+      ko_rsat(res.reply, 'AI javobi — «' + M.title + '» mavzusi bo\'yicha');
+      maydon.value = '';
+    }
+    document.getElementById('aiYubor').onclick = so_ra;
+    maydon.onkeydown = function (e) { if (e.key === 'Enter') so_ra(); };
+  }
+
+  // ── 2. Quiz ────────────────────────────────────────────
+  function quizChiz() {
+    var el = document.getElementById('panelQuiz');
+    if (!M.quiz || !M.quiz.length) {
+      el.innerHTML = UI.holat({ belgi: '🧠', sarlavha: 'Bu mavzuda test yo\'q',
+        matn: 'To\'g\'ridan-to\'g\'ri uy vazifasiga o\'tishingiz mumkin.' });
+      return;
+    }
+    savolChiz();
+  }
+
+  function savolChiz() {
+    var el = document.getElementById('panelQuiz');
+    var s = M.quiz[quizIndeks];
+    var jami = M.quiz.length;
+
+    var chiziqlar = M.quiz.map(function (_, i) {
+      return '<i class="' + (i < quizIndeks ? 'bajarildi' : (i === quizIndeks ? 'joriy' : '')) +
+        '"></i>';
+    }).join('');
+
+    var kirish = '';
+    if (s.type === 'mc') {
+      kirish = '<div class="variantlar">' + s.options.map(function (o, i) {
+        return '<button class="variant" data-javob="' + i + '" aria-pressed="false">' +
+          '<span class="harf" aria-hidden="true">' + 'ABCD'[i] + '</span>' +
+          '<span>' + UI.esc(o) + '</span></button>';
+      }).join('') + '</div>';
+    } else if (s.type === 'tf') {
+      kirish = '<div class="variantlar">' +
+        '<button class="variant" data-javob="true" aria-pressed="false">' +
+          '<span class="harf" aria-hidden="true">✓</span><span>To\'g\'ri</span></button>' +
+        '<button class="variant" data-javob="false" aria-pressed="false">' +
+          '<span class="harf" aria-hidden="true">✕</span><span>Noto\'g\'ri</span></button>' +
+        '</div>';
+    } else {
+      kirish = '<input class="kiritish" id="quizMatn" placeholder="Javobingizni yozing"' +
+        ' autocomplete="off" maxlength="120">';
+    }
+
+    el.innerHTML =
+      '<div class="quiz-progress" aria-hidden="true">' + chiziqlar + '</div>' +
+      '<div class="karta">' +
+        '<p class="savol-son">' + (quizIndeks + 1) + '-savol, jami ' + jami + ' ta</p>' +
+        '<p class="savol-matn">' + UI.matnHtml(s.q) + '</p>' +
+        kirish +
+      '</div>' +
+      '<div class="qadam-yakun">' +
+        '<button class="tugma" id="quizKeyingi" disabled>' +
+          (quizIndeks + 1 === jami ? 'Testni yakunlash' : 'Keyingi savol') +
+        '</button>' +
+      '</div>';
+
+    var keyingi = document.getElementById('quizKeyingi');
+
+    el.querySelectorAll('.variant').forEach(function (b) {
+      b.onclick = function () {
+        el.querySelectorAll('.variant').forEach(function (x) {
+          x.setAttribute('aria-pressed', String(x === b));
+        });
+        var v = b.dataset.javob;
+        quizJavoblar[quizIndeks] = (v === 'true') ? true : (v === 'false' ? false : Number(v));
+        keyingi.disabled = false;
+      };
+    });
+
+    var matn = document.getElementById('quizMatn');
+    if (matn) {
+      if (quizJavoblar[quizIndeks] != null) matn.value = quizJavoblar[quizIndeks];
+      keyingi.disabled = !matn.value.trim();
+      matn.oninput = function () {
+        quizJavoblar[quizIndeks] = matn.value;
+        keyingi.disabled = !matn.value.trim();
+      };
+      matn.onkeydown = function (e) {
+        if (e.key === 'Enter' && !keyingi.disabled) keyingi.click();
+      };
+      setTimeout(function () { matn.focus(); }, 100);
+    }
+
+    keyingi.onclick = function () {
+      if (quizIndeks + 1 < M.quiz.length) { quizIndeks++; savolChiz(); }
+      else quizYubor();
+    };
+  }
+
+  async function quizYubor() {
+    var el = document.getElementById('panelQuiz');
+    el.innerHTML = UI.yuklanmoqda('Javoblar tekshirilmoqda...');
+
+    var res = await API.quizYuborish(fan, slug, quizJavoblar);
+    if (!res.ok) {
+      el.innerHTML = UI.xatoHolat(res.error, function () { quizIndeks = 0; savolChiz(); });
+      return;
+    }
+    quizNatija(res);
+  }
+
+  function quizNatija(res) {
+    var el = document.getElementById('panelQuiz');
+    var tafsilot = res.results.map(function (r, i) {
+      var s = M.quiz[i];
+      return '<div class="vazifa ' + (r.correct ? 'to-g-ri' : 'xato') + '">' +
+        '<div class="savol"><span class="raqam" aria-hidden="true">' +
+          (r.correct ? '✓' : '✕') + '</span>' +
+        '<span>' + UI.matnHtml(s.q) + '</span></div>' +
+        (r.correct ? '' :
+          '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' +
+            UI.esc(r.correct_answer) + '</b>' + UI.esc(r.explain) + '</div>') +
+      '</div>';
+    }).join('');
+
+    el.innerHTML =
+      '<div class="karta">' +
+        '<div class="natija ' + (res.passed ? 'o-tdi' : 'yiqildi') + '">' +
+          '<div class="halqa">' + res.percent + '%</div>' +
+          '<h2>' + (res.passed ? 'Ajoyib natija!' : 'Hali yetarli emas') + '</h2>' +
+          '<p>' + res.correct + ' / ' + res.total + ' ta to\'g\'ri javob. ' +
+            'O\'tish uchun kamida ' + res.pass_percent + '% kerak.</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bo-lim"><h2>Javoblaringiz</h2></div>' + tafsilot +
+      '<div class="qadam-yakun">' +
+        (res.passed
+          ? '<button class="tugma" id="uygaO-t">Uyga vazifaga o\'tish</button>'
+          : '<div class="tugmalar">' +
+              '<button class="tugma tugma-ikkilamchi" id="darsgaQayt">Mavzuni qayta o\'qish</button>' +
+              '<button class="tugma" id="quizQayta">Quizni qayta ishlash</button>' +
+            '</div>') +
+      '</div>';
+
+    if (res.passed) {
+      M.progress.quiz_passed = true;
+      belgila('quiz');
+      document.getElementById('uygaO-t').onclick = function () { ochish('uy'); };
+      if (res.completion && res.completion.completed) yakunEkran(res.completion);
+    } else {
+      UI.xabar(res.message);
+      document.getElementById('darsgaQayt').onclick = function () { ochish('dars'); };
+      document.getElementById('quizQayta').onclick = function () {
+        quizIndeks = 0;
+        quizJavoblar = new Array(M.quiz.length).fill(null);
+        savolChiz();
+      };
+    }
+  }
+
+  // ── 3. Uyga vazifa ─────────────────────────────────────
+  function uyChiz() {
+    var el = document.getElementById('panelUy');
+    var uy = M.homework;
+
+    if (!uy || !uy.tasks || !uy.tasks.length) {
+      el.innerHTML = UI.holat({ belgi: '📝', sarlavha: 'Uyga vazifa yo\'q',
+        matn: 'Bu mavzuda qo\'shimcha vazifa berilmagan.' });
+      return;
+    }
+
+    var saqlangan = M.progress.homework_answers || {};
+
+    el.innerHTML =
+      (uy.intro ? '<div class="karta-tekis" style="margin-bottom:14px">' +
+        UI.matnHtml(uy.intro) + '</div>' : '') +
+      '<form id="uyForma">' +
+      uy.tasks.map(function (t, i) {
+        var qiymat = UI.esc(saqlangan[t.id] || '');
+        var maydon = t.type === 'open'
+          ? '<textarea class="kiritish" name="' + t.id + '" rows="3"' +
+            ' placeholder="Javobingizni yozing">' + qiymat + '</textarea>'
+          : '<input class="kiritish" name="' + t.id + '" value="' + qiymat + '"' +
+            (t.type === 'number' ? ' inputmode="numeric"' : '') +
+            ' placeholder="Javob" autocomplete="off" maxlength="200">';
+        return '<div class="vazifa" data-vazifa="' + t.id + '">' +
+          '<div class="savol"><span class="raqam" aria-hidden="true">' + (i + 1) + '</span>' +
+          '<span>' + UI.matnHtml(t.prompt) +
+            (t.type === 'open' ? '<span class="erkin-belgi">erkin javob</span>' : '') +
+          '</span></div>' + maydon +
+          (t.hint ? '<p class="maslahat">' + UI.esc(t.hint) + '</p>' : '') +
+          '</div>';
+      }).join('') +
+      '<div class="qadam-yakun">' +
+        '<button class="tugma" type="submit" id="uyYubor">Vazifani topshirish</button>' +
+      '</div></form>';
+
+    document.getElementById('uyForma').onsubmit = async function (e) {
+      e.preventDefault();
+      var tugma = document.getElementById('uyYubor');
+      var javoblar = {};
+      uy.tasks.forEach(function (t) {
+        var m = e.target.elements[t.id];
+        javoblar[t.id] = m ? m.value : '';
+      });
+
+      tugma.disabled = true;
+      tugma.textContent = 'Tekshirilmoqda...';
+      var res = await API.uyIshiYuborish(fan, slug, javoblar);
+      tugma.disabled = false;
+      tugma.textContent = 'Vazifani topshirish';
+
+      if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
+
+      // Har bir vazifani belgilash
+      res.results.forEach(function (r) {
+        var quti = el.querySelector('[data-vazifa="' + r.id + '"]');
+        if (!quti) return;
+        quti.classList.toggle('to-g-ri', r.correct);
+        quti.classList.toggle('xato', !r.correct);
+        var eski = quti.querySelector('.tushuntirish');
+        if (eski) eski.remove();
+        if (!r.correct && r.checked && r.correct_answer) {
+          quti.insertAdjacentHTML('beforeend',
+            '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' +
+            UI.esc(r.correct_answer) + '</b></div>');
+        } else if (!r.correct) {
+          quti.insertAdjacentHTML('beforeend',
+            '<div class="tushuntirish xato">Bu savolga javob yozing.</div>');
+        }
+      });
+
+      if (res.passed) {
+        M.progress.homework_status = 'passed';
+        belgila('uy');
+        UI.xabar(res.message, 'muvaffaqiyat');
+        if (res.completion && res.completion.completed) yakunEkran(res.completion);
+        else if (res.completion && res.completion.blocked_by_cooldown) {
+          UI.xabar(res.completion.message, 'xato');
+        }
+      } else {
+        UI.xabar(res.message, 'xato');
+        var birinchi = el.querySelector('.vazifa.xato');
+        if (birinchi) birinchi.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    };
+  }
+
+  // ── Yakunlash ekrani ───────────────────────────────────
+  function yakunEkran(yakun) {
+    var keyingi = M.next_topic;
+    document.getElementById('tana').innerHTML =
+      '<div class="karta tugadi-ekran">' +
+        '<div class="nishon-katta" aria-hidden="true">' +
+          '<svg width="48" height="48" viewBox="0 0 72 72" fill="currentColor">' +
+          '<path d="M36 4l8.5 16.5L63 23l-13.5 12L53 54l-17-9-17 9 3.5-19L9 23l18.5-2.5z"/></svg>' +
+        '</div>' +
+        '<h1>Tabriklaymiz!</h1>' +
+        '<p class="izoh" style="margin:8px 0 4px">«' + UI.esc(M.title) +
+          '» mavzusini muvaffaqiyatli yakunladingiz.</p>' +
+      '</div>' +
+      '<div class="kutish-karta" style="margin-top:14px">' +
+        '<h2>' + (keyingi ? 'Keyingi mavzu: ' + UI.esc(keyingi.title) : 'Keyingi mavzu') + '</h2>' +
+        '<p>Kuniga bitta mavzu — shunda bilim mustahkam o\'rnashadi</p>' +
+        '<div class="taymer" id="yakunTaymer" role="timer">24:00:00</div>' +
+        '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+          UI.esc(yakun.next_unlock_tashkent || '') + ' da ochiladi (Toshkent vaqti)</p>' +
+      '</div>' +
+      '<div class="tugmalar" style="margin-top:16px">' +
+        '<a class="tugma tugma-ikkilamchi" href="topics.html?fan=' +
+          encodeURIComponent(fan) + '">Mavzular ro\'yxati</a>' +
+        '<a class="tugma" href="dashboard.html">Bosh sahifa</a>' +
+      '</div>';
+
+    var soniya = Math.max(0, Math.round(
+      (new Date(yakun.next_unlock_at) - new Date()) / 1000));
+    if (to_xtat) to_xtat();
+    to_xtat = UI.taymer(document.getElementById('yakunTaymer'), soniya, function () {
+      UI.xabar('Keyingi mavzu ochildi!', 'muvaffaqiyat');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  yukla();
+})();
+</script>
+</body>
+</html>

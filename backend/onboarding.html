@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16283C">
+<title>Sinfingizni tanlang — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .ob { max-width: 620px; margin: 0 auto; padding: 26px 20px 40px; }
+  .ob h1 { font-size: 1.6rem; margin-bottom: 6px; }
+  .ob .kirish-tavsif { color: var(--matn-2); margin-bottom: 24px; }
+  .tanlangan-panel {
+    position: sticky;
+    bottom: 0;
+    padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, var(--qogoz) 72%, rgba(246,248,251,0));
+    margin-top: 22px;
+  }
+</style>
+</head>
+<body class="no-nav">
+
+<div class="ob">
+  <div class="nuqtalar" aria-hidden="true">
+    <i class="faol" data-nuqta="1"></i><i data-nuqta="2"></i>
+  </div>
+
+  <!-- 1-qadam: sinf -->
+  <section class="qadam faol" id="qadamSinf" aria-labelledby="sinfSarlavha">
+    <h1 id="sinfSarlavha">Nechinchi sinfda o'qiysiz?</h1>
+    <p class="kirish-tavsif">Sizga faqat o'z sinfingiz darslari ko'rsatiladi.</p>
+
+    <div id="sinflar" class="sinflar" role="group" aria-label="Sinflar">
+      <div class="skelet" style="height:76px"></div>
+      <div class="skelet" style="height:76px"></div>
+      <div class="skelet" style="height:76px"></div>
+      <div class="skelet" style="height:76px"></div>
+      <div class="skelet" style="height:76px"></div>
+      <div class="skelet" style="height:76px"></div>
+    </div>
+
+    <div class="tanlangan-panel">
+      <button class="tugma" id="sinfDavom" disabled>Davom etish</button>
+    </div>
+  </section>
+
+  <!-- 2-qadam: fan -->
+  <section class="qadam" id="qadamFan" aria-labelledby="fanSarlavha">
+    <button class="orqaga" id="orqagaSinf" aria-label="Sinf tanlashga qaytish"
+            style="margin-bottom:16px">←</button>
+    <h1 id="fanSarlavha">Qaysi fandan boshlaymiz?</h1>
+    <p class="kirish-tavsif" id="fanTavsif">Keyinchalik boshqa fanlarga ham o'tishingiz mumkin.</p>
+    <div id="fanlar" class="fanlar"></div>
+  </section>
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+
+  var tanlanganSinf = null;
+
+  function qadam(n) {
+    document.querySelectorAll('.qadam').forEach(function (el) { el.classList.remove('faol'); });
+    document.getElementById(n === 1 ? 'qadamSinf' : 'qadamFan').classList.add('faol');
+    document.querySelectorAll('[data-nuqta]').forEach(function (el) {
+      el.classList.toggle('faol', Number(el.dataset.nuqta) <= n);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Sinflar ──
+  var javob = await API.sinflar();
+  var quti = document.getElementById('sinflar');
+
+  if (!javob.ok) {
+    quti.innerHTML = UI.xatoHolat(javob.error, function () { location.reload(); });
+    quti.style.gridTemplateColumns = '1fr';
+    return;
+  }
+
+  quti.innerHTML = javob.grades.map(function (s) {
+    return '<button type="button" class="sinf-tugma' + (s.available ? ' tayyor' : '') + '"' +
+      ' data-sinf="' + s.grade + '" aria-pressed="false">' + s.grade +
+      '<span>' + (s.available ? s.topic_count + ' mavzu' : 'tayyorlanmoqda') + '</span></button>';
+  }).join('');
+
+  quti.addEventListener('click', function (e) {
+    var t = e.target.closest('.sinf-tugma');
+    if (!t) return;
+    quti.querySelectorAll('.sinf-tugma').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b === t));
+    });
+    tanlanganSinf = Number(t.dataset.sinf);
+    document.getElementById('sinfDavom').disabled = false;
+  });
+
+  // ── Sinfni saqlash ──
+  document.getElementById('sinfDavom').onclick = async function () {
+    if (!tanlanganSinf) return;
+    this.disabled = true;
+    this.textContent = 'Saqlanmoqda...';
+
+    var res = await API.sinfTanlash(tanlanganSinf);
+    this.disabled = false;
+    this.textContent = 'Davom etish';
+
+    if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
+
+    API.userYangilash({ grade: tanlanganSinf });
+    qadam(2);
+    fanlarniYukla();
+  };
+
+  document.getElementById('orqagaSinf').onclick = function () { qadam(1); };
+
+  // ── Fanlar ──
+  async function fanlarniYukla() {
+    var quti = document.getElementById('fanlar');
+    quti.style.gridTemplateColumns = '1fr';
+    quti.innerHTML = UI.yuklanmoqda('Fanlar yuklanmoqda...');
+
+    var res = await API.fanlar();
+    if (!res.ok) {
+      quti.innerHTML = UI.xatoHolat(res.error, fanlarniYukla);
+      return;
+    }
+
+    document.getElementById('fanTavsif').textContent =
+      tanlanganSinf + '-sinf uchun ' + res.subjects.length + ' ta fan mavjud.';
+
+    if (!res.subjects.length) {
+      quti.innerHTML = UI.holat({
+        belgi: '🛠️',
+        sarlavha: 'Bu sinf uchun darslar tayyorlanmoqda',
+        matn: res.empty_message || 'Tez orada qo\'shiladi. Boshqa sinfni tanlab ko\'rishingiz mumkin.',
+      }) + '<button class="tugma tugma-ikkilamchi" id="boshqaSinf" style="margin-top:12px">' +
+        'Boshqa sinfni tanlash</button>';
+      document.getElementById('boshqaSinf').onclick = function () { qadam(1); };
+      return;
+    }
+
+    quti.style.gridTemplateColumns = '';
+    quti.innerHTML = res.subjects.map(function (f) {
+      return '<a class="fan" href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
+        ' style="border-left-color:' + UI.esc(f.color) + '">' +
+        '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+        '<h3>' + UI.esc(f.name) + '</h3>' +
+        '<p class="holat">' + f.total_topics + ' ta mavzu</p></a>';
+    }).join('');
+  }
+})();
+</script>
+</body>
+</html>

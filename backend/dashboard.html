@@ -1,211 +1,185 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BilimSari — Dashboard</title>
-  <link rel="icon" type="image/png" href="assets/logo-icon-32.png">
-  <link rel="apple-touch-icon" href="assets/logo-icon-64.png">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #fafafa;
-      color: #111;
-      min-height: 100vh;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    .header {
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo img { height: 34px; display: block; }
-
-    .user-area {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .user-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: #333;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 38px;
-      padding: 0 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: .2s;
-    }
-
-    .btn-outline {
-      background: #fff;
-      border: 1px solid #ddd;
-      color: #333;
-    }
-
-    .btn-outline:hover { background: #f5f5f5; }
-
-    .btn-danger {
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .btn-danger:hover { background: #fee2e2; }
-
-    .main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 24px;
-    }
-
-    .welcome {
-      background: #fff;
-      border: 1px solid #eee;
-      border-radius: 16px;
-      padding: 32px;
-      margin-bottom: 28px;
-    }
-
-    .welcome h1 {
-      font-size: 26px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .welcome p {
-      color: #666;
-      font-size: 15px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid #eee;
-      border-radius: 14px;
-      padding: 24px;
-      transition: .2s;
-    }
-
-    .card:hover {
-      box-shadow: 0 6px 20px rgba(0,0,0,.04);
-      transform: translateY(-2px);
-    }
-
-    .card-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: #fff5f4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      margin-bottom: 14px;
-    }
-
-    .card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .card p {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 800px) {
-      .cards { grid-template-columns: 1fr; }
-      .user-name { display: none; }
-      .welcome h1 { font-size: 22px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16283C">
+<title>Bosh sahifa — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo-full.png" alt="BilimSari">
-      </a>
-      <div class="user-area">
-        <span class="user-name" id="userName">—</span>
-        <button class="btn btn-danger" onclick="logout()">Chiqish</button>
-      </div>
+
+<header class="shapka">
+  <div class="shapka-qator">
+    <div>
+      <p class="salom" id="salom">Salom!</p>
+      <span class="sinf" id="sinfYorliq" hidden></span>
     </div>
-  </header>
+    <div class="avatar" id="avatar" aria-hidden="true"></div>
+  </div>
+</header>
 
-  <main class="main">
-    <div class="welcome">
-      <h1>Salom, <span id="welcomeName">Foydalanuvchi</span>! 👋</h1>
-      <p>BilimSari dashboardiga xush kelibsiz. Bu yerda kurslaringiz va progresslaringiz bo‘ladi.</p>
+<main class="sahifa sahifa-keng">
+  <div class="ko-tarilgan" id="bugun">
+    <div class="karta">
+      <div class="skelet" style="height:22px;width:45%;margin-bottom:12px"></div>
+      <div class="skelet" style="height:30px;width:75%;margin-bottom:10px"></div>
+      <div class="skelet" style="height:50px"></div>
     </div>
+  </div>
 
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">📚</div>
-        <h3>Mening kurslarim</h3>
-        <p>Hozircha kurslar yo‘q. Tez orada yangi kurslar qo‘shiladi.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">✅</div>
-        <h3>Testlar</h3>
-        <p>O‘z bilimingizni tekshirish uchun testlar bo‘limi.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <h3>Progress</h3>
-        <p>O‘zlashtirish darajangiz shu yerda ko‘rinadi.</p>
-      </div>
+  <section class="bo-lim" id="statBo-lim" hidden>
+    <div class="stat-setka" id="statlar"></div>
+  </section>
+
+  <section class="bo-lim" id="fanBo-lim" hidden>
+    <div class="bo-lim-bosh">
+      <h2>Mening fanlarim</h2>
+      <a href="subjects.html" class="izoh" style="font-weight:600">Hammasi</a>
     </div>
-  </main>
+    <div class="fanlar" id="fanlar"></div>
+  </section>
+</main>
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="js/telegram.js"></script>
-  <script src="js/auth.js"></script>
-  <script>
-    (async function () {
-      await ensureSession();
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('dashboard.html');
 
-    const session = getSession();
-    if (session) {
-      document.getElementById('userName').textContent = session.name;
-      document.getElementById('welcomeName').textContent = session.name;
+  var to_xtat = null;
+
+  async function yukla() {
+    var res = await API.dashboard();
+
+    if (!res.ok) {
+      document.getElementById('bugun').innerHTML = UI.xatoHolat(res.error, yukla);
+      return;
     }
-    })();
-  </script>
+    if (res.needs_onboarding) { location.href = 'onboarding.html'; return; }
+
+    // Sarlavha
+    var ism = UI.bosh(res.user && res.user.name);
+    document.getElementById('salom').textContent = 'Salom, ' + ism + '!';
+    var yorliq = document.getElementById('sinfYorliq');
+    yorliq.textContent = res.grade + '-sinf o\'quvchisi';
+    yorliq.hidden = false;
+
+    var av = document.getElementById('avatar');
+    if (res.user && res.user.photo_url) {
+      av.outerHTML = '<img class="avatar" id="avatar" alt="" src="' + UI.esc(res.user.photo_url) + '">';
+    } else {
+      av.textContent = UI.harfAvatar(ism);
+    }
+
+    bugunChiz(res);
+    statChiz(res.stats);
+    fanChiz(res.subjects);
+  }
+
+  // ── Bugungi dars yoki kutish ──
+  function bugunChiz(res) {
+    var quti = document.getElementById('bugun');
+    if (to_xtat) { to_xtat(); to_xtat = null; }
+
+    if (res.cooldown && res.cooldown.active) {
+      quti.innerHTML =
+        '<div class="kutish-karta">' +
+          '<h2>Bugungi mavzuni yakunladingiz</h2>' +
+          '<p>Keyingi mavzu quyidagi vaqtdan so\'ng ochiladi</p>' +
+          '<div class="taymer" id="taymer" role="timer" aria-live="off">--:--:--</div>' +
+          '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+            UI.esc(res.cooldown.unlock_at_tashkent || '') + ' (Toshkent vaqti)</p>' +
+        '</div>';
+      to_xtat = UI.taymer(
+        document.getElementById('taymer'),
+        res.cooldown.seconds_left,
+        function () { UI.xabar('Keyingi mavzu ochildi!', 'muvaffaqiyat'); yukla(); }
+      );
+      return;
+    }
+
+    if (!res.today) {
+      quti.innerHTML = UI.holat({
+        belgi: '🎉',
+        sarlavha: 'Barcha mavzular tugallandi',
+        matn: 'Ushbu sinf bo\'yicha hamma darsni yakunladingiz. Natijalaringizni ko\'ring.',
+        tugma: 'Natijalarim', tugmaYo_l: 'progress.html',
+      });
+      return;
+    }
+
+    var t = res.today;
+    quti.innerHTML =
+      '<div class="karta bugun">' +
+        '<div class="fan-qator">' +
+          '<span class="belgi" aria-hidden="true">' + t.subject_icon + '</span>' +
+          '<span>Bugungi dars — ' + UI.esc(t.subject_name) + '</span>' +
+        '</div>' +
+        '<h2>' + UI.esc(t.topic_title) + '</h2>' +
+        '<p class="tavsif">Dars, test va uy vazifasi — hammasi bitta sahifada.</p>' +
+        '<a class="tugma" href="topic.html?fan=' + encodeURIComponent(t.subject_key) +
+          '&mavzu=' + encodeURIComponent(t.topic_slug) + '">Darsni boshlash</a>' +
+      '</div>';
+  }
+
+  // ── Statistika ──
+  function statChiz(s) {
+    if (!s) return;
+    document.getElementById('statlar').innerHTML =
+      '<div class="stat"><b>' + s.completed_topics + '</b><span>Tugallangan mavzu</span></div>' +
+      '<div class="stat"><b>' + s.percent + '%</b><span>Umumiy progress</span></div>' +
+      '<div class="stat"><b>' + s.subjects_count + '</b><span>Fan</span></div>';
+    document.getElementById('statBo-lim').hidden = false;
+  }
+
+  // ── Fanlar ──
+  function fanChiz(fanlar) {
+    var quti = document.getElementById('fanlar');
+    document.getElementById('fanBo-lim').hidden = false;
+
+    if (!fanlar || !fanlar.length) {
+      quti.style.gridTemplateColumns = '1fr';
+      quti.innerHTML = UI.holat({
+        belgi: '🛠️',
+        sarlavha: 'Fanlar tayyorlanmoqda',
+        matn: 'Sizning sinfingiz uchun darslar hali qo\'shilmagan.',
+        tugma: 'Sinfni o\'zgartirish', tugmaYo_l: 'onboarding.html',
+      });
+      return;
+    }
+
+    quti.innerHTML = fanlar.map(function (f) {
+      var holat = f.finished
+        ? 'Hamma mavzu tugallandi'
+        : (f.current_topic
+            ? (f.current_topic.state === 'cooldown' ? 'Keyingi: ' : 'Hozir: ') +
+              UI.esc(f.current_topic.title)
+            : 'Boshlanmagan');
+      return '<a class="fan' + (f.finished ? ' tugagan' : '') + '"' +
+        ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
+        ' style="border-left-color:' + UI.esc(f.color) + '">' +
+        '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+        '<h3>' + UI.esc(f.name) + '</h3>' +
+        '<p class="holat">' + holat + '</p>' +
+        '<div class="progress"><i style="width:' + f.percent + '%;background:' +
+          UI.esc(f.color) + '"></i></div>' +
+        '<p class="foiz">' + f.completed_topics + ' / ' + f.total_topics + ' mavzu</p></a>';
+    }).join('');
+  }
+
+  yukla();
+
+  // Sahifaga qaytganda yangilash (kutish vaqti o'tgan bo'lishi mumkin)
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) yukla();
+  });
+})();
+</script>
 </body>
 </html>
