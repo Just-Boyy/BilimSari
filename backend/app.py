@@ -446,7 +446,7 @@ GOOGLE_AI_API_KEY = (
     or os.environ.get('GOOGLE_API_KEY')
     or ''
 )
-GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-2.0-flash')
+GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-3.5-flash-lite')
 
 
 def ai_system_prompt(lang: str) -> str:
@@ -514,7 +514,7 @@ def ai_tutor():
         ],
         "generationConfig": {
             "temperature": 0.6,
-            "maxOutputTokens": 600,
+            "maxOutputTokens": 1024,
         },
     }
 
@@ -545,8 +545,10 @@ def ai_tutor():
         # Parse Gemini response
         reply = ''
         try:
-            parts = data['candidates'][0]['content']['parts']
-            reply = ''.join(p.get('text', '') for p in parts).strip()
+            cands = data.get('candidates') or []
+            content = (cands[0] or {}).get('content') or {}
+            parts = content.get('parts') or []
+            reply = ''.join((p.get('text') or '') for p in parts if isinstance(p, dict)).strip()
         except Exception:
             reply = ''
 
