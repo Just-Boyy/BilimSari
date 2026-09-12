@@ -436,6 +436,99 @@ def service_worker():
     return response
 
 
+
+# ───────────────────────────── AI Tutor ─────────────────────────────
+
+XAI_API_KEY = os.environ.get('XAI_API_KEY') or os.environ.get('GROK_API_KEY') or ''
+XAI_BASE = os.environ.get('XAI_API_BASE', 'https://api.x.ai/v1')
+XAI_MODEL = os.environ.get('XAI_MODEL', 'grok-2-latest')
+
+def ai_system_prompt(lang: str) -> str:
+    if lang == 'ru':
+        return (
+            'Ты дружелюбный репетитор BilimSari для школьников. '
+            'Отвечай кратко, понятно, на русском. Помогай с предметами: '
+            'математика, языки, биология и др. Не давай вредных советов. '
+            'Если вопрос не об учёбе — вежливо верни к теме обучения.'
+        )
+    if lang == 'en':
+        return (
+            'You are a friendly BilimSari tutor for students. '
+            'Answer briefly and clearly in English. Help with school subjects. '
+            'Stay educational and safe. If off-topic, gently return to learning.'
+        )
+    return (
+        'Sen BilimSari platformasidagi do‘stona o‘qituvchi yordamchisan. '
+        'O‘quvchilarga qisqa, tushunarli, o‘zbek tilida javob ber. '
+        'Maktab fanlari: matematika, tillar, biologiya va boshqalar. '
+        'Zararli maslahat berma. Mavzudan tashqari bo‘lsa, o‘qishga qaytar.'
+    )
+
+
+@app.route('/api/ai/tutor', methods=['POST'])
+def ai_tutor():
+    """AI o'qituvchi — savol / tushuntirish"""
+    import requests as http_requests
+
+    body = request.get_json(silent=True) or {}
+    message = (body.get('message') or '').strip()
+    lang = (body.get('lang') or 'uz')[:5]
+    context = (body.get('context') or '').strip()  # savol, javob, fan
+
+    if not message:
+        return jsonify({'ok': False, 'error': 'Xabar bo‘sh'}), 400
+    if len(message) > 2000:
+        return jsonify({'ok': False, 'error': 'Xabar juda uzun'}), 400
+
+    if not XAI_API_KEY:
+        return jsonify({
+            'ok': False,
+            'error': 'AI ulanmagan. Railway'da XAI_API_KEY qo‘shing.',
+            'reply': None,
+        }), 503
+
+    user_content = message
+    if context:
+        user_content = f'Mavzu/kontekst:\n{context}\n\nO‘quvchi:\n{message}'
+
+    try:
+        r = http_requests.post(
+            f'{XAI_BASE.rstrip("/")}/chat/completions',
+            headers={
+                'Authorization': f'Bearer {XAI_API_KEY}',
+                'Content-Type': 'application/json',
+            },
+            json={
+                'model': XAI_MODEL,
+                'messages': [
+                    {'role': 'system', 'content': ai_system_prompt(lang)},
+                    {'role': 'user', 'content': user_content},
+                ],
+                'temperature': 0.6,
+                'max_tokens': 600,
+            },
+            timeout=45,
+        )
+        if r.status_code != 200:
+            return jsonify({
+                'ok': False,
+                'error': f'AI xato: {r.status_code}',
+                'reply': None,
+            }), 502
+        data = r.json()
+        reply = (
+            data.get('choices', [{}])[0]
+            .get('message', {})
+            .get('content', '')
+            .strip()
+        )
+        if not reply:
+            return jsonify({'ok': False, 'error': 'Bo‘sh javob', 'reply': None}), 502
+        return jsonify({'ok': True, 'reply': reply})
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e), 'reply': None}), 500
+
+
 # ───────────────────────────── Telegram bot (webhook) ─────────────────────────────
 
 def tg_api(method, payload):

@@ -303,6 +303,7 @@
   <script src="js/i18n.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/ai.js"></script>
   <script src="js/data.js"></script>
   <script>
     (async function () {
@@ -533,6 +534,7 @@
         fb.className = 'feedback show ok';
         document.getElementById('fbTitle').textContent = 'To‘g‘ri!';
         document.getElementById('fbText').textContent = `+${gain} XP`;
+        var expOk = document.getElementById('aiExplainBtn'); if (expOk) expOk.style.display = 'none';
         btn.className = 'continue-btn';
         btn.textContent = 'DAVOM ETISH';
       } else {
@@ -542,6 +544,17 @@
         fb.className = 'feedback show bad';
         document.getElementById('fbTitle').textContent = 'Noto‘g‘ri';
         document.getElementById('fbText').textContent = correctText ? ('To‘g‘ri javob: ' + correctText) : 'Qayta urinib ko‘ring';
+        var exp = document.getElementById('aiExplainBtn');
+        if (!exp) {
+          exp = document.createElement('button');
+          exp.id = 'aiExplainBtn';
+          exp.type = 'button';
+          exp.textContent = 'AI tushuntirsin';
+          exp.style.cssText = 'margin-top:10px;width:100%;height:40px;border:none;border-radius:10px;background:#1CB0F6;color:#fff;font-weight:700;cursor:pointer';
+          document.getElementById('feedback').appendChild(exp);
+        }
+        exp.style.display = 'block';
+        exp.onclick = function () { explainCurrentWrong(correctText); };
         btn.className = 'continue-btn wrong-theme';
         btn.textContent = 'DAVOM ETISH';
         document.getElementById('main').classList.add('bs-shake');
@@ -560,6 +573,29 @@
       } else {
         renderQuestion();
       }
+    }
+
+    
+    async function explainCurrentWrong(correctText) {
+      const q = questions[idx];
+      const subject = (found && found.course && found.course.name) || '';
+      const questionText = q.q || q.question || '';
+      const userAns = selected != null ? (q.options ? q.options[selected] : String(selected)) : '';
+      const btn = document.getElementById('aiExplainBtn');
+      if (btn) { btn.disabled = true; btn.textContent = '...'; }
+      try {
+        const data = await BilimSariAI.explainWrong(questionText, correctText || '', userAns, subject);
+        const fb = document.getElementById('fbText');
+        if (data && data.ok && data.reply) {
+          if (fb) fb.textContent = data.reply;
+        } else if (fb) {
+          fb.textContent = (data && data.error) || 'AI tushuntira olmadi';
+        }
+      } catch (e) {
+        const fb = document.getElementById('fbText');
+        if (fb) fb.textContent = 'AI xatosi';
+      }
+      if (btn) { btn.disabled = false; btn.textContent = 'AI tushuntirsin'; }
     }
 
     function finishLesson() {
