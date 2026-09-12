@@ -441,7 +441,7 @@ def service_worker():
 
 XAI_API_KEY = os.environ.get('XAI_API_KEY') or os.environ.get('GROK_API_KEY') or ''
 XAI_BASE = os.environ.get('XAI_API_BASE', 'https://api.x.ai/v1')
-XAI_MODEL = os.environ.get('XAI_MODEL', 'grok-2-latest')
+XAI_MODEL = os.environ.get('XAI_MODEL', 'grok-3-mini')
 
 def ai_system_prompt(lang: str) -> str:
     if lang == 'ru':
@@ -510,9 +510,17 @@ def ai_tutor():
             timeout=45,
         )
         if r.status_code != 200:
+            detail = ''
+            try:
+                err_json = r.json()
+                detail = err_json.get('error') or err_json.get('message') or str(err_json)
+                if isinstance(detail, dict):
+                    detail = detail.get('message') or str(detail)
+            except Exception:
+                detail = (r.text or '')[:300]
             return jsonify({
                 'ok': False,
-                'error': f'AI xato: {r.status_code}',
+                'error': f'AI xato {r.status_code}: {detail}',
                 'reply': None,
             }), 502
         data = r.json()
@@ -523,7 +531,7 @@ def ai_tutor():
             .strip()
         )
         if not reply:
-            return jsonify({'ok': False, 'error': 'Bo‘sh javob', 'reply': None}), 502
+            return jsonify({'ok': False, 'error': 'Bosh javob', 'reply': None}), 502
         return jsonify({'ok': True, 'reply': reply})
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e), 'reply': None}), 500
