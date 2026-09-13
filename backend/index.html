@@ -29,13 +29,11 @@
   .nishon-katta {
     width: 76px; height: 76px;
     border-radius: 22px;
-    background: var(--yashil);
-    display: grid; place-items: center;
-    color: #fff;
     margin-bottom: 20px;
     box-shadow: 0 5px 0 var(--yashil-quyuq);
+    overflow: hidden;
   }
-  .nishon-katta svg { width: 40px; height: 40px; }
+  .nishon-katta img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .kirish-ichi h1 {
     font-size: clamp(28px, 8vw, 34px);
@@ -106,11 +104,11 @@
 
 <main class="kirish-ekran" id="ekran" hidden>
   <div class="kirish-ichi">
-    <div class="nishon-katta" data-ikon="girih"></div>
+    <div class="nishon-katta"><img src="assets/logo-green.png" alt="Bilim Sari"></div>
 
-    <h1>Bilim sari<br><em>har kuni bir qadam</em></h1>
+    <h1>Bilim Sari</h1>
     <p class="kirish-tavsif">
-      Maktab dasturi bo'yicha darslar, testlar va uy vazifalari — sinfingizga moslab.
+      Har kuni bir qadam bilim sari. Maktab dasturi bo'yicha darslar, testlar va uy vazifalari — sinfingizga moslab.
     </p>
 
     <ul class="xususiyatlar">
