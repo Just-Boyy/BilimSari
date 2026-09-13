@@ -34,37 +34,16 @@ def _fail(exc: study.StudyError):
     return jsonify(payload), exc.http_status
 
 
-def _require_grade(cur, user_id):
-    grade = study.get_user_grade(cur, user_id)
-    if not grade:
-        raise study.StudyError(
-            'Avval sinfingizni tanlang', code='no_grade', http_status=409
-        )
-    return grade
+# DIQQAT: sinf tushunchasi olib tashlangan — barcha foydalanuvchilarga bitta
+# umumiy dastur (barcha sinflardan yig'ilgan mavzular) ko'rsatiladi. Har bir
+# mavzu o'zining asl `grade`sini saqlaydi (ID va tartib uchun ishlatiladi),
+# lekin foydalanuvchidan endi sinf so'ralmaydi.
 
-
-# ───────────────────────── Sinflar va fanlar ─────────────────────────
 
 @bp.route('/grades', methods=['GET'])
 def grades():
-    """Onboarding: mavjud sinflar ro'yxati. Auth talab qilinmaydi."""
+    """Eskirgan: endi ishlatilmaydi (sinf tanlash olib tashlangan)."""
     return jsonify({'ok': True, 'grades': cur_mod.grades_overview()})
-
-
-@bp.route('/grade', methods=['POST'])
-@auth_required
-def choose_grade():
-    body = request.get_json(silent=True) or {}
-    conn, cur = _conn()
-    try:
-        grade = study.set_user_grade(cur, conn, request.user['id'], body.get('grade'))
-        return jsonify({'ok': True, 'grade': grade})
-    except study.StudyError as exc:
-        return _fail(exc)
-    except (TypeError, ValueError):
-        return jsonify({'ok': False, 'error': "Sinf noto'g'ri", 'code': 'bad_grade'}), 400
-    finally:
-        _close(conn, cur)
 
 
 @bp.route('/subjects', methods=['GET'])
@@ -72,19 +51,11 @@ def choose_grade():
 def subjects():
     conn, cur = _conn()
     try:
-        grade = request.args.get('grade') or study.get_user_grade(cur, request.user['id'])
-        if not grade:
-            return jsonify({'ok': False, 'error': 'Avval sinfingizni tanlang',
-                            'code': 'no_grade'}), 409
-        items = study.subjects_overview(cur, request.user['id'], int(grade))
+        items = study.subjects_overview(cur, request.user['id'])
         return jsonify({
             'ok': True,
-            'grade': int(grade),
             'subjects': items,
-            'empty_message': (
-                f'Hozircha {grade}-sinf uchun fanlar tayyorlanmoqda. '
-                'Tez orada qo\'shiladi.'
-            ) if not items else '',
+            'empty_message': 'Hozircha fanlar tayyorlanmoqda. Tez orada qo\'shiladi.' if not items else '',
         })
     finally:
         _close(conn, cur)
@@ -107,6 +78,17 @@ def dashboard():
         _close(conn, cur)
 
 
+def _grade_or_400(raw):
+    """Endi bitta 'foydalanuvchi sinfi' yo'q — har bir mavzu o'z grade'ini
+    o'zi bilan olib yuradi (frontend uni mavzular ro'yxatidan oladi)."""
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        raise study.StudyError(
+            "Mavzu ma'lumoti yetarli emas (grade)", code='bad_topic', http_status=400
+        )
+
+
 # ───────────────────────── Mavzular ─────────────────────────
 
 @bp.route('/topics/<subject_key>', methods=['GET'])
@@ -114,8 +96,7 @@ def dashboard():
 def topics(subject_key):
     conn, cur = _conn()
     try:
-        grade = int(request.args.get('grade') or _require_grade(cur, request.user['id']))
-        subject, items = study.subject_topics(cur, request.user['id'], grade, subject_key)
+        subject, items = study.subject_topics(cur, request.user['id'], subject_key)
         if subject is None:
             return jsonify({
                 'ok': False,
@@ -126,7 +107,6 @@ def topics(subject_key):
         done = sum(1 for t in items if t['state'] == study.STATUS_COMPLETED)
         return jsonify({
             'ok': True,
-            'grade': grade,
             'subject': {
                 'key': subject['subject_key'],
                 'name': subject['name'],
@@ -139,8 +119,6 @@ def topics(subject_key):
             'percent': round(done * 100 / len(items)) if items else 0,
             'cooldown': study.cooldown_state(cur, request.user['id']),
         })
-    except study.StudyError as exc:
-        return _fail(exc)
     finally:
         _close(conn, cur)
 
@@ -150,7 +128,7 @@ def topics(subject_key):
 def topic(subject_key, slug):
     conn, cur = _conn()
     try:
-        grade = int(request.args.get('grade') or _require_grade(cur, request.user['id']))
+        grade = _grade_or_400(request.args.get('grade'))
         tid = cur_mod.topic_id(grade, subject_key, slug)
         data = study.topic_payload(cur, conn, request.user['id'], tid)
         data['ok'] = True
@@ -167,7 +145,7 @@ def lesson_read():
     body = request.get_json(silent=True) or {}
     conn, cur = _conn()
     try:
-        grade = int(body.get('grade') or _require_grade(cur, request.user['id']))
+        grade = _grade_or_400(body.get('grade'))
         tid = cur_mod.topic_id(grade, body.get('subject_key'), body.get('slug'))
         study.mark_lesson_read(cur, conn, request.user['id'], tid)
         return jsonify({'ok': True})
@@ -185,7 +163,7 @@ def quiz():
     body = request.get_json(silent=True) or {}
     conn, cur = _conn()
     try:
-        grade = int(body.get('grade') or _require_grade(cur, request.user['id']))
+        grade = _grade_or_400(body.get('grade'))
         tid = cur_mod.topic_id(grade, body.get('subject_key'), body.get('slug'))
         result = study.grade_quiz(cur, conn, request.user['id'], tid, body.get('answers'))
         result['ok'] = True
@@ -204,7 +182,7 @@ def homework():
     body = request.get_json(silent=True) or {}
     conn, cur = _conn()
     try:
-        grade = int(body.get('grade') or _require_grade(cur, request.user['id']))
+        grade = _grade_or_400(body.get('grade'))
         tid = cur_mod.topic_id(grade, body.get('subject_key'), body.get('slug'))
         result = study.submit_homework(cur, conn, request.user['id'], tid, body.get('answers'))
         result['ok'] = True

@@ -331,17 +331,19 @@ def _compute_states(topics, progress, cooldown):
     return out
 
 
-def subject_topics(cur, user_id, grade, subject_key):
+def subject_topics(cur, user_id, subject_key):
+    """Fan bo'yicha BARCHA sinflardan yig'ilgan mavzular (bitta umumiy dastur,
+    grade ASC/seq ASC tartibida — soddadan murakkabga ketma-ket ochiladi)."""
     cur.execute(
-        'SELECT * FROM topics WHERE grade = %s AND subject_key = %s ORDER BY seq ASC',
-        (int(grade), subject_key),
+        'SELECT * FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        (subject_key,),
     )
     topics = cur.fetchall()
     if not topics:
         return None, []
     cur.execute(
-        'SELECT * FROM subjects WHERE grade = %s AND subject_key = %s',
-        (int(grade), subject_key),
+        'SELECT * FROM subjects WHERE subject_key = %s ORDER BY grade ASC LIMIT 1',
+        (subject_key,),
     )
     subject = cur.fetchone()
     progress = _progress_map(cur, user_id)
@@ -349,37 +351,44 @@ def subject_topics(cur, user_id, grade, subject_key):
     return subject, _compute_states(topics, progress, cooldown)
 
 
-def subjects_overview(cur, user_id, grade):
-    """Sinf bo'yicha barcha fanlar + har birida progress."""
-    grade = int(grade)
-    cur.execute('SELECT * FROM subjects WHERE grade = %s ORDER BY sort_order ASC', (grade,))
-    subjects = cur.fetchall()
-    if not subjects:
+def subjects_overview(cur, user_id):
+    """Barcha fanlar (barcha sinflar birlashtirilgan — hammaga bitta standart
+    dastur) + har birida progress."""
+    cur.execute('SELECT * FROM subjects ORDER BY grade ASC, sort_order ASC')
+    all_subjects = cur.fetchall()
+    if not all_subjects:
         return []
 
-    cur.execute('SELECT * FROM topics WHERE grade = %s ORDER BY seq ASC', (grade,))
+    cur.execute('SELECT * FROM topics ORDER BY grade ASC, seq ASC')
     all_topics = cur.fetchall()
     progress = _progress_map(cur, user_id)
     cooldown = cooldown_state(cur, user_id)
 
     out = []
-    for subject in subjects:
-        topics = [t for t in all_topics if t['subject_key'] == subject['subject_key']]
+    seen_keys = set()
+    for subject in all_subjects:
+        key = subject['subject_key']
+        if key in seen_keys:
+            continue  # bir fan bir marta — mavzulari barcha sinflardan yig'iladi
+        seen_keys.add(key)
+
+        topics = [t for t in all_topics if t['subject_key'] == key]
         states = _compute_states(topics, progress, cooldown)
         done = sum(1 for s in states if s['state'] == STATUS_COMPLETED)
         current = next((s for s in states if s['state'] in (STATUS_CURRENT, STATUS_COOLDOWN)), None)
         out.append({
             'id': subject['id'],
-            'key': subject['subject_key'],
+            'key': key,
             'name': subject['name'],
             'icon': subject['icon'],
             'color': subject['color'],
-            'grade': grade,
             'total_topics': len(states),
             'completed_topics': done,
             'percent': round(done * 100 / len(states)) if states else 0,
-            'current_topic': {'title': current['title'], 'slug': current['slug'],
-                              'state': current['state']} if current else None,
+            'current_topic': {
+                'title': current['title'], 'slug': current['slug'],
+                'state': current['state'], 'grade': current['grade'],
+            } if current else None,
             'finished': done == len(states) and len(states) > 0,
         })
     return out
@@ -409,10 +418,11 @@ def _ensure_progress_row(cur, conn, user_id, topic_id):
 
 
 def topic_state_for(cur, user_id, topic):
-    """Bitta mavzuning holatini (o'sha fandagi ketma-ketlikni hisobga olib) aniqlaydi."""
+    """Bitta mavzuning holatini (o'sha fandagi — barcha sinflar bo'ylab
+    birlashtirilgan — ketma-ketlikni hisobga olib) aniqlaydi."""
     cur.execute(
-        'SELECT * FROM topics WHERE grade = %s AND subject_key = %s ORDER BY seq ASC',
-        (topic['grade'], topic['subject_key']),
+        'SELECT * FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        (topic['subject_key'],),
     )
     siblings = cur.fetchall()
     progress = _progress_map(cur, user_id)
@@ -469,8 +479,8 @@ def topic_payload(cur, conn, user_id, topic_id):
     homework = _json(topic['homework'], {})
 
     cur.execute(
-        'SELECT id, slug, seq, title FROM topics WHERE grade = %s AND subject_key = %s ORDER BY seq ASC',
-        (topic['grade'], topic['subject_key']),
+        'SELECT id, slug, seq, grade, title FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        (topic['subject_key'],),
     )
     siblings = cur.fetchall()
     index = next((i for i, s in enumerate(siblings) if s['id'] == topic_id), 0)
@@ -784,14 +794,8 @@ def _try_complete(cur, conn, user_id, topic_id):
 # ───────────────────────── Dashboard ─────────────────────────
 
 def dashboard(cur, user_id):
-    grade = get_user_grade(cur, user_id)
     cooldown = cooldown_state(cur, user_id)
-
-    if not grade:
-        return {'grade': None, 'needs_onboarding': True, 'cooldown': cooldown,
-                'subjects': [], 'stats': {}}
-
-    subjects = subjects_overview(cur, user_id, grade)
+    subjects = subjects_overview(cur, user_id)
 
     cur.execute(
         'SELECT COUNT(*) AS n FROM user_progress WHERE user_id = %s AND status = %s',
@@ -799,8 +803,13 @@ def dashboard(cur, user_id):
     )
     completed_total = int(cur.fetchone()['n'] or 0)
 
-    cur.execute('SELECT COUNT(*) AS n FROM topics WHERE grade = %s', (grade,))
+    cur.execute('SELECT COUNT(*) AS n FROM topics')
     topics_total = int(cur.fetchone()['n'] or 0)
+
+    # Hali birorta mavzuni boshlamagan (haqiqiy DB qatori yo'q) — yangi
+    # foydalanuvchi, ismni tasdiqlash/fan tanlash oqimi ko'rsatiladi.
+    cur.execute('SELECT 1 FROM user_progress WHERE user_id = %s LIMIT 1', (user_id,))
+    has_started = cur.fetchone() is not None
 
     # bugungi dars — birinchi ochiq mavzu
     today = None
@@ -813,13 +822,13 @@ def dashboard(cur, user_id):
                 'subject_color': subject['color'],
                 'topic_title': subject['current_topic']['title'],
                 'topic_slug': subject['current_topic']['slug'],
+                'topic_grade': subject['current_topic']['grade'],
                 'state': subject['current_topic']['state'],
             }
             break
 
     return {
-        'grade': grade,
-        'needs_onboarding': False,
+        'needs_onboarding': not has_started,
         'subjects': subjects,
         'today': today,
         'cooldown': cooldown,

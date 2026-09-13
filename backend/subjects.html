@@ -13,7 +13,7 @@
 
 <div class="ustki">
   <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
-  <h1>Mening fanlarim<small id="sinfMatn">Yuklanmoqda...</small></h1>
+  <h1>Mening fanlarim</h1>
 </div>
 
 <main class="sahifa sahifa-keng" style="padding-top:18px">
@@ -23,17 +23,6 @@
     <div class="skelet" style="height:150px"></div>
     <div class="skelet" style="height:150px"></div>
   </div>
-
-  <section class="bo-lim" id="sinfBo-lim" hidden>
-    <div class="karta-tekis" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-      <div style="flex:1;min-width:200px">
-        <h3 style="margin-bottom:3px">Sinf noto'g'rimi?</h3>
-        <p class="izoh">Sinfni o'zgartirsangiz, o'sha sinf darslari ko'rsatiladi.
-          Yig'ilgan natijalaringiz saqlanib qoladi.</p>
-      </div>
-      <a class="tugma tugma-ikkilamchi tugma-mayda" href="onboarding.html">Sinfni o'zgartirish</a>
-    </div>
-  </section>
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -58,16 +47,12 @@
       return;
     }
 
-    document.getElementById('sinfMatn').textContent = res.grade + '-sinf';
-    document.getElementById('sinfBo-lim').hidden = false;
-
     if (!res.subjects.length) {
       quti.style.gridTemplateColumns = '1fr';
       quti.innerHTML = UI.holat({
         belgi: 'tools',
         sarlavha: 'Hozircha fanlar mavjud emas',
-        matn: res.empty_message || 'Sizning sinfingiz uchun darslar tayyorlanmoqda.',
-        tugma: 'Boshqa sinfni tanlash', tugmaYo_l: 'onboarding.html',
+        matn: res.empty_message || 'Darslar tayyorlanmoqda.',
       });
       return;
     }

@@ -59,12 +59,6 @@
   <section class="bo-lim">
     <h2 style="margin-bottom:12px">Sozlamalar</h2>
 
-    <a class="qator" href="onboarding.html">
-      <span class="nishon" data-ikon="graduation"></span>
-      <span class="matn">Sinfni o'zgartirish<small id="joriySinf">—</small></span>
-      <span class="o-q" data-ikon="chevronRight"></span>
-    </a>
-
     <a class="qator" href="progress.html">
       <span class="nishon" data-ikon="chart"></span>
       <span class="matn">Natijalarim<small>Tugallangan mavzular va ballar</small></span>
@@ -120,15 +114,6 @@
     av.outerHTML = '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">';
   } else {
     av.textContent = UI.harfAvatar(ism);
-  }
-
-  if (d.grade) {
-    var y = document.getElementById('sinfYorliq');
-    y.textContent = d.grade + '-sinf o\'quvchisi';
-    y.hidden = false;
-    document.getElementById('joriySinf').textContent = 'Hozir: ' + d.grade + '-sinf';
-  } else {
-    document.getElementById('joriySinf').textContent = 'Sinf tanlanmagan';
   }
 
   var s = d.stats || {};

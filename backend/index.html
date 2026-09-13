@@ -134,9 +134,9 @@ document.querySelectorAll('[data-ikon]').forEach(function (el) {
 
   var boshlashTugma = document.getElementById('boshlashTugma');
   if (API.kirganmi()) {
-    var men = await API.men();
-    if (men.ok) {
-      boshlashTugma.setAttribute('href', men.user && men.user.grade ? 'dashboard.html' : 'onboarding.html');
+    var d = await API.dashboard();
+    if (d.ok) {
+      boshlashTugma.setAttribute('href', d.needs_onboarding ? 'onboarding.html' : 'dashboard.html');
     }
   }
 

@@ -240,6 +240,28 @@ def me():
     return jsonify({'ok': True, 'user': request.user})
 
 
+@app.route('/api/profile/name', methods=['POST'])
+@auth_required
+def update_name():
+    """Onboarding: Telegram'dan aniqlangan ismni foydalanuvchi o'zi
+    o'zgartirmoqchi bo'lsa ("O'zim kiritaman") shu yerdan saqlanadi."""
+    body = request.get_json(silent=True) or {}
+    name = (body.get('name') or '').strip()
+    if len(name) < 2:
+        return jsonify({'ok': False, 'error': "Ismingizni to'liq yozing.", 'code': 'bad_name'}), 400
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('UPDATE users SET name = %s WHERE id = %s', (name, request.user['id']))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    updated = dict(request.user)
+    updated['name'] = name
+    return jsonify({'ok': True, 'user': updated})
+
+
 @app.route('/api/logout', methods=['POST'])
 @auth_required
 def logout():

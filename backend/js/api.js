@@ -106,28 +106,33 @@
       return so_rov('/api/study/grade', { method: 'POST', body: { grade: sinf } });
     },
     dashboard: function () { return so_rov('/api/study/dashboard'); },
-    fanlar: function (sinf) {
-      return so_rov('/api/study/subjects' + (sinf ? '?grade=' + sinf : ''));
+    fanlar: function () {
+      return so_rov('/api/study/subjects');
     },
-    mavzular: function (fan, sinf) {
-      return so_rov('/api/study/topics/' + encodeURIComponent(fan) + (sinf ? '?grade=' + sinf : ''));
+    mavzular: function (fan) {
+      return so_rov('/api/study/topics/' + encodeURIComponent(fan));
     },
     mavzu: function (fan, slug, sinf) {
       return so_rov('/api/study/topic/' + encodeURIComponent(fan) + '/' + encodeURIComponent(slug)
-        + (sinf ? '?grade=' + sinf : ''));
+        + '?grade=' + encodeURIComponent(sinf));
     },
-    darsO_qildi: function (fan, slug) {
-      return so_rov('/api/study/lesson-read', { method: 'POST', body: { subject_key: fan, slug: slug } });
+    darsO_qildi: function (fan, slug, sinf) {
+      return so_rov('/api/study/lesson-read', {
+        method: 'POST', body: { subject_key: fan, slug: slug, grade: sinf },
+      });
     },
-    quizYuborish: function (fan, slug, javoblar) {
+    quizYuborish: function (fan, slug, javoblar, sinf) {
       return so_rov('/api/study/quiz', {
-        method: 'POST', body: { subject_key: fan, slug: slug, answers: javoblar },
+        method: 'POST', body: { subject_key: fan, slug: slug, answers: javoblar, grade: sinf },
       });
     },
-    uyIshiYuborish: function (fan, slug, javoblar) {
+    uyIshiYuborish: function (fan, slug, javoblar, sinf) {
       return so_rov('/api/study/homework', {
-        method: 'POST', body: { subject_key: fan, slug: slug, answers: javoblar },
+        method: 'POST', body: { subject_key: fan, slug: slug, answers: javoblar, grade: sinf },
       });
+    },
+    ismYangilash: function (ism) {
+      return so_rov('/api/profile/name', { method: 'POST', body: { name: ism } });
     },
     kutish: function () { return so_rov('/api/study/cooldown'); },
 

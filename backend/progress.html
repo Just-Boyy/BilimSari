@@ -35,7 +35,7 @@
 
 <div class="ustki">
   <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
-  <h1>Natijalarim<small id="sinfMatn"></small></h1>
+  <h1>Natijalarim</h1>
 </div>
 
 <main class="sahifa" style="padding-top:18px">
@@ -65,8 +65,6 @@
 
     if (!d.ok) { tana.innerHTML = UI.xatoHolat(d.error, yukla); return; }
     if (d.needs_onboarding) { location.href = 'onboarding.html'; return; }
-
-    document.getElementById('sinfMatn').textContent = d.grade + '-sinf';
 
     if (!d.subjects.length) {
       tana.innerHTML = UI.holat({

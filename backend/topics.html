@@ -13,7 +13,7 @@
 
 <div class="ustki">
   <a class="orqaga" href="subjects.html" aria-label="Orqaga">←</a>
-  <h1 id="fanNomi">Mavzular<small id="fanSinf">Yuklanmoqda...</small></h1>
+  <h1 id="fanNomi">Mavzular</h1>
 </div>
 
 <main class="sahifa" style="padding-top:18px">
@@ -73,9 +73,7 @@
       return;
     }
 
-    document.getElementById('fanNomi').innerHTML =
-      UI.esc(res.subject.name) +
-      '<small>' + res.grade + '-sinf</small>';
+    document.getElementById('fanNomi').textContent = res.subject.name;
     document.title = res.subject.name + ' — BilimSari';
 
     // Ust panel: progress yoki kutish taymeri
@@ -106,21 +104,23 @@
     }
 
     // Mavzular yo'li
-    ro_yxat.innerHTML = '<div class="yo-l">' + res.topics.map(function (m) {
+    ro_yxat.innerHTML = '<div class="yo-l">' + res.topics.map(function (m, i) {
+      var raqam = i + 1;
       var sinf = { completed: 'tugallangan', current: 'joriy',
                    cooldown: 'kutish', locked: 'qulflangan' }[m.state];
-      var tugun = tugunIkon(m.state, m.seq);
+      var tugun = tugunIkon(m.state, raqam);
 
       var ichki =
         '<span class="mavzu-tugun">' + tugun + '</span>' +
-        '<h3>' + m.seq + '. ' + UI.esc(m.title) + '</h3>' +
+        '<h3>' + raqam + '. ' + UI.esc(m.title) + '</h3>' +
         '<p class="tavsif">' + UI.esc(m.summary) + '</p>' +
         '<span class="yorliq">' + YORLIQ[m.state] + '</span>';
 
       var ochiq = m.state === 'completed' || m.state === 'current';
       if (ochiq) {
         return '<a class="mavzu ' + sinf + '" href="topic.html?fan=' +
-          encodeURIComponent(fan) + '&mavzu=' + encodeURIComponent(m.slug) + '">' +
+          encodeURIComponent(fan) + '&mavzu=' + encodeURIComponent(m.slug) +
+          '&sinf=' + encodeURIComponent(m.grade) + '">' +
           ichki + '</a>';
       }
       var sabab = m.state === 'cooldown'

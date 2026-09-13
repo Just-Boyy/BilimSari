@@ -58,7 +58,8 @@
   var parametr = new URLSearchParams(location.search);
   var fan = parametr.get('fan');
   var slug = parametr.get('mavzu');
-  if (!fan || !slug) { location.replace('subjects.html'); return; }
+  var sinf = parametr.get('sinf');
+  if (!fan || !slug || !sinf) { location.replace('subjects.html'); return; }
 
   document.getElementById('orqaga').href = 'topics.html?fan=' + encodeURIComponent(fan);
 
@@ -69,7 +70,7 @@
 
   // ── Yuklash ────────────────────────────────────────────
   async function yukla() {
-    var res = await API.mavzu(fan, slug);
+    var res = await API.mavzu(fan, slug, sinf);
     if (UI.sinfKerak(res)) return;
 
     var tana = document.getElementById('tana');
@@ -198,7 +199,7 @@
     var tugma = document.getElementById('darsTugadi');
     if (tugma) tugma.onclick = async function () {
       this.disabled = true;
-      var res = await API.darsO_qildi(fan, slug);
+      var res = await API.darsO_qildi(fan, slug, sinf);
       this.disabled = false;
       if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
       M.progress.lesson_read = true;
@@ -370,7 +371,7 @@
     var el = document.getElementById('panelQuiz');
     el.innerHTML = UI.yuklanmoqda('Javoblar tekshirilmoqda...');
 
-    var res = await API.quizYuborish(fan, slug, quizJavoblar);
+    var res = await API.quizYuborish(fan, slug, quizJavoblar, sinf);
     if (!res.ok) {
       el.innerHTML = UI.xatoHolat(res.error, function () { quizIndeks = 0; savolChiz(); });
       return;
@@ -478,7 +479,7 @@
 
       tugma.disabled = true;
       tugma.textContent = 'Tekshirilmoqda...';
-      var res = await API.uyIshiYuborish(fan, slug, javoblar);
+      var res = await API.uyIshiYuborish(fan, slug, javoblar, sinf);
       tugma.disabled = false;
       tugma.textContent = 'Vazifani topshirish';
 

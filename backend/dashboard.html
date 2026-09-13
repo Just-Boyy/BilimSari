@@ -67,9 +67,6 @@
     // Sarlavha
     var ism = UI.bosh(res.user && res.user.name);
     document.getElementById('salom').textContent = 'Salom, ' + ism + '!';
-    var yorliq = document.getElementById('sinfYorliq');
-    yorliq.textContent = res.grade + '-sinf o\'quvchisi';
-    yorliq.hidden = false;
 
     var av = document.getElementById('avatar');
     if (res.user && res.user.photo_url) {
@@ -109,7 +106,7 @@
       quti.innerHTML = UI.holat({
         belgi: 'award',
         sarlavha: 'Barcha mavzular tugallandi',
-        matn: 'Ushbu sinf bo\'yicha hamma darsni yakunladingiz. Natijalaringizni ko\'ring.',
+        matn: 'Hamma darsni yakunladingiz. Natijalaringizni ko\'ring.',
         tugma: 'Natijalarim', tugmaYo_l: 'progress.html',
       });
       return;
@@ -125,7 +122,8 @@
         '<h2>' + UI.esc(t.topic_title) + '</h2>' +
         '<p class="tavsif">Dars, test va uy vazifasi — hammasi bitta sahifada.</p>' +
         '<a class="tugma" href="topic.html?fan=' + encodeURIComponent(t.subject_key) +
-          '&mavzu=' + encodeURIComponent(t.topic_slug) + '">Darsni boshlash</a>' +
+          '&mavzu=' + encodeURIComponent(t.topic_slug) +
+          '&sinf=' + encodeURIComponent(t.topic_grade) + '">Darsni boshlash</a>' +
       '</div>';
   }
 
@@ -149,8 +147,7 @@
       quti.innerHTML = UI.holat({
         belgi: 'tools',
         sarlavha: 'Fanlar tayyorlanmoqda',
-        matn: 'Sizning sinfingiz uchun darslar hali qo\'shilmagan.',
-        tugma: 'Sinfni o\'zgartirish', tugmaYo_l: 'onboarding.html',
+        matn: 'Darslar hali qo\'shilmagan.',
       });
       return;
     }

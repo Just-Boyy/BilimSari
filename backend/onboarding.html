@@ -26,48 +26,38 @@
 <div class="ob">
   <div class="nuqtalar" aria-hidden="true" id="nuqtalar"></div>
 
-  <!-- Ism (faqat sessiya bo'lmaganda) -->
+  <!-- Ism -->
   <section class="qadam" id="qadamIsm" aria-labelledby="ismSarlavha">
-    <h1 id="ismSarlavha">Ismingiz nima?</h1>
-    <p class="kirish-tavsif">Sizga shu ism bilan murojaat qilamiz.</p>
-
-    <div class="maydon">
-      <label for="ism">Ism</label>
-      <input class="kiritish" type="text" id="ism" placeholder="Masalan: Dilnoza"
-             autocomplete="given-name" maxlength="40">
+    <!-- Telegram'dan aniqlangan ism — tasdiqlash yoki o'zgartirish -->
+    <div id="ismAniqlanganBlok" hidden>
+      <h1>Ismingiz <span id="aniqlanganIsm"></span>?</h1>
+      <p class="kirish-tavsif">Sizga shu ism bilan murojaat qilamiz.</p>
+      <button class="tugma" id="ismTasdiq">Davom etish</button>
+      <button class="tugma tugma-ikkilamchi" id="ismOzimKiritaman" style="margin-top:10px">O'zim kiritaman</button>
     </div>
-    <p id="ismXato" class="izoh" style="color:var(--qizil);min-height:1.3em;margin:0 0 10px"></p>
 
-    <button class="tugma" id="ismDavom">Davom etish</button>
+    <!-- Qo'lda kiritish (mehmon foydalanuvchi YOKI "O'zim kiritaman" bosilganda) -->
+    <div id="ismQolBlok" hidden>
+      <h1 id="ismSarlavha">Ismingiz nima?</h1>
+      <p class="kirish-tavsif">Sizga shu ism bilan murojaat qilamiz.</p>
+
+      <div class="maydon">
+        <label for="ism">Ism</label>
+        <input class="kiritish" type="text" id="ism" placeholder="Masalan: Dilnoza"
+               autocomplete="given-name" maxlength="40">
+      </div>
+      <p id="ismXato" class="izoh" style="color:var(--qizil);min-height:1.3em;margin:0 0 10px"></p>
+
+      <button class="tugma" id="ismDavom">Davom etish</button>
+    </div>
 
     <p class="izoh-kichik" style="text-align:center;margin-top:16px">
       Email bilan hisobingiz bormi? <a href="login.html"><b>Kirish</b></a>
     </p>
   </section>
 
-  <!-- Sinf -->
-  <section class="qadam" id="qadamSinf" aria-labelledby="sinfSarlavha">
-    <h1 id="sinfSarlavha">Nechinchi sinfda o'qiysiz?</h1>
-    <p class="kirish-tavsif">Sizga faqat o'z sinfingiz darslari ko'rsatiladi.</p>
-
-    <div id="sinflar" class="sinflar" role="group" aria-label="Sinflar">
-      <div class="skelet" style="height:76px"></div>
-      <div class="skelet" style="height:76px"></div>
-      <div class="skelet" style="height:76px"></div>
-      <div class="skelet" style="height:76px"></div>
-      <div class="skelet" style="height:76px"></div>
-      <div class="skelet" style="height:76px"></div>
-    </div>
-
-    <div class="tanlangan-panel">
-      <button class="tugma" id="sinfDavom" disabled>Davom etish</button>
-    </div>
-  </section>
-
   <!-- Fan -->
   <section class="qadam" id="qadamFan" aria-labelledby="fanSarlavha">
-    <button class="orqaga" id="orqagaSinf" aria-label="Sinf tanlashga qaytish"
-            style="margin-bottom:16px">←</button>
     <h1 id="fanSarlavha">Qaysi fandan boshlaymiz?</h1>
     <p class="kirish-tavsif" id="fanTavsif">Keyinchalik boshqa fanlarga ham o'tishingiz mumkin.</p>
     <div id="fanlar" class="fanlar"></div>
@@ -81,18 +71,13 @@
 <script src="js/telegram.js"></script>
 <script>
 (async function () {
-  var tanlanganSinf = null;
-  var qadamlar = [];   // ko'rsatiladigan qadamlar ketma-ketligi
+  var qadamlar = ['qadamIsm', 'qadamFan'];
 
-  // ── Sessiya: Telegram bo'lsa avtomatik, aks holda ism so'raymiz ──
+  // ── Sessiya: Telegram bo'lsa avtomatik kirib olamiz ──
   if (!API.kirganmi() && window.BilimSariTG &&
       typeof BilimSariTG.autoAuthIfTelegram === 'function') {
     try { await BilimSariTG.autoAuthIfTelegram(); } catch (e) {}
   }
-
-  qadamlar = API.kirganmi()
-    ? ['qadamSinf', 'qadamFan']
-    : ['qadamIsm', 'qadamSinf', 'qadamFan'];
 
   document.getElementById('nuqtalar').innerHTML =
     qadamlar.map(function (_, i) {
@@ -109,12 +94,38 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function sinfQadami() { return qadamlar.indexOf('qadamSinf') + 1; }
   function fanQadami() { return qadamlar.indexOf('qadamFan') + 1; }
 
-  // ── Ism qadami (sessiyasiz foydalanuvchi uchun) ──
+  // ── Ism qadami ──
+  var aniqlanganBlok = document.getElementById('ismAniqlanganBlok');
+  var qolBlok = document.getElementById('ismQolBlok');
   var ismMaydon = document.getElementById('ism');
   var ismXato = document.getElementById('ismXato');
+
+  var joriyIsm = API.kirganmi() ? ((API.user() || {}).name || null) : null;
+
+  function ismQolKiritishniKo_rsat(oldindanTo_ldirilgan) {
+    aniqlanganBlok.hidden = true;
+    qolBlok.hidden = false;
+    if (oldindanTo_ldirilgan) ismMaydon.value = oldindanTo_ldirilgan;
+    setTimeout(function () { ismMaydon.focus(); }, 100);
+  }
+
+  if (joriyIsm) {
+    document.getElementById('aniqlanganIsm').textContent = joriyIsm;
+    aniqlanganBlok.hidden = false;
+  } else {
+    ismQolKiritishniKo_rsat();
+  }
+
+  document.getElementById('ismOzimKiritaman').onclick = function () {
+    ismQolKiritishniKo_rsat(joriyIsm);
+  };
+
+  document.getElementById('ismTasdiq').onclick = function () {
+    qadam(fanQadami());
+    fanlarniYukla();
+  };
 
   async function ismSaqla() {
     var ism = ismMaydon.value.trim();
@@ -130,67 +141,32 @@
     tugma.disabled = true;
     tugma.textContent = 'Saqlanmoqda...';
 
-    var res = await API.mehmon(ism);
+    var res;
+    if (API.kirganmi()) {
+      // Telegram foydalanuvchisi ismini o'zi kiritmoqchi
+      res = await API.ismYangilash(ism);
+    } else {
+      // Mehmon — yangi hisob, faqat ism bilan
+      res = await API.mehmon(ism);
+    }
 
     tugma.disabled = false;
     tugma.textContent = 'Davom etish';
 
     if (!res.ok) { ismXato.textContent = res.error; return; }
 
-    API.sessiyaOchish(res.token, res.user);
-    qadam(sinfQadami());
-    sinflarniYukla();
+    if (res.token) {
+      API.sessiyaOchish(res.token, res.user);
+    } else {
+      API.userYangilash({ name: ism });
+    }
+
+    qadam(fanQadami());
+    fanlarniYukla();
   }
 
   document.getElementById('ismDavom').onclick = ismSaqla;
   ismMaydon.onkeydown = function (e) { if (e.key === 'Enter') ismSaqla(); };
-
-  // ── Sinf qadami ──
-  async function sinflarniYukla() {
-    var quti = document.getElementById('sinflar');
-    var javob = await API.sinflar();
-
-    if (!javob.ok) {
-      quti.style.gridTemplateColumns = '1fr';
-      quti.innerHTML = UI.xatoHolat(javob.error, function () { sinflarniYukla(); });
-      return;
-    }
-
-    quti.style.gridTemplateColumns = '';
-    quti.innerHTML = javob.grades.map(function (s) {
-      return '<button type="button" class="sinf-tugma' + (s.available ? ' tayyor' : '') + '"' +
-        ' data-sinf="' + s.grade + '" aria-pressed="false">' + s.grade +
-        '<span>' + (s.available ? s.topic_count + ' mavzu' : 'tayyorlanmoqda') + '</span></button>';
-    }).join('');
-  }
-
-  document.getElementById('sinflar').addEventListener('click', function (e) {
-    var t = e.target.closest('.sinf-tugma');
-    if (!t) return;
-    this.querySelectorAll('.sinf-tugma').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b === t));
-    });
-    tanlanganSinf = Number(t.dataset.sinf);
-    document.getElementById('sinfDavom').disabled = false;
-  });
-
-  document.getElementById('sinfDavom').onclick = async function () {
-    if (!tanlanganSinf) return;
-    this.disabled = true;
-    this.textContent = 'Saqlanmoqda...';
-
-    var res = await API.sinfTanlash(tanlanganSinf);
-    this.disabled = false;
-    this.textContent = 'Davom etish';
-
-    if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
-
-    API.userYangilash({ grade: tanlanganSinf });
-    qadam(fanQadami());
-    fanlarniYukla();
-  };
-
-  document.getElementById('orqagaSinf').onclick = function () { qadam(sinfQadami()); };
 
   // ── Fan qadami ──
   async function fanlarniYukla() {
@@ -205,16 +181,14 @@
     }
 
     document.getElementById('fanTavsif').textContent =
-      tanlanganSinf + '-sinf uchun ' + res.subjects.length + ' ta fan mavjud.';
+      res.subjects.length + ' ta fan mavjud.';
 
     if (!res.subjects.length) {
       quti.innerHTML = UI.holat({
         belgi: 'tools',
-        sarlavha: 'Bu sinf uchun darslar tayyorlanmoqda',
-        matn: res.empty_message || 'Tez orada qo\'shiladi. Boshqa sinfni tanlab ko\'rishingiz mumkin.',
-      }) + '<button class="tugma tugma-ikkilamchi" id="boshqaSinf" style="margin-top:12px">' +
-        'Boshqa sinfni tanlash</button>';
-      document.getElementById('boshqaSinf').onclick = function () { qadam(sinfQadami()); };
+        sarlavha: 'Fanlar tayyorlanmoqda',
+        matn: res.empty_message || 'Tez orada qo\'shiladi.',
+      });
       return;
     }
 
@@ -227,14 +201,7 @@
     }).join('');
   }
 
-  // ── Boshlash ──
-  if (API.kirganmi()) {
-    qadam(sinfQadami());
-    sinflarniYukla();
-  } else {
-    qadam(1);
-    setTimeout(function () { ismMaydon.focus(); }, 150);
-  }
+  qadam(1);
 })();
 </script>
 </body>
