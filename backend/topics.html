@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F6F8FB">
+<meta name="theme-color" content="#58A700">
 <title>Mavzular — BilimSari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
@@ -49,7 +49,7 @@
   };
 
   function tugunIkon(holat, seq) {
-    if (holat === 'completed') return UI.nishon('girih');
+    if (holat === 'completed') return UI.nishon('check');
     if (holat === 'locked') return UI.nishon('lock');
     if (holat === 'cooldown') return UI.nishon('clock');
     return String(seq);
@@ -88,7 +88,7 @@
           '<h2>Keyingi mavzu qulflangan</h2>' +
           '<p>Bir kunda bitta mavzu o\'rganiladi</p>' +
           '<div class="taymer" id="taymer" role="timer">--:--:--</div>' +
-          '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+          '<p class="izoh-kichik">' +
             UI.esc(res.cooldown.unlock_at_tashkent || '') + ' da ochiladi</p>' +
         '</div>';
       to_xtat = UI.taymer(document.getElementById('taymer'), res.cooldown.seconds_left,

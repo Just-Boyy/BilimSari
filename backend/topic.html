@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F6F8FB">
+<meta name="theme-color" content="#58A700">
 <title>Mavzu — BilimSari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
@@ -15,14 +15,15 @@
   .quiz-progress i {
     flex: 1; height: 5px; border-radius: 3px; background: var(--chiziq);
   }
-  .quiz-progress i.bajarildi { background: var(--feruza); }
-  .quiz-progress i.joriy { background: var(--oxra); }
+  .quiz-progress i.bajarildi { background: var(--yashil); }
+  .quiz-progress i.joriy { background: var(--kok); }
   .tugadi-ekran { text-align: center; padding: 16px 0; }
   .tugadi-ekran .nishon-katta {
     width: 96px; height: 96px; margin: 0 auto 16px;
     border-radius: 50%; background: var(--yashil-och);
-    display: grid; place-items: center; color: var(--yashil);
+    display: grid; place-items: center; color: var(--yashil-quyuq);
   }
+  .tugadi-ekran .nishon-katta svg { width: 48px; height: 48px; }
   .ai-rejimlar { display: flex; gap: 8px; flex-wrap: wrap; }
   .ai-rejimlar .tugma { flex: 1 1 140px; }
   .qadam-yakun {
@@ -109,7 +110,7 @@
       '<h2>Bugungi mavzuni yakunladingiz</h2>' +
       '<p>Keyingi mavzu quyidagi vaqtdan so\'ng ochiladi</p>' +
       '<div class="taymer" id="taymer" role="timer">--:--:--</div>' +
-      '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+      '<p class="izoh-kichik">' +
         UI.esc((kutish && kutish.unlock_at_tashkent) || '') + ' (Toshkent vaqti)</p>' +
       '</div>' +
       '<a class="tugma tugma-ikkilamchi" style="margin-top:14px"' +
@@ -523,7 +524,7 @@
     document.getElementById('tana').innerHTML =
       '<div class="karta tugadi-ekran">' +
         '<div class="nishon-katta" aria-hidden="true">' +
-          UI.nishon('girih', '', 48) +
+          UI.nishon('check') +
         '</div>' +
         '<h1>Tabriklaymiz!</h1>' +
         '<p class="izoh" style="margin:8px 0 4px">«' + UI.esc(M.title) +
@@ -533,7 +534,7 @@
         '<h2>' + (keyingi ? 'Keyingi mavzu: ' + UI.esc(keyingi.title) : 'Keyingi mavzu') + '</h2>' +
         '<p>Kuniga bitta mavzu — shunda bilim mustahkam o\'rnashadi</p>' +
         '<div class="taymer" id="yakunTaymer" role="timer">24:00:00</div>' +
-        '<p class="izoh-kichik" style="color:rgba(255,255,255,.6)">' +
+        '<p class="izoh-kichik">' +
           UI.esc(yakun.next_unlock_tashkent || '') + ' da ochiladi (Toshkent vaqti)</p>' +
       '</div>' +
       '<div class="tugmalar" style="margin-top:16px">' +
