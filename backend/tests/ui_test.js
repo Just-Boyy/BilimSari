@@ -81,7 +81,54 @@ async function sahifaOch(fayl, saqlangan = {}, qidiruv = '') {
     body: JSON.stringify({ grade: 1 }),
   });
 
-  // ══ 1. Onboarding ══
+  // ══ 0. Kirish ekrani va sessiyasiz onboarding ══
+  console.log('\n═══ BOSHLASH EKRANI ═══');
+  {
+    const { w, xatolar } = await sahifaOch('index.html', {});
+    await kut(500);
+    const d = w.document;
+    const tugmalar = [...d.querySelectorAll('.tugma')];
+    check('Bitta asosiy tugma qoldi', tugmalar.length === 1, tugmalar.length + ' ta');
+    check('Tugmada "Boshlash" yozuvi',
+      tugmalar[0] && tugmalar[0].textContent.trim() === 'Boshlash',
+      tugmalar[0] ? tugmalar[0].textContent.trim() : 'yo\'q');
+    check('Boshlash onboardingga olib boradi',
+      tugmalar[0] && tugmalar[0].getAttribute('href') === 'onboarding.html',
+      tugmalar[0] ? tugmalar[0].getAttribute('href') : '');
+    check('Ro\'yxatdan o\'tish tugmasi yo\'q',
+      !/Ro'yxatdan o'tish/.test(d.body.textContent), 'hali bor');
+    check('JS xatosi yo\'q', xatolar.length === 0, xatolar.join(' | '));
+  }
+  {
+    // Sessiyasiz onboarding: login sahifasiga uloqtirmasligi kerak
+    const { w, xatolar } = await sahifaOch('onboarding.html', {});
+    await kutSelektor(w, '#qadamIsm.faol');
+    const d = w.document;
+    check('Sessiyasiz onboarding ism so\'raydi',
+      d.getElementById('qadamIsm').classList.contains('faol'), 'ism qadami ochilmadi');
+    check('3 ta qadam nuqtasi', d.querySelectorAll('[data-nuqta]').length === 3,
+      d.querySelectorAll('[data-nuqta]').length + ' ta');
+
+    d.getElementById('ism').value = 'A';
+    d.getElementById('ismDavom').click();
+    await kut(200);
+    check('Qisqa ism rad etiladi',
+      /to'liq yozing/.test(d.getElementById('ismXato').textContent),
+      d.getElementById('ismXato').textContent);
+
+    d.getElementById('ism').value = 'Mehmon Test';
+    d.getElementById('ismDavom').click();
+    await kutSelektor(w, '.sinf-tugma', 6000);
+    check('Ism kiritilgach sessiya ochiladi',
+      !!w.localStorage.getItem('bilimsari_token'), 'token yo\'q');
+    check('Sinf qadamiga o\'tadi',
+      d.getElementById('qadamSinf').classList.contains('faol'), 'o\'tmadi');
+    check('11 ta sinf chizildi', d.querySelectorAll('.sinf-tugma').length === 11,
+      d.querySelectorAll('.sinf-tugma').length + ' ta');
+    check('JS xatosi yo\'q', xatolar.length === 0, xatolar.join(' | '));
+  }
+
+  // ══ 1. Onboarding (sessiya bilan) ══
   console.log('\n═══ ONBOARDING ═══');
   {
     const { w, xatolar } = await sahifaOch('onboarding.html', SESSIYA);

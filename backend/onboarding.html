@@ -4,32 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#58A700">
-<title>Sinfingizni tanlang — BilimSari</title>
+<title>Boshlash — BilimSari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
 <link rel="stylesheet" href="css/app.css">
 <style>
-  .ob { max-width: 620px; margin: 0 auto; padding: 26px 20px 40px; }
-  .ob h1 { font-size: 1.6rem; margin-bottom: 6px; }
-  .ob .kirish-tavsif { color: var(--matn-2); margin-bottom: 24px; }
+  .ob { max-width: 560px; margin: 0 auto; padding: 24px 16px 36px; }
+  .ob h1 { font-size: 22px; margin-bottom: 6px; }
+  .ob .kirish-tavsif { color: var(--matn-2); font-size: 14px; margin-bottom: 22px; }
   .tanlangan-panel {
     position: sticky;
     bottom: 0;
     padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
     background: linear-gradient(to top, var(--fon) 72%, rgba(243,244,246,0));
-    margin-top: 22px;
+    margin-top: 20px;
   }
 </style>
 </head>
 <body class="no-nav">
 
 <div class="ob">
-  <div class="nuqtalar" aria-hidden="true">
-    <i class="faol" data-nuqta="1"></i><i data-nuqta="2"></i>
-  </div>
+  <div class="nuqtalar" aria-hidden="true" id="nuqtalar"></div>
 
-  <!-- 1-qadam: sinf -->
-  <section class="qadam faol" id="qadamSinf" aria-labelledby="sinfSarlavha">
+  <!-- Ism (faqat sessiya bo'lmaganda) -->
+  <section class="qadam" id="qadamIsm" aria-labelledby="ismSarlavha">
+    <h1 id="ismSarlavha">Ismingiz nima?</h1>
+    <p class="kirish-tavsif">Sizga shu ism bilan murojaat qilamiz.</p>
+
+    <div class="maydon">
+      <label for="ism">Ism</label>
+      <input class="kiritish" type="text" id="ism" placeholder="Masalan: Dilnoza"
+             autocomplete="given-name" maxlength="40">
+    </div>
+    <p id="ismXato" class="izoh" style="color:var(--qizil);min-height:1.3em;margin:0 0 10px"></p>
+
+    <button class="tugma" id="ismDavom">Davom etish</button>
+
+    <p class="izoh-kichik" style="text-align:center;margin-top:16px">
+      Email bilan hisobingiz bormi? <a href="login.html"><b>Kirish</b></a>
+    </p>
+  </section>
+
+  <!-- Sinf -->
+  <section class="qadam" id="qadamSinf" aria-labelledby="sinfSarlavha">
     <h1 id="sinfSarlavha">Nechinchi sinfda o'qiysiz?</h1>
     <p class="kirish-tavsif">Sizga faqat o'z sinfingiz darslari ko'rsatiladi.</p>
 
@@ -47,7 +64,7 @@
     </div>
   </section>
 
-  <!-- 2-qadam: fan -->
+  <!-- Fan -->
   <section class="qadam" id="qadamFan" aria-labelledby="fanSarlavha">
     <button class="orqaga" id="orqagaSinf" aria-label="Sinf tanlashga qaytish"
             style="margin-bottom:16px">←</button>
@@ -64,46 +81,99 @@
 <script src="js/telegram.js"></script>
 <script>
 (async function () {
-  if (!(await UI.sessiyaKerak())) return;
-
   var tanlanganSinf = null;
+  var qadamlar = [];   // ko'rsatiladigan qadamlar ketma-ketligi
+
+  // ── Sessiya: Telegram bo'lsa avtomatik, aks holda ism so'raymiz ──
+  if (!API.kirganmi() && window.BilimSariTG &&
+      typeof BilimSariTG.autoAuthIfTelegram === 'function') {
+    try { await BilimSariTG.autoAuthIfTelegram(); } catch (e) {}
+  }
+
+  qadamlar = API.kirganmi()
+    ? ['qadamSinf', 'qadamFan']
+    : ['qadamIsm', 'qadamSinf', 'qadamFan'];
+
+  document.getElementById('nuqtalar').innerHTML =
+    qadamlar.map(function (_, i) {
+      return '<i data-nuqta="' + (i + 1) + '"></i>';
+    }).join('');
 
   function qadam(n) {
-    document.querySelectorAll('.qadam').forEach(function (el) { el.classList.remove('faol'); });
-    document.getElementById(n === 1 ? 'qadamSinf' : 'qadamFan').classList.add('faol');
+    qadamlar.forEach(function (id, i) {
+      document.getElementById(id).classList.toggle('faol', i === n - 1);
+    });
     document.querySelectorAll('[data-nuqta]').forEach(function (el) {
       el.classList.toggle('faol', Number(el.dataset.nuqta) <= n);
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── Sinflar ──
-  var javob = await API.sinflar();
-  var quti = document.getElementById('sinflar');
+  function sinfQadami() { return qadamlar.indexOf('qadamSinf') + 1; }
+  function fanQadami() { return qadamlar.indexOf('qadamFan') + 1; }
 
-  if (!javob.ok) {
-    quti.innerHTML = UI.xatoHolat(javob.error, function () { location.reload(); });
-    quti.style.gridTemplateColumns = '1fr';
-    return;
+  // ── Ism qadami (sessiyasiz foydalanuvchi uchun) ──
+  var ismMaydon = document.getElementById('ism');
+  var ismXato = document.getElementById('ismXato');
+
+  async function ismSaqla() {
+    var ism = ismMaydon.value.trim();
+    ismXato.textContent = '';
+
+    if (ism.length < 2) {
+      ismXato.textContent = 'Ismingizni to\'liq yozing.';
+      ismMaydon.focus();
+      return;
+    }
+
+    var tugma = document.getElementById('ismDavom');
+    tugma.disabled = true;
+    tugma.textContent = 'Saqlanmoqda...';
+
+    var res = await API.mehmon(ism);
+
+    tugma.disabled = false;
+    tugma.textContent = 'Davom etish';
+
+    if (!res.ok) { ismXato.textContent = res.error; return; }
+
+    API.sessiyaOchish(res.token, res.user);
+    qadam(sinfQadami());
+    sinflarniYukla();
   }
 
-  quti.innerHTML = javob.grades.map(function (s) {
-    return '<button type="button" class="sinf-tugma' + (s.available ? ' tayyor' : '') + '"' +
-      ' data-sinf="' + s.grade + '" aria-pressed="false">' + s.grade +
-      '<span>' + (s.available ? s.topic_count + ' mavzu' : 'tayyorlanmoqda') + '</span></button>';
-  }).join('');
+  document.getElementById('ismDavom').onclick = ismSaqla;
+  ismMaydon.onkeydown = function (e) { if (e.key === 'Enter') ismSaqla(); };
 
-  quti.addEventListener('click', function (e) {
+  // ── Sinf qadami ──
+  async function sinflarniYukla() {
+    var quti = document.getElementById('sinflar');
+    var javob = await API.sinflar();
+
+    if (!javob.ok) {
+      quti.style.gridTemplateColumns = '1fr';
+      quti.innerHTML = UI.xatoHolat(javob.error, function () { sinflarniYukla(); });
+      return;
+    }
+
+    quti.style.gridTemplateColumns = '';
+    quti.innerHTML = javob.grades.map(function (s) {
+      return '<button type="button" class="sinf-tugma' + (s.available ? ' tayyor' : '') + '"' +
+        ' data-sinf="' + s.grade + '" aria-pressed="false">' + s.grade +
+        '<span>' + (s.available ? s.topic_count + ' mavzu' : 'tayyorlanmoqda') + '</span></button>';
+    }).join('');
+  }
+
+  document.getElementById('sinflar').addEventListener('click', function (e) {
     var t = e.target.closest('.sinf-tugma');
     if (!t) return;
-    quti.querySelectorAll('.sinf-tugma').forEach(function (b) {
+    this.querySelectorAll('.sinf-tugma').forEach(function (b) {
       b.setAttribute('aria-pressed', String(b === t));
     });
     tanlanganSinf = Number(t.dataset.sinf);
     document.getElementById('sinfDavom').disabled = false;
   });
 
-  // ── Sinfni saqlash ──
   document.getElementById('sinfDavom').onclick = async function () {
     if (!tanlanganSinf) return;
     this.disabled = true;
@@ -116,13 +186,13 @@
     if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
 
     API.userYangilash({ grade: tanlanganSinf });
-    qadam(2);
+    qadam(fanQadami());
     fanlarniYukla();
   };
 
-  document.getElementById('orqagaSinf').onclick = function () { qadam(1); };
+  document.getElementById('orqagaSinf').onclick = function () { qadam(sinfQadami()); };
 
-  // ── Fanlar ──
+  // ── Fan qadami ──
   async function fanlarniYukla() {
     var quti = document.getElementById('fanlar');
     quti.style.gridTemplateColumns = '1fr';
@@ -144,18 +214,26 @@
         matn: res.empty_message || 'Tez orada qo\'shiladi. Boshqa sinfni tanlab ko\'rishingiz mumkin.',
       }) + '<button class="tugma tugma-ikkilamchi" id="boshqaSinf" style="margin-top:12px">' +
         'Boshqa sinfni tanlash</button>';
-      document.getElementById('boshqaSinf').onclick = function () { qadam(1); };
+      document.getElementById('boshqaSinf').onclick = function () { qadam(sinfQadami()); };
       return;
     }
 
     quti.style.gridTemplateColumns = '';
     quti.innerHTML = res.subjects.map(function (f) {
-      return '<a class="fan" href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
-        ' style="border-left-color:' + UI.esc(f.color) + '">' +
+      return '<a class="fan" href="topics.html?fan=' + encodeURIComponent(f.key) + '">' +
         '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + f.total_topics + ' ta mavzu</p></a>';
     }).join('');
+  }
+
+  // ── Boshlash ──
+  if (API.kirganmi()) {
+    qadam(sinfQadami());
+    sinflarniYukla();
+  } else {
+    qadam(1);
+    setTimeout(function () { ismMaydon.focus(); }, 150);
   }
 })();
 </script>

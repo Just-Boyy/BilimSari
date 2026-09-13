@@ -79,8 +79,13 @@
 
     <button class="qator xavfli" id="chiqish">
       <span class="nishon" data-ikon="logout"></span>
-      <span class="matn">Chiqish<small>Hisobdan chiqasiz, natijalar saqlanadi</small></span>
+      <span class="matn">Chiqish<small id="chiqishIzoh">Hisobdan chiqasiz, natijalar saqlanadi</small></span>
     </button>
+
+    <p class="izoh-kichik" id="mehmonOgoh" hidden
+       style="color:var(--qizil);margin-top:6px;padding:0 4px">
+      Hisobingiz email va parolsiz. Chiqsangiz, natijalaringizga qayta kira olmaysiz.
+    </p>
   </section>
 
   <p class="izoh-kichik" style="text-align:center;margin-top:20px">
@@ -132,7 +137,21 @@
     '<div class="stat"><b>' + (s.percent || 0) + '%</b><span>Progress</span></div>' +
     '<div class="stat"><b>' + (s.finished_subjects || 0) + '</b><span>Tugagan fan</span></div>';
 
+  // Mehmon hisobi (email ham, Telegram ham yo'q) — chiqish xavfli
+  var men = await API.men();
+  var mehmon = men.ok && !men.user.email && !men.user.telegram_id;
+  if (mehmon) {
+    document.getElementById('mehmonOgoh').hidden = false;
+    document.getElementById('chiqishIzoh').textContent = 'Natijalar tiklanmaydi';
+  }
+
   document.getElementById('chiqish').onclick = async function () {
+    if (mehmon && !confirm(
+        'Hisobingiz email va parolsiz.\n' +
+        'Chiqsangiz, ' + (s.completed_topics || 0) + ' ta tugallangan mavzu va butun ' +
+        'progressingizga qayta kira olmaysiz.\n\nChiqasizmi?')) {
+      return;
+    }
     this.disabled = true;
     await API.chiqish();
     location.href = 'index.html';

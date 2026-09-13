@@ -90,6 +90,10 @@
     ro_yxat: function (ism, email, parol) {
       return so_rov('/api/register', { method: 'POST', body: { name: ism, email: email, password: parol } });
     },
+    /** Ism bilan tezkor hisob — email/parol so'ralmaydi. */
+    mehmon: function (ism) {
+      return so_rov('/api/guest', { method: 'POST', body: { name: ism } });
+    },
     chiqish: async function () {
       await so_rov('/api/logout', { method: 'POST' });
       sessiyaYopish();

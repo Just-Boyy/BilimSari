@@ -21,7 +21,7 @@ Kuniga faqat **bitta** mavzu yakunlanadi — bilim shoshilmasdan o'zlashtirilsin
 | Baza | PostgreSQL (ishlab chiqarish), SQLite (lokal — hech narsa o'rnatmasdan) |
 | Frontend | Toza HTML + CSS + vanilla JS (framework yo'q), PWA |
 | AI | Google Gemini — faqat **qo'shimcha** tushuntirish uchun |
-| Kirish | Email/parol yoki Telegram Mini App |
+| Kirish | Telegram (avtomatik), ism bilan tezkor hisob, yoki email/parol |
 
 ---
 
@@ -229,10 +229,10 @@ cd backend
 # 1. Darslar butunligi
 python validate_curriculum.py
 
-# 2. Backend: to'liq o'quv oqimi (73 ta tekshiruv)
+# 2. Backend: to'liq o'quv oqimi (83 ta tekshiruv)
 python test_flow.py
 
-# 3. Frontend: haqiqiy sahifalar jsdom da (77 ta tekshiruv)
+# 3. Frontend: haqiqiy sahifalar jsdom da (89 ta tekshiruv)
 python -m flask --app app run --port 5055 &
 cd tests && npm install jsdom && node ui_test.js
 ```
@@ -249,6 +249,17 @@ cd tests && npm install jsdom && node ui_test.js
 * Ikki joydan tekshiriladi:
   1. mavzuni **ochishda** — yangi mavzu qulflangan bo'ladi;
   2. mavzuni **yakunlashda** — allaqachon boshlangan mavzuni ham yakunlab bo'lmaydi.
+
+## Kirish oqimi
+
+1. **Telegram Mini App** — `initData` HMAC bilan tekshiriladi, hisob avtomatik
+   yaratiladi yoki topiladi. Foydalanuvchidan hech narsa so'ralmaydi.
+2. **Ism bilan** — «Boshlash» bosilganda ism so'raladi, `POST /api/guest`
+   haqiqiy hisob va token yaratadi. Email/parol kerak emas.
+   Bunday hisobga boshqa qurilmadan kirib bo'lmaydi.
+3. **Email/parol** — `login.html` orqali, avvalgi hisoblar uchun.
+
+Uchala holatda ham progress serverda, hisobga bog'langan holda saqlanadi.
 
 ## Xavfsizlik
 

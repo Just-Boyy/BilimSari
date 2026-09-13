@@ -148,6 +148,40 @@ def register():
     }), 201
 
 
+@app.route('/api/guest', methods=['POST'])
+def guest():
+    """
+    Ism bilan tezkor hisob — email va parol so'ralmaydi.
+
+    Eski ilovadagi «Boshlash» oqimi shunday edi. Farqi: endi token haqiqiy
+    va progress serverda saqlanadi. Bunday hisobga boshqa qurilmadan kirib
+    bo'lmaydi (email/parol yo'q) — Telegram orqali kirganlar bundan mustasno.
+    """
+    data = request.get_json(silent=True) or {}
+    name = (data.get('name') or '').strip()[:80]
+
+    if len(name) < 2:
+        return jsonify({'ok': False, 'error': 'Ismingizni yozing (kamida 2 ta harf)'}), 400
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        'INSERT INTO users (name, email, password_hash) VALUES (%s, NULL, NULL) RETURNING id',
+        (name,)
+    )
+    user_id = cur.fetchone()['id']
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    token = create_token(user_id)
+    return jsonify({
+        'ok': True,
+        'token': token,
+        'user': {'id': user_id, 'name': name, 'email': None, 'grade': None},
+    }), 201
+
+
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json(silent=True) or {}

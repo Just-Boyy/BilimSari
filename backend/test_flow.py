@@ -309,7 +309,38 @@ check('Kuniga faqat 1 mavzu hisoblanadi',
       data['stats']['completed_topics'] == 1, str(data['stats']))
 
 
-print('\n═══ 16. AI YORDAMCHI ═══')
+print('\n═══ 16. MEHMON HISOBI (ism bilan tezkor kirish) ═══')
+code, data = call('post', '/api/guest', json={'name': 'A'})
+check('Qisqa ism rad etiladi', code == 400, f'{code} {data}')
+
+code, data = call('post', '/api/guest', json={'name': 'Mehmon Bola'})
+check('Ism bilan hisob yaratiladi', code == 201 and data.get('ok'), f'{code} {data}')
+T5 = data.get('token')
+check('Token qaytadi', bool(T5), str(data))
+check('Email yo\'q', data['user'].get('email') is None, str(data['user']))
+check('Sinf hali tanlanmagan', data['user'].get('grade') is None, str(data['user']))
+
+code, data = call('get', '/api/me', T5)
+check('Mehmon tokeni ishlaydi', data.get('ok') and data['user']['name'] == 'Mehmon Bola',
+      str(data))
+
+code, data = call('post', '/api/study/grade', T5, json={'grade': 1})
+check('Mehmon sinf tanlay oladi', data.get('ok'), str(data))
+
+code, data = call('get', '/api/study/topics/math', T5)
+check('Mehmon mavzularni ko\'radi', data.get('ok') and len(data['topics']) == 6,
+      str(data.get('error')))
+
+call('post', '/api/study/lesson-read', T5, json={'subject_key': 'math', 'slug': 'sonlar'})
+code, data = call('post', '/api/study/quiz', T5, json={
+    'subject_key': 'math', 'slug': 'sonlar', 'answers': [1, 1, 1, True, '6', 1]})
+check('Mehmon progressi serverda saqlanadi', data.get('passed'), str(data.get('percent')))
+
+code, data = call('get', '/api/study/dashboard', T5)
+check('Mehmon dashboardi ishlaydi', data.get('ok') and data.get('grade') == 1, str(data))
+
+
+print('\n═══ 17. AI YORDAMCHI ═══')
 code, data = call('get', '/api/ai/status')
 check('AI status endpointi ishlaydi', data.get('ok'), str(data))
 code, data = call('post', '/api/ai/explain', json={'subject_key': 'math', 'slug': 'sonlar'})
