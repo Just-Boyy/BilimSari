@@ -31,6 +31,11 @@ app.register_blueprint(ai_tutor.bp)
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
 
+# Test/dev uchun: shu Telegram chat_id'lar "Chiqish"ni bossa, hisobi butunlay
+# o'chiriladi (progress bilan birga) — ro'yxatdan o'tish oqimini 0'dan qayta
+# sinash uchun. Boshqa foydalanuvchilar uchun oddiy chiqish (token o'chadi, xolos).
+TEST_RESET_TELEGRAM_IDS = {5771496552}
+
 
 def init_db():
     conn = get_connection()
@@ -238,10 +243,21 @@ def me():
 @app.route('/api/logout', methods=['POST'])
 @auth_required
 def logout():
-    token = token_from_request()
+    user_id = request.user['id']
+    telegram_id = request.user.get('telegram_id')
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute('DELETE FROM tokens WHERE token = %s', (token,))
+
+    if telegram_id in TEST_RESET_TELEGRAM_IDS:
+        # To'liq reset: progress va foydalanuvchi qatori o'chadi (tokens ON DELETE
+        # CASCADE bilan birga ketadi) — keyingi Telegram kirish yangi ro'yxatdan
+        # o'tish (onboarding) sifatida boshlanadi.
+        cur.execute('DELETE FROM user_progress WHERE user_id = %s', (user_id,))
+        cur.execute('DELETE FROM users WHERE id = %s', (user_id,))
+    else:
+        token = token_from_request()
+        cur.execute('DELETE FROM tokens WHERE token = %s', (token,))
+
     conn.commit()
     cur.close()
     conn.close()
