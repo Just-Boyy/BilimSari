@@ -126,7 +126,7 @@
       </li>
     </ul>
 
-    <a class="tugma" href="onboarding.html">Boshlash</a>
+    <a class="tugma" href="onboarding.html" id="boshlashTugma">Boshlash</a>
 
     <p class="izoh-kichik" style="text-align:center;margin-top:16px">
       Email bilan hisobingiz bormi? <a href="login.html"><b>Kirish</b></a>
@@ -144,16 +144,18 @@ document.querySelectorAll('[data-ikon]').forEach(function (el) {
 });
 
 (async function () {
-  // Telegram Mini App ichida bo'lsa — avtomatik kirish
+  // Telegram Mini App ichida bo'lsa — fonda avtomatik kirib olamiz, lekin
+  // baribir avval logo + "Bilim Sari" + "Boshlash" ekranini ko'rsatamiz —
+  // sinf tanlashga to'g'ridan-to'g'ri otlantirmaymiz.
   if (window.BilimSariTG && typeof BilimSariTG.autoAuthIfTelegram === 'function') {
     try { await BilimSariTG.autoAuthIfTelegram(); } catch (e) {}
   }
 
+  var boshlashTugma = document.getElementById('boshlashTugma');
   if (API.kirganmi()) {
     var men = await API.men();
     if (men.ok) {
-      location.replace(men.user && men.user.grade ? 'dashboard.html' : 'onboarding.html');
-      return;
+      boshlashTugma.setAttribute('href', men.user && men.user.grade ? 'dashboard.html' : 'onboarding.html');
     }
   }
 
