@@ -48,21 +48,22 @@ from importlib import import_module
 # ───────────────────────── Fanlar katalogi ─────────────────────────
 
 SUBJECT_CATALOG = {
-    'math':        {'name': 'Matematika',     'icon': '📐', 'color': '#4F7DF3'},
-    'algebra':     {'name': 'Algebra',        'icon': '➗', 'color': '#4F7DF3'},
-    'geometry':    {'name': 'Geometriya',     'icon': '📏', 'color': '#3B82C4'},
-    'uzbek':       {'name': 'Ona tili',       'icon': '📖', 'color': '#22A06B'},
-    'reading':     {'name': "O'qish",         'icon': '📚', 'color': '#F0932B'},
-    'literature':  {'name': 'Adabiyot',       'icon': '📜', 'color': '#8E44AD'},
-    'nature':      {'name': 'Tabiiy fanlar',  'icon': '🌱', 'color': '#16A085'},
-    'english':     {'name': 'Ingliz tili',    'icon': '🇬🇧', 'color': '#E74C3C'},
-    'russian':     {'name': 'Rus tili',       'icon': '🇷🇺', 'color': '#2980B9'},
-    'history':     {'name': 'Tarix',          'icon': '🏛️', 'color': '#B7791F'},
-    'geography':   {'name': 'Geografiya',     'icon': '🗺️', 'color': '#0E9F6E'},
-    'physics':     {'name': 'Fizika',         'icon': '⚛️', 'color': '#6C5CE7'},
-    'chemistry':   {'name': 'Kimyo',          'icon': '🧪', 'color': '#E17055'},
-    'biology':     {'name': 'Biologiya',      'icon': '🧬', 'color': '#00B894'},
-    'informatics': {'name': 'Informatika',    'icon': '💻', 'color': '#475569'},
+    # 'icon' — js/icons.js dagi ikonka nomi (emoji emas)
+    'math':        {'name': 'Matematika',     'icon': 'calc',     'color': '#4F7DF3'},
+    'algebra':     {'name': 'Algebra',        'icon': 'divide',   'color': '#4F7DF3'},
+    'geometry':    {'name': 'Geometriya',     'icon': 'ruler',    'color': '#3B82C4'},
+    'uzbek':       {'name': 'Ona tili',       'icon': 'bookOpen', 'color': '#22A06B'},
+    'reading':     {'name': "O'qish",         'icon': 'book',     'color': '#F0932B'},
+    'literature':  {'name': 'Adabiyot',       'icon': 'scroll',   'color': '#8E44AD'},
+    'nature':      {'name': 'Tabiiy fanlar',  'icon': 'leaf',     'color': '#16A085'},
+    'english':     {'name': 'Ingliz tili',    'icon': 'lang',     'color': '#E74C3C'},
+    'russian':     {'name': 'Rus tili',       'icon': 'chat',     'color': '#2980B9'},
+    'history':     {'name': 'Tarix',          'icon': 'landmark', 'color': '#B7791F'},
+    'geography':   {'name': 'Geografiya',     'icon': 'map',      'color': '#0E9F6E'},
+    'physics':     {'name': 'Fizika',         'icon': 'atom',     'color': '#6C5CE7'},
+    'chemistry':   {'name': 'Kimyo',          'icon': 'flask',    'color': '#E17055'},
+    'biology':     {'name': 'Biologiya',      'icon': 'dna',      'color': '#00B894'},
+    'informatics': {'name': 'Informatika',    'icon': 'code',     'color': '#475569'},
 }
 
 GRADES = list(range(1, 12))  # 1-sinfdan 11-sinfgacha
@@ -118,7 +119,7 @@ def grades_overview() -> list:
 
 
 def subject_meta(key: str) -> dict:
-    return SUBJECT_CATALOG.get(key, {'name': key, 'icon': '📘', 'color': '#64748B'})
+    return SUBJECT_CATALOG.get(key, {'name': key, 'icon': 'book', 'color': '#64748B'})
 
 
 def subject_id(grade: int, key: str) -> str:

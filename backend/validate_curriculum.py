@@ -15,7 +15,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 import curriculum as cur_mod
 
-BLOK_TURLARI = {'text', 'example', 'steps', 'formula', 'note', 'life', 'table'}
+BLOK_TURLARI = {'text', 'example', 'steps', 'formula', 'note', 'life', 'table', 'count'}
 SAVOL_TURLARI = {'mc', 'tf', 'fill'}
 VAZIFA_TURLARI = {'number', 'text', 'open'}
 
@@ -86,6 +86,15 @@ for grade in cur_mod.GRADES:
                 if tur == 'steps':
                     if not blok.get('items'):
                         xato(joy, f'{j}-blok (steps) bo\'sh')
+                elif tur == 'count':
+                    groups = blok.get('groups') or []
+                    if not groups:
+                        xato(joy, f'{j}-blok (count) bo\'sh')
+                    for g in groups:
+                        if not g.get('shape'):
+                            xato(joy, f'{j}-blok: shakl nomi (shape) yo\'q')
+                        if not isinstance(g.get('n'), int) or g['n'] < 1:
+                            xato(joy, f'{j}-blok: shakllar soni (n) noto\'g\'ri')
                 elif tur == 'table':
                     head = blok.get('head') or []
                     for r, row in enumerate(blok.get('rows') or [], start=1):

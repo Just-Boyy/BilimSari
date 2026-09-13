@@ -335,18 +335,24 @@ NATURE = {
             'lesson': [
                 {'type': 'text', 'title': "O'simlik qismlari", 'body':
                  "Har bir o'simlikda asosan 5 ta qism bo'ladi:\n\n"
-                 "🌱 **Ildiz** — yerda, suv va oziq so'radi\n"
-                 "🌿 **Poya** — o'simlikni ko'taradi, suvni yuqoriga olib chiqadi\n"
-                 "🍃 **Barg** — nafas oladi va oziq tayyorlaydi\n"
-                 "🌸 **Gul** — urug' hosil qilish uchun\n"
-                 "🍎 **Meva** — ichida urug' bo'ladi"},
+                 "• **Ildiz** — yerda, suv va oziq so'radi\n"
+                 "• **Poya** — o'simlikni ko'taradi, suvni yuqoriga olib chiqadi\n"
+                 "• **Barg** — nafas oladi va oziq tayyorlaydi\n"
+                 "• **Gul** — urug' hosil qilish uchun\n"
+                 "• **Meva** — ichida urug' bo'ladi"},
                 {'type': 'text', 'title': "O'simlikka nima kerak?", 'body':
                  "O'simlik o'sishi uchun 4 narsa kerak:\n\n"
-                 "☀️ **Yorug'lik** (quyosh)\n"
-                 "💧 **Suv**\n"
-                 "🌬️ **Havo**\n"
-                 "🟤 **Tuproq** (oziq moddalar)\n\n"
+                 "• **Yorug'lik** (quyosh)\n"
+                 "• **Suv**\n"
+                 "• **Havo**\n"
+                 "• **Tuproq** (oziq moddalar)\n\n"
                  "Bulardan biri yo'q bo'lsa, o'simlik qurib qoladi."},
+                {'type': 'count', 'title': "O'simlik qismlari", 'groups': [
+                    {'shape': 'sprout', 'n': 1, 'label': 'Ildiz va poya'},
+                    {'shape': 'leaf', 'n': 1, 'label': 'Barg'},
+                    {'shape': 'flower', 'n': 1, 'label': 'Gul'},
+                    {'shape': 'apple', 'n': 1, 'label': 'Meva'},
+                ]},
                 {'type': 'text', 'title': "O'simlik turlari", 'body':
                  "**Daraxt** — yo'g'on va baland poyali (olma, terak, tut)\n"
                  "**Buta** — past, ko'p ingichka poyali (na'matak, atirgul)\n"
@@ -404,10 +410,10 @@ NATURE = {
                  "**Go'sht yeydiganlar** — bo'ri, sher, tulki, burgut\n"
                  "**Aralash yeydiganlar** — ayiq, cho'chqa, odam"},
                 {'type': 'text', 'title': 'Hayvonlar guruhlari', 'body':
-                 "🐦 **Qushlar** — pati bor, tuxum qo'yadi, uchadi (chumchuq, laylak, burgut)\n"
-                 "🐟 **Baliqlar** — suvda yashaydi, jabra bilan nafas oladi\n"
-                 "🐛 **Hasharotlar** — 6 ta oyoq (chumoli, asalari, kapalak)\n"
-                 "🐄 **Sutemizuvchilar** — bolasini sut bilan boqadi (sigir, it, odam)"},
+                 "• **Qushlar** — pati bor, tuxum qo'yadi, uchadi (chumchuq, laylak, burgut)\n"
+                 "• **Baliqlar** — suvda yashaydi, jabra bilan nafas oladi\n"
+                 "• **Hasharotlar** — 6 ta oyoq (chumoli, asalari, kapalak)\n"
+                 "• **Sutemizuvchilar** — bolasini sut bilan boqadi (sigir, it, odam)"},
                 {'type': 'note', 'body':
                  "Hayvonlar ham jonli — ular og'riqni sezadi. Hayvonlarni ranjitmang, "
                  "uy hayvonlariga g'amxo'rlik qiling."},
@@ -454,24 +460,30 @@ NATURE = {
                 {'type': 'text', 'title': "Yilda nechta fasl bor?", 'body':
                  "Bir yilda **4 ta fasl** bor. Har bir fasl **3 oy** davom etadi.\n\n"
                  "Bir yilda jami 12 oy: 4 × 3 = 12"},
-                {'type': 'text', 'title': '🌸 Bahor (mart, aprel, may)', 'body':
+                {'type': 'text', 'title': 'Bahor (mart, aprel, may)', 'icon': 'leaf', 'body':
                  "Havo isiydi, qor eriydi.\n"
                  "Daraxtlar gullaydi, maysalar ko'karadi.\n"
                  "Qushlar issiq o'lkalardan qaytadi.\n"
                  "Dehqonlar ekin ekadi. Navro'z bayrami nishonlanadi."},
-                {'type': 'text', 'title': "☀️ Yoz (iyun, iyul, avgust)", 'body':
+                {'type': 'text', 'title': 'Yoz (iyun, iyul, avgust)', 'icon': 'sparkle', 'body':
                  "Eng issiq fasl. Kun uzun, tun qisqa.\n"
                  "Mevalar pishadi: o'rik, shaftoli, uzum, tarvuz.\n"
                  "O'quvchilar ta'tilda bo'ladi."},
-                {'type': 'text', 'title': '🍂 Kuz (sentabr, oktabr, noyabr)', 'body':
+                {'type': 'text', 'title': 'Kuz (sentabr, oktabr, noyabr)', 'icon': 'leaf', 'body':
                  "Havo salqinlashadi, yomg'ir ko'p yog'adi.\n"
                  "Barglar sarg'ayadi va to'kiladi.\n"
                  "Hosil yig'ib olinadi. Qushlar issiq o'lkalarga uchib ketadi.\n"
                  "1-sentabrda o'quv yili boshlanadi."},
-                {'type': 'text', 'title': '❄️ Qish (dekabr, yanvar, fevral)', 'body':
+                {'type': 'text', 'title': 'Qish (dekabr, yanvar, fevral)', 'icon': 'moon', 'body':
                  "Eng sovuq fasl. Qor yog'adi, suv muzlaydi.\n"
                  "Kun qisqa, tun uzun.\n"
                  "Daraxtlar barglarsiz turadi. Ba'zi hayvonlar uyquga ketadi."},
+                {'type': 'count', 'title': "To'rt fasl", 'groups': [
+                    {'shape': 'flower', 'n': 1, 'label': 'Bahor — gullar ochiladi'},
+                    {'shape': 'sun', 'n': 1, 'label': 'Yoz — issiq, mevalar pishadi'},
+                    {'shape': 'leaf', 'n': 1, 'label': "Kuz — barglar to'kiladi"},
+                    {'shape': 'snow', 'n': 1, 'label': "Qish — qor yog'adi"},
+                ]},
                 {'type': 'table', 'head': ['Fasl', 'Oylar', 'Belgi'], 'rows': [
                     ['Bahor', 'Mart, aprel, may', 'Gullar ochiladi'],
                     ['Yoz', 'Iyun, iyul, avgust', 'Issiq, mevalar pishadi'],

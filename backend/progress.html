@@ -46,6 +46,7 @@
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -54,7 +55,8 @@
   if (!(await UI.sessiyaKerak())) return;
   UI.navChiz('progress.html');
 
-  var NISHON = { completed: '✅', current: '🔵', cooldown: '🕐', locked: '🔒' };
+  var NISHON = { completed: 'checkCircle', current: 'play',
+                 cooldown: 'clock', locked: 'lock' };
 
   async function yukla() {
     var tana = document.getElementById('tana');
@@ -68,7 +70,7 @@
 
     if (!d.subjects.length) {
       tana.innerHTML = UI.holat({
-        belgi: '📈',
+        belgi: 'chart',
         sarlavha: 'Hozircha natija yo\'q',
         matn: 'Sinfingiz uchun darslar qo\'shilgach, natijalaringiz shu yerda ko\'rinadi.',
         tugma: 'Sinfni o\'zgartirish', tugmaYo_l: 'onboarding.html',
@@ -102,7 +104,7 @@
         var mavzular = (r && r.ok) ? r.topics : [];
         return '<div class="karta-tekis fan-blok">' +
           '<div class="fan-bosh">' +
-            '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+            '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
             '<h3>' + UI.esc(f.name) + '</h3>' +
             '<span class="son">' + f.completed_topics + '/' + f.total_topics + '</span>' +
           '</div>' +
@@ -113,7 +115,7 @@
               ? '<span class="ball">' + m.quiz_score + '%</span>' : '';
             return '<div class="mavzu-qator' +
               (m.state === 'locked' || m.state === 'cooldown' ? ' qulf' : '') + '">' +
-              '<span class="nishon" aria-hidden="true">' + NISHON[m.state] + '</span>' +
+              '<span class="nishon nishon-kichik">' + UI.nishon(NISHON[m.state]) + '</span>' +
               '<span class="nom">' + m.seq + '. ' + UI.esc(m.title) + '</span>' + ball +
               '</div>';
           }).join('') +

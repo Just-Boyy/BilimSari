@@ -26,6 +26,7 @@
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -47,8 +48,12 @@
     locked: 'Qulflangan',
   };
 
-  var YULDUZ = '<svg class="yulduz" viewBox="0 0 72 72" aria-hidden="true">' +
-    '<path d="M36 4l8.5 16.5L63 23l-13.5 12L53 54l-17-9-17 9 3.5-19L9 23l18.5-2.5z"/></svg>';
+  function tugunIkon(holat, seq) {
+    if (holat === 'completed') return UI.nishon('girih');
+    if (holat === 'locked') return UI.nishon('lock');
+    if (holat === 'cooldown') return UI.nishon('clock');
+    return String(seq);
+  }
 
   async function yukla() {
     var res = await API.mavzular(fan);
@@ -59,7 +64,7 @@
     if (!res.ok) {
       ro_yxat.innerHTML = res.code === 'empty_subject'
         ? UI.holat({
-            belgi: '🛠️',
+            belgi: 'tools',
             sarlavha: 'Mavzular tayyorlanmoqda',
             matn: 'Bu fan bo\'yicha darslar hali qo\'shilmagan.',
             tugma: 'Fanlarga qaytish', tugmaYo_l: 'subjects.html',
@@ -69,7 +74,7 @@
     }
 
     document.getElementById('fanNomi').innerHTML =
-      res.subject.icon + ' ' + UI.esc(res.subject.name) +
+      UI.esc(res.subject.name) +
       '<small>' + res.grade + '-sinf</small>';
     document.title = res.subject.name + ' — BilimSari';
 
@@ -104,11 +109,10 @@
     ro_yxat.innerHTML = '<div class="yo-l">' + res.topics.map(function (m) {
       var sinf = { completed: 'tugallangan', current: 'joriy',
                    cooldown: 'kutish', locked: 'qulflangan' }[m.state];
-      var tugun = m.state === 'completed' ? YULDUZ
-        : (m.state === 'locked' ? '🔒' : (m.state === 'cooldown' ? '🕐' : m.seq));
+      var tugun = tugunIkon(m.state, m.seq);
 
       var ichki =
-        '<span class="mavzu-tugun" aria-hidden="true">' + tugun + '</span>' +
+        '<span class="mavzu-tugun">' + tugun + '</span>' +
         '<h3>' + m.seq + '. ' + UI.esc(m.title) + '</h3>' +
         '<p class="tavsif">' + UI.esc(m.summary) + '</p>' +
         '<span class="yorliq">' + YORLIQ[m.state] + '</span>';

@@ -83,6 +83,40 @@ a { color: var(--feruza-quyuq); }
   border-radius: 6px;
 }
 
+/* ── Ikonkalar ──────────────────────────────────────────── */
+/* Barcha SVG currentColor dan rang oladi va matn bilan tekislanadi. */
+
+svg { display: block; }
+
+.nishon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.nishon svg { width: 22px; height: 22px; }
+.nishon-kichik svg { width: 16px; height: 16px; }
+.nishon-katta svg { width: 28px; height: 28px; }
+
+/* Sanash mashqlari uchun shakllar qatori */
+.shakllar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.shakllar svg {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+}
+
+.shakllar-kichik svg { width: 28px; height: 28px; }
+
 /* ── Tuzilma ────────────────────────────────────────────── */
 
 .sahifa {
@@ -442,7 +476,42 @@ a.mavzu:hover { box-shadow: var(--soya); }
 .dars { font-size: 1.02rem; line-height: 1.68; }
 
 .blok { margin-bottom: 20px; }
-.blok h3 { margin-bottom: 8px; font-size: 1.12rem; }
+.blok h3 {
+  margin-bottom: 8px;
+  font-size: 1.12rem;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.blok-nishon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: var(--qogoz);
+  align-items: center;
+  justify-content: center;
+  color: var(--feruza-quyuq);
+}
+.blok-nishon svg { width: 18px; height: 18px; }
+
+/* Sanash mashqi bloki */
+.blok-sanash {
+  background: var(--oq);
+  border: 1px solid var(--chiziq);
+  border-radius: var(--r);
+  padding: 15px 16px;
+}
+.sanash-qator {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+  border-top: 1px solid var(--chiziq);
+}
+.sanash-qator:first-of-type { border-top: none; }
+.sanash-yozuv { font-weight: 600; color: var(--matn-2); font-size: .95rem; }
 .blok p { margin-bottom: .7em; }
 .blok strong { font-weight: 700; color: var(--lojuvard); }
 
@@ -563,6 +632,15 @@ a.mavzu:hover { box-shadow: var(--soya); }
 }
 
 .savol-matn { font-family: var(--sarlavha); font-size: 1.25rem; margin-bottom: 16px; }
+
+/* Savolga ilova qilingan shakllar (sanash mashqlari) */
+.savol-rasm {
+  background: var(--qogoz);
+  border: 1px solid var(--chiziq);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
 
 .variantlar { display: grid; gap: 10px; }
 

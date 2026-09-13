@@ -17,10 +17,11 @@ MATH = {
                  "Sanashni birdan boshlaymiz:\n\n"
                  "1 — bir\n2 — ikki\n3 — uch\n4 — to'rt\n5 — besh\n"
                  "6 — olti\n7 — yetti\n8 — sakkiz\n9 — to'qqiz\n10 — o'n"},
-                {'type': 'example', 'title': "Sanab ko'ramiz", 'body':
-                 "🍎🍎🍎 — bu yerda 3 ta olma bor.\n"
-                 "⭐⭐⭐⭐⭐ — bu yerda 5 ta yulduzcha bor.\n"
-                 "🐦🐦 — bu yerda 2 ta qushcha bor."},
+                {'type': 'count', 'title': "Sanab ko'ramiz", 'groups': [
+                    {'shape': 'apple', 'n': 3, 'label': '3 ta olma'},
+                    {'shape': 'star', 'n': 5, 'label': '5 ta yulduzcha'},
+                    {'shape': 'bird', 'n': 2, 'label': '2 ta qushcha'},
+                ]},
                 {'type': 'steps', 'title': "To'g'ri sanash qoidasi", 'items': [
                     "Chapdan o'ngga qarab sana.",
                     "Har bir narsani faqat BIR MARTA sana.",
@@ -39,7 +40,8 @@ MATH = {
                  "sumkangizda nechta daftar bor, oilangizda nechta kishi bor — hammasi sanash."},
             ],
             'quiz': [
-                {'type': 'mc', 'q': '🍎🍎🍎🍎 — bu yerda nechta olma bor?',
+                {'type': 'mc', 'q': 'Bu yerda nechta olma bor?',
+                 'visual': {'shape': 'apple', 'n': 4},
                  'options': ['3', '4', '5', '6'], 'answer': 1,
                  'explain': "Sanaymiz: bir, ikki, uch, to'rt. Javob — 4."},
                 {'type': 'mc', 'q': '7 sonidan keyin qaysi son keladi?',
@@ -61,7 +63,8 @@ MATH = {
             'homework': {
                 'intro': 'Uy ishini bajaring. Javoblarni raqam bilan yozing.',
                 'tasks': [
-                    {'id': 'h1', 'type': 'number', 'prompt': '⭐⭐⭐⭐⭐⭐ — nechta yulduzcha bor?',
+                    {'id': 'h1', 'type': 'number', 'prompt': 'Nechta yulduzcha bor?',
+                     'visual': {'shape': 'star', 'n': 6},
                      'answer': '6', 'hint': 'Chapdan boshlab sanang.'},
                     {'id': 'h2', 'type': 'number', 'prompt': '2 sonidan keyin keladigan sonni yozing.',
                      'answer': '3', 'hint': 'Sanash tartibini eslang.'},
@@ -212,19 +215,25 @@ MATH = {
                 {'type': 'text', 'title': 'Shakllar atrofimizda', 'body':
                  "Atrofimizdagi hamma narsaning o'z shakli bor. Non yumaloq, deraza to'rtburchak, "
                  "tom uchburchak bo'lishi mumkin. Keling, asosiy shakllar bilan tanishamiz."},
-                {'type': 'text', 'title': '⭕ Doira', 'body':
+                {'type': 'text', 'title': 'Doira', 'icon': 'shapeCircle', 'body':
                  "Doira — yumaloq shakl. Uning burchagi ham, tomoni ham yo'q.\n\n"
                  "Misollar: quyosh, non, soat, g'ildirak, tanga."},
-                {'type': 'text', 'title': '🔺 Uchburchak', 'body':
+                {'type': 'text', 'title': 'Uchburchak', 'icon': 'shapeTriangle', 'body':
                  "Uchburchakning **3 ta tomoni** va **3 ta burchagi** bor.\n\n"
                  "Misollar: uyning tomi, yo'l belgisi, bo'lak pitsa."},
-                {'type': 'text', 'title': '🟦 Kvadrat', 'body':
+                {'type': 'text', 'title': 'Kvadrat', 'icon': 'shapeSquare', 'body':
                  "Kvadratning **4 ta tomoni** bor va hamma tomoni **bir xil uzunlikda**.\n\n"
                  "Misollar: shaxmat katagi, salfetka, kubik yuzasi."},
-                {'type': 'text', 'title': "▭ To'g'ri to'rtburchak", 'body':
+                {'type': 'text', 'title': "To'g'ri to'rtburchak", 'icon': 'shapeRect', 'body':
                  "Uning ham 4 ta tomoni bor, lekin qarama-qarshi tomonlari teng: "
                  "ikkitasi uzun, ikkitasi qisqa.\n\n"
                  "Misollar: daftar, eshik, telefon ekrani, doska."},
+                {'type': 'count', 'title': 'Shakllarni ko\'ramiz', 'groups': [
+                    {'shape': 'circle', 'n': 1, 'label': 'Doira — burchagi yo\'q'},
+                    {'shape': 'triangle', 'n': 1, 'label': 'Uchburchak — 3 ta tomon'},
+                    {'shape': 'square', 'n': 1, 'label': 'Kvadrat — 4 ta teng tomon'},
+                    {'shape': 'rectangle', 'n': 1, 'label': "To'rtburchak — 2 uzun, 2 qisqa"},
+                ]},
                 {'type': 'table', 'head': ['Shakl', 'Tomonlar soni', 'Burchaklar soni'], 'rows': [
                     ['Doira', '0', '0'],
                     ['Uchburchak', '3', '3'],

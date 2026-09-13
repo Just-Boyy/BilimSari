@@ -58,6 +58,7 @@
 </div>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -138,7 +139,7 @@
 
     if (!res.subjects.length) {
       quti.innerHTML = UI.holat({
-        belgi: '🛠️',
+        belgi: 'tools',
         sarlavha: 'Bu sinf uchun darslar tayyorlanmoqda',
         matn: res.empty_message || 'Tez orada qo\'shiladi. Boshqa sinfni tanlab ko\'rishingiz mumkin.',
       }) + '<button class="tugma tugma-ikkilamchi" id="boshqaSinf" style="margin-top:12px">' +
@@ -151,7 +152,7 @@
     quti.innerHTML = res.subjects.map(function (f) {
       return '<a class="fan" href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
         ' style="border-left-color:' + UI.esc(f.color) + '">' +
-        '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+        '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + f.total_topics + ' ta mavzu</p></a>';
     }).join('');

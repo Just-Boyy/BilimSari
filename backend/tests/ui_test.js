@@ -301,7 +301,85 @@ async function sahifaOch(fayl, saqlangan = {}, qidiruv = '') {
       !!w.document.querySelector('a[href="onboarding.html"]'), '');
   }
 
-  // ══ 8. Kirish sahifasi ══
+  // ══ 8. Ikonkalar (emoji ishlatilmasligi) ══
+  console.log('\n═══ IKONKALAR ═══');
+  {
+    // Emoji regexi — saytda umuman bo'lmasligi kerak
+    const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B00}-\u{2BFF}]/u;
+
+    // Toza foydalanuvchi — yuqoridagi bo'limlar progressi xalaqit bermasin
+    const r2 = await fetch(BASE + '/api/register', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Ikon Test', email: 'ikon' + Date.now() + '@bilimsari.uz', password: 'parol123',
+      }),
+    }).then(x => x.json());
+    const T2 = r2.token;
+    const SESSIYA2 = { bilimsari_token: T2, bilimsari_user: JSON.stringify(r2.user) };
+
+    await fetch(BASE + '/api/study/grade', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + T2 },
+      body: JSON.stringify({ grade: 1 }),
+    });
+
+    const { w } = await sahifaOch('dashboard.html', SESSIYA2);
+    await kutSelektor(w, '.fan');
+    const d = w.document;
+
+    check('Navigatsiyada SVG bor',
+      d.querySelectorAll('.pastki-nav svg').length === 4,
+      d.querySelectorAll('.pastki-nav svg').length + ' ta');
+    check('Fan kartasida SVG bor',
+      d.querySelectorAll('.fan .belgi svg').length === 4,
+      d.querySelectorAll('.fan .belgi svg').length + ' ta');
+    check('Bugungi dars kartasida SVG bor',
+      !!d.querySelector('#bugun .belgi svg'), '');
+    check('Dashboard matnida emoji yo\'q',
+      !EMOJI.test(d.body.textContent), 'emoji topildi');
+
+    // Mavzular yo'li
+    const t = await sahifaOch('topics.html', SESSIYA2, '?fan=math');
+    await kutSelektor(t.w, '.mavzu');
+    const td = t.w.document;
+    check('Joriy mavzu tuguni raqam ko\'rsatadi',
+      td.querySelectorAll('.mavzu-tugun')[0].textContent.trim() === '1',
+      td.querySelectorAll('.mavzu-tugun')[0].textContent.trim());
+    check('Qulflangan mavzu tugunida qulf ikonkasi',
+      !!td.querySelectorAll('.mavzu-tugun')[1].querySelector('svg'), '');
+    check('Mavzular sahifasida emoji yo\'q',
+      !EMOJI.test(td.body.textContent), 'emoji topildi');
+
+    // Mavzu sahifasi
+    const m = await sahifaOch('topic.html', SESSIYA2, '?fan=math&mavzu=sonlar');
+    await kutSelektor(m.w, '.bosqich');
+    const md = m.w.document;
+    check('Bosqich tugmalarida SVG bor',
+      md.querySelectorAll('.bosqich .nishon svg').length === 3,
+      md.querySelectorAll('.bosqich .nishon svg').length + ' ta');
+    check('Sanash bloki shakl bilan chizildi',
+      md.querySelectorAll('.blok-sanash .shakllar svg').length === 10,
+      md.querySelectorAll('.blok-sanash .shakllar svg').length + ' ta shakl');
+    check('Sanash blokida yozuv bor',
+      /3 ta olma/.test(md.querySelector('.blok-sanash').textContent), '');
+    check('Mavzu sahifasida emoji yo\'q',
+      !EMOJI.test(md.body.textContent), 'emoji topildi');
+
+    // Quizdagi rasmli savol
+    md.getElementById('darsTugadi').click();
+    await kut(400);
+    check('Quizning 1-savolida 4 ta olma chizildi',
+      md.querySelectorAll('#panelQuiz .savol-rasm .shakllar svg').length === 4,
+      md.querySelectorAll('#panelQuiz .savol-rasm .shakllar svg').length + ' ta');
+    check('Rasmli savolda matn emoji-siz',
+      /Bu yerda nechta olma bor/.test(md.querySelector('.savol-matn').textContent),
+      md.querySelector('.savol-matn').textContent);
+    check('Uy vazifasida 6 ta yulduz chizildi',
+      md.querySelectorAll('#panelUy .savol-rasm .shakllar svg').length === 6,
+      md.querySelectorAll('#panelUy .savol-rasm .shakllar svg').length + ' ta');
+  }
+
+  // ══ 9. Kirish sahifasi ══
   console.log('\n═══ KIRISH ═══');
   {
     const { w, xatolar } = await sahifaOch('login.html', {});

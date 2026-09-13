@@ -37,6 +37,7 @@
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -63,7 +64,7 @@
     if (!res.subjects.length) {
       quti.style.gridTemplateColumns = '1fr';
       quti.innerHTML = UI.holat({
-        belgi: '🛠️',
+        belgi: 'tools',
         sarlavha: 'Hozircha fanlar mavjud emas',
         matn: res.empty_message || 'Sizning sinfingiz uchun darslar tayyorlanmoqda.',
         tugma: 'Boshqa sinfni tanlash', tugmaYo_l: 'onboarding.html',
@@ -82,7 +83,7 @@
       return '<a class="fan' + (f.finished ? ' tugagan' : '') + '"' +
         ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
         ' style="border-left-color:' + UI.esc(f.color) + '">' +
-        '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+        '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + holat + '</p>' +
         '<div class="progress"><i style="width:' + f.percent + '%;background:' +

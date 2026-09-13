@@ -42,12 +42,12 @@ ALGEBRA = {
                  "√D = √1 = 1\n\n"
                  "x₁ = (5 + 1) / 2 = **3**\n"
                  "x₂ = (5 − 1) / 2 = **2**\n\n"
-                 "Tekshirish: 3² − 5·3 + 6 = 9 − 15 + 6 = 0 ✓"},
+                 "Tekshirish: 3² − 5·3 + 6 = 9 − 15 + 6 = 0 — to'g'ri"},
                 {'type': 'text', 'title': 'Vyet teoremasi', 'body':
                  "Agar a = 1 bo'lsa (keltirilgan tenglama x² + px + q = 0):\n\n"
                  "x₁ + x₂ = −p\n"
                  "x₁ · x₂ = q\n\n"
-                 "Yuqoridagi misolda: 3 + 2 = 5 = −(−5) ✓ va 3 · 2 = 6 ✓\n\n"
+                 "Yuqoridagi misolda: 3 + 2 = 5 = −(−5) va 3 · 2 = 6 — ikkalasi ham to'g'ri\n\n"
                  "Bu usul bilan oddiy tenglamalarni **og'zaki** yechish mumkin."},
                 {'type': 'note', 'body':
                  "Eng ko'p uchraydigan xato — **ishorani** noto'g'ri olish. "

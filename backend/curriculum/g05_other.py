@@ -410,8 +410,8 @@ ENGLISH = {
                  "**Does** she like tea?"},
                 {'type': 'note', 'body':
                  "Diqqat! **does** ishlatilganda fe'lga **-s qo'shilmaydi**:\n"
-                 "❌ Does she likes tea?\n"
-                 "✅ Does she **like** tea?"},
+                 "Noto'g'ri: Does she likes tea?\n"
+                 "To'g'ri: Does she **like** tea?"},
                 {'type': 'text', 'title': 'Vaqt so\'zlari', 'body':
                  "Present Simple bilan tez-tez keladi:\n\n"
                  "always (doim), usually (odatda), often (tez-tez), "

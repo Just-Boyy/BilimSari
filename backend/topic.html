@@ -45,6 +45,7 @@
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -78,7 +79,7 @@
         boshlaTaymer(res.cooldown);
       } else if (res.code === 'locked') {
         tana.innerHTML = UI.holat({
-          belgi: '🔒',
+          belgi: 'lock',
           sarlavha: 'Bu mavzu hozircha qulflangan',
           matn: res.error,
           tugma: 'Mavzular ro\'yxati',
@@ -96,7 +97,7 @@
 
     document.getElementById('sarlavha').innerHTML =
       UI.esc(M.title) +
-      '<small>' + M.subject.icon + ' ' + UI.esc(M.subject.name) +
+      '<small>' + UI.esc(M.subject.name) +
       ', ' + M.position + '-mavzu (' + M.total_topics + ' tadan)</small>';
     document.title = M.title + ' — BilimSari';
 
@@ -132,10 +133,11 @@
 
     document.getElementById('tana').innerHTML =
       '<div class="bosqichlar" role="tablist" aria-label="Mavzu bosqichlari">' +
-        bosqichTugma('dars', '📖', 'Mavzuni o\'rganish', p.lesson_read || tugallangan, false) +
-        bosqichTugma('quiz', '🧠', 'Quiz', p.quiz_passed || tugallangan, false) +
-        bosqichTugma('uy', '📝', 'Uyga vazifa',
-                     p.homework_status === 'passed' || tugallangan, false) +
+        bosqichTugma('dars', 'bookOpen', 'Mavzuni o\'rganish',
+                     p.lesson_read || tugallangan) +
+        bosqichTugma('quiz', 'brain', 'Quiz', p.quiz_passed || tugallangan) +
+        bosqichTugma('uy', 'pencil', 'Uyga vazifa',
+                     p.homework_status === 'passed' || tugallangan) +
       '</div>' +
       '<section class="panel" id="panelDars" role="tabpanel"></section>' +
       '<section class="panel" id="panelQuiz" role="tabpanel"></section>' +
@@ -159,7 +161,7 @@
   function bosqichTugma(kalit, nishon, matn, bajarildi) {
     return '<button class="bosqich' + (bajarildi ? ' bajarildi' : '') + '"' +
       ' data-bosqich="' + kalit + '" role="tab" aria-selected="false">' +
-      '<span class="nishon" aria-hidden="true">' + (bajarildi ? '✓' : nishon) + '</span>' +
+      '<span class="nishon">' + UI.nishon(bajarildi ? 'check' : nishon) + '</span>' +
       '<span>' + matn + '</span></button>';
   }
 
@@ -208,7 +210,7 @@
     var b = document.querySelector('.bosqich[data-bosqich="' + kalit + '"]');
     if (b && !b.classList.contains('bajarildi')) {
       b.classList.add('bajarildi');
-      b.querySelector('.nishon').textContent = '✓';
+      b.querySelector('.nishon').innerHTML = UI.nishon('check');
     }
   }
 
@@ -273,7 +275,7 @@
   function quizChiz() {
     var el = document.getElementById('panelQuiz');
     if (!M.quiz || !M.quiz.length) {
-      el.innerHTML = UI.holat({ belgi: '🧠', sarlavha: 'Bu mavzuda test yo\'q',
+      el.innerHTML = UI.holat({ belgi: 'brain', sarlavha: 'Bu mavzuda test yo\'q',
         matn: 'To\'g\'ridan-to\'g\'ri uy vazifasiga o\'tishingiz mumkin.' });
       return;
     }
@@ -300,20 +302,28 @@
     } else if (s.type === 'tf') {
       kirish = '<div class="variantlar">' +
         '<button class="variant" data-javob="true" aria-pressed="false">' +
-          '<span class="harf" aria-hidden="true">✓</span><span>To\'g\'ri</span></button>' +
+          '<span class="harf">' + UI.nishon('check') + '</span>' +
+          '<span>To\'g\'ri</span></button>' +
         '<button class="variant" data-javob="false" aria-pressed="false">' +
-          '<span class="harf" aria-hidden="true">✕</span><span>Noto\'g\'ri</span></button>' +
+          '<span class="harf">' + UI.nishon('x') + '</span>' +
+          '<span>Noto\'g\'ri</span></button>' +
         '</div>';
     } else {
       kirish = '<input class="kiritish" id="quizMatn" placeholder="Javobingizni yozing"' +
         ' autocomplete="off" maxlength="120">';
     }
 
+    // Sanash mashqlari uchun shakllar (emoji o'rniga)
+    var rasm = s.visual
+      ? '<div class="savol-rasm">' + UI.shakllar(s.visual.shape, s.visual.n) + '</div>'
+      : '';
+
     el.innerHTML =
       '<div class="quiz-progress" aria-hidden="true">' + chiziqlar + '</div>' +
       '<div class="karta">' +
         '<p class="savol-son">' + (quizIndeks + 1) + '-savol, jami ' + jami + ' ta</p>' +
         '<p class="savol-matn">' + UI.matnHtml(s.q) + '</p>' +
+        rasm +
         kirish +
       '</div>' +
       '<div class="qadam-yakun">' +
@@ -372,8 +382,8 @@
     var tafsilot = res.results.map(function (r, i) {
       var s = M.quiz[i];
       return '<div class="vazifa ' + (r.correct ? 'to-g-ri' : 'xato') + '">' +
-        '<div class="savol"><span class="raqam" aria-hidden="true">' +
-          (r.correct ? '✓' : '✕') + '</span>' +
+        '<div class="savol"><span class="raqam' + (r.correct ? ' to-g-ri' : ' xato') +
+          '">' + UI.nishon(r.correct ? 'check' : 'x') + '</span>' +
         '<span>' + UI.matnHtml(s.q) + '</span></div>' +
         (r.correct ? '' :
           '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' +
@@ -422,7 +432,7 @@
     var uy = M.homework;
 
     if (!uy || !uy.tasks || !uy.tasks.length) {
-      el.innerHTML = UI.holat({ belgi: '📝', sarlavha: 'Uyga vazifa yo\'q',
+      el.innerHTML = UI.holat({ belgi: 'pencil', sarlavha: 'Uyga vazifa yo\'q',
         matn: 'Bu mavzuda qo\'shimcha vazifa berilmagan.' });
       return;
     }
@@ -441,11 +451,14 @@
           : '<input class="kiritish" name="' + t.id + '" value="' + qiymat + '"' +
             (t.type === 'number' ? ' inputmode="numeric"' : '') +
             ' placeholder="Javob" autocomplete="off" maxlength="200">';
+        var rasm = t.visual
+          ? '<div class="savol-rasm">' + UI.shakllar(t.visual.shape, t.visual.n) + '</div>'
+          : '';
         return '<div class="vazifa" data-vazifa="' + t.id + '">' +
           '<div class="savol"><span class="raqam" aria-hidden="true">' + (i + 1) + '</span>' +
           '<span>' + UI.matnHtml(t.prompt) +
             (t.type === 'open' ? '<span class="erkin-belgi">erkin javob</span>' : '') +
-          '</span></div>' + maydon +
+          '</span></div>' + rasm + maydon +
           (t.hint ? '<p class="maslahat">' + UI.esc(t.hint) + '</p>' : '') +
           '</div>';
       }).join('') +
@@ -510,8 +523,7 @@
     document.getElementById('tana').innerHTML =
       '<div class="karta tugadi-ekran">' +
         '<div class="nishon-katta" aria-hidden="true">' +
-          '<svg width="48" height="48" viewBox="0 0 72 72" fill="currentColor">' +
-          '<path d="M36 4l8.5 16.5L63 23l-13.5 12L53 54l-17-9-17 9 3.5-19L9 23l18.5-2.5z"/></svg>' +
+          UI.nishon('girih', '', 48) +
         '</div>' +
         '<h1>Tabriklaymiz!</h1>' +
         '<p class="izoh" style="margin:8px 0 4px">«' + UI.esc(M.title) +

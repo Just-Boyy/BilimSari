@@ -37,11 +37,21 @@
 
   // ── Navigatsiya ──────────────────────────────────────────
   var NAV = [
-    { yo_l: 'dashboard.html', nishon: '🏠', matn: 'Bosh sahifa' },
-    { yo_l: 'subjects.html', nishon: '📚', matn: 'Fanlarim' },
-    { yo_l: 'progress.html', nishon: '📈', matn: 'Natijalar' },
-    { yo_l: 'profile.html', nishon: '👤', matn: 'Profil' },
+    { yo_l: 'dashboard.html', nishon: 'home', matn: 'Bosh sahifa' },
+    { yo_l: 'subjects.html', nishon: 'library', matn: 'Fanlarim' },
+    { yo_l: 'progress.html', nishon: 'chart', matn: 'Natijalar' },
+    { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
   ];
+
+  /** Ikonka HTML si. icons.js yuklanmagan bo'lsa bo'sh qaytaradi. */
+  function nishon(nom, cls, size) {
+    return (window.BSIcons ? BSIcons.icon(nom, cls, size) : '');
+  }
+
+  /** n ta shakl (sanash mashqlari uchun). */
+  function shakllar(nom, n, cls) {
+    return (window.BSIcons ? BSIcons.shapes(nom, n, cls) : '');
+  }
 
   function navChiz(faolYo_l) {
     var joriy = faolYo_l || location.pathname.split('/').pop() || 'dashboard.html';
@@ -52,7 +62,7 @@
       var faol = n.yo_l === joriy ? ' faol' : '';
       return '<a href="' + n.yo_l + '" class="' + faol.trim() + '"' +
         (faol ? ' aria-current="page"' : '') + '>' +
-        '<span class="nishon" aria-hidden="true">' + n.nishon + '</span>' +
+        '<span class="nishon">' + nishon(n.nishon) + '</span>' +
         '<span>' + n.matn + '</span></a>';
     }).join('');
     document.body.appendChild(nav);
@@ -69,7 +79,7 @@
       ? '<a class="tugma" href="' + esc(sozlama.tugmaYo_l || '#') + '">' + esc(sozlama.tugma) + '</a>'
       : '';
     return '<div class="holat-karta">' +
-      '<span class="belgi" aria-hidden="true">' + (sozlama.belgi || '📭') + '</span>' +
+      '<span class="belgi">' + nishon(sozlama.belgi || 'inbox') + '</span>' +
       '<h3>' + esc(sozlama.sarlavha) + '</h3>' +
       '<p>' + esc(sozlama.matn || '') + '</p>' + t + '</div>';
   }
@@ -81,7 +91,7 @@
       if (b && qaytaFn) b.onclick = qaytaFn;
     }, 0);
     return '<div class="holat-karta">' +
-      '<span class="belgi" aria-hidden="true">⚠️</span>' +
+      '<span class="belgi">' + nishon('alert') + '</span>' +
       '<h3>Ma\'lumot yuklanmadi</h3>' +
       '<p>' + esc(matn || 'Qayta urinib ko\'ring.') + '</p>' +
       '<button class="tugma tugma-avto" id="' + id + '">Qayta urinish</button></div>';
@@ -129,8 +139,20 @@
       return '<p class="izoh">Bu mavzu uchun dars matni tayyorlanmoqda.</p>';
     }
     return bloklar.map(function (b) {
-      var sarlavha = b.title ? '<h3>' + esc(b.title) + '</h3>' : '';
+      var bosh = b.icon
+        ? '<span class="blok-nishon">' + nishon(b.icon) + '</span>'
+        : '';
+      var sarlavha = b.title
+        ? '<h3>' + bosh + '<span>' + esc(b.title) + '</span></h3>'
+        : '';
       switch (b.type) {
+        case 'count':
+          return '<div class="blok blok-sanash">' + sarlavha +
+            (b.groups || []).map(function (g) {
+              return '<div class="sanash-qator">' +
+                shakllar(g.shape, g.n) +
+                '<span class="sanash-yozuv">' + esc(g.label || '') + '</span></div>';
+            }).join('') + '</div>';
         case 'example':
           return '<div class="blok blok-misol">' + sarlavha +
             '<p>' + matnHtml(b.body) + '</p></div>';
@@ -209,6 +231,8 @@
     vaqtMatn: vaqtMatn,
     vaqtRaqam: vaqtRaqam,
     taymer: taymer,
+    nishon: nishon,
+    shakllar: shakllar,
     darsHtml: darsHtml,
     sessiyaKerak: sessiyaKerak,
     sinfKerak: sinfKerak,

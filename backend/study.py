@@ -489,7 +489,7 @@ def topic_payload(cur, conn, user_id, topic_id):
         'subject': {
             'key': topic['subject_key'],
             'name': subject.get('name') or topic['subject_key'],
-            'icon': subject.get('icon') or '📘',
+            'icon': subject.get('icon') or 'book',
             'color': subject.get('color') or '#4F7DF3',
         },
         'lesson': _json(topic['lesson'], []),
@@ -519,6 +519,9 @@ def public_quiz(quiz):
     out = []
     for i, q in enumerate(quiz):
         item = {'index': i, 'type': q.get('type', 'mc'), 'q': q.get('q', '')}
+        if q.get('visual'):
+            # sanash mashqlari uchun shakl: {'shape': 'apple', 'n': 4}
+            item['visual'] = q['visual']
         if item['type'] == 'mc':
             item['options'] = q.get('options', [])
         out.append(item)
@@ -534,6 +537,7 @@ def public_homework(homework):
             'prompt': t.get('prompt', ''),
             'hint': t.get('hint') or '',
             'checked': bool(t.get('answer')),
+            'visual': t.get('visual'),
         })
     return {'intro': homework.get('intro', ''), 'tasks': tasks}
 

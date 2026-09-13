@@ -79,6 +79,7 @@ backend/
 ├── tests/ui_test.js        Frontend testlari (jsdom)
 │
 ├── css/app.css             Butun dizayn tizimi
+├── js/icons.js             SVG ikonkalar va shakllar (emoji ishlatilmaydi)
 ├── js/api.js               API klienti
 ├── js/ui.js                Umumiy UI komponentlari
 ├── js/telegram.js          Telegram Mini App
@@ -165,6 +166,7 @@ python -m flask --app app run   # baza avtomatik yangilanadi
 | Tur | Maydonlar | Ko'rinishi |
 |-----|-----------|------------|
 | `text` | title, body | Oddiy matn |
+| `count` | title, groups[] | Sanash mashqi: shakllar qatori |
 | `example` | title, body | Ko'k fonli misol |
 | `note` | body | Sariq chiziqli eslatma |
 | `life` | body | Yashil "Hayotdan" bloki |
@@ -173,6 +175,33 @@ python -m flask --app app run   # baza avtomatik yangilanadi
 | `table` | head[], rows[][] | Jadval |
 
 `body` ichida `**qalin**` va qator ko'chirish (`\n`) ishlaydi.
+Har qanday blokka `'icon': 'leaf'` qo'shib, sarlavha yoniga ikonka chiqarish mumkin.
+
+### Emoji ishlatilmaydi
+
+Saytda emoji yo'q — hamma joyda `js/icons.js` dagi SVG ikonkalar. Sababi: emoji
+qurilmaga qarab har xil ko'rinadi, ba'zi telefonlarda umuman chizilmaydi.
+
+Sanash mashqlari uchun `count` bloki yoki savolga `visual` maydoni ishlatiladi:
+
+```python
+# Dars ichida — shakllar qatori
+{'type': 'count', 'title': "Sanab ko'ramiz", 'groups': [
+    {'shape': 'apple', 'n': 3, 'label': '3 ta olma'},
+    {'shape': 'star', 'n': 5, 'label': '5 ta yulduzcha'},
+]}
+
+# Quiz yoki uy vazifasi savolida — savol ostidagi rasm
+{'type': 'mc', 'q': 'Bu yerda nechta olma bor?',
+ 'visual': {'shape': 'apple', 'n': 4},
+ 'options': ['3', '4', '5', '6'], 'answer': 1, 'explain': '...'}
+```
+
+Mavjud shakllar: `apple`, `star`, `bird`, `circle`, `square`, `triangle`,
+`rectangle`, `drop`, `sun`, `snow`, `leaf`, `cloud`, `fish`, `bug`, `cow`,
+`soil`, `wind`, `flower`, `sprout`.
+
+Ikonka nomlari uchun `js/icons.js` dagi `ICONS` obyektiga qarang.
 
 ### Savol turlari
 
@@ -203,7 +232,7 @@ python validate_curriculum.py
 # 2. Backend: to'liq o'quv oqimi (73 ta tekshiruv)
 python test_flow.py
 
-# 3. Frontend: haqiqiy sahifalar jsdom da (63 ta tekshiruv)
+# 3. Frontend: haqiqiy sahifalar jsdom da (77 ta tekshiruv)
 python -m flask --app app run --port 5055 &
 cd tests && npm install jsdom && node ui_test.js
 ```

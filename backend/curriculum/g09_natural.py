@@ -199,7 +199,7 @@ CHEMISTRY = {
                  "Endi o'ngda H = 4, O = 2\n\n"
                  "H₂ oldiga 2 qo'yamiz:\n"
                  "**2**H₂ + O₂ → **2**H₂O\n\n"
-                 "Tekshirish: chapda H=4, O=2; o'ngda H=4, O=2 ✓"},
+                 "Tekshirish: chapda H=4, O=2; o'ngda H=4, O=2 — teng"},
                 {'type': 'note', 'body':
                  "**Diqqat!** Indeksni (pastdagi kichik raqam) o'zgartirish mumkin emas — "
                  "u moddaning o'zini o'zgartiradi. Faqat **koeffitsiyent** (oldidagi katta raqam) "

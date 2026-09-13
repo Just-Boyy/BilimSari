@@ -28,7 +28,9 @@
     text-align: left;
     cursor: pointer;
   }
-  .qator .nishon { font-size: 1.2rem; }
+  .qator .nishon { color: var(--feruza-quyuq); }
+  .qator.xavfli .nishon { color: var(--qizil); }
+  .qator .o-q svg { width: 18px; height: 18px; }
   .qator .matn { flex: 1; }
   .qator .matn small { display: block; color: var(--matn-2); font-size: .82rem; }
   .qator .o-q { color: var(--matn-3); }
@@ -58,25 +60,25 @@
     <h2 style="margin-bottom:12px">Sozlamalar</h2>
 
     <a class="qator" href="onboarding.html">
-      <span class="nishon" aria-hidden="true">🎓</span>
+      <span class="nishon" data-ikon="graduation"></span>
       <span class="matn">Sinfni o'zgartirish<small id="joriySinf">—</small></span>
-      <span class="o-q" aria-hidden="true">›</span>
+      <span class="o-q" data-ikon="chevronRight"></span>
     </a>
 
     <a class="qator" href="progress.html">
-      <span class="nishon" aria-hidden="true">📈</span>
+      <span class="nishon" data-ikon="chart"></span>
       <span class="matn">Natijalarim<small>Tugallangan mavzular va ballar</small></span>
-      <span class="o-q" aria-hidden="true">›</span>
+      <span class="o-q" data-ikon="chevronRight"></span>
     </a>
 
     <a class="qator" href="learn.html">
-      <span class="nishon" aria-hidden="true">✨</span>
+      <span class="nishon" data-ikon="sparkle"></span>
       <span class="matn">AI mashqlari<small>Qo'shimcha, dastur tashqarisidagi darslar</small></span>
-      <span class="o-q" aria-hidden="true">›</span>
+      <span class="o-q" data-ikon="chevronRight"></span>
     </a>
 
     <button class="qator xavfli" id="chiqish">
-      <span class="nishon" aria-hidden="true">🚪</span>
+      <span class="nishon" data-ikon="logout"></span>
       <span class="matn">Chiqish<small>Hisobdan chiqasiz, natijalar saqlanadi</small></span>
     </button>
   </section>
@@ -87,6 +89,7 @@
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -94,6 +97,11 @@
 (async function () {
   if (!(await UI.sessiyaKerak())) return;
   UI.navChiz('profile.html');
+
+  // data-ikon belgilarini SVG ga aylantiramiz
+  document.querySelectorAll('[data-ikon]').forEach(function (el) {
+    el.innerHTML = UI.nishon(el.dataset.ikon);
+  });
 
   var d = await API.dashboard();
   if (!d.ok) { UI.xabar(d.error, 'xato'); return; }

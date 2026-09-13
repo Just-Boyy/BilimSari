@@ -44,6 +44,7 @@
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
@@ -106,7 +107,7 @@
 
     if (!res.today) {
       quti.innerHTML = UI.holat({
-        belgi: '🎉',
+        belgi: 'award',
         sarlavha: 'Barcha mavzular tugallandi',
         matn: 'Ushbu sinf bo\'yicha hamma darsni yakunladingiz. Natijalaringizni ko\'ring.',
         tugma: 'Natijalarim', tugmaYo_l: 'progress.html',
@@ -118,7 +119,7 @@
     quti.innerHTML =
       '<div class="karta bugun">' +
         '<div class="fan-qator">' +
-          '<span class="belgi" aria-hidden="true">' + t.subject_icon + '</span>' +
+          '<span class="belgi">' + UI.nishon(t.subject_icon) + '</span>' +
           '<span>Bugungi dars — ' + UI.esc(t.subject_name) + '</span>' +
         '</div>' +
         '<h2>' + UI.esc(t.topic_title) + '</h2>' +
@@ -146,7 +147,7 @@
     if (!fanlar || !fanlar.length) {
       quti.style.gridTemplateColumns = '1fr';
       quti.innerHTML = UI.holat({
-        belgi: '🛠️',
+        belgi: 'tools',
         sarlavha: 'Fanlar tayyorlanmoqda',
         matn: 'Sizning sinfingiz uchun darslar hali qo\'shilmagan.',
         tugma: 'Sinfni o\'zgartirish', tugmaYo_l: 'onboarding.html',
@@ -164,7 +165,7 @@
       return '<a class="fan' + (f.finished ? ' tugagan' : '') + '"' +
         ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
         ' style="border-left-color:' + UI.esc(f.color) + '">' +
-        '<span class="belgi" aria-hidden="true">' + f.icon + '</span>' +
+        '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + holat + '</p>' +
         '<div class="progress"><i style="width:' + f.percent + '%;background:' +

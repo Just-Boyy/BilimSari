@@ -203,10 +203,10 @@ UZBEK = {
                  "«kitob» — bu faqat so'z, fikr tugallanmagan.\n"
                  "«Men kitob o'qiyapman.» — bu gap, chunki fikr to'liq."},
                 {'type': 'example', 'title': "So'z va gapni solishtiramiz", 'body':
-                 "❌ **olma** — so'z (nima haqida gapiryapmiz, tushunarsiz)\n"
-                 "✅ **Olma shirin.** — gap (fikr tugallangan)\n\n"
-                 "❌ **bola maktab**\n"
-                 "✅ **Bola maktabga ketdi.**"},
+                 "Noto'g'ri: **olma** — so'z (nima haqida gapiryapmiz, tushunarsiz)\n"
+                 "To'g'ri: **Olma shirin.** — gap (fikr tugallangan)\n\n"
+                 "Noto'g'ri: **bola maktab**\n"
+                 "To'g'ri: **Bola maktabga ketdi.**"},
                 {'type': 'steps', 'title': "Gapning belgilari", 'items': [
                     "Gap **katta harf** bilan boshlanadi.",
                     "Gap oxirida **tinish belgisi** bo'ladi (. ? !).",
@@ -268,10 +268,10 @@ UZBEK = {
                  "**3. Joy nomlarida**\n"
                  "**T**oshkent, **S**amarqand, **O**ʻzbekiston, **A**mudaryo"},
                 {'type': 'example', 'title': 'To\'g\'ri va noto\'g\'ri', 'body':
-                 "❌ men toshkentda yashayman.\n"
-                 "✅ **M**en **T**oshkentda yashayman.\n\n"
-                 "❌ ali maktabga bordi\n"
-                 "✅ **A**li maktabga bordi**.**"},
+                 "Noto'g'ri: men toshkentda yashayman.\n"
+                 "To'g'ri: **M**en **T**oshkentda yashayman.\n\n"
+                 "Noto'g'ri: ali maktabga bordi\n"
+                 "To'g'ri: **A**li maktabga bordi**.**"},
                 {'type': 'text', 'title': 'Tinish belgilari', 'body':
                  "**Nuqta (.)** — darak gap oxirida\n"
                  "Misol: Kitob stolda turibdi.\n\n"
