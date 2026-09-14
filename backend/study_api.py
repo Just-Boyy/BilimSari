@@ -68,6 +68,7 @@ def dashboard():
     try:
         data = study.dashboard(cur, request.user['id'])
         data['ok'] = True
+        data['needs_onboarding'] = not bool(request.user.get('onboarded'))
         data['user'] = {
             'id': request.user['id'],
             'name': request.user.get('name'),

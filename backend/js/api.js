@@ -134,6 +134,9 @@
     ismYangilash: function (ism) {
       return so_rov('/api/profile/name', { method: 'POST', body: { name: ism } });
     },
+    ismTasdiqla: function () {
+      return so_rov('/api/profile/onboarded', { method: 'POST' });
+    },
     kutish: function () { return so_rov('/api/study/cooldown'); },
 
     // — AI —

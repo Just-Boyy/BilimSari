@@ -49,6 +49,7 @@ def init_db():
             telegram_id BIGINT UNIQUE,
             username TEXT,
             photo_url TEXT,
+            onboarded BOOLEAN NOT NULL DEFAULT FALSE,
             created_at TIMESTAMP NOT NULL DEFAULT NOW()
         )
     ''')
@@ -73,6 +74,7 @@ def init_db():
         ('telegram_id', 'BIGINT'),
         ('username', 'TEXT'),
         ('photo_url', 'TEXT'),
+        ('onboarded', 'BOOLEAN NOT NULL DEFAULT FALSE'),
     ]:
         add_column_if_missing(cur, conn, 'users', column, ddl)
 
@@ -137,7 +139,7 @@ def register():
 
     pw_hash = hash_password(password)
     cur.execute(
-        'INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s) RETURNING id',
+        'INSERT INTO users (name, email, password_hash, onboarded) VALUES (%s, %s, %s, TRUE) RETURNING id',
         (name, email, pw_hash)
     )
     user_id = cur.fetchone()['id']
@@ -171,7 +173,7 @@ def guest():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        'INSERT INTO users (name, email, password_hash) VALUES (%s, NULL, NULL) RETURNING id',
+        'INSERT INTO users (name, email, password_hash, onboarded) VALUES (%s, NULL, NULL, TRUE) RETURNING id',
         (name,)
     )
     user_id = cur.fetchone()['id']
@@ -252,14 +254,28 @@ def update_name():
 
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute('UPDATE users SET name = %s WHERE id = %s', (name, request.user['id']))
+    cur.execute('UPDATE users SET name = %s, onboarded = TRUE WHERE id = %s', (name, request.user['id']))
     conn.commit()
     cur.close()
     conn.close()
 
     updated = dict(request.user)
     updated['name'] = name
+    updated['onboarded'] = True
     return jsonify({'ok': True, 'user': updated})
+
+
+@app.route('/api/profile/onboarded', methods=['POST'])
+@auth_required
+def mark_onboarded():
+    """Onboarding: Telegram ismi tasdiqlanganda (o'zgartirmasdan) chaqiriladi."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('UPDATE users SET onboarded = TRUE WHERE id = %s', (request.user['id'],))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({'ok': True})
 
 
 @app.route('/api/logout', methods=['POST'])

@@ -74,7 +74,7 @@ def get_user_by_token(token: str):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        '''SELECT u.id, u.name, u.email, u.grade, u.photo_url, u.telegram_id
+        '''SELECT u.id, u.name, u.email, u.grade, u.photo_url, u.telegram_id, u.onboarded
            FROM tokens t
            JOIN users u ON u.id = t.user_id
            WHERE t.token = %s AND t.expires_at > NOW()''',

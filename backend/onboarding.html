@@ -143,7 +143,10 @@
     ismQolKiritishniKo_rsat(joriyIsm);
   };
 
-  document.getElementById('ismTasdiq').onclick = function () {
+  document.getElementById('ismTasdiq').onclick = async function () {
+    this.disabled = true;
+    await API.ismTasdiqla();
+    this.disabled = false;
     qadam(fanQadami());
     fanlarniYukla();
   };

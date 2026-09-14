@@ -806,11 +806,6 @@ def dashboard(cur, user_id):
     cur.execute('SELECT COUNT(*) AS n FROM topics')
     topics_total = int(cur.fetchone()['n'] or 0)
 
-    # Hali birorta mavzuni boshlamagan (haqiqiy DB qatori yo'q) — yangi
-    # foydalanuvchi, ismni tasdiqlash/fan tanlash oqimi ko'rsatiladi.
-    cur.execute('SELECT 1 FROM user_progress WHERE user_id = %s LIMIT 1', (user_id,))
-    has_started = cur.fetchone() is not None
-
     # bugungi dars — birinchi ochiq mavzu
     today = None
     for subject in subjects:
@@ -828,7 +823,6 @@ def dashboard(cur, user_id):
             break
 
     return {
-        'needs_onboarding': not has_started,
         'subjects': subjects,
         'today': today,
         'cooldown': cooldown,
