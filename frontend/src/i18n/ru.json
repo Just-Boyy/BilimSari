@@ -1,0 +1,42 @@
+{
+  "app": {
+    "slogan": "Каждый день на шаг ближе к знаниям"
+  },
+  "onboarding": {
+    "chooseLanguage": "Выберите язык",
+    "chooseGrade": "Выберите класс",
+    "continue": "Продолжить"
+  },
+  "home": {
+    "greeting": "Добро пожаловать",
+    "continueCard": "Продолжить",
+    "streak": "Серия дней",
+    "goToSubjects": "Перейти к предметам"
+  },
+  "subjects": {
+    "title": "Предметы"
+  },
+  "sections": {
+    "title": "Разделы"
+  },
+  "topics": {
+    "title": "Темы",
+    "locked": "Заблокировано",
+    "completed": "Завершено"
+  },
+  "topic": {
+    "tabLesson": "Урок",
+    "tabTest": "Тест",
+    "tabQuiz": "Квиз",
+    "tabHomework": "Домашнее задание",
+    "understood": "Понятно",
+    "comingSoon": "Скоро",
+    "comingSoonDesc": "Этот раздел будет добавлен на следующем этапе."
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "notAvailableInLanguage": "Пока недоступно на этом языке",
+    "offline": "Offline (из кэша)"
+  }
+}

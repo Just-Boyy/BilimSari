@@ -1,0 +1,42 @@
+{
+  "app": {
+    "slogan": "One step closer to knowledge every day"
+  },
+  "onboarding": {
+    "chooseLanguage": "Choose your language",
+    "chooseGrade": "Choose your grade",
+    "continue": "Continue"
+  },
+  "home": {
+    "greeting": "Welcome",
+    "continueCard": "Continue",
+    "streak": "Streak",
+    "goToSubjects": "Go to subjects"
+  },
+  "subjects": {
+    "title": "Subjects"
+  },
+  "sections": {
+    "title": "Sections"
+  },
+  "topics": {
+    "title": "Topics",
+    "locked": "Locked",
+    "completed": "Completed"
+  },
+  "topic": {
+    "tabLesson": "Lesson",
+    "tabTest": "Test",
+    "tabQuiz": "Quiz",
+    "tabHomework": "Homework",
+    "understood": "Understood",
+    "comingSoon": "Coming soon",
+    "comingSoonDesc": "This section will be added in a later stage."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "notAvailableInLanguage": "Not available in this language yet",
+    "offline": "Offline (from cache)"
+  }
+}
