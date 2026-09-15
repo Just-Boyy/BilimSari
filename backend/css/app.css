@@ -380,9 +380,10 @@ svg { display: block; }
   background: linear-gradient(to top, rgba(10, 10, 10, .82) 0%, rgba(10, 10, 10, .35) 55%, rgba(10, 10, 10, .05) 100%);
 }
 .fan.fan-rasmli > * { position: relative; }
-.fan.fan-rasmli h3 { color: #fff; }
-.fan.fan-rasmli .holat { color: rgba(255, 255, 255, .88); }
-.fan.fan-rasmli .foiz { color: rgba(255, 255, 255, .8); }
+.fan.fan-rasmli h3 { color: #fff; margin-bottom: 0; }
+.fan.fan-rasmli .holat,
+.fan.fan-rasmli .progress,
+.fan.fan-rasmli .foiz { display: none; }
 
 .fan.tugagan { border-color: var(--yashil-chegara); background: var(--yashil-fon); }
 .fan.tugagan::after {
