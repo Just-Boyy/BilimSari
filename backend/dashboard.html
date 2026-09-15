@@ -22,14 +22,6 @@
 </header>
 
 <main class="sahifa sahifa-keng">
-  <div class="ko-tarilgan" id="bugun">
-    <div class="karta">
-      <div class="skelet" style="height:22px;width:45%;margin-bottom:12px"></div>
-      <div class="skelet" style="height:30px;width:75%;margin-bottom:10px"></div>
-      <div class="skelet" style="height:50px"></div>
-    </div>
-  </div>
-
   <section class="bo-lim" id="statBo-lim" hidden>
     <div class="stat-setka" id="statlar"></div>
   </section>
@@ -53,13 +45,11 @@
   if (!(await UI.sessiyaKerak())) return;
   UI.navChiz('dashboard.html');
 
-  var to_xtat = null;
-
   async function yukla() {
     var res = await API.dashboard();
 
     if (!res.ok) {
-      document.getElementById('bugun').innerHTML = UI.xatoHolat(res.error, yukla);
+      UI.xabar(res.error, 'xato');
       return;
     }
     if (res.needs_onboarding) { location.href = 'onboarding.html'; return; }
@@ -75,56 +65,8 @@
       av.textContent = UI.harfAvatar(ism);
     }
 
-    bugunChiz(res);
     statChiz(res.stats);
     fanChiz(res.subjects);
-  }
-
-  // ── Bugungi dars yoki kutish ──
-  function bugunChiz(res) {
-    var quti = document.getElementById('bugun');
-    if (to_xtat) { to_xtat(); to_xtat = null; }
-
-    if (res.cooldown && res.cooldown.active) {
-      quti.innerHTML =
-        '<div class="kutish-karta">' +
-          '<h2>Bugungi mavzuni yakunladingiz</h2>' +
-          '<p>Keyingi mavzu quyidagi vaqtdan so\'ng ochiladi</p>' +
-          '<div class="taymer" id="taymer" role="timer" aria-live="off">--:--:--</div>' +
-          '<p class="izoh-kichik">' +
-            UI.esc(res.cooldown.unlock_at_tashkent || '') + ' (Toshkent vaqti)</p>' +
-        '</div>';
-      to_xtat = UI.taymer(
-        document.getElementById('taymer'),
-        res.cooldown.seconds_left,
-        function () { UI.xabar('Keyingi mavzu ochildi!', 'muvaffaqiyat'); yukla(); }
-      );
-      return;
-    }
-
-    if (!res.today) {
-      quti.innerHTML = UI.holat({
-        belgi: 'award',
-        sarlavha: 'Barcha mavzular tugallandi',
-        matn: 'Hamma darsni yakunladingiz. Natijalaringizni ko\'ring.',
-        tugma: 'Natijalarim', tugmaYo_l: 'progress.html',
-      });
-      return;
-    }
-
-    var t = res.today;
-    quti.innerHTML =
-      '<div class="karta bugun">' +
-        '<div class="fan-qator">' +
-          '<span class="belgi">' + UI.fanBelgi(t.subject_image, t.subject_icon) + '</span>' +
-          '<span>Bugungi dars — ' + UI.esc(t.subject_name) + '</span>' +
-        '</div>' +
-        '<h2>' + UI.esc(t.topic_title) + '</h2>' +
-        '<p class="tavsif">Dars, test va uy vazifasi — hammasi bitta sahifada.</p>' +
-        '<a class="tugma" href="topic.html?fan=' + encodeURIComponent(t.subject_key) +
-          '&mavzu=' + encodeURIComponent(t.topic_slug) +
-          '&sinf=' + encodeURIComponent(t.topic_grade) + '">Darsni boshlash</a>' +
-      '</div>';
   }
 
   // ── Statistika ──
