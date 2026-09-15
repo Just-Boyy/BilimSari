@@ -3,5 +3,6 @@
 
 from .g09_exact import ALGEBRA
 from .g09_natural import CHEMISTRY, BIOLOGY
+from .g09_social import HISTORY, LAW
 
-SUBJECTS = [ALGEBRA, CHEMISTRY, BIOLOGY]
+SUBJECTS = [ALGEBRA, CHEMISTRY, BIOLOGY, HISTORY, LAW]
