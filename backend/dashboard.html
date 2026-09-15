@@ -159,10 +159,12 @@
             ? (f.current_topic.state === 'cooldown' ? 'Keyingi: ' : 'Hozir: ') +
               UI.esc(f.current_topic.title)
             : 'Boshlanmagan');
-      return '<a class="fan' + (f.finished ? ' tugagan' : '') + '"' +
+      return '<a class="fan' + (f.finished ? ' tugagan' : '') + (f.image ? ' fan-rasmli' : '') + '"' +
         ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
-        ' style="border-left-color:' + UI.esc(f.color) + '">' +
-        '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>' +
+        ' style="' + (f.image
+          ? "background-image:url('" + UI.esc(f.image) + "')"
+          : 'border-left-color:' + UI.esc(f.color)) + '">' +
+        (f.image ? '' : '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>') +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + holat + '</p>' +
         '<div class="progress"><i style="width:' + f.percent + '%;background:' +

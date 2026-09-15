@@ -361,6 +361,29 @@ svg { display: block; }
 .fan .progress { height: 8px; }
 .fan .foiz { font-size: 11px; color: var(--matn-3); margin-top: 6px; font-weight: 700; }
 
+/* Rasm bergan fanlar — butun kartani qoplaydigan orqa fon (background) sifatida */
+.fan.fan-rasmli {
+  background-size: cover;
+  background-position: center;
+  border: none;
+  color: #fff;
+  overflow: hidden;
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.fan.fan-rasmli::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 10, .82) 0%, rgba(10, 10, 10, .35) 55%, rgba(10, 10, 10, .05) 100%);
+}
+.fan.fan-rasmli > * { position: relative; }
+.fan.fan-rasmli h3 { color: #fff; }
+.fan.fan-rasmli .holat { color: rgba(255, 255, 255, .88); }
+.fan.fan-rasmli .foiz { color: rgba(255, 255, 255, .8); }
+
 .fan.tugagan { border-color: var(--yashil-chegara); background: var(--yashil-fon); }
 .fan.tugagan::after {
   content: 'Tugallandi';
