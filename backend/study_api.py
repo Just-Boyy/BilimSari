@@ -112,6 +112,7 @@ def topics(subject_key):
                 'key': subject['subject_key'],
                 'name': subject['name'],
                 'icon': subject['icon'],
+                'image': subject.get('image'),
                 'color': subject['color'],
             },
             'topics': items,

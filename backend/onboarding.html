@@ -219,7 +219,7 @@
     quti.style.gridTemplateColumns = '';
     quti.innerHTML = res.subjects.map(function (f) {
       return '<a class="fan" href="topics.html?fan=' + encodeURIComponent(f.key) + '">' +
-        '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
+        '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>' +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + f.total_topics + ' ta mavzu</p></a>';
     }).join('');

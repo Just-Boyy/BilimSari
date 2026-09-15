@@ -2,7 +2,7 @@
 """9-sinf — Algebra va Fizika."""
 
 ALGEBRA = {
-    'key': 'algebra',
+    'key': 'math',  # Matematika bilan birlashtirilgan (alohida fan emas)
     'topics': [
         {
             'slug': 'kvadrat-tenglama',

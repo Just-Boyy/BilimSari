@@ -202,6 +202,7 @@ svg { display: block; }
 
 .bugun .fan-qator .belgi { color: var(--yashil); }
 .bugun .fan-qator .belgi svg { width: 18px; height: 18px; }
+.bugun .fan-qator .belgi img { width: 18px; height: 18px; border-radius: 5px; object-fit: cover; vertical-align: middle; }
 
 .bugun h2 { font-size: 20px; margin: 8px 0 4px; }
 .bugun .tavsif { color: var(--matn-2); font-size: 13px; margin-bottom: 14px; }
@@ -354,6 +355,7 @@ svg { display: block; }
 
 .fan .belgi { display: block; margin-bottom: 8px; color: var(--yashil); }
 .fan .belgi svg { width: 28px; height: 28px; }
+.fan .belgi img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
 .fan h3 { font-size: 15px; margin-bottom: 3px; }
 .fan .holat { font-size: 12px; color: var(--matn-2); margin-bottom: 10px; min-height: 2.4em; }
 .fan .progress { height: 8px; }

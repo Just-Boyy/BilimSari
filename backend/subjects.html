@@ -68,7 +68,7 @@
       return '<a class="fan' + (f.finished ? ' tugagan' : '') + '"' +
         ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
         ' style="border-left-color:' + UI.esc(f.color) + '">' +
-        '<span class="belgi">' + UI.nishon(f.icon) + '</span>' +
+        '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>' +
         '<h3>' + UI.esc(f.name) + '</h3>' +
         '<p class="holat">' + holat + '</p>' +
         '<div class="progress"><i style="width:' + f.percent + '%;background:' +

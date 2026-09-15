@@ -53,11 +53,13 @@ def ensure_tables(cur, conn):
             subject_key TEXT NOT NULL,
             name TEXT NOT NULL,
             icon TEXT,
+            image TEXT,
             color TEXT,
             description TEXT,
             sort_order INTEGER NOT NULL DEFAULT 0
         )
     ''')
+    add_column_if_missing(cur, conn, 'subjects', 'image', 'TEXT')
     cur.execute('''
         CREATE TABLE IF NOT EXISTS topics (
             id TEXT PRIMARY KEY,
@@ -104,32 +106,26 @@ def ensure_tables(cur, conn):
 
 def sync_curriculum(cur, conn, force=False):
     """
-    curriculum/ paketidagi darslarni bazaga yozadi.
+    curriculum/ paketidagi darslarni bazaga yozadi va endi mavjud bo'lmagan
+    (kodda olib tashlangan yoki subject_key'i o'zgargan) qatorlarni o'chiradi.
 
     Manba — Python modullari (qo'lda yozilgan dastur), baza esa ishchi nusxa.
-    Har safar ishga tushganda yangilanadi, shuning uchun darsni kodda tahrirlash
-    kifoya.
+    Har safar ishga tushganda to'liq qayta sinxronlanadi (kod = haqiqat manbai),
+    shuning uchun darsni yoki fanlar ro'yxatini kodda tahrirlash kifoya.
     """
     ensure_tables(cur, conn)
 
-    if not force:
-        cur.execute('SELECT COUNT(*) AS n FROM topics')
-        existing = int(cur.fetchone()['n'] or 0)
-        expected = sum(
-            len(s.get('topics', []))
-            for g in cur_mod.GRADES
-            for s in cur_mod.subjects_for_grade(g)
-        )
-        if existing == expected and expected > 0:
-            return 0  # o'zgarish yo'q
-
     written = 0
+    expected_subject_ids = set()
+    expected_topic_ids = set()
+
     for grade in cur_mod.GRADES:
         subjects = cur_mod.subjects_for_grade(grade)
         for order, subject in enumerate(subjects, start=1):
             key = subject['key']
             meta = cur_mod.subject_meta(key)
             sid = cur_mod.subject_id(grade, key)
+            expected_subject_ids.add(sid)
             _upsert(
                 cur,
                 'subjects',
@@ -140,6 +136,7 @@ def sync_curriculum(cur, conn, force=False):
                     'subject_key': key,
                     'name': meta['name'],
                     'icon': meta['icon'],
+                    'image': meta.get('image'),
                     'color': meta['color'],
                     'description': subject.get('description') or '',
                     'sort_order': order,
@@ -147,6 +144,7 @@ def sync_curriculum(cur, conn, force=False):
             )
             for seq, topic in enumerate(subject.get('topics', []), start=1):
                 tid = cur_mod.topic_id(grade, key, topic['slug'])
+                expected_topic_ids.add(tid)
                 _upsert(
                     cur,
                     'topics',
@@ -167,6 +165,20 @@ def sync_curriculum(cur, conn, force=False):
                     },
                 )
                 written += 1
+
+    # Kodda endi yo'q fan/mavzularni bazadan ham o'chiramiz (masalan, Algebra
+    # Matematikaga birlashtirildi yoki bir fan butunlay olib tashlandi).
+    cur.execute('SELECT id FROM topics')
+    stale_topic_ids = {r['id'] for r in cur.fetchall()} - expected_topic_ids
+    for tid in stale_topic_ids:
+        cur.execute('DELETE FROM user_progress WHERE topic_id = %s', (tid,))
+        cur.execute('DELETE FROM topics WHERE id = %s', (tid,))
+
+    cur.execute('SELECT id FROM subjects')
+    stale_subject_ids = {r['id'] for r in cur.fetchall()} - expected_subject_ids
+    for sid in stale_subject_ids:
+        cur.execute('DELETE FROM subjects WHERE id = %s', (sid,))
+
     conn.commit()
     return written
 
@@ -381,6 +393,7 @@ def subjects_overview(cur, user_id):
             'key': key,
             'name': subject['name'],
             'icon': subject['icon'],
+            'image': subject.get('image'),
             'color': subject['color'],
             'total_topics': len(states),
             'completed_topics': done,
@@ -500,6 +513,7 @@ def topic_payload(cur, conn, user_id, topic_id):
             'key': topic['subject_key'],
             'name': subject.get('name') or topic['subject_key'],
             'icon': subject.get('icon') or 'book',
+            'image': subject.get('image'),
             'color': subject.get('color') or '#4F7DF3',
         },
         'lesson': _json(topic['lesson'], []),
@@ -814,6 +828,7 @@ def dashboard(cur, user_id):
                 'subject_key': subject['key'],
                 'subject_name': subject['name'],
                 'subject_icon': subject['icon'],
+                'subject_image': subject.get('image'),
                 'subject_color': subject['color'],
                 'topic_title': subject['current_topic']['title'],
                 'topic_slug': subject['current_topic']['slug'],

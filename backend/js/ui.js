@@ -53,6 +53,15 @@
     return (window.BSIcons ? BSIcons.shapes(nom, n, cls) : '');
   }
 
+  /** Fan belgisi: rasm berilgan bo'lsa shuni, aks holda SVG ikonkani ko'rsatadi.
+   * O'lcham CSS'da .belgi img qoidalari orqali (svg bilan bir xil joyda) beriladi. */
+  function fanBelgi(rasm, ikon) {
+    if (rasm) {
+      return '<img src="' + esc(rasm) + '" alt="">';
+    }
+    return nishon(ikon);
+  }
+
   function navChiz(faolYo_l) {
     var joriy = faolYo_l || location.pathname.split('/').pop() || 'dashboard.html';
     var nav = document.createElement('nav');
@@ -233,6 +242,7 @@
     taymer: taymer,
     nishon: nishon,
     shakllar: shakllar,
+    fanBelgi: fanBelgi,
     darsHtml: darsHtml,
     sessiyaKerak: sessiyaKerak,
     sinfKerak: sinfKerak,

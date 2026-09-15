@@ -48,21 +48,19 @@ from importlib import import_module
 # ───────────────────────── Fanlar katalogi ─────────────────────────
 
 SUBJECT_CATALOG = {
-    # 'icon' — js/icons.js dagi ikonka nomi (emoji emas)
-    'math':        {'name': 'Matematika',     'icon': 'calc',     'color': '#4F7DF3'},
-    'algebra':     {'name': 'Algebra',        'icon': 'divide',   'color': '#4F7DF3'},
+    # 'icon' — js/icons.js dagi ikonka nomi (emoji emas), 'image' berilgan bo'lsa
+    # frontend shu rasmni icon o'rniga ko'rsatadi (assets/ ostidagi fayl nomi).
+    'math':        {'name': 'Matematika',     'icon': 'calc',     'color': '#4F7DF3', 'image': 'assets/subject-math.png'},
     'geometry':    {'name': 'Geometriya',     'icon': 'ruler',    'color': '#3B82C4'},
-    'uzbek':       {'name': 'Ona tili',       'icon': 'bookOpen', 'color': '#22A06B'},
-    'reading':     {'name': "O'qish",         'icon': 'book',     'color': '#F0932B'},
+    'uzbek':       {'name': 'Ona tili',       'icon': 'bookOpen', 'color': '#22A06B', 'image': 'assets/subject-uzbek.png'},
     'literature':  {'name': 'Adabiyot',       'icon': 'scroll',   'color': '#8E44AD'},
-    'nature':      {'name': 'Tabiiy fanlar',  'icon': 'leaf',     'color': '#16A085'},
-    'english':     {'name': 'Ingliz tili',    'icon': 'lang',     'color': '#E74C3C'},
-    'russian':     {'name': 'Rus tili',       'icon': 'chat',     'color': '#2980B9'},
-    'history':     {'name': 'Tarix',          'icon': 'landmark', 'color': '#B7791F'},
-    'geography':   {'name': 'Geografiya',     'icon': 'map',      'color': '#0E9F6E'},
-    'physics':     {'name': 'Fizika',         'icon': 'atom',     'color': '#6C5CE7'},
-    'chemistry':   {'name': 'Kimyo',          'icon': 'flask',    'color': '#E17055'},
-    'biology':     {'name': 'Biologiya',      'icon': 'dna',      'color': '#00B894'},
+    'english':     {'name': 'Ingliz tili',    'icon': 'lang',     'color': '#E74C3C', 'image': 'assets/subject-english.png'},
+    'russian':     {'name': 'Rus tili',       'icon': 'chat',     'color': '#2980B9', 'image': 'assets/subject-russian.png'},
+    'history':     {'name': 'Tarix',          'icon': 'landmark', 'color': '#B7791F', 'image': 'assets/subject-history.png'},
+    'geography':   {'name': 'Geografiya',     'icon': 'map',      'color': '#0E9F6E', 'image': 'assets/subject-geography.png'},
+    'chemistry':   {'name': 'Kimyo',          'icon': 'flask',    'color': '#E17055', 'image': 'assets/subject-chemistry.png'},
+    'biology':     {'name': 'Biologiya',      'icon': 'dna',      'color': '#00B894', 'image': 'assets/subject-biology.png'},
+    'law':         {'name': 'Huquq',          'icon': 'scale',    'color': '#B45309', 'image': 'assets/subject-law.png'},
     'informatics': {'name': 'Informatika',    'icon': 'code',     'color': '#475569'},
 }
 

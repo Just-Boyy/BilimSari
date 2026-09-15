@@ -3,6 +3,5 @@
 
 from .g01_math import MATH
 from .g01_uzbek import UZBEK
-from .g01_other import READING, NATURE
 
-SUBJECTS = [MATH, UZBEK, READING, NATURE]
+SUBJECTS = [MATH, UZBEK]
