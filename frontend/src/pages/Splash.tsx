@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { apiClient } from "../lib/apiClient";
-import { getTelegramLanguageCode, isRunningInsideTelegram, waitForInitData } from "../lib/telegram";
+import { getDebugInfo, getTelegramLanguageCode, isRunningInsideTelegram, waitForInitData } from "../lib/telegram";
 import { useAuthStore } from "../store/useAuthStore";
 import type { TelegramAuthResponse } from "../types/api";
 import i18n, { detectInitialLang } from "../i18n";
@@ -21,7 +21,7 @@ export function Splash() {
       const insideTelegram = isRunningInsideTelegram();
 
       if (!insideTelegram && !import.meta.env.DEV) {
-        setError("Ilova faqat Telegram ichida ishlaydi. Iltimos, botdagi tugma orqali oching.");
+        setError(`Ilova faqat Telegram ichida ishlaydi. Iltimos, botdagi tugma orqali oching. [${getDebugInfo()}]`);
         return;
       }
 
@@ -32,7 +32,7 @@ export function Splash() {
         if (cancelled) return;
 
         if (insideTelegram && !initData) {
-          setError(t("common.error"));
+          setError(`${t("common.error")} [${getDebugInfo()}]`);
           return;
         }
 
@@ -48,8 +48,11 @@ export function Splash() {
         await i18n.changeLanguage(lang);
 
         navigate(data.user.grade ? "/home" : "/onboarding", { replace: true });
-      } catch {
-        if (!cancelled) setError(t("common.error"));
+      } catch (e) {
+        if (!cancelled) {
+          const status = (e as { response?: { status?: number } })?.response?.status;
+          setError(`${t("common.error")} [status=${status ?? "?"} ${getDebugInfo()}]`);
+        }
       }
     }
 

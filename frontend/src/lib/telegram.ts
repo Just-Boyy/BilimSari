@@ -49,4 +49,13 @@ export async function waitForInitData(timeoutMs = 3000, intervalMs = 100): Promi
   }
 }
 
+/** Vaqtinchalik diagnostika uchun — Telegram Desktop'da nima uzatilayotganini ekranda
+ * ko'rish imkonini beradi (DevTools ochish qiyin bo'lgan muhitlarda). */
+export function getDebugInfo(): string {
+  const w = WebApp as unknown as { platform?: string; version?: string };
+  return `platform=${w.platform ?? "?"} version=${w.version ?? "?"} initDataLen=${WebApp.initData?.length ?? 0} hasTelegramObj=${Boolean(
+    (window as unknown as { Telegram?: unknown }).Telegram,
+  )} ua=${navigator.userAgent.slice(0, 60)}`;
+}
+
 export default WebApp;
