@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { apiClient } from "../lib/apiClient";
-import { getInitData, getTelegramLanguageCode, isRunningInsideTelegram } from "../lib/telegram";
+import { getTelegramLanguageCode, isRunningInsideTelegram, waitForInitData } from "../lib/telegram";
 import { useAuthStore } from "../store/useAuthStore";
 import type { TelegramAuthResponse } from "../types/api";
 import i18n, { detectInitialLang } from "../i18n";
@@ -26,10 +26,20 @@ export function Splash() {
       }
 
       try {
+        // Telegram Desktop'da initData darhol emas, biroz kechikib keladi — shu sababli
+        // "Telegram ichida emasmiz" xatosini bermasdan turib qisqa muddat kutamiz.
+        const initData = insideTelegram ? await waitForInitData() : "";
+        if (cancelled) return;
+
+        if (insideTelegram && !initData) {
+          setError(t("common.error"));
+          return;
+        }
+
         // DIQQAT: /auth/dev-login faqat backend ENV=development bo'lganda ishlaydi
         // (production'da 404) — bu shunchaki Telegram'siz brauzerda UI'ni sinash uchun.
         const { data } = insideTelegram
-          ? await apiClient.post<TelegramAuthResponse>("/auth/telegram", { init_data: getInitData() })
+          ? await apiClient.post<TelegramAuthResponse>("/auth/telegram", { init_data: initData })
           : await apiClient.post<TelegramAuthResponse>("/auth/dev-login");
         if (cancelled) return;
 
