@@ -27,24 +27,24 @@ export function getTelegramLanguageCode(): string | undefined {
   return WebApp.initDataUnsafe?.user?.language_code;
 }
 
-/** Telegram Desktop'da "platform" maydoni ham (initData kabi) kechikib to'ladi — shu sababli
- * unga asoslanish noto'g'ri xato beradi. window.Telegram.WebApp esa rasmiy telegram-web-app.js
- * skripti orqali sahifa yuklanishi bilanoq sinxron o'rnatiladi (index.html <head>'da), shuning
- * uchun "Telegram ichidamizmi" tekshiruvi shu obyektning mavjudligiga asoslanadi. */
-export function isRunningInsideTelegram(): boolean {
-  const telegram = (window as unknown as { Telegram?: { WebApp?: unknown } }).Telegram;
-  return Boolean(telegram?.WebApp);
-}
-
-/** initData Telegram Desktop'da kechikib kelishi mumkin (WebApp brauzer bridge orqali
- * asinxron beriladi) — shu sababli darhol bo'sh bo'lsa ham, qisqa vaqt kutib, qayta
- * tekshiramiz. Mobil klientlarda odatda birinchi urinishdayoq to'ladi. */
-export async function waitForInitData(timeoutMs = 3000, intervalMs = 100): Promise<string> {
+/** MUHIM: window.Telegram.WebApp'ning mavjudligi Telegram ichidamizligimizni ISBOTLAMAYDI —
+ * @twa-dev/sdk o'zi shu obyektni polyfill sifatida har doim yaratadi (oddiy brauzerda ham).
+ * Haqiqiy signal — "platform" yoki "initData"ning to'lishi, ular esa native bridge orqali
+ * (ayniqsa Telegram Desktop'da) kechikib keladi. Shuning uchun ikkalasini ham birgalikda,
+ * darhol emas, qisqa vaqt kutib tekshiramiz — pastdagi waitForTelegramReady() orqali. */
+export async function waitForTelegramReady(
+  timeoutMs = 3000,
+  intervalMs = 100,
+): Promise<{ insideTelegram: boolean; initData: string }> {
   const start = Date.now();
   while (true) {
-    const data = WebApp.initData;
-    if (data) return data;
-    if (Date.now() - start >= timeoutMs) return "";
+    const initData = WebApp.initData;
+    if (initData) return { insideTelegram: true, initData };
+
+    const platform = (WebApp as unknown as { platform?: string }).platform;
+    const insideTelegram = Boolean(platform && platform !== "unknown");
+
+    if (Date.now() - start >= timeoutMs) return { insideTelegram, initData: "" };
     await new Promise((resolve) => setTimeout(resolve, intervalMs));
   }
 }

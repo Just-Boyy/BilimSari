@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { apiClient } from "../lib/apiClient";
-import { getDebugInfo, getTelegramLanguageCode, isRunningInsideTelegram, waitForInitData } from "../lib/telegram";
+import { getDebugInfo, getTelegramLanguageCode, waitForTelegramReady } from "../lib/telegram";
 import { useAuthStore } from "../store/useAuthStore";
 import type { TelegramAuthResponse } from "../types/api";
 import i18n, { detectInitialLang } from "../i18n";
@@ -18,7 +18,12 @@ export function Splash() {
     let cancelled = false;
 
     async function run() {
-      const insideTelegram = isRunningInsideTelegram();
+      // Telegram Desktop'da platform va initData ikkalasi ham darhol emas, kechikib keladi —
+      // shu sababli "Telegram ichida emasmiz" xatosini bermasdan turib qisqa muddat kutamiz.
+      const { insideTelegram, initData } = import.meta.env.DEV
+        ? { insideTelegram: false, initData: "" }
+        : await waitForTelegramReady();
+      if (cancelled) return;
 
       if (!insideTelegram && !import.meta.env.DEV) {
         setError(`Ilova faqat Telegram ichida ishlaydi. Iltimos, botdagi tugma orqali oching. [${getDebugInfo()}]`);
@@ -26,11 +31,6 @@ export function Splash() {
       }
 
       try {
-        // Telegram Desktop'da initData darhol emas, biroz kechikib keladi — shu sababli
-        // "Telegram ichida emasmiz" xatosini bermasdan turib qisqa muddat kutamiz.
-        const initData = insideTelegram ? await waitForInitData() : "";
-        if (cancelled) return;
-
         if (insideTelegram && !initData) {
           setError(`${t("common.error")} [${getDebugInfo()}]`);
           return;
