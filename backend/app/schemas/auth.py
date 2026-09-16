@@ -5,6 +5,10 @@ class TelegramAuthRequest(BaseModel):
     init_data: str
 
 
+class SimpleRegisterRequest(BaseModel):
+    name: str
+
+
 class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

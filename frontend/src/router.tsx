@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { Onboarding } from "./pages/Onboarding";
+import { Register } from "./pages/Register";
 import { Sections } from "./pages/Sections";
 import { Splash } from "./pages/Splash";
 import { Subjects } from "./pages/Subjects";
@@ -12,6 +13,7 @@ export function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<Splash />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/home" element={<Home />} />
       <Route path="/subjects" element={<Subjects />} />

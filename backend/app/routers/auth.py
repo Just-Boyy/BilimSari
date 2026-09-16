@@ -1,3 +1,5 @@
+import secrets
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,7 +8,7 @@ from app.config import settings
 from app.core.rate_limit import limiter
 from app.db.models import User, UserLang
 from app.deps import get_db
-from app.schemas.auth import TelegramAuthRequest, TelegramAuthResponse, UserOut
+from app.schemas.auth import SimpleRegisterRequest, TelegramAuthRequest, TelegramAuthResponse, UserOut
 from app.security.jwt import create_access_token
 from app.security.telegram_auth import InitDataValidationError, validate_init_data
 
@@ -56,6 +58,39 @@ async def auth_telegram(
     lang = lang_code if lang_code in _SUPPORTED_LANGS else "uz"
 
     user = await _upsert_user(db, data["telegram_id"], data.get("username"), data.get("first_name"), lang)
+
+    token = create_access_token(user.id, user.telegram_id)
+    return TelegramAuthResponse(token=token, user=UserOut.model_validate(user))
+
+
+async def _generate_guest_telegram_id(db: AsyncSession) -> int:
+    """Haqiqiy Telegram ID'lar doim musbat bo'lgani uchun manfiy raqamlar bilan
+    to'qnashuv ehtimoli yo'q — shunchaki ism bilan ro'yxatdan o'tgan mehmon
+    foydalanuvchilar uchun sun'iy, noyob identifikator."""
+    for _ in range(5):
+        candidate = -secrets.randbits(62)
+        exists = (await db.execute(select(User.id).where(User.telegram_id == candidate))).scalar_one_or_none()
+        if exists is None:
+            return candidate
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="ID generatsiya qilib bo'lmadi")
+
+
+@router.post("/register", response_model=TelegramAuthResponse)
+@limiter.limit("20/minute")
+async def auth_register(
+    request: Request,
+    payload: SimpleRegisterRequest,
+    db: AsyncSession = Depends(get_db),
+) -> TelegramAuthResponse:
+    name = payload.name.strip()
+    if not name:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Ism bo'sh bo'lishi mumkin emas")
+
+    guest_id = await _generate_guest_telegram_id(db)
+    user = User(telegram_id=guest_id, username=None, first_name=name[:128], lang=UserLang.uz)
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
 
     token = create_access_token(user.id, user.telegram_id)
     return TelegramAuthResponse(token=token, user=UserOut.model_validate(user))
