@@ -50,8 +50,10 @@ export function Splash() {
         navigate(data.user.grade ? "/home" : "/onboarding", { replace: true });
       } catch (e) {
         if (!cancelled) {
-          const status = (e as { response?: { status?: number } })?.response?.status;
-          setError(`${t("common.error")} [status=${status ?? "?"} ${getDebugInfo()}]`);
+          const err = e as { response?: { status?: number }; code?: string; message?: string };
+          const status = err?.response?.status;
+          const netInfo = status ? "" : ` code=${err?.code ?? "?"} msg=${err?.message ?? "?"}`;
+          setError(`${t("common.error")} [status=${status ?? "?"}${netInfo} ${getDebugInfo()}]`);
         }
       }
     }
