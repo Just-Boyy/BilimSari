@@ -27,21 +27,28 @@ export function getTelegramLanguageCode(): string | undefined {
   return WebApp.initDataUnsafe?.user?.language_code;
 }
 
-/** MUHIM: window.Telegram.WebApp'ning mavjudligi Telegram ichidamizligimizni ISBOTLAMAYDI —
- * @twa-dev/sdk o'zi shu obyektni polyfill sifatida har doim yaratadi (oddiy brauzerda ham).
- * Haqiqiy signal — "platform" yoki "initData"ning to'lishi, ular esa native bridge orqali
- * (ayniqsa Telegram Desktop'da) kechikib keladi. Shuning uchun ikkalasini ham birgalikda,
- * darhol emas, qisqa vaqt kutib tekshiramiz — pastdagi waitForTelegramReady() orqali. */
+/** @twa-dev/sdk'ning WebApp.initData/platform getter'lari — sahifa birinchi yuklanganda
+ * location.hash'dan BIR MARTA o'qib keshlangan qiymatlar (Object.defineProperty get orqali
+ * qaytariladi, lekin qiymat o'zi bir martalik parse natijasi). Telegram Desktop'da hash
+ * (#tgWebAppData=...) sahifa skripti ishga tushgandan BIRO OZ KEYIN biriktiriladi — shuning
+ * uchun SDK'ning bir martalik parse'i uni butunlay o'tkazib yuboradi va keyin hech qachon
+ * yangilanmaydi (getter reaktiv emas). Shu sababli bu yerda location.hash'ni SDK keshiga
+ * tayanmasdan, har safar o'zimiz to'g'ridan-to'g'ri qayta o'qiymiz. */
+function parseHashParam(name: string): string {
+  const hash = location.hash.startsWith("#") ? location.hash.slice(1) : location.hash;
+  return new URLSearchParams(hash).get(name) ?? "";
+}
+
 export async function waitForTelegramReady(
   timeoutMs = 3000,
   intervalMs = 100,
 ): Promise<{ insideTelegram: boolean; initData: string }> {
   const start = Date.now();
   while (true) {
-    const initData = WebApp.initData;
+    const initData = WebApp.initData || parseHashParam("tgWebAppData");
     if (initData) return { insideTelegram: true, initData };
 
-    const platform = (WebApp as unknown as { platform?: string }).platform;
+    const platform = (WebApp as unknown as { platform?: string }).platform || parseHashParam("tgWebAppPlatform");
     const insideTelegram = Boolean(platform && platform !== "unknown");
 
     if (Date.now() - start >= timeoutMs) return { insideTelegram, initData: "" };
