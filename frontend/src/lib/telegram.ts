@@ -50,12 +50,14 @@ export async function waitForTelegramReady(
 }
 
 /** Vaqtinchalik diagnostika uchun — Telegram Desktop'da nima uzatilayotganini ekranda
- * ko'rish imkonini beradi (DevTools ochish qiyin bo'lgan muhitlarda). */
+ * ko'rish imkonini beradi (DevTools ochish qiyin bo'lgan muhitlarda).
+ * hash/href — platform/initData asosida URL hash fragmentidan (#tgWebAppData=...) olinadi,
+ * shuning uchun bu hash bo'shmi yoki yo'qmi aynan shu ikkalasi bo'sh bo'lish sababini ko'rsatadi. */
 export function getDebugInfo(): string {
   const w = WebApp as unknown as { platform?: string; version?: string };
   return `platform=${w.platform ?? "?"} version=${w.version ?? "?"} initDataLen=${WebApp.initData?.length ?? 0} hasTelegramObj=${Boolean(
     (window as unknown as { Telegram?: unknown }).Telegram,
-  )} ua=${navigator.userAgent.slice(0, 60)}`;
+  )} hashLen=${location.hash.length} hash=${location.hash.slice(0, 40)} href=${location.href.slice(0, 60)} ua=${navigator.userAgent.slice(0, 40)}`;
 }
 
 export default WebApp;
