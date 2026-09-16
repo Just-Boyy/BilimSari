@@ -59,7 +59,6 @@ def ensure_tables(cur, conn):
             sort_order INTEGER NOT NULL DEFAULT 0
         )
     ''')
-    add_column_if_missing(cur, conn, 'subjects', 'image', 'TEXT')
     cur.execute('''
         CREATE TABLE IF NOT EXISTS topics (
             id TEXT PRIMARY KEY,
@@ -97,6 +96,12 @@ def ensure_tables(cur, conn):
     cur.execute('CREATE INDEX IF NOT EXISTS idx_topics_subject ON topics (subject_id, seq)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_progress_user ON user_progress (user_id)')
     conn.commit()
+
+    # Eski (jadval allaqachon mavjud) bazalarda yetishmayotgan ustunlarni qo'shadi.
+    # CREATE TABLE'dan keyin, alohida commit'lardan keyin turishi shart — aks holda
+    # yangi (bo'sh) bazada "ustun allaqachon bor" xatosi rollback qilib, hali
+    # commit qilinmagan CREATE TABLE'ni ham bekor qilib yuboradi.
+    add_column_if_missing(cur, conn, 'subjects', 'image', 'TEXT')
 
     # users jadvaliga sinf ustuni
     add_column_if_missing(cur, conn, 'users', 'grade', 'INTEGER')
