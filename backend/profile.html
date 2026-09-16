@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Profil — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .profil-bosh { text-align: center; }
+  .profil-bosh .avatar {
+    width: 84px; height: 84px; font-size: 2rem; margin: 0 auto 12px;
+  }
+  .qator {
+    display: flex; align-items: center; gap: 12px;
+    padding: 15px 16px;
+    background: var(--oq);
+    border: 1px solid var(--chiziq);
+    border-radius: var(--r);
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    font-family: var(--tana);
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+  }
+  .qator .nishon { color: var(--yashil); }
+  .qator.xavfli .nishon { color: var(--qizil); }
+  .qator .o-q svg { width: 18px; height: 18px; }
+  .qator .matn { flex: 1; }
+  .qator .matn small { display: block; color: var(--matn-2); font-size: .82rem; }
+  .qator .o-q { color: var(--matn-3); }
+  .qator.xavfli { color: var(--qizil); }
+</style>
+</head>
+<body>
+
+<header class="shapka">
+  <div class="profil-bosh">
+    <div class="avatar" id="avatar" aria-hidden="true">?</div>
+    <h1 id="ism">Yuklanmoqda...</h1>
+    <span class="sinf" id="sinfYorliq" hidden></span>
+  </div>
+</header>
+
+<main class="sahifa">
+  <div class="ko-tarilgan">
+    <div class="stat-setka" id="statlar">
+      <div class="skelet" style="height:74px"></div>
+      <div class="skelet" style="height:74px"></div>
+      <div class="skelet" style="height:74px"></div>
+    </div>
+  </div>
+
+  <section class="bo-lim">
+    <h2 style="margin-bottom:12px">Sozlamalar</h2>
+
+    <a class="qator" href="progress.html">
+      <span class="nishon" data-ikon="chart"></span>
+      <span class="matn">Natijalarim<small>Tugallangan mavzular va ballar</small></span>
+      <span class="o-q" data-ikon="chevronRight"></span>
+    </a>
+
+    <a class="qator" href="learn.html">
+      <span class="nishon" data-ikon="sparkle"></span>
+      <span class="matn">AI mashqlari<small>Qo'shimcha, dastur tashqarisidagi darslar</small></span>
+      <span class="o-q" data-ikon="chevronRight"></span>
+    </a>
+
+    <button class="qator xavfli" id="chiqish">
+      <span class="nishon" data-ikon="logout"></span>
+      <span class="matn">Chiqish<small id="chiqishIzoh">Hisobdan chiqasiz, natijalar saqlanadi</small></span>
+    </button>
+
+    <p class="izoh-kichik" id="mehmonOgoh" hidden
+       style="color:var(--qizil);margin-top:6px;padding:0 4px">
+      Hisobingiz email va parolsiz. Chiqsangiz, natijalaringizga qayta kira olmaysiz.
+    </p>
+  </section>
+
+  <p class="izoh-kichik" style="text-align:center;margin-top:20px">
+    BilimSari — o'zbek maktab o'quvchilari uchun
+  </p>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('profile.html');
+
+  // data-ikon belgilarini SVG ga aylantiramiz
+  document.querySelectorAll('[data-ikon]').forEach(function (el) {
+    el.innerHTML = UI.nishon(el.dataset.ikon);
+  });
+
+  var d = await API.dashboard();
+  if (!d.ok) { UI.xabar(d.error, 'xato'); return; }
+
+  var u = d.user || API.user() || {};
+  var ism = u.name || 'O\'quvchi';
+
+  document.getElementById('ism').textContent = ism;
+  var av = document.getElementById('avatar');
+  if (u.photo_url) {
+    av.outerHTML = '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">';
+  } else {
+    av.textContent = UI.harfAvatar(ism);
+  }
+
+  var s = d.stats || {};
+  document.getElementById('statlar').innerHTML =
+    '<div class="stat"><b>' + (s.completed_topics || 0) + '</b><span>Mavzu</span></div>' +
+    '<div class="stat"><b>' + (s.percent || 0) + '%</b><span>Progress</span></div>' +
+    '<div class="stat"><b>' + (s.finished_subjects || 0) + '</b><span>Tugagan fan</span></div>';
+
+  // Mehmon hisobi (email ham, Telegram ham yo'q) — chiqish xavfli
+  var men = await API.men();
+  var mehmon = men.ok && !men.user.email && !men.user.telegram_id;
+  if (mehmon) {
+    document.getElementById('mehmonOgoh').hidden = false;
+    document.getElementById('chiqishIzoh').textContent = 'Natijalar tiklanmaydi';
+  }
+
+  document.getElementById('chiqish').onclick = async function () {
+    if (mehmon && !confirm(
+        'Hisobingiz email va parolsiz.\n' +
+        'Chiqsangiz, ' + (s.completed_topics || 0) + ' ta tugallangan mavzu va butun ' +
+        'progressingizga qayta kira olmaysiz.\n\nChiqasizmi?')) {
+      return;
+    }
+    this.disabled = true;
+    await API.chiqish();
+    location.href = 'index.html';
+  };
+})();
+</script>
+</body>
+</html>

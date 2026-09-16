@@ -1,109 +1,281 @@
-# Bilim Sari
+# BilimSari
 
-Telegram Mini App (WebApp) + bot ko'rinishidagi ta'lim platformasi. Sun'iy intellekt ishlatilmaydi —
-barcha kontent admin tomonidan kiritiladi, tizim faqat ko'rsatadi, tekshiradi va hisoblaydi.
+O'zbek maktab o'quvchilari uchun raqamli ta'lim platformasi.
 
-**Joriy holat: Bosqich 1** — to'liq DB sxemasi, Telegram auth, fanlar/bo'limlar/mavzular ko'rish,
-dars (lesson) o'qish va progress belgilash ishlaydi. Test/Quiz/Uy vazifasi, gamifikatsiya, admin
-panel UI — keyingi bosqichlar.
-
-## Tuzilma
+O'quvchi sinfini tanlaydi → o'z sinfidagi fanlarni ko'radi → mavzularni maktab
+dasturi tartibida o'rganadi. Har bir mavzu uchta bosqichdan iborat:
 
 ```
-backend/    FastAPI + SQLAlchemy(async) + Alembic + PostgreSQL/Redis
-bot/        aiogram 3.x Telegram bot (/start + Mini App tugmasi)
-frontend/   React + TypeScript + Tailwind + @twa-dev/sdk (Vite)
+Dars  →  Quiz  →  Uyga vazifa  →  Mavzu tugallandi  →  24 soat  →  Keyingi mavzu ochiladi
 ```
 
-## Talab qilinadigan vositalar
+Kuniga faqat **bitta** mavzu yakunlanadi — bilim shoshilmasdan o'zlashtirilsin.
 
-- Python 3.12+ (loyiha 3.14'da sinovdan o'tgan)
-- Node.js 20+
-- Docker Desktop (Postgres + Redis uchun)
+---
 
-## 1. Muhit sozlamalari
+## Texnologiyalar
 
-Root papkadagi `.env.example`ni nusxalab, qiymatlarni to'ldiring:
+| Qatlam | Nima ishlatilgan |
+|--------|------------------|
+| Backend | Python 3 + Flask |
+| Baza | PostgreSQL (ishlab chiqarish), SQLite (lokal — hech narsa o'rnatmasdan) |
+| Frontend | Toza HTML + CSS + vanilla JS (framework yo'q), PWA |
+| AI | Google Gemini — faqat **qo'shimcha** tushuntirish uchun |
+| Kirish | Telegram (avtomatik), ism bilan tezkor hisob, yoki email/parol |
 
-```bash
-cp .env.example .env
-```
+---
 
-Har bir servis o'z ishga tushirish papkasidan `.env` faylini o'qiydi, shuning uchun uni
-`backend/.env`, `bot/.env` va (kerak bo'lsa) `frontend/.env` ga ham nusxalang — har birining
-o'z `.env.example`i mavjud.
-
-`BOT_TOKEN` — BotFather'dan olingan haqiqiy token (Telegram initData tekshiruvi shu token bilan
-ishlaydi). `WEBAPP_URL` — Mini App joylashgan URL (lokal ishlab chiqishda ngrok/cloudflared kabi
-tunnel orqali `http://localhost:5173`ni oching, chunki Telegram faqat HTTPS URL qabul qiladi).
-
-## 2. Postgres + Redis
-
-```bash
-docker compose up -d postgres redis
-```
-
-## 3. Backend
+## Lokal ishga tushirish
 
 ```bash
 cd backend
-python -m venv .venv
-.venv/Scripts/activate        # Windows
-pip install -r requirements.txt
+python -m venv ../.venv
+../.venv/Scripts/python.exe -m pip install -r requirements.txt   # Windows
+# source ../.venv/bin/activate && pip install -r requirements.txt  # Linux/Mac
 
-alembic upgrade head           # migratsiyalarni qo'llash
-python -m scripts.seed         # namunaviy ma'lumotlar (10 fan, 20 mavzu, 3 tilda)
-
-uvicorn app.main:app --reload  # http://localhost:8000
+python -m flask --app app run --port 5000
 ```
 
-Testlarni ishga tushirish (Postgres+Redis ishlab turgan bo'lishi kerak — testlar dev bazasiga
-ulanadi, jadvallarni o'chirmaydi):
+`DATABASE_URL` bo'lmasa avtomatik **SQLite** ga tushadi (`backend/bilimsari.db`) —
+PostgreSQL o'rnatish shart emas.
+
+Brauzerda oching: http://127.0.0.1:5000
+
+---
+
+## Muhit o'zgaruvchilari
+
+| O'zgaruvchi | Kerakmi | Tavsif |
+|-------------|---------|--------|
+| `DATABASE_URL` | ishlab chiqarishda | PostgreSQL ulanishi. Bo'lmasa SQLite |
+| `SECRET_KEY` | ha | Token va parol xeshi uchun. **Albatta o'zgartiring** |
+| `BOT_TOKEN` | Telegram uchun | BotFather tokeni. **Kodda saqlanmaydi** |
+| `WEBAPP_URL` | Telegram uchun | Mini App manzili |
+| `GOOGLE_AI_API_KEY` | AI uchun | aistudio.google.com dan olinadi |
+| `GEMINI_MODEL` | yo'q | Standart: `gemini-2.5-flash` |
+| `QUIZ_PASS_PERCENT` | yo'q | Quizdan o'tish chegarasi, standart **70** |
+| `COOLDOWN_HOURS` | yo'q | Mavzular orasidagi kutish, standart **24** |
+| `AI_RATE_LIMIT` | yo'q | Bitta foydalanuvchiga daqiqasiga so'rov, standart 12 |
+
+---
+
+## Fayllar tuzilishi
+
+```
+backend/
+├── app.py                  Flask ilovasi, auth, Telegram webhook
+├── db.py                   Baza qatlami (PostgreSQL / SQLite)
+├── auth_core.py            Token, parol xeshi (PBKDF2)
+├── study.py                O'qish dvigateli: progress, 24 soat, baholash
+├── study_api.py            /api/study/* endpointlari
+├── ai_tutor.py             /api/ai/* — qo'shimcha AI yordamchi
+├── curriculum/             ★ RASMIY DARSLAR (qo'lda yozilgan)
+│   ├── __init__.py         Fanlar katalogi, sinflar registri
+│   ├── grade01.py          1-sinf fanlar ro'yxati
+│   ├── g01_math.py         1-sinf matematika mavzulari
+│   └── ...
+├── validate_curriculum.py  Darslarni tekshirish
+├── test_flow.py            Backend testlari
+├── tests/ui_test.js        Frontend testlari (jsdom)
+│
+├── css/app.css             Butun dizayn tizimi
+├── js/icons.js             SVG ikonkalar va shakllar (emoji ishlatilmaydi)
+├── js/api.js               API klienti
+├── js/ui.js                Umumiy UI komponentlari
+├── js/telegram.js          Telegram Mini App
+│
+├── index.html              Kirish ekrani
+├── onboarding.html         Sinf va fan tanlash
+├── dashboard.html          Bosh sahifa
+├── subjects.html           Fanlar
+├── topics.html             Mavzular yo'li
+├── topic.html              Dars / Quiz / Uyga vazifa
+├── progress.html           Natijalar
+├── profile.html            Profil
+│
+└── learn.html, lesson.html, courses.html, review.html
+    Eski AI-darslar oqimi — saqlanib qolgan, ishlaydi
+```
+
+---
+
+## Yangi dars qo'shish
+
+Darslar **kodda** saqlanadi (`curriculum/` papkasida), bazaga esa ishga tushganda
+avtomatik ko'chiriladi. Shuning uchun dars qo'shish uchun bazaga tegish shart emas.
+
+**1.** Fan fayli yarating, masalan `curriculum/g03_math.py`:
+
+```python
+MATH = {
+    'key': 'math',                  # SUBJECT_CATALOG dagi kalit
+    'topics': [
+        {
+            'slug': 'sonlar',       # URL da ishlatiladi, takrorlanmasin
+            'title': 'Sonlar',
+            'summary': 'Qisqa tavsif',
+            'duration': 15,
+            'lesson': [
+                {'type': 'text', 'title': 'Sarlavha', 'body': 'Matn...'},
+                {'type': 'example', 'title': 'Misol', 'body': '...'},
+                {'type': 'note', 'body': 'Esda tuting: ...'},
+            ],
+            'quiz': [
+                {'type': 'mc', 'q': 'Savol?', 'options': ['A', 'B'],
+                 'answer': 0, 'explain': 'Chunki...'},
+            ],
+            'homework': {
+                'intro': 'Vazifani bajaring.',
+                'tasks': [
+                    {'id': 'h1', 'type': 'number', 'prompt': '2 + 2 = ?', 'answer': '4'},
+                    {'id': 'h2', 'type': 'open', 'prompt': 'O\'z misolingizni yozing.'},
+                ],
+            },
+        },
+    ],
+}
+```
+
+**2.** Sinf faylini yarating — `curriculum/grade03.py`:
+
+```python
+from .g03_math import MATH
+SUBJECTS = [MATH]
+```
+
+**3.** `curriculum/__init__.py` dagi `_GRADE_MODULES` ga qo'shing:
+
+```python
+_GRADE_MODULES = {
+    1: 'curriculum.grade01',
+    3: 'curriculum.grade03',   # ← yangi
+    5: 'curriculum.grade05',
+    9: 'curriculum.grade09',
+}
+```
+
+**4.** Tekshiring va ishga tushiring:
 
 ```bash
-pytest -q
+python validate_curriculum.py   # xatolarni topadi
+python -m flask --app app run   # baza avtomatik yangilanadi
 ```
 
-## 4. Bot
+### Blok turlari (dars matni uchun)
+
+| Tur | Maydonlar | Ko'rinishi |
+|-----|-----------|------------|
+| `text` | title, body | Oddiy matn |
+| `count` | title, groups[] | Sanash mashqi: shakllar qatori |
+| `example` | title, body | Ko'k fonli misol |
+| `note` | body | Sariq chiziqli eslatma |
+| `life` | body | Yashil "Hayotdan" bloki |
+| `formula` | body | Katta, markazlashgan formula |
+| `steps` | title, items[] | Raqamlangan qadamlar |
+| `table` | head[], rows[][] | Jadval |
+
+`body` ichida `**qalin**` va qator ko'chirish (`\n`) ishlaydi.
+Har qanday blokka `'icon': 'leaf'` qo'shib, sarlavha yoniga ikonka chiqarish mumkin.
+
+### Emoji ishlatilmaydi
+
+Saytda emoji yo'q — hamma joyda `js/icons.js` dagi SVG ikonkalar. Sababi: emoji
+qurilmaga qarab har xil ko'rinadi, ba'zi telefonlarda umuman chizilmaydi.
+
+Sanash mashqlari uchun `count` bloki yoki savolga `visual` maydoni ishlatiladi:
+
+```python
+# Dars ichida — shakllar qatori
+{'type': 'count', 'title': "Sanab ko'ramiz", 'groups': [
+    {'shape': 'apple', 'n': 3, 'label': '3 ta olma'},
+    {'shape': 'star', 'n': 5, 'label': '5 ta yulduzcha'},
+]}
+
+# Quiz yoki uy vazifasi savolida — savol ostidagi rasm
+{'type': 'mc', 'q': 'Bu yerda nechta olma bor?',
+ 'visual': {'shape': 'apple', 'n': 4},
+ 'options': ['3', '4', '5', '6'], 'answer': 1, 'explain': '...'}
+```
+
+Mavjud shakllar: `apple`, `star`, `bird`, `circle`, `square`, `triangle`,
+`rectangle`, `drop`, `sun`, `snow`, `leaf`, `cloud`, `fish`, `bug`, `cow`,
+`soil`, `wind`, `flower`, `sprout`.
+
+Ikonka nomlari uchun `js/icons.js` dagi `ICONS` obyektiga qarang.
+
+### Savol turlari
+
+| Tur | Maydonlar |
+|-----|-----------|
+| `mc` | q, options[], answer (indeks 0 dan), explain |
+| `tf` | q, answer (True/False), explain |
+| `fill` | q, answer, accept[] (muqobil javoblar), explain |
+
+### Uy vazifasi turlari
+
+| Tur | Izoh |
+|-----|------|
+| `number` | Son javob, avtomatik tekshiriladi |
+| `text` | Matn javob, avtomatik tekshiriladi (`accept[]` bilan muqobillar) |
+| `open` | Erkin javob — tekshirilmaydi, faqat yozilgani qayd etiladi |
+
+---
+
+## Testlar
 
 ```bash
-cd bot
-pip install -r requirements.txt
-python -m bot.main
+cd backend
+
+# 1. Darslar butunligi
+python validate_curriculum.py
+
+# 2. Backend: to'liq o'quv oqimi (83 ta tekshiruv)
+python test_flow.py
+
+# 3. Frontend: haqiqiy sahifalar jsdom da (89 ta tekshiruv)
+python -m flask --app app run --port 5055 &
+cd tests && npm install jsdom && node ui_test.js
 ```
 
-`/start` buyrug'i Mini App'ni ochish tugmasini yuboradi. Foydalanuvchi bazaga bot orqali emas,
-Mini App ochilganda (`POST /api/auth/telegram`) yoziladi — bu yagona, ziddiyatsiz registratsiya
-yo'li.
+---
 
-## 5. Frontend
+## 24 soatlik qoida qanday ishlaydi
 
-```bash
-cd frontend
-npm install
-npm run dev   # http://localhost:5173
-```
+* Vaqt **serverda**, `user_progress.completed_at` ustuni asosida hisoblanadi
+  (UTC da saqlanadi, foydalanuvchiga **Toshkent vaqtida** ko'rsatiladi).
+* Brauzerni yangilash, chiqib qayta kirish, boshqa qurilma yoki kompyuter
+  soatini o'zgartirish hech narsani o'zgartirmaydi.
+* Kutish **global**: bir kunda jami bitta mavzu, hamma fanlar bo'yicha.
+* Ikki joydan tekshiriladi:
+  1. mavzuni **ochishda** — yangi mavzu qulflangan bo'ladi;
+  2. mavzuni **yakunlashda** — allaqachon boshlangan mavzuni ham yakunlab bo'lmaydi.
 
-Telegram WebView'da sinash uchun `npm run dev` serverini ngrok/cloudflared bilan HTTPS'ga
-tunnellang va shu URL'ni BotFather'dagi Menu Button / `WEBAPP_URL`ga qo'ying.
+## Kirish oqimi
 
-## 6. To'liq Docker (ixtiyoriy)
+1. **Telegram Mini App** — `initData` HMAC bilan tekshiriladi, hisob avtomatik
+   yaratiladi yoki topiladi. Foydalanuvchidan hech narsa so'ralmaydi.
+2. **Ism bilan** — «Boshlash» bosilganda ism so'raladi, `POST /api/guest`
+   haqiqiy hisob va token yaratadi. Email/parol kerak emas.
+   Bunday hisobga boshqa qurilmadan kirib bo'lmaydi.
+3. **Email/parol** — `login.html` orqali, avvalgi hisoblar uchun.
 
-Backend/frontend uchun Dockerfile'lar tayyor, lekin standart dev oqimiga ulanmagan (tezroq
-hot-reload uchun). To'liq konteynerlashtirilgan holatda ishga tushirish:
+Uchala holatda ham progress serverda, hisobga bog'langan holda saqlanadi.
 
-```bash
-docker compose --profile full up -d --build
-```
+## Xavfsizlik
 
-## Qo'lda tekshirish (smoke test)
+* Quiz va uy vazifasining **to'g'ri javoblari frontendga yuborilmaydi** —
+  baholash faqat serverda.
+* Progress faqat `study.py` orqali o'zgaradi; `localStorage` ni tahrirlash
+  hech qanday mavzuni ochmaydi.
+* Parollar PBKDF2-HMAC-SHA256 (120 000 iteratsiya) bilan, har foydalanuvchi
+  uchun alohida salt bilan xeshlanadi. Eski SHA-256 xeshlar kirish paytida
+  avtomatik yangi formatga ko'chiriladi.
+* `BOT_TOKEN` kodda saqlanmaydi — faqat muhit o'zgaruvchisidan olinadi.
+* AI endpointlari avtorizatsiya talab qiladi va tezlik chegarasi bilan himoyalangan.
 
-1. `curl http://localhost:8000/health` → `{"status":"ok"}`
-2. Telegram Mini App'ni ochib, Splash → Onboarding → Subjects → Sections → Topics → Dars
-   oqimini bosib chiqing; "Tushundim" tugmasidan so'ng mavzu ✅ bo'lishi, 2-mavzu esa hali
-   🔒 (Test bosqichi Bosqich-2'da qo'shiladi) bo'lib qolishi kerak.
+## AI yordamchining o'rni
 
-## Bosqich-1'da QILINMAGAN
-
-Test topshirish, Quiz, Uy vazifasi topshirish/tekshirish, gamifikatsiya yozish mantig'i, Admin
-panel UI, Reyting, Statistika, Bot bildirishnomalari (eslatma/natija/haftalik xulosa).
+AI **rasmiy darsni almashtirmaydi**. U mavzu sahifasida alohida, aniq belgilangan
+blokda turadi va faqat o'quvchi hozir o'qiyotgan **sinf + fan + mavzu** doirasida
+ishlaydi. Uchta rejimi bor: oddiyroq tushuntirish, qo'shimcha misollar, qisqa xulosa.
+AI javoblari bazaga dars sifatida saqlanmaydi.
