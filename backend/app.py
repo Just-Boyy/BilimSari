@@ -40,6 +40,15 @@ TEST_RESET_TELEGRAM_IDS = {5771496552}
 def init_db():
     conn = get_connection()
     cur = conn.cursor()
+
+    # Bir martalik: eski (FastAPI) sxemasi bilan to'qnashmasligi uchun,
+    # RESET_DB=1 bo'lsa jadvallar noldan qayta yaratiladi. Ishlatgandan
+    # so'ng RESET_DB muhit o'zgaruvchisini o'chirib qo'yish kerak.
+    if os.environ.get('RESET_DB') == '1':
+        cur.execute('DROP SCHEMA public CASCADE; CREATE SCHEMA public;')
+        conn.commit()
+        print('RESET_DB=1: schema tozalandi')
+
     cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
