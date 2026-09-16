@@ -27,13 +27,13 @@ export function getTelegramLanguageCode(): string | undefined {
   return WebApp.initDataUnsafe?.user?.language_code;
 }
 
-/** Telegram Desktop'da initData ba'zan darhol emas, biroz kechikib keladi (bridge orqali),
- * URL fragmentiga bog'liq mobil versiyalardan farqli. Shuning uchun "Telegram ichidamizmi"
- * degan tekshiruv initData'ga emas, platform maydoniga asoslanadi — u initData'dan oldinroq
- * to'ladi. */
+/** Telegram Desktop'da "platform" maydoni ham (initData kabi) kechikib to'ladi — shu sababli
+ * unga asoslanish noto'g'ri xato beradi. window.Telegram.WebApp esa rasmiy telegram-web-app.js
+ * skripti orqali sahifa yuklanishi bilanoq sinxron o'rnatiladi (index.html <head>'da), shuning
+ * uchun "Telegram ichidamizmi" tekshiruvi shu obyektning mavjudligiga asoslanadi. */
 export function isRunningInsideTelegram(): boolean {
-  const platform = (WebApp as unknown as { platform?: string }).platform;
-  return Boolean(platform && platform !== "unknown");
+  const telegram = (window as unknown as { Telegram?: { WebApp?: unknown } }).Telegram;
+  return Boolean(telegram?.WebApp);
 }
 
 /** initData Telegram Desktop'da kechikib kelishi mumkin (WebApp brauzer bridge orqali
