@@ -507,6 +507,17 @@ a.mavzu { cursor: pointer; }
 .kutish-karta h2 { font-size: 17px; margin-bottom: 4px; }
 .kutish-karta p { color: var(--matn-2); font-size: 13px; }
 
+.dars-karta {
+  background: var(--oq);
+  border: 2px solid var(--chiziq);
+  border-radius: var(--r-katta);
+  padding: 18px 16px;
+  box-shadow: var(--soya);
+}
+.dars-fan { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--yashil); margin-bottom: 4px; }
+.dars-mavzu { font-size: 18px; margin-bottom: 14px; }
+.dars-karta .tugma { width: 100%; }
+
 .qulf-karta {
   background: var(--oq);
   border: 2px solid var(--chiziq);
