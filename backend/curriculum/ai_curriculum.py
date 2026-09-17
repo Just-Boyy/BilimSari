@@ -7124,2411 +7124,2405 @@ SUBJECTS = [
         ]
     },
     {
-        'key': 'literature',
+        'key': 'geography',
         'topics': [
             {
-                'slug': 'badiiy-tasvir-vositalari-tashbeh-va-sifatlash',
-                'title': 'Badiiy tasvir vositalari: Tashbeh va Sifatlash',
-                'summary': "Ushbu darsda adabiyotda keng qo'llaniladigan tashbeh (o'xshatish) va sifatlash (epitet) badiiy tasvir vositalarining mohiyati, turlari va ularning asar ta'sirchanligini oshirishdagi o'rni o'rganiladi.",
-                'duration': 15,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Badiiy nutq oddiy nutqdan o'zining jozibadorligi, ta'sirchanligi va serjiloligi bilan ajralib turadi. Yozuvchi yoki shoir kitobxon qalbida muayyan his-tuyg'u va tasavvur oshtirish uchun turli badiiy tasvir vositalaridan foydalanadi. Shulardan eng keng tarqalganlari tashbeh va sifatlashdir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Tashbeh va Sifatlashga misollar',
-                        'body': "Tashbeh: 'Yuzing lola kabi qip-qizil bo'ldi' (bu yerda yuz lolaga o'xshatilmoqda).\nSifatlash: 'Zarrin quyosh', 'Kumush qish' (narsa-hodisaning o'ziga xos belgisini bo'rttirib ko'rsatuvchi an'anaviy yoki mualliflik sifatlashi)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Tashbehning 4 ta elementi',
-                        'items': [
-                            "O'xshatilmish (o'xshatilayotgan narsa/shaxs, masalan: Yuz)",
-                            "O'xshatuvchi (nimaga o mezon qilib olinayotgani, masalan: Lola)",
-                            "O'xshatish belgisi (ularni bog'lab turgan sifat, masalan: Qizillik)",
-                            "O'xshatish vositasi (kabi, dek, go'yo, yanglig' yuklamalari va ko'makchilar)"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Har qanday sifat ham sifatlash bo'lavermaydi. Faqat narsa va hodisaga badiiy bo'yoq, his-tuyg'u yuklaydigan aniqlovchilar sifatlash deyiladi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'xshatish (tashbeh) san'atida nechta asosiy element mavjud?",
-                        'options': [
-                            '2 ta',
-                            '3 ta',
-                            '4 ta',
-                            '5 ta'
-                        ],
-                        'answer': 2,
-                        'explain': "Tashbeh 4 ta elementdan iborat: o'xshatilmish, o'xshatuvchi, o'xshatish belgisi va o'xshatish vositasi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "'Oltin kuz' birikmasida 'oltin' so'zi sifatlash san'atiga misol bo'ladi.",
-                        'answer': True,
-                        'explain': 'Ha, kuz fasliga oltin sifatining berilishi kuzning sariq tusga kirganini badiiy ifodalovchi sifatlashdir.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Qaysi qatorda tashbeh vositasi qo'llanilgan?",
-                        'options': [
-                            'Qizil olma',
-                            "Ko'zlari yulduzdek yonadi",
-                            'Katta bino',
-                            'Eski shahar'
-                        ],
-                        'answer': 1,
-                        'explain': "'Yulduzdek' so'zidagi '-dek' qo'shimchasi o'xshatish vositasi bo'lib, tashbeh hosil qilgan."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Mavzuni mustahkamlash uchun quyidagi topshiriqlarni bajaring.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Alisher Navoiy g'azallaridan 2 ta tashbeh va 2 ta sifatlash qatnashgan bayt topib yozing.",
-                            'answer': "O'quvchi klassik matnlardan mos ravishda tashbeh va sifatlash misollarini ko'chirib yozadi.",
-                            'hint': "'kabi', 'yanglig'' so'zlari mavjudligiga va badiiy sifatlarga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "O'zingiz yaratgan qisqa matnda kamida 3 ta sifatlash va 2 ta tashbehdan foydalaning."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'badiiy-tasvir-vositalari-mubolaga-va-istiora',
-                'title': "Badiiy tasvir vositalari: Mubolag'a va Istiora",
-                'summary': "Tasvirda bo'rttirish (mubolag'a) hamda ko'chma ma'noning murakkab shakli bo'lgan istiora (metafora)ning badiiy xususiyatlari tahlil qilinadi.",
-                'duration': 15,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Badiiy adabiyotda tasvir ta'sirchanligini oshirish va kitobxonda kuchli taassurot qoldirish uchun hodisalarni oshirib ko'rsatish (mubolag'a) hamda ma'noni yashirin o'xshatish orqali ko'chirish (istiora) usullari qo mezon qilib olinadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Mubolag'a va Istioraga misollar",
-                        'body': "Mubolag'a: 'Ko'z yoshimdan daryolar hosil bo'ldi' (oshirib tasvirlash).\nIstiora: 'Quyosh kulib boqdi' (odamga xos 'kulish' harakati yashirin o'xshatish orqali quyoshga ko'chirilgan)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Istiorani aniqlash bosqichlari',
-                        'items': [
-                            "So'zning o'z ma'nosini aniqlash",
-                            "Ushbu so'z matnda qaysi tushuncha o'rnida qo'llanayotganini topish",
-                            "O'xshatish asosi yashiringanligini tasdiqlash"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Istiora — bu o'xshatuvchi yoki o'xshatilmish tushib qolgan 'yashirin tashbeh'dir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbek adabiyotida mubolag'aning eng yuqori darajasi qanday ataladi?",
-                        'options': [
-                            "Tablig'",
-                            "Iyg'al",
-                            "G'uluv",
-                            'Tashbeh'
-                        ],
-                        'answer': 2,
-                        'explain': "Mubolag'aning uch turi bor: tablig', ig'ro' va eng yuqori, mantiqan imkonsiz darajasi g'uluv hisoblanadi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Istiorada o'xshatish vositalari ('kabi', 'dek') ochiq ko'rsatiladi.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Istiorada o'xshatish yashirin bo'ladi, o'xshatish vositalari ishlatilmaydi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "'Osmon yig'ladi' birikmasida qaysi tasvir vositasi qo'llanilgan?",
-                        'options': [
-                            'Sifatlash',
-                            'Istiora',
-                            'Tazod',
-                            'Tashbeh'
-                        ],
-                        'answer': 1,
-                        'explain': "Yig'lash insonga xos belgi bo'lib, osmonga (yomg'ir yog'ishiga) ko'chirilgani uchun bu istioradir."
-                    }
-                ],
-                'homework': {
-                    'intro': "Mubolag'a va istiora san'atlarini yaxshiroq tushunish uchun amaliy topshiriqlar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Xalq dostonlarida ('Alpomish' yoki 'Gorog'li') mubolag'a ishlatilgan 2 ta o'rinni topib yozing.",
-                            'answer': "O'quvchi dostonlardan qahramonlarning kuchi yoki harakati oshirib ko'rsatilgan parchalardan misol keltirishi kerak.",
-                            'hint': "Qahramonlarning baqirishi yoki ot chopish sahnalariga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Istiora va oddiy ko'chma ma'noli so'zlar o'rtasidagi farqni 3-4 ta gap bilan tushuntirib bering."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'gazal-janri-xususiyatlari-va-tuzilishi',
-                'title': "G'azal janri xususiyatlari va tuzilishi",
-                'summary': "Sharq mumtoz adabiyotining eng yetakchi janri bo'lmish g'azalning qoidalari, misra, bayt, qafiya va radif strukturasi o'rganiladi.",
+                'slug': 'litosfera-plitalari-va-relyef',
+                'title': 'Yer sharining umumiy tuzilishi va litosfera plitalari',
+                'summary': "Mavzuda Yer po'stining ichki tuzilishi, litosfera plitalarining harakati va ularning relyef shakllanishiga ta'siri o'rganiladi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "G'azal — Sharq poetikasida eng keng tarqalgan lirik janr bo'lib, uning vujudga kelishi arab adabiyotiga borib taqaladi. G'azal, asosan, ishq-muhabbat, falsafiy-axloqiy va tasavvufiy g'oyalarni kuylaydi."
+                        'title': 'Kirish va Yer ichki tuzilishi',
+                        'body': "Yer uchta asosiy qatlamdan iborat: mag'iz (yadro), mantiya va Yer po'sti. Litosfera — Yer po'sti va yuqori mantiyaning qattiq qismini o'z ichiga oluvchi qobiqdir. Litosfera yaxlit emas, balki bir nechta yirik litosfera plitalaridan tashkil topgan."
                     },
                     {
                         'type': 'example',
-                        'title': "G'azal qofiyalanish tartibi",
-                        'body': "G'azal baytlardan tashkil topadi. Qofiyalanish tartibi: a-a, b-a, c-a, d-a...Birinchi bayt 'matla', oxirgi shoir taxallusi berilgan bayt 'makta' deyiladi."
+                        'title': 'Plitalar harakatiga misol',
+                        'body': "Hind-Avstraliya va Yevroosiyo plitalarining to'qnashishi natijasida dunyodagi eng baland tog' tizmasi — Himolay tog'lari hamda Yevroosiyodagi baland tizmalar hosil bo'lgan."
                     },
                     {
                         'type': 'steps',
-                        'title': "G'azal strukturasi",
+                        'title': "Litosfera plitalari o'zaro ta'sirlashuv turlari",
                         'items': [
-                            "Hajmi: odatda 5 baytdan 19 baytgacha bo'ladi (ko'pincha 7 yoki 9 bayt).",
-                            "Matla: g'azalning dastlabki, o'zaro qofiyalanuvchi bayti.",
-                            "Makta: g'azalning yakuniy, shoir taxallusi qatnashgan bayti.",
-                            "Radif: qofiyadan keyin aynan takrorlanib keluvchi so'z yoki so'z birikmasi."
+                            "Konvergent chegaralar: Plitalarning bir-biri bilan to'qnashishi (tog'lar, botiqlar va orollar yoyi hosil bo'ladi).",
+                            "Divergent chegaralar: Plitalarning bir-biridan uzoqlashishi (okean o'rtaliq tizmalari va rift zonalari hosil bo'ladi).",
+                            "Transform chegaralar: Plitalarning bir-biri bo'ylab yonlama surilishi (kuchli zilzilalar sodir bo'ladi)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: G'azaldagi eng go'zal va mazmunan mukammal bayt 'shohbayt' yoki 'baytul-g'azal' deb ataladi."
+                        'body': 'Esda tuting: Litosfera plitalarining chegaralari seysmik faol zonalar va vulqonlar tarqalgan hududlar hisoblanadi.'
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "G'azalning birinchi bayti nima deb ataladi?",
+                        'q': "Litosfera qaysi qatlamlarni o'z ichiga oladi?",
                         'options': [
-                            'Makta',
-                            'Matla',
-                            'Shohbayt',
-                            "Qit'a"
+                            "Faqat Yer po'sti",
+                            "Yer po'sti va yuqori mantiya",
+                            'Mantiya va yadro',
+                            'Faqat tashqi yadro'
                         ],
                         'answer': 1,
-                        'explain': "G'azalning birinchi bayti matla (chiqish, boshlanish joyi) deyiladi."
+                        'explain': "Litosfera Yer po me'yoriy qobiqlari orasida Yer po'sti va yuqori mantiyaning qattiq qismini qamrab oladi."
                     },
                     {
                         'type': 'tf',
-                        'q': "G'azalning oxirgi baytida shartli ravishda shoirning taxallusi keltiriladi.",
-                        'answer': True,
-                        'explain': "To'g'ri. Shoir taxallusi mavjud bo'lgan oxirgi bayt makta hisoblanadi."
+                        'q': "Plitalarning bir-biridan uzoqlashishi convergent chegaralarga misol bo'ladi.",
+                        'answer': False,
+                        'explain': "Plitalarning uzoqlashishi divergent chegaralar deyiladi, konvergent chegaralarda esa plitalar to'qnashadi."
                     },
                     {
                         'type': 'mc',
-                        'q': "G'azalning qofiyalanish tizimi qaysi javobda to'g'ri ko'rsatilgan?",
+                        'q': "Himolay tog'lari qaysi plitalar to'qnashuvidan hosil bo'lgan?",
                         'options': [
-                            'a-b-a-b',
-                            'a-a-b-b',
-                            'a-a-b-a-c-a',
-                            'a-b-c-d'
+                            'Tinch okeani va Shimoliy Amerika',
+                            'Afrika va Arabiston',
+                            'Hind-Avstraliya va Yevroosiyo',
+                            'Naska va Janubiy Amerika'
                         ],
                         'answer': 2,
-                        'explain': "G'azalda birinchi bayt o'zaro qofiyalanadi (a-a), keyingi baytlarning faqat ikkinchi misrasi matla bilan qofiyalanib keladi (b-a, c-a...)."
+                        'explain': "Hind-Avstraliya plitasining Yevroosiyo plitasi ostiga kirib borishi natijasida Himolay tog'lari ko'tarilgan."
                     }
                 ],
                 'homework': {
-                    'intro': "G'azal strukturasini amalda tahlil qilish uchun vazifalar.",
+                    'intro': "Litosfera plitalari xaritasini o'rganing va quyidagi topshiriqlarni bajaring.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Alisher Navoiyning biror g'azalidan matla va makta baytlarini ko'chiring hamda radif va qofiyasini ajratib ko'rsating.",
-                            'answer': "O'quvchi g'azalning 1-bayti va oxirgi baytini yozib, qofiya hamda radifni ajratadi.",
-                            'hint': "Har bir misra oxiridagi takrorlanuvchi so mezon so'zlarni radif sifatida belgilang."
+                            'prompt': "Tinch okeani 'Olovli halqasi' nima va u qanday hosil bo'lgan?",
+                            'answer': "Tinch okeani plitasining atrofidagi boshqa plitalar bilan tutashgan tektonik faol zonasi bo'lib, bu yerda ko'plab vulqonlar va seysmik hududlar joylashgan.",
+                            'hint': "Plitalar to'qnashuvi va vulqonlar tarqalishiga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "G'azal va zamonaviy she'riyat o'rtasidagi asosiy shakliy farqlarni tushuntiring."
+                            'prompt': "Rift zonalari va ularda hosil bo'ladigan geografik obyektlarga misol keltiring."
                         }
                     ]
                 }
             },
             {
-                'slug': 'alisher-navoiy-xamsa-asarining-tuzilishi',
-                'title': "Alisher Navoiy: 'Xamsa' haqida umumiy tushuncha",
-                'summary': "Nizomiy Ganjaviydan boshlangan xamsachilik an'anasi va Alisher Navoiyning turkiy tilda yaratgan shoh 'Xamsa' dostonlari tarkibi hamda ahamiyati.",
+                'slug': 'atmosfera-bosimi-va-shamollar',
+                'title': "Atmosfera bosimi va shamollarning hosil bo'lishi",
+                'summary': "Mavzu atmosfera bosimining taqsimlanishi, harorat ta'siri hamda shamol turlari va sabablarini tushuntiradi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Xamsa — bir muallif tomonidan yozilgan beshta doston majmuasidir. Sharq adabiyotida xamsachilik buyuk ijodiy imtihon va sharaf sanalgan. Alisher Navoiy 1483–1485 yillarda turkiy tilda birinchi bo'lib butun bir 'Xamsa'ni yaratdi."
+                        'title': "Atmosfera bosimi va uning o'zgarishi",
+                        'body': "Havo og'irlikka ega va u Yer yuzasiga bosim o'tkazadi. Normal atmosfera bosimi 760 mm simob ustuniga teng. Harorat ortganda havo kengayadi va yengillashib yuqoriga ko'tariladi, natijada past bosim sohasi (siklon) hosil bo'ladi. Havo soviganda zichlashib, yuqori bosim sohasi (antisiklon) shakllanadi."
                     },
                     {
                         'type': 'example',
-                        'title': "Navoiy 'Xamsa'si tarkibidagi dostonlar",
-                        'body': "1. Hayrat ul-abror (falsafiy-ta'limiy)\n2. Farhod va Shirin (ishqiy-qahramonlik)\n3. Layli va Majnun (ishqiy-afsonaviy)\n4. Sab'ai sayyor (sarguzasht-didaktik)\n5. Saddi Iskandariy (tarixiy-falsafiy)"
+                        'title': 'Shamol kelib chiqish sababi',
+                        'body': "Havo har doim yuqori bosimli hududdan past bosimli hududga qarab harakat qiladi. Bu gorizontal havo harakati shamol deyiladi. Bosimlar farqi qancha katta bo'lsa, shamol shuncha kuchli esadi."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Xamsachilik maktabi rivoji',
+                        'title': 'Doimiy shamollar turlari',
                         'items': [
-                            'Nizomiy Ganjaviy (farsiy xamsachilik asoschisi)',
-                            'Xusrav Dehlaviy (ikkinchi xamsa yaratuvchisi)',
-                            'Alisher Navoiy (turkiy tildagi birinchi xamsovis)'
+                            'Passatlar: Tropik yuqori bosim poyaslaridan ekvatorning past bosim poyasiga esadigan shamollar.',
+                            "G'arbiy shamollar: Tropiklardan mo'tadil kengliklarga qarab esuvchi shamollar.",
+                            "Qutb shamollari: Qutb yuqori bosim zonalardan mo'tadil hududlarga esuvchi shamollar."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Navoiy 'Xamsa'si orqali turkiy tilning qudrati va boyligini butun dunyoga isbotlab bergan."
+                        'body': "Esda tuting: Koriolis kuchi natijasida shamollar Shimoliy yarimsharda o'ngga, Janubiy yarimsharda chapga og'adi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Alisher Navoiy 'Xamsa'sini nechanchi yillarda yaratgan?",
+                        'q': "Shamolning hosil bo'lishining asosiy sababi nima?",
                         'options': [
-                            '1441-1451',
-                            '1483-1485',
-                            '1490-1492',
-                            '1500-1501'
+                            "Yerning o'z o'qi atrofida aylanishi",
+                            "Atmosfera bosimining hududlar bo'yicha turlicha bo'lishi",
+                            "Okean suvlarining to'lqinlanishi",
+                            'Bulutlarning qalinligi'
                         ],
                         'answer': 1,
-                        'explain': "Navoiy o'zining 'Xamsa'sini qisqa fursatda — 1483–1485 yillar oralig'ida yozib tugatgan."
+                        'explain': "Bosimlar farqi havo massalarining gorizontal harakatlanishiga, ya'ni shamolga sabab bo'ladi."
                     },
                     {
                         'type': 'tf',
-                        'q': "'Hayrat ul-abror' dostonida asosan Farhod va Shirin sevgisi kuylanadi.",
+                        'q': 'Havo qiziganda uning bosimi ortadi va u pastga tushadi.',
                         'answer': False,
-                        'explain': "Noto'g'ri. 'Hayrat ul-abror' pand-nasihat, falsafiy-axloqiy masalalarga bag'ishlangan."
+                        'explain': "Havo qiziganda kengayadi, yengillashadi va yuqoriga ko'tariladi, natijada bosim kamayadi."
                     },
                     {
                         'type': 'mc',
-                        'q': "Sharq adabiyotida birinchi 'Xamsa'ni kim yaratgan?",
+                        'q': 'Tropik yuqori bosimdan ekvatorga qarab doimiy esuvchi shamollar qanday nomlanadi?',
                         'options': [
-                            'Alisher Navoiy',
-                            'Xusrav Dehlaviy',
-                            'Nizomiy Ganjaviy',
-                            'Jomiy'
+                            'Mussonlar',
+                            'Brizlar',
+                            'Passatlar',
+                            "G'arbiy shamollar"
                         ],
                         'answer': 2,
-                        'explain': "Xamsachilik an'anasiga fors-tojik shoiri Nizomiy Ganjaviy asos solgan."
+                        'explain': 'Tropiklardan ekvatorga esadigan doimiy shamollar passatlar deb ataladi.'
                     }
                 ],
                 'homework': {
-                    'intro': "Navoiy 'Xamsa'si va dostonlar tarkibiga doir topshiriqlar.",
+                    'intro': 'Briz va musson shamollarining mavsumiy va sutkalik farqlarini tahlil qiling.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Navoiy 'Xamsa'sidagi har bir dostonning mavzusi va g'oyasini 1 jumla bilan yozib chiqing.",
-                            'answer': "O'quvchi 5 ta dostonning qisqacha mazmun yo'nalishini tartib bo'yicha yozadi.",
-                            'hint': 'Masalan: Saddi Iskandariy — adolatli shoh va jahongirlik haqida.'
+                            'prompt': "Kunduzgi va tungi briz shamollarining yo'nalishi va sababini tushuntiring.",
+                            'answer': "Kunduzi quruqlik tezroq qizib past bosim, dengiz esa sekinroq qizib yuqori bosim bo'ladi, shamol dengizdan quruqlikka esadi. Tunda aksincha, quruqlikdan dengizga esadi.",
+                            'hint': "Suv va quruqlikning issiqlik sig'imiga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Alisher Navoiyning 'Farhod va Shirin' dostonidagi Farhod obraziga xos 3 ta ijobiy fazilatni tahlil qiling."
+                            'prompt': "Koriolis kuchi shamollar yo'nalishiga qanday ta'sir ko'rsatishini tavsiflang."
                         }
                     ]
                 }
             },
             {
-                'slug': 'ruboiy-va-qita-janrlari',
-                'title': "Ruboiy va qit'a janrlari",
-                'summary': "Kichik lirik janrlardan bo'lgan ruboiy va qit'aning o'ziga xos tuzilishi, qofiyalanishi hamda ulardagi hikmatli g'oyalar tahlili.",
-                'duration': 15,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Sharq klassik she'riyatida kichik hajmli, lekin teran ma'noli janrlar muhim o'rin tutadi. Ruboiy va qit'a shunday janrlar sirasiga kiradi. Ular loqda, pishiq va aniq falsafiy fikrni ifodalaydi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Ruboiy va Qit'aning qofiyalanishi",
-                        'body': "Ruboiy: 4 misradan iborat, qofiyalanishi a-a-b-a (ba'zan a-a-a-a). Maxsus hazaj bahrida yoziladi.\nQit'a: Kamida 2 bayt (4 misra) bo'ladi, qofiyalanishi b-a, d-a, f-a tartibida kechadi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Ruboiy va Qit'a o'rtasidagi tafovutlar",
-                        'items': [
-                            "Ruboiida asosiy fikr 4-misrada xulosa qilinadi; qit'ada esa har bir bayt mantiqan davom etadi.",
-                            "Ruboiy faqat aruzning hazaj bahrida bitiladi, qit'a boshqa bahr xillarida ham yozilishi mumkin.",
-                            "Qit'ada ko'pincha ijtimoiy-axloqiy va ta'limiy fikrlar beriladi."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: Umar Xayyom jahon adabiyotida ruboiy janrining buyuk ustasi sifatida tanilgan.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Ruboiy necha misradan iborat bo'ladi?",
-                        'options': [
-                            '2 misra',
-                            '4 misra',
-                            '6 misra',
-                            '8 misra'
-                        ],
-                        'answer': 1,
-                        'explain': "Ruboiy so'zi arabcha 'arbaa' (to'rt) so'zidan olingan bo'lib, 4 misradan iborat she'riy shakldir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Qit'a janrida birinchi misra albatta ikkinchi misra bilan qofiyalanadi.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Qit'ada birinchi bayt misralari o'zaro qofiyalanmaydi, qofiya juft misralarda (2, 4, 6...) keladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Ruboiy aruz vaznining qaysi bahrida yoziladi?',
-                        'options': [
-                            'Raml',
-                            'Mutaqorib',
-                            'Hazaj',
-                            'Rajax'
-                        ],
-                        'answer': 2,
-                        'explain': 'Ruboiy faqat aruz vaznining hazaj bahrining maxsus vaznlarida (axrab va axram) bitiladi.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Ruboiy va qit'a janrlarini farqlash va yod olish topshirig'i.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Alisher Navoiy va Bobur ruboiylaridan 2 tadan yoddan ko'chirib yozing hamda qofiyalarini belgilang.",
-                            'answer': "O'quvchi ikkala shoir ruboiylarini a-a-b-a sxemasi bo'yicha belgilab ko'rsatadi.",
-                            'hint': "3-misra erkin (b) qolishiga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Qit'aning falsafiy-didaktik ahamiyatini biror muallif qit'asi misolida tushuntiring."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'doston-janri-va-uning-xususiyatlari',
-                'title': "Doston janri va uning o'ziga xosligi",
-                'summary': "Xalq og'zaki ijodi hamda yozma adabiyotdagi doston janrining syujet, obraz va poetik xususiyatlari haqida ta'lim beriladi.",
+                'slug': 'okean-oqimlari-va-iqlim',
+                'title': "Okean oqimlari va ularning iqlimga ta'siri",
+                'summary': "Mavzu dunyo okeanidagi issiq va sovuq oqimlar hamda ularning sohildagi iqlim sharoitlariga ta'sirini ko'rib chiqadi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Doston — adabiyotdagi eng yirik epik-she'riy janrlardan biridir. Unda voqealar rivoji, qahramonlarning sarguzashtlari va ijtimoiy-siyosiy hamda shaxsiy toqnashuvlar keng va atroflicha tasvirlanadi."
+                        'title': 'Okean oqimlari turlari',
+                        'body': "Dunyo okeanidagi suv massalarining muayyan yo'nalishda katta masofalarga ko'chishi okean oqimlari deyiladi. Oqimlar atrofdagi suv haroratiga nisbatan issiq yoki sovuq bo'lishi mumkin. Ularning asosiy harakatlantiruvchi kuchi doimiy shamollardir (passat va g'arbiy shamollar)."
                     },
                     {
                         'type': 'example',
-                        'title': 'Xalq dostonlari va Yozma dostonlar',
-                        'body': "Xalq dostonlari: 'Alpomish', 'Gorog'li' (baxshilar tomonidan kuylangan, nasr va nazm aralash bo'ladi).\nYozma dostonlar: 'Farhod va Shirin', 'Sohibqiron' (shoir tomonidan to'liq she'riy vaznda yoziladi)."
+                        'title': "Issiq va sovuq oqimlar ta'siri",
+                        'body': "Golfstrim issiq oqimi Shimoliy-G'arbiy Yevropa iqlimini yumshatadi va ushbu kenglikda joylashgan portlarning muzlamasligini ta'minlaydi. Bengela sovuq oqimi esa Afrika janubi-g'arbiy sohilida yog'in miqdorini kamaytirib, Namid cho'lining hosil bo'lishiga olib kelgan."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Doston janrining turlari',
+                        'title': 'Okean oqimlarining geografik oqibatlari',
                         'items': [
-                            "Qahramonlik dostonlari ('Alpomish')",
-                            "Ishqiy-romantik dostonlar ('Tohir va Zuhra')",
-                            "Tarixiy dostonlar ('Shayboniynoma')",
-                            "Falsafiy-ta'limiy dostonlar ('Saddi Iskandariy')"
+                            "Issiq oqimlar: Havo namligini va haroratini oshiradi, ko'p yog'in yog'ishiga sabab bo'ladi.",
+                            "Sovuq oqimlar: Havoni sovutadi, bug'lanishni kamaytiradi va qirg'oq bo'yi cho'llarini hosil qiladi.",
+                            "Biologik resurslar: Issiq va sovuq oqimlar tutashgan joylarda plankton ko'p bo'lib, baliqchilik rivojlanadi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Folklor dostonlarida baxshilar dombra jo'rligida ijro etishsa, yozma dostonlar yakka muallifning muayyan g'oyaviy niyatini aks ettiradi."
+                        'body': "Esda tuting: Okean oqimlarining nomi xaritalarda mos ravishda qizil (issiq) va ko'k (sovuq) ko'rsatkichlar bilan beriladi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "O'zbek xalq qahramonlik eposining eng yuksak namunasi qaysi doston hisoblanadi?",
+                        'q': "Golfstrim oqimining Yevropa iqlimiga ta'siri qanday?",
                         'options': [
-                            "Gorog'li",
-                            'Alpomish',
-                            'Tohir va Zuhra',
-                            'Rizvon pari'
+                            'Qahraton va quruq havo olib keladi',
+                            "Iqlimni yumshatib, ko'proq yog'in keltiradi",
+                            "Cho'llashish jarayonini tezlashtiradi",
+                            "Muzliklar paydo bo'lishiga sabab bo'ladi"
                         ],
                         'answer': 1,
-                        'explain': "'Alpomish' dostoni o'zbek xalq qahramonlik eposining cho'qqisi sanaladi."
+                        'explain': "Golfstrim issiq oqimi Yevropaning g'arbiy sohili iqlimini ilitadi va namlikni oshiradi."
                     },
                     {
                         'type': 'tf',
-                        'q': "Xalq dostonlari faqat she'riy yozilgan bo'lib, unda nasriy parchalar bo'lmaydi.",
+                        'q': "Sovuq okean oqimlari sohil bo'yida ko me'yoriy va sero't o'rmonlar rivojlanishiga yordam beradi.",
                         'answer': False,
-                        'explain': "Noto'g'ri. Xalq dostonlari nasr va nazm aralashmasidan iborat bo'ladi."
+                        'explain': "Sovuq oqimlar bug'lanishni kamaytiradi, havo turg'unlashadi va sohil bo'yi cho'llari paydo bo'ladi."
                     },
                     {
                         'type': 'mc',
-                        'q': 'Quyidagilardan qaysi biri yozma doston hisoblanadi?',
+                        'q': "Janubiy Amerikadagi Atakama cho'li paydo bo'lishiga qaysi sovuq oqim ta'sir qilgan?",
                         'options': [
-                            'Alpomish',
-                            "Kuntug'mish",
-                            "Kuntug'mish va Xolbeka",
-                            'Lison ut-tayr'
+                            'Kanar oqimi',
+                            'Gumboldt (Peru) oqimi',
+                            'Kuroshio oqimi',
+                            'Gudzon oqimi'
+                        ],
+                        'answer': 1,
+                        'explain': "Peru (Gumboldt) sovuq oqimi Janubiy Amerikaning Tinch okeani sohilida Atakama cho'lining shakllanishiga sabab bo'lgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Dunyo okeani xaritasidagi asosiy oqimlarni o'rganing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Tinch va Atlantika okeanlaridagi 2 tadan issiq va sovuq oqimlarga misol yozing.',
+                            'answer': 'Atlantika: Golfstrim (issiq), Bengela (sovuq). Tinch: Kuroshio (issiq), Peru (sovuq).',
+                            'hint': "Kontinentlar qirg'og'i bo'ylab oqadigan oqimlarni eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "El-Ninyo hodisasi nima va u okean oqimlarining o'zgarishi bilan qanday bog'liq?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'dunyo-aholisi-irqiy-milliy-tarkibi',
+                'title': 'Dunyo aholisining irqiy va milliy tarkibi',
+                'summary': "Mavzuda insoniyatning irqiy bo'linishi, irqlarning kelib chiqishi, tillar va millat xususiyatlari o'rganiladi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Insoniyat irqlari',
+                        'body': "Irq — bu kelib chiqishi, tashqi jismoniy belgilar (tana tuzilishi, teri va soch rangi, ko'z shakli) bir xil bo'lgan odamlar guruhi. Insoniyat biologik jihatdan bitta turga kiradi. Atrof-muhit ta'sirida 3 ta (yoki 4 ta) katta irq shakllangan: yevropoid, mongoloid, negroid (va avstraloid)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Irqlarning aralashuvi',
+                        'body': "Amerika qit'asida irqlarning aralashuvi natijasida yangi guruhlar hosil bo'lgan: metislar (yevropoid va hindu), mulatlar (yevropoid va negroid), sambo (negroid va hindu)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Dunyo tillari klassifikatsiyasi',
+                        'items': [
+                            "Hind-Yevropa til oilasi: Dunyodagi eng yirik til oilasi (dunyo aholisining 45% dan ortig'i).",
+                            'Sin-Tibet til oilasi: Xitoy va Janubiy-Sharqiy Osiyoda keng tarqalgan.',
+                            "Oltoy til oilasi: Turkiy tillar guruhi (shu jumladan o'zbek tili) ham ushbu oilaga kiradi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Irq va millat tushunchalari farqlanadi. Irq biologik tushuncha bo'lsa, millat madaniy, til va tarixiy umumiylikdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Yevropoid va negroid irqlari aralashuvidan qaysi aholi guruhi shakllangan?',
+                        'options': [
+                            'Metislar',
+                            'Mulatlar',
+                            'Sambo',
+                            'Kreollar'
+                        ],
+                        'answer': 1,
+                        'explain': 'Mulatlar yevropoid va negroid irqi vakillarining nikohidan kelib chiqqan.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbek tili Hind-Yevropa til oilasiga kiradi.",
+                        'answer': False,
+                        'explain': "O'zbek tili Oltoy til oilasining turkiy tillar guruhiga mansub."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Dunyodagi eng ko'p kishi so'zlashadigan til oilasi qaysi?",
+                        'options': [
+                            'Sin-Tibet',
+                            'Afro-Osiyo',
+                            'Hind-Yevropa',
+                            'Niger-Kordofan'
+                        ],
+                        'answer': 2,
+                        'explain': 'Hind-Yevropa til oilasiga dunyo aholisining taxminan 45% ga yaqini kiradi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Dunyo xaritasida yirik til oilalari va irqlarning tarqalishini ko'rib chiqing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Metis, mulat va sambo tushunchalarining har biriga qisqa ta'rif bering.",
+                            'answer': "Metis - yevropoid va hindulardan; Mulat - yevropoid va negroidlardan; Sambo - negroid va hindulardan bo'lgan avlodlar.",
+                            'hint': "Amerika qit'asining o'zlashtirilishi tarixini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun irqchilik g'oyalari ilmiy jihatdan mantiqsiz va asossiz hisoblanadi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'avstraliya-materigi-tabiati-va-iqlimi',
+                'title': 'Avstraliya materigining tabiati va iqlimi',
+                'summary': "Avstraliya eng quruq va eng kichik materik bo'lib, uning geografik o'rni, relyefi va o'ziga xos organik olami o'rganiladi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Geografik o'rni va relyefi",
+                        'body': "Avstraliya barcha materiklar orasida eng kichigi va eng past-tekisidir. Materikning aksariyat qismini Avstraliya platformasi egallaydi. Sharqiy qismida qadimiy va uncha baland bo'lmagan Katta Suvayirg'ich tizmasi joylashgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Iqlimi va gidrologiyasi',
+                        'body': "Avstraliya eng quruq materikdir. Uning yarmidan ko'pini cho'l va yarimcho'llar egallaydi (Katta Viktoriya, Katta Qumli cho'l). Ichki suvlar tarmog'i juda sust rivojlangan, vaqtincha qurib qoladigan daryolar 'krik'lar deyiladi. Eng yirik daryo sistemasi — Murrey va Darling."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "O'ziga xos endemik olami",
+                        'items': [
+                            "Flora: Evkalipt o'simligi, baobab va butasimon scrublar keng tarqalgan.",
+                            "Fauna: Xaltali hayvonlar (kenguru, koala), tuxum qo'yuvchi sutemizuvchilar (o'rdakburun, yexidna).",
+                            "Riflar: Materik shimoliy-sharqida dunyodagi eng yirik Katta To'siq rifi joylashgan."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Avstraliyadagi vaqtincha quriydigan daryolar kriklardir, u yerda doimiy oqar suv kam.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Avstraliyadagi vaqtincha qurib qoladigan o'zanlar va daryolar nima deyiladi?",
+                        'options': [
+                            'Vadiy',
+                            'Krik',
+                            'Siklon',
+                            'Kanyon'
+                        ],
+                        'answer': 1,
+                        'explain': "Avstraliyada qurib qoladigan daryolar va o'zanlar 'krik' deb ataladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Avstraliya dunyodagi eng baland va sersuv materik hisoblanadi.',
+                        'answer': False,
+                        'explain': 'Avstraliya eng tekis, past va eng quruq materikdir.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Avstraliya sharqidagi eng yirik daryo tizimi qaysi?',
+                        'options': [
+                            'Murrey va Darling',
+                            'Amazonka va Parana',
+                            'Zambezi va Kongo',
+                            'Kura va Araks'
+                        ],
+                        'answer': 0,
+                        'explain': "Murrey va uning irmog'i Darling Avstraliyaning eng yirik daryo sistemasi hisoblanadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Avstraliya xaritasini va tabiat zonalarini tahlil qiling.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Katta To'siq rifi haqida va uning qayerda joylashganini yozing.",
+                            'answer': "Katta To me'yoriy To'siq rifi Avstraliyaning shimoli-sharqiy sohilida Korall dengizida joylashgan marjon qurilmasidir.",
+                            'hint': 'Marjon poliplari hosil qilgan tuzilma.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Nima uchun Avstraliya faunasida xaltali hayvonlar ustunlik qiladi?'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'janubiy-amerika-daryolari-gidrologiyasi',
+                'title': 'Janubiy Amerika: daryo sistemalari va gidrologiyasi',
+                'summary': 'Janubiy Amerikaning dunyodagi eng sersuv materik ekanligi hamda Amazonka, Orinoko va Parana daryolari tahlil qilinadi.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Materikning sersuvlik sabablari',
+                        'body': "Janubiy Amerika dunyodagi eng sernam va sersuv materikdir. Bunga uning joylashuvi (ekvatorial va subekvatorial poyaslar), passat shamollarining Atlantika okeanidan ko'p namlik keltirishi va And tog'larining namlikni Tinch okeaniga o'tkazmay to'sib turishi sabab bo'ladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amazonka daryosi',
+                        'body': "Amazonka — dunyodagi eng sersuv va havzasi eng katta daryo. Uning suv yig'ish havzasi 7 million km² dan ortiq. Amazonka yil bo'yi bir maromda sersuv bo'ladi, chunki uning o'ng va chap irmoqlari turli yarimsharlarda joylashgan bo'lib, ketma-ket toshadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Materikning yirik gidrologik obyektlari',
+                        'items': [
+                            'Anxel sharsharasi: Dunyodagi eng baland sharshara (979 m), Orinoko havzasida joylashgan.',
+                            "Iguasu sharsharasi: Parana daryosi irmoqlarida joylashgan eng go'zal sharsharalar majmuasi.",
+                            "Titikaka ko'li: Dunyodagi eng balandda joylashgan kemalar suza oladigan baland tog' ko'li."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Janubiy Amerikadagi daryolarning aksariyati Atlantika okeani havzasiga quyiladi.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Dunyodagi eng sersuv va havza maydoni eng katta daryo qaysi?',
+                        'options': [
+                            'Nil',
+                            'Misisipi',
+                            'Amazonka',
+                            'Yanszi'
+                        ],
+                        'answer': 2,
+                        'explain': "Amazonka suvliligi va havzasining maydoni bo'yicha dunyoda birinchi o'rinni egallaydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Janubiy Amerikaning aksariyat daryolari Tinch okeaniga quyiladi.',
+                        'answer': False,
+                        'explain': "And tog'lari g'arbda to'siq bo'lgani uchun daryolarning asosiy qismi sharqqa, Atlantika okeaniga quyiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Dunyodagi eng baland sharshara qaysi daryo havzasida joylashgan?',
+                        'options': [
+                            'Parana',
+                            'Orinoko',
+                            'Amazonka',
+                            'San-Fransisko'
+                        ],
+                        'answer': 1,
+                        'explain': 'Anxel sharsharasi Churun daryosida (Orinoko havzasi) joylashgan.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Janubiy Amerika gidrogrfiyasini o'rganing va savollarga javob bering.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Titikaka ko'lining o'ziga xosligi va joylashgan balandligini yozing.",
+                            'answer': "Titikaka ko'li And tog'larida 3812 m balandlikda joylashgan bo'lib, dunyodagi eng baland joylashgan kema qatnaydigan ko'ldir.",
+                            'hint': "And tog'lari va balandlikka e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun Amazonka daryosi yil davomida bir maromda sersuv bo'lib oqadi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'afrika-tabiiy-zonalari-mintaqalari',
+                'title': 'Afrika materigining tabiiy zonalari va balandlik mintaqalari',
+                'summary': 'Afrika materigining ekvatordan qutblarga qarab tabiat zonalarining takrorlanishi va simmetrikligi tushuntiriladi.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Simmetrik iqlim va zonalik',
+                        'body': "Afrika o'rtasidan ekvator chizig'i o'tganligi sababli, uning iqlim poyaslari va tabiiy zonalari ekvatordan shimolga va janubga qarab deyarli simmetrik ravishda takrorlanadi: ekvatorial o'rmonlar, savannalar, cho'llar va subtropiklar."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Afrika savannalari',
+                        'body': 'Savannalar Afrika hududining 40% ga yaqinini egallaydi. Bu yerda aniq nam va quruq mavsumlar almashinadi. Dunyodagi eng yirik tuyoqli hayvonlar (jirafa, zebra, antilopa) va yirtqichlar (sher, gepard) ushbu zonada yashaydi.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Afripaning asosiy prirod zonalari',
+                        'items': [
+                            "Ekvatorial nam o'rmonlar (Giley): Kongo havzasi va Gvineya qo'ltig'ida joylashgan, ko'p qatlamli, doim yashil.",
+                            "Savanna va siyrak o'rmonlar: Ekvatorial o me'yoriy zonasidan atroflarga qarab cho'zilgan, baobab va soyabon simon akatsiyalar hosil qilgan.",
+                            "Tropik cho'llar: Shimolda Sahroi Kabir, janubda Kalahari va Namib cho'llari."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Sahroi Kabir — dunyodagi eng katta issiq cho'ldir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Afrika materigida tabiat zonalarining simmetrik takrorlanishiga nima sabab bo'lgan?",
+                        'options': [
+                            "Grinvich meridianining o'tishi",
+                            "Ekvator chizig'ining materik markazidan o'tishi",
+                            'Atrofida ikkita okean borligi',
+                            "Baland tog'larning yo'qligi"
+                        ],
+                        'answer': 1,
+                        'explain': "Ekvator Afrikani o'rtasidan bo'lgani uchun undan shimolga va janubga poyaslar takrorlanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Afrikaning giley o'rmonlarida aniq nam va quruq fasllar bo'ladi.",
+                        'answer': False,
+                        'explain': "Ekvatorial o'rmonlarda (giley) yil bo'yi yuqori harorat va har kuni yog'in yog'adi, fasllar bo'linmaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Afrikada eng keng maydonni egallagan tabiat zonasi qaysi?',
+                        'options': [
+                            "Nam ekvatorial o'rmonlar",
+                            "Savanna va siyrak o me'yoriy o'rmonlar",
+                            "Qattiq bargli o'rmonlar",
+                            'Tundra'
+                        ],
+                        'answer': 1,
+                        'explain': 'Savannalar Afrika hududining qariyb 40 foizini tashkil qiladi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Afrika tabiiy zonalari va iqlim poyaslari xaritasini o'rganing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Sahroi Kabir va Namib cho me'yordagi cho'llarining hosil bo'lish farqini izohlang.",
+                            'answer': "Sahroi Kabir kontinental tropik havo va yuqori bosim natijasida, Namib esa sovuq Bengela okean oqimi ta'sirida shakllangan.",
+                            'hint': "Okean oqimlarining ta'siriga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kilimanjaro tog'idagi balandlik mintaqalari qanday almashinishini tavsiflang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'yevroosiyo-relyefi-va-tektonikasi',
+                'title': 'Yevroosiyo materigining relyefi va tektonik tuzilishi',
+                'summary': "Mavzuda Yevroosiyo materigining eng murakkab va xilma-xil relyefi, eng baland va eng past nuqtalari hamda ularning shakllanishi o'rganiladi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Relyefning xilma-xilligi',
+                        'body': "Yevroosiyo — Yerdagi eng yirik materik. Uning relyefi boshqa materiklardan murakkabligi bilan ajralib turadi. Bu yerda dunyodagi eng baland tog' — Everest (Evolest/Comolungma, 8848 m) va Yerdagi eng chuqur quruqlik botiqligi — O'lik dengiz botiqligi (-430 m) joylashgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Tog' hosil bo'lish poyaslari",
+                        'body': "Materikda ikkita ulkan burmalanish poyasi o'tgan: Alp-Himolay poyasi (g'arbdan sharqqa) va Tinch okean ruhiy olovli poyasi (materikning sharqiy chekkasi bo'ylab)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Yevroosiyoning yirik tekisliklari',
+                        'items': [
+                            'Sharqiy Yevropa tekisligi: Qadimiy platforma ustida joylashgan yirik tepalikli tekislik.',
+                            "G'arbiy Sibir tekisligi: Dunyodagi eng tekis va Botqoqlashgan pasttekisliklardan biri.",
+                            "Turon pasttekisligi: Markaziy Osiyoda joylashgan cho'lli pasttekislik."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Yevroosiyo bitta emas, balki bir nechta qadimiy platformalarning tutashishidan shakllangan.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Yevroosiyodagi va dunyodagi eng baland cho'qqi qaysi?",
+                        'options': [
+                            'Monblan',
+                            'Elbrus',
+                            'Jomolungma (Everest)',
+                            'K2'
+                        ],
+                        'answer': 2,
+                        'explain': 'Jomolungma (Everest) 8848 metr balandlik bilan dunyoning eng yuqori nuqtasidir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "G'arbiy Sibir tekisligi Alp-Himolay burmalanish poyasiga kiradi.",
+                        'answer': False,
+                        'explain': "G'arbiy Sibir tekisligi yosh platforma plitasi ustida joylashgan tekislikdir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Dunyodagi eng chuqur quruqlik botiqligi qaysi?',
+                        'options': [
+                            "Karag'iye botiqligi",
+                            "O'lik dengiz botiqligi",
+                            'Turfan botiqligi',
+                            'Assal botiqligi'
+                        ],
+                        'answer': 1,
+                        'explain': "O'lik dengiz botiqligi okean sathidan taxminan -430 metr pastda joylashgan."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Yevroosiyo fiziki xaritasidan foydalanib topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alp-Himolay burmali poyasiga kiruvchi 4 ta tog' tizmasini yozing.",
+                            'answer': "Alp, Karpat, Kavkaz, Pomir, Tyanshan, Himolay tog'lari.",
+                            'hint': "Yevropa janubidan Osiyo janubiga cho'zilgan tog'lar."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun Yevroosiyoning sharqiy chekkasida seysmik va vulqon faolligi o'ta yuqori?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekistonning-geografik-orni-va-chegaralari',
+                'title': "O'zbekistonning geografik o'rni va chegaralari",
+                'summary': "O'zbekiston Respublikasining Markaziy Osiyodagi geosiyosiy va geografik o'rni, chegaralari hamda maydoni ko'rib chiqiladi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Geografik o'rni",
+                        'body': "O'zbekiston Markaziy Osiyoning markazida, Amudaryo va Sirdaryo oraliqlarida joylashgan. Respublika maydoni 448,9 ming km² ni tashkil etadi. Mamlakatimiz mutlaq quruqlikda joylashgan bo'lib, Jahon okeaniga chiqish uchun kamida ikkita davlat hududidan o'tishi kerak (double landlocked)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Qo'shni davlatlar",
+                        'body': "O'zbekiston 5 ta davlat bilan chegaradosh: shimol va shimoli-g'arbda Qozog'iston, sharq va shimoli-sharqda Qirg'iziston, janubi-sharqda Tojikiston, janubda Afg'oniston, janubi-g'arbda Turkmaniston."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Chegara xususiyatlari',
+                        'items': [
+                            "Eng uzoq chegara: Qozog'iston Respublikasi bilan (2200 km dan ortiq).",
+                            "Eng qisqa chegara: Afg'oniston Islom Respublikasi bilan (137 km, Amudaryo bo'ylab).",
+                            "Tabiiy chegaralar: Amudaryo, Sirdaryo hamda Tyanshan va Hisor-Oloy tog' tizmalari."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: O'zbekiston dunyoda okeanga chiqish uchun ikkita davlat orqali o'tiladigan ikki mamlakatdan biridir (ikkinchisi Lixtenshteyn)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekiston Respublikasining umumiy maydoni qancha?",
+                        'options': [
+                            '1.1 mln km²',
+                            '448.9 ming km²',
+                            '200 ming km²',
+                            '500 ming km²'
+                        ],
+                        'answer': 1,
+                        'explain': "O'zbekistonning hududi 448,9 ming kvadrat kilometrni tashkil qiladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbekiston to'g'ridan-to'g'ri Kaspiy dengiziga chiqish imkoniyatiga ega.",
+                        'answer': False,
+                        'explain': "O'zbekiston Okean va Kaspiy dengiziga bevosita chiqish yo'liga ega emas."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekiston eng qisqa chegara liniyasiga qaysi davlat bilan ega?",
+                        'options': [
+                            'Tojikiston',
+                            "Qirg'iziston",
+                            "Afg'oniston",
+                            'Turkmaniston'
+                        ],
+                        'answer': 2,
+                        'explain': "Afg'oniston bilan chegaramiz uzunligi eng qisqa bo'lib, taxminan 137 km ni tashkil etadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "O'zbekiston kontur xaritasidan foydalanib quyidagi vazifalarni bering.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O'zbekiston bilan chegaradosh barcha 5 davlatni va uning eng chekka nuqtalarini yozing.",
+                            'answer': "Qozog'iston, Qirg'iziston, Tojikiston, Afg'oniston, Turkmaniston.",
+                            'hint': "Shimol, janub, sharq va g'arbdagi qo'shnilarni tartiblang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Double landlocked' (ikki karra quruqlik ichidagi) geografik o'rnining O'zbekiston iqtisodiyotiga va savdosiga ta'sirini baholang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekiston-geologik-tuzilishi-foydali-qazilmalari',
+                'title': "O'zbekiston geologik tuzilishi va foydali qazilmalari",
+                'summary': "O'zbekiston hududining geologik rivojlanish tarixi, burmalanish bosqichlari va boy ma'dan hamda yoqilg'i resurslari o'rganiladi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Geologik tuzilishi va tektonikasi',
+                        'body': "O'zbekiston hududi asosan ikkita tektonik tuzilmaga bo'linadi: tekislik (Turon plitasi) va tog'li hududlar (Tyanshan va Hisor-Oloy burmali sistemalari). Tog'li hududlarda gersin va alp burmalanishi jinslari uchraydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Foydali qazilma konlari',
+                        'body': "O'zbekiston oltin, tabiiy gaz, uran, mis va ko'mir resurslariga juda boy. Muruntov oltin koni dunyodagi eng yirik ochiq oltin konlaridan biridir. Qashqadaryo va Buxoro viloyatlarida yirik gaz konlari (Gazli, Shohpaxta) joylashgan."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kon turlarining tarqalishi',
+                        'items': [
+                            "Yoqilg'i resurslari: Buxoro-Xiva hamda Surxondaryo, Farg'ona botiqlarida (gaz, neft).",
+                            "Ruda resurslari: Navoiy, Toshkent va Oltintepa tog'li hududlarida (oltin, mis, polimetall).",
+                            "Noma'dan resurslar: Qizilqumda fosforitlar va osh tuzi konlari."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Oltin zaxiralari bo'yicha O'zbekiston dunyoda yetakchi o'rinlardan birini egallaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistondagi dunyoga mashhur eng yirik ochiq oltin koni qaysi?",
+                        'options': [
+                            'Olmaliq',
+                            'Muruntov',
+                            'Gazli',
+                            "Sharg'un"
+                        ],
+                        'answer': 1,
+                        'explain': 'Qizilqum hududida joylashgan Muruntov koni dunyodagi eng yirik ochiq oltin konlaridan biridir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Turon plitasi O'zbekistonning tog'li sharqiy qismini egallaydi.",
+                        'answer': False,
+                        'explain': "Turon plitasi O'zbekistonning g'arbiy va markaziy tekislik qismlarini tashkil etadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistondagi toshko'mirning asosiy konlari qaysi hududda joylashgan?",
+                        'options': [
+                            "Angren va Sharg'un",
+                            'Gazli va Muborak',
+                            'Uchquduq va Zarafshon',
+                            "Mo'ynoq va Chimboy"
+                        ],
+                        'answer': 0,
+                        'explain': "Angren (Toshkent viloyati) va Sharg'un (Surxondaryo) asosiy ko'mir havzalaridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "O'zbekiston foydali qazilmalar xaritasidan foydalanib jadvalni to'ldiring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Olmaliq kon-metallurgiya kombinatida qanday rudalar qayta ishlanishini ko'rsating.",
+                            'answer': 'Mis va molibden rudalari, shuningdek oltin va kumush birga ajratib olinadi.',
+                            'hint': 'Toshkent viloyatidagi yirik metallurgiya markazini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Qizilqumdagi Konimex va Markaziy Qizilqum fosforit konlarining qishloq xo'jaligidagi ahamiyatini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekiston-iqlimini-shakllantiruvchi-omillar',
+                'title': "O'zbekiston iqlimini shakllantiruvchi omillar",
+                'summary': "O'zbekistonning keskin kontinental iqlimi, quyosh radiatsiyasi, havo massalari va relyef ta'siri batafsil ko'rib chiqiladi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Iqlimning umumiy xususiyatlari',
+                        'body': "O me'yoriy va subtropik poyaslar tutashuvida joylashgan O'zbekiston iqlimi keskin kontinentaldir. Buning asosiy xususiyatlari: issiq va quruq yoz, nisbatan sovuq va o'zgaruvchan qish, kunlik va yillik harorat amplidutasining kattaligi ile yog me'yorining kamligidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Havo massalari harakati',
+                        'body': "Respublikaga shimol va shimoli-g'arbdan qishda Arktika va mo'tadil sovuq havo massalari kirib keladi, bu haroratning keskin tushib ketishiga sabab bo'ladi. Yozda esa mahalliy kontinental tropik havo massalari (issiq va quruq) shakllanadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Iqlim shakllantiruvchi 3 omil',
+                        'items': [
+                            "Quyosh radiatsiyasi: Yillik quyoshli soatlar miqdori o'rtacha 2500-3000 soatni tashkil qiladi.",
+                            "Atmosfera sirkulyatsiyasi: G'arbiy havo massalari va Arktika havosi kelishi.",
+                            "Yer yuzasi tuzilishi (relyef): Sharqdagi tog'lar nam havoni to'sib, yog'in miqdorini oshiradi, g'arb esa tekislik va quruq."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Tog'larda yog'in miqdori (1000 mm gacha) tekisliklarga (100-200 mm) nisbatan bir necha barobar ko'p bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekiston iqlimining asosiy xarakterli xususiyati qaysi?",
+                        'options': [
+                            'Dengiz iqlimi',
+                            'Ekvatorial iqlim',
+                            'Keskin kontinental iqlim',
+                            'Mussonli iqlim'
+                        ],
+                        'answer': 2,
+                        'explain': "O'zbekiston okeanlardan uzoqda joylashgani uchun uning iqlimi keskin kontinentaldir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbekistonda yoz oylarida mo'tadil nam havo massalari ustunlik qiladi.",
+                        'answer': False,
+                        'explain': "Yozda jazlama, quruq va issiq kontinental tropik havo massalari (turan havosi) ustun bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistonning eng ko'p yog'in tushadigan hududlari qayerda joylashgan?",
+                        'options': [
+                            'Qizilqum va Ustyurtda',
+                            'Buxoro va Xiva vohalarida',
+                            "Sharqiy va janubiy tog'li hududlarda",
+                            'Orolboyi hududida'
+                        ],
+                        'answer': 2,
+                        'explain': "G'arbdan kelayotgan nam havo massalari tog'larga urilib, tog' va tog' oldi hududlarida ko'p yog'in qoldiradi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Iqlim ko'rsatkichlari bo'yicha amaliy topshiriqni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Toshkent va Nukus shaharlarining qishki haroratlari o'rtasidagi farq va sababini tushuntiring.",
+                            'answer': "Nukus shimolda va tekislikda joylashgan bo'lib, Arktika sovuq havosiga ochiq; Toshkent esa janubroqda va tog'lar sovuqdan qisman himoya qiladi.",
+                            'hint': "Geografik kenglik va relyef to'sig'ini hisobga oling."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Garmsel va Mirzacho'l shamollarining qishloq xo'jaligiga ta'sirini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekiston-ichki-suvlari-daryo-rejimi',
+                'title': "O'zbekistonning ichki suvlari: daryolar va ko'llar rejimi",
+                'summary': 'Mavzuda Amudaryo va Sirdaryo havzalari, daryolarning oziqlanish manbalari hamda suv muammolari tahlil qilinadi.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Daryolar tarmog'i va oziqlanishi",
+                        'body': "O'zbekiston daryolari berkitikli Aral (Orol) dengizi havzasiga kiradi. Daryolarning asosiy manbai — baland tog'lardagi muzliklar va qorlardir. Shu sababli daryolarning toshishi ( eng ko'p suv sarfi) havo isigan bahor va yoz oylariga to'g'ri keladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amudaryo va Sirdaryo',
+                        'body': "Amudaryo — Markaziy Osiyodagi eng sersuv daryo (uzunligi 2540 km), Panj va Vaxsh daryolari qo'shilishidan hosil bo'ladi. Sirdaryo — eng uzun daryo (2014 km gacha, Norin va Qoradaryo qo'shilishidan)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Daryolarning oziqlanish tiplari',
+                        'items': [
+                            'Muzlik va qor oziqlanishli: Yoz ortida (iyul-avgust) toshadi (masalan, Amudaryo, Zarafshon).',
+                            "Qor va yomg'ir oziqlanishli: Bahorda (aprel-may) toshadi (Chirchiq, Ohangaron).",
+                            'Ermagak (bulaq) va soylar: Mavsumiy va yer osti suvlari hisobiga oqadi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: O'zbekistondagi aksariyat daryolar sug'orish va gidroenergetikada keng foydalaniladi va uning suvlari tekislikka yetib so'nadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Amudaryo qaysi daryolarning qo'shilishidan hosil bo'ladi?",
+                        'options': [
+                            'Norin va Qoradaryo',
+                            'Panj va Vaxsh',
+                            'Zarafshon va Qashqadaryo',
+                            'Chirchiq va Ohangaron'
+                        ],
+                        'answer': 1,
+                        'explain': "Panj va Vaxsh daryolarining qo'shilishidan Amudaryo hosil bo'ladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Muzlik va qor bilan oziqlanadigan daryolarning eng sersuv davri qish oylariga to'g'ri keladi.",
+                        'answer': False,
+                        'explain': "Muzliklar yozda eriganligi sababli, bunday daryolar yozda eng sersuv bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistondagi sun'iy suv omborlaridan eng yirigi qaysi?",
+                        'options': [
+                            'Toshkent suv ombori',
+                            'Chorvoq suv ombori',
+                            "Kattaqo'rg'on suv ombori",
+                            'Tuyuqboshi'
+                        ],
+                        'answer': 1,
+                        'explain': "Chorvoq suv ombori sig'imi va gidroenergetik ahamiyati bo'yicha eng yiriklaridan biridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "O'zbekiston daryolari va ko'llari xaritasini o'rganing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Aydarkol-Arnasoy ko'llar tizimining hosil bo'lish tarixini yozing.",
+                            'answer': "1969-yilgi kuchli toshqin paytida Sirdaryodagi Chordara suv omboridan ortiqcha suv Arnasoy botiqligiga tashlanishi natijasida hosil bo'lgan.",
+                            'hint': "Sirdaryo va Chordara suv omboriga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Orol dengizining qurishi sabablari va oqibatlarini gidrologik nuqtai nazardan izohlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekiston-tuproq-osimlik-qatlami-balandlik-poyaslari',
+                'title': "O'zbekistonning tuproq-o'simlik qatlami va balandlik poyaslari",
+                'summary': "Tekislikdan tog'larga ko'tarilgan sari tuproq va o'simlik qatlamining o'zgarishi va vertical poyaslik qonuniyati o'rganiladi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Tekisliklar tuproq va o'simliklari",
+                        'body': "O'zbekiston tekisliklarida (hududning 70% ga yaqini) cho'l tuproqlari: sur-qo'ng'ir, qumli va sho'rxok tuproqlar tarqalgan. O'simliklardan saksovul, qandim, shuvoq va cherkez moslashgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Balandlik poyaslari (vertikal zonalik)',
+                        'body': "Tog' tizimlarida balandlik oshgan sari harorat pasayadi va namlik ortadi. Natijada tuproq va o'simliklar almashinadi: cho'l va adirlar (bo'z tuproqlar, rang, lola) -> tog'lar (jigarrang va qo me'yoriy tuproqlar, archazorlar) -> yaylovlar (subalp va alp o me'yoriy o me'yoriy qismida shuvoq va o me'yoriy o me'yoriy)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "O'zbekistonning 4 ta landshaft mintaqasi",
+                        'items': [
+                            "Cho'l mintaqasi: 0-500 m gacha bo'lgan tekisliklar.",
+                            "Adir mintaqasi: 500-1200 m gacha bo'lgan tog' oldi tepaliklari.",
+                            "Tog' mintaqasi: 1200-2800 m gacha bo'lgan balandliklar (o me me'yoriy o'rmonlar va archazorlar).",
+                            "Yaylov (Yayloq) mintaqasi: 2800 m dan yuqori Alpine va Subalpine o'loqlari."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Bo'z tuproqlar adir mintaqasining asosiy va eng unumdor tuproq turi hisoblanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Adir mintaqasi uchun qaysi tuproq turi xos?',
+                        'options': [
+                            "Sho'rxok tuproqlar",
+                            'Torfli tuproqlar',
+                            "Bo'z tuproqlar",
+                            'Qora tuproqlar'
+                        ],
+                        'answer': 2,
+                        'explain': "Bo'z tuproqlar O'zbekiston adir mintaqasida va sug'oriladigan yerlarda keng tarqalgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Saksovul va qandim tog' mintaqasining asosiy daraxtlaridir.",
+                        'answer': False,
+                        'explain': "Saksovul va qandim cho'l mintaqasining o'simliklaridir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekiston tog'larida 1500-2500 m balandlikda qaysi nodir daraxtzorlar uchraydi?",
+                        'options': [
+                            'Saksovulzorlar',
+                            'Archazorlar',
+                            'Palmazorlar',
+                            'Bambukzorlar'
+                        ],
+                        'answer': 1,
+                        'explain': "Tog' mintaqasida archazorlar suvni saqlash va eroziyadan himoya qilishda katta rol o'ynaydi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Balandlik mintaqalari sxemasini chizing va topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Cho'l, adir, tog' va yayloq mintaqalarining balandlik chegaralarini tartib bilan yozing.",
+                            'answer': "Cho'l (0-500 m), Adir (500-1200 m), Tog' (1200-2800 m), Yayloq (2800 m dan baland).",
+                            'hint': "Mintaqalarning o'rtacha balandliklarini keltiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tuproq eroziyasi va sho'rlanish muammosini kamaytirish usullarini taklif qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekiston-demografiyasi-aholi-joylashuvi',
+                'title': "O'zbekiston demografiyasi va aholi joylashuvi",
+                'summary': "O'zbekiston aholisining soni, o'sish sur'atlari, urbanizatsiya va zichlikning geografik xususiyatlari o'rganiladi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Aholi soni va o'sishi",
+                        'body': "O'zbekiston Markaziy Osiyoda aholi soni bo'yicha 1-o'rinda turadi (36 milliondan ortiq). Mamlakatda aholining tabiiy ko'payishi yuqori bo'lib, tug'ilish ko me'yori o me'yorda va o'lim darajasi nisbatan past."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Aholi zichligi',
+                        'body': "Aholi respublika bo'yicha juda tengsiz joylashgan. Eng yuqori zichlik Farg'ona vodiysida (1 km² ga 500-700 kishidan ortiq) bo'lsa, Navoiy viloyati va Qoraqalpog'iston cho'llarida 1 km² ga 10-15 kishidan to'g'ri keladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Urbanizatsiya jarayoni',
+                        'items': [
+                            'Shahar aholisi: Umuman olganda 50% dan ortiqni tashkil etadi.',
+                            'Yirik shaharlar: Toshkent (2.9 mln dan ortiq), Samarqand, Namangan, Andijon.',
+                            "Agglomeratsiyalar: Toshkent va Farg'ona-Marg'ilon shahar agglomeratsiyalari jadal rivojlanmoqda."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Aholining joylashishiga suv resurslari, sug'oriladigan yerlar va iqlim sharoitlari asosiy ta'sir ko'rsatgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistonda aholi zichligi eng yuqori bo'lgan iqtisodiy-geografik hudud qaysi?",
+                        'options': [
+                            'Ustyurt platosi',
+                            "Farg'ona vodiysi",
+                            'Qizilqum zonasi',
+                            "Murg'ob vohasi"
+                        ],
+                        'answer': 1,
+                        'explain': "Farg'ona vodiysi o'zining unumdor yerlari va qadimiy vohalari bilan eng yuqori zichlikka ega."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbekiston aholi soni bo'yicha Markaziy Osiyoda ikkinchi o'rinda turadi.",
+                        'answer': False,
+                        'explain': "O'zbekiston aholisi 36 mln dan ortiq bo'lib, Markaziy Osiyoda 1-o'rinni egallaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistonning birinchi millionli va eng yirik shahri qaysi?",
+                        'options': [
+                            'Samarqand',
+                            'Namangan',
+                            'Toshkent',
+                            'Buxoro'
+                        ],
+                        'answer': 2,
+                        'explain': 'Toshkent shahri respublikamiz poytaxti va eng yirik megapolidir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "O'zbekiston aholisi demografiyasiga oid tahliliy vazifalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Nima uchun cho'l viloyatlarida (Navoiy, Qoraqalpog'iston) aholi zichligi pastligini tushuntiring.",
+                            'answer': 'Suv resurslarining yetishmasligi, keskin quruq iqlim va dehqonchilik uchun yerlarning kamligi sababli.',
+                            'hint': 'Tabiiy sharoit va suv omilini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbekistondagi mehnat migratsiyasining iqtisodiy va demografik oqibatlarini muhokama qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbekiston-sanoatining-hududiy-tarkibi',
+                'title': "O'zbekiston sanoatining hududiy tarkibi",
+                'summary': "O'zbekiston sanoat tarmoqlari, energetika, mashinasozlik, kimyo va yengil sanoat korxonalarining joylashishi tahlil qilinadi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Sanoat tarmoqlari tuzilishi',
+                        'body': "O'zbekiston industrial-agrar mamlakatdir. Sanoatning asosiy tarmoqlari: yoqilg'i-energetika, kon-metallurgiya, mashinasozlik, kimyo, to'qimachilik va oziq-ovqat sanoatidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Avtomobilsozlik va Metallurgiya',
+                        'body': "Asaka (Andijon) shahri avtomobilsozlik markazi hisoblanadi. Bekobod shahri metallurgiya (O'zbekiston metallurgiya kombinati), Olmaliq hamda Zarafshon rangli metallurgiya markazlaridir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Asosiy sanoat tugunlari',
+                        'items': [
+                            'Toshkent sanoat tuguni: Mashinasozlik, samolyotsozlik va yengil sanoat.',
+                            "Farg'ona-Marg'ilon sanoat tuguni: Neftni qayta ishlash va to'qimachilik.",
+                            'Navoiy-Zarafshon sanoat tuguni: Kon-metallurgiya va kimyo sanoati.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Chirchiq shahri O'zbekistondagi yirik kimyo va mashinasozlik markazlaridan biridir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekistonda yengil avtomobillar ishlab chiqaruvchi asosiy zavod qaysi shahrida joylashgan?",
+                        'options': [
+                            'Samarqand',
+                            'Asaka',
+                            'Qarshi',
+                            'Chirchiq'
+                        ],
+                        'answer': 1,
+                        'explain': 'Andijon viloyatining Asaka shahrida yengil avtomobillar ishlab chiqaruvchi zavod joylashgan.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Bekobod shahri O'zbekistondagi rangli metallurgiyaning bosh markazidir.",
+                        'answer': False,
+                        'explain': 'Bekobod qora metallurgiya markazidir, Olmaliq va Zarafshon esa rangli metallurgiyaga ixtisoslashgan.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi shahrida gaz-kimyo majmuasi (GTL) va sho'rtan gaz-kimyo majmuasi joylashgan?",
+                        'options': [
+                            "Qashqadaryo viloyatida (G'uzor/Qarshi)",
+                            'Xorazmda (Urganch)',
+                            'Jizzaxda',
+                            'Gulistonda'
+                        ],
+                        'answer': 0,
+                        'explain': "Sho'rtan gaz-kimyo majmuasi va Uzbekistan GTL Qashqadaryo viloyatida joylashgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "O'zbekiston iqtisodiy xaritasidan foydalanib topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Navoiy va Farg'ona shaharlarida joylashgan mineral o'g'itlar ishlab chiqaradigan kimyo zavodlarini yozing.",
+                            'answer': "'Navoiyazot' AJ va 'Farg'onaazot' AJ.",
+                            'hint': "Azotli o'g'itlar ishlab chiqaruvchi aksiyadorlik jamiyatlari."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbekistonda qayta tiklanadigan energiya (quyosh va shamol) manbalarini rivojlantirish istiqbollarini baholang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'dunyo-siyosiy-xaritasi-davlatlar-klassifikatsiyasi',
+                'title': 'Dunyo siyosiy xaritasi va davlatlar klassifikatsiyasi',
+                'summary': "Dunyoning siyosiy xaritasi shakllanish bosqichlari, davlatlarning boshqaruv shakllari va hududiy tuzilishi o'rganiladi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Siyosiy xaritaning ko'rinishi",
+                        'body': "Dunyo siyosiy xaritasida 200 dan ortiq davlat va hududlar mavjud. Davlatlar maydonining kattaligi, aholisi soni, geografik o'rni, iqtisodiy rivojlanish darajasi va davlat boshqaruvi shakliga ko'ra guruhlanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Boshqaruv shakllari',
+                        'body': "Boshqaruv shakliga ko'ra davlatlar respublika va monarxiyaga bo me'yorlanadi. Monarxiyaning o'zi konstitutsiyaviy (Buyuk Britaniya, Yaponiya) va absolyut (Saudiya Arabistoni, Ummon) shakllarga ega."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Ma'muriy-hududiy tuzilishi",
+                        'items': [
+                            "Unitar davlatlar: Hududida yagona qonunchilik va ijro etuvchi hokimiyat amal qiladi (O'zbekiston, Fransiya, Yaponiya).",
+                            "Federativ davlatlar: Tarkibida muayyan siyosiy mustaqillikka ega bo'lgan subyektlar bo'ladi (AQSh, Rossiya, Germaniya, Hindiston).",
+                            'Konfederatsiya: Vaqtincha ittifoq (masalan, Shveysariya tarixan).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: BMT ma'lumotlariga ko'ra dunyoda 193 ta rasman tan olingan mustaqil a'zo davlat mavjud."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Quyidagi davlatlardan qaysi biri monarxiya boshqaruv shakliga ega?',
+                        'options': [
+                            'Fransiya',
+                            'Yaponiya',
+                            'AQSh',
+                            'Germaniya'
+                        ],
+                        'answer': 1,
+                        'explain': 'Yaponiya konstitutsiyaviy monarxiya (imperiya) hisoblanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbekiston Respublikasi ma'muriy-hududiy tuzilishiga ko'ra federativ davlatdir.",
+                        'answer': False,
+                        'explain': "O'zbekiston unitar davlat hisoblanadi (tarkibidagi Qoraqalpog'iston Suveren Respublika maqomiga ega bo'lsa-da)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Dunyo maydoni bo'yicha eng katta davlat qaysi?",
+                        'options': [
+                            'Kanada',
+                            'Xitoy',
+                            'AQSh',
+                            'Rossiya'
                         ],
                         'answer': 3,
-                        'explain': "'Lison ut-tayr' Alisher Navoiy yozgan mualliflik dostonidir."
+                        'explain': "Rossiya 17.1 mln km² maydon bilan dunyoda birinchi o'rinni egallaydi."
                     }
                 ],
                 'homework': {
-                    'intro': 'Doston janrini tahlil qilish uchun topshiriqlar.',
+                    'intro': 'Dunyo siyosiy xaritasidan foydalanib topshiriqlarni bajaring.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Xalq dostonlari bilan yozma dostonlar o'rtasidagi 3 ta asosiy farqni jadval ko'rinishida yozing.",
-                            'answer': "O'quvchi mualliflik, shakl va ijro usulidagi farqlarni ko'rsatadi.",
-                            'hint': "Baxshichilik va yozma adabiyot farqiga e'tibor bering."
+                            'prompt': 'Janubiy Amerikadagi 2 ta federativ va 2 ta unitar davlatni yozing.',
+                            'answer': 'Federativ: Braziliya, Argentina. Unitar: Chili, Kolumbiya, Peru.',
+                            'hint': "Braziliya va Argentina tuzilishiga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "'Alpomish' dostonidagi vatandoshlik va sodiqlik g'oyalarini izohlab bering."
+                            'prompt': 'Anklav va eksklav hududlar tushunchalarini misollar yordamida izohlang.'
                         }
                     ]
                 }
             },
             {
-                'slug': 'badiiy-asar-syujeti-va-unsurlari',
-                'title': 'Badiiy asar syujeti va uning unsurlari',
-                'summary': "Badiiy asardagi voqealar rivojini ta'minlovchi syujet tushunchasi va uning tarkibiy qismlari (tugun, kulminatsiya, yechim) chuqur tahlil qilinadi.",
-                'duration': 20,
+                'slug': 'jahon-tabiiy-resurslari-potensiali',
+                'title': "Jahon tabiiy resurslari potensiali va resurs bilan ta'minlanganlik",
+                'summary': "Mavzuda tabiiy resurslar tasnifi, tugaydigan va tugamaydigan resurslar hamda resurs bilan ta'minlanganlik darajasini hisoblash usullari ko'rib chiqiladi.",
+                'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Syujet — badiiy asarda tasvirlangan voqealar zanjiri bo'lib, u xarakterlarning shakllanishi va ziddiyatlarning namoyon bo'lishini ta'minlaydi. Har bir syujetli asar muayyan mantiqiy bosqichlardan o'tadi."
+                        'title': 'Tabiiy resurslar va ularning turlari',
+                        'body': "Tabiiy resurslar — insoniyat jamiyati tomonidan moddiy va ma'naviy ehtiyojlarni qondirish uchun foydalaniladigan tabiat unsurlaridir. Ular tugaydigan (tiklanmaydigan: foydali qazilmalar; tiklanadigan: tuproq, o'rmon, suv) va tugamaydigan (quyosh, shamol, to'lqin) resurslarga bo'linadi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Syujet bosqichlari misolida',
-                        'body': "Masalan, Abdulla Qodiriyning 'O'tkan kunlar' romanida Kumush va Otabekning uchrashuvi ziddiyatlarni boshlasa, Asadbek va Marg'ilon voqealari keskinlashib, kulminatsiyaga yetib boradi."
+                        'title': "Resurs bilan ta'minlanganlikni hisoblash",
+                        'body': "Resurs bilan ta'minlanganlik ko'rsatkichi resurs zaxirasini uning yillik qazib olish (foydalanish) hajmiga bo'lish yoki aholi jon boshiga bo'lish orqali topiladi: R = Zaxira / Qazib olish (yillarda) yoki R = Zaxira / Aholi soni."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Syujetning 5 asosiy elementi',
+                        'title': 'Asosiy resurs turlari',
                         'items': [
-                            'Expozitsiya (Muqaddima): Qahramonlar va joy bilan tanishtiruv',
-                            'Tugun: Ziddiyat (konflikt)ning boshlanishi',
-                            'Voqealar rivoji: Qarama-qarshilikning keskinlashuvi',
-                            'Kulminatsiya: Voqealarning eng yuqori nuqtasi',
-                            "Yechim: Ziddiyatning hal bo'lishi"
+                            "Mineral resurslar: Yoqilg'i, ruda va noma'dan minerallar.",
+                            'Er resurslari: Jahon yer fondi va unumdor tuproqlar.',
+                            'Suv resurslari: Chuchuk suv zaxiralari (asosan muzliklarda).',
+                            "O'rmon resurslari: Shimoliy (ignabargli) va Janubiy (ekvatorial) o'rmon poyaslari."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Syujetsiz asarlar ham bo'lishi mumkin (masalan, lirik she'rlar), lekin epik va dramatik asarlar uchun syujet muhim tayanchdir."
+                        'body': "Esda tuting: Jahon bo'yicha chuchuk suvning atigi 2.5-3 foizigina mavjud, uning asosiy qismi Antarktida va Grenlandiya muzliklarida to'plangan."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Syujetning eng yuqori, taranglashgan nuqtasi nima deb ataladi?',
+                        'q': 'Quyidagilardan qaysi biri tugamaydigan resurslar sirasiga kiradi?',
                         'options': [
-                            'Tugun',
-                            'Expozitsiya',
-                            'Kulminatsiya',
-                            'Yechim'
+                            "Toshko'mir",
+                            'Quyosh va shamol energiyasi',
+                            "O'rmon va tuproq",
+                            'Tabiiy gaz'
+                        ],
+                        'answer': 1,
+                        'explain': 'Quyosh, shamol va suv harakati tugamaydigan resurslar hisoblanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Resurs bilan ta'minlanganlik ko'rsatkichi zaxirani aholi soniga ko'paytirish orqali topiladi.",
+                        'answer': False,
+                        'explain': "Resurs bilan ta'minlanganlik zaxira miqdorini aholi soniga yoki yillik iste'molga bo'lish orqali hisoblanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Neft zaxiralari bo'yicha dunyoda eng yetakchi mintaqa qaysi?",
+                        'options': [
+                            "G'arbiy Yevropa",
+                            "Yaqin va O'rta Sharq (Fors qo'ltig'i)",
+                            'Janubiy-Sharqiy Osiyo',
+                            'Markaziy Afrika'
+                        ],
+                        'answer': 1,
+                        'explain': "Fors qo'ltig'i mintaqasi jahon neft zaxiralarining asosiy qismini o'zida jamlagan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Resurs ta'minlanganligini hisoblash bo'yicha amaliy masalani bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'A davlatda neft zaxirasi 15 milliard tonna. Yiliga 300 million tonna qazib olinsa, neft necha yilga yetadi?',
+                            'answer': '50 yilga (15 000 000 000 / 300 000 000 = 50).',
+                            'hint': "Zaxira miqdorini yillik qazib olish hajmiga bo'ling."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Shimoliy va Janubiy o'rmon poyaslarining joylashuvi hamda daraxt turlari farqini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'demografik-otish-nazariyasi-va-jarayonlar',
+                'title': "Demografik o'tish nazariyasi va jahon demografik jarayonlari",
+                'summary': "Jahon aholisi o'sishining tiplari, demografik portlash va demografik inqiroz (qarish) hodisalari ko'rib chiqiladi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Demografik o'tish nazariyasi",
+                        'body': "Demografik o'tish — bu tug'ilish va o'lim ko'rsatkichlarining yuqori darajasidan past darajasiga o me'yoriy o me'yoriy o me me'yoriy o'tishi jarayonidir. U 4 ta bosqichni o'z ichiga oladi: 1) Yuqori tug'ilish va o'lim; 2) O'lim kamayishi va 'demografik portlash'; 3) Tug'ilish kamayishi; 4) Past tug'ilish va o'lim ('demografik inqiroz'/qarish)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Aholi ko'payish tiplari",
+                        'body': "Rivojlangan davlatlarda (Yevropa, Yaponiya) 4-bosqich kuzatilib, aholi qarishi va demografik inqiroz mavjud. Rivojlanayotgan mamlakatlarda (Afrika, Osiyo) 2 va 3-bosqich bo'lib, aholi tez o me'yorda ko'paymoqda (demografik portlash)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Demografik siyosat',
+                        'items': [
+                            "Tug'ilishni rag'batlantirish: Rivojlangan mamlakat larda (yordam pullari, imtiyozlar).",
+                            "Tug'ilishni cheklash: Aholisi juda ko'p rivojlanayotgan mamlakatlarda (masalan, Xitoyning vaqtinchalik 'Bir oila - bir bola' siyosati, Hindiston)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Depopulatsiya — bu aholi sonining mutlaq kamayib ketishi jarayonidir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Demografik portlash' jarayoni asosan qaysi turdagi mamlakatlar uchun xos?",
+                        'options': [
+                            "G'arbiy Yevropaning rivojlangan davlatlari",
+                            'Rivojlanayotgan mamlakatlar (Afrika, Osiyo)',
+                            'Shimoliy Amerika mamlakatlari',
+                            'Aholi soni kamayayotgan davlatlar'
+                        ],
+                        'answer': 1,
+                        'explain': "O'lim darajasining pasayishi va tug'ilishning yuqoriligi rivojlanayotgan mamlakatlarda demografik portlashni yuzaga keltirgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Aholining qarishi (keksayishi) ko'rsatkichi rivojlanayotgan Afrika davlatlarida eng yuqori.",
+                        'answer': False,
+                        'explain': 'Aholining qarishi rivojlangan Yevropa va Yaponiya kabi mamlakatlarda yuqori.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Demografik o'tishning to me'yordagi 4-bosqichida tug'ilish va o me me'yorda o'lim ko'rsatkichlari qanday bo'ladi?",
+                        'options': [
+                            'Ikkalasi ham yuqori',
+                            "Tug'ilish yuqori, o'lim past",
+                            'Ikkalasi ham barqaror past',
+                            "Tug'ilish o'limdan keskin oshadi"
                         ],
                         'answer': 2,
-                        'explain': 'Kulminatsiya — asardagi ziddiyatlar eng yuqori va hal qiluvchi nuqtaga yetgan bosqichdir.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Expozitsiya — bu voqealarning yakunlanishi va ziddiyatning yechilishidir.',
-                        'answer': False,
-                        'explain': "Noto'g'ri. Expozitsiya — asar boshida qahramonlar va sharoit bilan dastlabki tanishtiruvdir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Asarda ziddiyat qaysi bosqichdan e'tiboran boshlanadi?",
-                        'options': [
-                            'Expozitsiya',
-                            'Tugun',
-                            'Kulminatsiya',
-                            'Yechim'
-                        ],
-                        'answer': 1,
-                        'explain': 'Tugun — voqealar zanjiridagi ziddiyat va toqnashuvlarning boshlanish nuqtasidir.'
+                        'explain': "4-bosqichda tug'ilish ham, o'lim ham past bo'lib, aholi soni barqarorlashadi yoki kamayadi."
                     }
                 ],
                 'homework': {
-                    'intro': 'Badiiy asar syujetini tahlil qilish topshiriqlari.',
+                    'intro': "Demografik pyramids va statistik ma'lumotlarni tahlil qiling.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "O'zingiz o'qigan biror hikoyaning syujet unsurlarini (expozitsiya, tugun, kulminatsiya, yechim) ajratib yozing.",
-                            'answer': "O mezoniy o'quvchi tanlangan hikoya voqealarini 5 bosqichga bo'lib beradi.",
-                            'hint': "Abdulla Qahhorning 'Anor' yoki 'Dahshat' hikoyasini tanlashingiz mumkin."
+                            'prompt': "Jahon aholisi yosh tarkibida 'milliya qarishi' qanday iqtisodiy muammolarga olib keladi?",
+                            'answer': 'Mehnat resurslarining yetishmasligi, pensiya va tibbiy xarajatlarning oshishiga olib keladi.',
+                            'hint': "Nafaqa va mehnat qobiliyati yoshidagi aholi nisbatini o me'yorlang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Nega har bir badiiy asarda kulminatsiya nuqtasi kitobxonda eng kuchli emotsiyani uyg'otadi?"
+                            'prompt': "Xitoy va Hindiston davlatlarining demografik siyosatini o'zaro taqqoslang."
                         }
                     ]
                 }
             },
             {
-                'slug': 'badiiy-asar-kompozitsiyasi-va-goya',
-                'title': "Badiiy asar kompozitsiyasi va g'oya",
-                'summary': "Asarning ichki va tashqi tuzilishi bo'lmish kompozitsiya hamda yozuvchi nazarda tutgan asosiy fikr — g'oyaning o'zaro mutanosibligi o'rganiladi.",
-                'duration': 20,
+                'slug': 'jahon-xojaligi-tuzilishi',
+                'title': "Jahon xo'jaligining tarmoqlararo va hududiy tuzilishi",
+                'summary': "Jahon xo'jaligi tushunchasi, uning rivojlanish bosqichlari (agrariya, industrial, postindustrial) hamda xalqaro mehnat taqsimoti ko'rib chiqiladi.",
+                'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Kompozitsiya (lotincha 'compositio' — tuzilish, birikish) — badiiy asar qismlari, lavhalari va elementlarining muayyan g'oyaviy maqsadga bo mezonlashtirilib joylashtirilishidir. Asar g'oyasi esa muallifning shu asar orqali aytmoqchi bo'lgan bosh fikridir."
+                        'title': "Jahon xo'jaligi rivojlanish bosqichlari",
+                        'body': "Jahon xo'jaligi — barcha milliy iqtisodiyotlarning xalqaro iqtisodiy munosabatlar va xalqaro mehnat taqsimoti orqali birikuvidir. U 3 bosqichni bosib o'tgan: Agrar (qishloq xo'jaligi ustun), Industrial (sanoat ustun) va Postindustrial (xizmat ko'rsatish sohasining ustunligi)."
                     },
                     {
                         'type': 'example',
-                        'title': 'Kompozitsiya usullari',
-                        'body': 'Peyzaj (tabiat tasviri), portret (qahramon qiyofasi), epigraf (asar boshidagi hikmat), ramka (asar ichida asar usuli) kompozitsiya vositalari sanaladi.'
+                        'title': 'Postindustrial jamiyat',
+                        'body': "AQSh, Yaponiya va G'arbiy Yevropa mamlakatlarida yalpi ichki mahsulotning (YIM) 70-80 foizidan ortig'i xizmat ko'rsatish va yuqori texnologiyalar (IT, moliya, fan) hisobiga to'g'ri keladi."
                     },
                     {
                         'type': 'steps',
-                        'title': "Asar g'oyasini aniqlash ketma-ketligi",
+                        'title': "Jahon xo'jaligining 3 asosiy markazi",
                         'items': [
-                            "Asar mavzusini (nimaga bag'ishlanganini) aniqlash",
-                            'Qahramonlarning xatti-harakatlari va takdirini kuzatish',
-                            "Muallif pozitsiyasini o'rganish",
-                            'Yozuvchining jamiyatga berayotgan xabarini jamlash'
+                            'Shimoliy Amerika markazi: AQSh va Kanada (yuqori texnologiyalar va moliya).',
+                            'Yevropa markazi: Yevropa Ittifoqi mamlakatlari.',
+                            "Osiyo-Tinch okeani markazi: Xitoy, Yaponiya va 'Osiyo yo'lbarslari'."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Mavzu va G'oya bir xil narsa emas. Mavzu — asarda aks etgan hayotiy material, g'oya esa muallifning o'sha materialga bergan bahosi va xulosasidir."
+                        'body': 'Esda tuting: Xalqaro mehnat taqsimoti (XMT) — mamlakatlarning muayyan mahsulot yoki xizmatlarni ishlab chiqarishga ixtisoslashuvidir.'
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Badiiy asar elementlarining bir-biri bilan uzviy bog'lanishi va joylashuvi nima deyiladi?",
+                        'q': "Postindustrial bosqichda iqtisodiyotning qaysi sohasi yetakchi o'ringa chiqadi?",
                         'options': [
-                            'Syujet',
-                            'Kompozitsiya',
-                            'Mavzu',
-                            'Janr'
-                        ],
-                        'answer': 1,
-                        'explain': "Kompozitsiya — asar tarkibiy qismlarining o'zaro mutanosib tartibda tuzilishidir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Asarning mavzusi bilan uning g mezoniy g'oyasi mutlaqo bir xil tushunchadir.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Mavzu — nima haqidaligi, g'oya esa asardan chiqariladigan asosiy xulosa va maqsaddir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Asar boshida keladigan va uning umumiy ruhiga ishora qiluvchi ko'chirma yoki hikmatli so'z nima deyiladi?",
-                        'options': [
-                            'Peyzaj',
-                            'Portret',
-                            'Epigraf',
-                            'Monolog'
+                            "Qishloq xo'jaligi",
+                            'Konchilik sanoati',
+                            "Xizmat ko'rsatish va axborot sohasi",
+                            "Og'ir mashinasozlik"
                         ],
                         'answer': 2,
-                        'explain': "Epigraf — asar yoki boblar boshida beriladigan, asosiy g'oyaga yo'naltiruvchi hikmatli matndir."
-                    }
-                ],
-                'homework': {
-                    'intro': "Kompozitsion tahlil bo'yicha amaliy mashg'ulot.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "O'zingiz yoqtirgan biror asardagi portret va peyzaj tasviriga 1 tadan misol keltiring.",
-                            'answer': "O'quvchi asardan insonga berilgan qiyofa va tabiat tasvirini alohida ajratib ko'rsatadi.",
-                            'hint': "Portretda tashqi ko'rinish, peyzajda tabiat manzarasi tasvirlanadi."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Epigrafning asar g'oyasini ochib berishdagi rolini sharhlang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'dramatik-asarlar-va-ularning-turlari',
-                'title': 'Dramatik asarlar va ularning turlari',
-                'summary': "Sahnaga mo'ljallangan dramaturgiya janri, uning o'ziga xos tili (dialog va monolog) hamda komediya, tragediya, drama turlari tahlili.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Drama — badiiy adabiyotning uch asosiy turidan biridir (epos, lirika, drama). Dramatik asarlar sahnada ko'rsatishga mo'ljallangan bo'lib, unda muallif so'zi kam bo'ladi; voqealar qahramonlarning harakati va nutqi orqali namoyon bo'ladi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Dramatik turunining janrlari',
-                        'body': "Tragediya (Fojia): Qahramonning haloqati bilan tugaydi ('Otello', 'Jaloliddin Manguberdi').\nKomediya: Kulgi va hajvga asoslanadi ('Maysaraning ishi').\nDrama: Jiddiy ijtimoiy-maishiy ziddiyatlarni ko'taradi ('Padarkush')."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Dramatik asar tili',
-                        'items': [
-                            "Dialog — ikki yoki undan ortiq shaxsning o'zaro suhbati.",
-                            "Monolog — qahramonning o'zi bilan o'zi yoki tomoshabin bilan yakka nutqi.",
-                            "Remarka — muallifning sahna holati, harakatlar bo'yicha ko'rsatmalari."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Dramatik asarda epizod va boblar o'rniga 'parda', 'ko'rinish' va 'pahlav' tushunchalari qo'llaniladi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Muallifning sahna bezaqlari va qahramon harakatlari haqida qavs ichida beradigan izohi nima deyiladi?',
-                        'options': [
-                            'Monolog',
-                            'Remarka',
-                            'Dialog',
-                            'Aksiya'
-                        ],
-                        'answer': 1,
-                        'explain': 'Remarka — dramaturgning rejissyor va aktyorlar uchun beradigan tushuntirishidir.'
+                        'explain': "Postindustrial jamiyatda xizmat ko'rsatish, fan, axborot va moliya sohalari asosiy drayverga aylanadi."
                     },
                     {
                         'type': 'tf',
-                        'q': 'Tragediyada har doim voqealar quvnoq va kulgili yakun topadi.',
+                        'q': 'Xalqaro mehnat taqsimoti barcha mamlakatlarning bir xil mahsulot ishlab chiqarishini anglatadi.',
                         'answer': False,
-                        'explain': "Noto'g'ri. Tragediyada asosiy qahramonlar fojiali halokatga uchraydi."
+                        'explain': "Xalqaro mehnat taqsimoti davlatlarning o'z resursi va afzalligiga ko'ra ma'lum mahsulotlarga ixtisoslashuvidir."
                     },
                     {
                         'type': 'mc',
-                        'q': "O'zbek dramaturgiyasining birinchi namunasi qaysi asar hisoblanadi?",
+                        'q': "Quyidagilardan qaysi biri 'Yangi sanoatlashgan mamlakatlar' (Osiyo yo'lbarslari) guruhiga kiradi?",
                         'options': [
-                            'Maysaraning ishi',
-                            'Padarkush',
-                            "O'lim burguti",
-                            'Mahmud Torobiy'
-                        ],
-                        'answer': 1,
-                        'explain': "Mahmudxo'ja Behbudiyning 1911-yilda yozilgan 'Padarkush' dramasi o'zbek dramaturgiyasiga tamal toshini qo'ygan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Dramatik janr xususiyatlarini o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Dialog va monolog o'rtasidagi asosiy farqni izohlab, har biriga 1 tadan misol matn keltiring.",
-                            'answer': "O'quvchi yakka va jamoaviy nutq o'rtasidagi farqni tushuntiradi.",
-                            'hint': 'Monolog bir kishining mulohazasi ekanligini yodda tuting.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Nima uchun dramatik asarlarni sahnada ijro etmasdan shunchaki o'qish qiyinroq kechadi?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'aruz-vazni-haqida-boshlangich-tushuncha',
-                'title': "Aruz vazni haqida boshlang'ich tushuncha",
-                'summary': "Sharq she'riyatining klassik o'lchov tizimi bo'lgan aruz vazni, qisqa va uzun bo'g'inlarning navbatlashuvi va uning ruknlari.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Aruz — arab, fors va turkiy xalqlar mumtoz she'riyatida qo'llanilgan poetik vazn tizimidir. Aruz vazni bo'g'inlarning soniga emas, balki ularning cho'ziqlik va qisqalik xususiyatiga asoslanadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Aruz va Barmoq vazni farqi',
-                        'body': "Barmoq vaznida bo'g'inlar soni teng bo'lishi shart (masalan: 7, 8, 11 bo'g'in).\nAruz vaznida esa misradagi bo mezoniy bo'g'inlarning uzun-qisqalik tartibi mos kelishi kerak."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Aruzdagi bo'g'in turlari",
-                        'items': [
-                            "Qisqa bo mezon (unli bilan tugagan ochiq bo'g'in: 'v-')",
-                            "Cho'ziq bo mezon (undosh bilan tugagan yopiq yoki uzun unlili bo'g'in: '- ')",
-                            "O'ta cho'ziq bo mezon (vaqt jihatidan eng uzun bo'g'in: '~')"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Aruz vaznida ruknlar (masalan: 'Fa'ulun', 'Mafa'ilun') she'r o mezonining musiqiyligini ta'minlaydi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Aruz vazni nimaga asoslanadi?',
-                        'options': [
-                            "Faqat bo'g'inlar soniga",
-                            "Turg'un urg'uga",
-                            "Cho'ziq va qisqa bo'g'inlarning tartibiga",
-                            'Misralar soniga'
-                        ],
-                        'answer': 2,
-                        'explain': "Aruz bo'g'inlarning cho'ziq va qisqalik darajalarining tizimli almashinishiga asoslanadi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Alisher Navoiy o'zining barcha g'azallarini barmoq vaznida yozgan.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Navoiy va barcha mumtoz shoirlarimiz aksariyat asarlarini aruz vaznida yaratishgan."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Aruz vazni nazariyasiga bag'ishlangan Alisher Navoiyning mashhur asari qaysi?",
-                        'options': [
-                            'Mezon ul-avzon',
-                            "Muhakamat ul-lug'atayn",
-                            'Mahbub ul-qulub',
-                            'Nasaoyim ul-muhabbat'
+                            'Janubiy Koreya va Singapur',
+                            'Mongoliya va Nepal',
+                            'Norvegiya va Islandiya',
+                            'Misir va Nigeriya'
                         ],
                         'answer': 0,
-                        'explain': "'Mezon ul-avzon' (Vaznlar mezon) — Navoiyning aruz vazniga bag'ishlangan ilmiy risolasidir."
+                        'explain': "Janubiy Koreya, Singapur, Tayvan va Gonkong 'Osiyo yo'lbarslari' sifatida tanilgan."
                     }
                 ],
                 'homework': {
-                    'intro': 'Aruz vazni haqidagi bilimlarni sinash topshiriqlari.',
+                    'intro': "Jahon xo'jaligi va iqtisodiy modellarga oid vazifalar.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Barmoq vazni bilan Aruz vaznining 2 ta eng asosiy farqini tushuntiring.',
-                            'answer': "O'quvchi bo'g'in soni tengligi va bo'g'in uzun-qisqaligi farqlarini yozadi.",
-                            'hint': "Xalq qo'shiqlaridagi ritm va g'azallardagi ritmni solishtiring."
+                            'prompt': 'Transmilliy korporatsiyalar (TMK) nima va ularning jahon iqtisodiyotidagi roliga misol keltiring.',
+                            'answer': "TMK — turli mamlakatlarda sho'ba korxonalariga ega bo'lgan ulkan kompaniyalardir (masalan, Apple, Toyota, Samsung).",
+                            'hint': 'Xalqaro darajadagi kompaniyalarni eslang.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Nima uchun Alisher Navoiy aruz vaznini turkiy tilda qo'llashni rivojlantirishga alohida e'tibor bergan?"
+                            'prompt': "O'zbekiston xalqaro mehnat taqsimotida qaysi mahsulotlar bilan ishtirok etmoqda?"
                         }
                     ]
                 }
             },
             {
-                'slug': 'zahiriddin-muhammad-bobur-va-boburnoma',
-                'title': "Zahiriddin Muhammad Bobur hayoti va 'Boburnoma'",
-                'summary': "Boburning serqirra ijodi, uning mashhur 'Boburnoma' (Vaqoye) meuar asarining tarixiy, adabiy va geografik qiymati tahlili.",
-                'duration': 20,
+                'slug': 'jahon-energetika-sanoati',
+                'title': 'Jahon energetika sanoati va uning rivojlanish tendensiyalari',
+                'summary': "Mavzuda neft, gaz, ko'mir sanoati hamda muqobil va yashil energetika manbalarining o'rni tahlil qilinadi.",
+                'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Zahiriddin Muhammad Bobur — shoh, shoir, qomusiy olim va sarkarda. Unining 'Boburnoma' asari jahon adabiyotida memuar (xotira) janrining eng nodir durdonalaridan biri sanaladi."
+                        'title': 'Energetika balansi va evolyutsiyasi',
+                        'body': "Jahon yoqilg'i-energetika balansi bir necha bosqichni o'tdi: 19-asrda ko'mir davri, 20-asr o'rtalaridan neft-gaz davri. Hozirda esa past uglerodli va qayta tiklanadigan 'yashil energetika' davriga o'tilmoqda."
                     },
                     {
                         'type': 'example',
-                        'title': "'Boburnoma' asarining qamrovi",
-                        'body': "Asarda Movarounnahr, Xuroson, Afg'oniston va Hindistonning XV-XVI asrlardagi ijtimoiy-siyosiy hayoti, tabiati, hayvonot olami va mashhur shaxslari haqida aniq, xolis ma'lumotlar berilgan."
+                        'title': 'Elektr energiyasi manbalari',
+                        'body': "Jahonda elektr energiyasining 60% dan ortig'i Issiqlik elektr stansiyalarida (IES), 15-16% Gidroelektr stansiyalarda (GES), 10% Atom elektr stansiyalarida (AES) va qolgani muqobil manbalarda (Quyosh, Shamol) olindi."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Boburning adabiy merosi',
+                        'title': 'Energetika yetakchilari',
                         'items': [
-                            "Lirik meros (Devon, g'azal, ruboiylar)",
-                            "'Boburnoma' (Tarixiy-biografik meuar)",
-                            "'Mubayyin' (Fiqh va zakotga oid masnaviy)",
-                            "'Katt-i Boburiy' (Yangi alifbo va xat turi)"
+                            'Neft qazib olish: AQSh, Saudiya Arabistoni, Rossiya.',
+                            'Tabiiy gaz qazib olish: AQSh, Rossiya, Qatar, Erron.',
+                            'AES elektr energiyasi: Fransiya (elektrning ~70% AESdan), AQSh, Xitoy.'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Boburnoma' hayot haqiqatini xolis va ochiq-oydin yozilganligi bilan ajralib turadi."
+                        'body': "Esda tuting: OPEK (OPEC) — neft eksport qiluvchi mamlakatlar tashkiloti bo'lib, jahon neft narxini tartibga solishda katta rol o'ynaydi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'Boburnoma' asarining asl nomi qanday bo'lgan?",
+                        'q': 'Fransiyada elektr energiyasining asosiy qismi (70% ga yaqini) qaysi turdagi stansiyalarda ishlab chiqariladi?',
                         'options': [
-                            'Tarixi Rashidiy',
-                            'Vaqoye',
-                            'Tuzukoti Boburiy',
-                            'Shajarayi turk'
-                        ],
-                        'answer': 1,
-                        'explain': "Boburning o'zi bu asarni 'Vaqoye' ('Voqealar') deb atagan, keyinchalik u 'Boburnoma' nomi bilan mashhur bo'lgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Bobur 'Katt-i Boburiy' deb nomlangan yangi xat va alifbo turini yaratgan.",
-                        'answer': True,
-                        'explain': 'Ha, Bobur arab alifbosi asosida yozuvni soddalashtirgan xat turini ixtiro qilgan.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Bobur ruboiylarining asosiy ruhiy motivida qaysi tuyg'u ustuvorlik qiladi?",
-                        'options': [
-                            "Katta g'alaba nashidasi",
-                            'Vatan hamda yurt soginchi',
-                            'Faoliyatsizlik',
-                            'Tabiatga nafrat'
-                        ],
-                        'answer': 1,
-                        'explain': "Bobur ruboiylarining tub mazmunida ona yurt sog'inchi va g'urbat azoblari yotadi."
-                    }
-                ],
-                'homework': {
-                    'intro': "Bobur va uning asarlarini o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Boburning 'Tale' yo'qki jonimg'a belog'a bo'ldi...' deb boshlanuvchi ruboiysini yoddan yozib, mazmunini sharhlang.",
-                            'answer': "O'quvchi ruboiyni yozadi va g'urbatlik iztiroblarini tushuntirib beradi.",
-                            'hint': "Shoirning taqdir va vatan sog'inchi haqidagi kechinmalarini e'tiborga oling."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "'Boburnoma'ning geografik va etnografik manba sifatidagi qadrini baholang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ogahiy-gazaliyoti-va-badiiy-mahorati',
-                'title': "Ogahiy g'azaliyoti va badiiy mahorati",
-                'summary': "Xiva xonligining ma'rifatparvar shoiri, tarjimon va tarixchisi Muhammad Rizo Ogahiy ijodiy merosi va g'azallarining g'oyaviy-badiiy tahlili.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Muhammad Rizo Ogahiy (1809–1874) — XIX asr Xorazm adabiy muhitining eng yorqin namoyandasi. U izchil shoir, mashhur tarixchi va 20 dan ortiq nodir forsiy manbalarni turkiyga o'girgan mohir tarjimondir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Ogahiy lirikasi',
-                        'body': "Ogahiy g'azallari g'oyaviy chuqurligi, xalqona sodda tili va ijtimoiyligi bilan ajralib turadi. Uning 'Ta'viz ul-oshiqin' ('Oshiqlar tumori') devoni xalq orasida juda mashhur."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Ogahiyning ko'p qirrali faoliyati",
-                        'items': [
-                            'Shoirlik (Lirik devoni)',
-                            "Tarixchilik ('Riyoz ud-davla', 'Zubdat ut-tavorix' kabi tarixiy asarlar)",
-                            "Tarjimonlik (Sa'diyning 'Guliston', Nizomiyning 'Haft paykar' asarlari tarjimasi)"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Ogahiy g'azallarida jamiyatdagi adolatsizlik, adolatparvar shoh orzusi va xalq g'ami ochiq kuylangan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Ogahiyning o'zbek tiliga o'girgan mashhur Sa'diy Sheroziy asari qaysi?",
-                        'options': [
-                            "Bo'ston",
-                            'Guliston',
-                            'Bahoriston',
-                            'Zafarnoma'
-                        ],
-                        'answer': 1,
-                        'explain': "Ogahiy Sa'diy Sheroziyning 'Guliston' asarini o'zbek tiliga yuksak mahorat bilan tarjima qilgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Ogahiy faqat g'azal yozgan va tarixiy voqealarni yozish bilan shug'ullanmagan.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Ogahiy Xiva xonligi tarixiga oid 5 ta muhim tarixiy asar yozgan."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Ogahiyning she'riy devoni qanday nomlanadi?",
-                        'options': [
-                            'Badoe ul-vasat',
-                            "Ta'viz ul-oshiqin",
-                            'Munis ul-ushshoq',
-                            'Fevoyid ul-kibar'
-                        ],
-                        'answer': 1,
-                        'explain': "Ogahiy o'z she'rlarini to'plab 'Ta'viz ul-oshiqin' ('Oshiqlar tumori') deb nom bergan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Ogahiy ijodi va g'azallarini o'rganish vazifasi.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Ogahiyning 'Mushkin qoshining hay'ati olamg'a balo bo'ldi' g'azalidan 2 bayt yozib, undagi tasvir vositalarini ko'rsating.",
-                            'answer': "O'quvchi baytlarni ko'chiradi va tashbeh hamda mubolag'alarni ajratadi.",
-                            'hint': "Qoshning kamonga, kiprikning o'qqa o'xshatilishiga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Ogahiyning tarjimonlik faoliyatining o'zbek adabiyoti rivojidagi o'rnini yoritib bering."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'uzbek-marifatparvarlik-adabiyoti',
-                'title': "XIX asr oxiri - XX asr boshlari O'zbek ma'rifatparvarlik adabiyoti",
-                'summary': "Jamiyatni ilim-fan, ma'rifat va maktablar orqali uyg'otishga intilgan ma'rifatparvarlik harakati va ushbu davr adabiyotining yetakchi g'oyalari.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "XIX asrning ikkinchi yarmi va XX asr boshlarida O'zbekiston Turkiston chor Rossiyasi mustamlakasiga aylandi. Shunday og'ir sharoitda millatni qorong'ilikdan olib chiqish uchun milliy ma'rifatparvarlik harakati va adabiyoti shakllandi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Ma'rifatparvar adiblar",
-                        'body': "Ahmad Donish, Muqimiy, Furqat, Avloniy, Behbudiy, Sidqiy Xondayliqiy va boshqalar ozodlik yo'lini ma'rifat va ilm-fanda ko'rdilar."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Davr adabiyotining asosiy xususiyatlari',
-                        'items': [
-                            'Jaholat, nodonlik va xurofotni tanqid qilish',
-                            'Yangi usul (usuli jadid) maktablarini ochishga chorlov',
-                            "Matbuot, gazeta va teatrni ma'rifat quroliga aylantirish",
-                            "Ijtimoiy-siyosiy va hajviy yo'nalishning kuchayishi"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Abdullah Avloniyning 'Tarbiya biz uchun yo hayot — yo mamot, yo najot — yo halokat, yo saodat — yo falokat masalasidir' degan so'zlari ushbu davr shioriga aylandi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Tarbiya biz uchun yo hayot — yo mamot...' degan mashhur so'zlar kimga tegishli?",
-                        'options': [
-                            "Mahmudxo'ja Behbudiy",
-                            'Abdulla Avloniy',
-                            'Munavvarqori',
-                            'Hamza'
-                        ],
-                        'answer': 1,
-                        'explain': "Bu mashhur da'vat ma'rifatparvar adib Abdulla Avloniyga tegishli."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Ma'rifatparvarlik adabiyotida fan va ta'limni targ'ib qilish asosiy g'oyalardan biri edi.",
-                        'answer': True,
-                        'explain': "Ha, ma'rifatparvarlar millatni qutqarishning yagona yo'li ilm-fan va ma'rifatda deb bilishgan."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'XX asr boshida ochilgan yangi tipdagi maktablar qanday nomlangan?',
-                        'options': [
-                            'Madrasayi oliya',
-                            'Usuli jadid',
-                            'Rusiya maktabi',
-                            'Dorul funun'
-                        ],
-                        'answer': 1,
-                        'explain': "Jadidlar tashkil etgan, dunyoviy va diniy ilmlar birga o'qitiladigan maktablar 'Usuli jadid' deb atalgan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Ma'rifatparvarlik adabiyotini tahlil qilish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Abdulla Avloniyning 'Turkiy guliston yoxud axloq' asaridagi asosiy g'oyalarni 3 ta bandda umumlashtiring.",
-                            'answer': "O'quvchi axloq, ta'lim-tarbiya va ma'rifatning inson kamolotidagi o'rnini yozadi.",
-                            'hint': 'Yaxshi va yomon xulqlar haqidagi qismlarni eslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Nega jadidlar millatni uyg'otishda gazeta va teatrga alohida e'tibor berishgan?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'muqimiy-va-furqat-hajviyoti',
-                'title': 'Muqimiy va Furqat hajviyoti hamda lirikasi',
-                'summary': "Qo'qon adabiy muhitining atoqli vakillari Muhammad Aminxo'ja Muqimiy va Zokirjon Xolmuhammad o'g'li Furqat ijodidagi lirik va hajviy yo'nalishlar.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Muqimiy va Furqat — XIX asr oxiridagi o'zbek adabiyotining ikki yorqin yulduzidir. Ularning ijodi an'anaviy mumtoz adabiyot bilan ma'rifatparvarlik realist adabiyotini bog'lab turuvchi ko'prik bo'ldi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Hajviyot va ma'rifatparvarlik",
-                        'body': "Muqimiy hajviyoti: 'Tanobchilar', 'Vektor sotovoy' (amaldorlar va hiylakorlarni fosh qilish).\nFurqat ma'rifatparvarligi: 'Ilm xosiyati', 'Gimnaziya' (ilm va dunyoviy bilimlarni ulug'lash)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Muqimiy hajviyotining turlari',
-                        'items': [
-                            "Hajviy tiplar yaratilgan asarlar ('Sayohatnoma')",
-                            "Ijtimoiy adolatsizlik fosh qilingan hajvlar ('Tanobchilar')",
-                            "Maishiy muammolarga bag'ishlangan asarlar ('Leksin sobiq')"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Furqat ijodida chet ellarga sayohat, ma'rifatparvarlik va vatandan yiroqlikdagi g'urbat tuyg'ulari teran aks etgan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Muqimiyning mashhur 'Tanobchilar' asarining janri nima?",
-                        'options': [
-                            "Lirik g'azal",
-                            "Hajviy doston/she'r",
-                            'Dramatik asar',
-                            'Tarixiy meuar'
-                        ],
-                        'answer': 1,
-                        'explain': "'Tanobchilar' — yer o'lchovchilar va poytaxt amaldorlarining qallobligini fosh etuvchi hajviy asardir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Furqat butun umri davomida Qo'qondan tashqariga chiqmagan.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Furqat Hindiston, Turkiya, Yunoniston, Xitoy va Qashqarda bo'lib, xorijda vafot etgan."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Quyidagi asarlardan qaysi biri Furqat qalamiga mansub?',
-                        'options': [
-                            'Sayohatnoma',
-                            'Ilm xosiyati',
-                            'Vektor sotovoy',
-                            "To'y bolar"
-                        ],
-                        'answer': 1,
-                        'explain': "'Ilm xosiyati' she'ri Furqatning yoshlarni ma'rifatga chorlovchi asaridir."
-                    }
-                ],
-                'homework': {
-                    'intro': "Muqimiy va Furqat ijodiy merosini o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Muqimiyning 'Tanobchilar' asaridagi Sultanali va Mingboshi obrazlariga xarakteristika bering.",
-                            'answer': "O'quvchi xalqni shiluvchi, tamagir va hiylakor amaldorlar qiyofasini tasvirlaydi.",
-                            'hint': "Er tanobini o'lchashdagi g'irromlik sahnalarini eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Furqatning 'Fasli navbahor bo'ldi...' deb boshlanuvchi g'azalida vatan va tabiat tasvirining uyg'unligini sharhlang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'mahmudxoja-behbudiy-va-padarkush-dramasi',
-                'title': "Mahmudxo'ja Behbudiy va 'Padarkush' dramasi",
-                'summary': "Jadidchilik harakatining otasi Mahmudxo'ja Behbudiy faoliyati hamda o'zbek professional dramaturgiyasini boshlab bergan 'Padarkush' pyesasining g'oyaviy muammolari.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Mahmudxo'ja Behbudiy (1875–1919) — Turkiston jadidchilik harakatining yo'lboshchisi, buyuk ma'rifatparvar va publitsist. U yozgan 'Padarkush' (1911) dramasi o'zbek adabiyotida sahna san'ati rivojiga tamal toshini qo'ydi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "'Padarkush' dramasi g'oyasi",
-                        'body': "Pyesaning to'liq nomi: 'Padarkush yoxud o'quvsiz bolaning hali'. Asarda ilmsizlik, ma'rifatsizlik va boylikka berilish insonni va oilani fojeaviy halokatga (otani o'ldirishga) olib kelishi ko'rsatiladi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Pyesadagi asosiy obrazlar va qarama-qarshilik',
-                        'items': [
-                            'Toshmurod boy — ilmni mensimaydigan, nodon boy',
-                            "Mulla Do'st — ilmsiz va kaltabin hamroh",
-                            "Toshmurodning o'g mezonli (Toshpo mezonlat) — tarbiyasiz, maishatparvar yosh",
-                            "Ziyoli (O'qituvchi) — ma'rifat va ma'rifatli avlod tarafdori"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Behbudiy 'Teatr — bu ibratxonadir' iborasi bilan teatrning xalqni tarbiyalashdagi beqiyos o'rnini ta'riflagan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Padarkush' dramasi nechanchi yilda yozilgan hamda bosilgan?",
-                        'options': [
-                            '1905-yil',
-                            '1911-yil',
-                            '1917-yil',
-                            '1920-yil'
-                        ],
-                        'answer': 1,
-                        'explain': "Behbudiy 'Padarkush' pyesasini 1911-yilda yozgan, u 1913-yilda chop etilib, 1914-yilda sahnaga qo mezonyilgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "'Padarkush' so'zi 'Ota g'amxo'ri' degan ma'noni anglatadi.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. 'Padarkush' so'zi fors-tojikchadan olingan bo'lib, 'Otasini o'ldiruvchi (ota qotili)' degan ma'noni bildiradi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Teatrga 'Teatr — bu ibratxonadir' deya baho bergan ma'rifatparvar kim?",
-                        'options': [
-                            'Abdulla Qodiriy',
-                            "Mahmudxo'ja Behbudiy",
-                            "Cho'lpon",
-                            'Fitrat'
-                        ],
-                        'answer': 1,
-                        'explain': "Mahmudxo'ja Behbudiy teatrni xalqqa to'g'ri yo'l ko'rsatuvchi ibratxona deb ta'riflagan."
-                    }
-                ],
-                'homework': {
-                    'intro': "'Padarkush' dramasi va Behbudiy merosini o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "'Padarkush' dramasi misolida ilmsizlik va tarbiyasizlikning oqibatlarini yoritib yozing.",
-                            'answer': "O'quvchi Toshpo'lat va Boy o'rtasidagi munosabat va oqibatdagi fojiani tahlil qiladi.",
-                            'hint': "Boyning o'g'lini o'qitishdan bosh tortish sahnasiga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Behbudiyning 'Ikki emas, to'rt til bilmoq kerak' degan da'vatining bugungi kun uchun dolzarbligini baholang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'abdulla-qodiriy-va-otkan-kunlar-romani',
-                'title': "Abdulla Qodiriy va o'zbek romanichiligi ('O'tkan kunlar')",
-                'summary': "O'zbek adabiyotida birinchi roman yaratuvchisi Abdulla Qodiriyning 'O'tkan kunlar' asaridagi ijtimoiy-siyosiy ziddiyatlar va milliy xarakterlar.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Abdulla Qodiriy (Julqunboy) (1894–1938) — o mezonzbek milliy romanichiligining asoschisi. Uning 'O'tkan kunlar' (1922–1925) romani o'zbek adabiyoti tarixida yangi davr va bosqichni boshlab berdi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "'O'tkan kunlar' romani mavzusi",
-                        'body': "Roman XIX asr o'rtalaridagi Xudoyorxon davri Qo'qon xonligining fojiali ijtimoiy-siyosiy ahvoli hamda Otabek va Kumushning fojiali sevgisi fonida milliy birlik va parokandalik muammosini ko'taradi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Romandagi yetakchi g'oyalar",
-                        'items': [
-                            "O'zibo'shlik, ichki nizolar va xonliklar aro urushlarning millat va davlatga yetkazgan zarari",
-                            "Inson erki, sevgi sofligi va oilaviy muammolar (ko'p xotinlilik asoratlari)",
-                            "Yangi va ilg'or fikrli yoshlar (Otabek) va eski jamiyat toqnashuvi"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Abdulla Qodiriy o'z romanini 'Maziya qaytib, ish ko'rmak xayrli bo'lganidan...' degan niyat bilan yozganini ta'kidlaydi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbek adabiyotidagi birinchi romanchilik namunasi qaysi asar?",
-                        'options': [
-                            'Kecha va kunduz',
-                            "O'tkan kunlar",
-                            'Obid ketmon',
-                            'Mehrobdan chayon'
-                        ],
-                        'answer': 1,
-                        'explain': "Abdulla Qodiriyning 'O'tkan kunlar' romani o'zbek adabiyotidagi ilk romandir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "'O'tkan kunlar' romanida voqealar XV asr Temuriylar davrida bo'lib o'tadi.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Voqealar XIX asr o'rtalarida, Qo'qon xonligi va Toshkent ziddiyatlari davrida yuz beradi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Otabekning yaqin do mezonsti, unga har qanday og'ir vaziyatda yelkadosh bo'lgan sodiq qahramon kim?",
-                        'options': [
-                            'Homid',
-                            'Hasanali',
-                            'Usta Olim',
-                            'Ziyo shohichi'
+                            'GES',
+                            'IES',
+                            'AES',
+                            'Shamol stansiyalari'
                         ],
                         'answer': 2,
-                        'explain': 'Usta Olim — Otabekning sirdoshi, xalqning donishmand va halol vakilidir.'
-                    }
-                ],
-                'homework': {
-                    'intro': "'O'tkan kunlar' romani tahlili.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Otabek va Homid obrazlariga qiyosiy tavsif berib, matn ko'rinishida yozing.",
-                            'answer': "O'quvchi ma'rifatli, millat dardi bilan yashovchi Otabek va shaxsiy manfaati uchun har qanday pastkashlikka tayyor Homidni solishtiradi.",
-                            'hint': 'Ularning dunyoqarashi, axloqi va qadriyatlarini taqqoslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Qodiriyning 'O'tkan kunlar' romanidagi yurt parokandaligi va o'zaro urushlar haqidagi ogohlantirishi bugungi kun uchun qanday saboq beradi?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'cholpon-lirikasi-va-kecha-va-kunduz',
-                'title': "Abdulhamid Cho'lpon lirikasi va 'Kecha va kunduz' romani",
-                'summary': "Cho'lponning erksizlikka qarshi qaratilgan otashin she'riyati va uning 'Kecha va kunduz' romanidagi milliy fojea va ozodlik motivlari.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Abdulhamid Sulaymon o'g'li Cho'lpon (1897–1938) — o'zbek yangi she'riyatining va adabiyotining ulkan namoyandasi. Uning ijodida milliy erkinlik, istiklol va inson qadr-qimmati masalasi birinchi o'ringa ko'tarilgan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Cho'lpon she'riyati va romani",
-                        'body': "She'riyat: 'Go'zal', 'Kishan giydim', 'Xalq' she'rlarida erksizlik asorati va mustaqillik orzusi nola qiladi.\nRoman: 'Kecha va kunduz' (1936) — millatning topatilgan taqdiri va chor amaldorlari hamda mahalliy boylarning zulmini aks ettiradi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "'Kecha va kunduz' asari dramaturji qurilishi",
-                        'items': [
-                            "'Kecha' qismi: Jaholat, erksizlik va zulm qorong'iligi (Zebining begunoh fojiasi)",
-                            "'Kunduz' qismi: Rejalashtirilgan, lekin muallif qatag'on qilingani sababli yozilmay qolgan uyg'onish davri"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Cho'lponning 'Ko'ngil, sen bunchalar nega zanjirlar bilan bog'landang...' misrasi milliy uyg'onish gipnozidan uyg mezonotuvchi da'vatdir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Cho'lponning 'Kecha va kunduz' romanidagi begunoh jabr ko'rib, Sibirga surgun qilingan shoira qiz kim?",
-                        'options': [
-                            'Kumush',
-                            'Zebi',
-                            'Sultonalixon',
-                            'Poshshoxon'
-                        ],
-                        'answer': 1,
-                        'explain': "Zebi — sodda, ma'suma, san'atkor ruhli qiz bo'lib, tuhmat bilan Sibirga surgun qilinadi."
+                        'explain': "Fransiya atom energetikasi ulushi bo'yicha dunyoda birinchi o'rinni egallaydi."
                     },
                     {
                         'type': 'tf',
-                        'q': "Cho'lponning 'Kecha va kunduz' romanining 'Kunduz' qismi ham to'liq yozilib nashr etilgan.",
+                        'q': "Hozirgi kunda jahonda elektr energiyasining ko'p qismi GESlarda ishlab chiqariladi.",
                         'answer': False,
-                        'explain': "Noto'g'ri. Shoir qatag'on qilingani sababli 'Kunduz' qismi yozilmay qolgan yoki qo'lyozmasi yo'qolgan."
+                        'explain': "Elektr energiyasining asosiy qismi (60% dan ortig'i) ko'mir va gazda ishlaydigan IES larda olinadi."
                     },
                     {
                         'type': 'mc',
-                        'q': "'Go'zal' va 'Kishan giydim' she'rlarining muallifi kim?",
+                        'q': 'Neft eksport qiluvchi mamlakatlar xalqaro tashkiloti qanday qisqartiriladi?',
                         'options': [
-                            'Abdulla Oripov',
-                            "Cho'lpon",
-                            'Oybek',
-                            'Usmon Nasir'
+                            'NATO',
+                            'OPEK (OPEC)',
+                            'ASEAN',
+                            'BRIX'
                         ],
                         'answer': 1,
-                        'explain': "Ushbu otashin va erksevar she mezonrlar Abdulhamid Cho'lpon qalamiga mansub."
+                        'explain': 'OPEC (Organization of the Petroleum Exporting Countries) neft eksportyorlari tashkilotidir.'
                     }
                 ],
                 'homework': {
-                    'intro': "Cho'lpon lirikasi va romanini o'rganish.",
+                    'intro': "Energetika geofrafiyasiga bag'ishlangan tahliliy savollar.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Cho'lponning 'Go'zal' she'ridagi badiiy tasvir vositalarini va she'rning g'oyaviy poydevorini yozing.",
-                            'answer': "O'quvchi go mezonzallik niqobi ostidagi Hurlik va Erkinlik g'oyasini tahlil qiladi.",
-                            'hint': "Shoir 'Go'zal' deganda nimani (yoki kimni) nazarda tutganini o'ylang."
+                            'prompt': "Gidroenergetika imkoniyatlari yuqori bo'lgan 3 ta mamlakatni ko'rsating va sababini ayting.",
+                            'answer': "Xitoy, Braziliya, Kanada. Ser-suv va tez oquvchi tog' daryolariga ega.",
+                            'hint': 'Daryo suvlari va relyef xususiyatlarini eslang.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "'Kecha va kunduz' romanida Akbarali mingboshi va Razzoq so'fi obrazlari orqali jamiyatning qaysi illatlari ko'rsatilgan?"
+                            'prompt': "Global iqlim o'zgarishi va 'Yashil energetika'ga o'tishning zaruriyatini asoslab bering."
                         }
                     ]
                 }
             },
             {
-                'slug': 'fitrat-dramaturgiyasi-va-fojialari',
-                'title': 'Fitrat va uning dramatik asarlari',
-                'summary': "Abdurauf Fitratning fantastik va tarixiy dramalari, ulardagi milliy mustaqillik va davlatchilik g'oyalari tahlili.",
-                'duration': 25,
+                'slug': 'xalqaro-transport-koridorlari-va-logistika',
+                'title': 'Xalqaro transport koridorlari va logistika',
+                'summary': "Jahon transport tizimi, dengiz, temiryo'l, avtomobil va havo transporti yo me me'yor va xalqaro magistrallar o'rganiladi.",
+                'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Abdurauf Fitrat (1886–1938) — buyuk mutafakkir, adabiyotshunos olim, shoir va dramaturg. U o'zbek dramaturgiyasida tarixiy va fojiaviy dramalarning yuksak namunalarini yaratgan."
+                        'title': 'Jahon transport tizimi',
+                        'body': "Transport — jahon xo me'yorligining moddiy asosi va xalqaro savdoning tomiridir. Transport turlari: quruqlik (avtomobil, temiryo'l, quvur), suv (dengiz, ichki suv) va havo transporti. Rivojlangan mamlakatlar transport tarmog'ining zichligi va sifat ko'rsatkichlari bilan ajralib turadi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Fitrat dramalari',
-                        'body': "'Abulfayzxon' (tarixiy fojia — milliy parokandalik fojiasi), 'Arslon' (ijtimoiy drama), 'Hind ixtilolchilari', 'M Shaytonning tangriga isyoni' (falsafiy drama)."
+                        'title': "Dengiz kanallari va bo me'yozlar",
+                        'body': "Xalqaro dengiz savdosida Panama kanali (Tinch va Atlantika okeanlarini bog me'yorlaydi) va Suvaysh kanali (O'rtayer dengizi va Qizil dengizni bog'laydi) strategik ahamiyatga ega."
                     },
                     {
                         'type': 'steps',
-                        'title': "'Abulfayzxon' tragediyasining mohiyati",
+                        'title': 'Asosiy magistrallar va tashabbuslar',
                         'items': [
-                            'Joniy va Ashtarxoniylar sülolasining inqirozi',
-                            "Shoh Abulfayzxonning taxt uchun shafqatsizligi va qo'rqoqligi",
-                            'Davlat va millatning mustaqilligini yo mezonqotish sabablari'
+                            "Bir makon, bir yo'l (Xitoy): Yevroosiyo bo'ylab yangi Ipak yo me'yori logistika tarmoqlarini yaratish.",
+                            "Trans-Sibir temir yo'li: Rossiya va Sharqiy Osiyoni Yevropa bilan bog'lovchi eng uzun temiryo'l.",
+                            "Shimol-Janub koridori: Rossiya, Eron va Hindiston o'rtasidagi transport yo'li."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Fitrat 'Abulfayzxon' dramasi orqali stalinistik diktatura va taxt vasvasasiga berilgan hukmdorlar oqibatini badiiy bashorat qilgan."
+                        'body': "Esda tuting: Yuk aylanmasi hajmi bo'yicha dengiz transporti dunyoda Mutlaq birinchi o'rinni egallaydi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "O'zbek adabiyotida birinchi tarixiy tragediya hisoblangan 'Abulfayzxon' asarining muallifi kim?",
+                        'q': "O'rtayer dengizi va Qizil dengizni bog'laydigan va Yevropadan Osiyoga dengiz yo'lini bir necha ming kmga qisqartirgan kanal qaysi?",
                         'options': [
-                            'Abdulla Qodiriy',
-                            'Abdurauf Fitrat',
-                            'Hamza',
-                            'Oybek'
+                            'Panama kanali',
+                            'Suvaysh kanali',
+                            'Kil kanali',
+                            'Korinf kanali'
                         ],
                         'answer': 1,
-                        'explain': "Fitrat 1924-yilda o'zining mashhur 'Abulfayzxon' tragediyasini yozgan."
+                        'explain': "Suvaysh kanali 1869-yilda ochilgan bo'lib, O'rtayer va Qizil dengizni tutashtiradi."
                     },
                     {
                         'type': 'tf',
-                        'q': 'Fitrat nafaqat badiiy asarlar yozgan, balki ilmiy adabiyotshunoslik va tilshunoslikka ham katta hissa qo mezonshgan.',
-                        'answer': True,
-                        'explain': "Ha, Fitrat birinchi professor sifatida o'zbek tili va adabiyoti tarixiga oid ko'plab fundamental ilmiy ishlar yaratgan."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Fitratning sharq romantizmi va mustamlakachilikka qarshi isyon ruhi ifodalangan dramasi qaysi?',
-                        'options': [
-                            'Padarkush',
-                            'Hind ixtilolchilari',
-                            'Maysaraning ishi',
-                            'Muxbir'
-                        ],
-                        'answer': 1,
-                        'explain': "'Hind ixtilolchilari' dramasi ingliz mustamlakachiligiga qarshi kurashgan hind xalqi harakatiga bag'ishlangan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Abdurauf Fitrat va uning dramaturgiyasini o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "'Abulfayzxon' dramasida 'Qon qon bilan yuvilmas, suvsiz yuvilmas' g'oyasi qanday aks etganini yozing.",
-                            'answer': "O'quvchi zolim hukmdorning taxt uchun to'kkan qonlari oxir-o'zini ham haloq qilganini izohlaydi.",
-                            'hint': 'Abulfayzxonning saroydagi fitnalari va mantiqiy oqibatini keltiring.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Fitratning 'O mezonzbek klassik musiqasi va uning tarixi' asarining milliy san'atimizdagi o'rnini yoritib bering."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'oybekning-navoiy-romani-va-tarixiy-psixologizm',
-                'title': "Oybekning 'Navoiy' romani va tarixiy psixologizm",
-                'summary': "Musa Toshmuhammad o'g'li Oybekning 'Navoiy' romanida ulug' shoir va mutafakkir Alisher Navoiy siymosining hamda XV asr Muhitining ruhiy va ijtimoiy tasviri.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Oybek (Musa Toshmuhammad o'g'li) (1905–1968) — o'zbek adabiyotida tarixiy roman janrini yuksak psixologik bosqichga olib chiqqan adib va nazokatli shoirdir. Uning 'Navoiy' (1944) romani jahonning ko'plab tillariga tarjima qilingan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Asardagi psixologik va tarixiy tasvir',
-                        'body': "Romanda Alisher Navoiy va Husayn Boyqaro munosabatlari, Hirot madaniy hayoti va oddiy xalq vakillari (To'xtasin, Majididdin) o'rtasidagi ijtimoiy ziddiyatlar psixologik teranlik bilan tasvirlanadi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Romanning kompozitsion tarmoqlari',
-                        'items': [
-                            'Saray va davlat boshqaruvi (Navoiy va Boyqaro xarakterlari)',
-                            "Xalq hayoti va isyoni (To'xtasin hamda kosiblar xarakteri)",
-                            "Badiiy ijod va falsafa (Navoiyning 'Xamsa' yozish jarayoni)"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Oybek ushbu romanida Navoiyni mo''jizakor afsonaviy shaxs emas, balki tirik, quvonadigan va iztirob chekadigan komil inson sifatida ko'rsatgan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Oybekning 'Navoiy' romani nechanchi yilda yozib tugatilgan hamda nashr etilgan?",
-                        'options': [
-                            '1930-yil',
-                            '1944-yil',
-                            '1955-yil',
-                            '1960-yil'
-                        ],
-                        'answer': 1,
-                        'explain': "Oybek ikkinchi jahon urushi yillarida — 1944-yilda 'Navoiy' romanini muvaffaqiyatli yakunlagan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Romanda Husayn Boyqaro faqat ijobiy va benuqson hukmdor sifatida tasvirlangan.',
+                        'q': "Yo'lovchi aylanmasining tezligi va masofasi bo'yicha dengiz transporti yetakchilik qiladi.",
                         'answer': False,
-                        'explain': "Noto'g'ri. Boyqaro ma'rifatparvar shoh bo'lishi bilan birga, kayf-safa va saroy maishatiga beriluvchan, ikkilanuvchi shaxs sifatida berilgan."
+                        'explain': "Uzoq masofalarga yo'lovchilar tashishda havo (aviatsiya) transporti birinchi o'rinda turadi."
                     },
                     {
                         'type': 'mc',
-                        'q': "Oybekning avtobiografik xarakterga ega bo'lgan qaysi mashhur qissasi bor?",
+                        'q': "Qaysi bo'g'oz orqali dunyo neftining chorak qismi dengiz tankyerlarida tashiladi?",
                         'options': [
-                            "Qutlug' qon",
-                            'Oltin vodiydan shabadalar',
-                            'Bolalik',
-                            "G'unchalar"
+                            "Bering bo'g'ozi",
+                            "Magellan bo'g'ozi",
+                            "Hormuz bo'g'ozi",
+                            "Gibraltar bo'g'ozi"
                         ],
                         'answer': 2,
-                        'explain': "'Bolalik' qissasi Oybekning o'z yoshligi va davr hayoti haqida yozgan mahoratli avtobiografik asaridir."
+                        'explain': "Fors qo'ltig me'yoridagi Hormuz bo'g'ozi neft tashishdagi eng muhim geostrategik nuqtadir."
                     }
                 ],
                 'homework': {
-                    'intro': "Oybekning 'Navoiy' romanini o'rganish va tahlil qilish.",
+                    'intro': 'Xalqaro transport marshrutlarini xaritada tahlil qiling.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Romandagi Majididdin va Alisher Navoiy o'rtasidagi ijtimoiy va axloqiy qarama-qarshilikni yozing.",
-                            'answer': "O'quvchi xalq g'amini yeydigan Navoiy va o'z manfaati hamda mansab uchun fittna qiluvchi Majididdinni solishtiradi.",
-                            'hint': 'Majididdinning soliqlar va saroy fitnalaridagi rolini tasvirlang.'
+                            'prompt': "'O'zbekiston-Xitoy-Qirg'iziston' temir yo'li qurilishining O'zbekiston uchun iqtisodiy ahamiyatini tushuntiring.",
+                            'answer': "O'zbekistonga Tinch okeani portlariga eng qisqa yo me'yor orqali chiqish va tranzit salohiyatini oshirish imkonini beradi.",
+                            'hint': 'Okeanga chiqish va masofa qisqarishini hisobga oling.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Nima uchun Oybek Navoiy obrazini yaratishda uning poetik ijodidan ko'ra davlat va xalq uchun qilgan fidoyiligiga ko'proq урg'u bergan?"
+                            'prompt': 'Konteynerlashtirish (containerization) jarayoni logistada qanday inqilob qildi?'
                         }
                     ]
                 }
             },
             {
-                'slug': 'gafur-gulom-va-maqsud-shayxzoda-poeziyasi',
-                'title': "G'afur G'ulom va Maqsud Shayxzoda poeziyasi",
-                'summary': "XX asr o'zbek she'riyatining ikki yirik vakili — G'afur G mezonulomning hayotiy falsafiy she'riyati hamda Maqsud Shayxzodaning intellektual va dramatik poeziyasi.",
-                'duration': 20,
+                'slug': 'xalqaro-iqtisodiy-integratsiya-va-bloklar',
+                'title': 'Xalqaro iqtisodiy integratsiya va bloklar (Yevroittifoq, ASEAN, BRIX)',
+                'summary': 'Mavzuda hududiy iqtisodiy integratsiyalashuv, erkin savdo zonalari hamda yirik xalqaro uyushmalar tahlil qilinadi.',
+                'duration': 35,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "G'afur G'ulom va Maqsud Shayxzoda adabiyotimizga falsafiy teranlik, intellektual fikr va otashin ritorikani olib kirgan shoirlardir. Ularning asarlari inson qadr-qimmati, tarixiy xotira hamda umumbashariy qadriyatlarga boy."
+                        'title': 'Iqtisodiy integratsiya tushunchasi',
+                        'body': "Xalqaro iqtisodiy integratsiya — bu davlatlar o'rtasida milliy xo'jaliklarning o'zaro birikishi va chuqur kooperatsiya aloqalarining o'rnatilishi jarayonidir. Uning bosqichlari: Erkin savdo zonasi -> Bojxona ittifoqi -> Umumiy bozor -> Iqtisodiy va valyuta ittifoqi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Shoirlarning durdona asarlari',
-                        'body': "G'afur G'ulom: 'Senga kalit beraman', 'Sening toychoq' she'rlari hamda 'Shum bola' qissasi.\nShayxzoda: 'Mirzo Ulug'bek', 'Jalaliddin Manguberdi' dramalari va 'Toshkentnoma' doston-romani."
+                        'title': 'Yevropa Ittifoqi (YI)',
+                        'body': "Yevropa Ittifoqi (EU) — eng chuqur integratsiyalashgan birlashma bo'lib, unga 27 ma mamlakat a'zo. U umumiy valyuta (Yevro), yagona bozor va chegarasiz harakatlanish (Shengen zonasi) tizimiga ega."
                     },
                     {
                         'type': 'steps',
-                        'title': "G'afur G'ulom she'riyatining xususiyatlari",
+                        'title': 'Asosiy iqtisodiy va siyosiy bloklar',
                         'items': [
-                            'Xalqona hazil va chuqur optimizm',
-                            "Falsafiy umumlashma va publitsistik jo'shqinlik",
-                            'Bolalar ruhiyatini teran bilish'
+                            "ASEAN: Janubiy-Sharqiy Osiyo davlatlari assotsiatsiyasi (mintaqaviy barqarorlik va iqtisodiy o'sish).",
+                            'USMCA (sobiq NAFTA): Shimoliy Amerika erkin savdo hududi (AQSh, Kanada, Meksika).',
+                            'BRICS (BRIX): Tez rivojlanayotgan yirik mamlakatlar ittifoqi (Braziliya, Rossiya, Hindiston, Xitoy, JARS va boshqalar).'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: G'afur G'ulomning 'Sening toychoq' she'ri Urush yillarida yetim qolgan bolalarga bag'ishlangan eng ta'sirli asardir."
+                        'body': 'Esda tuting: SHTT (Shanhay Hamkorlik Tashkiloti) — Yevroosiyoda xavfsizlik va iqtisodiy hamkorlikni rivojlantiruvchi muhim blokdir.'
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'Sen yetim emassan...' degan mashhur otashin misralar qaysi shoir qalamiga mansub?",
+                        'q': 'Eng yuqori va chuqur bosqichdagi iqtisodiy integratsiya birlashmasi qaysi?',
                         'options': [
-                            'Maqsud Shayxzoda',
-                            "G'afur G'ulom",
-                            'Erkin Vohidov',
-                            'Hamid Olimjon'
+                            'ASEAN',
+                            'Yevropa Ittifoqi (YI)',
+                            'MERKOSUR',
+                            'OPEK'
                         ],
                         'answer': 1,
-                        'explain': "G'afur G'ulomning 'Sening toychoq' (Sen yetim emassan) she'ri bag'rikenglikning yuksak madhiyasidir."
+                        'explain': 'Yevropa Ittifoqi yagona valyuta va iqtisodiy-siyosiy hamkorlik darajasiga yetgan eng mukammal integratsiyadir.'
                     },
                     {
                         'type': 'tf',
-                        'q': "Maqsud Shayxzoda 'Mirzo Ulug'bek' tarixiy tragediyasini yozgan.",
-                        'answer': True,
-                        'explain': "Ha, Shayxzodaning 'Mirzo Ulug'bek' dramasi o'zbek dramaturgiyasining cho'qqilaridan biri hisoblanadi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "G'afur G'ulomning bolalar hayotidan olingan va sarguzashtlarga boy mashhur qissasi qaysi?",
-                        'options': [
-                            'Yodgor',
-                            'Shum bola',
-                            'O mezonzbekiston',
-                            "Mening o'g'rigina bolam"
-                        ],
-                        'answer': 1,
-                        'explain': "'Shum bola' qissasi G'afur G'ulomning yumor va hayotiy qiziqarliligi bilan ajralib turuvchi asaridir."
-                    }
-                ],
-                'homework': {
-                    'intro': "G'afur G'ulom va Shayxzoda ijodini tahlil qilish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "G'afur G'ulomning 'Sening toychoq' she'ridagi bag'rikenglik va insonparvarlik g'oyasini tahlil eting.",
-                            'answer': "O'quvchi o'zbek xalqining yetim bolalarga quchoq ochishi va bag'rikengligini yozadi.",
-                            'hint': "Shoirning o'z farzandlari bilan yetim bolalarni teng ko'rishi sahnalarini ta'riflang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Maqsud Shayxzodaning 'Mirzo Ulug'bek' tragediyasida ilm va jaholat o'rtasidagi toqnashuvni sharhlang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'abdulla-qahhor-hikoyalarida-xarakter-yaratish',
-                'title': 'Abdulla Qahhor hikoyalarida uslub va xarakter yaratish',
-                'summary': "O'zbek hikoyachiligining munosib ustasi Abdulla Qahhor asarlaridagi so'z tejamkorligi, xarakter va maishiy detallar mahorati.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Abdulla Qahhor (1907–1968) — o'zbek adabiyotida hikoya janrini mukammallik darajasiga ko'targan zabardast yozuvchi. U 'O'zbek adabiyotining Chexovi' deb tan olingan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Qahhor hikoyachiligi va detali',
-                        'body': "Hikoyalar: 'Anor', 'Dahshat', 'Bemor', 'O'g'ri', 'Mavizli pashsha'.\nQahhor birgina kichik detal (masalan, 'Anor'dagi anor po'chog'i yoki 'Bemor'dagi kosa) orqali butun bir ijtimoiy fojia va qahramon ruhiyatini ochib bera oladi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Qahhor uslubining 3 oltin qoidasi',
-                        'items': [
-                            "So'z tejamkorligi (ortiqcha tasvirlarsiz, aniq va loqis nutq)",
-                            'Badiiy detalning yuklama darajasi',
-                            'Ijtimoiy fojea va xarakterning psixologik toqnashuvi'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Qahhor 'So'zga adabsizlik — bu fojia' deya ta'kidlagan va har bir so'z ustida yillab ishlagan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Abdulla Qahhorning qaysi hikoyasida qashshoqlik sababli kasal xotiniga anor olib bera olmagan Turabning fojiasi tasvirlanadi?',
-                        'options': [
-                            'Bemor',
-                            'Anor',
-                            "O'g'ri",
-                            'Dahshat'
-                        ],
-                        'answer': 1,
-                        'explain': "'Anor' hikoyasida kambag'allik va ijtimoiy tengsizlik asoratlari anor vositasida ko'rsatilgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Abdulla Qahhor faqat hikoyalar yozgan, u komediya va roman Janrida ishlamagan.',
+                        'q': "BRICS (BRIX) faqat Yevropa davlatlarini o'z ichiga olgan harbiy blokdir.",
                         'answer': False,
-                        'explain': "Noto'g'ri. Qahhor 'Sarab' romani va 'Shohi sozana', 'Tobutdan tovush' kabi mashhur pyesalar ham yaratgan."
+                        'explain': 'BRICS rivojlanayotgan yirik iqtisodiyotli mamlakatlar (Braziliya, Rossiya, Hindiston, Xitoy, JARS va h.k.) iqtisodiy uyushmasidir.'
                     },
                     {
                         'type': 'mc',
-                        'q': "Qahhorning 'Dahshat' hikoyasidagi jasorat ko'rsatishga majbur bo'lib, mozoristonda halok bo'lgan jasur qiz kim?",
+                        'q': 'Janubiy-Sharqiy Osiyo mamlakatlarini birglashtirgan regional tashkilot qaysi?',
                         'options': [
-                            'Unsin',
-                            'Kibriyo',
-                            'Sotiboldining xotini',
-                            'Zebi'
+                            'NAFTA',
+                            'ASEAN',
+                            'YI',
+                            'LAI'
+                        ],
+                        'answer': 1,
+                        'explain': 'ASEAN (Association of Southeast Asian Nations) Janubiy-Sharqiy Osiyo davlatlari guruhidir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Xalqaro tashkilotlar va iqtisodiy bloklarga bag'ishlangan topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O'zbekiston a'zo va kuzatuvchi bo'lgan 2 ta xalqaro/mintaqaviy tashkilotni yozing.",
+                            'answer': "BMT, SHTT, MDH (a'zo); YOI (EAEU - kuzatuvchi), JSST (Jahon savdo tashkiloti - muzokaralar olib bormoqda).",
+                            'hint': "O'zbekistonning tashqi siyosatini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Iqtisodiy integratsiyaning a'zo mamlakat iqtisodiyotiga beradigan ijobiy va salbiy ta'sirlarini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'geosiyosat-va-siyosiy-geografiya-asoslari',
+                'title': 'Geosiyosat va siyosiy geografiya asoslari',
+                'summary': "Geosiyosiy nazariyalar (Xartlend, Rimland), davlatlar kuch-qudrati va siyosiy-geografik o'rin tahlili.",
+                'duration': 35,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Geosiyosat tushunchasi va rivojlanishi',
+                        'body': "Geosiyosat — davlatlarning tashqi va ichki siyosatini geografik omillar (hudud, joylashuv, resurslar, iqlim) nuqtai nazaridan o'rganuvchi fandir. Asosiy tushunchalarga 'Xartlend' (Yevroosiyo ichki hududi), 'Rimland' (sohil bo'yi hududlari) va 'Dengiz kuchi' (Talassokratiya) hamda 'Quruqlik kuchi' (Tellurokratiya) kiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Xartlend nazariyasi',
+                        'body': "Xalford Makkinder tomonidan ilgari surilgan nazariyaga ko'ra, Yevroosiyoning markaziy qismi (Xartlend) kimning nazorati ostida bo'lsa, u 'Dunyo oroli'ni va o'z navbatida butun dunyoni nazorat qiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Geosiyosiy omillar',
+                        'items': [
+                            "Geografik o'rin: Dengizga chiqish imkoniyati, qo'shni davlatlarning barqarorligi.",
+                            'Resurs salohiyati: Energetika, oziq-ovqat va chuchuk suv resurslariga egalik.',
+                            'Demografik va harbiy salohiyat: Aholi soni, yosh tarkibi va armiya qudrati.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Markaziy Osiyo geografik joylashuviga ko'ra Yevroosiyoning geosiyosiy markazida (Xartlendda) joylashgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Xartlend' (Yer yuragi) nazariyasining muallifi kim?",
+                        'options': [
+                            'A. Mahan',
+                            'X. Makkinder',
+                            'N. Spikmen',
+                            'F. Ratsel'
+                        ],
+                        'answer': 1,
+                        'explain': 'Britaniyalik geograf Xalford Makkinder 1904-yilda Xartlend nazariyasini taklif etgan.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Talassokratiya davlatlari bu asosan quruqlik va harbiy-quruqlik kuchiga tayanadigan mamlakatlardir.',
+                        'answer': False,
+                        'explain': 'Talassokratiya — bu dengiz kuchi va dengiz savdosiga tayanadigan davlatlardir (masalan, Buyuk Britaniya, AQSh).'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Rimland (Yevroosiyoning sohil bo'yi mintaqasi) nazariyasini kim ishlab chiqqan?",
+                        'options': [
+                            'Nikolas Spikmen',
+                            'Karl Haushofer',
+                            'Immanuil Kant',
+                            'Alexander von Humboldt'
                         ],
                         'answer': 0,
-                        'explain': "Unsin — 'Dahshat' hikoyasidagi oriyat va sharaf yo'lida qurbon bo'lgan matonatli qiz obrazidir."
+                        'explain': "Nikolas Spikmen Rimland nazariyasini ilgari surib, sohil zonalarining geosiyosiy ahamiyatini ko'rsatgan."
                     }
                 ],
                 'homework': {
-                    'intro': "Abdulla Qahhor hikoyachilik san'atini o'rganish.",
+                    'intro': "Geosiyosiy tushunchalar bo'yicha tahliliy insho yozing.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Abdulla Qahhorning 'Bemor' hikoyasidagi Sotiboldi va tabib munosabatlarini badiiy detal orqali tahlil qiling.",
-                            'answer': "O'quvchi jaholat, xurofot va chorasizlik asoratlarini xotinining o mezonlimi bilan tugagan fojeada tahlil etadi.",
-                            'hint': 'Sotiboldining chiroq va afsunlarga umid qilish sahnasini eslang.'
+                            'prompt': 'Markaziy Osiyoning zamonaviy geosiyosatdagi ahamiyati nimada?',
+                            'answer': 'Yevroosiyo markazida transport koridorlari chorrahasida joylashganligi va boy energetika resurslariga egaligi sababli.',
+                            'hint': "Xartlend, resurslar va transport yo'llarini hisobga oling."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Nega Abdulla Qahhor 'Hikoya yozish so'z bilan rasm chizishdir' deb hisoblagan?"
+                            'prompt': "'Dengiz kuchi' va 'Quruqlik kuchi' o'rtasidagi geosiyosiy raqobatga tarixiy va zamonaviy misollar keltiring."
                         }
                     ]
                 }
             },
             {
-                'slug': 'erkin-vohidov-va-abdulla-oripov-poeziyasi',
-                'title': "Erkin Vohidov va Abdulla Oripov poeziyasida milliy g'oya",
-                'summary': "XX asrning ikkinchi yarmi o'zbek she'riyatining ikki darg'asi — Erkin Vohidov va Abdulla Oripov ijodidagi milliy o'zlikni anglash va falsafiy teranlik.",
-                'duration': 25,
+                'slug': 'geoekologiya-va-global-ekologik-muammolar',
+                'title': 'Geoekologiya va global ekologik muammolar',
+                'summary': "Mavzu insoniyat va tabiat o'rtasidagi ta'sir, global isish, cho'llashish, ozon qatlamining yemirilishi hamda BMT Barqaror Rivojlanish Maqsadlarini qamrab oladi.",
+                'duration': 35,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Erkin Vohidov (1936–2016) va Abdulla Oripov (1941–2016) — 60-yillarda adabiyotga kirib kelib, o'zbek she'riyatiga yangi nafas va samimiyat olib kirgan zabardast shoirlardir. Ularning she'riyati milliy uyg'onishga xizmat qildi."
+                        'title': 'Geoekologiya tushunchasi va muammolar',
+                        'body': "Geoekologiya — geografik muhit va inson jamiyati o'rtasidagi o'zaro ta'sirlarni, ekologik muammolarning hududiy tarqalishini o'rganadi. Insoniyat bugun global darajadagi ekologik inqirozlar bilan to me'yosh kelmoqda."
                     },
                     {
                         'type': 'example',
-                        'title': 'Shoirlarning shoh asarlari',
-                        'body': "Erkin Vohidov: 'O'zbegim' qasidasi, 'Ruhlar isyoni' doston, 'Oltin devor' komediyasi.\nAbdulla Oripov: O'zbekiston Respublikasi Davlat Madhiyasi matni, 'O'zbekiston' qasidasi, 'Jannatga yo'l' doston."
+                        'title': 'Global isish va Issiqxona effekti',
+                        'body': "Atmosferaga karbonat angidrid (CO2) va metan kabi gazlarning ko'p chiqishi issiqxona effektini kuchaytirmoqda. Bu muzliklarning erishiga, Dunyo okeani sathining ko'tarilishiga va keskin ob-havo hodisalarining ortishiga olib keladi."
                     },
                     {
                         'type': 'steps',
-                        'title': "Poetik uslubdagi farqlar va o'xshashliklar",
+                        'title': 'Asosiy global geoekologik muammolar',
                         'items': [
-                            "Erkin Vohidov: Klassik an'ana (g'azaliylik), sharqona shirin kalom va badiiy nafosat",
-                            "Abdulla Oripov: Falsafiy dramatizm, o'tkir dramatik toqnashuv va iztirobli o'ylar",
-                            "Ikkalasida ham: Millat ravnaqi, vatan tuyg'usi va insoniylikni ulug'lash"
+                            "Global iqlim o'zgarishi: O'rtacha haroratning ko'tarilishi.",
+                            "Ozon teshigi: Stratosferadagi ozon qatlamining freonlar ta'sirida yemirilishi.",
+                            "Cho'llashish va tuproq degradatsiyasi: Noto me me'yroiy dehqonchilik va o'rmonlarning qisqarishi.",
+                            "Biologik xilma-xillikning kamayishi: Hayvon va o'simlik turlarining yo'qolishi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Ikkala shoir ham O'zbekiston Qahramoni oliy unvoniga sazovor bo'lishgan."
+                        'body': "Esda tuting: Parij iqlim bitimi (2015) global harorat ko'tarilishini 1.5 - 2 Selsiy darajasida ushlab turishni maqsad qilgan."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "O'zbekiston Respublikasi Davlat Madhiyasining matn muallifi kim?",
+                        'q': 'Ozon qatlamining asosiy vazifasi nimadan iborat?',
                         'options': [
-                            'Erkin Vohidov',
-                            'Abdulla Oripov',
-                            'Muhammad Yusuf',
-                            'Zulfiya'
+                            'Yerda issiqlikni saqlash',
+                            "Quyoshning zararli ultrabinafsha (UV) nurlarini to'sish",
+                            'Atmosfera bosimini tartibga solish',
+                            'Bulutlarni hosil qilish'
                         ],
                         'answer': 1,
-                        'explain': "O'zbekiston Madhiyasi matnini O'zbekiston Qahramoni, xalq shoiri Abdulla Oripov yozgan."
+                        'explain': 'Ozon qatlam Quyoshdan keladigan zararli ultrabinafsha radiatsiyani shimib oladi.'
                     },
                     {
                         'type': 'tf',
-                        'q': "Erkin Vohidovning 'O'zbegim' qasidasi milliy o'zlikni anglash va adabiyotimiz rivojida muhim burilish bo'lgan.",
-                        'answer': True,
-                        'explain': "Ha, 'O'zbegim' qasidasi shoirning milliy gurur va o'zlikni kuylagan eng yuksak va jasoratli asarlaridan biridir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Erkin Vohidovning Nazrul Islom hayotiga bag'ishlangan dostoni qaysi?",
-                        'options': [
-                            "Jannatga yo'l",
-                            'Ruhlar isyoni',
-                            'Oltin devor',
-                            'Daniya'
-                        ],
-                        'answer': 1,
-                        'explain': "'Ruhlar isyoni' dostoni hind-bengal shoiri Nazrul Islomning erksevarligi haqidagi buyuk doston sanaladi."
-                    }
-                ],
-                'homework': {
-                    'intro': "Erkin Vohidov va Abdulla Oripov poeziyasini o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Erkin Vohidovning 'O'zbegim' qasidasi va Abdulla Oripovning 'O'zbekiston' she mezonridagi umumiy va o'ziga xos xususiyatlarni yozing.",
-                            'answer': "O'quvchi har ikkala asardagi milliy g'urur va vatanga bo'lgan sevgini tahlil qiladi.",
-                            'hint': "Tarixiy shaxslar va vatan madhiga berilgan urg'uni qiyoslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Abdulla Oripovning 'Munojotni tinglab' she'ridagi milliy musiqaga va ruhiyatga berilgan bahoni izohlang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'utkir-hoshimov-asarlarida-manaviy-muammolar',
-                'title': "O'tkir Hoshimov asarlarida ma'naviy-axloqiy muammolar",
-                'summary': "O'tkir Hoshimovning 'Dunyoning ishlari', 'Ikki eshik orasi', 'Tushda kechgan umrlar' asarlarida insoniylik, vafo va urush asoratlari tasviri.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "O'tkir Hoshimov (1941–2013) — kitobxonlar qalbidan chuqur joy olgan, samimiy va xalqona yozuvchi. Uning asarlarida ota-ona hurmati, samimiy sevgiga vafo hamda insoniy burch masalalari yetakchilik qiladi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "O'tkir Hoshimovning eng mashhur asarlari",
-                        'body': "'Dunyoning ishlari' (Ona haqida qissa-hikoyalar to'plami).\n'Ikki eshik orasi' (Urush va urushdan keyingi davrdagi insonlar taqdiri va xiyonat hamda sadoqat romani).\n'Tushda kechgan umrlar' (Afg'on urushi va sho'ro tuzumining fojialari)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "O'tkir Hoshimov prozasining xususiyatlari",
-                        'items': [
-                            "Ona siymosini yuksak ma'naviyat bilan tasvirlash",
-                            'Urushning inson ruhiyatiga yetkazgan chuqur jarohatlari',
-                            "Soddalik va ta'sirchan badiiy dilkashlik"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: 'Dunyoning ishlari' asari muallifning o'z onasiga bag'ishlangan samimiy va ruhiy xotiralar to'plamidir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'tkir Hoshimovning onasining xotirasiga bag'ishlab yozgan mashhur qissasi qaysi?",
-                        'options': [
-                            'Ikki eshik orasi',
-                            'Dunyoning ishlari',
-                            'Bahor qaytmaydi',
-                            'Nur borki, soya bor'
-                        ],
-                        'answer': 1,
-                        'explain': "'Dunyoning ishlari' asari onaga qo'yilgan badiiy haykal bo'lib, xalqona soddalik bilan yozilgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "'Ikki eshik orasi' romanida voqealar faqat bir inson — Muzaffar tilidan berilgan.",
+                        'q': "Orol dengizining qurishi faqat mahalliy muammo bo'lib, global ekologiyaga ta'siri yo'q.",
                         'answer': False,
-                        'explain': "Noto'g'ri. Roman ko'p ovozli (polifonik) bo'lib, voqealar turli qahramonlar (Kimsan, Robiya, Umarzaq va b.) tilidan so'zlanadi."
+                        'explain': "Orolqumdan ko'tarilgan tuz va chang hatto Arktika hamda Himolay muzliklarida ham topilgan, bu mintaqaviy va global ekologik muammodir."
                     },
                     {
                         'type': 'mc',
-                        'q': "O'tkir Hoshimovning Afg'onistonda urush qilgan yoshlar taqdiri va fojeasini yoritgan romani qaysi?",
+                        'q': "Cho'llashish jarayoniga qarshi kurash bo'yicha eng yirik xalqaro loyihalardan biri qaysi?",
                         'options': [
-                            'Ikki eshik orasi',
-                            'Tushda kechgan umrlar',
-                            'Bahor qaytmaydi',
-                            'Daftar hoshiyasidagi bitiklar'
-                        ],
-                        'answer': 1,
-                        'explain': "'Tushda kechgan umrlar' romani afg'on urushi va sobiq sho mezonro davri soxtaliklarini fosh etadi."
-                    }
-                ],
-                'homework': {
-                    'intro': "O'tkir Hoshimov prozasini tahlil qilish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "'Dunyoning ishlari' qissasidagi 'Ona' obraziga xos 3 ta ma'naviy sifatni va biror hikoyacha misolini yozing.",
-                            'answer': "O mezonquvchi fidoiylik, mehribonlik va kamsuqumlik sifatlarini 'Gilam paypoq' yoki 'Oq o'lan' hikoyachalarida ko'rsatadi.",
-                            'hint': "Onaning o'z ehtiyojidan ko'ra farzandlarini ustun qo mezonyishini eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "'Ikki eshik orasi' romanidagi Robiya va Kimsan munosabatlaridagi sadoqat va burch tuyg'usini tahlil qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'shekspir-va-jahon-dramaturgiyasi',
-                'title': 'Jahon adabiyoti: Uilyam Shekspir va jahon dramaturgiyasi',
-                'summary': "Uyg'onish davri ingliz adabiyotining daho dramaturgi Uilyam Shekspir va uning 'Gamlet', 'Otello' hamda 'Rromeo va Julyetta' asarlaridagi umumbashariy g'oyalar.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Uilyam Shekspir (1564–1616) — Uyg'onish davri (Renessans) adabiyotining buyuk namoyandasi va jahon dramaturgiyasining cho'qqisidir. U insoniy tuyg'ular, ehtiros va ziddiyatlarni yuksak dramatik san'at bilan tasvirlagan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Shekspir fojialari',
-                        'body': "'Gamlet' (haqiqat va ikkilanish, 'Yashamoq yoki yo mezonq bo'lmoq' muammosi).\n'Otello' (ishonch va rashk hiylalari).\n'Romeo va Julyetta' (muhabbatning qabilaviy dushmanlikdan ustunligi va fojiasi)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Shekspir dramaturgiyasining belgilari',
-                        'items': [
-                            'Xarakterlarning murakkab va psixologik teranligi',
-                            "Yovuzlik va Ezgulik o'rtasidagi abadiy murosaiz kurash",
-                            "She'riy dialoglar va yuksak falsafiy monologlar"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Shekspir asarlari o'zbek tiliga Cho'lpon, G'afur G'ulom, Maqsud Shayxzoda va Qahhor kabi ulkan adiblar tomonidan yuksak mahorat bilan tarjima qilingan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Yashamoq yo o'lmoq — na gap shundadir...' degan mashhur monolog qaysi asardan olingan?",
-                        'options': [
-                            'Otello',
-                            'Qirol Lir',
-                            'Gamlet',
-                            'Makbet'
-                        ],
-                        'answer': 2,
-                        'explain': "Bu monolog Shekspirning 'Gamlet' tragediyasida shahzoda Gamletning hayot va o'lim haqidagi falsafiy o'yidir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "'Romeo va Julyetta' tragik asari oilalar o'rtasidagi adovat tufayli ikki yoshning fojiasi bilan tugaydi.",
-                        'answer': True,
-                        'explain': "Ha, Montekki va Kapuletti xonadonlari adovati fojiaviy o'limga va oxir-oqibat kechikkan sulhga olib keladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Shekspirning 'Otello' tragediyasini o'zbek tiliga kim mahorat bilan tarjima qilgan?",
-                        'options': [
-                            "G'afur G'ulom",
-                            "Cho'lpon",
-                            'Abdulla Qahhor',
-                            'Oybek'
-                        ],
-                        'answer': 1,
-                        'explain': "Cho'lpon Shekspirning 'Otello' hamda 'Hamlet' tragediyalarini o'zbek tiliga tarjima qilib badiiy durdona yaratgan."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Uilyam Shekspir va uning asarlari tahlili.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "'Gamlet' tragediyasidagi Gamlet va Yago ('Otello'dagi) obrazlarini xarakter jihatdan taqqoslang.",
-                            'answer': "O'quvchi haqiqat izlovchi Gamlet bilan hiylakor, hasadgo'y Yagoni solishtiradi.",
-                            'hint': 'Biri ezgulik va shubha azobida, ikkinchisi esa yovuzlik fitnasida harakat qiladi.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Shekspir tragediyalarining necha asrlardan beri o'z qiymatini yo'qotmay kelayotganining siri nimada?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'xeminguy-va-yoqotilgan-avlod-adabiyoti',
-                'title': "Jahon adabiyoti: Ernest Xeminguy va 'yo'qotilgan avlod' adabiyoti",
-                'summary': "XX asr amerika adabiyotining atoqli vakili Ernest Xeminguyning 'Aysberg nazariyasi' hamda 'Chil va dengiz', 'Alvido, qurol!' asarlarining badiiy tahlili.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Ernest Xeminguy (1899–1961) — Nobel mukofoti laureati, XX asr jahon nasri uslubiga ulkan ta'sir ko'rsatgan yozuvchi. U 'yo'qotilgan avlod' (birinchi jahon urushi ruhiy jarohatlagan insonlar) adabiyotining eng yorqin namoyandasidir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Xeminguy va Aysberg nazariyasi',
-                        'body': "Aysbergning faqat 1/8 qismi suv ustida ko'rinadi. Xeminguy fikricha, yozuvchi asarda voqelikning faqat yuzasini yozishi, asosiy va chuqur falsafiy mazmun matn ostida (subtekst) yashirin bo'lishi kerak."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "'Chal chol va dengiz' qissasining g'oyasi",
-                        'items': [
-                            'Santiyago chol va uning ulkan baliq bilan tengsiz va shafqatsiz olishuvi',
-                            "Matonat va taslim bo'lmaslik harakati",
-                            "'Insonni tor-mor qilish mumkin, lekin uni yengib bo'lmaydi' g'oyasi"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Xeminguy uslubi — sodda, qisqa gaplar va ulkan ma'no yuklangan badiiy sukunatdir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Insonni tor-mor qilish mumkin, lekin uni yengib bo'lmaydi' iborasi qaysi asardan olingan?",
-                        'options': [
-                            'Alvido, qurol!',
-                            'Chol va dengiz',
-                            'Quyosh baribir chiqadi',
-                            "Qo'ng'iroq kimni chorlamoqda"
-                        ],
-                        'answer': 1,
-                        'explain': "Bu fikr Xeminguyning 'Chol va dengiz' qissasidagi Santiyago cholning iroda va matonat falsafasidir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Xeminguy yozuvchining uslubida ma'noni berkitmasdan, har bir ma'lumotni ochiq va batafsil tushuntirish kerak deb hisoblagan.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. U 'Aysberg nazariyasi'ga ko'ra asosiy ma'noni matn ostiga (subtekst) berkitish va kitobxonni fikrlashga majbur etish tarafdori bo'lgan."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Ernest Xeminguy 'Chol va dengiz' asari uchun qaysi xalqaro nufuzli mukofotga sazovor bo'lgan?",
-                        'options': [
-                            'Oskar mukofoti',
-                            'Nobel mukofoti',
-                            'Buker mukofoti',
-                            'Gonkur mukofoti'
-                        ],
-                        'answer': 1,
-                        'explain': "Xeminguy 1954-yilda ushbu asari va adabiyotdagi xizmatlari uchun Nobel mukofotini qo'lga kiritgan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Ernest Xeminguy va uning 'Aysberg nazariyasi'ni o'rganish.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "'Chol va dengiz' qissasidagi Santiyago chol va akulalar o'rtasidagi olishuv nimani ramziy aks ettiradi?",
-                            'answer': "O'quvchi bu olishuvni inson va shafqatsiz hayot hamda taqdir kurashi sifatida izohlaydi.",
-                            'hint': "Akulalarga elat bo'lgan baliq va cholning irodasini tasvirlang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "'Aysberg nazariyasi'ning zamonaviy o'zbek nasridagi ko'rinishlariga misollar keltiring."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'aruz-vazni-bahrlar-klassifikatsiyasi',
-                'title': 'Aruz vaznining tahliliy usullari va bahrlar klassifikatsiyasi',
-                'summary': "Oliy darajadagi poetiya: Aruz vaznidagi asosiy bahrlar (Raml, Hazaj, Rajaz, Mutaqorib va b.), ruknlar va تقطيع (taqti') tahlili.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Aruz vazni murakkab ichki ritmik tizimga ega. U asosiy 19 ta bahr va ularning tarmoqlaridan (axrab, axram va h.k.) tashkil topadi. Sheriy misrani taqti' qilish — aruzning aniq matematik kalitini topish demakdir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Asosiy bahr va ruknlar misolida',
-                        'body': "Raml bahri: 'Fa'ilātun fa'ilātun fa'ilātun fa'ilun' (Navoiyning ko'p g'azallari).\nHazaj bahri: 'Mafa'īlun mafa'īlun mafa'īlun mafa'īlun' (Ruboiylarning ba'zi shakllari hamda g'azallar).\nMutaqorib bahri: 'Fa'ūlun fa'ūlun fa'ūlun fa'ūl' ('Shohnoma', 'Qutadg'u bilig')."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Taqti' (she'r vaznini aniqlash) ketma-ketligi",
-                        'items': [
-                            "Misradagi bo'g'inlarni belgilash va ularni qisqa (v) va cho'ziq (-) belgilarga ajratish",
-                            "Bo'g'inlar shakliga mos aruz ruknlarini (Fa'ilātun, Mafā'īlun va b.) moslashtirish",
-                            'Bahr turini va uning musamman (8 ruknli) yoki musaddas (6 ruknli) ekanini aniqlash'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Imala, zihaf va tasxin aruzda bo'g mezon va vaqt mosligini ta'minlash uchun shoirlarga berilgan poetik erkinlik shakllaridir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Firdavsiyning 'Shohnoma' va Yugnakiyning 'Hibat ul-haqoyiq' asarlari aruzning qaysi bahrida yozilgan?",
-                        'options': [
-                            'Raml',
-                            'Hazaj',
-                            'Mutaqorib',
-                            'Rajaz'
-                        ],
-                        'answer': 2,
-                        'explain': "Ushbu mashhur dostonlar Aruzning 'Mutaqorib' bahri (Fa'ūlun fa'ūlun...)da yaratilgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Taqti' — bu aruz vaznida misralarni bo'g'inlarning cho'ziq va qisqaligi bo'yicha ruknlarga bo'lib chiqish usulidir.",
-                        'answer': True,
-                        'explain': "To'g'ri. Taqti' amaliyoti orqali she'rning aynan qaysi bahr va vaznda yozilgani ilmiy aniqlanadi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Aruzda 8 ta rukndan iborat vazn shakli qanday ataladi?',
-                        'options': [
-                            'Musaddas',
-                            'Musamman',
-                            "Murabba'",
-                            'Muhammas'
-                        ],
-                        'answer': 1,
-                        'explain': "Musamman — arabcha 'samaniya' (sakkiz) so'zidan olingan bo'lib, har bir baytida 8 rukn bo'lgan vazndir."
-                    }
-                ],
-                'homework': {
-                    'intro': "Aruz bahri va taqti' qilish vazifalari (Oliy daraja).",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Alisher Navoiyning 'Kech keldi-yu, qildi meni bormag'ay ramida...' baytining taqti'ini qiling va bahrini aniqlang.",
-                            'answer': "O mezonquvchi Ramal bahri musammani maqsur vaznida taqti' ketma-ketligini taqdim etadi.",
-                            'hint': "Fa'ilātun fa'ilātun fa'ilātun fa'ilun ruknlariga moslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': 'Imolaning aruz poetikasidagi ritmik va lingvistik rolini ilmiy izohlang.'
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'badiiy-asar-psixologizmi-va-ichki-monolog',
-                'title': 'Badiiy asar psixologizmi va ichki monolog nazariyasi',
-                'summary': 'Oliy adabiyotshunoslik: Badiiy asarda qahramonning ruhiy holatini ochib berish usullari, ichki monolog, psixologik parallellizm va subtekst.',
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': 'Badiiy psixologizm — yozuvchining insondagi ruhiy kechinmalar, botiniy toqnashuvlar hamda hissiyotlar dinamikasini badiiy vositalar orqali aks ettira olish mahoratidir. Bu oliy adabiyotshunoslikning markaziy muammolaridan biridir.'
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Psixologizmning vositalari',
-                        'body': "1. Ichki monolog (qahramonning o'zi bilan botiniy muloqoti).\n2. Tush tasviri (ruhiyatdagi yashirin qo'rquv va orzularning ramziy namoyon bo'lishi).\n3. Psixologik peyzaj (tabiat va qahramon kayfiyatining mosligi)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Psixologik tahlil darajalari',
-                        'items': [
-                            "Oshkor psixologizm (Muallif qahramon ruhiyatini to'g'ridan-to mezong'ri izohlaydi)",
-                            'Yashirin psixologizm (Qahramon harakati, xatti-harakati va imo-ishorasidan xulosa chiqariladi)',
-                            "Ong oqimi (Stream of consciousness — o'y-fikrlarning mantiqsiz va uzuq-yuluq zanjiri)"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Cholpon va Cho'lpon-Dostoyevskiy maktabi o'zbek nasrida psixologizmning teranlashuviga ulkan hissa qo mezonshgan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Qahramonning o'z-o'ziga qaratilgan, nutq organlarisiz, qalbida kechadigan uzluksiz o'y-xayollari nima deyiladi?",
-                        'options': [
-                            'Dialog',
-                            'Remarka',
-                            'Ichki monolog',
-                            'Epigraf'
-                        ],
-                        'answer': 2,
-                        'explain': "Ichki monolog — qahramon botiniy dunyosining to'g'ridan-to'g'ri kitobxonga ochilishidir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Psixologik peyzajda tabiat hodisalari va qahramonning ruhiy holati o'rtasida mantiqiy hamda emotsional bog'liqlik bo'ladi.",
-                        'answer': True,
-                        'explain': "Ha, masalan, qahramon iztirobdaligida fojiali yomg'ir va bo'ron tasvirlanishi psixologik peyzajdir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "'Ong oqimi' (Stream of consciousness) atamasi va usuli adabiyotga asosan qaysi yo me zonnalish orqali kirib kelgan?",
-                        'options': [
-                            'Klassitsizm',
-                            'Modernizm',
-                            'Realizm',
-                            'Sentimentalizm'
-                        ],
-                        'answer': 1,
-                        'explain': "'Ong oqimi' XX asr modernistik adabiyotining yetakchi usul va tushunchalaridan biridir."
-                    }
-                ],
-                'homework': {
-                    'intro': "Badiiy psixologizm bo'yicha nazariy va amaliy topshiriq.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "O'zbek adabiyotidan (masalan, 'O'tkan kunlar' yoki 'Kecha va kunduz') ichki monolog qo mezonllangan o'rinni topib, uning qahramon ruhiyatini ochishdagi va vazifasini yozing.",
-                            'answer': "O'quvchi Otabek yoki Zebining botiniy kechinmalari matnini tahlil qiladi.",
-                            'hint': "Qahramon yolg'iz qolgandagi o'y-fikrlarini keltiring."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Yashirin psixologizm va oshkor psixologizm o'rtasidagi farqni misollar bilan ilmiy asoslang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'adabiyotda-modernizm-va-postmodernizm',
-                'title': "Adabiyotda modernizm va postmodernizm yo'nalishlari",
-                'summary': "XX-XXI asr jahon va o'zbek adabiyotidagi modernistik, syurrealistik hamda postmodernistik yo'nalishlar, ularning poetikasi va uslubiy o'zgarishlari.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Modernizm va Postmodernizm — klassik realizm qoliplaridan voz kechib, shakliy, uslubiy va mazmuniy erkinlikka intilgan adabiy yo'nalishlardir. Ular voqelikni to'g'ridan-to'g'ri emas, balki ramzlar, absurd, dekonstruksiya va intertekstuallik orqali aks ettiradi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Postmodernizm vositalari',
-                        'body': "Intertekstuallik (boshqa matnlarga ishora va iqtiboslar bilan o'yin), Pastiche (uslubiy taqlid), Kichik va tarqoq syujet, Ironiya hamda muallifning asarga o'yin sifatida qarashi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Yo'nalishlarning asosiy vakillari",
-                        'items': [
-                            'Jahon adabiyoti: Frans Kafka, Jeyms Joys, Gabriel Garsiya Markes, Umberto Eko',
-                            "O'zbek adabiyoti: Nazar Eshanqul, Shukur Xolmirzayev (bazi hikoyalarida), Abduqayum Yo'ldoshev"
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Postmodernizmda qat'iy va mutlaq haqiqat tushunchasi yo'q, matn har bir kitobxonga har xil talqin qilish imkonini beradi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Sehrli realizm' (Magic realism) oqimining jahon adabiyotidagi eng atoqli vakili kim?",
-                        'options': [
-                            'Frans Kafka',
-                            'Gabriel Garsiya Markes',
-                            'Umberto Eko',
-                            'Ernest Xeminguy'
-                        ],
-                        'answer': 1,
-                        'explain': "Markes o'zining 'Yuz yil tanholikda' romani bilan sehrli realizm oqimining cho'qqisiga aylangan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Intertekstuallik — bu bir badiiy matn ichida boshqa ilgari yozilgan matnlarga ishora, ramz va iqtiboslar berish usulidir.',
-                        'answer': True,
-                        'explain': 'Ha, intertekstuallik postmodernistik matnlarning eng asosiy tayanchlaridan biri hisoblanadi.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbek adabiyotida modernistik va falsafiy-absurd yo mezonnalishda ijod qilgan, 'Maymun yetaklagan odam' hikoyasining muallifi kim?",
-                        'options': [
-                            "O'tkir Hoshimov",
-                            'Nazar Eshanqul',
-                            'Tohir Malik',
-                            "Erkin A'zam"
-                        ],
-                        'answer': 1,
-                        'explain': "Nazar Eshanqul o'zining 'Maymun yetaklagan odam', 'Urush odamlari' kabi asarlari bilan modernistik yo'nalish vakilidir."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Modernizm va postmodernizm hodisasini ilmiy tahlil qilish.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Klassik realizm va Modernizm o'rtasidagi 3 ta asosiy farqni ilmiy tilda bayon qiling.",
-                            'answer': 'O mezonquvchi mantiqiy syujet, xarakter tipi va voqelikka munosabatdagi farqlarni belgilaydi.',
-                            'hint': "Inson obraziga va dunyo tartibiga munosabatga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Nazar Eshanqulning 'Maymun yetaklagan odam' hikoyasidagi ramziylik va absurd motivlarni tahlil eting."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'qiyosiy-adabiyotshunoslik-komparativistika',
-                'title': 'Qiyosiy adabiyotshunoslik (Komparativistika) asoslari',
-                'summary': "Oliy maktab adabiyotshunosligi: Har xil milliy adabiyotlar o'rtasidagi g'oyaviy, janriy, syujet va poetik ta'sirlashuv hamda aloqalarni qiyosiy o'rganish.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Komparativistika (qiyosiy adabiyotshunoslik) — turli xalqlar adabiyoti, ularning o'zaro ta'siri, umumiyligi va farqlarini, tipologik o'xshashliklarini o'rganuvchi fan tarmog'idir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Qiyosiy tahlil misollari',
-                        'body': "1. Navoiy va Nizomiy 'Xamsa'larining tipologik va badiiy qiyosi.\n2. Cho'lpon lirikasi va Yapon xokkulari poetikasidagi o'xshashliklar.\n3. Shekspir va Fitrat dramalarida tamsiliy-falsafiy obrazlar."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Komparativistik tahlil metodlari',
-                        'items': [
-                            "Genezis va ta'sirni o'rganish (To'g'ridan-to mezong'ri ta'sirlanish va o'zlashtirish)",
-                            "Tipologik o'xshashlik (Bir-biridan bexabar holda o'xshash g'oyalar yaratilishi)",
-                            'Muloqot va tarjima adabiyotshunosligi'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Tipologik o'xshashlik har doim ham birovdan ko'chirish (plagiat) degani emas, bu insoniyat ruhiyati va jamiyat rivojining o'xshash qonuniyatlaridir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Turli milliy adabiyotlar va madaniyatlarni taqqoslab o'rganuvchi adabiyotshunoslik sohasi nima deyiladi?",
-                        'options': [
-                            'Hermenevtika',
-                            'Komparativistika',
-                            'Tekstologiya',
-                            'Poetika'
-                        ],
-                        'answer': 1,
-                        'explain': "Komparativistika (lotincha 'comparativus' — qiyosiy) — qiyosiy adabiyotshunoslikdir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Ikki turli shoirning bir-birini umuman o'qimagan holda o'xshash she'rlar yozishi 'Genetik ta'sirlanish' deyiladi.",
-                        'answer': False,
-                        'explain': "Noto'g'ri. Bu hodisa 'Tipologik o'xshashlik' deyiladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Alisher Navoiy va Aleksandr Pushkin poeziyasidagi insonparvarlik motividagi o'xshashlik qaysi tahlilga kiradi?",
-                        'options': [
-                            "Genetik ta'sir",
-                            'Tipologik taqqoslash',
-                            'Matnshunoslik',
-                            'Metrika'
-                        ],
-                        'answer': 1,
-                        'explain': "Turli davr va tildagi ikki buyuk shoirning g'oyaviy uyg'unligi tipologik taqqoslash orqali o'rganiladi."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Komparativistik tahlil topshiriqlari.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Alisher Navoiy va Nizomiy Ganjaviyning 'Farhod va Shirin' dostonlaridagi Farhod obrazi talqinidagi 2 ta o'xshashlik va 2 ta farqni ko'rsating.",
-                            'answer': 'O mezonquvchi Navoiyning Farhodni turkiy qahramon va komil inson sifatida takomillashtirganini izohlaydi.',
-                            'hint': "Navoiy Farhodni shoh o'g'li va san'atkor-yaratuvchi qilganiga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': 'Nima uchun badiiy tarjima komparativistikaning muhim predmeti hisoblanadi?'
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'adabiy-hermenevtika-va-poetik-tahlil',
-                'title': 'Adabiy hermenevtika va matn poetik tahlili metodologiyasi',
-                'summary': "Oliy adabiyotshunoslik nazariyasi: Matn ma'nosini talqin qilish va tushunish san'ati bo'lgan Hermenevtika hamda filologik va strukturistik tahlil metodologiyasi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kirish',
-                        'body': "Adabiy hermenevtika (grekcha 'hermeneutikos' — tushuntiraman, talqin qilaman) — badiiy matnlarning yashirin va ko'p qatlamli ma'nolarini tushunish, izohlash va talqin etish haqidagi ilmdir. U matn poetikasini har tomonlama ilmiy yoritadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Hermenevtik doira va tahlil',
-                        'body': "Hermenevtik doira prinsipi: Matn qismlarini tushunish uchun butun asarni bilish kerak, butun asarni yaxshi tushunish uchun esa uning har bir qismini va so'zini teran anglash lozim."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Badiiy matn tahlili bosqichlari',
-                        'items': [
-                            "Lingvo-poetik tahlil (So'z va semantik va poetik bo'yoq)",
-                            'Struktural va semiotik tahlil (Ramz va belgilarni o mezonqish)',
-                            'Kontekstual va madaniy-tarixiy talqin'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Badiiy matn — bu tugallanmas ma mezonnolar manbaidir; har bir davr va har bir kitobxona asardan yangi ma'no qatlamini kashf etadi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Badiiy matnlarni va ulardagi ko'p qatlamli ma'nolarni talqin qilish va tushunish ilmi nima deyiladi?",
-                        'options': [
-                            'Poetika',
-                            'Hermenevtika',
-                            'Fonetika',
-                            'Tekstologiya'
-                        ],
-                        'answer': 1,
-                        'explain': 'Hermenevtika — matnlarni sharhlash, talqin qilish va tushunish nazariyasidir.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "'Hermenevtik doira' prinsipiga ko'ra, matn qismlarini yaxshi tushunmasdan turib asarning butunligini teran anglab bo mezonlmaydi.",
-                        'answer': True,
-                        'explain': "Ha, qism va butunlik o'rtasidagi uzviy aloqadorlik hermenevtikaning asosiy doirasidir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Asardagi belgi va ramzlarni (metfora, simvol) maxsus kodlar va sistemalar sifatida o'rganuvchi fan qaysi?",
-                        'options': [
-                            'Semiotika',
-                            'Mifologiya',
-                            'Psixologiya',
-                            'Etimologiya'
+                            "Afrikadagi 'Yashil buyuk devor' loyihasi",
+                            'Suvaysh kanali loyihasi',
+                            'Panama kanali loyihasi',
+                            'Appalachi loyihasi'
                         ],
                         'answer': 0,
-                        'explain': "Semiotika — belgi va belgilar tizimlarini o'rganuvchi ilmdir."
+                        'explain': "Afrikada Sahroi Kabir kengayishiga qarshi 'Buyuk Yashil Devor' daraxtzorlar liniyasi barpo etilmoqda."
                     }
                 ],
                 'homework': {
-                    'intro': 'Matn poetikasi va hermenevtik talqin vazifasi.',
+                    'intro': "Geoekologik muammolar va ularning yechimlariga bag'ishlangan topshiriqlar.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Alisher Navoiyning biror muammo yoki fardidan bittasining hermenevtik va ilmiy talqinini yozib bering.',
-                            'answer': "O'quvchi yashirin ma'no va qatlamlarni so'z o'yinlari orqali ochib beradi.",
-                            'hint': "So'zlarning o'z va ko'chma ma mezonnolarini va ramzlarni tahlil qiling."
+                            'prompt': "BMT Barqaror Rivojlanish Maqsadlarining (BRM) ekologiyaga oid 2 ta maqsadini ko'rsating.",
+                            'answer': "13-maqsad: Iqlim o'zgarishiga qarshi kurash; 14-maqsad: Suv osti ekotizimlarini asrash; 15-maqsad: Quruqlikdagi ekotizimlarni asrash.",
+                            'hint': 'BMT SDG (Sustainable Development Goals) dasturini eslang.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Badiiy matnni filologik va poetik tahlil qilishning amaliy ahamiyatini yoritib bering.'
+                            'prompt': "O'zbekistonda Orolbo'yi hududida ekologik holatni yaxshilash bo'yicha amalga oshirilayotgan chora-tadbirlarni tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kartografik-proyeksiyalar-va-xarita-matematik-esasi',
+                'title': 'Kartografik proyeksiyalar va xaritalar matematik esasi',
+                'summary': 'Mavzu Yer sharining tekislikda tasvirlanishi, kartografik proyeksiyalar turlari va xatoliklar (bujliklar) klassifikatsiyasini tushuntiradi.',
+                'duration': 35,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kartografik proyeksiya tushunchasi',
+                        'body': 'Yer ellipsoidi sirtini xarita tekisligida tasvirlashning matematik usuli kartografik proyeksiya deyiladi. Sharsimon sirtni tekislikka yoyganda baribir xatoliklar (bujliklar) yuzaga keladi: burchak, masofa, maydon va shakl bujliklari.'
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Merkator proyeksiyasi',
+                        'body': "Merkatorning silindrik proyeksiyasida burchaklar to'g me'yoriy saqlanadi (teng burchakli), shuning uchun dengiz va havo navigatsiyasida keng qo me'yorlanadi. Ammo qutblarga yaqinlashgan sari maydon bujligi keskin ortadi (masalan, Grenlandiya Afrika bilan tengdek ko'rinadi, aslida Afrika 14 baravar katta)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Yordamchi geometrik sirt bo'yicha proyeksiyalar",
+                        'items': [
+                            'Silindrik proyeksiya: Globus silindr ichiga joylashtiriladi (dunyo xaritalari uchun).',
+                            "Konusli proyeksiya: Globusga konus kiygiziladi (mo'tadil kenglikdagi davlatlar uchun).",
+                            "Azimutal proyeksiya: Tasvir to'g'ridan-to'g'ri tekislikka tushiriladi (qutbiy hududlar uchun)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Barcha parametrlar (maydon, burchak, masofa) bir vaqtning o'zida xatosiz ko'rsatilgan xarita mavjud emas."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Navigatsiyada keng qo'llaniladigan, burchaklarni aniq saqlaydigan silindrik proyeksiya muallifi kim?",
+                        'options': [
+                            'Ptolemey',
+                            'Gerrard Merkator',
+                            'Eratosfen',
+                            'Al-Xorazmiy'
+                        ],
+                        'answer': 1,
+                        'explain': '1569-yilda Gerrard Merkator mashhur teng burchakli silindrik proyeksiyani yaratgan.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Azimutal proyeksiya asosan ekvatorial mamlakatlarni tasvirlash uchun eng qulay hisoblanadi.',
+                        'answer': False,
+                        'explain': 'Azimutal proyeksiya asosan qutblar va ularga tutash doiraviy hududlarni tasvirlashda ishlatiladi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Maydonlarni xatosiz ko'rsatuvchi proyeksiya turi qanday nomlanadi?",
+                        'options': [
+                            'Teng burchakli (konform)',
+                            'Teng maydonli (ekvivalent)',
+                            'Erkin proyeksiya',
+                            'Teng masofali (ekvidistant)'
+                        ],
+                        'answer': 1,
+                        'explain': "Teng maydonli (ekvivalent) proyeksiyalarda maydonlar bujligi bo'lmaydi, lekin shakllar buziladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kartografik proyeksiyalarni tahlil qilish va taqqoslash topshiriqlari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Nima uchun Merkator xaritasida Grenlandiya va Afrika maydonlari deyarli teng ko'rinadi?",
+                            'answer': "Chunki Merkator proyeksiyasida yuqori kengliklarda (qutblarga yaqin) maydon bujligi juda katta bo'ladi.",
+                            'hint': 'Silindrik proyeksiya va qutblardagi kengayishni eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbekiston hududi xaritasini tuzish uchun qaysi kartografik proyeksiya eng mos keladi va nega?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'geografik-axborot-tizimlari-gat-va-masofadan-zondlash',
+                'title': "Geografik axborot tizimlari (GAT/GIS) va ularning qo'llanilishi",
+                'summary': "Mavzuda zamonaviy geoinformatika, GAT texnologiyalari, kosmik va aerofotosuratlar hamda ularning amaliyotdagi o'rni o'rganiladi.",
+                'duration': 35,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'GAT (GIS) nima?',
+                        'body': "Geografik Axborot Tizimlari (GAT/GIS) — fazo va hududiy ma'lumotlarni to'plash, saqlash, tahlil qilish hamda vizuallashtirish uchun mo'ljallangan kompyuter dasturiy-apparat majmuasidir. U ma'lumotlar bazasini xarita ob'ektlari bilan bog'laydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Vektor va Rastr ma'lumotlari",
+                        'body': "GATda ma'lumotlar 2 xil ko'rinishda bo'ladi: Vektor (nuqta, chiziq, poligon kabi geometrik shakllar) va Rastr (piksellardan iborat tasvirlar, kosmik suratlar va balandlik modellari)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'GATning amaliy sohalari',
+                        'items': [
+                            "Shaharsozlik va kadastr: Yer va ko me me'yorsiz mulklarni ro'yxatga olish va rejalashtirish.",
+                            "Ekologik monitoring: O me'rmonlar qisqarishi, suv resurslari va cho'llashishni sun'iy yo'ldoshdan kuzatish.",
+                            "Favqulodda vaziyatlar: Suv tasqinlari, yong me'yinlar va zilzilalar xavfini modellashtirish va zudlik bilan baholash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: GPS va GLONASS sun'iy yo'ldosh navigatsiya tizimlari GAT uchun joylashuv koordinatalarini (X, Y, Z) ta'minlaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "GATda nuqta, chiziq va ko'pburchaklar (poligon) orqali obyektlarni tasvirlash qaysi ma'lumot modeliga kiradi?",
+                        'options': [
+                            'Rastr modeli',
+                            'Vektor modeli',
+                            'Matnli model',
+                            '3D skaner modeli'
+                        ],
+                        'answer': 1,
+                        'explain': 'Vektor modeli aniq koordinatalarga ega nuqta, chiziq va poligonlardan iborat.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Masofadan zondlash (Remote Sensing) asosan Yerdagi ma'lumotlarni faqat joyiga borib qo me'lda o o'chirishni anglatadi.",
+                        'answer': False,
+                        'explain': "Masofadan zondlash — bu aerofoto yoki sun'iy yo'ldoshlar orqali obyektga tegmasdan masofadan axborot olish usulidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Quyidagi dasturlardan qaysi biri dunyoda eng mashhur professional GAT dasturlaridan biridir?',
+                        'options': [
+                            'Adobe Photoshop',
+                            'ArcGIS (QGIS)',
+                            'AutoCAD Civil',
+                            'CorelDraw'
+                        ],
+                        'answer': 1,
+                        'explain': 'ArcGIS va ochiq manbali QGIS geoinformatsion tizimlarda asosiy professional dasturlardir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Geoinformatika va zamonaviy xaritalash bo'yicha amaliy topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "GPS va GAT o'rtasidagi bog'liqlik va farqni qisqacha tushuntiring.",
+                            'answer': "GPS — ob'ektning aniq koordinatalarini aniqlaydi; GAT — ushbu koordinatalar va ma'lumotlarni xaritada tahlil qiladi va saqlaydi.",
+                            'hint': "Navigatsiya va tahlil dasturi farqiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Qishloq xo'jaligida 'Aqlli dehqonchilik' (Precision Agriculture) tizimida GAT va droanlarning o'rnini yoritib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'meteorologiya-va-sinoptik-tahlil-asoslari',
+                'title': 'Meteorologiya va sinoptik tahlil asoslari',
+                'summary': "Ob-havo elementlari, sinoptik xaritalar, ob-havoni prognoz qilish usullari va siklon-antisiklon harakati o'rganiladi.",
+                'duration': 40,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Meteorologiya va Sinoptika',
+                        'body': "Meteorologiya — atmosfera va unda yuz beradigan fizik jarayonlarni o me me'yroiy o me me'yoriy o'rganadigan fan. Sinoptik meteorologiya esa doimiy kuzatuvlar va sinoptik xaritalar (izobara, izotermalar) yordamida ob-havoni prognoz qilish bilan shug'ullanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Siklon va Antisiklon',
+                        'body': "Siklon — markazida past bosim bo'lgan, shamollar chekkadan markazga qarab (Shimoliy yarimsharda soat mili yo'nalishiga qarshi) esadigan atmosferaning ulkan uyurmasi (bulutli va yog'inli ob-havo). Antisiklon — markazida yuqori bosim, havo markazdan chekkalarga esadi ( ochiq va ochiq ob-havo)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Frontal zonalar va ob-havo',
+                        'items': [
+                            "Issiq front: Issiq havo sovuq havo ustiga asta-sekin ko'tariladi, qatlamli bulutlar va uzoq davom etuvchi shivalagan yog'in keladi.",
+                            "Sovuq front: Sovuq havo og'ir bo'lib issiq havo ostiga shiddat bilan kiradi, jala, momaqaldiroq va kuchli shamol keladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Izobaralar — sinoptik xaritada teng atmosfera bosimiga ega nuqtalarni tutashtiruvchi chiziqlardir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Sinoptik xaritada bir xil atmosfera bosimiga ega nuqtalarni tutashtiruvchi chiziqlar nima deyiladi?',
+                        'options': [
+                            'Izotermalar',
+                            'Izobaralar',
+                            'Izogiyetslar',
+                            'Izobatalar'
+                        ],
+                        'answer': 1,
+                        'explain': "Izobara chiziqlari teng atmosfera bosimini ko'rsatadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Antisiklon markazida past bosim bo'ladi va o'zi bilan doim kuchli yog'ingarchilik va bulutlilik olib keladi.",
+                        'answer': False,
+                        'explain': "Antisiklon markazida yuqori bosim bo'ladi va u kam bulutli, yog me'yorsiz va ochiq ob-havoni ta'minlaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Sovuq havoning issiq havo ostiga shiddat bilan bostirib kirishi natijasida qanday ob-havo kuzatiladi?',
+                        'options': [
+                            "Uzoq davom etuvchi mayda shivalagan yomg'ir",
+                            'Qisqa muddatli kuchli jala va momaqaldiroq',
+                            'Mutlaq shamolsiz ochiq issiq havo',
+                            'Quqroq garmsel shamoli'
+                        ],
+                        'answer': 1,
+                        'explain': "Sovuq front o'tganda havo keskin beqarorlashadi va jalali yomg'irlar hamda momaqaldiroq bo'ladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Sinoptik meteorologiya bo'yicha masalalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Siklon va antisiklonda havoning Shimoliy va Janubiy yarimsharlardagi burilish yo me me'yorini tushuntiring.",
+                            'answer': "Shimoliy yarimsharda siklonda soat mili yo'nalishiga qarshi, antisiklonda soat mili bo'yicha. Janubiy yarimsharda aksincha.",
+                            'hint': "Koriolis kuchi ta'sirini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Zamonaviy raqamli ob-havo prognozi (NWP - Numerical Weather Prediction) modellari qanday ishlaydi?'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'geomorfologiya-ekzogen-va-endogen-jarayonlar',
+                'title': 'Geomorfologiya: ekzogen va endogen jarayonlar dinamikasi',
+                'summary': "Yer yuzasi relyefining shakllanishida endogen (ichki) va ekzogen (tashqi) kuchlarning o'zaro ta'siri hamda geomorfologik jarayonlar.",
+                'duration': 40,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Geomorphologiyaning predmeti',
+                        'body': "Geomorfologiya — Yer yuzasi relyefining kelib chiqishi, yoshi, rivojlanish tarixi va dinamikasini o'rganuvchi fandir. Relyef endogen (Yer ichki energiyasi: tektonika, vulqonizm) va ekzogen (Quyosh energiyasi: yemirilish, suv, shamol, muzliklar) kuchlarning doimiy o'zaro kurashi va ta'sirida shakllanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Erozion va Eol relyef shakllari',
+                        'body': 'Oqar suvlarning yemirish faoliyati erozion relyef shakllarini (daryo vodiylari, kanyonlar, jarlar), shamol faoliyati esa eol relyef shakllarini (barxanlar, dyunalar, qum tepaliklari) hosil qiladi.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Asosiy ekzogen jarayonlar',
+                        'items': [
+                            'Yemirilish (Nuvash): Fizik, kimyoviy va biologik yemirilish.',
+                            "Denudatsiya: Yemirilgan jinslarning suv, shamol yoki og'irlik kuchi ta'sirida pastga ko'chishi.",
+                            "Akkumulyatsiya: Materiallarning botiqlarga to me me'planishi (alluvial, prolluvial yotqiziqlar)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Karst jarayonlari suvlarning oson eriydigan jinslarni (ohakdosh, gips) eritishi natijasida g me'orlar va o me'oriy botiqlar hosil qiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Oqar suvlarning yemirish va o'zan o'yish faoliyati natijasida hosil bo'lgan relyef shakli qanday ataladi?",
+                        'options': [
+                            'Eol shakllar',
+                            'Erozion shakllar',
+                            'Glyatsial shakllar',
+                            'Vulkanik shakllar'
+                        ],
+                        'answer': 1,
+                        'explain': "Eroziya — suvlarning yemirish jarayoni bo'lib, erozion relyef shakllanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Barxan va dyunalar muzliklarning harakati natijasida paydo bo'ladigan morphologik tuzilmalardir.",
+                        'answer': False,
+                        'explain': "Barxan va dyunalar shamolning (eol jarayonlari) qumlarni ko'chirib to'plashi natijasida hosil bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Eriydigan tog' jinslarining (ohakdosh, gips) suvda erishi natijasida g'orlar va botiqlar hosil bo'lish jarayoni nima deyiladi?",
+                        'options': [
+                            'Karst jarayoni',
+                            'Akkumulyatsiya',
+                            'Metamorfizm',
+                            'Subduktsiya'
+                        ],
+                        'answer': 0,
+                        'explain': "Karst hodisasi eruvchan tog' jinslarida er osti suvlari va eroziya ta'sirida ro'y beradi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Geomorphologik jarayonlarni tahlil qilish vazifalari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Alluvial va prolyuvial yotqiziqlarning farqini tushuntiring.',
+                            'answer': "Alluvial — doimiy daryo oqimlari keltirgan yotqiziqlar; Prolyuvial — tog' etaklaridagi vaqtincha sel va soylar keltirgan yotqiziqlar.",
+                            'hint': "Daryo va sel suvlari to'planishini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tog'li hududlarda ko'chkilar va sel hodisalarining geomorfologik sabablarini va ularga qarshi muhandislik tadbirlarini tavsiflang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'iqtisodiy-geografik-modellashtirish-va-hududiy-tizimlar',
+                'title': 'Iqtisodiy va ijtimoiy geografik modellashtirish (Markaziy joylar nazariyasi)',
+                'summary': "Mavzuda Walter Kristallernining Markaziy joylar nazariyasi, Tyunenning qishloq xo'jalik halqalari va hududiy-ishlab chiqarish majmualari (HIChM) modellarini o'rganiladi.",
+                'duration': 40,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Geografiyada modellashtirish',
+                        'body': 'Iqtisodiy va ijtimoiy geografiya hududiy tizimlar, shahar aglomeratsiyalari hamda ishlab chiqarish kuchlarining joylashish qonuniyatlarini matematik va fazoviy modellar orqali tadqiq etadi.'
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kristallerning Markaziy joylar nazariyasi',
+                        'body': "Valter Kristaller shahar va aholi punktlarining iyerarxik va geksagonal (oltiburchakli) tarmoq bo'yicha joylashuv modelini bergan. Markaziy joylar atrofdagi hududlarga tovar va xizmatlar ko'rsatadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Klassik iqtisodiy-geografik modellar',
+                        'items': [
+                            "Tyunenning 'Oshkora davlat' modeli: Shahar markazi atrofida qishloq xo'jaligi tarmoqlarining konsentrik halqalar bo'yicha joylashishi.",
+                            'Veberning sanoat shproti (lokatsiya) modeli: Transport, mehnat va aglomeratsiya xarajatlarini minimallashtirish.',
+                            'Kolosovskiyning Hududiy-ishlab chiqarish majmualari (HIChM): Xomashyo va energiya asosida sanoat korxonalarining zanjirli birlashishi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Kristaller modelida xizmat ko'rsatish doirasi oltiburchak shaklida (heksagon) ifodalanadi, chunki bu bo'shliqlarsiz hududni to'liq qoplaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Markaziy joylar nazariyasida (Kristaller modeli) xizmat ko'rsatish zonalari qanday geometrik shaklda tasvirlanadi?",
+                        'options': [
+                            'Aylana',
+                            'Kvadrat',
+                            'Oltiburchak (heksagon)',
+                            'Uchburchak'
+                        ],
+                        'answer': 2,
+                        'explain': "Oltiburchakli panjara (heksagon) barcha hududni ustma-ust tushmasdan va bo'shliqsiz qoplash imkonini beradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Tyunen modeliga ko'ra, tez buziladigan va og'ir mahsulotlar (masalan, sut va sabzavot) shahar markazidan eng uzoq halqada yetishtiriladi.",
+                        'answer': False,
+                        'explain': "Tez buziladigan va transport xarajatlari yuqori bo'lgan mahsulotlar shahar markaziga eng yaqin 1-halqada joylashadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Sanoat korxonalarini joylashtirishda transport va mehnat xarajatlarini minimallashtirish modelini (Sanoat shproti) kim ishlab chiqqan?',
+                        'options': [
+                            'Alfred Veber',
+                            'Yoqob Tyunen',
+                            'Nikolay Baranskiy',
+                            'Halford Makkinder'
+                        ],
+                        'answer': 0,
+                        'explain': 'Alfred Veber sanoat shproti (lokatsiyasi) nazariyasini yaratgan.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Iqtisodiy-geografik modellarga bag'ishlangan amaliy topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Tyunen modelida shahar markaziga eng yaqin halqadan eng uzoq halqaga qarab mahsulot turlarining almashinishini izohlang.',
+                            'answer': "1) Sut va sabzavot -> 2) O me'rmonchilik (o'tin) -> 3) Donli ekinlar -> 4) Yaylov chorvachiligi.",
+                            'hint': "Transport xarajati va mahsulotning buzilish muddatini o me'yorlang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Zamonaviy raqamli iqtisodiyot sharoitida Alfred Veberning sanoat joylashuv modeli o'z ahamiyatini yo'qotdimi? Asoslang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'klimatologiya-paleoiqlim-va-iqlim-modellashtirish',
+                'title': "Klimatologiya: Paleoiqlim va global iqlim o'zgarishi modellashtirish",
+                'summary': "Oliy darajadagi ushbu mavzuda Yer tarixidagi paleoiqlimiy sikllar (Milankovich sikllari), sun'iy yo'ldosh ma'lumotlari hamda iqlimning kompyuter modellarini (GCM) tahlil qilish o'rganiladi.",
+                'duration': 45,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Paleoklimatologiya va Milankovich sikllari',
+                        'body': "Yer iqlimi o'tmishda doim o'zgargan. Muzlik va muzliklararo davrlarning almashinishiga Milankovich sikllari — Yer orbitasining ekssentritsiteti, o'qining og'ish burchagi va pretsessiyasining davriy o'zgarishi asosiy sabab bo'lgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Iqlimning Umumiy Sirkulyatsiya Modellari (GCM)',
+                        'body': "Zamonaviy klimatologiya global va mintaqaviy iqlim modellaridan (General Circulation Models - GCM) foydalanadi. Bu modellar atmosfera, okean, muzliklar va quruqlik o'rtasidagi issiqlik hamda massalar almashinuvining murakkab differensial tenglamalariga asoslanadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Paleoiqlimni rekonstruksiya qilish usullari',
+                        'items': [
+                            'Muz kyorun tahlili: Antarktida va Grenlandiya muzliklaridan olingan chukurlik namunalaridagi havo pufakchalarini va kislorod izotoplarini (O-18/O-16) tahlil qilish.',
+                            "Dendrokronologiya: Daraxt yillik halqalarining qalinligini o me'rganish.",
+                            "Palinologik tahlil: Qadimiy tuproq qatlamlaridagi o'simlik changlarini o'rganish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: IPCC (Iqlim O'zgarishi Bo'yicha Hukumatlararo Mutaxassislar Guruhi) iqlim modellari asosida kelajak ssenariylarini (SSP1-SSP5) e'lon qiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Yer orbitasining shakli va o'qining og'ish burchagi o'zgarishi natijasida muzlik davrlari almashinishini tushuntiruvchi sikllar kimning nomi bilan ataladi?",
+                        'options': [
+                            'Koppen sikllari',
+                            'Milankovich sikllari',
+                            'Kondratyev sikllari',
+                            'Lomonosov sikllari'
+                        ],
+                        'answer': 1,
+                        'explain': "Milutin Milankovich Yerning astronomik orbital ko'rsatkichlari iqlim o'zgarishiga ta'sirini isbotlagan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Antarktida muzliklaridagi kislorod izotoplari (O-18/O-16) nisbati o'tmishdagi haroratni aniqlashga imkon beradi.",
+                        'answer': True,
+                        'explain': "Muz kyorunlaridagi izotoplar nisbati qadimiy atmosfera harorati va konsentratsiyasini aniq ko'rsatib beradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Atmosfera va okean dinamikasini matematik shaklda ifodalovchi zamonaviy kompyuter iqlim modellari qanday qisqartiriladi?',
+                        'options': [
+                            'GCM (General Circulation Models)',
+                            'GPS (Global Positioning System)',
+                            'DEM (Digital Elevation Model)',
+                            'KPI (Key Performance Indicators)'
+                        ],
+                        'answer': 0,
+                        'explain': 'GCM — global iqlim sirkulyatsiyasining kompyuter modellaridir.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Chuqurlashtirilgan klimatologiya va iqlim modellashtirish topshiriqlari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Milankovich sikllarining 3 ta asosiy astronomik komponentini yozing.',
+                            'answer': "1. Orbitaning ekssentritsiteti (shakli); 2. O'q og'ish burchagi (obliquity); 3. Pretsessiya (o'qning tebranishi).",
+                            'hint': "Yerning orbitasi va o'q parametrlari."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'IPCC tomonidan ilgari surilgan SSP (Shared Socioeconomic Pathways) kelajak iqlim ssenariylarining geografik oqibatlarini taqqoslab baholang.'
                         }
                     ]
                 }
@@ -14353,2405 +14347,2411 @@ SUBJECTS = [
         ]
     },
     {
-        'key': 'geography',
+        'key': 'literature',
         'topics': [
             {
-                'slug': 'litosfera-plitalari-va-relyef',
-                'title': 'Yer sharining umumiy tuzilishi va litosfera plitalari',
-                'summary': "Mavzuda Yer po'stining ichki tuzilishi, litosfera plitalarining harakati va ularning relyef shakllanishiga ta'siri o'rganiladi.",
+                'slug': 'badiiy-tasvir-vositalari-tashbeh-va-sifatlash',
+                'title': 'Badiiy tasvir vositalari: Tashbeh va Sifatlash',
+                'summary': "Ushbu darsda adabiyotda keng qo'llaniladigan tashbeh (o'xshatish) va sifatlash (epitet) badiiy tasvir vositalarining mohiyati, turlari va ularning asar ta'sirchanligini oshirishdagi o'rni o'rganiladi.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Badiiy nutq oddiy nutqdan o'zining jozibadorligi, ta'sirchanligi va serjiloligi bilan ajralib turadi. Yozuvchi yoki shoir kitobxon qalbida muayyan his-tuyg'u va tasavvur oshtirish uchun turli badiiy tasvir vositalaridan foydalanadi. Shulardan eng keng tarqalganlari tashbeh va sifatlashdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tashbeh va Sifatlashga misollar',
+                        'body': "Tashbeh: 'Yuzing lola kabi qip-qizil bo'ldi' (bu yerda yuz lolaga o'xshatilmoqda).\nSifatlash: 'Zarrin quyosh', 'Kumush qish' (narsa-hodisaning o'ziga xos belgisini bo'rttirib ko'rsatuvchi an'anaviy yoki mualliflik sifatlashi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Tashbehning 4 ta elementi',
+                        'items': [
+                            "O'xshatilmish (o'xshatilayotgan narsa/shaxs, masalan: Yuz)",
+                            "O'xshatuvchi (nimaga o mezon qilib olinayotgani, masalan: Lola)",
+                            "O'xshatish belgisi (ularni bog'lab turgan sifat, masalan: Qizillik)",
+                            "O'xshatish vositasi (kabi, dek, go'yo, yanglig' yuklamalari va ko'makchilar)"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Har qanday sifat ham sifatlash bo'lavermaydi. Faqat narsa va hodisaga badiiy bo'yoq, his-tuyg'u yuklaydigan aniqlovchilar sifatlash deyiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'xshatish (tashbeh) san'atida nechta asosiy element mavjud?",
+                        'options': [
+                            '2 ta',
+                            '3 ta',
+                            '4 ta',
+                            '5 ta'
+                        ],
+                        'answer': 2,
+                        'explain': "Tashbeh 4 ta elementdan iborat: o'xshatilmish, o'xshatuvchi, o'xshatish belgisi va o'xshatish vositasi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Oltin kuz' birikmasida 'oltin' so'zi sifatlash san'atiga misol bo'ladi.",
+                        'answer': True,
+                        'explain': 'Ha, kuz fasliga oltin sifatining berilishi kuzning sariq tusga kirganini badiiy ifodalovchi sifatlashdir.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi qatorda tashbeh vositasi qo'llanilgan?",
+                        'options': [
+                            'Qizil olma',
+                            "Ko'zlari yulduzdek yonadi",
+                            'Katta bino',
+                            'Eski shahar'
+                        ],
+                        'answer': 1,
+                        'explain': "'Yulduzdek' so'zidagi '-dek' qo'shimchasi o'xshatish vositasi bo'lib, tashbeh hosil qilgan."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Mavzuni mustahkamlash uchun quyidagi topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alisher Navoiy g'azallaridan 2 ta tashbeh va 2 ta sifatlash qatnashgan bayt topib yozing.",
+                            'answer': "O'quvchi klassik matnlardan mos ravishda tashbeh va sifatlash misollarini ko'chirib yozadi.",
+                            'hint': "'kabi', 'yanglig'' so'zlari mavjudligiga va badiiy sifatlarga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zingiz yaratgan qisqa matnda kamida 3 ta sifatlash va 2 ta tashbehdan foydalaning."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'badiiy-tasvir-vositalari-mubolaga-va-istiora',
+                'title': "Badiiy tasvir vositalari: Mubolag'a va Istiora",
+                'summary': "Tasvirda bo'rttirish (mubolag'a) hamda ko'chma ma'noning murakkab shakli bo'lgan istiora (metafora)ning badiiy xususiyatlari tahlil qilinadi.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Badiiy adabiyotda tasvir ta'sirchanligini oshirish va kitobxonda kuchli taassurot qoldirish uchun hodisalarni oshirib ko'rsatish (mubolag'a) hamda ma'noni yashirin o'xshatish orqali ko'chirish (istiora) usullari qo mezon qilib olinadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Mubolag'a va Istioraga misollar",
+                        'body': "Mubolag'a: 'Ko'z yoshimdan daryolar hosil bo'ldi' (oshirib tasvirlash).\nIstiora: 'Quyosh kulib boqdi' (odamga xos 'kulish' harakati yashirin o'xshatish orqali quyoshga ko'chirilgan)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Istiorani aniqlash bosqichlari',
+                        'items': [
+                            "So'zning o'z ma'nosini aniqlash",
+                            "Ushbu so'z matnda qaysi tushuncha o'rnida qo'llanayotganini topish",
+                            "O'xshatish asosi yashiringanligini tasdiqlash"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Istiora — bu o'xshatuvchi yoki o'xshatilmish tushib qolgan 'yashirin tashbeh'dir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek adabiyotida mubolag'aning eng yuqori darajasi qanday ataladi?",
+                        'options': [
+                            "Tablig'",
+                            "Iyg'al",
+                            "G'uluv",
+                            'Tashbeh'
+                        ],
+                        'answer': 2,
+                        'explain': "Mubolag'aning uch turi bor: tablig', ig'ro' va eng yuqori, mantiqan imkonsiz darajasi g'uluv hisoblanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Istiorada o'xshatish vositalari ('kabi', 'dek') ochiq ko'rsatiladi.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Istiorada o'xshatish yashirin bo'ladi, o'xshatish vositalari ishlatilmaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Osmon yig'ladi' birikmasida qaysi tasvir vositasi qo'llanilgan?",
+                        'options': [
+                            'Sifatlash',
+                            'Istiora',
+                            'Tazod',
+                            'Tashbeh'
+                        ],
+                        'answer': 1,
+                        'explain': "Yig'lash insonga xos belgi bo'lib, osmonga (yomg'ir yog'ishiga) ko'chirilgani uchun bu istioradir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mubolag'a va istiora san'atlarini yaxshiroq tushunish uchun amaliy topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Xalq dostonlarida ('Alpomish' yoki 'Gorog'li') mubolag'a ishlatilgan 2 ta o'rinni topib yozing.",
+                            'answer': "O'quvchi dostonlardan qahramonlarning kuchi yoki harakati oshirib ko'rsatilgan parchalardan misol keltirishi kerak.",
+                            'hint': "Qahramonlarning baqirishi yoki ot chopish sahnalariga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Istiora va oddiy ko'chma ma'noli so'zlar o'rtasidagi farqni 3-4 ta gap bilan tushuntirib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'gazal-janri-xususiyatlari-va-tuzilishi',
+                'title': "G'azal janri xususiyatlari va tuzilishi",
+                'summary': "Sharq mumtoz adabiyotining eng yetakchi janri bo'lmish g'azalning qoidalari, misra, bayt, qafiya va radif strukturasi o'rganiladi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Kirish va Yer ichki tuzilishi',
-                        'body': "Yer uchta asosiy qatlamdan iborat: mag'iz (yadro), mantiya va Yer po'sti. Litosfera — Yer po'sti va yuqori mantiyaning qattiq qismini o'z ichiga oluvchi qobiqdir. Litosfera yaxlit emas, balki bir nechta yirik litosfera plitalaridan tashkil topgan."
+                        'title': 'Kirish',
+                        'body': "G'azal — Sharq poetikasida eng keng tarqalgan lirik janr bo'lib, uning vujudga kelishi arab adabiyotiga borib taqaladi. G'azal, asosan, ishq-muhabbat, falsafiy-axloqiy va tasavvufiy g'oyalarni kuylaydi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Plitalar harakatiga misol',
-                        'body': "Hind-Avstraliya va Yevroosiyo plitalarining to'qnashishi natijasida dunyodagi eng baland tog' tizmasi — Himolay tog'lari hamda Yevroosiyodagi baland tizmalar hosil bo'lgan."
+                        'title': "G'azal qofiyalanish tartibi",
+                        'body': "G'azal baytlardan tashkil topadi. Qofiyalanish tartibi: a-a, b-a, c-a, d-a...Birinchi bayt 'matla', oxirgi shoir taxallusi berilgan bayt 'makta' deyiladi."
                     },
                     {
                         'type': 'steps',
-                        'title': "Litosfera plitalari o'zaro ta'sirlashuv turlari",
+                        'title': "G'azal strukturasi",
                         'items': [
-                            "Konvergent chegaralar: Plitalarning bir-biri bilan to'qnashishi (tog'lar, botiqlar va orollar yoyi hosil bo'ladi).",
-                            "Divergent chegaralar: Plitalarning bir-biridan uzoqlashishi (okean o'rtaliq tizmalari va rift zonalari hosil bo'ladi).",
-                            "Transform chegaralar: Plitalarning bir-biri bo'ylab yonlama surilishi (kuchli zilzilalar sodir bo'ladi)."
+                            "Hajmi: odatda 5 baytdan 19 baytgacha bo'ladi (ko'pincha 7 yoki 9 bayt).",
+                            "Matla: g'azalning dastlabki, o'zaro qofiyalanuvchi bayti.",
+                            "Makta: g'azalning yakuniy, shoir taxallusi qatnashgan bayti.",
+                            "Radif: qofiyadan keyin aynan takrorlanib keluvchi so'z yoki so'z birikmasi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Litosfera plitalarining chegaralari seysmik faol zonalar va vulqonlar tarqalgan hududlar hisoblanadi.'
+                        'body': "Esda tuting: G'azaldagi eng go'zal va mazmunan mukammal bayt 'shohbayt' yoki 'baytul-g'azal' deb ataladi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Litosfera qaysi qatlamlarni o'z ichiga oladi?",
+                        'q': "G'azalning birinchi bayti nima deb ataladi?",
                         'options': [
-                            "Faqat Yer po'sti",
-                            "Yer po'sti va yuqori mantiya",
-                            'Mantiya va yadro',
-                            'Faqat tashqi yadro'
+                            'Makta',
+                            'Matla',
+                            'Shohbayt',
+                            "Qit'a"
                         ],
                         'answer': 1,
-                        'explain': "Litosfera Yer po me'yoriy qobiqlari orasida Yer po'sti va yuqori mantiyaning qattiq qismini qamrab oladi."
+                        'explain': "G'azalning birinchi bayti matla (chiqish, boshlanish joyi) deyiladi."
                     },
                     {
                         'type': 'tf',
-                        'q': "Plitalarning bir-biridan uzoqlashishi convergent chegaralarga misol bo'ladi.",
-                        'answer': False,
-                        'explain': "Plitalarning uzoqlashishi divergent chegaralar deyiladi, konvergent chegaralarda esa plitalar to'qnashadi."
+                        'q': "G'azalning oxirgi baytida shartli ravishda shoirning taxallusi keltiriladi.",
+                        'answer': True,
+                        'explain': "To'g'ri. Shoir taxallusi mavjud bo'lgan oxirgi bayt makta hisoblanadi."
                     },
                     {
                         'type': 'mc',
-                        'q': "Himolay tog'lari qaysi plitalar to'qnashuvidan hosil bo'lgan?",
+                        'q': "G'azalning qofiyalanish tizimi qaysi javobda to'g'ri ko'rsatilgan?",
                         'options': [
-                            'Tinch okeani va Shimoliy Amerika',
-                            'Afrika va Arabiston',
-                            'Hind-Avstraliya va Yevroosiyo',
-                            'Naska va Janubiy Amerika'
+                            'a-b-a-b',
+                            'a-a-b-b',
+                            'a-a-b-a-c-a',
+                            'a-b-c-d'
                         ],
                         'answer': 2,
-                        'explain': "Hind-Avstraliya plitasining Yevroosiyo plitasi ostiga kirib borishi natijasida Himolay tog'lari ko'tarilgan."
+                        'explain': "G'azalda birinchi bayt o'zaro qofiyalanadi (a-a), keyingi baytlarning faqat ikkinchi misrasi matla bilan qofiyalanib keladi (b-a, c-a...)."
                     }
                 ],
                 'homework': {
-                    'intro': "Litosfera plitalari xaritasini o'rganing va quyidagi topshiriqlarni bajaring.",
+                    'intro': "G'azal strukturasini amalda tahlil qilish uchun vazifalar.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Tinch okeani 'Olovli halqasi' nima va u qanday hosil bo'lgan?",
-                            'answer': "Tinch okeani plitasining atrofidagi boshqa plitalar bilan tutashgan tektonik faol zonasi bo'lib, bu yerda ko'plab vulqonlar va seysmik hududlar joylashgan.",
-                            'hint': "Plitalar to'qnashuvi va vulqonlar tarqalishiga e'tibor bering."
+                            'prompt': "Alisher Navoiyning biror g'azalidan matla va makta baytlarini ko'chiring hamda radif va qofiyasini ajratib ko'rsating.",
+                            'answer': "O'quvchi g'azalning 1-bayti va oxirgi baytini yozib, qofiya hamda radifni ajratadi.",
+                            'hint': "Har bir misra oxiridagi takrorlanuvchi so mezon so'zlarni radif sifatida belgilang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Rift zonalari va ularda hosil bo'ladigan geografik obyektlarga misol keltiring."
+                            'prompt': "G'azal va zamonaviy she'riyat o'rtasidagi asosiy shakliy farqlarni tushuntiring."
                         }
                     ]
                 }
             },
             {
-                'slug': 'atmosfera-bosimi-va-shamollar',
-                'title': "Atmosfera bosimi va shamollarning hosil bo'lishi",
-                'summary': "Mavzu atmosfera bosimining taqsimlanishi, harorat ta'siri hamda shamol turlari va sabablarini tushuntiradi.",
+                'slug': 'alisher-navoiy-xamsa-asarining-tuzilishi',
+                'title': "Alisher Navoiy: 'Xamsa' haqida umumiy tushuncha",
+                'summary': "Nizomiy Ganjaviydan boshlangan xamsachilik an'anasi va Alisher Navoiyning turkiy tilda yaratgan shoh 'Xamsa' dostonlari tarkibi hamda ahamiyati.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': "Atmosfera bosimi va uning o'zgarishi",
-                        'body': "Havo og'irlikka ega va u Yer yuzasiga bosim o'tkazadi. Normal atmosfera bosimi 760 mm simob ustuniga teng. Harorat ortganda havo kengayadi va yengillashib yuqoriga ko'tariladi, natijada past bosim sohasi (siklon) hosil bo'ladi. Havo soviganda zichlashib, yuqori bosim sohasi (antisiklon) shakllanadi."
+                        'title': 'Kirish',
+                        'body': "Xamsa — bir muallif tomonidan yozilgan beshta doston majmuasidir. Sharq adabiyotida xamsachilik buyuk ijodiy imtihon va sharaf sanalgan. Alisher Navoiy 1483–1485 yillarda turkiy tilda birinchi bo'lib butun bir 'Xamsa'ni yaratdi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Shamol kelib chiqish sababi',
-                        'body': "Havo har doim yuqori bosimli hududdan past bosimli hududga qarab harakat qiladi. Bu gorizontal havo harakati shamol deyiladi. Bosimlar farqi qancha katta bo'lsa, shamol shuncha kuchli esadi."
+                        'title': "Navoiy 'Xamsa'si tarkibidagi dostonlar",
+                        'body': "1. Hayrat ul-abror (falsafiy-ta'limiy)\n2. Farhod va Shirin (ishqiy-qahramonlik)\n3. Layli va Majnun (ishqiy-afsonaviy)\n4. Sab'ai sayyor (sarguzasht-didaktik)\n5. Saddi Iskandariy (tarixiy-falsafiy)"
                     },
                     {
                         'type': 'steps',
-                        'title': 'Doimiy shamollar turlari',
+                        'title': 'Xamsachilik maktabi rivoji',
                         'items': [
-                            'Passatlar: Tropik yuqori bosim poyaslaridan ekvatorning past bosim poyasiga esadigan shamollar.',
-                            "G'arbiy shamollar: Tropiklardan mo'tadil kengliklarga qarab esuvchi shamollar.",
-                            "Qutb shamollari: Qutb yuqori bosim zonalardan mo'tadil hududlarga esuvchi shamollar."
+                            'Nizomiy Ganjaviy (farsiy xamsachilik asoschisi)',
+                            'Xusrav Dehlaviy (ikkinchi xamsa yaratuvchisi)',
+                            'Alisher Navoiy (turkiy tildagi birinchi xamsovis)'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Koriolis kuchi natijasida shamollar Shimoliy yarimsharda o'ngga, Janubiy yarimsharda chapga og'adi."
+                        'body': "Esda tuting: Navoiy 'Xamsa'si orqali turkiy tilning qudrati va boyligini butun dunyoga isbotlab bergan."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Shamolning hosil bo'lishining asosiy sababi nima?",
+                        'q': "Alisher Navoiy 'Xamsa'sini nechanchi yillarda yaratgan?",
                         'options': [
-                            "Yerning o'z o'qi atrofida aylanishi",
-                            "Atmosfera bosimining hududlar bo'yicha turlicha bo'lishi",
-                            "Okean suvlarining to'lqinlanishi",
-                            'Bulutlarning qalinligi'
+                            '1441-1451',
+                            '1483-1485',
+                            '1490-1492',
+                            '1500-1501'
                         ],
                         'answer': 1,
-                        'explain': "Bosimlar farqi havo massalarining gorizontal harakatlanishiga, ya'ni shamolga sabab bo'ladi."
+                        'explain': "Navoiy o'zining 'Xamsa'sini qisqa fursatda — 1483–1485 yillar oralig'ida yozib tugatgan."
                     },
                     {
                         'type': 'tf',
-                        'q': 'Havo qiziganda uning bosimi ortadi va u pastga tushadi.',
+                        'q': "'Hayrat ul-abror' dostonida asosan Farhod va Shirin sevgisi kuylanadi.",
                         'answer': False,
-                        'explain': "Havo qiziganda kengayadi, yengillashadi va yuqoriga ko'tariladi, natijada bosim kamayadi."
+                        'explain': "Noto'g'ri. 'Hayrat ul-abror' pand-nasihat, falsafiy-axloqiy masalalarga bag'ishlangan."
                     },
                     {
                         'type': 'mc',
-                        'q': 'Tropik yuqori bosimdan ekvatorga qarab doimiy esuvchi shamollar qanday nomlanadi?',
+                        'q': "Sharq adabiyotida birinchi 'Xamsa'ni kim yaratgan?",
                         'options': [
-                            'Mussonlar',
-                            'Brizlar',
-                            'Passatlar',
-                            "G'arbiy shamollar"
+                            'Alisher Navoiy',
+                            'Xusrav Dehlaviy',
+                            'Nizomiy Ganjaviy',
+                            'Jomiy'
                         ],
                         'answer': 2,
-                        'explain': 'Tropiklardan ekvatorga esadigan doimiy shamollar passatlar deb ataladi.'
+                        'explain': "Xamsachilik an'anasiga fors-tojik shoiri Nizomiy Ganjaviy asos solgan."
                     }
                 ],
                 'homework': {
-                    'intro': 'Briz va musson shamollarining mavsumiy va sutkalik farqlarini tahlil qiling.',
+                    'intro': "Navoiy 'Xamsa'si va dostonlar tarkibiga doir topshiriqlar.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Kunduzgi va tungi briz shamollarining yo'nalishi va sababini tushuntiring.",
-                            'answer': "Kunduzi quruqlik tezroq qizib past bosim, dengiz esa sekinroq qizib yuqori bosim bo'ladi, shamol dengizdan quruqlikka esadi. Tunda aksincha, quruqlikdan dengizga esadi.",
-                            'hint': "Suv va quruqlikning issiqlik sig'imiga e'tibor bering."
+                            'prompt': "Navoiy 'Xamsa'sidagi har bir dostonning mavzusi va g'oyasini 1 jumla bilan yozib chiqing.",
+                            'answer': "O'quvchi 5 ta dostonning qisqacha mazmun yo'nalishini tartib bo'yicha yozadi.",
+                            'hint': 'Masalan: Saddi Iskandariy — adolatli shoh va jahongirlik haqida.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Koriolis kuchi shamollar yo'nalishiga qanday ta'sir ko'rsatishini tavsiflang."
+                            'prompt': "Alisher Navoiyning 'Farhod va Shirin' dostonidagi Farhod obraziga xos 3 ta ijobiy fazilatni tahlil qiling."
                         }
                     ]
                 }
             },
             {
-                'slug': 'okean-oqimlari-va-iqlim',
-                'title': "Okean oqimlari va ularning iqlimga ta'siri",
-                'summary': "Mavzu dunyo okeanidagi issiq va sovuq oqimlar hamda ularning sohildagi iqlim sharoitlariga ta'sirini ko'rib chiqadi.",
+                'slug': 'ruboiy-va-qita-janrlari',
+                'title': "Ruboiy va qit'a janrlari",
+                'summary': "Kichik lirik janrlardan bo'lgan ruboiy va qit'aning o'ziga xos tuzilishi, qofiyalanishi hamda ulardagi hikmatli g'oyalar tahlili.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Sharq klassik she'riyatida kichik hajmli, lekin teran ma'noli janrlar muhim o'rin tutadi. Ruboiy va qit'a shunday janrlar sirasiga kiradi. Ular loqda, pishiq va aniq falsafiy fikrni ifodalaydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Ruboiy va Qit'aning qofiyalanishi",
+                        'body': "Ruboiy: 4 misradan iborat, qofiyalanishi a-a-b-a (ba'zan a-a-a-a). Maxsus hazaj bahrida yoziladi.\nQit'a: Kamida 2 bayt (4 misra) bo'ladi, qofiyalanishi b-a, d-a, f-a tartibida kechadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Ruboiy va Qit'a o'rtasidagi tafovutlar",
+                        'items': [
+                            "Ruboiida asosiy fikr 4-misrada xulosa qilinadi; qit'ada esa har bir bayt mantiqan davom etadi.",
+                            "Ruboiy faqat aruzning hazaj bahrida bitiladi, qit'a boshqa bahr xillarida ham yozilishi mumkin.",
+                            "Qit'ada ko'pincha ijtimoiy-axloqiy va ta'limiy fikrlar beriladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Umar Xayyom jahon adabiyotida ruboiy janrining buyuk ustasi sifatida tanilgan.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Ruboiy necha misradan iborat bo'ladi?",
+                        'options': [
+                            '2 misra',
+                            '4 misra',
+                            '6 misra',
+                            '8 misra'
+                        ],
+                        'answer': 1,
+                        'explain': "Ruboiy so'zi arabcha 'arbaa' (to'rt) so'zidan olingan bo'lib, 4 misradan iborat she'riy shakldir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Qit'a janrida birinchi misra albatta ikkinchi misra bilan qofiyalanadi.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Qit'ada birinchi bayt misralari o'zaro qofiyalanmaydi, qofiya juft misralarda (2, 4, 6...) keladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Ruboiy aruz vaznining qaysi bahrida yoziladi?',
+                        'options': [
+                            'Raml',
+                            'Mutaqorib',
+                            'Hazaj',
+                            'Rajax'
+                        ],
+                        'answer': 2,
+                        'explain': 'Ruboiy faqat aruz vaznining hazaj bahrining maxsus vaznlarida (axrab va axram) bitiladi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Ruboiy va qit'a janrlarini farqlash va yod olish topshirig'i.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alisher Navoiy va Bobur ruboiylaridan 2 tadan yoddan ko'chirib yozing hamda qofiyalarini belgilang.",
+                            'answer': "O'quvchi ikkala shoir ruboiylarini a-a-b-a sxemasi bo'yicha belgilab ko'rsatadi.",
+                            'hint': "3-misra erkin (b) qolishiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Qit'aning falsafiy-didaktik ahamiyatini biror muallif qit'asi misolida tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'doston-janri-va-uning-xususiyatlari',
+                'title': "Doston janri va uning o'ziga xosligi",
+                'summary': "Xalq og'zaki ijodi hamda yozma adabiyotdagi doston janrining syujet, obraz va poetik xususiyatlari haqida ta'lim beriladi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Okean oqimlari turlari',
-                        'body': "Dunyo okeanidagi suv massalarining muayyan yo'nalishda katta masofalarga ko'chishi okean oqimlari deyiladi. Oqimlar atrofdagi suv haroratiga nisbatan issiq yoki sovuq bo'lishi mumkin. Ularning asosiy harakatlantiruvchi kuchi doimiy shamollardir (passat va g'arbiy shamollar)."
+                        'title': 'Kirish',
+                        'body': "Doston — adabiyotdagi eng yirik epik-she'riy janrlardan biridir. Unda voqealar rivoji, qahramonlarning sarguzashtlari va ijtimoiy-siyosiy hamda shaxsiy toqnashuvlar keng va atroflicha tasvirlanadi."
                     },
                     {
                         'type': 'example',
-                        'title': "Issiq va sovuq oqimlar ta'siri",
-                        'body': "Golfstrim issiq oqimi Shimoliy-G'arbiy Yevropa iqlimini yumshatadi va ushbu kenglikda joylashgan portlarning muzlamasligini ta'minlaydi. Bengela sovuq oqimi esa Afrika janubi-g'arbiy sohilida yog'in miqdorini kamaytirib, Namid cho'lining hosil bo'lishiga olib kelgan."
+                        'title': 'Xalq dostonlari va Yozma dostonlar',
+                        'body': "Xalq dostonlari: 'Alpomish', 'Gorog'li' (baxshilar tomonidan kuylangan, nasr va nazm aralash bo'ladi).\nYozma dostonlar: 'Farhod va Shirin', 'Sohibqiron' (shoir tomonidan to'liq she'riy vaznda yoziladi)."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Okean oqimlarining geografik oqibatlari',
+                        'title': 'Doston janrining turlari',
                         'items': [
-                            "Issiq oqimlar: Havo namligini va haroratini oshiradi, ko'p yog'in yog'ishiga sabab bo'ladi.",
-                            "Sovuq oqimlar: Havoni sovutadi, bug'lanishni kamaytiradi va qirg'oq bo'yi cho'llarini hosil qiladi.",
-                            "Biologik resurslar: Issiq va sovuq oqimlar tutashgan joylarda plankton ko'p bo'lib, baliqchilik rivojlanadi."
+                            "Qahramonlik dostonlari ('Alpomish')",
+                            "Ishqiy-romantik dostonlar ('Tohir va Zuhra')",
+                            "Tarixiy dostonlar ('Shayboniynoma')",
+                            "Falsafiy-ta'limiy dostonlar ('Saddi Iskandariy')"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Okean oqimlarining nomi xaritalarda mos ravishda qizil (issiq) va ko'k (sovuq) ko'rsatkichlar bilan beriladi."
+                        'body': "Esda tuting: Folklor dostonlarida baxshilar dombra jo'rligida ijro etishsa, yozma dostonlar yakka muallifning muayyan g'oyaviy niyatini aks ettiradi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Golfstrim oqimining Yevropa iqlimiga ta'siri qanday?",
+                        'q': "O'zbek xalq qahramonlik eposining eng yuksak namunasi qaysi doston hisoblanadi?",
                         'options': [
-                            'Qahraton va quruq havo olib keladi',
-                            "Iqlimni yumshatib, ko'proq yog'in keltiradi",
-                            "Cho'llashish jarayonini tezlashtiradi",
-                            "Muzliklar paydo bo'lishiga sabab bo'ladi"
+                            "Gorog'li",
+                            'Alpomish',
+                            'Tohir va Zuhra',
+                            'Rizvon pari'
                         ],
                         'answer': 1,
-                        'explain': "Golfstrim issiq oqimi Yevropaning g'arbiy sohili iqlimini ilitadi va namlikni oshiradi."
+                        'explain': "'Alpomish' dostoni o'zbek xalq qahramonlik eposining cho'qqisi sanaladi."
                     },
                     {
                         'type': 'tf',
-                        'q': "Sovuq okean oqimlari sohil bo'yida ko me'yoriy va sero't o'rmonlar rivojlanishiga yordam beradi.",
+                        'q': "Xalq dostonlari faqat she'riy yozilgan bo'lib, unda nasriy parchalar bo'lmaydi.",
                         'answer': False,
-                        'explain': "Sovuq oqimlar bug'lanishni kamaytiradi, havo turg'unlashadi va sohil bo'yi cho'llari paydo bo'ladi."
+                        'explain': "Noto'g'ri. Xalq dostonlari nasr va nazm aralashmasidan iborat bo'ladi."
                     },
                     {
                         'type': 'mc',
-                        'q': "Janubiy Amerikadagi Atakama cho'li paydo bo'lishiga qaysi sovuq oqim ta'sir qilgan?",
+                        'q': 'Quyidagilardan qaysi biri yozma doston hisoblanadi?',
                         'options': [
-                            'Kanar oqimi',
-                            'Gumboldt (Peru) oqimi',
-                            'Kuroshio oqimi',
-                            'Gudzon oqimi'
-                        ],
-                        'answer': 1,
-                        'explain': "Peru (Gumboldt) sovuq oqimi Janubiy Amerikaning Tinch okeani sohilida Atakama cho'lining shakllanishiga sabab bo'lgan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Dunyo okeani xaritasidagi asosiy oqimlarni o'rganing.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': 'Tinch va Atlantika okeanlaridagi 2 tadan issiq va sovuq oqimlarga misol yozing.',
-                            'answer': 'Atlantika: Golfstrim (issiq), Bengela (sovuq). Tinch: Kuroshio (issiq), Peru (sovuq).',
-                            'hint': "Kontinentlar qirg'og'i bo'ylab oqadigan oqimlarni eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "El-Ninyo hodisasi nima va u okean oqimlarining o'zgarishi bilan qanday bog'liq?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'dunyo-aholisi-irqiy-milliy-tarkibi',
-                'title': 'Dunyo aholisining irqiy va milliy tarkibi',
-                'summary': "Mavzuda insoniyatning irqiy bo'linishi, irqlarning kelib chiqishi, tillar va millat xususiyatlari o'rganiladi.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Insoniyat irqlari',
-                        'body': "Irq — bu kelib chiqishi, tashqi jismoniy belgilar (tana tuzilishi, teri va soch rangi, ko'z shakli) bir xil bo'lgan odamlar guruhi. Insoniyat biologik jihatdan bitta turga kiradi. Atrof-muhit ta'sirida 3 ta (yoki 4 ta) katta irq shakllangan: yevropoid, mongoloid, negroid (va avstraloid)."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Irqlarning aralashuvi',
-                        'body': "Amerika qit'asida irqlarning aralashuvi natijasida yangi guruhlar hosil bo'lgan: metislar (yevropoid va hindu), mulatlar (yevropoid va negroid), sambo (negroid va hindu)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Dunyo tillari klassifikatsiyasi',
-                        'items': [
-                            "Hind-Yevropa til oilasi: Dunyodagi eng yirik til oilasi (dunyo aholisining 45% dan ortig'i).",
-                            'Sin-Tibet til oilasi: Xitoy va Janubiy-Sharqiy Osiyoda keng tarqalgan.',
-                            "Oltoy til oilasi: Turkiy tillar guruhi (shu jumladan o'zbek tili) ham ushbu oilaga kiradi."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Irq va millat tushunchalari farqlanadi. Irq biologik tushuncha bo'lsa, millat madaniy, til va tarixiy umumiylikdir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Yevropoid va negroid irqlari aralashuvidan qaysi aholi guruhi shakllangan?',
-                        'options': [
-                            'Metislar',
-                            'Mulatlar',
-                            'Sambo',
-                            'Kreollar'
-                        ],
-                        'answer': 1,
-                        'explain': 'Mulatlar yevropoid va negroid irqi vakillarining nikohidan kelib chiqqan.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "O'zbek tili Hind-Yevropa til oilasiga kiradi.",
-                        'answer': False,
-                        'explain': "O'zbek tili Oltoy til oilasining turkiy tillar guruhiga mansub."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Dunyodagi eng ko'p kishi so'zlashadigan til oilasi qaysi?",
-                        'options': [
-                            'Sin-Tibet',
-                            'Afro-Osiyo',
-                            'Hind-Yevropa',
-                            'Niger-Kordofan'
-                        ],
-                        'answer': 2,
-                        'explain': 'Hind-Yevropa til oilasiga dunyo aholisining taxminan 45% ga yaqini kiradi.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Dunyo xaritasida yirik til oilalari va irqlarning tarqalishini ko'rib chiqing.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Metis, mulat va sambo tushunchalarining har biriga qisqa ta'rif bering.",
-                            'answer': "Metis - yevropoid va hindulardan; Mulat - yevropoid va negroidlardan; Sambo - negroid va hindulardan bo'lgan avlodlar.",
-                            'hint': "Amerika qit'asining o'zlashtirilishi tarixini eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Nima uchun irqchilik g'oyalari ilmiy jihatdan mantiqsiz va asossiz hisoblanadi?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'avstraliya-materigi-tabiati-va-iqlimi',
-                'title': 'Avstraliya materigining tabiati va iqlimi',
-                'summary': "Avstraliya eng quruq va eng kichik materik bo'lib, uning geografik o'rni, relyefi va o'ziga xos organik olami o'rganiladi.",
-                'duration': 20,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Geografik o'rni va relyefi",
-                        'body': "Avstraliya barcha materiklar orasida eng kichigi va eng past-tekisidir. Materikning aksariyat qismini Avstraliya platformasi egallaydi. Sharqiy qismida qadimiy va uncha baland bo'lmagan Katta Suvayirg'ich tizmasi joylashgan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Iqlimi va gidrologiyasi',
-                        'body': "Avstraliya eng quruq materikdir. Uning yarmidan ko'pini cho'l va yarimcho'llar egallaydi (Katta Viktoriya, Katta Qumli cho'l). Ichki suvlar tarmog'i juda sust rivojlangan, vaqtincha qurib qoladigan daryolar 'krik'lar deyiladi. Eng yirik daryo sistemasi — Murrey va Darling."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "O'ziga xos endemik olami",
-                        'items': [
-                            "Flora: Evkalipt o'simligi, baobab va butasimon scrublar keng tarqalgan.",
-                            "Fauna: Xaltali hayvonlar (kenguru, koala), tuxum qo'yuvchi sutemizuvchilar (o'rdakburun, yexidna).",
-                            "Riflar: Materik shimoliy-sharqida dunyodagi eng yirik Katta To'siq rifi joylashgan."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: Avstraliyadagi vaqtincha quriydigan daryolar kriklardir, u yerda doimiy oqar suv kam.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Avstraliyadagi vaqtincha qurib qoladigan o'zanlar va daryolar nima deyiladi?",
-                        'options': [
-                            'Vadiy',
-                            'Krik',
-                            'Siklon',
-                            'Kanyon'
-                        ],
-                        'answer': 1,
-                        'explain': "Avstraliyada qurib qoladigan daryolar va o'zanlar 'krik' deb ataladi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Avstraliya dunyodagi eng baland va sersuv materik hisoblanadi.',
-                        'answer': False,
-                        'explain': 'Avstraliya eng tekis, past va eng quruq materikdir.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Avstraliya sharqidagi eng yirik daryo tizimi qaysi?',
-                        'options': [
-                            'Murrey va Darling',
-                            'Amazonka va Parana',
-                            'Zambezi va Kongo',
-                            'Kura va Araks'
-                        ],
-                        'answer': 0,
-                        'explain': "Murrey va uning irmog'i Darling Avstraliyaning eng yirik daryo sistemasi hisoblanadi."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Avstraliya xaritasini va tabiat zonalarini tahlil qiling.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Katta To'siq rifi haqida va uning qayerda joylashganini yozing.",
-                            'answer': "Katta To me'yoriy To'siq rifi Avstraliyaning shimoli-sharqiy sohilida Korall dengizida joylashgan marjon qurilmasidir.",
-                            'hint': 'Marjon poliplari hosil qilgan tuzilma.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': 'Nima uchun Avstraliya faunasida xaltali hayvonlar ustunlik qiladi?'
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'janubiy-amerika-daryolari-gidrologiyasi',
-                'title': 'Janubiy Amerika: daryo sistemalari va gidrologiyasi',
-                'summary': 'Janubiy Amerikaning dunyodagi eng sersuv materik ekanligi hamda Amazonka, Orinoko va Parana daryolari tahlil qilinadi.',
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Materikning sersuvlik sabablari',
-                        'body': "Janubiy Amerika dunyodagi eng sernam va sersuv materikdir. Bunga uning joylashuvi (ekvatorial va subekvatorial poyaslar), passat shamollarining Atlantika okeanidan ko'p namlik keltirishi va And tog'larining namlikni Tinch okeaniga o'tkazmay to'sib turishi sabab bo'ladi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Amazonka daryosi',
-                        'body': "Amazonka — dunyodagi eng sersuv va havzasi eng katta daryo. Uning suv yig'ish havzasi 7 million km² dan ortiq. Amazonka yil bo'yi bir maromda sersuv bo'ladi, chunki uning o'ng va chap irmoqlari turli yarimsharlarda joylashgan bo'lib, ketma-ket toshadi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Materikning yirik gidrologik obyektlari',
-                        'items': [
-                            'Anxel sharsharasi: Dunyodagi eng baland sharshara (979 m), Orinoko havzasida joylashgan.',
-                            "Iguasu sharsharasi: Parana daryosi irmoqlarida joylashgan eng go'zal sharsharalar majmuasi.",
-                            "Titikaka ko'li: Dunyodagi eng balandda joylashgan kemalar suza oladigan baland tog' ko'li."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: Janubiy Amerikadagi daryolarning aksariyati Atlantika okeani havzasiga quyiladi.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Dunyodagi eng sersuv va havza maydoni eng katta daryo qaysi?',
-                        'options': [
-                            'Nil',
-                            'Misisipi',
-                            'Amazonka',
-                            'Yanszi'
-                        ],
-                        'answer': 2,
-                        'explain': "Amazonka suvliligi va havzasining maydoni bo'yicha dunyoda birinchi o'rinni egallaydi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Janubiy Amerikaning aksariyat daryolari Tinch okeaniga quyiladi.',
-                        'answer': False,
-                        'explain': "And tog'lari g'arbda to'siq bo'lgani uchun daryolarning asosiy qismi sharqqa, Atlantika okeaniga quyiladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Dunyodagi eng baland sharshara qaysi daryo havzasida joylashgan?',
-                        'options': [
-                            'Parana',
-                            'Orinoko',
-                            'Amazonka',
-                            'San-Fransisko'
-                        ],
-                        'answer': 1,
-                        'explain': 'Anxel sharsharasi Churun daryosida (Orinoko havzasi) joylashgan.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Janubiy Amerika gidrogrfiyasini o'rganing va savollarga javob bering.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Titikaka ko'lining o'ziga xosligi va joylashgan balandligini yozing.",
-                            'answer': "Titikaka ko'li And tog'larida 3812 m balandlikda joylashgan bo'lib, dunyodagi eng baland joylashgan kema qatnaydigan ko'ldir.",
-                            'hint': "And tog'lari va balandlikka e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Nima uchun Amazonka daryosi yil davomida bir maromda sersuv bo'lib oqadi?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'afrika-tabiiy-zonalari-mintaqalari',
-                'title': 'Afrika materigining tabiiy zonalari va balandlik mintaqalari',
-                'summary': 'Afrika materigining ekvatordan qutblarga qarab tabiat zonalarining takrorlanishi va simmetrikligi tushuntiriladi.',
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Simmetrik iqlim va zonalik',
-                        'body': "Afrika o'rtasidan ekvator chizig'i o'tganligi sababli, uning iqlim poyaslari va tabiiy zonalari ekvatordan shimolga va janubga qarab deyarli simmetrik ravishda takrorlanadi: ekvatorial o'rmonlar, savannalar, cho'llar va subtropiklar."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Afrika savannalari',
-                        'body': 'Savannalar Afrika hududining 40% ga yaqinini egallaydi. Bu yerda aniq nam va quruq mavsumlar almashinadi. Dunyodagi eng yirik tuyoqli hayvonlar (jirafa, zebra, antilopa) va yirtqichlar (sher, gepard) ushbu zonada yashaydi.'
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Afripaning asosiy prirod zonalari',
-                        'items': [
-                            "Ekvatorial nam o'rmonlar (Giley): Kongo havzasi va Gvineya qo'ltig'ida joylashgan, ko'p qatlamli, doim yashil.",
-                            "Savanna va siyrak o'rmonlar: Ekvatorial o me'yoriy zonasidan atroflarga qarab cho'zilgan, baobab va soyabon simon akatsiyalar hosil qilgan.",
-                            "Tropik cho'llar: Shimolda Sahroi Kabir, janubda Kalahari va Namib cho'llari."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Sahroi Kabir — dunyodagi eng katta issiq cho'ldir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Afrika materigida tabiat zonalarining simmetrik takrorlanishiga nima sabab bo'lgan?",
-                        'options': [
-                            "Grinvich meridianining o'tishi",
-                            "Ekvator chizig'ining materik markazidan o'tishi",
-                            'Atrofida ikkita okean borligi',
-                            "Baland tog'larning yo'qligi"
-                        ],
-                        'answer': 1,
-                        'explain': "Ekvator Afrikani o'rtasidan bo'lgani uchun undan shimolga va janubga poyaslar takrorlanadi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Afrikaning giley o'rmonlarida aniq nam va quruq fasllar bo'ladi.",
-                        'answer': False,
-                        'explain': "Ekvatorial o'rmonlarda (giley) yil bo'yi yuqori harorat va har kuni yog'in yog'adi, fasllar bo'linmaydi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Afrikada eng keng maydonni egallagan tabiat zonasi qaysi?',
-                        'options': [
-                            "Nam ekvatorial o'rmonlar",
-                            "Savanna va siyrak o me'yoriy o'rmonlar",
-                            "Qattiq bargli o'rmonlar",
-                            'Tundra'
-                        ],
-                        'answer': 1,
-                        'explain': 'Savannalar Afrika hududining qariyb 40 foizini tashkil qiladi.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Afrika tabiiy zonalari va iqlim poyaslari xaritasini o'rganing.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Sahroi Kabir va Namib cho me'yordagi cho'llarining hosil bo'lish farqini izohlang.",
-                            'answer': "Sahroi Kabir kontinental tropik havo va yuqori bosim natijasida, Namib esa sovuq Bengela okean oqimi ta'sirida shakllangan.",
-                            'hint': "Okean oqimlarining ta'siriga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Kilimanjaro tog'idagi balandlik mintaqalari qanday almashinishini tavsiflang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'yevroosiyo-relyefi-va-tektonikasi',
-                'title': 'Yevroosiyo materigining relyefi va tektonik tuzilishi',
-                'summary': "Mavzuda Yevroosiyo materigining eng murakkab va xilma-xil relyefi, eng baland va eng past nuqtalari hamda ularning shakllanishi o'rganiladi.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Relyefning xilma-xilligi',
-                        'body': "Yevroosiyo — Yerdagi eng yirik materik. Uning relyefi boshqa materiklardan murakkabligi bilan ajralib turadi. Bu yerda dunyodagi eng baland tog' — Everest (Evolest/Comolungma, 8848 m) va Yerdagi eng chuqur quruqlik botiqligi — O'lik dengiz botiqligi (-430 m) joylashgan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Tog' hosil bo'lish poyaslari",
-                        'body': "Materikda ikkita ulkan burmalanish poyasi o'tgan: Alp-Himolay poyasi (g'arbdan sharqqa) va Tinch okean ruhiy olovli poyasi (materikning sharqiy chekkasi bo'ylab)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Yevroosiyoning yirik tekisliklari',
-                        'items': [
-                            'Sharqiy Yevropa tekisligi: Qadimiy platforma ustida joylashgan yirik tepalikli tekislik.',
-                            "G'arbiy Sibir tekisligi: Dunyodagi eng tekis va Botqoqlashgan pasttekisliklardan biri.",
-                            "Turon pasttekisligi: Markaziy Osiyoda joylashgan cho'lli pasttekislik."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: Yevroosiyo bitta emas, balki bir nechta qadimiy platformalarning tutashishidan shakllangan.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Yevroosiyodagi va dunyodagi eng baland cho'qqi qaysi?",
-                        'options': [
-                            'Monblan',
-                            'Elbrus',
-                            'Jomolungma (Everest)',
-                            'K2'
-                        ],
-                        'answer': 2,
-                        'explain': 'Jomolungma (Everest) 8848 metr balandlik bilan dunyoning eng yuqori nuqtasidir.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "G'arbiy Sibir tekisligi Alp-Himolay burmalanish poyasiga kiradi.",
-                        'answer': False,
-                        'explain': "G'arbiy Sibir tekisligi yosh platforma plitasi ustida joylashgan tekislikdir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Dunyodagi eng chuqur quruqlik botiqligi qaysi?',
-                        'options': [
-                            "Karag'iye botiqligi",
-                            "O'lik dengiz botiqligi",
-                            'Turfan botiqligi',
-                            'Assal botiqligi'
-                        ],
-                        'answer': 1,
-                        'explain': "O'lik dengiz botiqligi okean sathidan taxminan -430 metr pastda joylashgan."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Yevroosiyo fiziki xaritasidan foydalanib topshiriqlarni bajaring.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Alp-Himolay burmali poyasiga kiruvchi 4 ta tog' tizmasini yozing.",
-                            'answer': "Alp, Karpat, Kavkaz, Pomir, Tyanshan, Himolay tog'lari.",
-                            'hint': "Yevropa janubidan Osiyo janubiga cho'zilgan tog'lar."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Nima uchun Yevroosiyoning sharqiy chekkasida seysmik va vulqon faolligi o'ta yuqori?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekistonning-geografik-orni-va-chegaralari',
-                'title': "O'zbekistonning geografik o'rni va chegaralari",
-                'summary': "O'zbekiston Respublikasining Markaziy Osiyodagi geosiyosiy va geografik o'rni, chegaralari hamda maydoni ko'rib chiqiladi.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Geografik o'rni",
-                        'body': "O'zbekiston Markaziy Osiyoning markazida, Amudaryo va Sirdaryo oraliqlarida joylashgan. Respublika maydoni 448,9 ming km² ni tashkil etadi. Mamlakatimiz mutlaq quruqlikda joylashgan bo'lib, Jahon okeaniga chiqish uchun kamida ikkita davlat hududidan o'tishi kerak (double landlocked)."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Qo'shni davlatlar",
-                        'body': "O'zbekiston 5 ta davlat bilan chegaradosh: shimol va shimoli-g'arbda Qozog'iston, sharq va shimoli-sharqda Qirg'iziston, janubi-sharqda Tojikiston, janubda Afg'oniston, janubi-g'arbda Turkmaniston."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Chegara xususiyatlari',
-                        'items': [
-                            "Eng uzoq chegara: Qozog'iston Respublikasi bilan (2200 km dan ortiq).",
-                            "Eng qisqa chegara: Afg'oniston Islom Respublikasi bilan (137 km, Amudaryo bo'ylab).",
-                            "Tabiiy chegaralar: Amudaryo, Sirdaryo hamda Tyanshan va Hisor-Oloy tog' tizmalari."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: O'zbekiston dunyoda okeanga chiqish uchun ikkita davlat orqali o'tiladigan ikki mamlakatdan biridir (ikkinchisi Lixtenshteyn)."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekiston Respublikasining umumiy maydoni qancha?",
-                        'options': [
-                            '1.1 mln km²',
-                            '448.9 ming km²',
-                            '200 ming km²',
-                            '500 ming km²'
-                        ],
-                        'answer': 1,
-                        'explain': "O'zbekistonning hududi 448,9 ming kvadrat kilometrni tashkil qiladi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "O'zbekiston to'g'ridan-to'g'ri Kaspiy dengiziga chiqish imkoniyatiga ega.",
-                        'answer': False,
-                        'explain': "O'zbekiston Okean va Kaspiy dengiziga bevosita chiqish yo'liga ega emas."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekiston eng qisqa chegara liniyasiga qaysi davlat bilan ega?",
-                        'options': [
-                            'Tojikiston',
-                            "Qirg'iziston",
-                            "Afg'oniston",
-                            'Turkmaniston'
-                        ],
-                        'answer': 2,
-                        'explain': "Afg'oniston bilan chegaramiz uzunligi eng qisqa bo'lib, taxminan 137 km ni tashkil etadi."
-                    }
-                ],
-                'homework': {
-                    'intro': "O'zbekiston kontur xaritasidan foydalanib quyidagi vazifalarni bering.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "O'zbekiston bilan chegaradosh barcha 5 davlatni va uning eng chekka nuqtalarini yozing.",
-                            'answer': "Qozog'iston, Qirg'iziston, Tojikiston, Afg'oniston, Turkmaniston.",
-                            'hint': "Shimol, janub, sharq va g'arbdagi qo'shnilarni tartiblang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "'Double landlocked' (ikki karra quruqlik ichidagi) geografik o'rnining O'zbekiston iqtisodiyotiga va savdosiga ta'sirini baholang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekiston-geologik-tuzilishi-foydali-qazilmalari',
-                'title': "O'zbekiston geologik tuzilishi va foydali qazilmalari",
-                'summary': "O'zbekiston hududining geologik rivojlanish tarixi, burmalanish bosqichlari va boy ma'dan hamda yoqilg'i resurslari o'rganiladi.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Geologik tuzilishi va tektonikasi',
-                        'body': "O'zbekiston hududi asosan ikkita tektonik tuzilmaga bo'linadi: tekislik (Turon plitasi) va tog'li hududlar (Tyanshan va Hisor-Oloy burmali sistemalari). Tog'li hududlarda gersin va alp burmalanishi jinslari uchraydi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Foydali qazilma konlari',
-                        'body': "O'zbekiston oltin, tabiiy gaz, uran, mis va ko'mir resurslariga juda boy. Muruntov oltin koni dunyodagi eng yirik ochiq oltin konlaridan biridir. Qashqadaryo va Buxoro viloyatlarida yirik gaz konlari (Gazli, Shohpaxta) joylashgan."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Kon turlarining tarqalishi',
-                        'items': [
-                            "Yoqilg'i resurslari: Buxoro-Xiva hamda Surxondaryo, Farg'ona botiqlarida (gaz, neft).",
-                            "Ruda resurslari: Navoiy, Toshkent va Oltintepa tog'li hududlarida (oltin, mis, polimetall).",
-                            "Noma'dan resurslar: Qizilqumda fosforitlar va osh tuzi konlari."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Oltin zaxiralari bo'yicha O'zbekiston dunyoda yetakchi o'rinlardan birini egallaydi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistondagi dunyoga mashhur eng yirik ochiq oltin koni qaysi?",
-                        'options': [
-                            'Olmaliq',
-                            'Muruntov',
-                            'Gazli',
-                            "Sharg'un"
-                        ],
-                        'answer': 1,
-                        'explain': 'Qizilqum hududida joylashgan Muruntov koni dunyodagi eng yirik ochiq oltin konlaridan biridir.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Turon plitasi O'zbekistonning tog'li sharqiy qismini egallaydi.",
-                        'answer': False,
-                        'explain': "Turon plitasi O'zbekistonning g'arbiy va markaziy tekislik qismlarini tashkil etadi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistondagi toshko'mirning asosiy konlari qaysi hududda joylashgan?",
-                        'options': [
-                            "Angren va Sharg'un",
-                            'Gazli va Muborak',
-                            'Uchquduq va Zarafshon',
-                            "Mo'ynoq va Chimboy"
-                        ],
-                        'answer': 0,
-                        'explain': "Angren (Toshkent viloyati) va Sharg'un (Surxondaryo) asosiy ko'mir havzalaridir."
-                    }
-                ],
-                'homework': {
-                    'intro': "O'zbekiston foydali qazilmalar xaritasidan foydalanib jadvalni to'ldiring.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Olmaliq kon-metallurgiya kombinatida qanday rudalar qayta ishlanishini ko'rsating.",
-                            'answer': 'Mis va molibden rudalari, shuningdek oltin va kumush birga ajratib olinadi.',
-                            'hint': 'Toshkent viloyatidagi yirik metallurgiya markazini eslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Qizilqumdagi Konimex va Markaziy Qizilqum fosforit konlarining qishloq xo'jaligidagi ahamiyatini tushuntiring."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekiston-iqlimini-shakllantiruvchi-omillar',
-                'title': "O'zbekiston iqlimini shakllantiruvchi omillar",
-                'summary': "O'zbekistonning keskin kontinental iqlimi, quyosh radiatsiyasi, havo massalari va relyef ta'siri batafsil ko'rib chiqiladi.",
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Iqlimning umumiy xususiyatlari',
-                        'body': "O me'yoriy va subtropik poyaslar tutashuvida joylashgan O'zbekiston iqlimi keskin kontinentaldir. Buning asosiy xususiyatlari: issiq va quruq yoz, nisbatan sovuq va o'zgaruvchan qish, kunlik va yillik harorat amplidutasining kattaligi ile yog me'yorining kamligidir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Havo massalari harakati',
-                        'body': "Respublikaga shimol va shimoli-g'arbdan qishda Arktika va mo'tadil sovuq havo massalari kirib keladi, bu haroratning keskin tushib ketishiga sabab bo'ladi. Yozda esa mahalliy kontinental tropik havo massalari (issiq va quruq) shakllanadi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Iqlim shakllantiruvchi 3 omil',
-                        'items': [
-                            "Quyosh radiatsiyasi: Yillik quyoshli soatlar miqdori o'rtacha 2500-3000 soatni tashkil qiladi.",
-                            "Atmosfera sirkulyatsiyasi: G'arbiy havo massalari va Arktika havosi kelishi.",
-                            "Yer yuzasi tuzilishi (relyef): Sharqdagi tog'lar nam havoni to'sib, yog'in miqdorini oshiradi, g'arb esa tekislik va quruq."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Tog'larda yog'in miqdori (1000 mm gacha) tekisliklarga (100-200 mm) nisbatan bir necha barobar ko'p bo'ladi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekiston iqlimining asosiy xarakterli xususiyati qaysi?",
-                        'options': [
-                            'Dengiz iqlimi',
-                            'Ekvatorial iqlim',
-                            'Keskin kontinental iqlim',
-                            'Mussonli iqlim'
-                        ],
-                        'answer': 2,
-                        'explain': "O'zbekiston okeanlardan uzoqda joylashgani uchun uning iqlimi keskin kontinentaldir."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "O'zbekistonda yoz oylarida mo'tadil nam havo massalari ustunlik qiladi.",
-                        'answer': False,
-                        'explain': "Yozda jazlama, quruq va issiq kontinental tropik havo massalari (turan havosi) ustun bo'ladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistonning eng ko'p yog'in tushadigan hududlari qayerda joylashgan?",
-                        'options': [
-                            'Qizilqum va Ustyurtda',
-                            'Buxoro va Xiva vohalarida',
-                            "Sharqiy va janubiy tog'li hududlarda",
-                            'Orolboyi hududida'
-                        ],
-                        'answer': 2,
-                        'explain': "G'arbdan kelayotgan nam havo massalari tog'larga urilib, tog' va tog' oldi hududlarida ko'p yog'in qoldiradi."
-                    }
-                ],
-                'homework': {
-                    'intro': "Iqlim ko'rsatkichlari bo'yicha amaliy topshiriqni bajaring.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Toshkent va Nukus shaharlarining qishki haroratlari o'rtasidagi farq va sababini tushuntiring.",
-                            'answer': "Nukus shimolda va tekislikda joylashgan bo'lib, Arktika sovuq havosiga ochiq; Toshkent esa janubroqda va tog'lar sovuqdan qisman himoya qiladi.",
-                            'hint': "Geografik kenglik va relyef to'sig'ini hisobga oling."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Garmsel va Mirzacho'l shamollarining qishloq xo'jaligiga ta'sirini tahlil qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekiston-ichki-suvlari-daryo-rejimi',
-                'title': "O'zbekistonning ichki suvlari: daryolar va ko'llar rejimi",
-                'summary': 'Mavzuda Amudaryo va Sirdaryo havzalari, daryolarning oziqlanish manbalari hamda suv muammolari tahlil qilinadi.',
-                'duration': 25,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Daryolar tarmog'i va oziqlanishi",
-                        'body': "O'zbekiston daryolari berkitikli Aral (Orol) dengizi havzasiga kiradi. Daryolarning asosiy manbai — baland tog'lardagi muzliklar va qorlardir. Shu sababli daryolarning toshishi ( eng ko'p suv sarfi) havo isigan bahor va yoz oylariga to'g'ri keladi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Amudaryo va Sirdaryo',
-                        'body': "Amudaryo — Markaziy Osiyodagi eng sersuv daryo (uzunligi 2540 km), Panj va Vaxsh daryolari qo'shilishidan hosil bo'ladi. Sirdaryo — eng uzun daryo (2014 km gacha, Norin va Qoradaryo qo'shilishidan)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Daryolarning oziqlanish tiplari',
-                        'items': [
-                            'Muzlik va qor oziqlanishli: Yoz ortida (iyul-avgust) toshadi (masalan, Amudaryo, Zarafshon).',
-                            "Qor va yomg'ir oziqlanishli: Bahorda (aprel-may) toshadi (Chirchiq, Ohangaron).",
-                            'Ermagak (bulaq) va soylar: Mavsumiy va yer osti suvlari hisobiga oqadi.'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: O'zbekistondagi aksariyat daryolar sug'orish va gidroenergetikada keng foydalaniladi va uning suvlari tekislikka yetib so'nadi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Amudaryo qaysi daryolarning qo'shilishidan hosil bo'ladi?",
-                        'options': [
-                            'Norin va Qoradaryo',
-                            'Panj va Vaxsh',
-                            'Zarafshon va Qashqadaryo',
-                            'Chirchiq va Ohangaron'
-                        ],
-                        'answer': 1,
-                        'explain': "Panj va Vaxsh daryolarining qo'shilishidan Amudaryo hosil bo'ladi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Muzlik va qor bilan oziqlanadigan daryolarning eng sersuv davri qish oylariga to'g'ri keladi.",
-                        'answer': False,
-                        'explain': "Muzliklar yozda eriganligi sababli, bunday daryolar yozda eng sersuv bo'ladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistondagi sun'iy suv omborlaridan eng yirigi qaysi?",
-                        'options': [
-                            'Toshkent suv ombori',
-                            'Chorvoq suv ombori',
-                            "Kattaqo'rg'on suv ombori",
-                            'Tuyuqboshi'
-                        ],
-                        'answer': 1,
-                        'explain': "Chorvoq suv ombori sig'imi va gidroenergetik ahamiyati bo'yicha eng yiriklaridan biridir."
-                    }
-                ],
-                'homework': {
-                    'intro': "O'zbekiston daryolari va ko'llari xaritasini o'rganing.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Aydarkol-Arnasoy ko'llar tizimining hosil bo'lish tarixini yozing.",
-                            'answer': "1969-yilgi kuchli toshqin paytida Sirdaryodagi Chordara suv omboridan ortiqcha suv Arnasoy botiqligiga tashlanishi natijasida hosil bo'lgan.",
-                            'hint': "Sirdaryo va Chordara suv omboriga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': 'Orol dengizining qurishi sabablari va oqibatlarini gidrologik nuqtai nazardan izohlang.'
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekiston-tuproq-osimlik-qatlami-balandlik-poyaslari',
-                'title': "O'zbekistonning tuproq-o'simlik qatlami va balandlik poyaslari",
-                'summary': "Tekislikdan tog'larga ko'tarilgan sari tuproq va o'simlik qatlamining o'zgarishi va vertical poyaslik qonuniyati o'rganiladi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Tekisliklar tuproq va o'simliklari",
-                        'body': "O'zbekiston tekisliklarida (hududning 70% ga yaqini) cho'l tuproqlari: sur-qo'ng'ir, qumli va sho'rxok tuproqlar tarqalgan. O'simliklardan saksovul, qandim, shuvoq va cherkez moslashgan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Balandlik poyaslari (vertikal zonalik)',
-                        'body': "Tog' tizimlarida balandlik oshgan sari harorat pasayadi va namlik ortadi. Natijada tuproq va o'simliklar almashinadi: cho'l va adirlar (bo'z tuproqlar, rang, lola) -> tog'lar (jigarrang va qo me'yoriy tuproqlar, archazorlar) -> yaylovlar (subalp va alp o me'yoriy o me'yoriy qismida shuvoq va o me'yoriy o me'yoriy)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "O'zbekistonning 4 ta landshaft mintaqasi",
-                        'items': [
-                            "Cho'l mintaqasi: 0-500 m gacha bo'lgan tekisliklar.",
-                            "Adir mintaqasi: 500-1200 m gacha bo'lgan tog' oldi tepaliklari.",
-                            "Tog' mintaqasi: 1200-2800 m gacha bo'lgan balandliklar (o me me'yoriy o'rmonlar va archazorlar).",
-                            "Yaylov (Yayloq) mintaqasi: 2800 m dan yuqori Alpine va Subalpine o'loqlari."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Bo'z tuproqlar adir mintaqasining asosiy va eng unumdor tuproq turi hisoblanadi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Adir mintaqasi uchun qaysi tuproq turi xos?',
-                        'options': [
-                            "Sho'rxok tuproqlar",
-                            'Torfli tuproqlar',
-                            "Bo'z tuproqlar",
-                            'Qora tuproqlar'
-                        ],
-                        'answer': 2,
-                        'explain': "Bo'z tuproqlar O'zbekiston adir mintaqasida va sug'oriladigan yerlarda keng tarqalgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Saksovul va qandim tog' mintaqasining asosiy daraxtlaridir.",
-                        'answer': False,
-                        'explain': "Saksovul va qandim cho'l mintaqasining o'simliklaridir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekiston tog'larida 1500-2500 m balandlikda qaysi nodir daraxtzorlar uchraydi?",
-                        'options': [
-                            'Saksovulzorlar',
-                            'Archazorlar',
-                            'Palmazorlar',
-                            'Bambukzorlar'
-                        ],
-                        'answer': 1,
-                        'explain': "Tog' mintaqasida archazorlar suvni saqlash va eroziyadan himoya qilishda katta rol o'ynaydi."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Balandlik mintaqalari sxemasini chizing va topshiriqlarni bajaring.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Cho'l, adir, tog' va yayloq mintaqalarining balandlik chegaralarini tartib bilan yozing.",
-                            'answer': "Cho'l (0-500 m), Adir (500-1200 m), Tog' (1200-2800 m), Yayloq (2800 m dan baland).",
-                            'hint': "Mintaqalarning o'rtacha balandliklarini keltiring."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Tuproq eroziyasi va sho'rlanish muammosini kamaytirish usullarini taklif qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekiston-demografiyasi-aholi-joylashuvi',
-                'title': "O'zbekiston demografiyasi va aholi joylashuvi",
-                'summary': "O'zbekiston aholisining soni, o'sish sur'atlari, urbanizatsiya va zichlikning geografik xususiyatlari o'rganiladi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Aholi soni va o'sishi",
-                        'body': "O'zbekiston Markaziy Osiyoda aholi soni bo'yicha 1-o'rinda turadi (36 milliondan ortiq). Mamlakatda aholining tabiiy ko'payishi yuqori bo'lib, tug'ilish ko me'yori o me'yorda va o'lim darajasi nisbatan past."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Aholi zichligi',
-                        'body': "Aholi respublika bo'yicha juda tengsiz joylashgan. Eng yuqori zichlik Farg'ona vodiysida (1 km² ga 500-700 kishidan ortiq) bo'lsa, Navoiy viloyati va Qoraqalpog'iston cho'llarida 1 km² ga 10-15 kishidan to'g'ri keladi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Urbanizatsiya jarayoni',
-                        'items': [
-                            'Shahar aholisi: Umuman olganda 50% dan ortiqni tashkil etadi.',
-                            'Yirik shaharlar: Toshkent (2.9 mln dan ortiq), Samarqand, Namangan, Andijon.',
-                            "Agglomeratsiyalar: Toshkent va Farg'ona-Marg'ilon shahar agglomeratsiyalari jadal rivojlanmoqda."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Aholining joylashishiga suv resurslari, sug'oriladigan yerlar va iqlim sharoitlari asosiy ta'sir ko'rsatgan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistonda aholi zichligi eng yuqori bo'lgan iqtisodiy-geografik hudud qaysi?",
-                        'options': [
-                            'Ustyurt platosi',
-                            "Farg'ona vodiysi",
-                            'Qizilqum zonasi',
-                            "Murg'ob vohasi"
-                        ],
-                        'answer': 1,
-                        'explain': "Farg'ona vodiysi o'zining unumdor yerlari va qadimiy vohalari bilan eng yuqori zichlikka ega."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "O'zbekiston aholi soni bo'yicha Markaziy Osiyoda ikkinchi o'rinda turadi.",
-                        'answer': False,
-                        'explain': "O'zbekiston aholisi 36 mln dan ortiq bo'lib, Markaziy Osiyoda 1-o'rinni egallaydi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistonning birinchi millionli va eng yirik shahri qaysi?",
-                        'options': [
-                            'Samarqand',
-                            'Namangan',
-                            'Toshkent',
-                            'Buxoro'
-                        ],
-                        'answer': 2,
-                        'explain': 'Toshkent shahri respublikamiz poytaxti va eng yirik megapolidir.'
-                    }
-                ],
-                'homework': {
-                    'intro': "O'zbekiston aholisi demografiyasiga oid tahliliy vazifalar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Nima uchun cho'l viloyatlarida (Navoiy, Qoraqalpog'iston) aholi zichligi pastligini tushuntiring.",
-                            'answer': 'Suv resurslarining yetishmasligi, keskin quruq iqlim va dehqonchilik uchun yerlarning kamligi sababli.',
-                            'hint': 'Tabiiy sharoit va suv omilini eslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "O'zbekistondagi mehnat migratsiyasining iqtisodiy va demografik oqibatlarini muhokama qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'ozbekiston-sanoatining-hududiy-tarkibi',
-                'title': "O'zbekiston sanoatining hududiy tarkibi",
-                'summary': "O'zbekiston sanoat tarmoqlari, energetika, mashinasozlik, kimyo va yengil sanoat korxonalarining joylashishi tahlil qilinadi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Sanoat tarmoqlari tuzilishi',
-                        'body': "O'zbekiston industrial-agrar mamlakatdir. Sanoatning asosiy tarmoqlari: yoqilg'i-energetika, kon-metallurgiya, mashinasozlik, kimyo, to'qimachilik va oziq-ovqat sanoatidir."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Avtomobilsozlik va Metallurgiya',
-                        'body': "Asaka (Andijon) shahri avtomobilsozlik markazi hisoblanadi. Bekobod shahri metallurgiya (O'zbekiston metallurgiya kombinati), Olmaliq hamda Zarafshon rangli metallurgiya markazlaridir."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Asosiy sanoat tugunlari',
-                        'items': [
-                            'Toshkent sanoat tuguni: Mashinasozlik, samolyotsozlik va yengil sanoat.',
-                            "Farg'ona-Marg'ilon sanoat tuguni: Neftni qayta ishlash va to'qimachilik.",
-                            'Navoiy-Zarafshon sanoat tuguni: Kon-metallurgiya va kimyo sanoati.'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Chirchiq shahri O'zbekistondagi yirik kimyo va mashinasozlik markazlaridan biridir."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'zbekistonda yengil avtomobillar ishlab chiqaruvchi asosiy zavod qaysi shahrida joylashgan?",
-                        'options': [
-                            'Samarqand',
-                            'Asaka',
-                            'Qarshi',
-                            'Chirchiq'
-                        ],
-                        'answer': 1,
-                        'explain': 'Andijon viloyatining Asaka shahrida yengil avtomobillar ishlab chiqaruvchi zavod joylashgan.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Bekobod shahri O'zbekistondagi rangli metallurgiyaning bosh markazidir.",
-                        'answer': False,
-                        'explain': 'Bekobod qora metallurgiya markazidir, Olmaliq va Zarafshon esa rangli metallurgiyaga ixtisoslashgan.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Qaysi shahrida gaz-kimyo majmuasi (GTL) va sho'rtan gaz-kimyo majmuasi joylashgan?",
-                        'options': [
-                            "Qashqadaryo viloyatida (G'uzor/Qarshi)",
-                            'Xorazmda (Urganch)',
-                            'Jizzaxda',
-                            'Gulistonda'
-                        ],
-                        'answer': 0,
-                        'explain': "Sho'rtan gaz-kimyo majmuasi va Uzbekistan GTL Qashqadaryo viloyatida joylashgan."
-                    }
-                ],
-                'homework': {
-                    'intro': "O'zbekiston iqtisodiy xaritasidan foydalanib topshiriqlarni bajaring.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Navoiy va Farg'ona shaharlarida joylashgan mineral o'g'itlar ishlab chiqaradigan kimyo zavodlarini yozing.",
-                            'answer': "'Navoiyazot' AJ va 'Farg'onaazot' AJ.",
-                            'hint': "Azotli o'g'itlar ishlab chiqaruvchi aksiyadorlik jamiyatlari."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "O'zbekistonda qayta tiklanadigan energiya (quyosh va shamol) manbalarini rivojlantirish istiqbollarini baholang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'dunyo-siyosiy-xaritasi-davlatlar-klassifikatsiyasi',
-                'title': 'Dunyo siyosiy xaritasi va davlatlar klassifikatsiyasi',
-                'summary': "Dunyoning siyosiy xaritasi shakllanish bosqichlari, davlatlarning boshqaruv shakllari va hududiy tuzilishi o'rganiladi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Siyosiy xaritaning ko'rinishi",
-                        'body': "Dunyo siyosiy xaritasida 200 dan ortiq davlat va hududlar mavjud. Davlatlar maydonining kattaligi, aholisi soni, geografik o'rni, iqtisodiy rivojlanish darajasi va davlat boshqaruvi shakliga ko'ra guruhlanadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Boshqaruv shakllari',
-                        'body': "Boshqaruv shakliga ko'ra davlatlar respublika va monarxiyaga bo me'yorlanadi. Monarxiyaning o'zi konstitutsiyaviy (Buyuk Britaniya, Yaponiya) va absolyut (Saudiya Arabistoni, Ummon) shakllarga ega."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Ma'muriy-hududiy tuzilishi",
-                        'items': [
-                            "Unitar davlatlar: Hududida yagona qonunchilik va ijro etuvchi hokimiyat amal qiladi (O'zbekiston, Fransiya, Yaponiya).",
-                            "Federativ davlatlar: Tarkibida muayyan siyosiy mustaqillikka ega bo'lgan subyektlar bo'ladi (AQSh, Rossiya, Germaniya, Hindiston).",
-                            'Konfederatsiya: Vaqtincha ittifoq (masalan, Shveysariya tarixan).'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: BMT ma'lumotlariga ko'ra dunyoda 193 ta rasman tan olingan mustaqil a'zo davlat mavjud."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Quyidagi davlatlardan qaysi biri monarxiya boshqaruv shakliga ega?',
-                        'options': [
-                            'Fransiya',
-                            'Yaponiya',
-                            'AQSh',
-                            'Germaniya'
-                        ],
-                        'answer': 1,
-                        'explain': 'Yaponiya konstitutsiyaviy monarxiya (imperiya) hisoblanadi.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "O'zbekiston Respublikasi ma'muriy-hududiy tuzilishiga ko'ra federativ davlatdir.",
-                        'answer': False,
-                        'explain': "O'zbekiston unitar davlat hisoblanadi (tarkibidagi Qoraqalpog'iston Suveren Respublika maqomiga ega bo'lsa-da)."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Dunyo maydoni bo'yicha eng katta davlat qaysi?",
-                        'options': [
-                            'Kanada',
-                            'Xitoy',
-                            'AQSh',
-                            'Rossiya'
+                            'Alpomish',
+                            "Kuntug'mish",
+                            "Kuntug'mish va Xolbeka",
+                            'Lison ut-tayr'
                         ],
                         'answer': 3,
-                        'explain': "Rossiya 17.1 mln km² maydon bilan dunyoda birinchi o'rinni egallaydi."
+                        'explain': "'Lison ut-tayr' Alisher Navoiy yozgan mualliflik dostonidir."
                     }
                 ],
                 'homework': {
-                    'intro': 'Dunyo siyosiy xaritasidan foydalanib topshiriqlarni bajaring.',
+                    'intro': 'Doston janrini tahlil qilish uchun topshiriqlar.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Janubiy Amerikadagi 2 ta federativ va 2 ta unitar davlatni yozing.',
-                            'answer': 'Federativ: Braziliya, Argentina. Unitar: Chili, Kolumbiya, Peru.',
-                            'hint': "Braziliya va Argentina tuzilishiga e'tibor bering."
+                            'prompt': "Xalq dostonlari bilan yozma dostonlar o'rtasidagi 3 ta asosiy farqni jadval ko'rinishida yozing.",
+                            'answer': "O'quvchi mualliflik, shakl va ijro usulidagi farqlarni ko'rsatadi.",
+                            'hint': "Baxshichilik va yozma adabiyot farqiga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Anklav va eksklav hududlar tushunchalarini misollar yordamida izohlang.'
+                            'prompt': "'Alpomish' dostonidagi vatandoshlik va sodiqlik g'oyalarini izohlab bering."
                         }
                     ]
                 }
             },
             {
-                'slug': 'jahon-tabiiy-resurslari-potensiali',
-                'title': "Jahon tabiiy resurslari potensiali va resurs bilan ta'minlanganlik",
-                'summary': "Mavzuda tabiiy resurslar tasnifi, tugaydigan va tugamaydigan resurslar hamda resurs bilan ta'minlanganlik darajasini hisoblash usullari ko'rib chiqiladi.",
-                'duration': 30,
+                'slug': 'badiiy-asar-syujeti-va-unsurlari',
+                'title': 'Badiiy asar syujeti va uning unsurlari',
+                'summary': "Badiiy asardagi voqealar rivojini ta'minlovchi syujet tushunchasi va uning tarkibiy qismlari (tugun, kulminatsiya, yechim) chuqur tahlil qilinadi.",
+                'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Tabiiy resurslar va ularning turlari',
-                        'body': "Tabiiy resurslar — insoniyat jamiyati tomonidan moddiy va ma'naviy ehtiyojlarni qondirish uchun foydalaniladigan tabiat unsurlaridir. Ular tugaydigan (tiklanmaydigan: foydali qazilmalar; tiklanadigan: tuproq, o'rmon, suv) va tugamaydigan (quyosh, shamol, to'lqin) resurslarga bo'linadi."
+                        'title': 'Kirish',
+                        'body': "Syujet — badiiy asarda tasvirlangan voqealar zanjiri bo'lib, u xarakterlarning shakllanishi va ziddiyatlarning namoyon bo'lishini ta'minlaydi. Har bir syujetli asar muayyan mantiqiy bosqichlardan o'tadi."
                     },
                     {
                         'type': 'example',
-                        'title': "Resurs bilan ta'minlanganlikni hisoblash",
-                        'body': "Resurs bilan ta'minlanganlik ko'rsatkichi resurs zaxirasini uning yillik qazib olish (foydalanish) hajmiga bo'lish yoki aholi jon boshiga bo'lish orqali topiladi: R = Zaxira / Qazib olish (yillarda) yoki R = Zaxira / Aholi soni."
+                        'title': 'Syujet bosqichlari misolida',
+                        'body': "Masalan, Abdulla Qodiriyning 'O'tkan kunlar' romanida Kumush va Otabekning uchrashuvi ziddiyatlarni boshlasa, Asadbek va Marg'ilon voqealari keskinlashib, kulminatsiyaga yetib boradi."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Asosiy resurs turlari',
+                        'title': 'Syujetning 5 asosiy elementi',
                         'items': [
-                            "Mineral resurslar: Yoqilg'i, ruda va noma'dan minerallar.",
-                            'Er resurslari: Jahon yer fondi va unumdor tuproqlar.',
-                            'Suv resurslari: Chuchuk suv zaxiralari (asosan muzliklarda).',
-                            "O'rmon resurslari: Shimoliy (ignabargli) va Janubiy (ekvatorial) o'rmon poyaslari."
+                            'Expozitsiya (Muqaddima): Qahramonlar va joy bilan tanishtiruv',
+                            'Tugun: Ziddiyat (konflikt)ning boshlanishi',
+                            'Voqealar rivoji: Qarama-qarshilikning keskinlashuvi',
+                            'Kulminatsiya: Voqealarning eng yuqori nuqtasi',
+                            "Yechim: Ziddiyatning hal bo'lishi"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Jahon bo'yicha chuchuk suvning atigi 2.5-3 foizigina mavjud, uning asosiy qismi Antarktida va Grenlandiya muzliklarida to'plangan."
+                        'body': "Esda tuting: Syujetsiz asarlar ham bo'lishi mumkin (masalan, lirik she'rlar), lekin epik va dramatik asarlar uchun syujet muhim tayanchdir."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Quyidagilardan qaysi biri tugamaydigan resurslar sirasiga kiradi?',
+                        'q': 'Syujetning eng yuqori, taranglashgan nuqtasi nima deb ataladi?',
                         'options': [
-                            "Toshko'mir",
-                            'Quyosh va shamol energiyasi',
-                            "O'rmon va tuproq",
-                            'Tabiiy gaz'
-                        ],
-                        'answer': 1,
-                        'explain': 'Quyosh, shamol va suv harakati tugamaydigan resurslar hisoblanadi.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Resurs bilan ta'minlanganlik ko'rsatkichi zaxirani aholi soniga ko'paytirish orqali topiladi.",
-                        'answer': False,
-                        'explain': "Resurs bilan ta'minlanganlik zaxira miqdorini aholi soniga yoki yillik iste'molga bo'lish orqali hisoblanadi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Neft zaxiralari bo'yicha dunyoda eng yetakchi mintaqa qaysi?",
-                        'options': [
-                            "G'arbiy Yevropa",
-                            "Yaqin va O'rta Sharq (Fors qo'ltig'i)",
-                            'Janubiy-Sharqiy Osiyo',
-                            'Markaziy Afrika'
-                        ],
-                        'answer': 1,
-                        'explain': "Fors qo'ltig'i mintaqasi jahon neft zaxiralarining asosiy qismini o'zida jamlagan."
-                    }
-                ],
-                'homework': {
-                    'intro': "Resurs ta'minlanganligini hisoblash bo'yicha amaliy masalani bajaring.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': 'A davlatda neft zaxirasi 15 milliard tonna. Yiliga 300 million tonna qazib olinsa, neft necha yilga yetadi?',
-                            'answer': '50 yilga (15 000 000 000 / 300 000 000 = 50).',
-                            'hint': "Zaxira miqdorini yillik qazib olish hajmiga bo'ling."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Shimoliy va Janubiy o'rmon poyaslarining joylashuvi hamda daraxt turlari farqini tahlil qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'demografik-otish-nazariyasi-va-jarayonlar',
-                'title': "Demografik o'tish nazariyasi va jahon demografik jarayonlari",
-                'summary': "Jahon aholisi o'sishining tiplari, demografik portlash va demografik inqiroz (qarish) hodisalari ko'rib chiqiladi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': "Demografik o'tish nazariyasi",
-                        'body': "Demografik o'tish — bu tug'ilish va o'lim ko'rsatkichlarining yuqori darajasidan past darajasiga o me'yoriy o me'yoriy o me me'yoriy o'tishi jarayonidir. U 4 ta bosqichni o'z ichiga oladi: 1) Yuqori tug'ilish va o'lim; 2) O'lim kamayishi va 'demografik portlash'; 3) Tug'ilish kamayishi; 4) Past tug'ilish va o'lim ('demografik inqiroz'/qarish)."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Aholi ko'payish tiplari",
-                        'body': "Rivojlangan davlatlarda (Yevropa, Yaponiya) 4-bosqich kuzatilib, aholi qarishi va demografik inqiroz mavjud. Rivojlanayotgan mamlakatlarda (Afrika, Osiyo) 2 va 3-bosqich bo'lib, aholi tez o me'yorda ko'paymoqda (demografik portlash)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Demografik siyosat',
-                        'items': [
-                            "Tug'ilishni rag'batlantirish: Rivojlangan mamlakat larda (yordam pullari, imtiyozlar).",
-                            "Tug'ilishni cheklash: Aholisi juda ko'p rivojlanayotgan mamlakatlarda (masalan, Xitoyning vaqtinchalik 'Bir oila - bir bola' siyosati, Hindiston)."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: Depopulatsiya — bu aholi sonining mutlaq kamayib ketishi jarayonidir.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Demografik portlash' jarayoni asosan qaysi turdagi mamlakatlar uchun xos?",
-                        'options': [
-                            "G'arbiy Yevropaning rivojlangan davlatlari",
-                            'Rivojlanayotgan mamlakatlar (Afrika, Osiyo)',
-                            'Shimoliy Amerika mamlakatlari',
-                            'Aholi soni kamayayotgan davlatlar'
-                        ],
-                        'answer': 1,
-                        'explain': "O'lim darajasining pasayishi va tug'ilishning yuqoriligi rivojlanayotgan mamlakatlarda demografik portlashni yuzaga keltirgan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Aholining qarishi (keksayishi) ko'rsatkichi rivojlanayotgan Afrika davlatlarida eng yuqori.",
-                        'answer': False,
-                        'explain': 'Aholining qarishi rivojlangan Yevropa va Yaponiya kabi mamlakatlarda yuqori.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Demografik o'tishning to me'yordagi 4-bosqichida tug'ilish va o me me'yorda o'lim ko'rsatkichlari qanday bo'ladi?",
-                        'options': [
-                            'Ikkalasi ham yuqori',
-                            "Tug'ilish yuqori, o'lim past",
-                            'Ikkalasi ham barqaror past',
-                            "Tug'ilish o'limdan keskin oshadi"
+                            'Tugun',
+                            'Expozitsiya',
+                            'Kulminatsiya',
+                            'Yechim'
                         ],
                         'answer': 2,
-                        'explain': "4-bosqichda tug'ilish ham, o'lim ham past bo'lib, aholi soni barqarorlashadi yoki kamayadi."
+                        'explain': 'Kulminatsiya — asardagi ziddiyatlar eng yuqori va hal qiluvchi nuqtaga yetgan bosqichdir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Expozitsiya — bu voqealarning yakunlanishi va ziddiyatning yechilishidir.',
+                        'answer': False,
+                        'explain': "Noto'g'ri. Expozitsiya — asar boshida qahramonlar va sharoit bilan dastlabki tanishtiruvdir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Asarda ziddiyat qaysi bosqichdan e'tiboran boshlanadi?",
+                        'options': [
+                            'Expozitsiya',
+                            'Tugun',
+                            'Kulminatsiya',
+                            'Yechim'
+                        ],
+                        'answer': 1,
+                        'explain': 'Tugun — voqealar zanjiridagi ziddiyat va toqnashuvlarning boshlanish nuqtasidir.'
                     }
                 ],
                 'homework': {
-                    'intro': "Demografik pyramids va statistik ma'lumotlarni tahlil qiling.",
+                    'intro': 'Badiiy asar syujetini tahlil qilish topshiriqlari.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Jahon aholisi yosh tarkibida 'milliya qarishi' qanday iqtisodiy muammolarga olib keladi?",
-                            'answer': 'Mehnat resurslarining yetishmasligi, pensiya va tibbiy xarajatlarning oshishiga olib keladi.',
-                            'hint': "Nafaqa va mehnat qobiliyati yoshidagi aholi nisbatini o me'yorlang."
+                            'prompt': "O'zingiz o'qigan biror hikoyaning syujet unsurlarini (expozitsiya, tugun, kulminatsiya, yechim) ajratib yozing.",
+                            'answer': "O mezoniy o'quvchi tanlangan hikoya voqealarini 5 bosqichga bo'lib beradi.",
+                            'hint': "Abdulla Qahhorning 'Anor' yoki 'Dahshat' hikoyasini tanlashingiz mumkin."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Xitoy va Hindiston davlatlarining demografik siyosatini o'zaro taqqoslang."
+                            'prompt': "Nega har bir badiiy asarda kulminatsiya nuqtasi kitobxonda eng kuchli emotsiyani uyg'otadi?"
                         }
                     ]
                 }
             },
             {
-                'slug': 'jahon-xojaligi-tuzilishi',
-                'title': "Jahon xo'jaligining tarmoqlararo va hududiy tuzilishi",
-                'summary': "Jahon xo'jaligi tushunchasi, uning rivojlanish bosqichlari (agrariya, industrial, postindustrial) hamda xalqaro mehnat taqsimoti ko'rib chiqiladi.",
-                'duration': 30,
+                'slug': 'badiiy-asar-kompozitsiyasi-va-goya',
+                'title': "Badiiy asar kompozitsiyasi va g'oya",
+                'summary': "Asarning ichki va tashqi tuzilishi bo'lmish kompozitsiya hamda yozuvchi nazarda tutgan asosiy fikr — g'oyaning o'zaro mutanosibligi o'rganiladi.",
+                'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': "Jahon xo'jaligi rivojlanish bosqichlari",
-                        'body': "Jahon xo'jaligi — barcha milliy iqtisodiyotlarning xalqaro iqtisodiy munosabatlar va xalqaro mehnat taqsimoti orqali birikuvidir. U 3 bosqichni bosib o'tgan: Agrar (qishloq xo'jaligi ustun), Industrial (sanoat ustun) va Postindustrial (xizmat ko'rsatish sohasining ustunligi)."
+                        'title': 'Kirish',
+                        'body': "Kompozitsiya (lotincha 'compositio' — tuzilish, birikish) — badiiy asar qismlari, lavhalari va elementlarining muayyan g'oyaviy maqsadga bo mezonlashtirilib joylashtirilishidir. Asar g'oyasi esa muallifning shu asar orqali aytmoqchi bo'lgan bosh fikridir."
                     },
                     {
                         'type': 'example',
-                        'title': 'Postindustrial jamiyat',
-                        'body': "AQSh, Yaponiya va G'arbiy Yevropa mamlakatlarida yalpi ichki mahsulotning (YIM) 70-80 foizidan ortig'i xizmat ko'rsatish va yuqori texnologiyalar (IT, moliya, fan) hisobiga to'g'ri keladi."
+                        'title': 'Kompozitsiya usullari',
+                        'body': 'Peyzaj (tabiat tasviri), portret (qahramon qiyofasi), epigraf (asar boshidagi hikmat), ramka (asar ichida asar usuli) kompozitsiya vositalari sanaladi.'
                     },
                     {
                         'type': 'steps',
-                        'title': "Jahon xo'jaligining 3 asosiy markazi",
+                        'title': "Asar g'oyasini aniqlash ketma-ketligi",
                         'items': [
-                            'Shimoliy Amerika markazi: AQSh va Kanada (yuqori texnologiyalar va moliya).',
-                            'Yevropa markazi: Yevropa Ittifoqi mamlakatlari.',
-                            "Osiyo-Tinch okeani markazi: Xitoy, Yaponiya va 'Osiyo yo'lbarslari'."
+                            "Asar mavzusini (nimaga bag'ishlanganini) aniqlash",
+                            'Qahramonlarning xatti-harakatlari va takdirini kuzatish',
+                            "Muallif pozitsiyasini o'rganish",
+                            'Yozuvchining jamiyatga berayotgan xabarini jamlash'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Xalqaro mehnat taqsimoti (XMT) — mamlakatlarning muayyan mahsulot yoki xizmatlarni ishlab chiqarishga ixtisoslashuvidir.'
+                        'body': "Esda tuting: Mavzu va G'oya bir xil narsa emas. Mavzu — asarda aks etgan hayotiy material, g'oya esa muallifning o'sha materialga bergan bahosi va xulosasidir."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Postindustrial bosqichda iqtisodiyotning qaysi sohasi yetakchi o'ringa chiqadi?",
+                        'q': "Badiiy asar elementlarining bir-biri bilan uzviy bog'lanishi va joylashuvi nima deyiladi?",
                         'options': [
-                            "Qishloq xo'jaligi",
-                            'Konchilik sanoati',
-                            "Xizmat ko'rsatish va axborot sohasi",
-                            "Og'ir mashinasozlik"
+                            'Syujet',
+                            'Kompozitsiya',
+                            'Mavzu',
+                            'Janr'
+                        ],
+                        'answer': 1,
+                        'explain': "Kompozitsiya — asar tarkibiy qismlarining o'zaro mutanosib tartibda tuzilishidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Asarning mavzusi bilan uning g mezoniy g'oyasi mutlaqo bir xil tushunchadir.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Mavzu — nima haqidaligi, g'oya esa asardan chiqariladigan asosiy xulosa va maqsaddir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Asar boshida keladigan va uning umumiy ruhiga ishora qiluvchi ko'chirma yoki hikmatli so'z nima deyiladi?",
+                        'options': [
+                            'Peyzaj',
+                            'Portret',
+                            'Epigraf',
+                            'Monolog'
                         ],
                         'answer': 2,
-                        'explain': "Postindustrial jamiyatda xizmat ko'rsatish, fan, axborot va moliya sohalari asosiy drayverga aylanadi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Xalqaro mehnat taqsimoti barcha mamlakatlarning bir xil mahsulot ishlab chiqarishini anglatadi.',
-                        'answer': False,
-                        'explain': "Xalqaro mehnat taqsimoti davlatlarning o'z resursi va afzalligiga ko'ra ma'lum mahsulotlarga ixtisoslashuvidir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Quyidagilardan qaysi biri 'Yangi sanoatlashgan mamlakatlar' (Osiyo yo'lbarslari) guruhiga kiradi?",
-                        'options': [
-                            'Janubiy Koreya va Singapur',
-                            'Mongoliya va Nepal',
-                            'Norvegiya va Islandiya',
-                            'Misir va Nigeriya'
-                        ],
-                        'answer': 0,
-                        'explain': "Janubiy Koreya, Singapur, Tayvan va Gonkong 'Osiyo yo'lbarslari' sifatida tanilgan."
+                        'explain': "Epigraf — asar yoki boblar boshida beriladigan, asosiy g'oyaga yo'naltiruvchi hikmatli matndir."
                     }
                 ],
                 'homework': {
-                    'intro': "Jahon xo'jaligi va iqtisodiy modellarga oid vazifalar.",
+                    'intro': "Kompozitsion tahlil bo'yicha amaliy mashg'ulot.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Transmilliy korporatsiyalar (TMK) nima va ularning jahon iqtisodiyotidagi roliga misol keltiring.',
-                            'answer': "TMK — turli mamlakatlarda sho'ba korxonalariga ega bo'lgan ulkan kompaniyalardir (masalan, Apple, Toyota, Samsung).",
-                            'hint': 'Xalqaro darajadagi kompaniyalarni eslang.'
+                            'prompt': "O'zingiz yoqtirgan biror asardagi portret va peyzaj tasviriga 1 tadan misol keltiring.",
+                            'answer': "O'quvchi asardan insonga berilgan qiyofa va tabiat tasvirini alohida ajratib ko'rsatadi.",
+                            'hint': "Portretda tashqi ko'rinish, peyzajda tabiat manzarasi tasvirlanadi."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "O'zbekiston xalqaro mehnat taqsimotida qaysi mahsulotlar bilan ishtirok etmoqda?"
+                            'prompt': "Epigrafning asar g'oyasini ochib berishdagi rolini sharhlang."
                         }
                     ]
                 }
             },
             {
-                'slug': 'jahon-energetika-sanoati',
-                'title': 'Jahon energetika sanoati va uning rivojlanish tendensiyalari',
-                'summary': "Mavzuda neft, gaz, ko'mir sanoati hamda muqobil va yashil energetika manbalarining o'rni tahlil qilinadi.",
-                'duration': 30,
+                'slug': 'dramatik-asarlar-va-ularning-turlari',
+                'title': 'Dramatik asarlar va ularning turlari',
+                'summary': "Sahnaga mo'ljallangan dramaturgiya janri, uning o'ziga xos tili (dialog va monolog) hamda komediya, tragediya, drama turlari tahlili.",
+                'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Energetika balansi va evolyutsiyasi',
-                        'body': "Jahon yoqilg'i-energetika balansi bir necha bosqichni o'tdi: 19-asrda ko'mir davri, 20-asr o'rtalaridan neft-gaz davri. Hozirda esa past uglerodli va qayta tiklanadigan 'yashil energetika' davriga o'tilmoqda."
+                        'title': 'Kirish',
+                        'body': "Drama — badiiy adabiyotning uch asosiy turidan biridir (epos, lirika, drama). Dramatik asarlar sahnada ko'rsatishga mo'ljallangan bo'lib, unda muallif so'zi kam bo'ladi; voqealar qahramonlarning harakati va nutqi orqali namoyon bo'ladi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Elektr energiyasi manbalari',
-                        'body': "Jahonda elektr energiyasining 60% dan ortig'i Issiqlik elektr stansiyalarida (IES), 15-16% Gidroelektr stansiyalarda (GES), 10% Atom elektr stansiyalarida (AES) va qolgani muqobil manbalarda (Quyosh, Shamol) olindi."
+                        'title': 'Dramatik turunining janrlari',
+                        'body': "Tragediya (Fojia): Qahramonning haloqati bilan tugaydi ('Otello', 'Jaloliddin Manguberdi').\nKomediya: Kulgi va hajvga asoslanadi ('Maysaraning ishi').\nDrama: Jiddiy ijtimoiy-maishiy ziddiyatlarni ko'taradi ('Padarkush')."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Energetika yetakchilari',
+                        'title': 'Dramatik asar tili',
                         'items': [
-                            'Neft qazib olish: AQSh, Saudiya Arabistoni, Rossiya.',
-                            'Tabiiy gaz qazib olish: AQSh, Rossiya, Qatar, Erron.',
-                            'AES elektr energiyasi: Fransiya (elektrning ~70% AESdan), AQSh, Xitoy.'
+                            "Dialog — ikki yoki undan ortiq shaxsning o'zaro suhbati.",
+                            "Monolog — qahramonning o'zi bilan o'zi yoki tomoshabin bilan yakka nutqi.",
+                            "Remarka — muallifning sahna holati, harakatlar bo'yicha ko'rsatmalari."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: OPEK (OPEC) — neft eksport qiluvchi mamlakatlar tashkiloti bo'lib, jahon neft narxini tartibga solishda katta rol o'ynaydi."
+                        'body': "Esda tuting: Dramatik asarda epizod va boblar o'rniga 'parda', 'ko'rinish' va 'pahlav' tushunchalari qo'llaniladi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Fransiyada elektr energiyasining asosiy qismi (70% ga yaqini) qaysi turdagi stansiyalarda ishlab chiqariladi?',
+                        'q': 'Muallifning sahna bezaqlari va qahramon harakatlari haqida qavs ichida beradigan izohi nima deyiladi?',
                         'options': [
-                            'GES',
-                            'IES',
-                            'AES',
-                            'Shamol stansiyalari'
+                            'Monolog',
+                            'Remarka',
+                            'Dialog',
+                            'Aksiya'
+                        ],
+                        'answer': 1,
+                        'explain': 'Remarka — dramaturgning rejissyor va aktyorlar uchun beradigan tushuntirishidir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Tragediyada har doim voqealar quvnoq va kulgili yakun topadi.',
+                        'answer': False,
+                        'explain': "Noto'g'ri. Tragediyada asosiy qahramonlar fojiali halokatga uchraydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek dramaturgiyasining birinchi namunasi qaysi asar hisoblanadi?",
+                        'options': [
+                            'Maysaraning ishi',
+                            'Padarkush',
+                            "O'lim burguti",
+                            'Mahmud Torobiy'
+                        ],
+                        'answer': 1,
+                        'explain': "Mahmudxo'ja Behbudiyning 1911-yilda yozilgan 'Padarkush' dramasi o'zbek dramaturgiyasiga tamal toshini qo'ygan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Dramatik janr xususiyatlarini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Dialog va monolog o'rtasidagi asosiy farqni izohlab, har biriga 1 tadan misol matn keltiring.",
+                            'answer': "O'quvchi yakka va jamoaviy nutq o'rtasidagi farqni tushuntiradi.",
+                            'hint': 'Monolog bir kishining mulohazasi ekanligini yodda tuting.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun dramatik asarlarni sahnada ijro etmasdan shunchaki o'qish qiyinroq kechadi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'aruz-vazni-haqida-boshlangich-tushuncha',
+                'title': "Aruz vazni haqida boshlang'ich tushuncha",
+                'summary': "Sharq she'riyatining klassik o'lchov tizimi bo'lgan aruz vazni, qisqa va uzun bo'g'inlarning navbatlashuvi va uning ruknlari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Aruz — arab, fors va turkiy xalqlar mumtoz she'riyatida qo'llanilgan poetik vazn tizimidir. Aruz vazni bo'g'inlarning soniga emas, balki ularning cho'ziqlik va qisqalik xususiyatiga asoslanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Aruz va Barmoq vazni farqi',
+                        'body': "Barmoq vaznida bo'g'inlar soni teng bo'lishi shart (masalan: 7, 8, 11 bo'g'in).\nAruz vaznida esa misradagi bo mezoniy bo'g'inlarning uzun-qisqalik tartibi mos kelishi kerak."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Aruzdagi bo'g'in turlari",
+                        'items': [
+                            "Qisqa bo mezon (unli bilan tugagan ochiq bo'g'in: 'v-')",
+                            "Cho'ziq bo mezon (undosh bilan tugagan yopiq yoki uzun unlili bo'g'in: '- ')",
+                            "O'ta cho'ziq bo mezon (vaqt jihatidan eng uzun bo'g'in: '~')"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Aruz vaznida ruknlar (masalan: 'Fa'ulun', 'Mafa'ilun') she'r o mezonining musiqiyligini ta'minlaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Aruz vazni nimaga asoslanadi?',
+                        'options': [
+                            "Faqat bo'g'inlar soniga",
+                            "Turg'un urg'uga",
+                            "Cho'ziq va qisqa bo'g'inlarning tartibiga",
+                            'Misralar soniga'
                         ],
                         'answer': 2,
-                        'explain': "Fransiya atom energetikasi ulushi bo'yicha dunyoda birinchi o'rinni egallaydi."
+                        'explain': "Aruz bo'g'inlarning cho'ziq va qisqalik darajalarining tizimli almashinishiga asoslanadi."
                     },
                     {
                         'type': 'tf',
-                        'q': "Hozirgi kunda jahonda elektr energiyasining ko'p qismi GESlarda ishlab chiqariladi.",
+                        'q': "Alisher Navoiy o'zining barcha g'azallarini barmoq vaznida yozgan.",
                         'answer': False,
-                        'explain': "Elektr energiyasining asosiy qismi (60% dan ortig'i) ko'mir va gazda ishlaydigan IES larda olinadi."
+                        'explain': "Noto'g'ri. Navoiy va barcha mumtoz shoirlarimiz aksariyat asarlarini aruz vaznida yaratishgan."
                     },
                     {
                         'type': 'mc',
-                        'q': 'Neft eksport qiluvchi mamlakatlar xalqaro tashkiloti qanday qisqartiriladi?',
+                        'q': "Aruz vazni nazariyasiga bag'ishlangan Alisher Navoiyning mashhur asari qaysi?",
                         'options': [
-                            'NATO',
-                            'OPEK (OPEC)',
-                            'ASEAN',
-                            'BRIX'
-                        ],
-                        'answer': 1,
-                        'explain': 'OPEC (Organization of the Petroleum Exporting Countries) neft eksportyorlari tashkilotidir.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Energetika geofrafiyasiga bag'ishlangan tahliliy savollar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Gidroenergetika imkoniyatlari yuqori bo'lgan 3 ta mamlakatni ko'rsating va sababini ayting.",
-                            'answer': "Xitoy, Braziliya, Kanada. Ser-suv va tez oquvchi tog' daryolariga ega.",
-                            'hint': 'Daryo suvlari va relyef xususiyatlarini eslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Global iqlim o'zgarishi va 'Yashil energetika'ga o'tishning zaruriyatini asoslab bering."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'xalqaro-transport-koridorlari-va-logistika',
-                'title': 'Xalqaro transport koridorlari va logistika',
-                'summary': "Jahon transport tizimi, dengiz, temiryo'l, avtomobil va havo transporti yo me me'yor va xalqaro magistrallar o'rganiladi.",
-                'duration': 30,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Jahon transport tizimi',
-                        'body': "Transport — jahon xo me'yorligining moddiy asosi va xalqaro savdoning tomiridir. Transport turlari: quruqlik (avtomobil, temiryo'l, quvur), suv (dengiz, ichki suv) va havo transporti. Rivojlangan mamlakatlar transport tarmog'ining zichligi va sifat ko'rsatkichlari bilan ajralib turadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Dengiz kanallari va bo me'yozlar",
-                        'body': "Xalqaro dengiz savdosida Panama kanali (Tinch va Atlantika okeanlarini bog me'yorlaydi) va Suvaysh kanali (O'rtayer dengizi va Qizil dengizni bog'laydi) strategik ahamiyatga ega."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Asosiy magistrallar va tashabbuslar',
-                        'items': [
-                            "Bir makon, bir yo'l (Xitoy): Yevroosiyo bo'ylab yangi Ipak yo me'yori logistika tarmoqlarini yaratish.",
-                            "Trans-Sibir temir yo'li: Rossiya va Sharqiy Osiyoni Yevropa bilan bog'lovchi eng uzun temiryo'l.",
-                            "Shimol-Janub koridori: Rossiya, Eron va Hindiston o'rtasidagi transport yo'li."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Yuk aylanmasi hajmi bo'yicha dengiz transporti dunyoda Mutlaq birinchi o'rinni egallaydi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "O'rtayer dengizi va Qizil dengizni bog'laydigan va Yevropadan Osiyoga dengiz yo'lini bir necha ming kmga qisqartirgan kanal qaysi?",
-                        'options': [
-                            'Panama kanali',
-                            'Suvaysh kanali',
-                            'Kil kanali',
-                            'Korinf kanali'
-                        ],
-                        'answer': 1,
-                        'explain': "Suvaysh kanali 1869-yilda ochilgan bo'lib, O'rtayer va Qizil dengizni tutashtiradi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Yo'lovchi aylanmasining tezligi va masofasi bo'yicha dengiz transporti yetakchilik qiladi.",
-                        'answer': False,
-                        'explain': "Uzoq masofalarga yo'lovchilar tashishda havo (aviatsiya) transporti birinchi o'rinda turadi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Qaysi bo'g'oz orqali dunyo neftining chorak qismi dengiz tankyerlarida tashiladi?",
-                        'options': [
-                            "Bering bo'g'ozi",
-                            "Magellan bo'g'ozi",
-                            "Hormuz bo'g'ozi",
-                            "Gibraltar bo'g'ozi"
-                        ],
-                        'answer': 2,
-                        'explain': "Fors qo'ltig me'yoridagi Hormuz bo'g'ozi neft tashishdagi eng muhim geostrategik nuqtadir."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Xalqaro transport marshrutlarini xaritada tahlil qiling.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "'O'zbekiston-Xitoy-Qirg'iziston' temir yo'li qurilishining O'zbekiston uchun iqtisodiy ahamiyatini tushuntiring.",
-                            'answer': "O'zbekistonga Tinch okeani portlariga eng qisqa yo me'yor orqali chiqish va tranzit salohiyatini oshirish imkonini beradi.",
-                            'hint': 'Okeanga chiqish va masofa qisqarishini hisobga oling.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': 'Konteynerlashtirish (containerization) jarayoni logistada qanday inqilob qildi?'
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'xalqaro-iqtisodiy-integratsiya-va-bloklar',
-                'title': 'Xalqaro iqtisodiy integratsiya va bloklar (Yevroittifoq, ASEAN, BRIX)',
-                'summary': 'Mavzuda hududiy iqtisodiy integratsiyalashuv, erkin savdo zonalari hamda yirik xalqaro uyushmalar tahlil qilinadi.',
-                'duration': 35,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Iqtisodiy integratsiya tushunchasi',
-                        'body': "Xalqaro iqtisodiy integratsiya — bu davlatlar o'rtasida milliy xo'jaliklarning o'zaro birikishi va chuqur kooperatsiya aloqalarining o'rnatilishi jarayonidir. Uning bosqichlari: Erkin savdo zonasi -> Bojxona ittifoqi -> Umumiy bozor -> Iqtisodiy va valyuta ittifoqi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Yevropa Ittifoqi (YI)',
-                        'body': "Yevropa Ittifoqi (EU) — eng chuqur integratsiyalashgan birlashma bo'lib, unga 27 ma mamlakat a'zo. U umumiy valyuta (Yevro), yagona bozor va chegarasiz harakatlanish (Shengen zonasi) tizimiga ega."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Asosiy iqtisodiy va siyosiy bloklar',
-                        'items': [
-                            "ASEAN: Janubiy-Sharqiy Osiyo davlatlari assotsiatsiyasi (mintaqaviy barqarorlik va iqtisodiy o'sish).",
-                            'USMCA (sobiq NAFTA): Shimoliy Amerika erkin savdo hududi (AQSh, Kanada, Meksika).',
-                            'BRICS (BRIX): Tez rivojlanayotgan yirik mamlakatlar ittifoqi (Braziliya, Rossiya, Hindiston, Xitoy, JARS va boshqalar).'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: SHTT (Shanhay Hamkorlik Tashkiloti) — Yevroosiyoda xavfsizlik va iqtisodiy hamkorlikni rivojlantiruvchi muhim blokdir.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Eng yuqori va chuqur bosqichdagi iqtisodiy integratsiya birlashmasi qaysi?',
-                        'options': [
-                            'ASEAN',
-                            'Yevropa Ittifoqi (YI)',
-                            'MERKOSUR',
-                            'OPEK'
-                        ],
-                        'answer': 1,
-                        'explain': 'Yevropa Ittifoqi yagona valyuta va iqtisodiy-siyosiy hamkorlik darajasiga yetgan eng mukammal integratsiyadir.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "BRICS (BRIX) faqat Yevropa davlatlarini o'z ichiga olgan harbiy blokdir.",
-                        'answer': False,
-                        'explain': 'BRICS rivojlanayotgan yirik iqtisodiyotli mamlakatlar (Braziliya, Rossiya, Hindiston, Xitoy, JARS va h.k.) iqtisodiy uyushmasidir.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Janubiy-Sharqiy Osiyo mamlakatlarini birglashtirgan regional tashkilot qaysi?',
-                        'options': [
-                            'NAFTA',
-                            'ASEAN',
-                            'YI',
-                            'LAI'
-                        ],
-                        'answer': 1,
-                        'explain': 'ASEAN (Association of Southeast Asian Nations) Janubiy-Sharqiy Osiyo davlatlari guruhidir.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Xalqaro tashkilotlar va iqtisodiy bloklarga bag'ishlangan topshiriqlar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "O'zbekiston a'zo va kuzatuvchi bo'lgan 2 ta xalqaro/mintaqaviy tashkilotni yozing.",
-                            'answer': "BMT, SHTT, MDH (a'zo); YOI (EAEU - kuzatuvchi), JSST (Jahon savdo tashkiloti - muzokaralar olib bormoqda).",
-                            'hint': "O'zbekistonning tashqi siyosatini eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Iqtisodiy integratsiyaning a'zo mamlakat iqtisodiyotiga beradigan ijobiy va salbiy ta'sirlarini tahlil qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'geosiyosat-va-siyosiy-geografiya-asoslari',
-                'title': 'Geosiyosat va siyosiy geografiya asoslari',
-                'summary': "Geosiyosiy nazariyalar (Xartlend, Rimland), davlatlar kuch-qudrati va siyosiy-geografik o'rin tahlili.",
-                'duration': 35,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Geosiyosat tushunchasi va rivojlanishi',
-                        'body': "Geosiyosat — davlatlarning tashqi va ichki siyosatini geografik omillar (hudud, joylashuv, resurslar, iqlim) nuqtai nazaridan o'rganuvchi fandir. Asosiy tushunchalarga 'Xartlend' (Yevroosiyo ichki hududi), 'Rimland' (sohil bo'yi hududlari) va 'Dengiz kuchi' (Talassokratiya) hamda 'Quruqlik kuchi' (Tellurokratiya) kiradi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Xartlend nazariyasi',
-                        'body': "Xalford Makkinder tomonidan ilgari surilgan nazariyaga ko'ra, Yevroosiyoning markaziy qismi (Xartlend) kimning nazorati ostida bo'lsa, u 'Dunyo oroli'ni va o'z navbatida butun dunyoni nazorat qiladi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Geosiyosiy omillar',
-                        'items': [
-                            "Geografik o'rin: Dengizga chiqish imkoniyati, qo'shni davlatlarning barqarorligi.",
-                            'Resurs salohiyati: Energetika, oziq-ovqat va chuchuk suv resurslariga egalik.',
-                            'Demografik va harbiy salohiyat: Aholi soni, yosh tarkibi va armiya qudrati.'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Markaziy Osiyo geografik joylashuviga ko'ra Yevroosiyoning geosiyosiy markazida (Xartlendda) joylashgan."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "'Xartlend' (Yer yuragi) nazariyasining muallifi kim?",
-                        'options': [
-                            'A. Mahan',
-                            'X. Makkinder',
-                            'N. Spikmen',
-                            'F. Ratsel'
-                        ],
-                        'answer': 1,
-                        'explain': 'Britaniyalik geograf Xalford Makkinder 1904-yilda Xartlend nazariyasini taklif etgan.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Talassokratiya davlatlari bu asosan quruqlik va harbiy-quruqlik kuchiga tayanadigan mamlakatlardir.',
-                        'answer': False,
-                        'explain': 'Talassokratiya — bu dengiz kuchi va dengiz savdosiga tayanadigan davlatlardir (masalan, Buyuk Britaniya, AQSh).'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Rimland (Yevroosiyoning sohil bo'yi mintaqasi) nazariyasini kim ishlab chiqqan?",
-                        'options': [
-                            'Nikolas Spikmen',
-                            'Karl Haushofer',
-                            'Immanuil Kant',
-                            'Alexander von Humboldt'
+                            'Mezon ul-avzon',
+                            "Muhakamat ul-lug'atayn",
+                            'Mahbub ul-qulub',
+                            'Nasaoyim ul-muhabbat'
                         ],
                         'answer': 0,
-                        'explain': "Nikolas Spikmen Rimland nazariyasini ilgari surib, sohil zonalarining geosiyosiy ahamiyatini ko'rsatgan."
+                        'explain': "'Mezon ul-avzon' (Vaznlar mezon) — Navoiyning aruz vazniga bag'ishlangan ilmiy risolasidir."
                     }
                 ],
                 'homework': {
-                    'intro': "Geosiyosiy tushunchalar bo'yicha tahliliy insho yozing.",
+                    'intro': 'Aruz vazni haqidagi bilimlarni sinash topshiriqlari.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Markaziy Osiyoning zamonaviy geosiyosatdagi ahamiyati nimada?',
-                            'answer': 'Yevroosiyo markazida transport koridorlari chorrahasida joylashganligi va boy energetika resurslariga egaligi sababli.',
-                            'hint': "Xartlend, resurslar va transport yo'llarini hisobga oling."
+                            'prompt': 'Barmoq vazni bilan Aruz vaznining 2 ta eng asosiy farqini tushuntiring.',
+                            'answer': "O'quvchi bo'g'in soni tengligi va bo'g'in uzun-qisqaligi farqlarini yozadi.",
+                            'hint': "Xalq qo'shiqlaridagi ritm va g'azallardagi ritmni solishtiring."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "'Dengiz kuchi' va 'Quruqlik kuchi' o'rtasidagi geosiyosiy raqobatga tarixiy va zamonaviy misollar keltiring."
+                            'prompt': "Nima uchun Alisher Navoiy aruz vaznini turkiy tilda qo'llashni rivojlantirishga alohida e'tibor bergan?"
                         }
                     ]
                 }
             },
             {
-                'slug': 'geoekologiya-va-global-ekologik-muammolar',
-                'title': 'Geoekologiya va global ekologik muammolar',
-                'summary': "Mavzu insoniyat va tabiat o'rtasidagi ta'sir, global isish, cho'llashish, ozon qatlamining yemirilishi hamda BMT Barqaror Rivojlanish Maqsadlarini qamrab oladi.",
-                'duration': 35,
+                'slug': 'zahiriddin-muhammad-bobur-va-boburnoma',
+                'title': "Zahiriddin Muhammad Bobur hayoti va 'Boburnoma'",
+                'summary': "Boburning serqirra ijodi, uning mashhur 'Boburnoma' (Vaqoye) meuar asarining tarixiy, adabiy va geografik qiymati tahlili.",
+                'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Geoekologiya tushunchasi va muammolar',
-                        'body': "Geoekologiya — geografik muhit va inson jamiyati o'rtasidagi o'zaro ta'sirlarni, ekologik muammolarning hududiy tarqalishini o'rganadi. Insoniyat bugun global darajadagi ekologik inqirozlar bilan to me'yosh kelmoqda."
+                        'title': 'Kirish',
+                        'body': "Zahiriddin Muhammad Bobur — shoh, shoir, qomusiy olim va sarkarda. Unining 'Boburnoma' asari jahon adabiyotida memuar (xotira) janrining eng nodir durdonalaridan biri sanaladi."
                     },
                     {
                         'type': 'example',
-                        'title': 'Global isish va Issiqxona effekti',
-                        'body': "Atmosferaga karbonat angidrid (CO2) va metan kabi gazlarning ko'p chiqishi issiqxona effektini kuchaytirmoqda. Bu muzliklarning erishiga, Dunyo okeani sathining ko'tarilishiga va keskin ob-havo hodisalarining ortishiga olib keladi."
+                        'title': "'Boburnoma' asarining qamrovi",
+                        'body': "Asarda Movarounnahr, Xuroson, Afg'oniston va Hindistonning XV-XVI asrlardagi ijtimoiy-siyosiy hayoti, tabiati, hayvonot olami va mashhur shaxslari haqida aniq, xolis ma'lumotlar berilgan."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Asosiy global geoekologik muammolar',
+                        'title': 'Boburning adabiy merosi',
                         'items': [
-                            "Global iqlim o'zgarishi: O'rtacha haroratning ko'tarilishi.",
-                            "Ozon teshigi: Stratosferadagi ozon qatlamining freonlar ta'sirida yemirilishi.",
-                            "Cho'llashish va tuproq degradatsiyasi: Noto me me'yroiy dehqonchilik va o'rmonlarning qisqarishi.",
-                            "Biologik xilma-xillikning kamayishi: Hayvon va o'simlik turlarining yo'qolishi."
+                            "Lirik meros (Devon, g'azal, ruboiylar)",
+                            "'Boburnoma' (Tarixiy-biografik meuar)",
+                            "'Mubayyin' (Fiqh va zakotga oid masnaviy)",
+                            "'Katt-i Boburiy' (Yangi alifbo va xat turi)"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Parij iqlim bitimi (2015) global harorat ko'tarilishini 1.5 - 2 Selsiy darajasida ushlab turishni maqsad qilgan."
+                        'body': "Esda tuting: 'Boburnoma' hayot haqiqatini xolis va ochiq-oydin yozilganligi bilan ajralib turadi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Ozon qatlamining asosiy vazifasi nimadan iborat?',
+                        'q': "'Boburnoma' asarining asl nomi qanday bo'lgan?",
                         'options': [
-                            'Yerda issiqlikni saqlash',
-                            "Quyoshning zararli ultrabinafsha (UV) nurlarini to'sish",
-                            'Atmosfera bosimini tartibga solish',
-                            'Bulutlarni hosil qilish'
+                            'Tarixi Rashidiy',
+                            'Vaqoye',
+                            'Tuzukoti Boburiy',
+                            'Shajarayi turk'
                         ],
                         'answer': 1,
-                        'explain': 'Ozon qatlam Quyoshdan keladigan zararli ultrabinafsha radiatsiyani shimib oladi.'
+                        'explain': "Boburning o'zi bu asarni 'Vaqoye' ('Voqealar') deb atagan, keyinchalik u 'Boburnoma' nomi bilan mashhur bo'lgan."
                     },
                     {
                         'type': 'tf',
-                        'q': "Orol dengizining qurishi faqat mahalliy muammo bo'lib, global ekologiyaga ta'siri yo'q.",
-                        'answer': False,
-                        'explain': "Orolqumdan ko'tarilgan tuz va chang hatto Arktika hamda Himolay muzliklarida ham topilgan, bu mintaqaviy va global ekologik muammodir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Cho'llashish jarayoniga qarshi kurash bo'yicha eng yirik xalqaro loyihalardan biri qaysi?",
-                        'options': [
-                            "Afrikadagi 'Yashil buyuk devor' loyihasi",
-                            'Suvaysh kanali loyihasi',
-                            'Panama kanali loyihasi',
-                            'Appalachi loyihasi'
-                        ],
-                        'answer': 0,
-                        'explain': "Afrikada Sahroi Kabir kengayishiga qarshi 'Buyuk Yashil Devor' daraxtzorlar liniyasi barpo etilmoqda."
-                    }
-                ],
-                'homework': {
-                    'intro': "Geoekologik muammolar va ularning yechimlariga bag'ishlangan topshiriqlar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "BMT Barqaror Rivojlanish Maqsadlarining (BRM) ekologiyaga oid 2 ta maqsadini ko'rsating.",
-                            'answer': "13-maqsad: Iqlim o'zgarishiga qarshi kurash; 14-maqsad: Suv osti ekotizimlarini asrash; 15-maqsad: Quruqlikdagi ekotizimlarni asrash.",
-                            'hint': 'BMT SDG (Sustainable Development Goals) dasturini eslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "O'zbekistonda Orolbo'yi hududida ekologik holatni yaxshilash bo'yicha amalga oshirilayotgan chora-tadbirlarni tahlil qiling."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'kartografik-proyeksiyalar-va-xarita-matematik-esasi',
-                'title': 'Kartografik proyeksiyalar va xaritalar matematik esasi',
-                'summary': 'Mavzu Yer sharining tekislikda tasvirlanishi, kartografik proyeksiyalar turlari va xatoliklar (bujliklar) klassifikatsiyasini tushuntiradi.',
-                'duration': 35,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Kartografik proyeksiya tushunchasi',
-                        'body': 'Yer ellipsoidi sirtini xarita tekisligida tasvirlashning matematik usuli kartografik proyeksiya deyiladi. Sharsimon sirtni tekislikka yoyganda baribir xatoliklar (bujliklar) yuzaga keladi: burchak, masofa, maydon va shakl bujliklari.'
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Merkator proyeksiyasi',
-                        'body': "Merkatorning silindrik proyeksiyasida burchaklar to'g me'yoriy saqlanadi (teng burchakli), shuning uchun dengiz va havo navigatsiyasida keng qo me'yorlanadi. Ammo qutblarga yaqinlashgan sari maydon bujligi keskin ortadi (masalan, Grenlandiya Afrika bilan tengdek ko'rinadi, aslida Afrika 14 baravar katta)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': "Yordamchi geometrik sirt bo'yicha proyeksiyalar",
-                        'items': [
-                            'Silindrik proyeksiya: Globus silindr ichiga joylashtiriladi (dunyo xaritalari uchun).',
-                            "Konusli proyeksiya: Globusga konus kiygiziladi (mo'tadil kenglikdagi davlatlar uchun).",
-                            "Azimutal proyeksiya: Tasvir to'g'ridan-to'g'ri tekislikka tushiriladi (qutbiy hududlar uchun)."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Barcha parametrlar (maydon, burchak, masofa) bir vaqtning o'zida xatosiz ko'rsatilgan xarita mavjud emas."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Navigatsiyada keng qo'llaniladigan, burchaklarni aniq saqlaydigan silindrik proyeksiya muallifi kim?",
-                        'options': [
-                            'Ptolemey',
-                            'Gerrard Merkator',
-                            'Eratosfen',
-                            'Al-Xorazmiy'
-                        ],
-                        'answer': 1,
-                        'explain': '1569-yilda Gerrard Merkator mashhur teng burchakli silindrik proyeksiyani yaratgan.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': 'Azimutal proyeksiya asosan ekvatorial mamlakatlarni tasvirlash uchun eng qulay hisoblanadi.',
-                        'answer': False,
-                        'explain': 'Azimutal proyeksiya asosan qutblar va ularga tutash doiraviy hududlarni tasvirlashda ishlatiladi.'
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Maydonlarni xatosiz ko'rsatuvchi proyeksiya turi qanday nomlanadi?",
-                        'options': [
-                            'Teng burchakli (konform)',
-                            'Teng maydonli (ekvivalent)',
-                            'Erkin proyeksiya',
-                            'Teng masofali (ekvidistant)'
-                        ],
-                        'answer': 1,
-                        'explain': "Teng maydonli (ekvivalent) proyeksiyalarda maydonlar bujligi bo'lmaydi, lekin shakllar buziladi."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Kartografik proyeksiyalarni tahlil qilish va taqqoslash topshiriqlari.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Nima uchun Merkator xaritasida Grenlandiya va Afrika maydonlari deyarli teng ko'rinadi?",
-                            'answer': "Chunki Merkator proyeksiyasida yuqori kengliklarda (qutblarga yaqin) maydon bujligi juda katta bo'ladi.",
-                            'hint': 'Silindrik proyeksiya va qutblardagi kengayishni eslang.'
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "O'zbekiston hududi xaritasini tuzish uchun qaysi kartografik proyeksiya eng mos keladi va nega?"
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'geografik-axborot-tizimlari-gat-va-masofadan-zondlash',
-                'title': "Geografik axborot tizimlari (GAT/GIS) va ularning qo'llanilishi",
-                'summary': "Mavzuda zamonaviy geoinformatika, GAT texnologiyalari, kosmik va aerofotosuratlar hamda ularning amaliyotdagi o'rni o'rganiladi.",
-                'duration': 35,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'GAT (GIS) nima?',
-                        'body': "Geografik Axborot Tizimlari (GAT/GIS) — fazo va hududiy ma'lumotlarni to'plash, saqlash, tahlil qilish hamda vizuallashtirish uchun mo'ljallangan kompyuter dasturiy-apparat majmuasidir. U ma'lumotlar bazasini xarita ob'ektlari bilan bog'laydi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': "Vektor va Rastr ma'lumotlari",
-                        'body': "GATda ma'lumotlar 2 xil ko'rinishda bo'ladi: Vektor (nuqta, chiziq, poligon kabi geometrik shakllar) va Rastr (piksellardan iborat tasvirlar, kosmik suratlar va balandlik modellari)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'GATning amaliy sohalari',
-                        'items': [
-                            "Shaharsozlik va kadastr: Yer va ko me me'yorsiz mulklarni ro'yxatga olish va rejalashtirish.",
-                            "Ekologik monitoring: O me'rmonlar qisqarishi, suv resurslari va cho'llashishni sun'iy yo'ldoshdan kuzatish.",
-                            "Favqulodda vaziyatlar: Suv tasqinlari, yong me'yinlar va zilzilalar xavfini modellashtirish va zudlik bilan baholash."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: GPS va GLONASS sun'iy yo'ldosh navigatsiya tizimlari GAT uchun joylashuv koordinatalarini (X, Y, Z) ta'minlaydi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "GATda nuqta, chiziq va ko'pburchaklar (poligon) orqali obyektlarni tasvirlash qaysi ma'lumot modeliga kiradi?",
-                        'options': [
-                            'Rastr modeli',
-                            'Vektor modeli',
-                            'Matnli model',
-                            '3D skaner modeli'
-                        ],
-                        'answer': 1,
-                        'explain': 'Vektor modeli aniq koordinatalarga ega nuqta, chiziq va poligonlardan iborat.'
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Masofadan zondlash (Remote Sensing) asosan Yerdagi ma'lumotlarni faqat joyiga borib qo me'lda o o'chirishni anglatadi.",
-                        'answer': False,
-                        'explain': "Masofadan zondlash — bu aerofoto yoki sun'iy yo'ldoshlar orqali obyektga tegmasdan masofadan axborot olish usulidir."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Quyidagi dasturlardan qaysi biri dunyoda eng mashhur professional GAT dasturlaridan biridir?',
-                        'options': [
-                            'Adobe Photoshop',
-                            'ArcGIS (QGIS)',
-                            'AutoCAD Civil',
-                            'CorelDraw'
-                        ],
-                        'answer': 1,
-                        'explain': 'ArcGIS va ochiq manbali QGIS geoinformatsion tizimlarda asosiy professional dasturlardir.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Geoinformatika va zamonaviy xaritalash bo'yicha amaliy topshiriqlar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "GPS va GAT o'rtasidagi bog'liqlik va farqni qisqacha tushuntiring.",
-                            'answer': "GPS — ob'ektning aniq koordinatalarini aniqlaydi; GAT — ushbu koordinatalar va ma'lumotlarni xaritada tahlil qiladi va saqlaydi.",
-                            'hint': "Navigatsiya va tahlil dasturi farqiga e'tibor bering."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Qishloq xo'jaligida 'Aqlli dehqonchilik' (Precision Agriculture) tizimida GAT va droanlarning o'rnini yoritib bering."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'meteorologiya-va-sinoptik-tahlil-asoslari',
-                'title': 'Meteorologiya va sinoptik tahlil asoslari',
-                'summary': "Ob-havo elementlari, sinoptik xaritalar, ob-havoni prognoz qilish usullari va siklon-antisiklon harakati o'rganiladi.",
-                'duration': 40,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Meteorologiya va Sinoptika',
-                        'body': "Meteorologiya — atmosfera va unda yuz beradigan fizik jarayonlarni o me me'yroiy o me me'yoriy o'rganadigan fan. Sinoptik meteorologiya esa doimiy kuzatuvlar va sinoptik xaritalar (izobara, izotermalar) yordamida ob-havoni prognoz qilish bilan shug'ullanadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Siklon va Antisiklon',
-                        'body': "Siklon — markazida past bosim bo'lgan, shamollar chekkadan markazga qarab (Shimoliy yarimsharda soat mili yo'nalishiga qarshi) esadigan atmosferaning ulkan uyurmasi (bulutli va yog'inli ob-havo). Antisiklon — markazida yuqori bosim, havo markazdan chekkalarga esadi ( ochiq va ochiq ob-havo)."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Frontal zonalar va ob-havo',
-                        'items': [
-                            "Issiq front: Issiq havo sovuq havo ustiga asta-sekin ko'tariladi, qatlamli bulutlar va uzoq davom etuvchi shivalagan yog'in keladi.",
-                            "Sovuq front: Sovuq havo og'ir bo'lib issiq havo ostiga shiddat bilan kiradi, jala, momaqaldiroq va kuchli shamol keladi."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': 'Esda tuting: Izobaralar — sinoptik xaritada teng atmosfera bosimiga ega nuqtalarni tutashtiruvchi chiziqlardir.'
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': 'Sinoptik xaritada bir xil atmosfera bosimiga ega nuqtalarni tutashtiruvchi chiziqlar nima deyiladi?',
-                        'options': [
-                            'Izotermalar',
-                            'Izobaralar',
-                            'Izogiyetslar',
-                            'Izobatalar'
-                        ],
-                        'answer': 1,
-                        'explain': "Izobara chiziqlari teng atmosfera bosimini ko'rsatadi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Antisiklon markazida past bosim bo'ladi va o'zi bilan doim kuchli yog'ingarchilik va bulutlilik olib keladi.",
-                        'answer': False,
-                        'explain': "Antisiklon markazida yuqori bosim bo'ladi va u kam bulutli, yog me'yorsiz va ochiq ob-havoni ta'minlaydi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Sovuq havoning issiq havo ostiga shiddat bilan bostirib kirishi natijasida qanday ob-havo kuzatiladi?',
-                        'options': [
-                            "Uzoq davom etuvchi mayda shivalagan yomg'ir",
-                            'Qisqa muddatli kuchli jala va momaqaldiroq',
-                            'Mutlaq shamolsiz ochiq issiq havo',
-                            'Quqroq garmsel shamoli'
-                        ],
-                        'answer': 1,
-                        'explain': "Sovuq front o'tganda havo keskin beqarorlashadi va jalali yomg'irlar hamda momaqaldiroq bo'ladi."
-                    }
-                ],
-                'homework': {
-                    'intro': "Sinoptik meteorologiya bo'yicha masalalar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': "Siklon va antisiklonda havoning Shimoliy va Janubiy yarimsharlardagi burilish yo me me'yorini tushuntiring.",
-                            'answer': "Shimoliy yarimsharda siklonda soat mili yo'nalishiga qarshi, antisiklonda soat mili bo'yicha. Janubiy yarimsharda aksincha.",
-                            'hint': "Koriolis kuchi ta'sirini eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': 'Zamonaviy raqamli ob-havo prognozi (NWP - Numerical Weather Prediction) modellari qanday ishlaydi?'
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'geomorfologiya-ekzogen-va-endogen-jarayonlar',
-                'title': 'Geomorfologiya: ekzogen va endogen jarayonlar dinamikasi',
-                'summary': "Yer yuzasi relyefining shakllanishida endogen (ichki) va ekzogen (tashqi) kuchlarning o'zaro ta'siri hamda geomorfologik jarayonlar.",
-                'duration': 40,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Geomorphologiyaning predmeti',
-                        'body': "Geomorfologiya — Yer yuzasi relyefining kelib chiqishi, yoshi, rivojlanish tarixi va dinamikasini o'rganuvchi fandir. Relyef endogen (Yer ichki energiyasi: tektonika, vulqonizm) va ekzogen (Quyosh energiyasi: yemirilish, suv, shamol, muzliklar) kuchlarning doimiy o'zaro kurashi va ta'sirida shakllanadi."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Erozion va Eol relyef shakllari',
-                        'body': 'Oqar suvlarning yemirish faoliyati erozion relyef shakllarini (daryo vodiylari, kanyonlar, jarlar), shamol faoliyati esa eol relyef shakllarini (barxanlar, dyunalar, qum tepaliklari) hosil qiladi.'
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Asosiy ekzogen jarayonlar',
-                        'items': [
-                            'Yemirilish (Nuvash): Fizik, kimyoviy va biologik yemirilish.',
-                            "Denudatsiya: Yemirilgan jinslarning suv, shamol yoki og'irlik kuchi ta'sirida pastga ko'chishi.",
-                            "Akkumulyatsiya: Materiallarning botiqlarga to me me'planishi (alluvial, prolluvial yotqiziqlar)."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Karst jarayonlari suvlarning oson eriydigan jinslarni (ohakdosh, gips) eritishi natijasida g me'orlar va o me'oriy botiqlar hosil qiladi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Oqar suvlarning yemirish va o'zan o'yish faoliyati natijasida hosil bo'lgan relyef shakli qanday ataladi?",
-                        'options': [
-                            'Eol shakllar',
-                            'Erozion shakllar',
-                            'Glyatsial shakllar',
-                            'Vulkanik shakllar'
-                        ],
-                        'answer': 1,
-                        'explain': "Eroziya — suvlarning yemirish jarayoni bo'lib, erozion relyef shakllanadi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Barxan va dyunalar muzliklarning harakati natijasida paydo bo'ladigan morphologik tuzilmalardir.",
-                        'answer': False,
-                        'explain': "Barxan va dyunalar shamolning (eol jarayonlari) qumlarni ko'chirib to'plashi natijasida hosil bo'ladi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': "Eriydigan tog' jinslarining (ohakdosh, gips) suvda erishi natijasida g'orlar va botiqlar hosil bo'lish jarayoni nima deyiladi?",
-                        'options': [
-                            'Karst jarayoni',
-                            'Akkumulyatsiya',
-                            'Metamorfizm',
-                            'Subduktsiya'
-                        ],
-                        'answer': 0,
-                        'explain': "Karst hodisasi eruvchan tog' jinslarida er osti suvlari va eroziya ta'sirida ro'y beradi."
-                    }
-                ],
-                'homework': {
-                    'intro': 'Geomorphologik jarayonlarni tahlil qilish vazifalari.',
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': 'Alluvial va prolyuvial yotqiziqlarning farqini tushuntiring.',
-                            'answer': "Alluvial — doimiy daryo oqimlari keltirgan yotqiziqlar; Prolyuvial — tog' etaklaridagi vaqtincha sel va soylar keltirgan yotqiziqlar.",
-                            'hint': "Daryo va sel suvlari to'planishini eslang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Tog'li hududlarda ko'chkilar va sel hodisalarining geomorfologik sabablarini va ularga qarshi muhandislik tadbirlarini tavsiflang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'iqtisodiy-geografik-modellashtirish-va-hududiy-tizimlar',
-                'title': 'Iqtisodiy va ijtimoiy geografik modellashtirish (Markaziy joylar nazariyasi)',
-                'summary': "Mavzuda Walter Kristallernining Markaziy joylar nazariyasi, Tyunenning qishloq xo'jalik halqalari va hududiy-ishlab chiqarish majmualari (HIChM) modellarini o'rganiladi.",
-                'duration': 40,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Geografiyada modellashtirish',
-                        'body': 'Iqtisodiy va ijtimoiy geografiya hududiy tizimlar, shahar aglomeratsiyalari hamda ishlab chiqarish kuchlarining joylashish qonuniyatlarini matematik va fazoviy modellar orqali tadqiq etadi.'
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Kristallerning Markaziy joylar nazariyasi',
-                        'body': "Valter Kristaller shahar va aholi punktlarining iyerarxik va geksagonal (oltiburchakli) tarmoq bo'yicha joylashuv modelini bergan. Markaziy joylar atrofdagi hududlarga tovar va xizmatlar ko'rsatadi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Klassik iqtisodiy-geografik modellar',
-                        'items': [
-                            "Tyunenning 'Oshkora davlat' modeli: Shahar markazi atrofida qishloq xo'jaligi tarmoqlarining konsentrik halqalar bo'yicha joylashishi.",
-                            'Veberning sanoat shproti (lokatsiya) modeli: Transport, mehnat va aglomeratsiya xarajatlarini minimallashtirish.',
-                            'Kolosovskiyning Hududiy-ishlab chiqarish majmualari (HIChM): Xomashyo va energiya asosida sanoat korxonalarining zanjirli birlashishi.'
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: Kristaller modelida xizmat ko'rsatish doirasi oltiburchak shaklida (heksagon) ifodalanadi, chunki bu bo'shliqlarsiz hududni to'liq qoplaydi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Markaziy joylar nazariyasida (Kristaller modeli) xizmat ko'rsatish zonalari qanday geometrik shaklda tasvirlanadi?",
-                        'options': [
-                            'Aylana',
-                            'Kvadrat',
-                            'Oltiburchak (heksagon)',
-                            'Uchburchak'
-                        ],
-                        'answer': 2,
-                        'explain': "Oltiburchakli panjara (heksagon) barcha hududni ustma-ust tushmasdan va bo'shliqsiz qoplash imkonini beradi."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Tyunen modeliga ko'ra, tez buziladigan va og'ir mahsulotlar (masalan, sut va sabzavot) shahar markazidan eng uzoq halqada yetishtiriladi.",
-                        'answer': False,
-                        'explain': "Tez buziladigan va transport xarajatlari yuqori bo'lgan mahsulotlar shahar markaziga eng yaqin 1-halqada joylashadi."
-                    },
-                    {
-                        'type': 'mc',
-                        'q': 'Sanoat korxonalarini joylashtirishda transport va mehnat xarajatlarini minimallashtirish modelini (Sanoat shproti) kim ishlab chiqqan?',
-                        'options': [
-                            'Alfred Veber',
-                            'Yoqob Tyunen',
-                            'Nikolay Baranskiy',
-                            'Halford Makkinder'
-                        ],
-                        'answer': 0,
-                        'explain': 'Alfred Veber sanoat shproti (lokatsiyasi) nazariyasini yaratgan.'
-                    }
-                ],
-                'homework': {
-                    'intro': "Iqtisodiy-geografik modellarga bag'ishlangan amaliy topshiriqlar.",
-                    'tasks': [
-                        {
-                            'id': 't1',
-                            'type': 'text',
-                            'prompt': 'Tyunen modelida shahar markaziga eng yaqin halqadan eng uzoq halqaga qarab mahsulot turlarining almashinishini izohlang.',
-                            'answer': "1) Sut va sabzavot -> 2) O me'rmonchilik (o'tin) -> 3) Donli ekinlar -> 4) Yaylov chorvachiligi.",
-                            'hint': "Transport xarajati va mahsulotning buzilish muddatini o me'yorlang."
-                        },
-                        {
-                            'id': 't2',
-                            'type': 'open',
-                            'prompt': "Zamonaviy raqamli iqtisodiyot sharoitida Alfred Veberning sanoat joylashuv modeli o'z ahamiyatini yo'qotdimi? Asoslang."
-                        }
-                    ]
-                }
-            },
-            {
-                'slug': 'klimatologiya-paleoiqlim-va-iqlim-modellashtirish',
-                'title': "Klimatologiya: Paleoiqlim va global iqlim o'zgarishi modellashtirish",
-                'summary': "Oliy darajadagi ushbu mavzuda Yer tarixidagi paleoiqlimiy sikllar (Milankovich sikllari), sun'iy yo'ldosh ma'lumotlari hamda iqlimning kompyuter modellarini (GCM) tahlil qilish o'rganiladi.",
-                'duration': 45,
-                'lesson': [
-                    {
-                        'type': 'text',
-                        'title': 'Paleoklimatologiya va Milankovich sikllari',
-                        'body': "Yer iqlimi o'tmishda doim o'zgargan. Muzlik va muzliklararo davrlarning almashinishiga Milankovich sikllari — Yer orbitasining ekssentritsiteti, o'qining og'ish burchagi va pretsessiyasining davriy o'zgarishi asosiy sabab bo'lgan."
-                    },
-                    {
-                        'type': 'example',
-                        'title': 'Iqlimning Umumiy Sirkulyatsiya Modellari (GCM)',
-                        'body': "Zamonaviy klimatologiya global va mintaqaviy iqlim modellaridan (General Circulation Models - GCM) foydalanadi. Bu modellar atmosfera, okean, muzliklar va quruqlik o'rtasidagi issiqlik hamda massalar almashinuvining murakkab differensial tenglamalariga asoslanadi."
-                    },
-                    {
-                        'type': 'steps',
-                        'title': 'Paleoiqlimni rekonstruksiya qilish usullari',
-                        'items': [
-                            'Muz kyorun tahlili: Antarktida va Grenlandiya muzliklaridan olingan chukurlik namunalaridagi havo pufakchalarini va kislorod izotoplarini (O-18/O-16) tahlil qilish.',
-                            "Dendrokronologiya: Daraxt yillik halqalarining qalinligini o me'rganish.",
-                            "Palinologik tahlil: Qadimiy tuproq qatlamlaridagi o'simlik changlarini o'rganish."
-                        ]
-                    },
-                    {
-                        'type': 'note',
-                        'body': "Esda tuting: IPCC (Iqlim O'zgarishi Bo'yicha Hukumatlararo Mutaxassislar Guruhi) iqlim modellari asosida kelajak ssenariylarini (SSP1-SSP5) e'lon qiladi."
-                    }
-                ],
-                'quiz': [
-                    {
-                        'type': 'mc',
-                        'q': "Yer orbitasining shakli va o'qining og'ish burchagi o'zgarishi natijasida muzlik davrlari almashinishini tushuntiruvchi sikllar kimning nomi bilan ataladi?",
-                        'options': [
-                            'Koppen sikllari',
-                            'Milankovich sikllari',
-                            'Kondratyev sikllari',
-                            'Lomonosov sikllari'
-                        ],
-                        'answer': 1,
-                        'explain': "Milutin Milankovich Yerning astronomik orbital ko'rsatkichlari iqlim o'zgarishiga ta'sirini isbotlagan."
-                    },
-                    {
-                        'type': 'tf',
-                        'q': "Antarktida muzliklaridagi kislorod izotoplari (O-18/O-16) nisbati o'tmishdagi haroratni aniqlashga imkon beradi.",
+                        'q': "Bobur 'Katt-i Boburiy' deb nomlangan yangi xat va alifbo turini yaratgan.",
                         'answer': True,
-                        'explain': "Muz kyorunlaridagi izotoplar nisbati qadimiy atmosfera harorati va konsentratsiyasini aniq ko'rsatib beradi."
+                        'explain': 'Ha, Bobur arab alifbosi asosida yozuvni soddalashtirgan xat turini ixtiro qilgan.'
                     },
                     {
                         'type': 'mc',
-                        'q': 'Atmosfera va okean dinamikasini matematik shaklda ifodalovchi zamonaviy kompyuter iqlim modellari qanday qisqartiriladi?',
+                        'q': "Bobur ruboiylarining asosiy ruhiy motivida qaysi tuyg'u ustuvorlik qiladi?",
                         'options': [
-                            'GCM (General Circulation Models)',
-                            'GPS (Global Positioning System)',
-                            'DEM (Digital Elevation Model)',
-                            'KPI (Key Performance Indicators)'
+                            "Katta g'alaba nashidasi",
+                            'Vatan hamda yurt soginchi',
+                            'Faoliyatsizlik',
+                            'Tabiatga nafrat'
                         ],
-                        'answer': 0,
-                        'explain': 'GCM — global iqlim sirkulyatsiyasining kompyuter modellaridir.'
+                        'answer': 1,
+                        'explain': "Bobur ruboiylarining tub mazmunida ona yurt sog'inchi va g'urbat azoblari yotadi."
                     }
                 ],
                 'homework': {
-                    'intro': 'Chuqurlashtirilgan klimatologiya va iqlim modellashtirish topshiriqlari.',
+                    'intro': "Bobur va uning asarlarini o'rganish.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Milankovich sikllarining 3 ta asosiy astronomik komponentini yozing.',
-                            'answer': "1. Orbitaning ekssentritsiteti (shakli); 2. O'q og'ish burchagi (obliquity); 3. Pretsessiya (o'qning tebranishi).",
-                            'hint': "Yerning orbitasi va o'q parametrlari."
+                            'prompt': "Boburning 'Tale' yo'qki jonimg'a belog'a bo'ldi...' deb boshlanuvchi ruboiysini yoddan yozib, mazmunini sharhlang.",
+                            'answer': "O'quvchi ruboiyni yozadi va g'urbatlik iztiroblarini tushuntirib beradi.",
+                            'hint': "Shoirning taqdir va vatan sog'inchi haqidagi kechinmalarini e'tiborga oling."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'IPCC tomonidan ilgari surilgan SSP (Shared Socioeconomic Pathways) kelajak iqlim ssenariylarining geografik oqibatlarini taqqoslab baholang.'
+                            'prompt': "'Boburnoma'ning geografik va etnografik manba sifatidagi qadrini baholang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ogahiy-gazaliyoti-va-badiiy-mahorati',
+                'title': "Ogahiy g'azaliyoti va badiiy mahorati",
+                'summary': "Xiva xonligining ma'rifatparvar shoiri, tarjimon va tarixchisi Muhammad Rizo Ogahiy ijodiy merosi va g'azallarining g'oyaviy-badiiy tahlili.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Muhammad Rizo Ogahiy (1809–1874) — XIX asr Xorazm adabiy muhitining eng yorqin namoyandasi. U izchil shoir, mashhur tarixchi va 20 dan ortiq nodir forsiy manbalarni turkiyga o'girgan mohir tarjimondir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Ogahiy lirikasi',
+                        'body': "Ogahiy g'azallari g'oyaviy chuqurligi, xalqona sodda tili va ijtimoiyligi bilan ajralib turadi. Uning 'Ta'viz ul-oshiqin' ('Oshiqlar tumori') devoni xalq orasida juda mashhur."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Ogahiyning ko'p qirrali faoliyati",
+                        'items': [
+                            'Shoirlik (Lirik devoni)',
+                            "Tarixchilik ('Riyoz ud-davla', 'Zubdat ut-tavorix' kabi tarixiy asarlar)",
+                            "Tarjimonlik (Sa'diyning 'Guliston', Nizomiyning 'Haft paykar' asarlari tarjimasi)"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Ogahiy g'azallarida jamiyatdagi adolatsizlik, adolatparvar shoh orzusi va xalq g'ami ochiq kuylangan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Ogahiyning o'zbek tiliga o'girgan mashhur Sa'diy Sheroziy asari qaysi?",
+                        'options': [
+                            "Bo'ston",
+                            'Guliston',
+                            'Bahoriston',
+                            'Zafarnoma'
+                        ],
+                        'answer': 1,
+                        'explain': "Ogahiy Sa'diy Sheroziyning 'Guliston' asarini o'zbek tiliga yuksak mahorat bilan tarjima qilgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Ogahiy faqat g'azal yozgan va tarixiy voqealarni yozish bilan shug'ullanmagan.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Ogahiy Xiva xonligi tarixiga oid 5 ta muhim tarixiy asar yozgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Ogahiyning she'riy devoni qanday nomlanadi?",
+                        'options': [
+                            'Badoe ul-vasat',
+                            "Ta'viz ul-oshiqin",
+                            'Munis ul-ushshoq',
+                            'Fevoyid ul-kibar'
+                        ],
+                        'answer': 1,
+                        'explain': "Ogahiy o'z she'rlarini to'plab 'Ta'viz ul-oshiqin' ('Oshiqlar tumori') deb nom bergan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Ogahiy ijodi va g'azallarini o'rganish vazifasi.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Ogahiyning 'Mushkin qoshining hay'ati olamg'a balo bo'ldi' g'azalidan 2 bayt yozib, undagi tasvir vositalarini ko'rsating.",
+                            'answer': "O'quvchi baytlarni ko'chiradi va tashbeh hamda mubolag'alarni ajratadi.",
+                            'hint': "Qoshning kamonga, kiprikning o'qqa o'xshatilishiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Ogahiyning tarjimonlik faoliyatining o'zbek adabiyoti rivojidagi o'rnini yoritib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'uzbek-marifatparvarlik-adabiyoti',
+                'title': "XIX asr oxiri - XX asr boshlari O'zbek ma'rifatparvarlik adabiyoti",
+                'summary': "Jamiyatni ilim-fan, ma'rifat va maktablar orqali uyg'otishga intilgan ma'rifatparvarlik harakati va ushbu davr adabiyotining yetakchi g'oyalari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "XIX asrning ikkinchi yarmi va XX asr boshlarida O'zbekiston Turkiston chor Rossiyasi mustamlakasiga aylandi. Shunday og'ir sharoitda millatni qorong'ilikdan olib chiqish uchun milliy ma'rifatparvarlik harakati va adabiyoti shakllandi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Ma'rifatparvar adiblar",
+                        'body': "Ahmad Donish, Muqimiy, Furqat, Avloniy, Behbudiy, Sidqiy Xondayliqiy va boshqalar ozodlik yo'lini ma'rifat va ilm-fanda ko'rdilar."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Davr adabiyotining asosiy xususiyatlari',
+                        'items': [
+                            'Jaholat, nodonlik va xurofotni tanqid qilish',
+                            'Yangi usul (usuli jadid) maktablarini ochishga chorlov',
+                            "Matbuot, gazeta va teatrni ma'rifat quroliga aylantirish",
+                            "Ijtimoiy-siyosiy va hajviy yo'nalishning kuchayishi"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Abdullah Avloniyning 'Tarbiya biz uchun yo hayot — yo mamot, yo najot — yo halokat, yo saodat — yo falokat masalasidir' degan so'zlari ushbu davr shioriga aylandi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Tarbiya biz uchun yo hayot — yo mamot...' degan mashhur so'zlar kimga tegishli?",
+                        'options': [
+                            "Mahmudxo'ja Behbudiy",
+                            'Abdulla Avloniy',
+                            'Munavvarqori',
+                            'Hamza'
+                        ],
+                        'answer': 1,
+                        'explain': "Bu mashhur da'vat ma'rifatparvar adib Abdulla Avloniyga tegishli."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Ma'rifatparvarlik adabiyotida fan va ta'limni targ'ib qilish asosiy g'oyalardan biri edi.",
+                        'answer': True,
+                        'explain': "Ha, ma'rifatparvarlar millatni qutqarishning yagona yo'li ilm-fan va ma'rifatda deb bilishgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'XX asr boshida ochilgan yangi tipdagi maktablar qanday nomlangan?',
+                        'options': [
+                            'Madrasayi oliya',
+                            'Usuli jadid',
+                            'Rusiya maktabi',
+                            'Dorul funun'
+                        ],
+                        'answer': 1,
+                        'explain': "Jadidlar tashkil etgan, dunyoviy va diniy ilmlar birga o'qitiladigan maktablar 'Usuli jadid' deb atalgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Ma'rifatparvarlik adabiyotini tahlil qilish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Abdulla Avloniyning 'Turkiy guliston yoxud axloq' asaridagi asosiy g'oyalarni 3 ta bandda umumlashtiring.",
+                            'answer': "O'quvchi axloq, ta'lim-tarbiya va ma'rifatning inson kamolotidagi o'rnini yozadi.",
+                            'hint': 'Yaxshi va yomon xulqlar haqidagi qismlarni eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nega jadidlar millatni uyg'otishda gazeta va teatrga alohida e'tibor berishgan?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'muqimiy-va-furqat-hajviyoti',
+                'title': 'Muqimiy va Furqat hajviyoti hamda lirikasi',
+                'summary': "Qo'qon adabiy muhitining atoqli vakillari Muhammad Aminxo'ja Muqimiy va Zokirjon Xolmuhammad o'g'li Furqat ijodidagi lirik va hajviy yo'nalishlar.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Muqimiy va Furqat — XIX asr oxiridagi o'zbek adabiyotining ikki yorqin yulduzidir. Ularning ijodi an'anaviy mumtoz adabiyot bilan ma'rifatparvarlik realist adabiyotini bog'lab turuvchi ko'prik bo'ldi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Hajviyot va ma'rifatparvarlik",
+                        'body': "Muqimiy hajviyoti: 'Tanobchilar', 'Vektor sotovoy' (amaldorlar va hiylakorlarni fosh qilish).\nFurqat ma'rifatparvarligi: 'Ilm xosiyati', 'Gimnaziya' (ilm va dunyoviy bilimlarni ulug'lash)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Muqimiy hajviyotining turlari',
+                        'items': [
+                            "Hajviy tiplar yaratilgan asarlar ('Sayohatnoma')",
+                            "Ijtimoiy adolatsizlik fosh qilingan hajvlar ('Tanobchilar')",
+                            "Maishiy muammolarga bag'ishlangan asarlar ('Leksin sobiq')"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Furqat ijodida chet ellarga sayohat, ma'rifatparvarlik va vatandan yiroqlikdagi g'urbat tuyg'ulari teran aks etgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Muqimiyning mashhur 'Tanobchilar' asarining janri nima?",
+                        'options': [
+                            "Lirik g'azal",
+                            "Hajviy doston/she'r",
+                            'Dramatik asar',
+                            'Tarixiy meuar'
+                        ],
+                        'answer': 1,
+                        'explain': "'Tanobchilar' — yer o'lchovchilar va poytaxt amaldorlarining qallobligini fosh etuvchi hajviy asardir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Furqat butun umri davomida Qo'qondan tashqariga chiqmagan.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Furqat Hindiston, Turkiya, Yunoniston, Xitoy va Qashqarda bo'lib, xorijda vafot etgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Quyidagi asarlardan qaysi biri Furqat qalamiga mansub?',
+                        'options': [
+                            'Sayohatnoma',
+                            'Ilm xosiyati',
+                            'Vektor sotovoy',
+                            "To'y bolar"
+                        ],
+                        'answer': 1,
+                        'explain': "'Ilm xosiyati' she'ri Furqatning yoshlarni ma'rifatga chorlovchi asaridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Muqimiy va Furqat ijodiy merosini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Muqimiyning 'Tanobchilar' asaridagi Sultanali va Mingboshi obrazlariga xarakteristika bering.",
+                            'answer': "O'quvchi xalqni shiluvchi, tamagir va hiylakor amaldorlar qiyofasini tasvirlaydi.",
+                            'hint': "Er tanobini o'lchashdagi g'irromlik sahnalarini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Furqatning 'Fasli navbahor bo'ldi...' deb boshlanuvchi g'azalida vatan va tabiat tasvirining uyg'unligini sharhlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'mahmudxoja-behbudiy-va-padarkush-dramasi',
+                'title': "Mahmudxo'ja Behbudiy va 'Padarkush' dramasi",
+                'summary': "Jadidchilik harakatining otasi Mahmudxo'ja Behbudiy faoliyati hamda o'zbek professional dramaturgiyasini boshlab bergan 'Padarkush' pyesasining g'oyaviy muammolari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Mahmudxo'ja Behbudiy (1875–1919) — Turkiston jadidchilik harakatining yo'lboshchisi, buyuk ma'rifatparvar va publitsist. U yozgan 'Padarkush' (1911) dramasi o'zbek adabiyotida sahna san'ati rivojiga tamal toshini qo'ydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "'Padarkush' dramasi g'oyasi",
+                        'body': "Pyesaning to'liq nomi: 'Padarkush yoxud o'quvsiz bolaning hali'. Asarda ilmsizlik, ma'rifatsizlik va boylikka berilish insonni va oilani fojeaviy halokatga (otani o'ldirishga) olib kelishi ko'rsatiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Pyesadagi asosiy obrazlar va qarama-qarshilik',
+                        'items': [
+                            'Toshmurod boy — ilmni mensimaydigan, nodon boy',
+                            "Mulla Do'st — ilmsiz va kaltabin hamroh",
+                            "Toshmurodning o'g mezonli (Toshpo mezonlat) — tarbiyasiz, maishatparvar yosh",
+                            "Ziyoli (O'qituvchi) — ma'rifat va ma'rifatli avlod tarafdori"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Behbudiy 'Teatr — bu ibratxonadir' iborasi bilan teatrning xalqni tarbiyalashdagi beqiyos o'rnini ta'riflagan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Padarkush' dramasi nechanchi yilda yozilgan hamda bosilgan?",
+                        'options': [
+                            '1905-yil',
+                            '1911-yil',
+                            '1917-yil',
+                            '1920-yil'
+                        ],
+                        'answer': 1,
+                        'explain': "Behbudiy 'Padarkush' pyesasini 1911-yilda yozgan, u 1913-yilda chop etilib, 1914-yilda sahnaga qo mezonyilgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Padarkush' so'zi 'Ota g'amxo'ri' degan ma'noni anglatadi.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. 'Padarkush' so'zi fors-tojikchadan olingan bo'lib, 'Otasini o'ldiruvchi (ota qotili)' degan ma'noni bildiradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Teatrga 'Teatr — bu ibratxonadir' deya baho bergan ma'rifatparvar kim?",
+                        'options': [
+                            'Abdulla Qodiriy',
+                            "Mahmudxo'ja Behbudiy",
+                            "Cho'lpon",
+                            'Fitrat'
+                        ],
+                        'answer': 1,
+                        'explain': "Mahmudxo'ja Behbudiy teatrni xalqqa to'g'ri yo'l ko'rsatuvchi ibratxona deb ta'riflagan."
+                    }
+                ],
+                'homework': {
+                    'intro': "'Padarkush' dramasi va Behbudiy merosini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Padarkush' dramasi misolida ilmsizlik va tarbiyasizlikning oqibatlarini yoritib yozing.",
+                            'answer': "O'quvchi Toshpo'lat va Boy o'rtasidagi munosabat va oqibatdagi fojiani tahlil qiladi.",
+                            'hint': "Boyning o'g'lini o'qitishdan bosh tortish sahnasiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Behbudiyning 'Ikki emas, to'rt til bilmoq kerak' degan da'vatining bugungi kun uchun dolzarbligini baholang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'abdulla-qodiriy-va-otkan-kunlar-romani',
+                'title': "Abdulla Qodiriy va o'zbek romanichiligi ('O'tkan kunlar')",
+                'summary': "O'zbek adabiyotida birinchi roman yaratuvchisi Abdulla Qodiriyning 'O'tkan kunlar' asaridagi ijtimoiy-siyosiy ziddiyatlar va milliy xarakterlar.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Abdulla Qodiriy (Julqunboy) (1894–1938) — o mezonzbek milliy romanichiligining asoschisi. Uning 'O'tkan kunlar' (1922–1925) romani o'zbek adabiyoti tarixida yangi davr va bosqichni boshlab berdi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "'O'tkan kunlar' romani mavzusi",
+                        'body': "Roman XIX asr o'rtalaridagi Xudoyorxon davri Qo'qon xonligining fojiali ijtimoiy-siyosiy ahvoli hamda Otabek va Kumushning fojiali sevgisi fonida milliy birlik va parokandalik muammosini ko'taradi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Romandagi yetakchi g'oyalar",
+                        'items': [
+                            "O'zibo'shlik, ichki nizolar va xonliklar aro urushlarning millat va davlatga yetkazgan zarari",
+                            "Inson erki, sevgi sofligi va oilaviy muammolar (ko'p xotinlilik asoratlari)",
+                            "Yangi va ilg'or fikrli yoshlar (Otabek) va eski jamiyat toqnashuvi"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Abdulla Qodiriy o'z romanini 'Maziya qaytib, ish ko'rmak xayrli bo'lganidan...' degan niyat bilan yozganini ta'kidlaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek adabiyotidagi birinchi romanchilik namunasi qaysi asar?",
+                        'options': [
+                            'Kecha va kunduz',
+                            "O'tkan kunlar",
+                            'Obid ketmon',
+                            'Mehrobdan chayon'
+                        ],
+                        'answer': 1,
+                        'explain': "Abdulla Qodiriyning 'O'tkan kunlar' romani o'zbek adabiyotidagi ilk romandir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'O'tkan kunlar' romanida voqealar XV asr Temuriylar davrida bo'lib o'tadi.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Voqealar XIX asr o'rtalarida, Qo'qon xonligi va Toshkent ziddiyatlari davrida yuz beradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Otabekning yaqin do mezonsti, unga har qanday og'ir vaziyatda yelkadosh bo'lgan sodiq qahramon kim?",
+                        'options': [
+                            'Homid',
+                            'Hasanali',
+                            'Usta Olim',
+                            'Ziyo shohichi'
+                        ],
+                        'answer': 2,
+                        'explain': 'Usta Olim — Otabekning sirdoshi, xalqning donishmand va halol vakilidir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "'O'tkan kunlar' romani tahlili.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Otabek va Homid obrazlariga qiyosiy tavsif berib, matn ko'rinishida yozing.",
+                            'answer': "O'quvchi ma'rifatli, millat dardi bilan yashovchi Otabek va shaxsiy manfaati uchun har qanday pastkashlikka tayyor Homidni solishtiradi.",
+                            'hint': 'Ularning dunyoqarashi, axloqi va qadriyatlarini taqqoslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Qodiriyning 'O'tkan kunlar' romanidagi yurt parokandaligi va o'zaro urushlar haqidagi ogohlantirishi bugungi kun uchun qanday saboq beradi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'cholpon-lirikasi-va-kecha-va-kunduz',
+                'title': "Abdulhamid Cho'lpon lirikasi va 'Kecha va kunduz' romani",
+                'summary': "Cho'lponning erksizlikka qarshi qaratilgan otashin she'riyati va uning 'Kecha va kunduz' romanidagi milliy fojea va ozodlik motivlari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Abdulhamid Sulaymon o'g'li Cho'lpon (1897–1938) — o'zbek yangi she'riyatining va adabiyotining ulkan namoyandasi. Uning ijodida milliy erkinlik, istiklol va inson qadr-qimmati masalasi birinchi o'ringa ko'tarilgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Cho'lpon she'riyati va romani",
+                        'body': "She'riyat: 'Go'zal', 'Kishan giydim', 'Xalq' she'rlarida erksizlik asorati va mustaqillik orzusi nola qiladi.\nRoman: 'Kecha va kunduz' (1936) — millatning topatilgan taqdiri va chor amaldorlari hamda mahalliy boylarning zulmini aks ettiradi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "'Kecha va kunduz' asari dramaturji qurilishi",
+                        'items': [
+                            "'Kecha' qismi: Jaholat, erksizlik va zulm qorong'iligi (Zebining begunoh fojiasi)",
+                            "'Kunduz' qismi: Rejalashtirilgan, lekin muallif qatag'on qilingani sababli yozilmay qolgan uyg'onish davri"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Cho'lponning 'Ko'ngil, sen bunchalar nega zanjirlar bilan bog'landang...' misrasi milliy uyg'onish gipnozidan uyg mezonotuvchi da'vatdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Cho'lponning 'Kecha va kunduz' romanidagi begunoh jabr ko'rib, Sibirga surgun qilingan shoira qiz kim?",
+                        'options': [
+                            'Kumush',
+                            'Zebi',
+                            'Sultonalixon',
+                            'Poshshoxon'
+                        ],
+                        'answer': 1,
+                        'explain': "Zebi — sodda, ma'suma, san'atkor ruhli qiz bo'lib, tuhmat bilan Sibirga surgun qilinadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Cho'lponning 'Kecha va kunduz' romanining 'Kunduz' qismi ham to'liq yozilib nashr etilgan.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Shoir qatag'on qilingani sababli 'Kunduz' qismi yozilmay qolgan yoki qo'lyozmasi yo'qolgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Go'zal' va 'Kishan giydim' she'rlarining muallifi kim?",
+                        'options': [
+                            'Abdulla Oripov',
+                            "Cho'lpon",
+                            'Oybek',
+                            'Usmon Nasir'
+                        ],
+                        'answer': 1,
+                        'explain': "Ushbu otashin va erksevar she mezonrlar Abdulhamid Cho'lpon qalamiga mansub."
+                    }
+                ],
+                'homework': {
+                    'intro': "Cho'lpon lirikasi va romanini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Cho'lponning 'Go'zal' she'ridagi badiiy tasvir vositalarini va she'rning g'oyaviy poydevorini yozing.",
+                            'answer': "O'quvchi go mezonzallik niqobi ostidagi Hurlik va Erkinlik g'oyasini tahlil qiladi.",
+                            'hint': "Shoir 'Go'zal' deganda nimani (yoki kimni) nazarda tutganini o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Kecha va kunduz' romanida Akbarali mingboshi va Razzoq so'fi obrazlari orqali jamiyatning qaysi illatlari ko'rsatilgan?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'fitrat-dramaturgiyasi-va-fojialari',
+                'title': 'Fitrat va uning dramatik asarlari',
+                'summary': "Abdurauf Fitratning fantastik va tarixiy dramalari, ulardagi milliy mustaqillik va davlatchilik g'oyalari tahlili.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Abdurauf Fitrat (1886–1938) — buyuk mutafakkir, adabiyotshunos olim, shoir va dramaturg. U o'zbek dramaturgiyasida tarixiy va fojiaviy dramalarning yuksak namunalarini yaratgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Fitrat dramalari',
+                        'body': "'Abulfayzxon' (tarixiy fojia — milliy parokandalik fojiasi), 'Arslon' (ijtimoiy drama), 'Hind ixtilolchilari', 'M Shaytonning tangriga isyoni' (falsafiy drama)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "'Abulfayzxon' tragediyasining mohiyati",
+                        'items': [
+                            'Joniy va Ashtarxoniylar sülolasining inqirozi',
+                            "Shoh Abulfayzxonning taxt uchun shafqatsizligi va qo'rqoqligi",
+                            'Davlat va millatning mustaqilligini yo mezonqotish sabablari'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Fitrat 'Abulfayzxon' dramasi orqali stalinistik diktatura va taxt vasvasasiga berilgan hukmdorlar oqibatini badiiy bashorat qilgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek adabiyotida birinchi tarixiy tragediya hisoblangan 'Abulfayzxon' asarining muallifi kim?",
+                        'options': [
+                            'Abdulla Qodiriy',
+                            'Abdurauf Fitrat',
+                            'Hamza',
+                            'Oybek'
+                        ],
+                        'answer': 1,
+                        'explain': "Fitrat 1924-yilda o'zining mashhur 'Abulfayzxon' tragediyasini yozgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Fitrat nafaqat badiiy asarlar yozgan, balki ilmiy adabiyotshunoslik va tilshunoslikka ham katta hissa qo mezonshgan.',
+                        'answer': True,
+                        'explain': "Ha, Fitrat birinchi professor sifatida o'zbek tili va adabiyoti tarixiga oid ko'plab fundamental ilmiy ishlar yaratgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Fitratning sharq romantizmi va mustamlakachilikka qarshi isyon ruhi ifodalangan dramasi qaysi?',
+                        'options': [
+                            'Padarkush',
+                            'Hind ixtilolchilari',
+                            'Maysaraning ishi',
+                            'Muxbir'
+                        ],
+                        'answer': 1,
+                        'explain': "'Hind ixtilolchilari' dramasi ingliz mustamlakachiligiga qarshi kurashgan hind xalqi harakatiga bag'ishlangan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Abdurauf Fitrat va uning dramaturgiyasini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Abulfayzxon' dramasida 'Qon qon bilan yuvilmas, suvsiz yuvilmas' g'oyasi qanday aks etganini yozing.",
+                            'answer': "O'quvchi zolim hukmdorning taxt uchun to'kkan qonlari oxir-o'zini ham haloq qilganini izohlaydi.",
+                            'hint': 'Abulfayzxonning saroydagi fitnalari va mantiqiy oqibatini keltiring.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Fitratning 'O mezonzbek klassik musiqasi va uning tarixi' asarining milliy san'atimizdagi o'rnini yoritib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'oybekning-navoiy-romani-va-tarixiy-psixologizm',
+                'title': "Oybekning 'Navoiy' romani va tarixiy psixologizm",
+                'summary': "Musa Toshmuhammad o'g'li Oybekning 'Navoiy' romanida ulug' shoir va mutafakkir Alisher Navoiy siymosining hamda XV asr Muhitining ruhiy va ijtimoiy tasviri.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Oybek (Musa Toshmuhammad o'g'li) (1905–1968) — o'zbek adabiyotida tarixiy roman janrini yuksak psixologik bosqichga olib chiqqan adib va nazokatli shoirdir. Uning 'Navoiy' (1944) romani jahonning ko'plab tillariga tarjima qilingan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Asardagi psixologik va tarixiy tasvir',
+                        'body': "Romanda Alisher Navoiy va Husayn Boyqaro munosabatlari, Hirot madaniy hayoti va oddiy xalq vakillari (To'xtasin, Majididdin) o'rtasidagi ijtimoiy ziddiyatlar psixologik teranlik bilan tasvirlanadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Romanning kompozitsion tarmoqlari',
+                        'items': [
+                            'Saray va davlat boshqaruvi (Navoiy va Boyqaro xarakterlari)',
+                            "Xalq hayoti va isyoni (To'xtasin hamda kosiblar xarakteri)",
+                            "Badiiy ijod va falsafa (Navoiyning 'Xamsa' yozish jarayoni)"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Oybek ushbu romanida Navoiyni mo''jizakor afsonaviy shaxs emas, balki tirik, quvonadigan va iztirob chekadigan komil inson sifatida ko'rsatgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Oybekning 'Navoiy' romani nechanchi yilda yozib tugatilgan hamda nashr etilgan?",
+                        'options': [
+                            '1930-yil',
+                            '1944-yil',
+                            '1955-yil',
+                            '1960-yil'
+                        ],
+                        'answer': 1,
+                        'explain': "Oybek ikkinchi jahon urushi yillarida — 1944-yilda 'Navoiy' romanini muvaffaqiyatli yakunlagan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Romanda Husayn Boyqaro faqat ijobiy va benuqson hukmdor sifatida tasvirlangan.',
+                        'answer': False,
+                        'explain': "Noto'g'ri. Boyqaro ma'rifatparvar shoh bo'lishi bilan birga, kayf-safa va saroy maishatiga beriluvchan, ikkilanuvchi shaxs sifatida berilgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Oybekning avtobiografik xarakterga ega bo'lgan qaysi mashhur qissasi bor?",
+                        'options': [
+                            "Qutlug' qon",
+                            'Oltin vodiydan shabadalar',
+                            'Bolalik',
+                            "G'unchalar"
+                        ],
+                        'answer': 2,
+                        'explain': "'Bolalik' qissasi Oybekning o'z yoshligi va davr hayoti haqida yozgan mahoratli avtobiografik asaridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Oybekning 'Navoiy' romanini o'rganish va tahlil qilish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Romandagi Majididdin va Alisher Navoiy o'rtasidagi ijtimoiy va axloqiy qarama-qarshilikni yozing.",
+                            'answer': "O'quvchi xalq g'amini yeydigan Navoiy va o'z manfaati hamda mansab uchun fittna qiluvchi Majididdinni solishtiradi.",
+                            'hint': 'Majididdinning soliqlar va saroy fitnalaridagi rolini tasvirlang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun Oybek Navoiy obrazini yaratishda uning poetik ijodidan ko'ra davlat va xalq uchun qilgan fidoyiligiga ko'proq урg'u bergan?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'gafur-gulom-va-maqsud-shayxzoda-poeziyasi',
+                'title': "G'afur G'ulom va Maqsud Shayxzoda poeziyasi",
+                'summary': "XX asr o'zbek she'riyatining ikki yirik vakili — G'afur G mezonulomning hayotiy falsafiy she'riyati hamda Maqsud Shayxzodaning intellektual va dramatik poeziyasi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "G'afur G'ulom va Maqsud Shayxzoda adabiyotimizga falsafiy teranlik, intellektual fikr va otashin ritorikani olib kirgan shoirlardir. Ularning asarlari inson qadr-qimmati, tarixiy xotira hamda umumbashariy qadriyatlarga boy."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Shoirlarning durdona asarlari',
+                        'body': "G'afur G'ulom: 'Senga kalit beraman', 'Sening toychoq' she'rlari hamda 'Shum bola' qissasi.\nShayxzoda: 'Mirzo Ulug'bek', 'Jalaliddin Manguberdi' dramalari va 'Toshkentnoma' doston-romani."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "G'afur G'ulom she'riyatining xususiyatlari",
+                        'items': [
+                            'Xalqona hazil va chuqur optimizm',
+                            "Falsafiy umumlashma va publitsistik jo'shqinlik",
+                            'Bolalar ruhiyatini teran bilish'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: G'afur G'ulomning 'Sening toychoq' she'ri Urush yillarida yetim qolgan bolalarga bag'ishlangan eng ta'sirli asardir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Sen yetim emassan...' degan mashhur otashin misralar qaysi shoir qalamiga mansub?",
+                        'options': [
+                            'Maqsud Shayxzoda',
+                            "G'afur G'ulom",
+                            'Erkin Vohidov',
+                            'Hamid Olimjon'
+                        ],
+                        'answer': 1,
+                        'explain': "G'afur G'ulomning 'Sening toychoq' (Sen yetim emassan) she'ri bag'rikenglikning yuksak madhiyasidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Maqsud Shayxzoda 'Mirzo Ulug'bek' tarixiy tragediyasini yozgan.",
+                        'answer': True,
+                        'explain': "Ha, Shayxzodaning 'Mirzo Ulug'bek' dramasi o'zbek dramaturgiyasining cho'qqilaridan biri hisoblanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "G'afur G'ulomning bolalar hayotidan olingan va sarguzashtlarga boy mashhur qissasi qaysi?",
+                        'options': [
+                            'Yodgor',
+                            'Shum bola',
+                            'O mezonzbekiston',
+                            "Mening o'g'rigina bolam"
+                        ],
+                        'answer': 1,
+                        'explain': "'Shum bola' qissasi G'afur G'ulomning yumor va hayotiy qiziqarliligi bilan ajralib turuvchi asaridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "G'afur G'ulom va Shayxzoda ijodini tahlil qilish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "G'afur G'ulomning 'Sening toychoq' she'ridagi bag'rikenglik va insonparvarlik g'oyasini tahlil eting.",
+                            'answer': "O'quvchi o'zbek xalqining yetim bolalarga quchoq ochishi va bag'rikengligini yozadi.",
+                            'hint': "Shoirning o'z farzandlari bilan yetim bolalarni teng ko'rishi sahnalarini ta'riflang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Maqsud Shayxzodaning 'Mirzo Ulug'bek' tragediyasida ilm va jaholat o'rtasidagi toqnashuvni sharhlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'abdulla-qahhor-hikoyalarida-xarakter-yaratish',
+                'title': 'Abdulla Qahhor hikoyalarida uslub va xarakter yaratish',
+                'summary': "O'zbek hikoyachiligining munosib ustasi Abdulla Qahhor asarlaridagi so'z tejamkorligi, xarakter va maishiy detallar mahorati.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Abdulla Qahhor (1907–1968) — o'zbek adabiyotida hikoya janrini mukammallik darajasiga ko'targan zabardast yozuvchi. U 'O'zbek adabiyotining Chexovi' deb tan olingan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Qahhor hikoyachiligi va detali',
+                        'body': "Hikoyalar: 'Anor', 'Dahshat', 'Bemor', 'O'g'ri', 'Mavizli pashsha'.\nQahhor birgina kichik detal (masalan, 'Anor'dagi anor po'chog'i yoki 'Bemor'dagi kosa) orqali butun bir ijtimoiy fojia va qahramon ruhiyatini ochib bera oladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Qahhor uslubining 3 oltin qoidasi',
+                        'items': [
+                            "So'z tejamkorligi (ortiqcha tasvirlarsiz, aniq va loqis nutq)",
+                            'Badiiy detalning yuklama darajasi',
+                            'Ijtimoiy fojea va xarakterning psixologik toqnashuvi'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Qahhor 'So'zga adabsizlik — bu fojia' deya ta'kidlagan va har bir so'z ustida yillab ishlagan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Abdulla Qahhorning qaysi hikoyasida qashshoqlik sababli kasal xotiniga anor olib bera olmagan Turabning fojiasi tasvirlanadi?',
+                        'options': [
+                            'Bemor',
+                            'Anor',
+                            "O'g'ri",
+                            'Dahshat'
+                        ],
+                        'answer': 1,
+                        'explain': "'Anor' hikoyasida kambag'allik va ijtimoiy tengsizlik asoratlari anor vositasida ko'rsatilgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Abdulla Qahhor faqat hikoyalar yozgan, u komediya va roman Janrida ishlamagan.',
+                        'answer': False,
+                        'explain': "Noto'g'ri. Qahhor 'Sarab' romani va 'Shohi sozana', 'Tobutdan tovush' kabi mashhur pyesalar ham yaratgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qahhorning 'Dahshat' hikoyasidagi jasorat ko'rsatishga majbur bo'lib, mozoristonda halok bo'lgan jasur qiz kim?",
+                        'options': [
+                            'Unsin',
+                            'Kibriyo',
+                            'Sotiboldining xotini',
+                            'Zebi'
+                        ],
+                        'answer': 0,
+                        'explain': "Unsin — 'Dahshat' hikoyasidagi oriyat va sharaf yo'lida qurbon bo'lgan matonatli qiz obrazidir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Abdulla Qahhor hikoyachilik san'atini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Abdulla Qahhorning 'Bemor' hikoyasidagi Sotiboldi va tabib munosabatlarini badiiy detal orqali tahlil qiling.",
+                            'answer': "O'quvchi jaholat, xurofot va chorasizlik asoratlarini xotinining o mezonlimi bilan tugagan fojeada tahlil etadi.",
+                            'hint': 'Sotiboldining chiroq va afsunlarga umid qilish sahnasini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nega Abdulla Qahhor 'Hikoya yozish so'z bilan rasm chizishdir' deb hisoblagan?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'erkin-vohidov-va-abdulla-oripov-poeziyasi',
+                'title': "Erkin Vohidov va Abdulla Oripov poeziyasida milliy g'oya",
+                'summary': "XX asrning ikkinchi yarmi o'zbek she'riyatining ikki darg'asi — Erkin Vohidov va Abdulla Oripov ijodidagi milliy o'zlikni anglash va falsafiy teranlik.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Erkin Vohidov (1936–2016) va Abdulla Oripov (1941–2016) — 60-yillarda adabiyotga kirib kelib, o'zbek she'riyatiga yangi nafas va samimiyat olib kirgan zabardast shoirlardir. Ularning she'riyati milliy uyg'onishga xizmat qildi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Shoirlarning shoh asarlari',
+                        'body': "Erkin Vohidov: 'O'zbegim' qasidasi, 'Ruhlar isyoni' doston, 'Oltin devor' komediyasi.\nAbdulla Oripov: O'zbekiston Respublikasi Davlat Madhiyasi matni, 'O'zbekiston' qasidasi, 'Jannatga yo'l' doston."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Poetik uslubdagi farqlar va o'xshashliklar",
+                        'items': [
+                            "Erkin Vohidov: Klassik an'ana (g'azaliylik), sharqona shirin kalom va badiiy nafosat",
+                            "Abdulla Oripov: Falsafiy dramatizm, o'tkir dramatik toqnashuv va iztirobli o'ylar",
+                            "Ikkalasida ham: Millat ravnaqi, vatan tuyg'usi va insoniylikni ulug'lash"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Ikkala shoir ham O'zbekiston Qahramoni oliy unvoniga sazovor bo'lishgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbekiston Respublikasi Davlat Madhiyasining matn muallifi kim?",
+                        'options': [
+                            'Erkin Vohidov',
+                            'Abdulla Oripov',
+                            'Muhammad Yusuf',
+                            'Zulfiya'
+                        ],
+                        'answer': 1,
+                        'explain': "O'zbekiston Madhiyasi matnini O'zbekiston Qahramoni, xalq shoiri Abdulla Oripov yozgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Erkin Vohidovning 'O'zbegim' qasidasi milliy o'zlikni anglash va adabiyotimiz rivojida muhim burilish bo'lgan.",
+                        'answer': True,
+                        'explain': "Ha, 'O'zbegim' qasidasi shoirning milliy gurur va o'zlikni kuylagan eng yuksak va jasoratli asarlaridan biridir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Erkin Vohidovning Nazrul Islom hayotiga bag'ishlangan dostoni qaysi?",
+                        'options': [
+                            "Jannatga yo'l",
+                            'Ruhlar isyoni',
+                            'Oltin devor',
+                            'Daniya'
+                        ],
+                        'answer': 1,
+                        'explain': "'Ruhlar isyoni' dostoni hind-bengal shoiri Nazrul Islomning erksevarligi haqidagi buyuk doston sanaladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Erkin Vohidov va Abdulla Oripov poeziyasini o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Erkin Vohidovning 'O'zbegim' qasidasi va Abdulla Oripovning 'O'zbekiston' she mezonridagi umumiy va o'ziga xos xususiyatlarni yozing.",
+                            'answer': "O'quvchi har ikkala asardagi milliy g'urur va vatanga bo'lgan sevgini tahlil qiladi.",
+                            'hint': "Tarixiy shaxslar va vatan madhiga berilgan urg'uni qiyoslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Abdulla Oripovning 'Munojotni tinglab' she'ridagi milliy musiqaga va ruhiyatga berilgan bahoni izohlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'utkir-hoshimov-asarlarida-manaviy-muammolar',
+                'title': "O'tkir Hoshimov asarlarida ma'naviy-axloqiy muammolar",
+                'summary': "O'tkir Hoshimovning 'Dunyoning ishlari', 'Ikki eshik orasi', 'Tushda kechgan umrlar' asarlarida insoniylik, vafo va urush asoratlari tasviri.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "O'tkir Hoshimov (1941–2013) — kitobxonlar qalbidan chuqur joy olgan, samimiy va xalqona yozuvchi. Uning asarlarida ota-ona hurmati, samimiy sevgiga vafo hamda insoniy burch masalalari yetakchilik qiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "O'tkir Hoshimovning eng mashhur asarlari",
+                        'body': "'Dunyoning ishlari' (Ona haqida qissa-hikoyalar to'plami).\n'Ikki eshik orasi' (Urush va urushdan keyingi davrdagi insonlar taqdiri va xiyonat hamda sadoqat romani).\n'Tushda kechgan umrlar' (Afg'on urushi va sho'ro tuzumining fojialari)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "O'tkir Hoshimov prozasining xususiyatlari",
+                        'items': [
+                            "Ona siymosini yuksak ma'naviyat bilan tasvirlash",
+                            'Urushning inson ruhiyatiga yetkazgan chuqur jarohatlari',
+                            "Soddalik va ta'sirchan badiiy dilkashlik"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: 'Dunyoning ishlari' asari muallifning o'z onasiga bag'ishlangan samimiy va ruhiy xotiralar to'plamidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'tkir Hoshimovning onasining xotirasiga bag'ishlab yozgan mashhur qissasi qaysi?",
+                        'options': [
+                            'Ikki eshik orasi',
+                            'Dunyoning ishlari',
+                            'Bahor qaytmaydi',
+                            'Nur borki, soya bor'
+                        ],
+                        'answer': 1,
+                        'explain': "'Dunyoning ishlari' asari onaga qo'yilgan badiiy haykal bo'lib, xalqona soddalik bilan yozilgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Ikki eshik orasi' romanida voqealar faqat bir inson — Muzaffar tilidan berilgan.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Roman ko'p ovozli (polifonik) bo'lib, voqealar turli qahramonlar (Kimsan, Robiya, Umarzaq va b.) tilidan so'zlanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'tkir Hoshimovning Afg'onistonda urush qilgan yoshlar taqdiri va fojeasini yoritgan romani qaysi?",
+                        'options': [
+                            'Ikki eshik orasi',
+                            'Tushda kechgan umrlar',
+                            'Bahor qaytmaydi',
+                            'Daftar hoshiyasidagi bitiklar'
+                        ],
+                        'answer': 1,
+                        'explain': "'Tushda kechgan umrlar' romani afg'on urushi va sobiq sho mezonro davri soxtaliklarini fosh etadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "O'tkir Hoshimov prozasini tahlil qilish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Dunyoning ishlari' qissasidagi 'Ona' obraziga xos 3 ta ma'naviy sifatni va biror hikoyacha misolini yozing.",
+                            'answer': "O mezonquvchi fidoiylik, mehribonlik va kamsuqumlik sifatlarini 'Gilam paypoq' yoki 'Oq o'lan' hikoyachalarida ko'rsatadi.",
+                            'hint': "Onaning o'z ehtiyojidan ko'ra farzandlarini ustun qo mezonyishini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Ikki eshik orasi' romanidagi Robiya va Kimsan munosabatlaridagi sadoqat va burch tuyg'usini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'shekspir-va-jahon-dramaturgiyasi',
+                'title': 'Jahon adabiyoti: Uilyam Shekspir va jahon dramaturgiyasi',
+                'summary': "Uyg'onish davri ingliz adabiyotining daho dramaturgi Uilyam Shekspir va uning 'Gamlet', 'Otello' hamda 'Rromeo va Julyetta' asarlaridagi umumbashariy g'oyalar.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Uilyam Shekspir (1564–1616) — Uyg'onish davri (Renessans) adabiyotining buyuk namoyandasi va jahon dramaturgiyasining cho'qqisidir. U insoniy tuyg'ular, ehtiros va ziddiyatlarni yuksak dramatik san'at bilan tasvirlagan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Shekspir fojialari',
+                        'body': "'Gamlet' (haqiqat va ikkilanish, 'Yashamoq yoki yo mezonq bo'lmoq' muammosi).\n'Otello' (ishonch va rashk hiylalari).\n'Romeo va Julyetta' (muhabbatning qabilaviy dushmanlikdan ustunligi va fojiasi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Shekspir dramaturgiyasining belgilari',
+                        'items': [
+                            'Xarakterlarning murakkab va psixologik teranligi',
+                            "Yovuzlik va Ezgulik o'rtasidagi abadiy murosaiz kurash",
+                            "She'riy dialoglar va yuksak falsafiy monologlar"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Shekspir asarlari o'zbek tiliga Cho'lpon, G'afur G'ulom, Maqsud Shayxzoda va Qahhor kabi ulkan adiblar tomonidan yuksak mahorat bilan tarjima qilingan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Yashamoq yo o'lmoq — na gap shundadir...' degan mashhur monolog qaysi asardan olingan?",
+                        'options': [
+                            'Otello',
+                            'Qirol Lir',
+                            'Gamlet',
+                            'Makbet'
+                        ],
+                        'answer': 2,
+                        'explain': "Bu monolog Shekspirning 'Gamlet' tragediyasida shahzoda Gamletning hayot va o'lim haqidagi falsafiy o'yidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Romeo va Julyetta' tragik asari oilalar o'rtasidagi adovat tufayli ikki yoshning fojiasi bilan tugaydi.",
+                        'answer': True,
+                        'explain': "Ha, Montekki va Kapuletti xonadonlari adovati fojiaviy o'limga va oxir-oqibat kechikkan sulhga olib keladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Shekspirning 'Otello' tragediyasini o'zbek tiliga kim mahorat bilan tarjima qilgan?",
+                        'options': [
+                            "G'afur G'ulom",
+                            "Cho'lpon",
+                            'Abdulla Qahhor',
+                            'Oybek'
+                        ],
+                        'answer': 1,
+                        'explain': "Cho'lpon Shekspirning 'Otello' hamda 'Hamlet' tragediyalarini o'zbek tiliga tarjima qilib badiiy durdona yaratgan."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Uilyam Shekspir va uning asarlari tahlili.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Gamlet' tragediyasidagi Gamlet va Yago ('Otello'dagi) obrazlarini xarakter jihatdan taqqoslang.",
+                            'answer': "O'quvchi haqiqat izlovchi Gamlet bilan hiylakor, hasadgo'y Yagoni solishtiradi.",
+                            'hint': 'Biri ezgulik va shubha azobida, ikkinchisi esa yovuzlik fitnasida harakat qiladi.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Shekspir tragediyalarining necha asrlardan beri o'z qiymatini yo'qotmay kelayotganining siri nimada?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'xeminguy-va-yoqotilgan-avlod-adabiyoti',
+                'title': "Jahon adabiyoti: Ernest Xeminguy va 'yo'qotilgan avlod' adabiyoti",
+                'summary': "XX asr amerika adabiyotining atoqli vakili Ernest Xeminguyning 'Aysberg nazariyasi' hamda 'Chil va dengiz', 'Alvido, qurol!' asarlarining badiiy tahlili.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Ernest Xeminguy (1899–1961) — Nobel mukofoti laureati, XX asr jahon nasri uslubiga ulkan ta'sir ko'rsatgan yozuvchi. U 'yo'qotilgan avlod' (birinchi jahon urushi ruhiy jarohatlagan insonlar) adabiyotining eng yorqin namoyandasidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Xeminguy va Aysberg nazariyasi',
+                        'body': "Aysbergning faqat 1/8 qismi suv ustida ko'rinadi. Xeminguy fikricha, yozuvchi asarda voqelikning faqat yuzasini yozishi, asosiy va chuqur falsafiy mazmun matn ostida (subtekst) yashirin bo'lishi kerak."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "'Chal chol va dengiz' qissasining g'oyasi",
+                        'items': [
+                            'Santiyago chol va uning ulkan baliq bilan tengsiz va shafqatsiz olishuvi',
+                            "Matonat va taslim bo'lmaslik harakati",
+                            "'Insonni tor-mor qilish mumkin, lekin uni yengib bo'lmaydi' g'oyasi"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Xeminguy uslubi — sodda, qisqa gaplar va ulkan ma'no yuklangan badiiy sukunatdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Insonni tor-mor qilish mumkin, lekin uni yengib bo'lmaydi' iborasi qaysi asardan olingan?",
+                        'options': [
+                            'Alvido, qurol!',
+                            'Chol va dengiz',
+                            'Quyosh baribir chiqadi',
+                            "Qo'ng'iroq kimni chorlamoqda"
+                        ],
+                        'answer': 1,
+                        'explain': "Bu fikr Xeminguyning 'Chol va dengiz' qissasidagi Santiyago cholning iroda va matonat falsafasidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Xeminguy yozuvchining uslubida ma'noni berkitmasdan, har bir ma'lumotni ochiq va batafsil tushuntirish kerak deb hisoblagan.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. U 'Aysberg nazariyasi'ga ko'ra asosiy ma'noni matn ostiga (subtekst) berkitish va kitobxonni fikrlashga majbur etish tarafdori bo'lgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Ernest Xeminguy 'Chol va dengiz' asari uchun qaysi xalqaro nufuzli mukofotga sazovor bo'lgan?",
+                        'options': [
+                            'Oskar mukofoti',
+                            'Nobel mukofoti',
+                            'Buker mukofoti',
+                            'Gonkur mukofoti'
+                        ],
+                        'answer': 1,
+                        'explain': "Xeminguy 1954-yilda ushbu asari va adabiyotdagi xizmatlari uchun Nobel mukofotini qo'lga kiritgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Ernest Xeminguy va uning 'Aysberg nazariyasi'ni o'rganish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Chol va dengiz' qissasidagi Santiyago chol va akulalar o'rtasidagi olishuv nimani ramziy aks ettiradi?",
+                            'answer': "O'quvchi bu olishuvni inson va shafqatsiz hayot hamda taqdir kurashi sifatida izohlaydi.",
+                            'hint': "Akulalarga elat bo'lgan baliq va cholning irodasini tasvirlang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Aysberg nazariyasi'ning zamonaviy o'zbek nasridagi ko'rinishlariga misollar keltiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'aruz-vazni-bahrlar-klassifikatsiyasi',
+                'title': 'Aruz vaznining tahliliy usullari va bahrlar klassifikatsiyasi',
+                'summary': "Oliy darajadagi poetiya: Aruz vaznidagi asosiy bahrlar (Raml, Hazaj, Rajaz, Mutaqorib va b.), ruknlar va تقطيع (taqti') tahlili.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Aruz vazni murakkab ichki ritmik tizimga ega. U asosiy 19 ta bahr va ularning tarmoqlaridan (axrab, axram va h.k.) tashkil topadi. Sheriy misrani taqti' qilish — aruzning aniq matematik kalitini topish demakdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Asosiy bahr va ruknlar misolida',
+                        'body': "Raml bahri: 'Fa'ilātun fa'ilātun fa'ilātun fa'ilun' (Navoiyning ko'p g'azallari).\nHazaj bahri: 'Mafa'īlun mafa'īlun mafa'īlun mafa'īlun' (Ruboiylarning ba'zi shakllari hamda g'azallar).\nMutaqorib bahri: 'Fa'ūlun fa'ūlun fa'ūlun fa'ūl' ('Shohnoma', 'Qutadg'u bilig')."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Taqti' (she'r vaznini aniqlash) ketma-ketligi",
+                        'items': [
+                            "Misradagi bo'g'inlarni belgilash va ularni qisqa (v) va cho'ziq (-) belgilarga ajratish",
+                            "Bo'g'inlar shakliga mos aruz ruknlarini (Fa'ilātun, Mafā'īlun va b.) moslashtirish",
+                            'Bahr turini va uning musamman (8 ruknli) yoki musaddas (6 ruknli) ekanini aniqlash'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Imala, zihaf va tasxin aruzda bo'g mezon va vaqt mosligini ta'minlash uchun shoirlarga berilgan poetik erkinlik shakllaridir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Firdavsiyning 'Shohnoma' va Yugnakiyning 'Hibat ul-haqoyiq' asarlari aruzning qaysi bahrida yozilgan?",
+                        'options': [
+                            'Raml',
+                            'Hazaj',
+                            'Mutaqorib',
+                            'Rajaz'
+                        ],
+                        'answer': 2,
+                        'explain': "Ushbu mashhur dostonlar Aruzning 'Mutaqorib' bahri (Fa'ūlun fa'ūlun...)da yaratilgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Taqti' — bu aruz vaznida misralarni bo'g'inlarning cho'ziq va qisqaligi bo'yicha ruknlarga bo'lib chiqish usulidir.",
+                        'answer': True,
+                        'explain': "To'g'ri. Taqti' amaliyoti orqali she'rning aynan qaysi bahr va vaznda yozilgani ilmiy aniqlanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Aruzda 8 ta rukndan iborat vazn shakli qanday ataladi?',
+                        'options': [
+                            'Musaddas',
+                            'Musamman',
+                            "Murabba'",
+                            'Muhammas'
+                        ],
+                        'answer': 1,
+                        'explain': "Musamman — arabcha 'samaniya' (sakkiz) so'zidan olingan bo'lib, har bir baytida 8 rukn bo'lgan vazndir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Aruz bahri va taqti' qilish vazifalari (Oliy daraja).",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alisher Navoiyning 'Kech keldi-yu, qildi meni bormag'ay ramida...' baytining taqti'ini qiling va bahrini aniqlang.",
+                            'answer': "O mezonquvchi Ramal bahri musammani maqsur vaznida taqti' ketma-ketligini taqdim etadi.",
+                            'hint': "Fa'ilātun fa'ilātun fa'ilātun fa'ilun ruknlariga moslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Imolaning aruz poetikasidagi ritmik va lingvistik rolini ilmiy izohlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'badiiy-asar-psixologizmi-va-ichki-monolog',
+                'title': 'Badiiy asar psixologizmi va ichki monolog nazariyasi',
+                'summary': 'Oliy adabiyotshunoslik: Badiiy asarda qahramonning ruhiy holatini ochib berish usullari, ichki monolog, psixologik parallellizm va subtekst.',
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': 'Badiiy psixologizm — yozuvchining insondagi ruhiy kechinmalar, botiniy toqnashuvlar hamda hissiyotlar dinamikasini badiiy vositalar orqali aks ettira olish mahoratidir. Bu oliy adabiyotshunoslikning markaziy muammolaridan biridir.'
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Psixologizmning vositalari',
+                        'body': "1. Ichki monolog (qahramonning o'zi bilan botiniy muloqoti).\n2. Tush tasviri (ruhiyatdagi yashirin qo'rquv va orzularning ramziy namoyon bo'lishi).\n3. Psixologik peyzaj (tabiat va qahramon kayfiyatining mosligi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Psixologik tahlil darajalari',
+                        'items': [
+                            "Oshkor psixologizm (Muallif qahramon ruhiyatini to'g'ridan-to mezong'ri izohlaydi)",
+                            'Yashirin psixologizm (Qahramon harakati, xatti-harakati va imo-ishorasidan xulosa chiqariladi)',
+                            "Ong oqimi (Stream of consciousness — o'y-fikrlarning mantiqsiz va uzuq-yuluq zanjiri)"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Cholpon va Cho'lpon-Dostoyevskiy maktabi o'zbek nasrida psixologizmning teranlashuviga ulkan hissa qo mezonshgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Qahramonning o'z-o'ziga qaratilgan, nutq organlarisiz, qalbida kechadigan uzluksiz o'y-xayollari nima deyiladi?",
+                        'options': [
+                            'Dialog',
+                            'Remarka',
+                            'Ichki monolog',
+                            'Epigraf'
+                        ],
+                        'answer': 2,
+                        'explain': "Ichki monolog — qahramon botiniy dunyosining to'g'ridan-to'g'ri kitobxonga ochilishidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Psixologik peyzajda tabiat hodisalari va qahramonning ruhiy holati o'rtasida mantiqiy hamda emotsional bog'liqlik bo'ladi.",
+                        'answer': True,
+                        'explain': "Ha, masalan, qahramon iztirobdaligida fojiali yomg'ir va bo'ron tasvirlanishi psixologik peyzajdir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Ong oqimi' (Stream of consciousness) atamasi va usuli adabiyotga asosan qaysi yo me zonnalish orqali kirib kelgan?",
+                        'options': [
+                            'Klassitsizm',
+                            'Modernizm',
+                            'Realizm',
+                            'Sentimentalizm'
+                        ],
+                        'answer': 1,
+                        'explain': "'Ong oqimi' XX asr modernistik adabiyotining yetakchi usul va tushunchalaridan biridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Badiiy psixologizm bo'yicha nazariy va amaliy topshiriq.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O'zbek adabiyotidan (masalan, 'O'tkan kunlar' yoki 'Kecha va kunduz') ichki monolog qo mezonllangan o'rinni topib, uning qahramon ruhiyatini ochishdagi va vazifasini yozing.",
+                            'answer': "O'quvchi Otabek yoki Zebining botiniy kechinmalari matnini tahlil qiladi.",
+                            'hint': "Qahramon yolg'iz qolgandagi o'y-fikrlarini keltiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Yashirin psixologizm va oshkor psixologizm o'rtasidagi farqni misollar bilan ilmiy asoslang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'adabiyotda-modernizm-va-postmodernizm',
+                'title': "Adabiyotda modernizm va postmodernizm yo'nalishlari",
+                'summary': "XX-XXI asr jahon va o'zbek adabiyotidagi modernistik, syurrealistik hamda postmodernistik yo'nalishlar, ularning poetikasi va uslubiy o'zgarishlari.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Modernizm va Postmodernizm — klassik realizm qoliplaridan voz kechib, shakliy, uslubiy va mazmuniy erkinlikka intilgan adabiy yo'nalishlardir. Ular voqelikni to'g'ridan-to'g'ri emas, balki ramzlar, absurd, dekonstruksiya va intertekstuallik orqali aks ettiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Postmodernizm vositalari',
+                        'body': "Intertekstuallik (boshqa matnlarga ishora va iqtiboslar bilan o'yin), Pastiche (uslubiy taqlid), Kichik va tarqoq syujet, Ironiya hamda muallifning asarga o'yin sifatida qarashi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Yo'nalishlarning asosiy vakillari",
+                        'items': [
+                            'Jahon adabiyoti: Frans Kafka, Jeyms Joys, Gabriel Garsiya Markes, Umberto Eko',
+                            "O'zbek adabiyoti: Nazar Eshanqul, Shukur Xolmirzayev (bazi hikoyalarida), Abduqayum Yo'ldoshev"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Postmodernizmda qat'iy va mutlaq haqiqat tushunchasi yo'q, matn har bir kitobxonga har xil talqin qilish imkonini beradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Sehrli realizm' (Magic realism) oqimining jahon adabiyotidagi eng atoqli vakili kim?",
+                        'options': [
+                            'Frans Kafka',
+                            'Gabriel Garsiya Markes',
+                            'Umberto Eko',
+                            'Ernest Xeminguy'
+                        ],
+                        'answer': 1,
+                        'explain': "Markes o'zining 'Yuz yil tanholikda' romani bilan sehrli realizm oqimining cho'qqisiga aylangan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Intertekstuallik — bu bir badiiy matn ichida boshqa ilgari yozilgan matnlarga ishora, ramz va iqtiboslar berish usulidir.',
+                        'answer': True,
+                        'explain': 'Ha, intertekstuallik postmodernistik matnlarning eng asosiy tayanchlaridan biri hisoblanadi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek adabiyotida modernistik va falsafiy-absurd yo mezonnalishda ijod qilgan, 'Maymun yetaklagan odam' hikoyasining muallifi kim?",
+                        'options': [
+                            "O'tkir Hoshimov",
+                            'Nazar Eshanqul',
+                            'Tohir Malik',
+                            "Erkin A'zam"
+                        ],
+                        'answer': 1,
+                        'explain': "Nazar Eshanqul o'zining 'Maymun yetaklagan odam', 'Urush odamlari' kabi asarlari bilan modernistik yo'nalish vakilidir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Modernizm va postmodernizm hodisasini ilmiy tahlil qilish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Klassik realizm va Modernizm o'rtasidagi 3 ta asosiy farqni ilmiy tilda bayon qiling.",
+                            'answer': 'O mezonquvchi mantiqiy syujet, xarakter tipi va voqelikka munosabatdagi farqlarni belgilaydi.',
+                            'hint': "Inson obraziga va dunyo tartibiga munosabatga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nazar Eshanqulning 'Maymun yetaklagan odam' hikoyasidagi ramziylik va absurd motivlarni tahlil eting."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'qiyosiy-adabiyotshunoslik-komparativistika',
+                'title': 'Qiyosiy adabiyotshunoslik (Komparativistika) asoslari',
+                'summary': "Oliy maktab adabiyotshunosligi: Har xil milliy adabiyotlar o'rtasidagi g'oyaviy, janriy, syujet va poetik ta'sirlashuv hamda aloqalarni qiyosiy o'rganish.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Komparativistika (qiyosiy adabiyotshunoslik) — turli xalqlar adabiyoti, ularning o'zaro ta'siri, umumiyligi va farqlarini, tipologik o'xshashliklarini o'rganuvchi fan tarmog'idir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Qiyosiy tahlil misollari',
+                        'body': "1. Navoiy va Nizomiy 'Xamsa'larining tipologik va badiiy qiyosi.\n2. Cho'lpon lirikasi va Yapon xokkulari poetikasidagi o'xshashliklar.\n3. Shekspir va Fitrat dramalarida tamsiliy-falsafiy obrazlar."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Komparativistik tahlil metodlari',
+                        'items': [
+                            "Genezis va ta'sirni o'rganish (To'g'ridan-to mezong'ri ta'sirlanish va o'zlashtirish)",
+                            "Tipologik o'xshashlik (Bir-biridan bexabar holda o'xshash g'oyalar yaratilishi)",
+                            'Muloqot va tarjima adabiyotshunosligi'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Tipologik o'xshashlik har doim ham birovdan ko'chirish (plagiat) degani emas, bu insoniyat ruhiyati va jamiyat rivojining o'xshash qonuniyatlaridir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Turli milliy adabiyotlar va madaniyatlarni taqqoslab o'rganuvchi adabiyotshunoslik sohasi nima deyiladi?",
+                        'options': [
+                            'Hermenevtika',
+                            'Komparativistika',
+                            'Tekstologiya',
+                            'Poetika'
+                        ],
+                        'answer': 1,
+                        'explain': "Komparativistika (lotincha 'comparativus' — qiyosiy) — qiyosiy adabiyotshunoslikdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Ikki turli shoirning bir-birini umuman o'qimagan holda o'xshash she'rlar yozishi 'Genetik ta'sirlanish' deyiladi.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. Bu hodisa 'Tipologik o'xshashlik' deyiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Alisher Navoiy va Aleksandr Pushkin poeziyasidagi insonparvarlik motividagi o'xshashlik qaysi tahlilga kiradi?",
+                        'options': [
+                            "Genetik ta'sir",
+                            'Tipologik taqqoslash',
+                            'Matnshunoslik',
+                            'Metrika'
+                        ],
+                        'answer': 1,
+                        'explain': "Turli davr va tildagi ikki buyuk shoirning g'oyaviy uyg'unligi tipologik taqqoslash orqali o'rganiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Komparativistik tahlil topshiriqlari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alisher Navoiy va Nizomiy Ganjaviyning 'Farhod va Shirin' dostonlaridagi Farhod obrazi talqinidagi 2 ta o'xshashlik va 2 ta farqni ko'rsating.",
+                            'answer': 'O mezonquvchi Navoiyning Farhodni turkiy qahramon va komil inson sifatida takomillashtirganini izohlaydi.',
+                            'hint': "Navoiy Farhodni shoh o'g'li va san'atkor-yaratuvchi qilganiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Nima uchun badiiy tarjima komparativistikaning muhim predmeti hisoblanadi?'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'adabiy-hermenevtika-va-poetik-tahlil',
+                'title': 'Adabiy hermenevtika va matn poetik tahlili metodologiyasi',
+                'summary': "Oliy adabiyotshunoslik nazariyasi: Matn ma'nosini talqin qilish va tushunish san'ati bo'lgan Hermenevtika hamda filologik va strukturistik tahlil metodologiyasi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Adabiy hermenevtika (grekcha 'hermeneutikos' — tushuntiraman, talqin qilaman) — badiiy matnlarning yashirin va ko'p qatlamli ma'nolarini tushunish, izohlash va talqin etish haqidagi ilmdir. U matn poetikasini har tomonlama ilmiy yoritadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Hermenevtik doira va tahlil',
+                        'body': "Hermenevtik doira prinsipi: Matn qismlarini tushunish uchun butun asarni bilish kerak, butun asarni yaxshi tushunish uchun esa uning har bir qismini va so'zini teran anglash lozim."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Badiiy matn tahlili bosqichlari',
+                        'items': [
+                            "Lingvo-poetik tahlil (So'z va semantik va poetik bo'yoq)",
+                            'Struktural va semiotik tahlil (Ramz va belgilarni o mezonqish)',
+                            'Kontekstual va madaniy-tarixiy talqin'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Badiiy matn — bu tugallanmas ma mezonnolar manbaidir; har bir davr va har bir kitobxona asardan yangi ma'no qatlamini kashf etadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Badiiy matnlarni va ulardagi ko'p qatlamli ma'nolarni talqin qilish va tushunish ilmi nima deyiladi?",
+                        'options': [
+                            'Poetika',
+                            'Hermenevtika',
+                            'Fonetika',
+                            'Tekstologiya'
+                        ],
+                        'answer': 1,
+                        'explain': 'Hermenevtika — matnlarni sharhlash, talqin qilish va tushunish nazariyasidir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Hermenevtik doira' prinsipiga ko'ra, matn qismlarini yaxshi tushunmasdan turib asarning butunligini teran anglab bo mezonlmaydi.",
+                        'answer': True,
+                        'explain': "Ha, qism va butunlik o'rtasidagi uzviy aloqadorlik hermenevtikaning asosiy doirasidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Asardagi belgi va ramzlarni (metfora, simvol) maxsus kodlar va sistemalar sifatida o'rganuvchi fan qaysi?",
+                        'options': [
+                            'Semiotika',
+                            'Mifologiya',
+                            'Psixologiya',
+                            'Etimologiya'
+                        ],
+                        'answer': 0,
+                        'explain': "Semiotika — belgi va belgilar tizimlarini o'rganuvchi ilmdir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Matn poetikasi va hermenevtik talqin vazifasi.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Alisher Navoiyning biror muammo yoki fardidan bittasining hermenevtik va ilmiy talqinini yozib bering.',
+                            'answer': "O'quvchi yashirin ma'no va qatlamlarni so'z o'yinlari orqali ochib beradi.",
+                            'hint': "So'zlarning o'z va ko'chma ma mezonnolarini va ramzlarni tahlil qiling."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Badiiy matnni filologik va poetik tahlil qilishning amaliy ahamiyatini yoritib bering.'
                         }
                     ]
                 }
