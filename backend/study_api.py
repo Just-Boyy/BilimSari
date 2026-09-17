@@ -68,13 +68,42 @@ def dashboard():
     try:
         data = study.dashboard(cur, request.user['id'])
         data['ok'] = True
-        data['needs_onboarding'] = not bool(request.user.get('onboarded'))
+        data['needs_onboarding'] = (
+            not bool(request.user.get('onboarded')) or not request.user.get('chosen_subject_key')
+        )
         data['user'] = {
             'id': request.user['id'],
             'name': request.user.get('name'),
             'photo_url': request.user.get('photo_url'),
         }
         return jsonify(data)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/subjects/<subject_key>/choose', methods=['POST'])
+@auth_required
+def choose_subject(subject_key):
+    conn, cur = _conn()
+    try:
+        study.choose_subject(cur, conn, request.user['id'], subject_key)
+        return jsonify({'ok': True, 'chosen_subject_key': subject_key})
+    except study.StudyError as exc:
+        return _fail(exc)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/subjects/<subject_key>/unlock', methods=['POST'])
+@auth_required
+def unlock_subject(subject_key):
+    """DEMO to'lov — hozircha haqiqiy to'lov tizimi yo'q, so'rov kelsa fan ochiladi."""
+    conn, cur = _conn()
+    try:
+        study.unlock_subject(cur, conn, request.user['id'], subject_key)
+        return jsonify({'ok': True, 'subject_key': subject_key})
+    except study.StudyError as exc:
+        return _fail(exc)
     finally:
         _close(conn, cur)
 
@@ -97,6 +126,17 @@ def _grade_or_400(raw):
 def topics(subject_key):
     conn, cur = _conn()
     try:
+        if not study.is_subject_unlocked(cur, request.user['id'], subject_key):
+            cur.execute('SELECT name FROM subjects WHERE subject_key = %s LIMIT 1', (subject_key,))
+            row = cur.fetchone()
+            return jsonify({
+                'ok': False,
+                'error': 'Bu fan qulflangan. Ochish uchun sotib oling.',
+                'code': 'subject_locked',
+                'subject_key': subject_key,
+                'subject_name': (row or {}).get('name') or subject_key,
+                'price': study.SUBJECT_PRICE,
+            }), 403
         subject, items = study.subject_topics(cur, request.user['id'], subject_key)
         if subject is None:
             return jsonify({

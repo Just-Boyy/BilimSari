@@ -62,6 +62,33 @@
     var ro_yxat = document.getElementById('ro-yxat');
 
     if (!res.ok) {
+      if (res.code === 'subject_locked') {
+        document.getElementById('fanNomi').textContent = res.subject_name || 'Qulflangan fan';
+        document.getElementById('ustPanel').innerHTML = '';
+        ro_yxat.innerHTML =
+          '<div class="qulf-karta">' +
+            '<span class="qulf-belgi">' + UI.nishon('lock', null, 32) + '</span>' +
+            '<h2>' + UI.esc(res.subject_name || 'Bu fan') + ' qulflangan</h2>' +
+            '<p>Ushbu fanni ochish uchun sotib oling.</p>' +
+            '<p class="qulf-narx">' + Number(res.price || 0).toLocaleString('uz-UZ') + ' so\'m</p>' +
+            '<button type="button" class="tugma" id="sotibOlBtn">To\'lash</button>' +
+          '</div>';
+        document.getElementById('sotibOlBtn').onclick = async function () {
+          var btn = this;
+          btn.disabled = true;
+          btn.textContent = 'To\'lanmoqda...';
+          var natija = await API.fanSotibOl(fan);
+          if (!natija.ok) {
+            UI.xabar(natija.error);
+            btn.disabled = false;
+            btn.textContent = 'To\'lash';
+            return;
+          }
+          UI.xabar('Fan ochildi!', 'muvaffaqiyat');
+          yukla();
+        };
+        return;
+      }
       ro_yxat.innerHTML = res.code === 'empty_subject'
         ? UI.holat({
             belgi: 'tools',

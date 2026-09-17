@@ -34,6 +34,10 @@
   }
   .pastki-panel[hidden] { display: none; }
   #qadamIsm { padding-bottom: 140px; }
+  /* Fan tanlovi endi <button> (navigatsiya emas, API chaqiradi) — brauzer
+     standart tugma uslubini bekor qilamiz, .fan uslubi qolaveradi. */
+  button.fan { width: 100%; text-align: left; font: inherit; cursor: pointer; }
+  button.fan:disabled { opacity: .6; cursor: wait; }
 </style>
 </head>
 <body class="no-nav">
@@ -75,7 +79,7 @@
   <!-- Fan -->
   <section class="qadam" id="qadamFan" aria-labelledby="fanSarlavha">
     <h1 id="fanSarlavha">Qaysi fandan boshlaymiz?</h1>
-    <p class="kirish-tavsif" id="fanTavsif">Keyinchalik boshqa fanlarga ham o'tishingiz mumkin.</p>
+    <p class="kirish-tavsif" id="fanTavsif">Bu fan bepul bo'ladi. Boshqa fanlarni keyinroq sotib olishingiz mumkin.</p>
     <div id="fanlar" class="fanlar"></div>
   </section>
 </div>
@@ -218,13 +222,27 @@
 
     quti.style.gridTemplateColumns = '';
     quti.innerHTML = res.subjects.map(function (f) {
-      return '<a class="fan' + (f.image ? ' fan-rasmli' : '') + '"' +
-        ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
+      return '<button type="button" class="fan' + (f.image ? ' fan-rasmli' : '') + '"' +
+        ' data-fan="' + UI.esc(f.key) + '"' +
         (f.image ? " style=\"background-image:url('" + UI.esc(f.image) + "')\"" : '') + '>' +
         (f.image ? '' : '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>') +
         '<h3>' + UI.esc(f.name) + '</h3>' +
-        '<p class="holat">' + f.total_topics + ' ta mavzu</p></a>';
+        '<p class="holat">' + f.total_topics + ' ta mavzu</p></button>';
     }).join('');
+
+    quti.querySelectorAll('[data-fan]').forEach(function (btn) {
+      btn.onclick = async function () {
+        if (btn.disabled) return;
+        btn.disabled = true;
+        var res = await API.fanTanla(btn.dataset.fan);
+        if (!res.ok) {
+          UI.xabar(res.error);
+          btn.disabled = false;
+          return;
+        }
+        location.href = 'dashboard.html';
+      };
+    });
   }
 
   qadam(1);

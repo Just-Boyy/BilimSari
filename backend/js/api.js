@@ -112,6 +112,12 @@
     mavzular: function (fan) {
       return so_rov('/api/study/topics/' + encodeURIComponent(fan));
     },
+    fanTanla: function (fan) {
+      return so_rov('/api/study/subjects/' + encodeURIComponent(fan) + '/choose', { method: 'POST' });
+    },
+    fanSotibOl: function (fan) {
+      return so_rov('/api/study/subjects/' + encodeURIComponent(fan) + '/unlock', { method: 'POST' });
+    },
     mavzu: function (fan, slug, sinf) {
       return so_rov('/api/study/topic/' + encodeURIComponent(fan) + '/' + encodeURIComponent(slug)
         + '?grade=' + encodeURIComponent(sinf));

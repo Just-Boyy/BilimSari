@@ -24,6 +24,9 @@ from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
 # Sozlamalar
 QUIZ_PASS_PERCENT = int(os.environ.get('QUIZ_PASS_PERCENT', '70'))
 COOLDOWN_HOURS = int(os.environ.get('COOLDOWN_HOURS', '24'))
+# Onboarding'da bitta fan bepul tanlanadi, qolganlari shu narxda sotib olinadi
+# (hozircha DEMO — haqiqiy to'lov integratsiyasi yo'q, "to'lash" bosilsa ochiladi).
+SUBJECT_PRICE = int(os.environ.get('SUBJECT_PRICE', '12000'))
 
 STATUS_LOCKED = 'locked'        # oldingi mavzu tugallanmagan
 STATUS_COOLDOWN = 'cooldown'    # 24 soat kutish davom etmoqda
@@ -95,6 +98,14 @@ def ensure_tables(cur, conn):
     ''')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_topics_subject ON topics (subject_id, seq)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_progress_user ON user_progress (user_id)')
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS subject_purchases (
+            user_id INTEGER NOT NULL,
+            subject_key TEXT NOT NULL,
+            purchased_at TIMESTAMP NOT NULL DEFAULT NOW(),
+            PRIMARY KEY (user_id, subject_key)
+        )
+    ''')
     conn.commit()
 
     # Eski (jadval allaqachon mavjud) bazalarda yetishmayotgan ustunlarni qo'shadi.
@@ -105,6 +116,8 @@ def ensure_tables(cur, conn):
 
     # users jadvaliga sinf ustuni
     add_column_if_missing(cur, conn, 'users', 'grade', 'INTEGER')
+    # Onboarding'da tanlangan bepul fan
+    add_column_if_missing(cur, conn, 'users', 'chosen_subject_key', 'TEXT')
 
 
 # ───────────────────────── Curriculum → baza ─────────────────────────
@@ -225,6 +238,57 @@ def set_user_grade(cur, conn, user_id, grade):
     cur.execute('UPDATE users SET grade = %s WHERE id = %s', (grade, user_id))
     conn.commit()
     return grade
+
+
+# ───────────────────────── Fan qulfi (bepul + sotib olingan) ─────────────────────────
+
+def get_chosen_subject(cur, user_id):
+    cur.execute('SELECT chosen_subject_key FROM users WHERE id = %s', (user_id,))
+    row = cur.fetchone()
+    return row['chosen_subject_key'] if row else None
+
+
+def is_subject_unlocked(cur, user_id, subject_key):
+    if get_chosen_subject(cur, user_id) == subject_key:
+        return True
+    cur.execute(
+        'SELECT 1 FROM subject_purchases WHERE user_id = %s AND subject_key = %s',
+        (user_id, subject_key),
+    )
+    return cur.fetchone() is not None
+
+
+def choose_subject(cur, conn, user_id, subject_key):
+    """Onboarding'dagi bepul fan tanlovi — faqat bir marta, keyin o'zgartirib
+    bo'lmaydi (boshqa fanlar sotib olish orqali ochiladi)."""
+    if subject_key not in cur_mod.SUBJECT_CATALOG:
+        raise StudyError("Bunday fan mavjud emas", code='bad_subject', http_status=404)
+    already = get_chosen_subject(cur, user_id)
+    if already:
+        if already == subject_key:
+            return already
+        raise StudyError(
+            'Fan allaqachon tanlangan, uni o\'zgartirib bo\'lmaydi', code='already_chosen',
+        )
+    cur.execute('UPDATE users SET chosen_subject_key = %s WHERE id = %s', (subject_key, user_id))
+    conn.commit()
+    return subject_key
+
+
+def unlock_subject(cur, conn, user_id, subject_key):
+    """DEMO to'lov — haqiqiy to'lov tizimi hali ulanmagan, "to'lash" bosilsa
+    fan shu zahoti ochiladi."""
+    if subject_key not in cur_mod.SUBJECT_CATALOG:
+        raise StudyError("Bunday fan mavjud emas", code='bad_subject', http_status=404)
+    if is_subject_unlocked(cur, user_id, subject_key):
+        return True
+    cur.execute(
+        'INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '
+        'ON CONFLICT (user_id, subject_key) DO NOTHING',
+        (user_id, subject_key),
+    )
+    conn.commit()
+    return True
 
 
 # ───────────────────────── 24 soatlik kutish ─────────────────────────
@@ -380,6 +444,9 @@ def subjects_overview(cur, user_id):
     all_topics = cur.fetchall()
     progress = _progress_map(cur, user_id)
     cooldown = cooldown_state(cur, user_id)
+    chosen = get_chosen_subject(cur, user_id)
+    cur.execute('SELECT subject_key FROM subject_purchases WHERE user_id = %s', (user_id,))
+    purchased_keys = {r['subject_key'] for r in cur.fetchall()}
 
     out = []
     seen_keys = set()
@@ -393,6 +460,7 @@ def subjects_overview(cur, user_id):
         states = _compute_states(topics, progress, cooldown)
         done = sum(1 for s in states if s['state'] == STATUS_COMPLETED)
         current = next((s for s in states if s['state'] in (STATUS_CURRENT, STATUS_COOLDOWN)), None)
+        locked = key != chosen and key not in purchased_keys
         out.append({
             'id': subject['id'],
             'key': key,
@@ -408,6 +476,8 @@ def subjects_overview(cur, user_id):
                 'state': current['state'], 'grade': current['grade'],
             } if current else None,
             'finished': done == len(states) and len(states) > 0,
+            'locked': locked,
+            'price': SUBJECT_PRICE if locked else 0,
         })
     return out
 
@@ -460,6 +530,13 @@ def open_topic(cur, conn, user_id, topic_id, register=True):
     topic = _topic_row(cur, topic_id)
     if not topic:
         raise StudyError('Mavzu topilmadi', code='not_found', http_status=404)
+
+    if not is_subject_unlocked(cur, user_id, topic['subject_key']):
+        raise StudyError(
+            'Bu fan qulflangan. Ochish uchun sotib oling.',
+            code='subject_locked', http_status=403,
+            extra={'subject_key': topic['subject_key'], 'price': SUBJECT_PRICE},
+        )
 
     state, cooldown = topic_state_for(cur, user_id, topic)
     if state is None:

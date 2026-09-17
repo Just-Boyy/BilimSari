@@ -100,17 +100,20 @@
             ? (f.current_topic.state === 'cooldown' ? 'Keyingi: ' : 'Hozir: ') +
               UI.esc(f.current_topic.title)
             : 'Boshlanmagan');
-      return '<a class="fan' + (f.finished ? ' tugagan' : '') + (f.image ? ' fan-rasmli' : '') + '"' +
+      return '<a class="fan' + (f.finished ? ' tugagan' : '') + (f.image ? ' fan-rasmli' : '') + (f.locked ? ' qulflangan' : '') + '"' +
         ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
         ' style="' + (f.image
           ? "background-image:url('" + UI.esc(f.image) + "')"
           : 'border-left-color:' + UI.esc(f.color)) + '">' +
+        (f.locked ? '<span class="fan-qulf">' + UI.nishon('lock') + '</span>' : '') +
         (f.image ? '' : '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>') +
         '<h3>' + UI.esc(f.name) + '</h3>' +
-        '<p class="holat">' + holat + '</p>' +
-        '<div class="progress"><i style="width:' + f.percent + '%;background:' +
-          UI.esc(f.color) + '"></i></div>' +
-        '<p class="foiz">' + f.completed_topics + ' / ' + f.total_topics + ' mavzu</p></a>';
+        '<p class="holat">' + (f.locked ? f.price.toLocaleString('uz-UZ') + ' so\'m' : holat) + '</p>' +
+        (f.locked ? '' :
+          '<div class="progress"><i style="width:' + f.percent + '%;background:' +
+            UI.esc(f.color) + '"></i></div>' +
+          '<p class="foiz">' + f.completed_topics + ' / ' + f.total_topics + ' mavzu</p>') +
+        '</a>';
     }).join('');
   }
 

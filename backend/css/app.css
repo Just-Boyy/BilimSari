@@ -380,6 +380,22 @@ svg { display: block; }
   background: linear-gradient(to top, rgba(10, 10, 10, .82) 0%, rgba(10, 10, 10, .35) 55%, rgba(10, 10, 10, .05) 100%);
 }
 .fan.fan-rasmli > * { position: relative; }
+.fan.qulflangan { opacity: .82; }
+.fan-qulf {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(17, 24, 39, .68);
+  color: #fff;
+}
+.fan-qulf svg { width: 16px; height: 16px; }
 .fan.fan-rasmli h3 { color: #fff; margin-bottom: 0; }
 .fan.fan-rasmli .holat,
 .fan.fan-rasmli .progress,
@@ -490,6 +506,30 @@ a.mavzu { cursor: pointer; }
 
 .kutish-karta h2 { font-size: 17px; margin-bottom: 4px; }
 .kutish-karta p { color: var(--matn-2); font-size: 13px; }
+
+.qulf-karta {
+  background: var(--oq);
+  border: 2px solid var(--chiziq);
+  border-radius: var(--r-katta);
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: var(--soya);
+}
+.qulf-belgi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--yashil-fon);
+  color: var(--yashil);
+  margin-bottom: 14px;
+}
+.qulf-karta h2 { font-size: 18px; margin-bottom: 6px; }
+.qulf-karta p { color: var(--matn-2); font-size: 13px; }
+.qulf-narx { font-size: 24px; font-weight: 800; color: var(--matn-quyuq); margin: 12px 0 18px; }
+.qulf-karta .tugma { max-width: 260px; margin: 0 auto; }
 
 .taymer {
   font-size: 40px;
