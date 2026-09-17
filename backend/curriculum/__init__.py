@@ -51,9 +51,9 @@ SUBJECT_CATALOG = {
     # 'icon' — js/icons.js dagi ikonka nomi (emoji emas), 'image' berilgan bo'lsa
     # frontend shu rasmni icon o'rniga ko'rsatadi (assets/ ostidagi fayl nomi).
     'math':        {'name': 'Matematika',     'icon': 'calc',     'color': '#4F7DF3', 'image': 'assets/subject-math.png'},
-    'geometry':    {'name': 'Geometriya',     'icon': 'ruler',    'color': '#3B82C4'},
+    'geometry':    {'name': 'Geometriya',     'icon': 'ruler',    'color': '#3B82C4', 'image': 'assets/subject-geometry.png'},
     'uzbek':       {'name': 'Ona tili',       'icon': 'bookOpen', 'color': '#22A06B', 'image': 'assets/subject-uzbek.png'},
-    'literature':  {'name': 'Adabiyot',       'icon': 'scroll',   'color': '#8E44AD'},
+    'literature':  {'name': 'Adabiyot',       'icon': 'scroll',   'color': '#8E44AD', 'image': 'assets/subject-literature.png'},
     'english':     {'name': 'Ingliz tili',    'icon': 'lang',     'color': '#E74C3C', 'image': 'assets/subject-english.png'},
     'russian':     {'name': 'Rus tili',       'icon': 'chat',     'color': '#2980B9', 'image': 'assets/subject-russian.png'},
     'history':     {'name': 'Tarix',          'icon': 'landmark', 'color': '#B7791F', 'image': 'assets/subject-history.png'},
@@ -61,7 +61,7 @@ SUBJECT_CATALOG = {
     'chemistry':   {'name': 'Kimyo',          'icon': 'flask',    'color': '#E17055', 'image': 'assets/subject-chemistry.png'},
     'biology':     {'name': 'Biologiya',      'icon': 'dna',      'color': '#00B894', 'image': 'assets/subject-biology.png'},
     'law':         {'name': 'Huquq',          'icon': 'scale',    'color': '#B45309', 'image': 'assets/subject-law.png'},
-    'informatics': {'name': 'Informatika',    'icon': 'code',     'color': '#475569'},
+    'informatics': {'name': 'Informatika',    'icon': 'code',     'color': '#475569', 'image': 'assets/subject-informatics.png'},
 }
 
 GRADES = list(range(1, 12))  # 1-sinfdan 11-sinfgacha
