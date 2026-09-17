@@ -49,12 +49,6 @@
     .cta:active { transform: translateY(2px); box-shadow: 0 2px 0 #3f7d00; }
     .cta:disabled { opacity: .6; cursor: wait; }
     .cta small { display: block; font-weight: 600; opacity: .9; font-size: 12px; margin-top: 4px; }
-    .cta-secondary {
-      width: 100%; margin-bottom: 16px; border: 2px solid #58A700; border-radius: 16px;
-      background: #f0fdf4; color: #3f7d00; font-weight: 800; font-size: 15px;
-      padding: 14px 16px; cursor: pointer;
-    }
-    .cta-secondary:disabled { opacity: .6; }
     .unit {
       background: #fff; border: 1px solid #e5e7eb; border-radius: 18px;
       padding: 16px 14px 20px; margin-bottom: 14px;
@@ -119,7 +113,6 @@
     </div>
 
     <button type="button" class="cta" id="continueCta">Davom etish<small id="continueSub">Keyingi dars</small></button>
-    <button type="button" class="cta-secondary" id="genNextBtn">Yangi mavzu yaratish (AI)</button>
     <p class="err" id="errBox" style="display:none"></p>
     <div id="units"></div>
   </div>
@@ -263,28 +256,6 @@
       });
     }
 
-    async function generateNext() {
-      const btn = document.getElementById('genNextBtn');
-      btn.disabled = true;
-      btn.textContent = 'Yaratilmoqda...';
-      document.getElementById('errBox').style.display = 'none';
-      try {
-        const res = await fetch('/api/lessons/next', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ course_id: courseId })
-        });
-        const data = await res.json();
-        if (!data.ok) throw new Error(data.error || 'Xato');
-        await loadPath();
-      } catch (e) {
-        document.getElementById('errBox').style.display = 'block';
-        document.getElementById('errBox').textContent = e.message || String(e);
-      }
-      btn.disabled = false;
-      btn.textContent = 'Yangi mavzu yaratish (AI)';
-    }
-
     (async function init() {
       if (window.BilimSariTG && BilimSariTG.autoAuthIfTelegram) await BilimSariTG.autoAuthIfTelegram();
       if (typeof ensureSession === 'function') await ensureSession();
@@ -300,7 +271,6 @@
       document.getElementById('icoXp').innerHTML = icon('zap');
       document.getElementById('icoGems').innerHTML = icon('gem');
       document.querySelectorAll('.nav-ico').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
-      document.getElementById('genNextBtn').onclick = generateNext;
       refreshStats();
       try {
         await loadPath();
