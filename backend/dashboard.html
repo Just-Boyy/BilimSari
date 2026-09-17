@@ -21,8 +21,12 @@
 </header>
 
 <main class="sahifa sahifa-keng">
-  <section class="bo-lim" id="statBo-lim" hidden>
-    <div class="stat-setka" id="statlar"></div>
+  <section class="bo-lim" id="yolBo-lim" hidden>
+    <div class="bo-lim-bosh">
+      <h2 id="yolFanNomi">Mavzular</h2>
+      <a href="#" id="yolFanHavola" class="izoh" style="font-weight:600"></a>
+    </div>
+    <div id="yolRoyxat"></div>
   </section>
 
   <section class="bo-lim" id="fanBo-lim" hidden>
@@ -64,18 +68,76 @@
       av.textContent = UI.harfAvatar(ism);
     }
 
-    statChiz(res.stats);
+    yolChiz(res.today);
     fanChiz(res.subjects);
   }
 
-  // ── Statistika ──
-  function statChiz(s) {
-    if (!s) return;
-    document.getElementById('statlar').innerHTML =
-      '<div class="stat"><b>' + s.completed_topics + '</b><span>Tugallangan mavzu</span></div>' +
-      '<div class="stat"><b>' + s.percent + '%</b><span>Umumiy progress</span></div>' +
-      '<div class="stat"><b>' + s.subjects_count + '</b><span>Fan</span></div>';
-    document.getElementById('statBo-lim').hidden = false;
+  // ── Ochilgan fanning mavzular yo'li ──
+  var YORLIQ = {
+    completed: 'Tugallandi', current: 'Bugungi mavzu', cooldown: 'Kutishda', locked: 'Qulflangan',
+  };
+  function tugunIkon(holat, seq) {
+    if (holat === 'completed') return UI.nishon('check');
+    if (holat === 'locked') return UI.nishon('lock');
+    if (holat === 'cooldown') return UI.nishon('clock');
+    return String(seq);
+  }
+
+  async function yolChiz(today) {
+    var bo_lim = document.getElementById('yolBo-lim');
+    var royxat = document.getElementById('yolRoyxat');
+
+    if (!today) {
+      bo_lim.hidden = true;
+      return;
+    }
+
+    bo_lim.hidden = false;
+    document.getElementById('yolFanNomi').textContent = today.subject_name;
+    var havola = document.getElementById('yolFanHavola');
+    havola.href = 'topics.html?fan=' + encodeURIComponent(today.subject_key);
+    havola.textContent = 'Hammasi';
+
+    royxat.innerHTML = '<div class="skelet" style="height:90px;margin-bottom:14px"></div>';
+
+    var res = await API.mavzular(today.subject_key);
+    if (!res.ok) {
+      royxat.innerHTML = UI.xatoHolat(res.error, function () { yolChiz(today); });
+      return;
+    }
+
+    royxat.innerHTML = '<div class="yo-l">' + res.topics.map(function (m, i) {
+      var raqam = i + 1;
+      var sinf = { completed: 'tugallangan', current: 'joriy',
+                   cooldown: 'kutish', locked: 'qulflangan' }[m.state];
+      var tugun = tugunIkon(m.state, raqam);
+
+      var ichki =
+        '<span class="mavzu-tugun">' + tugun + '</span>' +
+        '<h3>' + raqam + '. ' + UI.esc(m.title) + '</h3>' +
+        '<p class="tavsif">' + UI.esc(m.summary) + '</p>' +
+        '<span class="yorliq">' + YORLIQ[m.state] + '</span>';
+
+      var ochiq = m.state === 'completed' || m.state === 'current';
+      if (ochiq) {
+        return '<a class="mavzu ' + sinf + '" href="topic.html?fan=' +
+          encodeURIComponent(today.subject_key) + '&mavzu=' + encodeURIComponent(m.slug) +
+          '&sinf=' + encodeURIComponent(m.grade) + '">' + ichki + '</a>';
+      }
+      var sabab = m.state === 'cooldown'
+        ? 'Bu mavzu ' + UI.vaqtMatn(res.cooldown.seconds_left) + 'dan so\'ng ochiladi.'
+        : 'Avval oldingi mavzuni yakunlang.';
+      return '<div class="mavzu ' + sinf + '" role="button" tabindex="0"' +
+        ' data-sabab="' + UI.esc(sabab) + '">' + ichki + '</div>';
+    }).join('') + '</div>';
+
+    royxat.querySelectorAll('[data-sabab]').forEach(function (el) {
+      function ayt() { UI.xabar(el.dataset.sabab); }
+      el.onclick = ayt;
+      el.onkeydown = function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ayt(); }
+      };
+    });
   }
 
   // ── Fanlar ──

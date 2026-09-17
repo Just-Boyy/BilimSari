@@ -902,9 +902,11 @@ def dashboard(cur, user_id):
     cur.execute('SELECT COUNT(*) AS n FROM topics')
     topics_total = int(cur.fetchone()['n'] or 0)
 
-    # bugungi dars — birinchi ochiq mavzu
+    # bugungi dars — birinchi ochiq (qulflanmagan) mavzu
     today = None
     for subject in subjects:
+        if subject['locked']:
+            continue
         if subject['current_topic']:
             today = {
                 'subject_key': subject['key'],
