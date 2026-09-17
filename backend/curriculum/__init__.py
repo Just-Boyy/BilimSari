@@ -66,11 +66,11 @@ SUBJECT_CATALOG = {
 
 GRADES = list(range(1, 12))  # 1-sinfdan 11-sinfgacha
 
-# Qaysi sinf uchun dars yozilgan bo'lsa — shu yerda
+# Qaysi sinf uchun dars yozilgan bo'lsa — shu yerda.
+# AI (Gemini) tomonidan generatsiya qilingan yagona dastur — daraja 7-sinfdan
+# boshlanadi va yuqoriga qarab murakkablashadi (scripts/generate_curriculum.py).
 _GRADE_MODULES = {
-    1: 'curriculum.grade01',
-    5: 'curriculum.grade05',
-    9: 'curriculum.grade09',
+    7: 'curriculum.ai_curriculum',
 }
 
 _cache: dict[int, list] = {}
