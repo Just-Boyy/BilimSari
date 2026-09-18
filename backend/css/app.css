@@ -521,7 +521,6 @@ a.mavzu { cursor: pointer; }
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, var(--yashil) 0%, var(--yashil-quyuq) 100%);
-  border: 3px solid var(--matn-quyuq);
   border-radius: var(--r-katta);
   padding: 22px 20px;
   box-shadow: 0 10px 24px -10px rgba(63, 125, 0, .55);
