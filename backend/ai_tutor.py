@@ -46,24 +46,29 @@ def _rate_ok(user_id) -> bool:
     return True
 
 
-def _system_prompt(lang, grade=None, subject=None, topic=None):
+def _system_prompt(lang, grade=None, subject=None, topic=None, qisqa=True):
     level = f"{grade}-sinf o'quvchisi" if grade else "maktab o'quvchisi"
     if lang == 'ru':
+        uzunlik = 'Отвечай кратко (до 200 слов).' if qisqa else 'Javob to\'liq va batafsil bo\'lishi mumkin.'
         base = (
             'Ты — дружелюбный помощник учителя платформы BilimSari. '
-            f'Твой собеседник — {level}. Отвечай кратко, простыми словами, по-русски.'
+            f'Твой собеседник — {level}. Отвечай простыми словами, по-русски. {uzunlik}'
         )
     elif lang == 'en':
+        uzunlik = 'Keep it under 200 words.' if qisqa else 'A fuller, more detailed answer is fine here.'
         base = (
             'You are a friendly teaching assistant on the BilimSari platform. '
-            f'You are talking to a {level}. Answer briefly and simply in English.'
+            f'You are talking to a {level}. Answer simply in English. {uzunlik}'
         )
     else:
+        uzunlik = "Javob 200 so'zdan oshmasin." if qisqa else (
+            "Javob to'liq va batafsil bo'lishi mumkin — uzunlikdan qo'rqma, "
+            "lekin bo'sh gap bilan cho'zma, har bir gap foydali bo'lsin."
+        )
         base = (
             "Sen BilimSari platformasidagi do'stona o'qituvchi yordamchisisan. "
-            f"Suhbatdoshing — {level}. Javobni QISQA, ODDIY o'zbek tilida yoz. "
-            "Murakkab atamalardan qoch, hayotiy misollar keltir. "
-            "Javob 200 so'zdan oshmasin."
+            f"Suhbatdoshing — {level}. Javobni ODDIY o'zbek tilida yoz. "
+            f"Murakkab atamalardan qoch, hayotiy misollar keltir. {uzunlik}"
         )
 
     if subject and topic:
@@ -222,10 +227,10 @@ def explain():
     }
     ask = asks.get(mode, asks['simple'])
 
-    system = _system_prompt(lang, grade, subject_name, topic_title)
+    system = _system_prompt(lang, grade, subject_name, topic_title, qisqa=(mode != 'full'))
     user_content = f"Rasmiy dars matni:\n{lesson_text}\n\nVazifa: {ask}"
 
-    reply, error = _call_gemini(system, user_content, max_tokens=1100)
+    reply, error = _call_gemini(system, user_content, max_tokens=2200 if mode == 'full' else 1400)
     if error:
         return jsonify({'ok': False, 'error': error, 'reply': None}), 502
     return jsonify({
