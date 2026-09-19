@@ -147,14 +147,14 @@
 
     // — AI —
     aiHolat: function () { return so_rov('/api/ai/status'); },
-    aiTushuntir: function (fan, slug, rejim) {
+    aiTushuntir: function (fan, slug, rejim, sinf) {
       return so_rov('/api/ai/explain', {
-        method: 'POST', body: { subject_key: fan, slug: slug, mode: rejim },
+        method: 'POST', body: { subject_key: fan, slug: slug, mode: rejim, grade: sinf },
       });
     },
-    aiSavol: function (matn, fan, slug) {
+    aiSavol: function (matn, fan, slug, sinf) {
       return so_rov('/api/ai/tutor', {
-        method: 'POST', body: { message: matn, subject_key: fan, slug: slug },
+        method: 'POST', body: { message: matn, subject_key: fan, slug: slug, grade: sinf },
       });
     },
   };

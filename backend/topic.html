@@ -247,7 +247,7 @@
     document.querySelectorAll('[data-ai]').forEach(function (b) {
       b.onclick = async function () {
         kutish();
-        var res = await API.aiTushuntir(fan, slug, b.dataset.ai);
+        var res = await API.aiTushuntir(fan, slug, b.dataset.ai, sinf);
         if (!res.ok) { xato(res.error); return; }
         ko_rsat(res.reply, res.disclaimer || '');
       };
