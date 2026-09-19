@@ -24,6 +24,8 @@
     display: grid; place-items: center; color: var(--yashil-quyuq);
   }
   .tugadi-ekran .nishon-katta svg { width: 48px; height: 48px; }
+  .ai-rejimlar { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ai-rejimlar .tugma { flex: 1 1 140px; }
   .qadam-yakun {
     margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--chiziq);
   }
@@ -219,10 +221,9 @@
     return '<div class="ai-qavs">' +
       '<h3>AI yordamida tushuntirish</h3>' +
       '<p class="izoh">Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.</p>' +
-      '<div style="margin-top:10px;display:flex;gap:8px">' +
-        '<input class="kiritish" id="aiSavol" placeholder="Yoki savolingizni yozing..."' +
-          ' style="min-height:46px;flex:1" maxlength="500">' +
-        '<button class="tugma tugma-mayda" id="aiYubor" style="min-height:46px">So\'rash</button>' +
+      '<div class="ai-rejimlar">' +
+        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="full">To\'liqroq tushuntir</button>' +
+        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="examples">Misol ber</button>' +
       '</div>' +
       '<div id="aiJavob"></div>' +
     '</div>';
@@ -243,18 +244,14 @@
         UI.esc(matn) + '</div>';
     }
 
-    var maydon = document.getElementById('aiSavol');
-    async function so_ra() {
-      var matn = maydon.value.trim();
-      if (!matn) { UI.xabar('Savolingizni yozing'); return; }
-      kutish();
-      var res = await API.aiSavol(matn, fan, slug);
-      if (!res.ok) { xato(res.error); return; }
-      ko_rsat(res.reply, 'AI javobi — «' + M.title + '» mavzusi bo\'yicha');
-      maydon.value = '';
-    }
-    document.getElementById('aiYubor').onclick = so_ra;
-    maydon.onkeydown = function (e) { if (e.key === 'Enter') so_ra(); };
+    document.querySelectorAll('[data-ai]').forEach(function (b) {
+      b.onclick = async function () {
+        kutish();
+        var res = await API.aiTushuntir(fan, slug, b.dataset.ai);
+        if (!res.ok) { xato(res.error); return; }
+        ko_rsat(res.reply, res.disclaimer || '');
+      };
+    });
   }
 
   // ── 2. Quiz ────────────────────────────────────────────

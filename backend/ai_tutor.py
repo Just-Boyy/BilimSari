@@ -213,6 +213,9 @@ def explain():
     asks = {
         'simple': "Shu mavzuni yanada ODDIY qilib, boshqacha so'zlar bilan tushuntir. "
                   "Kichik bolaga aytayotgandek yoz.",
+        'full': "Shu mavzuni TO'LIQROQ va CHUQURROQ tushuntir — qo'shimcha tafsilotlar, "
+                "nima uchun shunday ekanligi va qanday ishlashi haqida batafsil yoz. "
+                "Rasmiy darsda aytilmagan foydali qo'shimchalar ber, lekin baribir tushunarli yoz.",
         'examples': "Shu mavzu bo'yicha 3 ta YANGI, oddiy misol yoz va ularni "
                     "qadam-baqadam yech.",
         'summary': "Shu mavzuning eng muhim 5 ta fikrini qisqa ro'yxat qilib yoz.",

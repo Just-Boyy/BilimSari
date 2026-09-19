@@ -147,6 +147,11 @@
 
     // — AI —
     aiHolat: function () { return so_rov('/api/ai/status'); },
+    aiTushuntir: function (fan, slug, rejim) {
+      return so_rov('/api/ai/explain', {
+        method: 'POST', body: { subject_key: fan, slug: slug, mode: rejim },
+      });
+    },
     aiSavol: function (matn, fan, slug) {
       return so_rov('/api/ai/tutor', {
         method: 'POST', body: { message: matn, subject_key: fan, slug: slug },
