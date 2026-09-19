@@ -335,6 +335,29 @@ def cooldown_state(cur, user_id):
     }
 
 
+def compute_streak(cur, user_id):
+    """Ketma-ket nechta kun mavzu tugallangani — bugungisi hali bo'lmasa,
+    kechadan hisoblanadi (bugun hali tugamagani streak'ni uzmaydi)."""
+    cur.execute(
+        '''SELECT completed_at FROM user_progress
+           WHERE user_id = %s AND status = %s AND completed_at IS NOT NULL''',
+        (user_id, STATUS_COMPLETED),
+    )
+    rows = cur.fetchall()
+    if not rows:
+        return 0
+
+    days = {to_tashkent(as_utc(r['completed_at'])).date() for r in rows}
+    today = to_tashkent(utc_now()).date()
+    cursor_day = today if today in days else today - timedelta(days=1)
+
+    streak = 0
+    while cursor_day in days:
+        streak += 1
+        cursor_day -= timedelta(days=1)
+    return streak
+
+
 def format_remaining(seconds: int) -> str:
     seconds = max(0, int(seconds))
     hours = seconds // 3600
@@ -925,6 +948,7 @@ def dashboard(cur, user_id):
         'subjects': subjects,
         'today': today,
         'cooldown': cooldown,
+        'streak': compute_streak(cur, user_id),
         'stats': {
             'completed_topics': completed_total,
             'total_topics': topics_total,

@@ -519,8 +519,28 @@
     };
   }
 
+  // ── Konfetti (mavzu tugallanganda) ──────────────────────
+  function konfettiPortlat() {
+    var ranglar = ['#58A700', '#1CB0F6', '#eab308', '#FF4B4B', '#8E44AD'];
+    var qavat = document.createElement('div');
+    qavat.className = 'konfetti-qavat';
+    for (var i = 0; i < 60; i++) {
+      var p = document.createElement('span');
+      p.className = 'konfetti';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.background = ranglar[i % ranglar.length];
+      p.style.setProperty('--aylanish', (Math.random() * 720 - 360) + 'deg');
+      p.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+      p.style.animationDelay = (Math.random() * 0.4) + 's';
+      qavat.appendChild(p);
+    }
+    document.body.appendChild(qavat);
+    setTimeout(function () { qavat.remove(); }, 4000);
+  }
+
   // ── Yakunlash ekrani ───────────────────────────────────
   function yakunEkran(yakun) {
+    konfettiPortlat();
     var keyingi = M.next_topic;
     document.getElementById('tana').innerHTML =
       '<div class="karta tugadi-ekran">' +

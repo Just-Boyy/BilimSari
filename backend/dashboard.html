@@ -16,7 +16,9 @@
     <div>
       <p class="salom" id="salom">Salom!</p>
     </div>
-    <div class="avatar" id="avatar" aria-hidden="true"></div>
+    <div class="avatar-halqa" id="avatarHalqa">
+      <div class="avatar" id="avatar" aria-hidden="true"></div>
+    </div>
   </div>
 </header>
 
@@ -32,6 +34,13 @@
     </div>
     <div class="fanlar" id="fanlar"></div>
   </section>
+
+  <section class="bo-lim" id="qulfBo-lim" hidden>
+    <div class="bo-lim-bosh">
+      <h2>Boshqa fanlar</h2>
+    </div>
+    <div class="fanlar" id="qulfFanlar"></div>
+  </section>
 </main>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -44,6 +53,14 @@
   if (!(await UI.sessiyaKerak())) return;
   UI.navChiz('dashboard.html');
 
+  function salomlashuv() {
+    var soat = new Date().getHours();
+    if (soat < 6) return 'Xayrli tun';
+    if (soat < 12) return 'Xayrli tong';
+    if (soat < 18) return 'Xayrli kun';
+    return 'Xayrli kech';
+  }
+
   async function yukla() {
     var res = await API.dashboard();
 
@@ -55,7 +72,7 @@
 
     // Sarlavha
     var ism = UI.bosh(res.user && res.user.name);
-    document.getElementById('salom').textContent = 'Salom, ' + ism + '!';
+    document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
 
     var av = document.getElementById('avatar');
     if (res.user && res.user.photo_url) {
@@ -63,13 +80,14 @@
     } else {
       av.textContent = UI.harfAvatar(ism);
     }
+    document.getElementById('avatarHalqa').classList.toggle('bajarildi', !!(res.cooldown && res.cooldown.active));
 
-    darsChiz(res.today);
+    darsChiz(res.today, res.streak);
     fanChiz(res.subjects);
   }
 
   // ── Bugungi/joriy mavzu kartasi ──
-  function darsChiz(today) {
+  function darsChiz(today, streak) {
     var bo_lim = document.getElementById('darsBo-lim');
     if (!today) {
       bo_lim.hidden = true;
@@ -78,20 +96,58 @@
     bo_lim.hidden = false;
     document.getElementById('darsKarta').innerHTML =
       '<div class="dars-karta">' +
-        '<p class="dars-fan">' + UI.esc(today.subject_name) + '</p>' +
+        '<div class="dars-tepa">' +
+          '<p class="dars-fan">' + UI.esc(today.subject_name) + '</p>' +
+          (streak > 0
+            ? '<span class="dars-streak">' + UI.nishon('flame') + streak + '</span>'
+            : '') +
+        '</div>' +
         '<h2 class="dars-mavzu">' + UI.esc(today.topic_title) + '</h2>' +
-        '<a class="tugma" href="topics.html?fan=' + encodeURIComponent(today.subject_key) + '">O\'tish</a>' +
+        '<a class="tugma" href="topics.html?fan=' + encodeURIComponent(today.subject_key) + '">' +
+          'O\'tish' + UI.nishon('chevronRight') +
+        '</a>' +
       '</div>';
   }
 
-  // ── Fanlar ──
+  // ── Fan kartasi HTML'i (ochilgan va qulflangan uchun umumiy) ──
+  function fanKartaHtml(f) {
+    var holat = f.finished
+      ? 'Hamma mavzu tugallandi'
+      : (f.current_topic
+          ? (f.current_topic.state === 'cooldown' ? 'Keyingi: ' : 'Hozir: ') +
+            UI.esc(f.current_topic.title)
+          : 'Boshlanmagan');
+    var halqa = (!f.locked && !f.finished && f.percent > 0)
+      ? '<span class="fan-halqa" style="--foiz:' + f.percent + '%"><span>' + f.percent + '%</span></span>'
+      : '';
+    return '<a class="fan' + (f.finished ? ' tugagan' : '') + (f.image ? ' fan-rasmli' : '') + (f.locked ? ' qulflangan' : '') + '"' +
+      ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
+      ' style="' + (f.image
+        ? "background-image:url('" + UI.esc(f.image) + "')"
+        : 'border-left-color:' + UI.esc(f.color)) + '">' +
+      (f.locked ? '<span class="fan-qulf">' + UI.nishon('lock') + '</span>' : halqa) +
+      (f.image ? '' : '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>') +
+      '<h3>' + UI.esc(f.name) + '</h3>' +
+      '<p class="holat">' + (f.locked ? f.price.toLocaleString('uz-UZ') + ' so\'m' : holat) + '</p>' +
+      (f.locked ? '' :
+        '<div class="progress"><i style="width:' + f.percent + '%;background:' +
+          UI.esc(f.color) + '"></i></div>' +
+        '<p class="foiz">' + f.completed_topics + ' / ' + f.total_topics + ' mavzu</p>') +
+      '</a>';
+  }
+
+  // ── Fanlar: ochilgan va qulflangan alohida bo'limlarda ──
   function fanChiz(fanlar) {
-    var quti = document.getElementById('fanlar');
-    document.getElementById('fanBo-lim').hidden = false;
+    var ochiqBo_lim = document.getElementById('fanBo-lim');
+    var qulfBo_lim = document.getElementById('qulfBo-lim');
+    var ochiqQuti = document.getElementById('fanlar');
+    var qulfQuti = document.getElementById('qulfFanlar');
 
     if (!fanlar || !fanlar.length) {
-      quti.style.gridTemplateColumns = '1fr';
-      quti.innerHTML = UI.holat({
+      ochiqBo_lim.hidden = false;
+      qulfBo_lim.hidden = true;
+      ochiqQuti.style.gridTemplateColumns = '1fr';
+      ochiqQuti.innerHTML = UI.holat({
         belgi: 'tools',
         sarlavha: 'Fanlar tayyorlanmoqda',
         matn: 'Darslar hali qo\'shilmagan.',
@@ -99,28 +155,19 @@
       return;
     }
 
-    quti.innerHTML = fanlar.map(function (f) {
-      var holat = f.finished
-        ? 'Hamma mavzu tugallandi'
-        : (f.current_topic
-            ? (f.current_topic.state === 'cooldown' ? 'Keyingi: ' : 'Hozir: ') +
-              UI.esc(f.current_topic.title)
-            : 'Boshlanmagan');
-      return '<a class="fan' + (f.finished ? ' tugagan' : '') + (f.image ? ' fan-rasmli' : '') + (f.locked ? ' qulflangan' : '') + '"' +
-        ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
-        ' style="' + (f.image
-          ? "background-image:url('" + UI.esc(f.image) + "')"
-          : 'border-left-color:' + UI.esc(f.color)) + '">' +
-        (f.locked ? '<span class="fan-qulf">' + UI.nishon('lock') + '</span>' : '') +
-        (f.image ? '' : '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>') +
-        '<h3>' + UI.esc(f.name) + '</h3>' +
-        '<p class="holat">' + (f.locked ? f.price.toLocaleString('uz-UZ') + ' so\'m' : holat) + '</p>' +
-        (f.locked ? '' :
-          '<div class="progress"><i style="width:' + f.percent + '%;background:' +
-            UI.esc(f.color) + '"></i></div>' +
-          '<p class="foiz">' + f.completed_topics + ' / ' + f.total_topics + ' mavzu</p>') +
-        '</a>';
-    }).join('');
+    var ochiq = fanlar.filter(function (f) { return !f.locked; });
+    var qulf = fanlar.filter(function (f) { return f.locked; });
+
+    ochiqBo_lim.hidden = false;
+    ochiqQuti.style.gridTemplateColumns = '';
+    ochiqQuti.innerHTML = ochiq.map(fanKartaHtml).join('');
+
+    if (qulf.length) {
+      qulfBo_lim.hidden = false;
+      qulfQuti.innerHTML = qulf.map(fanKartaHtml).join('');
+    } else {
+      qulfBo_lim.hidden = true;
+    }
   }
 
   yukla();
