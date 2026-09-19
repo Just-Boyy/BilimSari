@@ -24,8 +24,6 @@
     display: grid; place-items: center; color: var(--yashil-quyuq);
   }
   .tugadi-ekran .nishon-katta svg { width: 48px; height: 48px; }
-  .ai-rejimlar { display: flex; gap: 8px; flex-wrap: wrap; }
-  .ai-rejimlar .tugma { flex: 1 1 140px; }
   .qadam-yakun {
     margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--chiziq);
   }
@@ -221,11 +219,6 @@
     return '<div class="ai-qavs">' +
       '<h3>AI yordamida tushuntirish</h3>' +
       '<p class="izoh">Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.</p>' +
-      '<div class="ai-rejimlar">' +
-        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="simple">Oddiyroq tushuntir</button>' +
-        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="examples">Yana misol ber</button>' +
-        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="summary">Qisqacha xulosa</button>' +
-      '</div>' +
       '<div style="margin-top:10px;display:flex;gap:8px">' +
         '<input class="kiritish" id="aiSavol" placeholder="Yoki savolingizni yozing..."' +
           ' style="min-height:46px;flex:1" maxlength="500">' +
@@ -249,15 +242,6 @@
       javobQuti.innerHTML = '<div class="ai-javob" style="color:var(--qizil)">' +
         UI.esc(matn) + '</div>';
     }
-
-    document.querySelectorAll('[data-ai]').forEach(function (b) {
-      b.onclick = async function () {
-        kutish();
-        var res = await API.aiTushuntir(fan, slug, b.dataset.ai);
-        if (!res.ok) { xato(res.error); return; }
-        ko_rsat(res.reply, res.disclaimer || '');
-      };
-    });
 
     var maydon = document.getElementById('aiSavol');
     async function so_ra() {
