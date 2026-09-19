@@ -3,11 +3,11 @@
    Qoidalar:
    • /api/* — HECH QACHON keshlanmaydi. Progress, kutish vaqti va natijalar
      doim serverdan olinadi, aks holda eskirgan ma'lumot ko'rsatiladi.
-   • HTML — avval tarmoq, ulanish yo'q bo'lsa keshdan.
-   • CSS/JS/rasm — avval kesh, orqa fonda yangilanadi.
+   • HTML va CSS/JS/rasm — avval tarmoq, ulanish yo'q bo'lsagina keshdan
+     (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v3';
+const CACHE = 'bilimsari-v4';
 
 const ASSETS = [
   '/',
@@ -77,13 +77,11 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Statik fayllar — avval kesh
+  // Statik fayllar — avval tarmoq (aktiv rivojlanishda eskirgan JS/CSS xizmat
+  // qilinib qolmasligi uchun), ulanish yo'q bo'lsagina keshdan
   e.respondWith(
-    caches.match(e.request).then((cached) => {
-      const tarmoq = fetch(e.request)
-        .then((res) => saqlash(e.request, res))
-        .catch(() => cached);
-      return cached || tarmoq;
-    })
+    fetch(e.request)
+      .then((res) => saqlash(e.request, res))
+      .catch(() => caches.match(e.request))
   );
 });
