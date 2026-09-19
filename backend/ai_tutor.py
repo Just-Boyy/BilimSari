@@ -230,7 +230,7 @@ def explain():
     system = _system_prompt(lang, grade, subject_name, topic_title, qisqa=(mode != 'full'))
     user_content = f"Rasmiy dars matni:\n{lesson_text}\n\nVazifa: {ask}"
 
-    reply, error = _call_gemini(system, user_content, max_tokens=2200 if mode == 'full' else 1400)
+    reply, error = _call_gemini(system, user_content, max_tokens=4500 if mode == 'full' else 1600)
     if error:
         return jsonify({'ok': False, 'error': error, 'reply': None}), 502
     return jsonify({
