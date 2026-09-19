@@ -24,6 +24,7 @@
   --kok-och: #ddf4ff;
   --sariq: #eab308;
   --zarg: #f59e0b;
+  --zarg-fon: #fffbeb;
 
   /* Neytral */
   --fon: #f3f4f6;
@@ -56,6 +57,7 @@
 
     --qizil-och: #3d1f1f;
     --kok-och: #16303d;
+    --zarg-fon: #332a12;
 
     --fon: #13161b;
     --oq: #1e222a;
@@ -510,7 +512,7 @@ svg { display: block; }
   position: relative;
   display: block;
   margin-bottom: 14px;
-  background: #fafafa;
+  background: var(--oq);
   border: 2px solid var(--chiziq);
   border-radius: var(--r);
   padding: 13px 14px;
@@ -726,7 +728,7 @@ a.mavzu { cursor: pointer; }
 .blok-misol .blok-nishon { background: var(--yashil-yumshoq); }
 
 .blok-eslatma {
-  background: #fffbeb;
+  background: var(--zarg-fon);
   border-left: 4px solid var(--zarg);
   border-radius: 0 var(--r-kichik) var(--r-kichik) 0;
   padding: 13px 15px;
@@ -878,19 +880,19 @@ a.mavzu { cursor: pointer; }
   min-height: 56px;
   padding: 15px 16px;
   background: var(--oq);
-  border: 2px solid #e5e5e5;
+  border: 2px solid var(--chiziq);
   border-radius: 14px;
   font-family: var(--tana);
   font-size: 16px;
   font-weight: 600;
   text-align: left;
-  color: #3c3c3c;
+  color: var(--matn);
   cursor: pointer;
   transition: .15s;
   -webkit-tap-highlight-color: transparent;
 }
 
-.variant:hover:not(:disabled) { background: #f7f7f7; }
+.variant:hover:not(:disabled) { background: var(--fon); }
 .variant:active:not(:disabled) { transform: scale(.98); }
 .variant[aria-pressed="true"] { border-color: var(--kok); background: var(--kok-och); }
 .variant.to-g-ri { border-color: var(--yashil); background: var(--yashil-och); }
@@ -916,7 +918,7 @@ a.mavzu { cursor: pointer; }
   width: 100%;
   min-height: 54px;
   padding: 15px 16px;
-  border: 2px solid #e5e5e5;
+  border: 2px solid var(--chiziq);
   border-radius: 14px;
   font-family: var(--tana);
   font-size: 16px;
