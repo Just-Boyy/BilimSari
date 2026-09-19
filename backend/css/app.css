@@ -407,7 +407,8 @@ svg { display: block; }
 
 /* Rasm bergan fanlar — butun kartani qoplaydigan orqa fon (background) sifatida */
 .fan.fan-rasmli {
-  background-size: cover;
+  /* 155% — rasmlar atrofidagi oq chegarani ko'rinmas qilib, markazini kattalashtiradi */
+  background-size: 155%;
   background-position: center;
   border: none;
   color: #fff;
