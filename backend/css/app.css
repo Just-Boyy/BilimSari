@@ -401,6 +401,8 @@ svg { display: block; }
   background: linear-gradient(to top, rgba(10, 10, 10, .82) 0%, rgba(10, 10, 10, .35) 55%, rgba(10, 10, 10, .05) 100%);
 }
 .fan.fan-rasmli > * { position: relative; }
+.fan.fan-rasmli .fan-qulf,
+.fan.fan-rasmli .fan-halqa { position: absolute; }
 .fan-qulf {
   position: absolute;
   top: 10px;
