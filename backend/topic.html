@@ -221,7 +221,7 @@
     return '<div class="ai-qavs">' +
       '<h3>AI yordamida tushuntirish</h3>' +
       '<p class="izoh">Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.</p>' +
-      '<div class="ai-rejimlar">' +
+      '<div class="ai-rejimlar" id="aiRejimlar">' +
         '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="full">To\'liqroq tushuntir</button>' +
         '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="examples">Misol ber</button>' +
       '</div>' +
@@ -238,6 +238,7 @@
     function ko_rsat(matn, manba) {
       javobQuti.innerHTML = '<div class="ai-javob">' + UI.matnHtml(matn) +
         '<span class="manba">' + UI.esc(manba) + '</span></div>';
+      document.getElementById('aiRejimlar').hidden = true;
     }
     function xato(matn) {
       javobQuti.innerHTML = '<div class="ai-javob" style="color:var(--qizil)">' +
