@@ -48,31 +48,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-tema="och"]) {
-    --yashil-fon: #16261a;
-    --yashil-chegara: #2d5016;
-    --yashil-yumshoq: #1f3616;
-    --yashil-och: #24401a;
-
-    --qizil-och: #3d1f1f;
-    --kok-och: #16303d;
-    --zarg-fon: #332a12;
-
-    --fon: #13161b;
-    --oq: #1e222a;
-    --chiziq: #2b313a;
-    --chiziq-quyuq: #3a4149;
-    --matn: #e4e6eb;
-    --matn-quyuq: #f7f8fa;
-    --matn-2: #9aa0aa;
-    --matn-3: #6c7178;
-
-    --soya: 0 1px 4px rgba(0, 0, 0, .4);
-    color-scheme: dark;
-  }
-}
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { -webkit-text-size-adjust: 100%; }
