@@ -11,9 +11,13 @@
 </head>
 <body>
 
-<header class="shapka">
+<header class="shapka shapka-uy">
   <div class="shapka-qator">
-    <div>
+    <div class="shapka-logo">
+      <img src="assets/logo-icon.png" alt="">
+      <span class="uchqun" aria-hidden="true">✦</span>
+    </div>
+    <div class="shapka-matn">
       <p class="salom" id="salom">Salom!</p>
     </div>
     <div class="avatar-halqa" id="avatarHalqa">
@@ -72,7 +76,9 @@
 
     // Sarlavha
     var ism = UI.bosh(res.user && res.user.name);
-    document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
+    document.getElementById('salom').innerHTML = salomlashuv() + ', ' +
+      '<span class="ism">' + UI.esc(ism) + '!</span> ' +
+      '<span class="uchqun-yon">' + UI.nishon('sparkle') + '</span>';
 
     var av = document.getElementById('avatar');
     if (res.user && res.user.photo_url) {
