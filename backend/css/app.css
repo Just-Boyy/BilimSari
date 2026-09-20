@@ -420,6 +420,7 @@ svg { display: block; }
 .fan-qulf svg { width: 16px; height: 16px; }
 .fan.qulflangan .holat {
   display: inline-block;
+  margin-top: 6px;
   padding: 3px 10px;
   border-radius: 99px;
   background: rgba(255, 255, 255, .16);
