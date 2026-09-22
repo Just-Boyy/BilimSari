@@ -12,15 +12,7 @@ import admin_api
 import ai_tutor
 import study
 import study_api
-from auth_core import (
-    SECRET,
-    auth_required,
-    create_token,
-    hash_password,
-    needs_rehash,
-    token_from_request,
-    verify_password,
-)
+from auth_core import auth_required, create_token, token_from_request
 from db import add_column_if_missing, get_connection
 
 app = Flask(__name__)
@@ -125,47 +117,6 @@ def health():
     return jsonify({'ok': True, 'service': 'BilimSari API', 'db': db_ok})
 
 
-@app.route('/api/register', methods=['POST'])
-def register():
-    data = request.get_json(silent=True) or {}
-    name = (data.get('name') or '').strip()
-    email = (data.get('email') or '').strip().lower()
-    password = data.get('password') or ''
-
-    if len(name) < 2:
-        return jsonify({'ok': False, 'error': 'Ism kamida 2 ta belgidan iborat bo‘lsin'}), 400
-    if '@' not in email:
-        return jsonify({'ok': False, 'error': 'Email noto‘g‘ri'}), 400
-    if len(password) < 6:
-        return jsonify({'ok': False, 'error': 'Parol kamida 6 ta belgidan iborat bo‘lsin'}), 400
-
-    conn = get_connection()
-    cur = conn.cursor()
-
-    cur.execute('SELECT id FROM users WHERE email = %s', (email,))
-    if cur.fetchone():
-        cur.close()
-        conn.close()
-        return jsonify({'ok': False, 'error': 'Bu email allaqachon ro‘yxatdan o‘tgan'}), 400
-
-    pw_hash = hash_password(password)
-    cur.execute(
-        'INSERT INTO users (name, email, password_hash, onboarded) VALUES (%s, %s, %s, TRUE) RETURNING id',
-        (name, email, pw_hash)
-    )
-    user_id = cur.fetchone()['id']
-    conn.commit()
-    cur.close()
-    conn.close()
-
-    token = create_token(user_id)
-    return jsonify({
-        'ok': True,
-        'token': token,
-        'user': {'id': user_id, 'name': name, 'email': email}
-    }), 201
-
-
 @app.route('/api/guest', methods=['POST'])
 def guest():
     """
@@ -198,53 +149,6 @@ def guest():
         'token': token,
         'user': {'id': user_id, 'name': name, 'email': None, 'grade': None},
     }), 201
-
-
-@app.route('/api/login', methods=['POST'])
-def login():
-    data = request.get_json(silent=True) or {}
-    email = (data.get('email') or '').strip().lower()
-    password = data.get('password') or ''
-
-    if not email or not password:
-        return jsonify({'ok': False, 'error': 'Email va parolni kiriting'}), 400
-
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute(
-        'SELECT id, name, email, grade, password_hash FROM users WHERE email = %s',
-        (email,)
-    )
-    user = cur.fetchone()
-
-    if not user:
-        cur.close()
-        conn.close()
-        return jsonify({'ok': False, 'error': 'Bunday foydalanuvchi topilmadi'}), 401
-
-    if not verify_password(password, user['password_hash']):
-        cur.close()
-        conn.close()
-        return jsonify({'ok': False, 'error': 'Parol noto‘g‘ri'}), 401
-
-    # Eski sha256 hash — kirish paytida yangi formatga ko'chiramiz
-    if needs_rehash(user['password_hash']):
-        cur.execute(
-            'UPDATE users SET password_hash = %s WHERE id = %s',
-            (hash_password(password), user['id'])
-        )
-        conn.commit()
-
-    cur.close()
-    conn.close()
-
-    token = create_token(user['id'])
-    return jsonify({
-        'ok': True,
-        'token': token,
-        'user': {'id': user['id'], 'name': user['name'], 'email': user['email'],
-                 'grade': user.get('grade')}
-    })
 
 
 @app.route('/api/me', methods=['GET'])
@@ -521,7 +425,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Xizmat ko'rsatiladigan sahifalar. Yangi sahifa qo'shsangiz shu ro'yxatga yozing.
 PAGES = {
-    'index.html', 'login.html', 'register.html', 'onboarding.html',
+    'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
     'progress.html', 'profile.html', 'leaderboard.html',
     # eski (AI-darslar) oqimi — ishlashda davom etadi

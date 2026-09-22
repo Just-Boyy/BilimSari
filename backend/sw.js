@@ -7,13 +7,12 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v4';
+const CACHE = 'bilimsari-v5';
 
 const ASSETS = [
   '/',
   '/index.html',
-  '/login.html',
-  '/register.html',
+  '/telegram-kerak.html',
   '/onboarding.html',
   '/dashboard.html',
   '/subjects.html',

@@ -204,8 +204,7 @@
       } catch (e) {}
     }
 
-    location.href = 'login.html?qaytish=' +
-      encodeURIComponent(location.pathname.split('/').pop() + location.search);
+    location.href = 'telegram-kerak.html';
     return false;
   }
 

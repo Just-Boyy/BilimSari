@@ -60,8 +60,8 @@
 
     if (javob.status === 401) {
       sessiyaYopish();
-      if (!/\/(login|register|index)\.html$|\/$/.test(location.pathname)) {
-        location.href = 'login.html?qaytish=' + encodeURIComponent(location.pathname + location.search);
+      if (!/\/(telegram-kerak|index)\.html$|\/$/.test(location.pathname)) {
+        location.href = 'telegram-kerak.html';
         return { ok: false, error: 'Sessiya tugadi', code: 'unauthorized' };
       }
     }
@@ -84,12 +84,6 @@
     post: function (yo_l, tana) { return so_rov(yo_l, { method: 'POST', body: tana }); },
 
     // — Auth —
-    kirish: function (email, parol) {
-      return so_rov('/api/login', { method: 'POST', body: { email: email, password: parol } });
-    },
-    ro_yxat: function (ism, email, parol) {
-      return so_rov('/api/register', { method: 'POST', body: { name: ism, email: email, password: parol } });
-    },
     /** Ism bilan tezkor hisob — email/parol so'ralmaydi. */
     mehmon: function (ism) {
       return so_rov('/api/guest', { method: 'POST', body: { name: ism } });

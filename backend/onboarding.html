@@ -91,6 +91,12 @@
 <script src="js/telegram.js"></script>
 <script>
 (async function () {
+  // Faqat Telegram Mini App ichida yoki mavjud sessiya bilan ochiladi.
+  if (!API.kirganmi() && !(window.BilimSariTG && BilimSariTG.isTelegram())) {
+    location.href = 'telegram-kerak.html';
+    return;
+  }
+
   var qadamlar = ['qadamIsm', 'qadamFan'];
 
   // ── Sessiya: Telegram bo'lsa avtomatik kirib olamiz ──

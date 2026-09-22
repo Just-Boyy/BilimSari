@@ -140,7 +140,14 @@ document.querySelectorAll('[data-ikon]').forEach(function (el) {
 });
 
 (async function () {
-  // Telegram Mini App ichida bo'lsa — fonda avtomatik kirib olamiz, lekin
+  // Faqat Telegram Mini App ichida ishlaydi — boshqa joydan kirgan bo'lsa
+  // botga yo'naltiramiz.
+  if (!(window.BilimSariTG && BilimSariTG.isTelegram())) {
+    location.href = 'telegram-kerak.html';
+    return;
+  }
+
+  // Telegram Mini App ichida — fonda avtomatik kirib olamiz, lekin
   // baribir avval logo + "Bilim Sari" + "Boshlash" ekranini ko'rsatamiz —
   // sinf tanlashga to'g'ridan-to'g'ri otlantirmaymiz.
   if (window.BilimSariTG && typeof BilimSariTG.autoAuthIfTelegram === 'function') {
