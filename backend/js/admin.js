@@ -47,13 +47,19 @@
 
     stats: function () { return so_rov('/api/admin/stats'); },
 
-    foydalanuvchilar: function (q, page) {
+    foydalanuvchilar: function (opts) {
+      opts = opts || {};
       var params = new URLSearchParams();
-      if (q) params.set('q', q);
-      params.set('page', page || 1);
+      if (opts.q) params.set('q', opts.q);
+      if (opts.grade) params.set('grade', opts.grade);
+      if (opts.purchasedOnly) params.set('purchased_only', '1');
+      params.set('page', opts.page || 1);
       return so_rov('/api/admin/users?' + params.toString());
     },
     foydalanuvchi: function (id) { return so_rov('/api/admin/users/' + id); },
+    foydalanuvchiMavzulari: function (id, subjectKey) {
+      return so_rov('/api/admin/users/' + id + '/topics/' + subjectKey);
+    },
     sinfYangilash: function (id, grade) {
       return so_rov('/api/admin/users/' + id + '/grade', { method: 'POST', body: { grade: grade } });
     },
@@ -66,9 +72,23 @@
     foydalanuvchiO_chirish: function (id) {
       return so_rov('/api/admin/users/' + id, { method: 'DELETE' });
     },
+    foydalanuvchilarCsv: function () {
+      return '/api/admin/users/export.csv?token=' + encodeURIComponent(token());
+    },
 
     fanlar: function () { return so_rov('/api/admin/subjects'); },
+    fanMavzulari: function (subjectKey) { return so_rov('/api/admin/subjects/' + subjectKey + '/topics'); },
+
     tolovlar: function (page) { return so_rov('/api/admin/purchases?page=' + (page || 1)); },
+    tolovlarCsv: function () {
+      return '/api/admin/purchases/export.csv?token=' + encodeURIComponent(token());
+    },
+
+    faoliyat: function (limit) { return so_rov('/api/admin/activity?limit=' + (limit || 50)); },
+
+    xabarYuborish: function (matn) {
+      return so_rov('/api/admin/broadcast', { method: 'POST', body: { message: matn } });
+    },
   };
 
   window.AdminAPI = AdminAPI;

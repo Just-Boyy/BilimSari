@@ -134,15 +134,78 @@
   table.adm-jadval .kichik { color: var(--matn-2); font-size: 12px; }
 
   .adm-qidir {
-    width: 100%;
-    max-width: 320px;
     padding: 10px 14px;
     border: 2px solid var(--chiziq);
     border-radius: 99px;
     font-size: 14px;
-    margin-bottom: 14px;
     font-family: var(--tana);
+    flex: 1;
+    min-width: 180px;
   }
+
+  .adm-filtrlar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .adm-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--matn-2);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .adm-checkbox input { width: 16px; height: 16px; }
+
+  .adm-xabar-karta {
+    background: var(--oq);
+    border: 1px solid var(--chiziq);
+    border-radius: var(--r-katta);
+    padding: 18px;
+    max-width: 520px;
+  }
+
+  /* Bar chart */
+  .adm-chart-bosh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .adm-chart-bosh h3 { font-size: 13px; color: var(--matn-2); }
+  .adm-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 70px;
+    margin-bottom: 22px;
+  }
+  .adm-chart .ustun {
+    flex: 1;
+    background: var(--yashil);
+    border-radius: 3px 3px 0 0;
+    min-height: 2px;
+    position: relative;
+  }
+  .adm-chart .ustun:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--matn-quyuq);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-bottom: 4px;
+  }
+
+  .adm-faoliyat-qator { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--chiziq); font-size: 13px; }
+  .adm-faoliyat-qator:last-child { border-bottom: none; }
+  .adm-faoliyat-qator .nishon { color: var(--yashil); flex: 0 0 auto; }
+  .adm-faoliyat-qator .matn { flex: 1; }
+  .adm-faoliyat-qator .vaqt { color: var(--matn-2); font-size: 12px; white-space: nowrap; }
 
   .adm-sahifalash { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 14px; }
   .adm-sahifalash button {
@@ -228,6 +291,8 @@
     <div class="adm-tab" data-bolim="foydalanuvchilar"><span class="nishon" data-ikon="user"></span> Foydalanuvchilar</div>
     <div class="adm-tab" data-bolim="tolovlar"><span class="nishon" data-ikon="gem"></span> To'lovlar</div>
     <div class="adm-tab" data-bolim="fanlar"><span class="nishon" data-ikon="book"></span> Fanlar</div>
+    <div class="adm-tab" data-bolim="faoliyat"><span class="nishon" data-ikon="clock"></span> Faoliyat</div>
+    <div class="adm-tab" data-bolim="xabar"><span class="nishon" data-ikon="send"></span> Xabar</div>
   </nav>
 
   <main class="adm-ichi">
@@ -237,12 +302,26 @@
     </section>
 
     <section class="adm-bolim" id="bolim-foydalanuvchilar">
-      <input class="adm-qidir" id="foydalanuvchiQidir" placeholder="Ism yoki email bo'yicha qidirish...">
+      <div class="adm-filtrlar">
+        <input class="adm-qidir" id="foydalanuvchiQidir" placeholder="Ism yoki email bo'yicha qidirish...">
+        <select class="adm-select" id="sinfFiltr">
+          <option value="">Barcha sinflar</option>
+        </select>
+        <label class="adm-checkbox"><input type="checkbox" id="xaridorFiltr"> Faqat xaridorlar</label>
+        <a class="adm-mini-tugma" id="foydalanuvchilarCsvHavola" href="#" target="_blank">
+          <span class="nishon" data-ikon="inbox"></span> CSV yuklab olish
+        </a>
+      </div>
       <div id="foydalanuvchilarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
       <div class="adm-sahifalash" id="foydalanuvchilarSahifalash" hidden></div>
     </section>
 
     <section class="adm-bolim" id="bolim-tolovlar">
+      <div style="margin-bottom:12px">
+        <a class="adm-mini-tugma" id="tolovlarCsvHavola" href="#" target="_blank">
+          <span class="nishon" data-ikon="inbox"></span> CSV yuklab olish
+        </a>
+      </div>
       <div id="tolovlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
       <div class="adm-sahifalash" id="tolovlarSahifalash" hidden></div>
     </section>
@@ -251,10 +330,27 @@
       <div id="fanlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
     </section>
 
+    <section class="adm-bolim" id="bolim-faoliyat">
+      <div id="faoliyatQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-xabar">
+      <div class="adm-xabar-karta">
+        <h2 style="margin-bottom:6px">Telegram orqali xabar yuborish</h2>
+        <p class="izoh-kichik" style="margin-bottom:14px">
+          Telegram orqali kirgan barcha foydalanuvchilarga bir vaqtda xabar yuboriladi. Bu amalni ortga qaytarib bo'lmaydi.
+        </p>
+        <textarea id="xabarMatn" rows="5" placeholder="Xabar matnini yozing..."
+          style="width:100%;padding:12px 14px;border:2px solid var(--chiziq);border-radius:var(--r);font-family:var(--tana);font-size:14px;resize:vertical"></textarea>
+        <button class="tugma" id="xabarYuborTugma" style="margin-top:12px">Yuborish</button>
+        <p id="xabarNatija" style="margin-top:12px;font-size:13px"></p>
+      </div>
+    </section>
+
   </main>
 </div>
 
-<!-- Foydalanuvchi tafsiloti modal -->
+<!-- Universal modal (foydalanuvchi tafsiloti / mavzular ro'yxati) -->
 <div class="adm-modal-fon" id="foydalanuvchiModalFon">
   <div class="adm-modal" id="foydalanuvchiModal"></div>
 </div>
@@ -285,11 +381,23 @@ var SUBJECT_NAMES = {
   chemistry: 'Kimyo', biology: 'Biologiya', law: 'Huquq', informatics: 'Informatika',
 };
 
+(function () {
+  var sel = document.getElementById('sinfFiltr');
+  for (var g = 1; g <= 11; g++) {
+    var opt = document.createElement('option');
+    opt.value = g;
+    opt.textContent = g + '-sinf';
+    sel.appendChild(opt);
+  }
+})();
+
 // ─────────────────────── Kirish ───────────────────────
 
 function panelniKorsat() {
   document.getElementById('kirishEkran').style.display = 'none';
   document.getElementById('admPanel').classList.add('faol');
+  document.getElementById('foydalanuvchilarCsvHavola').href = AdminAPI.foydalanuvchilarCsv();
+  document.getElementById('tolovlarCsvHavola').href = AdminAPI.tolovlarCsv();
   yuklaStatistika();
 }
 
@@ -328,6 +436,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'foydalanuvchilar' && !yuklandi.foydalanuvchilar) { yuklandi.foydalanuvchilar = true; yuklaFoydalanuvchilar(); }
     if (nomi === 'tolovlar' && !yuklandi.tolovlar) { yuklandi.tolovlar = true; yuklaTolovlar(); }
     if (nomi === 'fanlar' && !yuklandi.fanlar) { yuklandi.fanlar = true; yuklaFanlar(); }
+    if (nomi === 'faoliyat' && !yuklandi.faoliyat) { yuklandi.faoliyat = true; yuklaFaoliyat(); }
   });
 });
 
@@ -342,6 +451,8 @@ async function yuklaStatistika() {
     ['Jami foydalanuvchi', res.total_users],
     ['Bugun qo\'shilgan', res.users_today],
     ["So'nggi 7 kunda", res.users_7d],
+    ['Telegram orqali', res.telegram_users],
+    ['Onboarding tugatgan', res.onboarded_users],
     ['Tugallangan mavzular', res.total_completed_topics],
     ['Bugun tugallangan', res.completions_today],
     ['Fan xaridlari', res.total_purchases],
@@ -352,14 +463,33 @@ async function yuklaStatistika() {
     return '<div class="adm-stat"><div class="son">' + esc(k[1]) + '</div><div class="izoh">' + esc(k[0]) + '</div></div>';
   }).join('') + '</div>';
 
+  html += chartHtml("So'nggi 14 kun — ro'yxatdan o'tganlar", res.signups_14d);
+  html += chartHtml("So'nggi 14 kun — tugallangan mavzular", res.completions_14d);
+
   html += '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr>' +
     '<th>Fan</th><th>Bepul tanlagan</th><th>Sotib olgan</th></tr></thead><tbody>' +
     (res.subjects || []).map(function (s) {
       return '<tr><td class="nomzod">' + esc(s.name) + '</td><td>' + s.chosen_free + '</td><td>' + s.purchases + '</td></tr>';
     }).join('') + '</tbody></table></div>';
 
+  if (!res.bot_configured) {
+    html += '<p class="izoh-kichik" style="margin-top:10px;color:var(--qizil)">' +
+      "Diqqat: BOT_TOKEN sozlanmagan — Telegram orqali xabar yuborish ishlamaydi." + '</p>';
+  }
+
   quti.className = '';
   quti.innerHTML = html;
+}
+
+function chartHtml(sarlavha, punktlar) {
+  punktlar = punktlar || [];
+  var maxN = Math.max.apply(null, punktlar.map(function (p) { return p.n; }).concat([1]));
+  return '<div class="adm-chart-bosh"><h3>' + esc(sarlavha) + '</h3></div>' +
+    '<div class="adm-chart">' + punktlar.map(function (p) {
+      var foiz = Math.round((p.n / maxN) * 100);
+      var kun = p.date.slice(5);
+      return '<div class="ustun" style="height:' + Math.max(foiz, 3) + '%" data-tip="' + esc(kun) + ': ' + p.n + '"></div>';
+    }).join('') + '</div>';
 }
 
 // ─────────────────────── Foydalanuvchilar ───────────────────────
@@ -371,7 +501,11 @@ async function yuklaFoydalanuvchilar() {
   quti.className = 'adm-yuklanmoqda';
   quti.textContent = 'Yuklanmoqda...';
 
-  var res = await AdminAPI.foydalanuvchilar(fQuery, fPage);
+  var res = await AdminAPI.foydalanuvchilar({
+    q: fQuery, page: fPage,
+    grade: document.getElementById('sinfFiltr').value,
+    purchasedOnly: document.getElementById('xaridorFiltr').checked,
+  });
   if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
 
   if (!res.users.length) {
@@ -426,6 +560,8 @@ document.getElementById('foydalanuvchiQidir').addEventListener('input', function
     yuklaFoydalanuvchilar();
   }, 350);
 });
+document.getElementById('sinfFiltr').addEventListener('change', function () { fPage = 1; yuklaFoydalanuvchilar(); });
+document.getElementById('xaridorFiltr').addEventListener('change', function () { fPage = 1; yuklaFoydalanuvchilar(); });
 
 async function foydalanuvchiModalniOch(id) {
   var fon = document.getElementById('foydalanuvchiModalFon');
@@ -437,7 +573,6 @@ async function foydalanuvchiModalniOch(id) {
   if (!res.ok) { modal.innerHTML = '<p class="adm-bosh">' + esc(res.error || 'Xatolik') + '</p>'; return; }
 
   var u = res.user;
-  var qulflanmaganKalitlar = (res.progress || []).map(function (p) { return p.key; });
   var qulfliFanlar = Object.keys(SUBJECT_NAMES).filter(function (k) {
     return !res.progress.some(function (p) { return p.key === k && p.unlocked; });
   });
@@ -461,7 +596,9 @@ async function foydalanuvchiModalniOch(id) {
     (res.progress || []).map(function (p) {
       var foiz = p.total ? Math.round(p.completed / p.total * 100) : 0;
       return '<div class="adm-fan-progress">' +
-        '<span class="nomi">' + esc(p.name) + (p.free_choice ? ' <span class="adm-badge yashil">bepul</span>' : '') + '</span>' +
+        '<span class="nomi" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted" data-topics="' + p.key + '">' +
+          esc(p.name) + '</span>' +
+        (p.free_choice ? ' <span class="adm-badge yashil">bepul</span>' : '') +
         '<span class="foiz">' + p.completed + '/' + p.total + ' (' + foiz + '%)</span>' +
         (p.unlocked
           ? (p.free_choice ? '' : '<button class="adm-mini-tugma qizil" data-yop="' + p.key + '">Yopish</button>')
@@ -483,6 +620,10 @@ async function foydalanuvchiModalniOch(id) {
     '</div>';
 
   document.getElementById('modalYop').addEventListener('click', function () { fon.classList.remove('ochiq'); });
+
+  modal.querySelectorAll('[data-topics]').forEach(function (el) {
+    el.addEventListener('click', function () { foydalanuvchiMavzulariniKorsat(id, el.dataset.topics); });
+  });
 
   document.getElementById('sinfTanlov').addEventListener('change', async function (e) {
     var res2 = await AdminAPI.sinfYangilash(id, e.target.value || null);
@@ -523,6 +664,60 @@ async function foydalanuvchiModalniOch(id) {
       yuklaStatistika();
     }
   });
+}
+
+var TOPIC_HOLAT_NOMI = {
+  locked: 'Qulflangan', cooldown: 'Kutish', current: 'Hozirgi',
+  in_progress: 'Jarayonda', completed: 'Tugallangan',
+};
+
+async function foydalanuvchiMavzulariniKorsat(userId, subjectKey) {
+  var modal = document.getElementById('foydalanuvchiModal');
+  modal.innerHTML = '<p class="adm-bosh">Yuklanmoqda...</p>';
+
+  var res = await AdminAPI.foydalanuvchiMavzulari(userId, subjectKey);
+  if (!res.ok) { modal.innerHTML = '<p class="adm-bosh">' + esc(res.error || 'Xatolik') + '</p>'; return; }
+
+  modal.innerHTML =
+    '<div class="adm-modal-bosh">' +
+      '<h2>' + esc(res.subject_name) + '</h2>' +
+      '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button>' +
+    '</div>' +
+    '<button class="adm-mini-tugma" id="mavzuOrqaga" style="margin-bottom:10px">&larr; Foydalanuvchiga qaytish</button>' +
+    (res.topics || []).map(function (t) {
+      var badge = t.status === 'completed' ? 'yashil' : '';
+      return '<div class="adm-qator"><span class="yorliq">' + t.seq + '. ' + esc(t.title) + '</span>' +
+        '<span class="adm-badge ' + badge + '">' + (TOPIC_HOLAT_NOMI[t.status] || t.status) + '</span></div>';
+    }).join('');
+
+  document.getElementById('modalYop').addEventListener('click', function () {
+    document.getElementById('foydalanuvchiModalFon').classList.remove('ochiq');
+  });
+  document.getElementById('mavzuOrqaga').addEventListener('click', function () {
+    foydalanuvchiModalniOch(userId);
+  });
+}
+
+async function fanMavzulariniKorsat(subjectKey, subjectName) {
+  var fon = document.getElementById('foydalanuvchiModalFon');
+  var modal = document.getElementById('foydalanuvchiModal');
+  modal.innerHTML = '<p class="adm-bosh">Yuklanmoqda...</p>';
+  fon.classList.add('ochiq');
+
+  var res = await AdminAPI.fanMavzulari(subjectKey);
+  if (!res.ok) { modal.innerHTML = '<p class="adm-bosh">' + esc(res.error || 'Xatolik') + '</p>'; return; }
+
+  modal.innerHTML =
+    '<div class="adm-modal-bosh">' +
+      '<h2>' + esc(res.subject_name) + ' — mavzular</h2>' +
+      '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button>' +
+    '</div>' +
+    (res.topics || []).map(function (t) {
+      return '<div class="adm-qator"><span class="yorliq">' + t.seq + '. ' + esc(t.title) + '</span>' +
+        '<span>' + t.duration + ' daqiqa</span></div>';
+    }).join('');
+
+  document.getElementById('modalYop').addEventListener('click', function () { fon.classList.remove('ochiq'); });
 }
 
 document.getElementById('foydalanuvchiModalFon').addEventListener('click', function (e) {
@@ -589,10 +784,62 @@ async function yuklaFanlar() {
     '<th>Fan</th><th>Mavzular</th><th>Bepul tanlagan</th><th>Sotib olgan</th><th>Tugallangan mavzu</th><th>Daromad</th>' +
     '</tr></thead><tbody>' +
     res.subjects.map(function (s) {
-      return '<tr><td class="nomzod">' + esc(s.name) + '</td><td>' + s.topics + '</td><td>' + s.chosen_free +
+      return '<tr data-key="' + s.key + '" data-name="' + esc(s.name) + '">' +
+        '<td class="nomzod">' + esc(s.name) + '</td><td>' + s.topics + '</td><td>' + s.chosen_free +
         '</td><td>' + s.purchases + '</td><td>' + s.completed_topics + '</td><td>' + pul(s.revenue) + '</td></tr>';
     }).join('') + '</tbody></table></div>';
+
+  quti.querySelectorAll('tr[data-key]').forEach(function (tr) {
+    tr.addEventListener('click', function () { fanMavzulariniKorsat(tr.dataset.key, tr.dataset.name); });
+  });
 }
+
+// ─────────────────────── Faoliyat ───────────────────────
+
+async function yuklaFaoliyat() {
+  var quti = document.getElementById('faoliyatQuti');
+  var res = await AdminAPI.faoliyat(60);
+  if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
+
+  if (!res.items.length) {
+    quti.className = 'adm-bosh';
+    quti.textContent = "Hali faoliyat yo'q.";
+    return;
+  }
+
+  quti.className = 'adm-jadval-o-rash';
+  quti.style.padding = '4px 14px';
+  quti.innerHTML = res.items.map(function (it) {
+    return '<div class="adm-faoliyat-qator">' +
+      '<span class="nishon">' + BSIcons.icon('checkCircle') + '</span>' +
+      '<span class="matn"><b>' + esc(it.user_name) + '</b> — ' + esc(it.subject_name) + ': ' + esc(it.topic_title) + '</span>' +
+      '<span class="vaqt">' + sana(it.completed_at) + '</span>' +
+    '</div>';
+  }).join('');
+}
+
+// ─────────────────────── Xabar (broadcast) ───────────────────────
+
+document.getElementById('xabarYuborTugma').addEventListener('click', async function () {
+  var matn = document.getElementById('xabarMatn').value.trim();
+  var natija = document.getElementById('xabarNatija');
+  natija.textContent = '';
+  natija.style.color = '';
+
+  if (!matn) { natija.style.color = 'var(--qizil)'; natija.textContent = "Xabar matnini yozing."; return; }
+  if (!confirm("Bu xabar Telegram orqali kirgan BARCHA foydalanuvchilarga yuboriladi. Davom etilsinmi?")) return;
+
+  this.disabled = true;
+  natija.textContent = 'Yuborilmoqda...';
+
+  var res = await AdminAPI.xabarYuborish(matn);
+  this.disabled = false;
+
+  if (!res.ok) { natija.style.color = 'var(--qizil)'; natija.textContent = res.error || 'Xatolik'; return; }
+  natija.style.color = 'var(--yashil-quyuq)';
+  natija.textContent = res.sent + ' ta foydalanuvchiga yuborildi' + (res.failed ? ', ' + res.failed + ' ta muvaffaqiyatsiz' : '') + '.';
+  if (res.sent > 0) document.getElementById('xabarMatn').value = '';
+});
 </script>
 </body>
 </html>

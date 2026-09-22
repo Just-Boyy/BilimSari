@@ -40,7 +40,9 @@ def admin_token_from_request():
     auth = request.headers.get('Authorization', '')
     if auth.startswith('Bearer '):
         return auth[7:].strip()
-    return None
+    # CSV eksport havolalari kabi oddiy <a href> yuklab olishlar Authorization
+    # sarlavhasini yubora olmaydi — shunday hollarda ?token= orqali qabul qilinadi.
+    return request.args.get('token')
 
 
 def admin_required(fn):
