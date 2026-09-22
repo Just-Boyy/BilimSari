@@ -8,6 +8,7 @@ import os
 import json
 import urllib.request
 
+import admin_api
 import ai_tutor
 import study
 import study_api
@@ -26,6 +27,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.register_blueprint(study_api.bp)
 app.register_blueprint(ai_tutor.bp)
+app.register_blueprint(admin_api.bp)
 
 # BOT_TOKEN faqat muhit o'zgaruvchisidan olinadi — kodda saqlanmaydi.
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
@@ -524,6 +526,7 @@ PAGES = {
     'progress.html', 'profile.html', 'leaderboard.html',
     # eski (AI-darslar) oqimi — ishlashda davom etadi
     'learn.html', 'lesson.html', 'courses.html', 'review.html',
+    'admin.html',
 }
 
 

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c2417">
+<title>Admin panel — BilimSari</title>
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  body { background: #f3f4f6; padding-bottom: 0; }
+
+  /* ── Kirish ekrani ── */
+  .adm-kirish {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+  }
+  .adm-kirish-karta {
+    width: 100%;
+    max-width: 340px;
+    background: var(--oq);
+    border-radius: var(--r-katta);
+    padding: 28px 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    text-align: center;
+  }
+  .adm-kirish-karta .belgi {
+    width: 52px; height: 52px;
+    border-radius: 16px;
+    background: #0c2417;
+    color: #fff;
+    display: grid; place-items: center;
+    margin: 0 auto 14px;
+  }
+  .adm-kirish-karta h1 { font-size: 18px; margin-bottom: 4px; }
+  .adm-kirish-karta p { color: var(--matn-2); font-size: 13px; margin-bottom: 18px; }
+  .adm-kirish-karta input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--chiziq);
+    border-radius: var(--r);
+    font-size: 15px;
+    margin-bottom: 12px;
+    font-family: var(--tana);
+  }
+  .adm-kirish-karta .xato { color: var(--qizil); font-size: 13px; margin-top: 10px; min-height: 16px; }
+
+  /* ── Panel ── */
+  .adm-panel { display: none; min-height: 100dvh; flex-direction: column; }
+  .adm-panel.faol { display: flex; }
+
+  .adm-shapka {
+    background: linear-gradient(135deg, #0c2417 0%, #123420 55%, #0a2013 100%);
+    color: #fff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .adm-shapka .belgi {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.14);
+    display: grid; place-items: center;
+    flex: 0 0 auto;
+  }
+  .adm-shapka h1 { color: #fff; font-size: 16px; flex: 1; }
+  .adm-shapka button {
+    background: rgba(255,255,255,.12);
+    border: none;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--tana);
+  }
+  .adm-shapka button:hover { background: rgba(255,255,255,.2); }
+
+  .adm-tablar {
+    display: flex;
+    gap: 4px;
+    padding: 10px 16px 0;
+    background: var(--oq);
+    border-bottom: 1px solid var(--chiziq);
+    overflow-x: auto;
+  }
+  .adm-tab {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--matn-2);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .adm-tab.faol { color: var(--yashil-quyuq); border-color: var(--yashil); }
+  .adm-tab .nishon svg { width: 16px; height: 16px; }
+
+  .adm-ichi { max-width: 1080px; margin: 0 auto; padding: 18px 16px 40px; width: 100%; }
+  .adm-bolim { display: none; }
+  .adm-bolim.faol { display: block; }
+
+  /* Stat kartalar */
+  .adm-statlar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .adm-stat {
+    background: var(--oq);
+    border: 1px solid var(--chiziq);
+    border-radius: var(--r);
+    padding: 14px 16px;
+  }
+  .adm-stat .son { font-family: var(--sarlavha); font-size: 24px; font-weight: 800; color: var(--matn-quyuq); }
+  .adm-stat .izoh { font-size: 12px; color: var(--matn-2); margin-top: 2px; }
+
+  /* Jadval */
+  .adm-jadval-o-rash { overflow-x: auto; background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r); }
+  table.adm-jadval { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.adm-jadval th, table.adm-jadval td { padding: 10px 12px; text-align: left; white-space: nowrap; }
+  table.adm-jadval th { color: var(--matn-2); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; border-bottom: 1px solid var(--chiziq); }
+  table.adm-jadval tbody tr { border-bottom: 1px solid var(--chiziq); cursor: pointer; }
+  table.adm-jadval tbody tr:last-child { border-bottom: none; }
+  table.adm-jadval tbody tr:hover { background: var(--yashil-fon); }
+  table.adm-jadval .nomzod { font-weight: 700; color: var(--matn-quyuq); }
+  table.adm-jadval .kichik { color: var(--matn-2); font-size: 12px; }
+
+  .adm-qidir {
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    border: 2px solid var(--chiziq);
+    border-radius: 99px;
+    font-size: 14px;
+    margin-bottom: 14px;
+    font-family: var(--tana);
+  }
+
+  .adm-sahifalash { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 14px; }
+  .adm-sahifalash button {
+    padding: 7px 14px; border-radius: 99px; border: 1px solid var(--chiziq);
+    background: var(--oq); font-weight: 700; font-size: 13px; cursor: pointer; font-family: var(--tana);
+  }
+  .adm-sahifalash button:disabled { opacity: .4; cursor: default; }
+
+  .adm-yuklanmoqda, .adm-bosh { text-align: center; padding: 40px 20px; color: var(--matn-2); font-size: 14px; }
+
+  /* Modal */
+  .adm-modal-fon {
+    position: fixed; inset: 0; background: rgba(15,23,17,.5);
+    display: none; align-items: flex-end; justify-content: center; z-index: 50;
+  }
+  .adm-modal-fon.ochiq { display: flex; }
+  .adm-modal {
+    background: var(--oq);
+    border-radius: 22px 22px 0 0;
+    width: 100%; max-width: 480px;
+    max-height: 85dvh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  @media (min-width: 560px) {
+    .adm-modal-fon { align-items: center; }
+    .adm-modal { border-radius: var(--r-katta); margin: 20px; }
+  }
+  .adm-modal-bosh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .adm-modal-bosh h2 { font-size: 17px; }
+  .adm-modal-yop { background: none; border: none; color: var(--matn-2); cursor: pointer; padding: 4px; }
+
+  .adm-qator { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--chiziq); font-size: 13px; }
+  .adm-qator:last-child { border-bottom: none; }
+  .adm-qator .yorliq { color: var(--matn-2); }
+
+  .adm-badge { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+  .adm-badge.yashil { background: var(--yashil-fon); color: var(--yashil-quyuq); }
+  .adm-badge.qizil { background: var(--qizil-och); color: var(--qizil-quyuq); }
+
+  .adm-mini-tugma {
+    padding: 5px 11px; border-radius: 99px; border: 1px solid var(--chiziq);
+    background: var(--oq); font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--tana);
+  }
+  .adm-mini-tugma.yashil { background: var(--yashil); border-color: var(--yashil); color: #fff; }
+  .adm-mini-tugma.qizil { background: var(--qizil); border-color: var(--qizil); color: #fff; }
+
+  .adm-fan-progress { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--chiziq); }
+  .adm-fan-progress:last-child { border-bottom: none; }
+  .adm-fan-progress .nomi { flex: 1; font-size: 13px; font-weight: 600; }
+  .adm-fan-progress .foiz { font-size: 12px; color: var(--matn-2); }
+
+  select.adm-select {
+    padding: 8px 10px; border: 2px solid var(--chiziq); border-radius: 10px;
+    font-family: var(--tana); font-size: 13px;
+  }
+</style>
+</head>
+<body class="no-nav">
+
+<div class="adm-kirish" id="kirishEkran">
+  <div class="adm-kirish-karta">
+    <div class="belgi" data-ikon="lock"></div>
+    <h1>Admin panel</h1>
+    <p>BilimSari boshqaruv paneli. Faqat administratorlar uchun.</p>
+    <form id="kirishForma">
+      <input type="password" id="parolMaydon" placeholder="Admin paroli" autocomplete="current-password" required>
+      <button type="submit" class="tugma">Kirish</button>
+    </form>
+    <p class="xato" id="kirishXato"></p>
+  </div>
+</div>
+
+<div class="adm-panel" id="admPanel">
+  <header class="adm-shapka">
+    <div class="belgi" data-ikon="lock"></div>
+    <h1>BilimSari — Admin</h1>
+    <button id="chiqishTugma">Chiqish <span class="nishon" data-ikon="logout"></span></button>
+  </header>
+
+  <nav class="adm-tablar">
+    <div class="adm-tab faol" data-bolim="statistika"><span class="nishon" data-ikon="chart"></span> Statistika</div>
+    <div class="adm-tab" data-bolim="foydalanuvchilar"><span class="nishon" data-ikon="user"></span> Foydalanuvchilar</div>
+    <div class="adm-tab" data-bolim="tolovlar"><span class="nishon" data-ikon="gem"></span> To'lovlar</div>
+    <div class="adm-tab" data-bolim="fanlar"><span class="nishon" data-ikon="book"></span> Fanlar</div>
+  </nav>
+
+  <main class="adm-ichi">
+
+    <section class="adm-bolim faol" id="bolim-statistika">
+      <div id="statlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-foydalanuvchilar">
+      <input class="adm-qidir" id="foydalanuvchiQidir" placeholder="Ism yoki email bo'yicha qidirish...">
+      <div id="foydalanuvchilarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      <div class="adm-sahifalash" id="foydalanuvchilarSahifalash" hidden></div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-tolovlar">
+      <div id="tolovlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      <div class="adm-sahifalash" id="tolovlarSahifalash" hidden></div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-fanlar">
+      <div id="fanlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Foydalanuvchi tafsiloti modal -->
+<div class="adm-modal-fon" id="foydalanuvchiModalFon">
+  <div class="adm-modal" id="foydalanuvchiModal"></div>
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/admin.js"></script>
+<script>
+document.querySelectorAll('[data-ikon]').forEach(function (el) {
+  el.innerHTML = BSIcons.icon(el.dataset.ikon);
+});
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function pul(n) { return (n || 0).toLocaleString('uz-UZ') + " so'm"; }
+function sana(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  if (isNaN(d)) return '—';
+  return d.toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+var SUBJECT_NAMES = {
+  math: 'Matematika', geometry: 'Geometriya', uzbek: 'Ona tili', literature: 'Adabiyot',
+  english: 'Ingliz tili', russian: 'Rus tili', history: 'Tarix', geography: 'Geografiya',
+  chemistry: 'Kimyo', biology: 'Biologiya', law: 'Huquq', informatics: 'Informatika',
+};
+
+// ─────────────────────── Kirish ───────────────────────
+
+function panelniKorsat() {
+  document.getElementById('kirishEkran').style.display = 'none';
+  document.getElementById('admPanel').classList.add('faol');
+  yuklaStatistika();
+}
+
+document.getElementById('kirishForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var xato = document.getElementById('kirishXato');
+  xato.textContent = '';
+  var parol = document.getElementById('parolMaydon').value;
+  var res = await AdminAPI.kirish(parol);
+  if (!res.ok) {
+    xato.textContent = res.error || 'Xatolik yuz berdi';
+    return;
+  }
+  panelniKorsat();
+});
+
+document.getElementById('chiqishTugma').addEventListener('click', function () {
+  AdminAPI.chiqish();
+  location.reload();
+});
+
+if (AdminAPI.kirganmi()) panelniKorsat();
+
+// ─────────────────────── Tablar ───────────────────────
+
+var yuklandi = {};
+
+document.querySelectorAll('.adm-tab').forEach(function (tab) {
+  tab.addEventListener('click', function () {
+    document.querySelectorAll('.adm-tab').forEach(function (t) { t.classList.remove('faol'); });
+    document.querySelectorAll('.adm-bolim').forEach(function (b) { b.classList.remove('faol'); });
+    tab.classList.add('faol');
+    var nomi = tab.dataset.bolim;
+    document.getElementById('bolim-' + nomi).classList.add('faol');
+
+    if (nomi === 'foydalanuvchilar' && !yuklandi.foydalanuvchilar) { yuklandi.foydalanuvchilar = true; yuklaFoydalanuvchilar(); }
+    if (nomi === 'tolovlar' && !yuklandi.tolovlar) { yuklandi.tolovlar = true; yuklaTolovlar(); }
+    if (nomi === 'fanlar' && !yuklandi.fanlar) { yuklandi.fanlar = true; yuklaFanlar(); }
+  });
+});
+
+// ─────────────────────── Statistika ───────────────────────
+
+async function yuklaStatistika() {
+  var quti = document.getElementById('statlarQuti');
+  var res = await AdminAPI.stats();
+  if (!res.ok) { quti.innerHTML = '<p class="adm-bosh">' + esc(res.error || 'Xatolik') + '</p>'; return; }
+
+  var kartalar = [
+    ['Jami foydalanuvchi', res.total_users],
+    ['Bugun qo\'shilgan', res.users_today],
+    ["So'nggi 7 kunda", res.users_7d],
+    ['Tugallangan mavzular', res.total_completed_topics],
+    ['Bugun tugallangan', res.completions_today],
+    ['Fan xaridlari', res.total_purchases],
+    ['Umumiy daromad', pul(res.revenue)],
+  ];
+
+  var html = '<div class="adm-statlar">' + kartalar.map(function (k) {
+    return '<div class="adm-stat"><div class="son">' + esc(k[1]) + '</div><div class="izoh">' + esc(k[0]) + '</div></div>';
+  }).join('') + '</div>';
+
+  html += '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr>' +
+    '<th>Fan</th><th>Bepul tanlagan</th><th>Sotib olgan</th></tr></thead><tbody>' +
+    (res.subjects || []).map(function (s) {
+      return '<tr><td class="nomzod">' + esc(s.name) + '</td><td>' + s.chosen_free + '</td><td>' + s.purchases + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+
+  quti.className = '';
+  quti.innerHTML = html;
+}
+
+// ─────────────────────── Foydalanuvchilar ───────────────────────
+
+var fPage = 1, fQuery = '';
+
+async function yuklaFoydalanuvchilar() {
+  var quti = document.getElementById('foydalanuvchilarQuti');
+  quti.className = 'adm-yuklanmoqda';
+  quti.textContent = 'Yuklanmoqda...';
+
+  var res = await AdminAPI.foydalanuvchilar(fQuery, fPage);
+  if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
+
+  if (!res.users.length) {
+    quti.className = 'adm-bosh';
+    quti.textContent = 'Foydalanuvchi topilmadi.';
+    document.getElementById('foydalanuvchilarSahifalash').hidden = true;
+    return;
+  }
+
+  quti.className = '';
+  quti.innerHTML = '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr>' +
+    '<th>Ism</th><th>Sinf</th><th>Tanlagan fan</th><th>Tugallagan</th><th>Xarid</th><th>Sana</th>' +
+    '</tr></thead><tbody>' +
+    res.users.map(function (u) {
+      return '<tr data-id="' + u.id + '">' +
+        '<td><div class="nomzod">' + esc(u.name) + '</div><div class="kichik">' +
+          esc(u.email || (u.telegram_id ? 'Telegram #' + u.telegram_id : "Mehmon")) + '</div></td>' +
+        '<td>' + (u.grade ? u.grade + '-sinf' : '—') + '</td>' +
+        '<td>' + (u.chosen_subject_key ? esc(SUBJECT_NAMES[u.chosen_subject_key] || u.chosen_subject_key) : '—') + '</td>' +
+        '<td>' + u.completed_topics + '</td>' +
+        '<td>' + u.purchases + '</td>' +
+        '<td>' + sana(u.created_at) + '</td>' +
+        '</tr>';
+    }).join('') + '</tbody></table></div>';
+
+  quti.querySelectorAll('tr[data-id]').forEach(function (tr) {
+    tr.addEventListener('click', function () { foydalanuvchiModalniOch(tr.dataset.id); });
+  });
+
+  var sahifalash = document.getElementById('foydalanuvchilarSahifalash');
+  var jamiSahifa = Math.max(1, Math.ceil(res.total / res.per_page));
+  if (jamiSahifa > 1) {
+    sahifalash.hidden = false;
+    sahifalash.innerHTML =
+      '<button id="fOldingi" ' + (fPage <= 1 ? 'disabled' : '') + '>&larr;</button>' +
+      '<span>' + fPage + ' / ' + jamiSahifa + '</span>' +
+      '<button id="fKeyingi" ' + (fPage >= jamiSahifa ? 'disabled' : '') + '>&rarr;</button>';
+    document.getElementById('fOldingi').addEventListener('click', function () { fPage--; yuklaFoydalanuvchilar(); });
+    document.getElementById('fKeyingi').addEventListener('click', function () { fPage++; yuklaFoydalanuvchilar(); });
+  } else {
+    sahifalash.hidden = true;
+  }
+}
+
+var qidirVaqt;
+document.getElementById('foydalanuvchiQidir').addEventListener('input', function (e) {
+  clearTimeout(qidirVaqt);
+  var qiymat = e.target.value;
+  qidirVaqt = setTimeout(function () {
+    fQuery = qiymat;
+    fPage = 1;
+    yuklaFoydalanuvchilar();
+  }, 350);
+});
+
+async function foydalanuvchiModalniOch(id) {
+  var fon = document.getElementById('foydalanuvchiModalFon');
+  var modal = document.getElementById('foydalanuvchiModal');
+  modal.innerHTML = '<p class="adm-bosh">Yuklanmoqda...</p>';
+  fon.classList.add('ochiq');
+
+  var res = await AdminAPI.foydalanuvchi(id);
+  if (!res.ok) { modal.innerHTML = '<p class="adm-bosh">' + esc(res.error || 'Xatolik') + '</p>'; return; }
+
+  var u = res.user;
+  var qulflanmaganKalitlar = (res.progress || []).map(function (p) { return p.key; });
+  var qulfliFanlar = Object.keys(SUBJECT_NAMES).filter(function (k) {
+    return !res.progress.some(function (p) { return p.key === k && p.unlocked; });
+  });
+
+  modal.innerHTML =
+    '<div class="adm-modal-bosh"><h2>' + esc(u.name) + '</h2>' +
+      '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button></div>' +
+
+    '<div class="adm-qator"><span class="yorliq">Email / Telegram</span><span>' +
+      esc(u.email || (u.telegram_id ? '#' + u.telegram_id : '—')) + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Ro\'yxatdan o\'tgan</span><span>' + sana(u.created_at) + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Sinf</span><span>' +
+      '<select class="adm-select" id="sinfTanlov">' +
+        '<option value="">—</option>' +
+        Array.from({ length: 11 }, function (_, i) { return i + 1; }).map(function (g) {
+          return '<option value="' + g + '"' + (u.grade === g ? ' selected' : '') + '>' + g + '-sinf</option>';
+        }).join('') +
+      '</select></span></div>' +
+
+    '<h3 style="margin:16px 0 4px">Fanlar</h3>' +
+    (res.progress || []).map(function (p) {
+      var foiz = p.total ? Math.round(p.completed / p.total * 100) : 0;
+      return '<div class="adm-fan-progress">' +
+        '<span class="nomi">' + esc(p.name) + (p.free_choice ? ' <span class="adm-badge yashil">bepul</span>' : '') + '</span>' +
+        '<span class="foiz">' + p.completed + '/' + p.total + ' (' + foiz + '%)</span>' +
+        (p.unlocked
+          ? (p.free_choice ? '' : '<button class="adm-mini-tugma qizil" data-yop="' + p.key + '">Yopish</button>')
+          : '<button class="adm-mini-tugma yashil" data-och="' + p.key + '">Ochish</button>') +
+        '</div>';
+    }).join('') +
+
+    (qulfliFanlar.length
+      ? '<div style="margin-top:10px;display:flex;gap:8px;align-items:center">' +
+          '<select class="adm-select" id="yangiFanTanlov" style="flex:1">' +
+            qulfliFanlar.map(function (k) { return '<option value="' + k + '">' + esc(SUBJECT_NAMES[k]) + '</option>'; }).join('') +
+          '</select>' +
+          '<button class="adm-mini-tugma yashil" id="yangiFanOch">Ochish</button>' +
+        '</div>'
+      : '') +
+
+    '<div style="margin-top:20px;display:flex;gap:8px">' +
+      '<button class="adm-mini-tugma qizil" id="foydalanuvchiO_chir" style="flex:1">Foydalanuvchini o\'chirish</button>' +
+    '</div>';
+
+  document.getElementById('modalYop').addEventListener('click', function () { fon.classList.remove('ochiq'); });
+
+  document.getElementById('sinfTanlov').addEventListener('change', async function (e) {
+    var res2 = await AdminAPI.sinfYangilash(id, e.target.value || null);
+    if (res2.ok) yuklaFoydalanuvchilar();
+  });
+
+  modal.querySelectorAll('[data-och]').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      await AdminAPI.fanOchish(id, btn.dataset.och);
+      foydalanuvchiModalniOch(id);
+      yuklaFoydalanuvchilar();
+    });
+  });
+  modal.querySelectorAll('[data-yop]').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      await AdminAPI.fanYopish(id, btn.dataset.yop);
+      foydalanuvchiModalniOch(id);
+      yuklaFoydalanuvchilar();
+    });
+  });
+
+  var yangiFanOchTugma = document.getElementById('yangiFanOch');
+  if (yangiFanOchTugma) {
+    yangiFanOchTugma.addEventListener('click', async function () {
+      var kalit = document.getElementById('yangiFanTanlov').value;
+      await AdminAPI.fanOchish(id, kalit);
+      foydalanuvchiModalniOch(id);
+      yuklaFoydalanuvchilar();
+    });
+  }
+
+  document.getElementById('foydalanuvchiO_chir').addEventListener('click', async function () {
+    if (!confirm(esc(u.name) + ' butunlay o\'chirilsinmi? Bu amalni qaytarib bo\'lmaydi.')) return;
+    var res2 = await AdminAPI.foydalanuvchiO_chirish(id);
+    if (res2.ok) {
+      fon.classList.remove('ochiq');
+      yuklaFoydalanuvchilar();
+      yuklaStatistika();
+    }
+  });
+}
+
+document.getElementById('foydalanuvchiModalFon').addEventListener('click', function (e) {
+  if (e.target === this) this.classList.remove('ochiq');
+});
+
+// ─────────────────────── To'lovlar ───────────────────────
+
+var tPage = 1;
+
+async function yuklaTolovlar() {
+  var quti = document.getElementById('tolovlarQuti');
+  quti.className = 'adm-yuklanmoqda';
+  quti.textContent = 'Yuklanmoqda...';
+
+  var res = await AdminAPI.tolovlar(tPage);
+  if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
+
+  if (!res.purchases.length) {
+    quti.className = 'adm-bosh';
+    quti.textContent = "Hali xarid qilinmagan.";
+    document.getElementById('tolovlarSahifalash').hidden = true;
+    return;
+  }
+
+  quti.className = '';
+  quti.innerHTML =
+    '<div class="adm-statlar" style="margin-bottom:14px"><div class="adm-stat">' +
+      '<div class="son">' + pul(res.revenue_total) + '</div><div class="izoh">Umumiy daromad</div></div></div>' +
+    '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr>' +
+    '<th>Foydalanuvchi</th><th>Fan</th><th>Summasi</th><th>Sana</th></tr></thead><tbody>' +
+    res.purchases.map(function (p) {
+      return '<tr><td><div class="nomzod">' + esc(p.user_name) + '</div><div class="kichik">' +
+        esc(p.user_email || (p.telegram_id ? '#' + p.telegram_id : '')) + '</div></td>' +
+        '<td>' + esc(p.subject_name) + '</td>' +
+        '<td>' + pul(p.amount) + '</td>' +
+        '<td>' + sana(p.purchased_at) + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+
+  var sahifalash = document.getElementById('tolovlarSahifalash');
+  var jamiSahifa = Math.max(1, Math.ceil(res.total / res.per_page));
+  if (jamiSahifa > 1) {
+    sahifalash.hidden = false;
+    sahifalash.innerHTML =
+      '<button id="tOldingi" ' + (tPage <= 1 ? 'disabled' : '') + '>&larr;</button>' +
+      '<span>' + tPage + ' / ' + jamiSahifa + '</span>' +
+      '<button id="tKeyingi" ' + (tPage >= jamiSahifa ? 'disabled' : '') + '>&rarr;</button>';
+    document.getElementById('tOldingi').addEventListener('click', function () { tPage--; yuklaTolovlar(); });
+    document.getElementById('tKeyingi').addEventListener('click', function () { tPage++; yuklaTolovlar(); });
+  } else {
+    sahifalash.hidden = true;
+  }
+}
+
+// ─────────────────────── Fanlar ───────────────────────
+
+async function yuklaFanlar() {
+  var quti = document.getElementById('fanlarQuti');
+  var res = await AdminAPI.fanlar();
+  if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
+
+  quti.className = '';
+  quti.innerHTML = '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr>' +
+    '<th>Fan</th><th>Mavzular</th><th>Bepul tanlagan</th><th>Sotib olgan</th><th>Tugallangan mavzu</th><th>Daromad</th>' +
+    '</tr></thead><tbody>' +
+    res.subjects.map(function (s) {
+      return '<tr><td class="nomzod">' + esc(s.name) + '</td><td>' + s.topics + '</td><td>' + s.chosen_free +
+        '</td><td>' + s.purchases + '</td><td>' + s.completed_topics + '</td><td>' + pul(s.revenue) + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+</script>
+</body>
+</html>
