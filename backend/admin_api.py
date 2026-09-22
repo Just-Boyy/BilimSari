@@ -11,6 +11,7 @@ import hmac
 import io
 import os
 import time
+from collections import defaultdict, deque
 from datetime import timedelta
 
 import requests
@@ -25,6 +26,32 @@ bp = Blueprint('admin_api', __name__, url_prefix='/api/admin')
 
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 
+# Admin login uchun IP bo'yicha urinish cheklovi — parol o'zi cheksiz
+# taxmin qilinishining oldini oladi (hmac.compare_digest faqat vaqt
+# hujumidan himoyalaydi, urinishlar sonini cheklamaydi).
+LOGIN_RATE_LIMIT = int(os.environ.get('ADMIN_LOGIN_RATE_LIMIT', '5'))
+LOGIN_RATE_WINDOW = int(os.environ.get('ADMIN_LOGIN_RATE_WINDOW', '900'))  # 15 daqiqa
+_login_fails = defaultdict(deque)
+
+
+def _client_ip():
+    fwd = request.headers.get('X-Forwarded-For', '')
+    if fwd:
+        return fwd.split(',')[0].strip()
+    return request.remote_addr or 'unknown'
+
+
+def _login_blocked(ip):
+    now = time.time()
+    q = _login_fails[ip]
+    while q and now - q[0] > LOGIN_RATE_WINDOW:
+        q.popleft()
+    return len(q) >= LOGIN_RATE_LIMIT
+
+
+def _record_failed_login(ip):
+    _login_fails[ip].append(time.time())
+
 
 @bp.route('/login', methods=['POST'])
 def admin_login():
@@ -34,9 +61,18 @@ def admin_login():
             'error': "Admin paneli hali sozlanmagan (ADMIN_PASSWORD muhit o'zgaruvchisi yo'q)",
         }), 503
 
+    ip = _client_ip()
+    if _login_blocked(ip):
+        return jsonify({
+            'ok': False,
+            'error': "Juda ko'p noto'g'ri urinish. 15 daqiqadan so'ng qayta urinib ko'ring.",
+            'code': 'rate_limit',
+        }), 429
+
     body = request.get_json(silent=True) or {}
     password = body.get('password') or ''
     if not hmac.compare_digest(password, ADMIN_PASSWORD):
+        _record_failed_login(ip)
         return jsonify({'ok': False, 'error': "Parol noto'g'ri"}), 401
 
     return jsonify({'ok': True, 'token': make_admin_token()})

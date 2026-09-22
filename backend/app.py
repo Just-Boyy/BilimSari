@@ -4,6 +4,7 @@ BilimSari Backend — Flask + PostgreSQL
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+import hashlib
 import os
 import json
 import urllib.request
@@ -12,7 +13,7 @@ import admin_api
 import ai_tutor
 import study
 import study_api
-from auth_core import auth_required, create_token, token_from_request
+from auth_core import SECRET, auth_required, create_token, token_from_request
 from db import add_column_if_missing, get_connection
 
 app = Flask(__name__)
@@ -24,6 +25,12 @@ app.register_blueprint(admin_api.bp)
 # BOT_TOKEN faqat muhit o'zgaruvchisidan olinadi — kodda saqlanmaydi.
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
+
+# Webhook'ga faqat Telegram o'zi yuborayotganini tekshirish uchun maxfiy token.
+# SECRET_KEY'dan hosil qilinadi — barcha worker'larda bir xil bo'lishi shart
+# (tasodifiy generatsiya qilinsa, har bir gunicorn worker boshqa qiymat olib,
+# webhook so'rovlari qaysi workerga tushishiga qarab tasodifiy rad etilib qolardi).
+WEBHOOK_SECRET = hashlib.sha256(f'{SECRET}|telegram-webhook'.encode()).hexdigest()
 
 # Test/dev uchun: shu Telegram chat_id'lar "Chiqish"ni bossa, hisobi butunlay
 # o'chiriladi (progress bilan birga) — ro'yxatdan o'tish oqimini 0'dan qayta
@@ -542,6 +549,7 @@ def setup_telegram_bot():
         'url': webhook_url,
         'allowed_updates': ['message'],
         'drop_pending_updates': False,
+        'secret_token': WEBHOOK_SECRET,
     })
     print('setWebhook:', r)
     tg_api('setMyCommands', {
@@ -561,6 +569,9 @@ def setup_telegram_bot():
 
 @app.route('/telegram/webhook', methods=['POST'])
 def telegram_webhook():
+    if request.headers.get('X-Telegram-Bot-Api-Secret-Token') != WEBHOOK_SECRET:
+        return jsonify({'ok': False}), 403
+
     data = request.get_json(silent=True) or {}
     message = data.get('message') or {}
     text = (message.get('text') or '').strip()
