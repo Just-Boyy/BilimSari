@@ -5,16 +5,26 @@ BilimSari Backend — Flask + PostgreSQL
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import hashlib
+import logging
 import os
 import json
 import urllib.request
 
 import admin_api
+import admin_audit
+import admin_auth
 import ai_tutor
+import rate_limit
 import study
 import study_api
 from auth_core import SECRET, auth_required, create_token, token_from_request
 from db import add_column_if_missing, get_connection
+
+logging.basicConfig(
+    level=os.environ.get('LOG_LEVEL', 'INFO'),
+    format='%(asctime)s %(levelname)s [%(name)s] %(message)s',
+)
+logger = logging.getLogger('bilimsari')
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -32,11 +42,6 @@ WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railw
 # webhook so'rovlari qaysi workerga tushishiga qarab tasodifiy rad etilib qolardi).
 WEBHOOK_SECRET = hashlib.sha256(f'{SECRET}|telegram-webhook'.encode()).hexdigest()
 
-# Test/dev uchun: shu Telegram chat_id'lar "Chiqish"ni bossa, hisobi butunlay
-# o'chiriladi (progress bilan birga) — ro'yxatdan o'tish oqimini 0'dan qayta
-# sinash uchun. Boshqa foydalanuvchilar uchun oddiy chiqish (token o'chadi, xolos).
-TEST_RESET_TELEGRAM_IDS = {5771496552}
-
 
 def init_db():
     conn = get_connection()
@@ -48,7 +53,7 @@ def init_db():
     if os.environ.get('RESET_DB') == '1':
         cur.execute('DROP SCHEMA public CASCADE; CREATE SCHEMA public;')
         conn.commit()
-        print('RESET_DB=1: schema tozalandi')
+        logger.warning('RESET_DB=1: schema tozalandi')
 
     cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -93,17 +98,27 @@ def init_db():
         study.ensure_tables(cur, conn)
         written = study.sync_curriculum(cur, conn)
         if written:
-            print(f'Curriculum sinxronlandi: {written} ta mavzu')
-    except Exception as e:
-        print(f'Study jadvallari xatosi: {e}')
+            logger.info('Curriculum sinxronlandi: %d ta mavzu', written)
+    except Exception:
+        logger.exception('Study jadvallari xatosi')
+        conn.rollback()
+
+    # Umumiy tezlik cheklovi (AI, admin login, mehmon hisob), admin audit
+    # jurnali va admin token bekor qilish jadvali
+    try:
+        rate_limit.ensure_table(cur, conn)
+        admin_audit.ensure_table(cur, conn)
+        admin_auth.ensure_table(cur, conn)
+    except Exception:
+        logger.exception('rate_limit/admin_audit/admin_auth jadvallari xatosi')
         conn.rollback()
 
     # Eski AI-darslar tizimi (saqlanib qoldi, ixtiyoriy qo'shimcha sifatida)
     try:
         from lesson_ai import ensure_ai_tables
         ensure_ai_tables(cur, conn)
-    except Exception as e:
-        print(f'AI lessons table xato: {e}')
+    except Exception:
+        logger.exception('AI lessons table xato')
         conn.rollback()
 
     conn.commit()
@@ -124,6 +139,13 @@ def health():
     return jsonify({'ok': True, 'service': 'BilimSari API', 'db': db_ok})
 
 
+def _client_ip():
+    fwd = request.headers.get('X-Forwarded-For', '')
+    if fwd:
+        return fwd.split(',')[0].strip()
+    return request.remote_addr or 'unknown'
+
+
 @app.route('/api/guest', methods=['POST'])
 def guest():
     """
@@ -133,6 +155,13 @@ def guest():
     va progress serverda saqlanadi. Bunday hisobga boshqa qurilmadan kirib
     bo'lmaydi (email/parol yo'q) — Telegram orqali kirganlar bundan mustasno.
     """
+    if not rate_limit.hit(f'guest:{_client_ip()}', 8, 3600):
+        return jsonify({
+            'ok': False,
+            'error': "Juda ko'p urinish. Birozdan so'ng qayta urinib ko'ring.",
+            'code': 'rate_limit',
+        }), 429
+
     data = request.get_json(silent=True) or {}
     name = (data.get('name') or '').strip()[:80]
 
@@ -203,21 +232,10 @@ def mark_onboarded():
 @app.route('/api/logout', methods=['POST'])
 @auth_required
 def logout():
-    user_id = request.user['id']
-    telegram_id = request.user.get('telegram_id')
     conn = get_connection()
     cur = conn.cursor()
-
-    if telegram_id in TEST_RESET_TELEGRAM_IDS:
-        # To'liq reset: progress va foydalanuvchi qatori o'chadi (tokens ON DELETE
-        # CASCADE bilan birga ketadi) — keyingi Telegram kirish yangi ro'yxatdan
-        # o'tish (onboarding) sifatida boshlanadi.
-        cur.execute('DELETE FROM user_progress WHERE user_id = %s', (user_id,))
-        cur.execute('DELETE FROM users WHERE id = %s', (user_id,))
-    else:
-        token = token_from_request()
-        cur.execute('DELETE FROM tokens WHERE token = %s', (token,))
-
+    token = token_from_request()
+    cur.execute('DELETE FROM tokens WHERE token = %s', (token,))
     conn.commit()
     cur.close()
     conn.close()
@@ -500,8 +518,8 @@ def tg_api(method, payload):
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             return json.loads(resp.read().decode('utf-8'))
-    except Exception as e:
-        print(f'Telegram API xato {method}: {e}')
+    except Exception:
+        logger.exception('Telegram API xato (%s)', method)
         return None
 
 
@@ -542,7 +560,7 @@ def send_help_message(chat_id):
 def setup_telegram_bot():
     """Webhook + menu tugmasi — polling kerak emas, 24/7 Flask orqali."""
     if not BOT_TOKEN:
-        print('BOT_TOKEN yo‘q — Telegram webhook o‘rnatilmadi')
+        logger.warning('BOT_TOKEN yo‘q — Telegram webhook o‘rnatilmadi')
         return
     webhook_url = WEBAPP_URL.rstrip('/') + '/telegram/webhook'
     r = tg_api('setWebhook', {
@@ -551,7 +569,7 @@ def setup_telegram_bot():
         'drop_pending_updates': False,
         'secret_token': WEBHOOK_SECRET,
     })
-    print('setWebhook:', r)
+    logger.info('setWebhook: %s', r)
     tg_api('setMyCommands', {
         'commands': [
             {'command': 'start', 'description': 'Ilovani ochish'},
@@ -597,15 +615,15 @@ def telegram_webhook():
 
 try:
     init_db()
-except Exception as e:
-    print(f'DB init ogohlantirish: {e}')
+except Exception:
+    logger.exception('DB init ogohlantirish')
 
 try:
     setup_telegram_bot()
-except Exception as e:
-    print(f'Telegram webhook ogohlantirish: {e}')
+except Exception:
+    logger.exception('Telegram webhook ogohlantirish')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    print(f'BilimSari API → http://127.0.0.1:{port}')
+    logger.info('BilimSari API → http://127.0.0.1:%d', port)
     app.run(host='0.0.0.0', port=port, debug=True)

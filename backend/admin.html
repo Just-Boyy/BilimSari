@@ -283,6 +283,9 @@
   <header class="adm-shapka">
     <div class="belgi" data-ikon="lock"></div>
     <h1>BilimSari — Admin</h1>
+    <button id="seanslarniTugatTugma" title="Barcha qurilmalardagi admin seanslarini tugatadi">
+      <span class="nishon" data-ikon="alert"></span> Seanslarni tugatish
+    </button>
     <button id="chiqishTugma">Chiqish <span class="nishon" data-ikon="logout"></span></button>
   </header>
 
@@ -293,6 +296,7 @@
     <div class="adm-tab" data-bolim="fanlar"><span class="nishon" data-ikon="book"></span> Fanlar</div>
     <div class="adm-tab" data-bolim="faoliyat"><span class="nishon" data-ikon="clock"></span> Faoliyat</div>
     <div class="adm-tab" data-bolim="xabar"><span class="nishon" data-ikon="send"></span> Xabar</div>
+    <div class="adm-tab" data-bolim="jurnal"><span class="nishon" data-ikon="clock"></span> Jurnal</div>
   </nav>
 
   <main class="adm-ichi">
@@ -308,9 +312,9 @@
           <option value="">Barcha sinflar</option>
         </select>
         <label class="adm-checkbox"><input type="checkbox" id="xaridorFiltr"> Faqat xaridorlar</label>
-        <a class="adm-mini-tugma" id="foydalanuvchilarCsvHavola" href="#" target="_blank">
+        <button class="adm-mini-tugma" id="foydalanuvchilarCsvTugma" type="button">
           <span class="nishon" data-ikon="inbox"></span> CSV yuklab olish
-        </a>
+        </button>
       </div>
       <div id="foydalanuvchilarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
       <div class="adm-sahifalash" id="foydalanuvchilarSahifalash" hidden></div>
@@ -318,9 +322,9 @@
 
     <section class="adm-bolim" id="bolim-tolovlar">
       <div style="margin-bottom:12px">
-        <a class="adm-mini-tugma" id="tolovlarCsvHavola" href="#" target="_blank">
+        <button class="adm-mini-tugma" id="tolovlarCsvTugma" type="button">
           <span class="nishon" data-ikon="inbox"></span> CSV yuklab olish
-        </a>
+        </button>
       </div>
       <div id="tolovlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
       <div class="adm-sahifalash" id="tolovlarSahifalash" hidden></div>
@@ -345,6 +349,10 @@
         <button class="tugma" id="xabarYuborTugma" style="margin-top:12px">Yuborish</button>
         <p id="xabarNatija" style="margin-top:12px;font-size:13px"></p>
       </div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-jurnal">
+      <div id="jurnalQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
     </section>
 
   </main>
@@ -374,6 +382,19 @@ function sana(iso) {
   if (isNaN(d)) return '—';
   return d.toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
+function sanaVaqt(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  if (isNaN(d)) return '—';
+  return d.toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+    ' ' + d.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
+}
+
+var AUDIT_NOMLARI = {
+  login: 'Kirish', revoke_sessions: 'Seanslar tugatildi', set_grade: 'Sinf o\'zgartirildi',
+  grant_unlock: 'Fan ochildi', revoke_unlock: 'Fan yopildi', delete_user: 'Foydalanuvchi o\'chirildi',
+  broadcast: 'Ommaviy xabar yuborildi',
+};
 
 var SUBJECT_NAMES = {
   math: 'Matematika', geometry: 'Geometriya', uzbek: 'Ona tili', literature: 'Adabiyot',
@@ -396,10 +417,15 @@ var SUBJECT_NAMES = {
 function panelniKorsat() {
   document.getElementById('kirishEkran').style.display = 'none';
   document.getElementById('admPanel').classList.add('faol');
-  document.getElementById('foydalanuvchilarCsvHavola').href = AdminAPI.foydalanuvchilarCsv();
-  document.getElementById('tolovlarCsvHavola').href = AdminAPI.tolovlarCsv();
   yuklaStatistika();
 }
+
+document.getElementById('foydalanuvchilarCsvTugma').addEventListener('click', function () {
+  AdminAPI.foydalanuvchilarCsvYukla();
+});
+document.getElementById('tolovlarCsvTugma').addEventListener('click', function () {
+  AdminAPI.tolovlarCsvYukla();
+});
 
 document.getElementById('kirishForma').addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -417,6 +443,15 @@ document.getElementById('kirishForma').addEventListener('submit', async function
 document.getElementById('chiqishTugma').addEventListener('click', function () {
   AdminAPI.chiqish();
   location.reload();
+});
+
+document.getElementById('seanslarniTugatTugma').addEventListener('click', async function () {
+  if (!confirm("Barcha qurilmalardagi admin seanslari (shu jumladan hozirgisi) tugatiladi. Davom etilsinmi?")) return;
+  var res = await AdminAPI.barchaSeanslarniTugat();
+  if (res.ok) {
+    AdminAPI.chiqish();
+    location.reload();
+  }
 });
 
 if (AdminAPI.kirganmi()) panelniKorsat();
@@ -437,6 +472,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'tolovlar' && !yuklandi.tolovlar) { yuklandi.tolovlar = true; yuklaTolovlar(); }
     if (nomi === 'fanlar' && !yuklandi.fanlar) { yuklandi.fanlar = true; yuklaFanlar(); }
     if (nomi === 'faoliyat' && !yuklandi.faoliyat) { yuklandi.faoliyat = true; yuklaFaoliyat(); }
+    if (nomi === 'jurnal' && !yuklandi.jurnal) { yuklandi.jurnal = true; yuklaJurnal(); }
   });
 });
 
@@ -816,6 +852,30 @@ async function yuklaFaoliyat() {
       '<span class="vaqt">' + sana(it.completed_at) + '</span>' +
     '</div>';
   }).join('');
+}
+
+// ─────────────────────── Jurnal (admin audit) ───────────────────────
+
+async function yuklaJurnal() {
+  var quti = document.getElementById('jurnalQuti');
+  var res = await AdminAPI.auditJurnali(150);
+  if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
+
+  if (!res.items.length) {
+    quti.className = 'adm-bosh';
+    quti.textContent = "Hali yozuv yo'q.";
+    return;
+  }
+
+  quti.className = 'adm-jadval-o-rash';
+  quti.innerHTML = '<table class="adm-jadval"><thead><tr>' +
+    '<th>Amal</th><th>Tafsilot</th><th>IP</th><th>Vaqt</th></tr></thead><tbody>' +
+    res.items.map(function (it) {
+      return '<tr><td class="nomzod">' + esc(AUDIT_NOMLARI[it.action] || it.action) + '</td>' +
+        '<td class="kichik">' + esc(it.detail || '') + '</td>' +
+        '<td class="kichik">' + esc(it.ip || '') + '</td>' +
+        '<td>' + sanaVaqt(it.ts) + '</td></tr>';
+    }).join('') + '</tbody></table>';
 }
 
 // ─────────────────────── Xabar (broadcast) ───────────────────────

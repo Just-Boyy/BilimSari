@@ -14,12 +14,15 @@ Progress faqat shu yerdagi funksiyalar orqali o'zgaradi.
 """
 
 import json
+import logging
 import os
 import re
 from datetime import timedelta
 
 import curriculum as cur_mod
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
+
+logger = logging.getLogger('bilimsari')
 
 # Sozlamalar
 QUIZ_PASS_PERCENT = int(os.environ.get('QUIZ_PASS_PERCENT', '70'))
@@ -186,10 +189,16 @@ def sync_curriculum(cur, conn, force=False):
 
     # Kodda endi yo'q fan/mavzularni bazadan ham o'chiramiz (masalan, Algebra
     # Matematikaga birlashtirildi yoki bir fan butunlay olib tashlandi).
+    #
+    # MUHIM: faqat `topics` qatori o'chadi — `user_progress` esa SAQLANIB
+    # QOLADI. Aks holda bir mavzuning slug'ini (yoki fanini) o'zgartirsam,
+    # shu mavzuni tugatgan barcha foydalanuvchilarning progressi ham
+    # bazadan yo'qolib ketardi (topic_id'da FK yo'q, shuning uchun bu
+    # "yetim" qatorlar xatoga sabab bo'lmaydi — ular shunchaki keyingi
+    # JOIN'larda hisobga olinmaydi).
     cur.execute('SELECT id FROM topics')
     stale_topic_ids = {r['id'] for r in cur.fetchall()} - expected_topic_ids
     for tid in stale_topic_ids:
-        cur.execute('DELETE FROM user_progress WHERE topic_id = %s', (tid,))
         cur.execute('DELETE FROM topics WHERE id = %s', (tid,))
 
     cur.execute('SELECT id FROM subjects')
@@ -220,6 +229,7 @@ def _json(value, default):
     try:
         return json.loads(value)
     except Exception:
+        logger.warning('Bazada buzilgan JSON topildi, default qiymat ishlatildi: %r', value)
         return default
 
 

@@ -33,6 +33,30 @@
     return data;
   }
 
+  /** Autentifikatsiyalangan faylni yuklab olish — token URL'da emas,
+   * Authorization sarlavhasida yuboriladi. */
+  async function faylYukla(yo_l, nomi) {
+    var t = token();
+    var javob;
+    try {
+      javob = await fetch(yo_l, { headers: t ? { 'Authorization': 'Bearer ' + t } : {} });
+    } catch (e) {
+      return { ok: false, error: 'Internet aloqasi yo\'q.' };
+    }
+    if (!javob.ok) return { ok: false, error: 'Yuklab bo\'lmadi (' + javob.status + ')' };
+
+    var blob = await javob.blob();
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = nomi;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    return { ok: true };
+  }
+
   var AdminAPI = {
     kirganmi: function () { return !!token(); },
     chiqish: function () { tozalash(); },
@@ -72,22 +96,28 @@
     foydalanuvchiO_chirish: function (id) {
       return so_rov('/api/admin/users/' + id, { method: 'DELETE' });
     },
-    foydalanuvchilarCsv: function () {
-      return '/api/admin/users/export.csv?token=' + encodeURIComponent(token());
+    foydalanuvchilarCsvYukla: function () {
+      return faylYukla('/api/admin/users/export.csv', 'foydalanuvchilar.csv');
     },
 
     fanlar: function () { return so_rov('/api/admin/subjects'); },
     fanMavzulari: function (subjectKey) { return so_rov('/api/admin/subjects/' + subjectKey + '/topics'); },
 
     tolovlar: function (page) { return so_rov('/api/admin/purchases?page=' + (page || 1)); },
-    tolovlarCsv: function () {
-      return '/api/admin/purchases/export.csv?token=' + encodeURIComponent(token());
+    tolovlarCsvYukla: function () {
+      return faylYukla('/api/admin/purchases/export.csv', 'tolovlar.csv');
     },
 
     faoliyat: function (limit) { return so_rov('/api/admin/activity?limit=' + (limit || 50)); },
 
     xabarYuborish: function (matn) {
       return so_rov('/api/admin/broadcast', { method: 'POST', body: { message: matn } });
+    },
+
+    auditJurnali: function (limit) { return so_rov('/api/admin/audit?limit=' + (limit || 100)); },
+
+    barchaSeanslarniTugat: function () {
+      return so_rov('/api/admin/revoke-sessions', { method: 'POST' });
     },
   };
 

@@ -8,13 +8,12 @@ sinf + fan + mavzu doirasida tushuntiradi.
 """
 
 import os
-import time
-from collections import defaultdict, deque
 
 import requests
 from flask import Blueprint, jsonify, request
 
 import curriculum as cur_mod
+import rate_limit
 import study
 from auth_core import auth_required
 from db import get_connection
@@ -29,21 +28,15 @@ GOOGLE_AI_API_KEY = (
 )
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash')
 
-# Oddiy tezlik cheklovi: bitta foydalanuvchi daqiqada N ta so'rov
+# Oddiy tezlik cheklovi: bitta foydalanuvchi daqiqada N ta so'rov. Bazada
+# saqlanadi (rate_limit.py) — gunicorn bir necha worker bilan ishlaganda ham
+# real chegara aynan shu son bo'lib qoladi.
 RATE_LIMIT = int(os.environ.get('AI_RATE_LIMIT', '12'))
 RATE_WINDOW = 60
-_hits = defaultdict(deque)
 
 
 def _rate_ok(user_id) -> bool:
-    now = time.time()
-    q = _hits[user_id]
-    while q and now - q[0] > RATE_WINDOW:
-        q.popleft()
-    if len(q) >= RATE_LIMIT:
-        return False
-    q.append(now)
-    return True
+    return rate_limit.hit(f'ai:{user_id}', RATE_LIMIT, RATE_WINDOW)
 
 
 def _system_prompt(lang, grade=None, subject=None, topic=None, qisqa=True):

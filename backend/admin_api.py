@@ -11,15 +11,16 @@ import hmac
 import io
 import os
 import time
-from collections import defaultdict, deque
 from datetime import timedelta
 
 import requests
 from flask import Blueprint, Response, jsonify, request
 
+import admin_audit
 import curriculum as cur_mod
+import rate_limit
 import study
-from admin_auth import ADMIN_PASSWORD, admin_required, make_admin_token
+from admin_auth import ADMIN_PASSWORD, admin_required, make_admin_token, revoke_all_sessions
 from db import as_utc, get_connection, iso_utc, to_tashkent, utc_now
 
 bp = Blueprint('admin_api', __name__, url_prefix='/api/admin')
@@ -28,10 +29,10 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 
 # Admin login uchun IP bo'yicha urinish cheklovi — parol o'zi cheksiz
 # taxmin qilinishining oldini oladi (hmac.compare_digest faqat vaqt
-# hujumidan himoyalaydi, urinishlar sonini cheklamaydi).
+# hujumidan himoyalaydi, urinishlar sonini cheklamaydi). Bazada saqlanadi,
+# shunda bir necha gunicorn worker orasida ham real chegara bo'lib qoladi.
 LOGIN_RATE_LIMIT = int(os.environ.get('ADMIN_LOGIN_RATE_LIMIT', '5'))
 LOGIN_RATE_WINDOW = int(os.environ.get('ADMIN_LOGIN_RATE_WINDOW', '900'))  # 15 daqiqa
-_login_fails = defaultdict(deque)
 
 
 def _client_ip():
@@ -39,18 +40,6 @@ def _client_ip():
     if fwd:
         return fwd.split(',')[0].strip()
     return request.remote_addr or 'unknown'
-
-
-def _login_blocked(ip):
-    now = time.time()
-    q = _login_fails[ip]
-    while q and now - q[0] > LOGIN_RATE_WINDOW:
-        q.popleft()
-    return len(q) >= LOGIN_RATE_LIMIT
-
-
-def _record_failed_login(ip):
-    _login_fails[ip].append(time.time())
 
 
 @bp.route('/login', methods=['POST'])
@@ -62,7 +51,8 @@ def admin_login():
         }), 503
 
     ip = _client_ip()
-    if _login_blocked(ip):
+    bucket = f'admin_login:{ip}'
+    if rate_limit.is_blocked(bucket, LOGIN_RATE_LIMIT, LOGIN_RATE_WINDOW):
         return jsonify({
             'ok': False,
             'error': "Juda ko'p noto'g'ri urinish. 15 daqiqadan so'ng qayta urinib ko'ring.",
@@ -72,10 +62,29 @@ def admin_login():
     body = request.get_json(silent=True) or {}
     password = body.get('password') or ''
     if not hmac.compare_digest(password, ADMIN_PASSWORD):
-        _record_failed_login(ip)
+        rate_limit.record(bucket)
         return jsonify({'ok': False, 'error': "Parol noto'g'ri"}), 401
 
+    admin_audit.log('login', ip=ip)
     return jsonify({'ok': True, 'token': make_admin_token()})
+
+
+@bp.route('/revoke-sessions', methods=['POST'])
+@admin_required
+def revoke_sessions():
+    revoke_all_sessions()
+    admin_audit.log('revoke_sessions', ip=_client_ip())
+    return jsonify({'ok': True})
+
+
+@bp.route('/audit', methods=['GET'])
+@admin_required
+def audit_log():
+    try:
+        limit = min(200, max(1, int(request.args.get('limit', 100))))
+    except ValueError:
+        limit = 100
+    return jsonify({'ok': True, 'items': admin_audit.recent(limit)})
 
 
 @bp.route('/stats', methods=['GET'])
@@ -388,6 +397,7 @@ def set_grade(user_id):
             return jsonify({'ok': False, 'error': 'Foydalanuvchi topilmadi'}), 404
         cur.execute('UPDATE users SET grade = %s WHERE id = %s', (grade, user_id))
         conn.commit()
+        admin_audit.log('set_grade', detail=f'user_id={user_id} grade={grade}', ip=_client_ip())
         return jsonify({'ok': True})
     finally:
         cur.close()
@@ -414,6 +424,7 @@ def grant_unlock(user_id):
             (user_id, subject_key)
         )
         conn.commit()
+        admin_audit.log('grant_unlock', detail=f'user_id={user_id} subject={subject_key}', ip=_client_ip())
         return jsonify({'ok': True})
     finally:
         cur.close()
@@ -431,6 +442,7 @@ def revoke_unlock(user_id, subject_key):
             (user_id, subject_key)
         )
         conn.commit()
+        admin_audit.log('revoke_unlock', detail=f'user_id={user_id} subject={subject_key}', ip=_client_ip())
         return jsonify({'ok': True})
     finally:
         cur.close()
@@ -443,14 +455,16 @@ def delete_user(user_id):
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('SELECT id FROM users WHERE id = %s', (user_id,))
-        if not cur.fetchone():
+        cur.execute('SELECT id, name FROM users WHERE id = %s', (user_id,))
+        user = cur.fetchone()
+        if not user:
             return jsonify({'ok': False, 'error': 'Foydalanuvchi topilmadi'}), 404
         cur.execute('DELETE FROM user_progress WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM subject_purchases WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM tokens WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM users WHERE id = %s', (user_id,))
         conn.commit()
+        admin_audit.log('delete_user', detail=f'user_id={user_id} name={user["name"]}', ip=_client_ip())
         return jsonify({'ok': True})
     finally:
         cur.close()
@@ -595,6 +609,11 @@ def broadcast():
             failed += 1
         time.sleep(0.05)
 
+    admin_audit.log(
+        'broadcast',
+        detail=f'sent={sent} failed={failed} total={len(chat_ids)} message={message[:120]!r}',
+        ip=_client_ip(),
+    )
     return jsonify({'ok': True, 'sent': sent, 'failed': failed, 'total': len(chat_ids)})
 
 

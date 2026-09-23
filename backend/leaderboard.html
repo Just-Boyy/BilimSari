@@ -71,7 +71,19 @@
     board.forEach((u, i) => {
       const row = document.createElement('div');
       row.className = 'row' + (u.me ? ' me' : '');
-      row.innerHTML = `<div class="rank">${i<3?icon('medal'):(i+1)}</div><div>${u.name}${u.me?' (siz)':''}</div><div class="xp">${u.xp} XP</div>`;
+
+      const rank = document.createElement('div');
+      rank.className = 'rank';
+      rank.innerHTML = i < 3 ? icon('medal') : String(i + 1);
+
+      const nameEl = document.createElement('div');
+      nameEl.textContent = u.name + (u.me ? ' (siz)' : '');
+
+      const xpEl = document.createElement('div');
+      xpEl.className = 'xp';
+      xpEl.textContent = u.xp + ' XP';
+
+      row.append(rank, nameEl, xpEl);
       list.appendChild(row);
     });
   </script>
