@@ -368,6 +368,66 @@ def compute_streak(cur, user_id):
     return streak
 
 
+# ───────────────────────── XP va reyting ─────────────────────────
+
+XP_BASE_PER_TOPIC = 10  # har bir tugallangan mavzu uchun
+
+
+def _topic_xp(quiz_score) -> int:
+    """Bitta mavzu uchun XP: bazaviy ball + testdan olingan foizga qarab
+    bonus (0-10). Uyga vazifa/quiz'siz mavzular ham bazaviy ballni oladi."""
+    return XP_BASE_PER_TOPIC + (quiz_score or 0) // 10
+
+
+def compute_xp(cur, user_id) -> int:
+    cur.execute(
+        'SELECT quiz_score FROM user_progress WHERE user_id = %s AND status = %s',
+        (user_id, STATUS_COMPLETED),
+    )
+    return sum(_topic_xp(row['quiz_score']) for row in cur.fetchall())
+
+
+def leaderboard(cur, user_id, limit=20):
+    """Barcha foydalanuvchilar orasida XP bo'yicha reyting."""
+    cur.execute(
+        'SELECT user_id, quiz_score FROM user_progress WHERE status = %s',
+        (STATUS_COMPLETED,),
+    )
+    xp_by_user = {}
+    for row in cur.fetchall():
+        uid = row['user_id']
+        xp_by_user[uid] = xp_by_user.get(uid, 0) + _topic_xp(row['quiz_score'])
+
+    if not xp_by_user:
+        return {'top': [], 'me': None, 'total_players': 0}
+
+    ids = list(xp_by_user.keys())
+    placeholders = ', '.join(['%s'] * len(ids))
+    cur.execute(f'SELECT id, name, photo_url FROM users WHERE id IN ({placeholders})', ids)
+    info = {row['id']: row for row in cur.fetchall()}
+
+    ranked = sorted(xp_by_user.items(), key=lambda kv: (-kv[1], kv[0]))
+
+    top = []
+    me = None
+    for rank, (uid, xp) in enumerate(ranked, start=1):
+        meta = info.get(uid) or {}
+        entry = {
+            'rank': rank,
+            'user_id': uid,
+            'name': meta.get('name') or "O'quvchi",
+            'photo_url': meta.get('photo_url'),
+            'xp': xp,
+            'me': uid == user_id,
+        }
+        if uid == user_id:
+            me = entry
+        if rank <= limit:
+            top.append(entry)
+
+    return {'top': top, 'me': me, 'total_players': len(ranked)}
+
+
 def format_remaining(seconds: int) -> str:
     seconds = max(0, int(seconds))
     hours = seconds // 3600
@@ -959,6 +1019,7 @@ def dashboard(cur, user_id):
         'today': today,
         'cooldown': cooldown,
         'streak': compute_streak(cur, user_id),
+        'xp': compute_xp(cur, user_id),
         'stats': {
             'completed_topics': completed_total,
             'total_topics': topics_total,

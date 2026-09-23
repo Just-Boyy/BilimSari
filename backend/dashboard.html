@@ -16,6 +16,7 @@
     <div>
       <p class="salom" id="salom">Salom!</p>
     </div>
+    <span class="xp-belgi" id="xpBelgi" hidden></span>
     <div class="avatar-halqa" id="avatarHalqa">
       <div class="avatar" id="avatar" aria-hidden="true"></div>
     </div>
@@ -73,6 +74,10 @@
     // Sarlavha
     var ism = UI.bosh(res.user && res.user.name);
     document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
+
+    var xpBelgi = document.getElementById('xpBelgi');
+    xpBelgi.innerHTML = UI.nishon('zap') + ' ' + (res.xp || 0) + ' XP';
+    xpBelgi.hidden = false;
 
     var av = document.getElementById('avatar');
     if (res.user && res.user.photo_url) {

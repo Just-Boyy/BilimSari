@@ -131,6 +131,7 @@
         method: 'POST', body: { subject_key: fan, slug: slug, answers: javoblar, grade: sinf },
       });
     },
+    reyting: function () { return so_rov('/api/study/leaderboard'); },
     ismYangilash: function (ism) {
       return so_rov('/api/profile/name', { method: 'POST', body: { name: ism } });
     },

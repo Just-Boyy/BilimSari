@@ -245,3 +245,15 @@ def cooldown():
         return jsonify({'ok': True, 'cooldown': study.cooldown_state(cur, request.user['id'])})
     finally:
         _close(conn, cur)
+
+
+@bp.route('/leaderboard', methods=['GET'])
+@auth_required
+def leaderboard():
+    conn, cur = _conn()
+    try:
+        data = study.leaderboard(cur, request.user['id'])
+        data['ok'] = True
+        return jsonify(data)
+    finally:
+        _close(conn, cur)
