@@ -140,6 +140,20 @@ svg { display: block; }
   padding: 20px 14px 8px;
 }
 
+/* Yopishqoq (fixed) yuqori panel — bosh sahifada pastki navigatsiya
+   kabi doim ko'rinib tursin. */
+.shapka-qotgan {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  background: var(--yashil-fon);
+  border-bottom: 1px solid var(--yashil-chegara);
+  padding-top: calc(20px + env(safe-area-inset-top));
+}
+.shapka-qotgan + main {
+  margin-top: calc(80px + env(safe-area-inset-top));
+}
+
 .shapka-qator {
   max-width: 560px;
   margin: 0 auto;
