@@ -132,6 +132,15 @@
       });
     },
     reyting: function () { return so_rov('/api/study/leaderboard'); },
+
+    o_yinSavollari: function (soni) {
+      return so_rov('/api/study/game/questions?count=' + (soni || 10));
+    },
+    o_yinTekshir: function (topicId, qIndex, javob) {
+      return so_rov('/api/study/game/check', {
+        method: 'POST', body: { topic_id: topicId, q_index: qIndex, answer: javob },
+      });
+    },
     ismYangilash: function (ism) {
       return so_rov('/api/profile/name', { method: 'POST', body: { name: ism } });
     },

@@ -257,3 +257,33 @@ def leaderboard():
         return jsonify(data)
     finally:
         _close(conn, cur)
+
+
+@bp.route('/game/questions', methods=['GET'])
+@auth_required
+def game_questions():
+    conn, cur = _conn()
+    try:
+        try:
+            count = min(20, max(1, int(request.args.get('count', 10))))
+        except ValueError:
+            count = 10
+        questions = study.game_questions(cur, request.user['id'], count)
+        return jsonify({'ok': True, 'questions': questions})
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/game/check', methods=['POST'])
+@auth_required
+def game_check():
+    conn, cur = _conn()
+    try:
+        body = request.get_json(silent=True) or {}
+        result = study.game_check_answer(cur, body.get('topic_id'), body.get('q_index'), body.get('answer'))
+        if result is None:
+            return jsonify({'ok': False, 'error': "Savol topilmadi"}), 404
+        result['ok'] = True
+        return jsonify(result)
+    finally:
+        _close(conn, cur)

@@ -39,6 +39,7 @@
   var NAV = [
     { yo_l: 'dashboard.html', nishon: 'home', matn: 'Bosh sahifa' },
     { yo_l: 'subjects.html', nishon: 'library', matn: 'Fanlarim' },
+    { yo_l: 'game.html', nishon: 'brain', matn: "O'yin" },
     { yo_l: 'leaderboard.html', nishon: 'trophy', matn: 'Reyting' },
     { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
   ];

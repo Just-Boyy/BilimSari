@@ -7,7 +7,7 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v7';
+const CACHE = 'bilimsari-v8';
 
 const ASSETS = [
   '/',
@@ -19,6 +19,7 @@ const ASSETS = [
   '/topics.html',
   '/topic.html',
   '/leaderboard.html',
+  '/game.html',
   '/profile.html',
   '/manifest.json',
   '/css/app.css',

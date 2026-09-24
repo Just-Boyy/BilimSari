@@ -17,6 +17,7 @@ import hashlib
 import json
 import logging
 import os
+import random
 import re
 from datetime import timedelta
 
@@ -1085,4 +1086,74 @@ def dashboard(cur, user_id):
             'subjects_count': len(subjects),
             'finished_subjects': sum(1 for s in subjects if s['finished']),
         },
+    }
+
+
+# ───────────────────────── O'yin (mavzudan tashqari mashq) ─────────────────────────
+#
+# Rasmiy dars/progress tizimidan butunlay alohida: bu yerda javob berish
+# hech qanday mavzuni yakunlamaydi, cooldown'ga ta'sir qilmaydi va chaqmoq
+# bermaydi — faqat o'quvchi allaqachon o'qigan darslarini mashq qilish uchun.
+
+def game_questions(cur, user_id, count=10):
+    """O'quvchi darsini o'qigan (lesson_read) mavzulardan tasodifiy test
+    savollari — to'g'ri javob hech qachon frontendga yuborilmaydi."""
+    cur.execute(
+        '''SELECT t.id, t.title, t.subject_key, t.quiz
+           FROM topics t
+           JOIN user_progress p ON p.topic_id = t.id AND p.user_id = %s
+           WHERE p.lesson_read = 1''',
+        (user_id,),
+    )
+    pool = []
+    for row in cur.fetchall():
+        quiz = _json(row['quiz'], [])
+        meta = cur_mod.subject_meta(row['subject_key'])
+        for i, q in enumerate(quiz):
+            pool.append({
+                'topic_id': row['id'],
+                'topic_title': row['title'],
+                'subject_name': meta['name'],
+                'q_index': i,
+                'type': q.get('type', 'mc'),
+                'q': q.get('q'),
+                'options': q.get('options'),
+            })
+    random.shuffle(pool)
+    return pool[:count]
+
+
+def game_check_answer(cur, topic_id, q_index, given):
+    """Bitta o'yin savolini tekshiradi. None qaytsa — savol topilmadi."""
+    cur.execute('SELECT quiz FROM topics WHERE id = %s', (topic_id,))
+    row = cur.fetchone()
+    if not row:
+        return None
+    quiz = _json(row['quiz'], [])
+    try:
+        q_index = int(q_index)
+    except (TypeError, ValueError):
+        return None
+    if q_index < 0 or q_index >= len(quiz):
+        return None
+
+    q = quiz[q_index]
+    qtype = q.get('type', 'mc')
+    ok = False
+    if qtype == 'mc':
+        try:
+            ok = int(given) == int(q.get('answer', 0))
+        except (TypeError, ValueError):
+            ok = False
+    elif qtype == 'tf':
+        if isinstance(given, str):
+            given = given.strip().lower() in ('true', '1', 'ha', "to'g'ri", 'togri')
+        ok = bool(given) == bool(q.get('answer'))
+    else:
+        ok = answers_match(given, q.get('answer'), q.get('accept'))
+
+    return {
+        'correct': ok,
+        'explain': q.get('explain', ''),
+        'correct_answer': _readable_answer(q),
     }

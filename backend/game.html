@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>O'yin — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .oyin-belgi {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 11px;
+    border-radius: 99px;
+    background: var(--yashil-fon);
+    border: 1px solid var(--yashil-chegara);
+    color: var(--yashil-quyuq);
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .oyin-hisob { font-weight: 800; color: var(--yashil-quyuq); }
+</style>
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
+  <h1>O'yin</h1>
+  <span class="oyin-hisob" id="hisobBelgi" hidden></span>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="tana">
+    <div class="skelet" style="height:220px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('game.html');
+
+  var savollar = [];
+  var indeks = 0;
+  var togri = 0;
+  var javobBerildi = false;
+
+  var tana = document.getElementById('tana');
+  var hisobBelgi = document.getElementById('hisobBelgi');
+
+  function hisobniYangila() {
+    hisobBelgi.textContent = togri + ' / ' + indeks;
+    hisobBelgi.hidden = indeks === 0;
+  }
+
+  async function boshlash() {
+    tana.innerHTML = UI.yuklanmoqda('Savollar tayyorlanmoqda...');
+    var res = await API.o_yinSavollari(10);
+    if (!res.ok) { tana.innerHTML = UI.xatoHolat(res.error, boshlash); return; }
+
+    savollar = res.questions || [];
+    indeks = 0;
+    togri = 0;
+    hisobniYangila();
+
+    if (!savollar.length) {
+      tana.innerHTML = UI.holat({
+        belgi: 'brain',
+        sarlavha: "Hali mashq qilinadigan mavzu yo'q",
+        matn: "Avval kamida bitta darsni o'qing, keyin shu yerda o'sha mavzulardan savollar bilan mashq qilasiz.",
+        tugma: 'Darslarga o\'tish', tugmaYo_l: 'dashboard.html',
+      });
+      return;
+    }
+
+    savolChiz();
+  }
+
+  function savolChiz() {
+    javobBerildi = false;
+    var s = savollar[indeks];
+    var jami = savollar.length;
+
+    var chiziqlar = savollar.map(function (_, i) {
+      return '<i class="' + (i < indeks ? 'bajarildi' : (i === indeks ? 'joriy' : '')) + '"></i>';
+    }).join('');
+
+    var kirish = '';
+    if (s.type === 'mc') {
+      kirish = '<div class="variantlar">' + (s.options || []).map(function (o, i) {
+        return '<button class="variant" data-javob="' + i + '">' +
+          '<span class="harf" aria-hidden="true">' + 'ABCD'[i] + '</span>' +
+          '<span>' + UI.esc(o) + '</span></button>';
+      }).join('') + '</div>';
+    } else if (s.type === 'tf') {
+      kirish = '<div class="variantlar">' +
+        '<button class="variant" data-javob="true">' +
+          '<span class="harf">' + UI.nishon('check') + '</span><span>To\'g\'ri</span></button>' +
+        '<button class="variant" data-javob="false">' +
+          '<span class="harf">' + UI.nishon('x') + '</span><span>Noto\'g\'ri</span></button>' +
+        '</div>';
+    } else {
+      kirish = '<input class="kiritish" id="oyinMatn" placeholder="Javobingizni yozing" autocomplete="off" maxlength="120">' +
+        '<button class="tugma" id="oyinYubor" style="margin-top:12px">Javob berish</button>';
+    }
+
+    tana.innerHTML =
+      '<div class="quiz-progress" aria-hidden="true">' + chiziqlar + '</div>' +
+      '<div class="oyin-belgi">' + UI.esc(s.subject_name) + ' — ' + UI.esc(s.topic_title) + '</div>' +
+      '<div class="karta">' +
+        '<p class="savol-son">' + (indeks + 1) + '-savol, jami ' + jami + ' ta</p>' +
+        '<p class="savol-matn">' + UI.matnHtml(s.q) + '</p>' +
+        kirish +
+      '</div>' +
+      '<div id="natijaBlok"></div>';
+
+    tana.querySelectorAll('.variant').forEach(function (b) {
+      b.onclick = function () {
+        if (javobBerildi) return;
+        var v = b.dataset.javob;
+        javobYubor((v === 'true') ? true : (v === 'false' ? false : Number(v)), b);
+      };
+    });
+
+    var yuborTugma = document.getElementById('oyinYubor');
+    if (yuborTugma) {
+      var matn = document.getElementById('oyinMatn');
+      yuborTugma.onclick = function () {
+        if (javobBerildi || !matn.value.trim()) return;
+        javobYubor(matn.value.trim(), null);
+      };
+      matn.onkeydown = function (e) { if (e.key === 'Enter') yuborTugma.click(); };
+      setTimeout(function () { matn.focus(); }, 100);
+    }
+  }
+
+  async function javobYubor(javob, tugma) {
+    javobBerildi = true;
+    tana.querySelectorAll('.variant').forEach(function (b) { b.disabled = true; });
+    var yuborTugma = document.getElementById('oyinYubor');
+    if (yuborTugma) yuborTugma.disabled = true;
+
+    var s = savollar[indeks];
+    var res = await API.o_yinTekshir(s.topic_id, s.q_index, javob);
+    if (!res.ok) {
+      document.getElementById('natijaBlok').innerHTML =
+        '<div class="tushuntirish xato">' + UI.esc(res.error || 'Xatolik yuz berdi') + '</div>';
+      javobBerildi = false;
+      return;
+    }
+
+    if (tugma) tugma.classList.add(res.correct ? 'to-g-ri' : 'xato');
+    if (res.correct) togri++;
+
+    document.getElementById('natijaBlok').innerHTML =
+      '<div class="vazifa ' + (res.correct ? 'to-g-ri' : 'xato') + '" style="margin-top:12px">' +
+        '<div class="savol"><span class="raqam' + (res.correct ? ' to-g-ri' : ' xato') + '">' +
+          UI.nishon(res.correct ? 'check' : 'x') + '</span>' +
+          '<span>' + (res.correct ? "To'g'ri!" : "Noto'g'ri") + '</span></div>' +
+        (res.correct ? '' :
+          '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' + UI.esc(res.correct_answer) + '</b>' +
+            UI.esc(res.explain) + '</div>') +
+      '</div>' +
+      '<button class="tugma" id="keyingiTugma" style="margin-top:14px">' +
+        (indeks + 1 === savollar.length ? "Yakunlash" : 'Keyingi savol') +
+      '</button>';
+
+    hisobniYangila();
+    indeks++;
+    document.getElementById('keyingiTugma').onclick = function () {
+      if (indeks < savollar.length) savolChiz();
+      else yakunKorsat();
+    };
+  }
+
+  function yakunKorsat() {
+    tana.innerHTML = UI.holat({
+      belgi: 'trophy',
+      sarlavha: togri + ' / ' + savollar.length + " to'g'ri",
+      matn: "Ajoyib mashq bo'ldi! Yana bir bor sinab ko'rasizmi?",
+    }) + '<button class="tugma" id="qaytaOyna" style="margin-top:6px">Qayta o\'ynash</button>';
+    document.getElementById('qaytaOyna').onclick = boshlash;
+  }
+
+  boshlash();
+})();
+</script>
+</body>
+</html>
