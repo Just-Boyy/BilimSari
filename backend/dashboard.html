@@ -76,7 +76,7 @@
     document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
 
     var xpBelgi = document.getElementById('xpBelgi');
-    xpBelgi.innerHTML = UI.nishon('zap') + ' ' + (res.xp || 0) + ' XP';
+    xpBelgi.innerHTML = UI.nishon('zap', 'nishon') + '<span>' + (res.xp || 0) + ' XP</span>';
     xpBelgi.hidden = false;
 
     var av = document.getElementById('avatar');
