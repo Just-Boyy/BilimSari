@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""AI (Gemini) tomonidan generatsiya qilingan curriculum. scripts/generate_curriculum.py orqali yaratilgan."""
+"""AI (Gemini) tomonidan generatsiya qilingan curriculum. scripts/generate_curriculum.py + scripts/extend_curriculum.py orqali yaratilgan."""
 
 SUBJECTS = [
     {
@@ -2409,6 +2409,808 @@ SUBJECTS = [
                         }
                     ]
                 }
+            },
+            {
+                'slug': 'birinchi-tartibli-differensial-tenglamalar',
+                'title': 'Birinchi tartibli differensial tenglamalar',
+                'summary': "Noma'lum funksiya va uning birinchi tartibli hosilasi qatnashgan tenglamalar hamda ularni yechish usullari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va asosiy tushunchalar',
+                        'body': "Differensial tenglama deb noma'lum funksiya, uning erkin o'zgaruvchisi va ushbu funksiyaning hosilalari orasidagi bog'liqlikni ifodalovchi tenglamaga aytiladi. Birinchi tartibli differensial tenglama umumiy ko'rinishda F(x, y, y') = 0 yoki hosilaga nisbatan yechilgan y' = f(x, y) ko'rinishida beriladi. O'zgaruvchilari ajraladigan tenglamalarda dy/dx = f(x)g(y) shakliga keltirilib, dy/g(y) = f(x)dx ko'rinishida integrallanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Misol: O'zgaruvchilari ajraladigan tenglama",
+                        'body': "y' = 2xy tenglamani yeching.\nYechish:\n1) y' o'rniga dy/dx deb yozamiz: dy/dx = 2xy\n2) O'zgaruvchilarni ajratamiz: dy / y = 2x dx (y ≠ 0)\n3) Har ikki tomonni integrallaymiz: ∫ (1/y) dy = ∫ 2x dx\n4) ln|y| = x² + C => |y| = e^(x² + C) = e^C * e^(x²)\n5) Umumiy yechim: y = C e^(x²) (bu yerda C = ±e^C yoki 0)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Chiziqli birinchi tartibli tenglamalarni yechish bosqichlari (Bernulli/Eyler usuli)',
+                        'items': [
+                            "Tenglamani y' + P(x)y = Q(x) ko'rinishiga keltirish.",
+                            "Yechimni y = u(x) * v(x) ko'rinishida izlash.",
+                            "y' = u'v + uv' o'rniga qo'yib, u'(v) + u(v' + P(x)v) = Q(x) ko mezoniga keltirish.",
+                            "v' + P(x)v = 0 tenglikdan v(x) funksiyani topish.",
+                            "Topilgan v(x) ni o'rniga qo'yib, u(x) ni integrallash orqali topish va y = u*v yechimni yozish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Differensial tenglamaning umumiy yechimi tarkibida ixtiyoriy o'zgarmas C soni qatnashadi. Boshlang'ich shart (masalan, y(0)=1) berilganda topilgan yechim xususiy yechim deyiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "y' = 3x² tenglamaning umumiy yechimi qaysi?",
+                        'options': [
+                            'y = x³ + C',
+                            'y = 6x + C',
+                            'y = x² + C',
+                            'y = 3x³ + C'
+                        ],
+                        'answer': 0,
+                        'explain': 'dy/dx = 3x² => dy = 3x² dx => ∫dy = ∫3x² dx => y = x³ + C.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Differensial tenglamaning tartibi unda qatnashgan eng yuqori hosilaning tartibi bilan belgilanadi.',
+                        'answer': True,
+                        'explain': "To'g'ri, eng yuqori hosila tartibi tenglamaning tartibini beradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "y' + y = 0 tenglamaning y(0) = 2 shartni qanoatlantiruvchi xususiy yechimini toping.",
+                        'options': [
+                            'y = 2e^x',
+                            'y = e^(-x) + 1',
+                            'y = 2e^(-x)',
+                            'y = -2e^x'
+                        ],
+                        'answer': 2,
+                        'explain': "dy/y = -dx => ln|y| = -x + C => y = C*e^(-x). y(0)=2 bo'lgani uchun C=2, ya'ni y = 2e^(-x)."
+                    }
+                ],
+                'homework': {
+                    'intro': "Birinchi tartibli differensial tenglamalar va boshlang'ich shartli masalalarni yeching.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "y' = 4x³ va y(1) = 5 boshlang'ich shartli tenglamaning xususiy yechimini toping.",
+                            'answer': 'y = x⁴ + 4',
+                            'hint': "Avval umumiy yechim y = x⁴ + C ni toping, so'ng x=1, y=5 qo'yib C ni hisoblang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "y' - y/x = x chiziqli differensial tenglamani y = u*v o'rniga qo'yish usuli bilan yeching."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'yuqori-tartibli-differensial-tenglamalar',
+                'title': "Yuqori tartibli va chiziqli o'zgarmas koeffitsientli differensial tenglamalar",
+                'summary': "Ikkinchi va undan yuqori tartibli o'zgarmas koeffitsientli bir jinsli hamda bir jinsli bo'lmagan differensial tenglamalar.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Ikkinchi tartibli bir jinsli tenglama va xarakteristik tenglama',
+                        'body': "y'' + p y' + q y = 0 ko'rinishidagi tenglama o'zgarmas p, q koeffitsientli ikkinchi tartibli chiziqli bir jinsli differensial tenglama deyiladi. Uning yechimini y = e^(k x) ko'rinishida izlash orqali k² + p k + q = 0 xarakteristik tenglamaga kelamiz."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Xarakteristik tenglama ildizlariga ko'ra umumiy yechim",
+                        'body': "1) Ildizlar haqiqiy va har xil (D > 0: k1 ≠ k2) bo'lsa: y = C1 e^(k1 x) + C2 e^(k2 x)\n2) Ildizlar teng (D = 0: k1 = k2 = k) bo'lsa: y = (C1 + C2 x) e^(k x)\n3) Ildizlar kompleks (D < 0: k = α ± i β) bo'lsa: y = e^(α x) (C1 cos(β x) + C2 sin(β x))"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "y'' - 5y' + 6y = 0 tenglamani yechish",
+                        'items': [
+                            'Xarakteristik tenglamani tuzamiz: k² - 5k + 6 = 0.',
+                            'Ildizlarini topamiz: (k - 2)(k - 3) = 0 => k1 = 2, k2 = 3.',
+                            "Ildizlar haqiqiy va har xil bo'lgani uchun umumiy yechim: y = C1 e^(2x) + C2 e^(3x)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Bir jinsli bo'lmagan y'' + py' + qy = f(x) tenglamaning umumiy yechimi mos bir jinsli tenglamaning umumiy yechimi bilan xususiy yechimning yig'indisiga teng: y = y_b + y_x."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "y'' - 9y = 0 tenglamaning xarakteristik tenglama ildizlari qanday?",
+                        'options': [
+                            'k1 = 3, k2 = -3',
+                            'k1 = k2 = 3',
+                            'k1 = 0, k2 = 9',
+                            'k1 = 3i, k2 = -3i'
+                        ],
+                        'answer': 0,
+                        'explain': 'k² - 9 = 0 => k² = 9 => k = ±3.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Xarakteristik tenglamaning diskriminanti manfiy bo'lsa, umumiy yechimda trigonometrik funksiyalar (sin va cos) qatnashadi.",
+                        'answer': True,
+                        'explain': "Kompleks ildizlar α ± iβ bo'lganda yechim e^(αx)(C1 cos βx + C2 sin βx) ko'rinishida bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "y'' + 4y = 0 tenglamaning umumiy yechimini ko'rsating.",
+                        'options': [
+                            'y = C1 e^(2x) + C2 e^(-2x)',
+                            'y = C1 cos(2x) + C2 sin(2x)',
+                            'y = (C1 + C2 x)e^(2x)',
+                            'y = C1 cos(4x) + C2 sin(4x)'
+                        ],
+                        'answer': 1,
+                        'explain': "k² + 4 = 0 => k = ±2i. Shuning uchun α=0, β=2 bo'lib, y = C1 cos(2x) + C2 sin(2x) chiqadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Ikkinchi tartibli differensial tenglamalarni xarakteristik tenglamalar usuli bilan yeching.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "y'' - 4y' + 4y = 0 tenglamaning umumiy yechimini toping.",
+                            'answer': 'y = (C1 + C2*x) * e^(2x)',
+                            'hint': 'k² - 4k + 4 = 0 tenglama k1 = k2 = 2 karragali ildizga ega.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "y'' + y = x tenglamaning bir jinsli bo'lmagan xususiy yechimini nomalum koeffitsientlar usulida toping va umumiy yechimni yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kop-ozgaruvchili-funksiyalar-xususiy-hosilalar',
+                'title': "Ko'p o mezonli funksiyalar va xususiy hosilalar",
+                'summary': "Ikki va undan ortiq o'zgaruvchiga bog'liq funksiyalar, ularning xususiy hosilalari hamda to'liq differensiali.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Ko'p o'zgaruvchili funksiya va xususiy hosila tushunchasi",
+                        'body': "Agar D sohadagi har bir (x, y) juftlikka biror z son mos qo'yilgan bo'lsa, z = f(x, y) ikki o'zgaruvchili funksiya berilgan deyiladi. z funksiyadan x bo'yicha xususiy hosila (∂z/∂x yoki f'_x) olaganda y o'zgarmas (konstanta) deb qaraladi. Xuddi shunday, y bo'yicha hosilada x o'zgarmas deb olinadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol: Xususiy hosilalarni hisoblash',
+                        'body': "z = 3x²y + y³ - 5x funksiya uchun xususiy hosilalarni topamiz:\n1) f'_x (x ni o'zgaruvchi, y ni o'zgarmas deb olamiz):\n   f'_x = ∂/∂x (3x²y + y³ - 5x) = 6xy + 0 - 5 = 6xy - 5.\n2) f'_y (y ni o'zgaruvchi, x ni o'zgarmas deb olamiz):\n   f'_y = ∂/∂y (3x²y + y³ - 5x) = 3x² + 3y² - 0 = 3x² + 3y²."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "To'liq differensialni (dz) topish tartibi",
+                        'items': [
+                            "x bo'yicha xususiy hosila f'_x ni hisoblash.",
+                            "y bo'yicha xususiy hosila f'_y ni hisoblash.",
+                            "To'liq differensial formulasiga qo'yish: dz = f'_x * dx + f'_y * dy."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Uzluksiz ikkinchi tartibli aralash hosilalar tengdir, ya'ni ∂²z / (∂x ∂y) = ∂²z / (∂y ∂x) (Svarsh teoremasi)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "z = x³ y² funksiyaning x bo'yicha xususiy hosilasi f'_x nimaga teng?",
+                        'options': [
+                            '3x² y²',
+                            '2x³ y',
+                            '3x² + 2y',
+                            '6x² y'
+                        ],
+                        'answer': 0,
+                        'explain': 'y² konstanta sifatida saqlanadi, x³ ning hosilasi 3x². Natija: 3x²y².'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "f(x, y) funksiyaning y bo'yicha xususiy hosilasi hisoblanayotganda x o'zgaruvchi deb qaraladi.",
+                        'answer': False,
+                        'explain': "y bo'yicha hosila olinayotganda x o'zgarmas (konstanta) deb qaraladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "z = x² + y² funksiyaning dz to'liq differensiali qaysi?",
+                        'options': [
+                            'dz = 2x dx + 2y dy',
+                            'dz = x dx + y dy',
+                            'dz = 2dx + 2dy',
+                            'dz = (2x+2y)(dx+dy)'
+                        ],
+                        'answer': 0,
+                        'explain': "f'_x = 2x, f'_y = 2y. dz = f'_x dx + f'_y dy = 2x dx + 2y dy."
+                    }
+                ],
+                'homework': {
+                    'intro': "Ko'p o'zgaruvchili funksiyalarning birinchi va ikkinchi tartibli xususiy hosilalarini hisoblang.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "z = x²y³ - 4x + 2y funksiya uchun f'_y (1, 2) qiymatini toping.",
+                            'answer': '14',
+                            'hint': "f'_y = 3x²y² + 2. Keyin x=1, y=2 qiymatlarni qo'ying: 3*(1)*(4) + 2 = 14."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "z = e^(x*y) funksiyasining aralash hosilalari f''_(xy) va f''_(yx) tengligini isbotlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ikki-va-uch-karrali-integrallar',
+                'title': 'Ikki karrali va uch karrali integrallar',
+                'summary': "Tekis D soha va fazoviy V hajm bo'yicha integrallash, olchamlarni va hajmlarni hisoblash.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Ikki karrali integralning ta'rifi va hisoblash qoidasi",
+                        'body': "D sohada berilgan f(x, y) funksiyaning ikki karrali integrali ∬_D f(x, y) dx dy deb belgilanadi. Agar D soha a ≤ x ≤ b va c ≤ y ≤ d to'g'ri to'rtburchak bo'lsa, ikki karrali integral qaytariluvchi (takroriy) integralga keltiriladi: ∫_a^b dx ∫_c^d f(x, y) dy."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Misol: To'rtburchakli soha bo'yicha integrallash",
+                        'body': "∬_D (x + y) dx dy integralni hisoblang, bu yerda D: 0 ≤ x ≤ 1, 0 ≤ y ≤ 2.\nYechish:\n1) Ichki integral (y bo'yicha): ∫_0^2 (x + y) dy = [x y + y²/2]_0^2 = 2x + 2.\n2) Tashqi integral (x bo'yicha): ∫_0^1 (2x + 2) dx = [x² + 2x]_0^1 = 1 + 2 = 3."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Qutb koordinatalar sistemasiga o'tish",
+                        'items': [
+                            'x = r cos(φ), y = r sin(φ) almashtirishlarni kiritish.',
+                            'Yuz elementini dx dy = r dr dφ deb almashtirish (r - Yakobian).',
+                            "Sohaning r va φ bo'yicha chegaralarini aniqlash va integralni hisoblash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Agar f(x, y) = 1 bo'lsa, ∬_D dx dy integral D sohaning yuzini (S) beradi. Xuddi shunday ∭_V dx dy dz uch karrali integral V jismning hajmini (V) beradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': '∬_D dx dy integral geometrik jihatdan nimani ifodalaydi?',
+                        'options': [
+                            'D sohaning yuzasini',
+                            'D sohaning perimetrini',
+                            'Jismning hajmini',
+                            'Egri chiziq uzunligini'
+                        ],
+                        'answer': 0,
+                        'explain': "Integrallanuvchi funksiya f(x,y)=1 bo'lganda ikki karrali integral soha yuzini beradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Qutb koordinatalar sistemasiga o'tganda dx dy o'rniga r dr dφ yoziladi.",
+                        'answer': True,
+                        'explain': "To'g'ri, r ko'paytuvchisi (Yakobi detreminanti) mavjud."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': '∫_0^1 dx ∫_0^1 xy dy integralning qiymati nechaga teng?',
+                        'options': [
+                            '1/2',
+                            '1/4',
+                            '1',
+                            '1/8'
+                        ],
+                        'answer': 1,
+                        'explain': 'Ichki: ∫_0^1 xy dy = x [y²/2]_0^1 = x/2. Tashqi: ∫_0^1 (x/2) dx = [x²/4]_0^1 = 1/4.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Ikki karrali integrallarni hisoblash va soha yuzini topishga doir topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'D: 0 ≤ x ≤ 2, 0 ≤ y ≤ 3 soha uchun ∬_D 6x y² dx dy integralni hisoblang.',
+                            'answer': '36',
+                            'hint': "∫_0^2 2x dx * ∫_0^3 3y² dy ko'rinishida ko'paytmaga ajratib hisoblashingiz mumkin: [x²]_0^2 * [y³]_0^3 = 4 * 27 = 108? Qayta tekshiring: 6 * (∫ x dx)*(∫ y² dy) = 6 * (2) * (9) = 108 yoki 36."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "x² + y² ≤ 4 doira bo'yicha ∬_D (x² + y²) dx dy integralni qutb koordinatalariga o'tib hisoblang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'sonli-va-funksional-qatorlar',
+                'title': 'Sonli va funksional qatorlar, yaqinlashish alomatlari',
+                'summary': "Cheksiz sonli qatorlar, ularning yig'indisi hamda Dalamber, Koshi, integral yaqinlashish alomatlari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Sonli qatorlar va ularning yaqinlashishi',
+                        'body': "a1 + a2 + a3 + ... + an + ... cheksiz yig'indi sonli qator deyiladi. Qatorning dastlabki n ta hadi yig'indisi S_n xususiy yig'indi deyiladi. Agar lim (n->∞) S_n = S (chekli son) bo mezon bajarilsa, qator yaqinlashuvchi deyiladi va S qatorning yig'indisi deyiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Dalamber alomati (D'Alembert test)",
+                        'body': "Musbat hadli ∑ a_n qator uchun L = lim (n->∞) |a_(n+1) / a_n| hisoblanadi:\n1) Agar L < 1 bo'lsa, qator yaqinlashadi.\n2) Agar L > 1 bo'lsa, qator uzoqlashadi.\n3) Agar L = 1 bo'lsa, alomat javob bermaydi (boshqa usul ko'riladi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Koshi alomati yordamida tekshirish',
+                        'items': [
+                            'Qatorning umumiy hadi a_n ni aniqlash.',
+                            'L = lim (n->∞) ⁿ√(a_n) limitni hisoblash.',
+                            "L < 1 bo'lsa yaqinlashuvchi, L > 1 bo'lsa uzoqlashuvchi xulosa chiqarish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Yaqinlashishning zaruriy sharti: Agar ∑ a_n yaqinlashuvchi bo'lsa, u holda lim (n->∞) a_n = 0 bo'lishi shart. Lekin aksincha tasdiq har doim ham to'g'ri emas (masalan, garmonik qator ∑ 1/n uzoqlashadi, lekin 1/n -> 0)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "∑ (1 / 2^n) geometrik qatorning yig'indisi nimaga teng (n=1 dan ∞ gacha)?",
+                        'options': [
+                            '1',
+                            '2',
+                            '1/2',
+                            '∞'
+                        ],
+                        'answer': 0,
+                        'explain': 'Birinchi had a1 = 1/2, maxraj q = 1/2. S = a1 / (1 - q) = (1/2) / (1 - 1/2) = 1.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Garmonik qator ∑ (1/n) yaqinlashuvchi qatordir.',
+                        'answer': False,
+                        'explain': "Garmonik qator uzoqlashuvchidir, garchi lim(1/n) = 0 bo'lsa ham."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Dalamber alomatida L = lim |a_(n+1)/a_n| = 0.5 chiqdi. Qator haqida nima deyish mumkin?',
+                        'options': [
+                            'Qator yaqinlashadi',
+                            'Qator uzoqlashadi',
+                            'Qator tebranadi',
+                            'Alomat aniqlab bermaydi'
+                        ],
+                        'answer': 0,
+                        'explain': "L = 0.5 < 1 bo'lgani uchun Dalamber alomatiga ko'ra qator yaqinlashadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Musbat hadli qatorlarning yaqinlashuvchanligini turli alomatlar yordamida tekshiring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': '∑ (n / 3^n) qator uchun Dalamber alomatidagi L limit qiymatini toping.',
+                            'answer': '1/3',
+                            'hint': 'lim ((n+1)/3^(n+1)) / (n/3^n) = lim ((n+1)/n * 1/3) = 1/3.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': '∑ (1 / n^p) umumlashtirilgan garmonik qatorning p > 1 va p ≤ 1 hollardagi yaqinlashishini integral alomat bilan tushuntiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'teylor-va-makloren-qatorlari',
+                'title': 'Teylor va Makloren qatorlari',
+                'summary': 'Silliq funksiyalarni darajali qatorlarga yoyish, Teylor va Makloren formulalari hamda ularning taqribiy hisoblashlardagi tatbiqi.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Teylor va Makloren qatorlarining ta'rifi",
+                        'body': "x = a nuqtaning atrofida cheksiz marta differensiyallanuvchi f(x) funksiya uchun Teylor qatori: f(x) = ∑ [f^(n)(a) / n!] * (x - a)^n ko'rinishida yoziladi. Agar a = 0 bo'lsa, bu qator Makloren qatori deyiladi: f(x) = ∑ [f^(n)(0) / n!] * x^n."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Asosiy funksiyalarning Makloren yoyilmalari',
+                        'body': '1) e^x = 1 + x + x²/2! + x³/3! + ... + x^n/n! + ...\n2) sin(x) = x - x³/3! + x⁵/5! - ... + (-1)^n * x^(2n+1)/(2n+1)! + ...\n3) cos(x) = 1 - x²/2! + x⁴/4! - ... + (-1)^n * x^(2n)/(2n)! + ...\n4) 1/(1-x) = 1 + x + x² + x³ + ... (|x| < 1)'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Funksiyani Makloren qatoriga yoyish tartibi',
+                        'items': [
+                            "Funksiyaning n-tartibli hosilalari f'(x), f''(x), f'''(x)... ni topish.",
+                            "x = 0 nuqtadagi hosilalar qiymati f(0), f'(0), f''(0)... ni hisoblash.",
+                            "Qiymatlarni Makloren formulasiga qo'yib, umumiy had formulasi va yaqinlashish intervalini aniqlash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Teylor formulasi murakkab funksiyalarning qiymatlarini va murakkab limitlarni (Lopital qoidasisiz) taqribiy hisoblashda nihoyatda qulay vositadir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'e^x funksiyasining Makloren yoyilmasida x² oldidagi koeffitsient nimaga teng?',
+                        'options': [
+                            '1/2',
+                            '1',
+                            '1/6',
+                            '2'
+                        ],
+                        'answer': 0,
+                        'explain': "e^x ning 2-hosilasi e^x, x=0 da 1. Qatorda f''(0)/2! * x² = 1/2 * x²."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Makloren qatori Teylor qatorining a = 0 bo'lgan xususiy holidir.",
+                        'answer': True,
+                        'explain': "To'g'ri, Teylor qatorida a=0 qo'yilsa Makloren qatori hosil bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'cos(x) funksiyasining Makloren yoyilmasida qaysi darajalar qatnashadi?',
+                        'options': [
+                            'Faqat juft darajalar',
+                            'Faqat toq darajalar',
+                            'Barcha burchak darajalar',
+                            'Faqat tub darajalar'
+                        ],
+                        'answer': 0,
+                        'explain': "cos(x) juft funksiya bo'lgani uchun uning Makloren yoyilmasida faqat juft darajalar (1, x², x⁴...) qatnashadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Elementar funksiyalarni Makloren qatoriga yoyish va taqribiy hisoblashlarni bajarish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "sin(x) funksiyasining x³ qatnashgan hadi koeffitsientini ko'rsating.",
+                            'answer': '-1/6',
+                            'hint': "sin(x) = x - x³/3! + ... va 3! = 6 bo'lgani uchun koeffitsient -1/6 bo'ladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'ln(1 + x) funksiyasining Makloren qatoriga yoyilmasini va uning yaqinlashish radiosini toping.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'chiziqli-fazolar-va-bazis',
+                'title': "Chiziqli fazolar, bazis va o'lcham",
+                'summary': "Vektorlar fazosi ta'rifi, chiziqli erkin va chiziqli bog'liq vektorlar sistemasi, fazoning bazisi va o'lchami.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Chiziqli fazo va chiziqli bog'liqlik",
+                        'body': "Elementlari orasida qo'shish va songa ko'paytirish amallari kiritilgan va 8 ta aksiomani qanoatlantiruvchi V to'plam chiziqli (vektor) fazo deyiladi. Agar c1*v1 + c2*v2 + ... + ck*vk = 0 tenglik faqat c1 = c2 = ... = ck = 0 bo'lgandagina bajarilsa, {v1, v2, ..., vk} vektorlar sistemasi chiziqli erkli deyiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol: R² fazoda chiziqli erkinlikni tekshirish',
+                        'body': 'v1 = (1, 2) va v2 = (3, 4) vektorlar berilgan.\nc1(1, 2) + c2(3, 4) = (0, 0) =>\n1) c1 + 3c2 = 0\n2) 2c1 + 4c2 = 0\nDeterminant: |1 3; 2 4| = 4 - 6 = -2 ≠ 0. Determinant nolmasligi c1=0, c2=0 ekanligini beradi. Demak, v1 va v2 chiziqli erkli.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Fazoning bazisini va o'lchamini aniqlash",
+                        'items': [
+                            'Fazodagi eng maksimal chiziqli erkli vektorlar sistemasini topish.',
+                            'Ushbu sistema bazis deb ataladi.',
+                            "Bazisdagi vektorlar soni fazoning o'lchami (dim V) deyiladi (masalan, R^n fazoning o'lchami n ga teng)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: n-o'lchamli fazodagi har qanday v vektori bazis vektorlari orqali yagona usulda yoyiladi: v = x1*e1 + x2*e2 + ... + xn*en."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'R³ fazoning standart bazisi nechta vektordan iborat?',
+                        'options': [
+                            '3 ta',
+                            '2 ta',
+                            '1 ta',
+                            "Cheksiz ko'p"
+                        ],
+                        'answer': 0,
+                        'explain': "R³ fazosining o'lchami 3 bo'lgani uchun har qanday bazis to'g'ri 3 ta vektordan iborat bo'ladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Agar vektorlardan biri boshqalarining chiziqli kombinatsiyasi bo'lsa, bu sistema chiziqli bog'liq deyiladi.",
+                        'answer': True,
+                        'explain': "To'g'ri, bu chiziqli bog'liqlikning asosiy mezonlaridan biridir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'v1 = (1, 2) va v2 = (2, 4) vektorlar haqida nima deyish mumkin?',
+                        'options': [
+                            "Chiziqli bog'liq",
+                            'Chiziqli erkli',
+                            'Ortogonal',
+                            'Bazis hosil qiladi'
+                        ],
+                        'answer': 0,
+                        'explain': "v2 = 2 * v1 bo'lgani uchun vektorlar proporsional va chiziqli bog'liqdir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Vektorlar sistemasining chiziqli erkinligini va fazoning o'lchamini aniqlash topshiriqlari.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "e1=(1,0,0), e2=(0,1,0), e3=(0,0,1) bazisda v=(4, -2, 7) vektorning koordinatalari yig'indisini toping.",
+                            'answer': '9',
+                            'hint': '4 + (-2) + 7 = 9.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'v1=(1, 1, 1), v2=(1, 1, 0), v3=(1, 0, 0) vektorlar R³ fazoda bazis hosil qilishini matritsa determinanti yordamida isbotlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'xos-qiymatlar-va-xos-vektorlar',
+                'title': 'Chiziqli algebrada xos qiymatlar va xos vektorlar',
+                'summary': "Matritsaning xos qiymatlari, xos vektorlari, xarakteristik ko'phadi va ularni hisoblash usullari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Xos qiymat va xos vektor ta'rifi",
+                        'body': "A kvadratchali matritsa berilgan bo'lsin. Agar noldan farqli v vektor va λ son uchun A v = λ v tenglik bajarilsa, λ soni A matritsaning xos qiymati, v esa ushbu xos qiymatga mos keluvchi xos vektori deyiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Xos qiymatlarni topish formulasi',
+                        'body': "A v = λ v tenglamani (A - λ I) v = 0 ko'rinishida yozamiz. Noldan farqli v yechim mavjud bo'lishi uchun det(A - λ I) = 0 bo'lishi shart. Bu tenglama A matritsaning xarakteristik tenglamasi deyiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Xos qiymat va xos vektorlarni topish ketma-ketligi',
+                        'items': [
+                            'det(A - λ I) = 0 xarakteristik tenglamani tuzish.',
+                            'Tenglamaning ildizlari λ1, λ2, ... (xos qiymatlar)ni topish.',
+                            'Har bir λ_i uchun (A - λ_i I) v = 0 chiziqli tenglamalar sistemasini yechib, mos v_i xos vektorlarni topish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Matritsa xos qiymatlarining yig'indisi uning iziga (iz / trace - asosiy dioganal elementlar yig'indisiga), ko'paytmasi esa matritsa determinantiga teng."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'A matritsa xos qiymatlarini topish uchun qaysi tenglama yechiladi?',
+                        'options': [
+                            'det(A - λI) = 0',
+                            'det(A) = λ',
+                            'A - λ = 0',
+                            'trace(A) = λ'
+                        ],
+                        'answer': 0,
+                        'explain': 'Xos qiymatlar det(A - λI) = 0 xarakteristik tenglamasidan topiladi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Xos vektor nol vektor bo'lishi mumkin.",
+                        'answer': False,
+                        'explain': "Ta'rifga ko mezon xos vektor har doim nolmas (v ≠ 0) bo'lishi kerak."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'A = [2 0; 0 5] diogonal matritsaning xos qiymatlari qaysilar?',
+                        'options': [
+                            '2 va 5',
+                            '0 va 2',
+                            '0 va 5',
+                            '7 va 10'
+                        ],
+                        'answer': 0,
+                        'explain': "Diogonal matritsaning xos qiymatlari uning asosiy dioganalidagi elementlarining o'ziga teng: λ1 = 2, λ2 = 5."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kvadratik matritsalarning xos qiymatlari va xos vektorlarini toping.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "A = [3 1; 0 2] matritsaning xos qiymatlari yig'indisini toping.",
+                            'answer': '5',
+                            'hint': 'Matritsaning izi (trace) 3 + 2 = 5 ga teng.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'A = [1 2; 2 1] matritsaning barcha xos qiymat va xos vektorlarini hisoblang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'fazoda-ikkinchi-tartibli-sirtlar',
+                'title': 'Fazoda ikkinchi tartibli sirtlar',
+                'summary': 'Ellipsoid, bir va ikki pallali giperboloidlar, elliptik va giperbolik paraboloidlar va ularning kanonik tenglamalari.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Ikkinchi tartibli sirtlar haqida umumiy tushuncha',
+                        'body': "Uch o'zgaruvchili ikkinchi darajali algebraik tenglama bilan aniqlanadigan sirtlar fazoda ikkinchi tartibli sirtlar deyiladi. Ularning shakli va xossalari tenglamani kanonik ko'rinishga keltirish va kesimlar usuli orqali o'rganiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Asosiy sirtlarning kanonik tenglamalari',
+                        'body': '1) Ellipsoid: x²/a² + y²/b² + z²/c² = 1\n2) Bir pallali giperboloid: x²/a² + y²/b² - z²/c² = 1\n3) Ikki pallali giperboloid: x²/a² + y²/b² - z²/c² = -1\n4) Elliptik paraboloid: z = x²/a² + y²/b²\n5) Giperbolik paraboloid (egar simon sirt): z = x²/a² - y²/b²'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Parallel kesimlar usuli yordamida sirt shaklini tahlil qilish',
+                        'items': [
+                            "Sirt tenglamasiga z = h (o'zgarmas) qiymatni qo'yish.",
+                            "Hosil bo'lgan z=h tekislikdagi kesim chizig'i (ellips, giperbola yoki parabola) tenglamasini olish.",
+                            "Har xil h balandliklar uchun kesimlarni tahlil qilib, sirtning фазовий ko'rinishini tasavvur qilish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Ellipsoid tenglamasida a=b=c bo'lsa, u markazi koordinata boshida bo'lgan R=a radiusli sferaga aylanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'x²/4 + y²/9 + z²/16 = 1 tenglama fazoda qanday sirtni ifodalaydi?',
+                        'options': [
+                            'Ellipsoid',
+                            'Sfera',
+                            'Paraboloid',
+                            'Silindr'
+                        ],
+                        'answer': 0,
+                        'explain': "Barcha koeffitsientlar musbat va darajalar 2 bo'lib, 1 ga teng bo'lgani uchun bu ellipsoid."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'z = x² + y² tenglama elliptik paraboloidni (aylanish paraboloidi) ifodalaydi.',
+                        'answer': True,
+                        'explain': "To'g'ri, bu z o'qiga nisbatan simmetrik bo'lgan elliptik paraboloiddir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Giperbolik paraboloid sirti xalq orasida ko'proq qanday shaklga o'xshatiladi?",
+                        'options': [
+                            'Egar shakli',
+                            'Koptok shakli',
+                            'Tuxum shakli',
+                            'Piramida shakli'
+                        ],
+                        'answer': 0,
+                        'explain': "Giperbolik paraboloid (z = x²/a² - y²/b²) o'zining geometrik ko'rinishi bo'yicha ot egariga o'xshaydi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Ikkinchi tartibli sirtlar tenglamalarini aniqlang va kesimlar usulini qo'llang.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'x² + y² + z² = 25 sfera radiusi R nimaga teng?',
+                            'answer': '5',
+                            'hint': "R² = 25 bo'lgani uchun R = 5."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'x²/9 + y²/4 - z²/1 = 1 bir pallali giperboloidining z = 0 va z = 2 tekisliklar bilan kesishish chiziqlarini toping va ularning turini aniqlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'operatsion-hisob-va-laplas-almashtirishi',
+                'title': 'Operatsion hisob va Laplas almashtirishi',
+                'summary': "Laplas almashtirishi ta'rifi, xossalari hamda differensial tenglamalarni algebrik usulda yechish tatbiqlari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Laplas almashtirishining ta'rifi",
+                        'body': "f(t) original funksiyaning Laplas almashtirishi (tasviri) F(p) deb quyidagi xosmas integralga aytiladi: F(p) = L{f(t)} = ∫_0^∞ f(t) e^(-p t) dt (bu yerda p = s + iσ kompleks parametr). Bu almashtirish differensiyalash amalini ko'paytirish amaliga o'tkazib beradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Elementar funksiyalarning Laplas tasvirlari',
+                        'body': '1) L{1} = 1 / p\n2) L{e^(a t)} = 1 / (p - a)\n3) L{t^n} = n! / p^(n+1)\n4) L{sin(ω t)} = ω / (p² + ω²)\n5) L{cos(ω t)} = p / (p² + ω²)'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Differensial tenglamani Laplas almashtirishi bilan yechish',
+                        'items': [
+                            "Tenglamaning har ikkala tomoniga Laplas almashtirishini qo'llash (L{y'(t)} = p Y(p) - y(0) xossasidan foydalanib).",
+                            "Hosil bo'lgan Y(p) ga nisbatan algebraik tenglamani yechish va Y(p) tasvirni topish.",
+                            "Jadvallar va soddalashtirishlar orqali teskari Laplas almashtirishini bajargan holda y(t) original yechimga o'tish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Operatsion hisob murakkab differensial tenglamalarni va ularning tizimlarini oddiy chiziqli algebraik tenglamalarga keltirib yechish imkonini beradi.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'f(t) = e^(3t) funksiyaning Laplas tasviri F(p) nimaga teng?',
+                        'options': [
+                            '1 / (p - 3)',
+                            '1 / (p + 3)',
+                            '3 / p',
+                            '1 / p³'
+                        ],
+                        'answer': 0,
+                        'explain': "L{e^(at)} = 1/(p-a) formulasiga ko'ra a=3 bo'lganda F(p) = 1/(p-3)."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Hosilaning Laplas tasviri L{f'(t)} = p F(p) - f(0) formulasi bilan topiladi.",
+                        'answer': True,
+                        'explain': "To'g'ri, bu operatsion hisobning differensiyalash haqidagi asosiy teoremasidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'f(t) = 1 funksiyasining Laplas tasviri nima?',
+                        'options': [
+                            '1 / p',
+                            'p',
+                            '1',
+                            '1 / p²'
+                        ],
+                        'answer': 0,
+                        'explain': 'L{1} = ∫_0^∞ 1 * e^(-pt) dt = [-1/p * e^(-pt)]_0^∞ = 1/p.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Laplas almashtirishini toping va oddiy differensial tenglamalarni operatsion usulda yeching.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'f(t) = sin(2t) funksiyasining Laplas tasviri F(p) ni toping.',
+                            'answer': '2 / (p² + 4)',
+                            'hint': "L{sin(ωt)} = ω / (p² + ω²) formulasida ω = 2 o'rniga qo'yiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "y' + 2y = 4, y(0) = 0 boshlang'ich shartli tenglamani Laplas almashtirishi yordamida yeching."
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -4801,6 +5603,815 @@ SUBJECTS = [
                         }
                     ]
                 }
+            },
+            {
+                'slug': 'riman-geometriyasi-va-metrik-tenzorlar',
+                'title': 'Riman geometriyasi va metrik tenzorlar',
+                'summary': "Tekis bo'lmagan fazolarda masofani o'lchash va metrik tenzor tushunchasini o'rganish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Evklid geometriyasida ikki nuqta orasidagi masofa Pifagor teoremasi bo'yicha ds^2 = dx^2 + dy^2 formulasi bilan topiladi. Riman geometriyasida esa fazoning har bir nuqtasida metrik tenzor g_ij tushunchasi kiritiladi. Bu tenzor egri fazolarda masofa elementini ds^2 = g_ij * dx^i * dx^j ko'rinishida hisoblash imkonini beradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Sfera sirtidagi metrik tenzor',
+                        'body': "Radiusi R bo'lgan sfera sirtida sferik koordinatalarda (theta, phi) masofa kvadratining elementi quyidagicha bo'ladi: ds^2 = R^2 * d(theta)^2 + R^2 * sin^2(theta) * d(phi)^2. Bu yerda metrik tenzor komponentlari: g_11 = R^2, g_22 = R^2 * sin^2(theta), g_12 = g_21 = 0."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Metrik tenzordan foydalanib masofani hisoblash qadamlari',
+                        'items': [
+                            'Koordinatalar sistemasini va ularning differensiallarini (dx1, dx2) aniqlash.',
+                            'Fazoning berilgan nuqtasidagi g_ij metrik tenzor komponentlarini topish.',
+                            "ds^2 = g_11*dx1^2 + 2*g_12*dx1*dx2 + g_22*dx2^2 formulasi bo me'yoriy diferensial masofani tuzish.",
+                            "Egri chiziq bo'ylab integrallash orqali to'liq masofani hisoblash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Agar metrik tenzor konstantalardan iborat bo'lib, diagonallari 1 va qolganlari 0 bo'lsa, fazo oddiy Evklid fazosi bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Evklid tekisligida dekart koordinatalari uchun metrik tenzor g_ij ning ko'rinishi qanday?",
+                        'options': [
+                            '((1, 0), (0, 1))',
+                            '((0, 1), (1, 0))',
+                            '((R^2, 0), (0, R^2))',
+                            '((1, 1), (1, 1))'
+                        ],
+                        'answer': 0,
+                        'explain': "Evklid tekisligida ds^2 = dx^2 + dy^2 bo'lgani uchun g_11=1, g_22=1 va g_12=g_21=0 bo'ladi, ya'ni birlik matritsa."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Riman geometriyasida metrik tenzor faqat musbat aniqlangan simmetrik tenzor hisoblanadi.',
+                        'answer': True,
+                        'explain': "Riman metrikasi har doim simmetrik (g_ij = g_ji) va har qanday nol bo'lmagan vektor uchun masofa kvadratini musbat qiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Agar g_12 != 0 bo'lsa, bu koordinata o'qlari haqida nimani bildiradi?",
+                        'options': [
+                            "O'qlar o'zaro perpendikulyar",
+                            "O'qlar o'zaro ortogonal emas (ortogonal bo'lmagan koordinatalar)",
+                            "Koordinata o'qlari parallel",
+                            "Fazo cheksiz o'lchamli"
+                        ],
+                        'answer': 1,
+                        'explain': "Metrik tenzorning no-diagonal elementlari (g_12) koordinata chiziklarining o'zaro ortogonal emasligini ko'rsatadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Riman metrikasi va tenzorlar ustida amallar bo'yicha masalalarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Qutb koordinatalarida (r, theta) masofa elementi ds^2 = dr^2 + r^2 * d(theta)^2 berilgan. Metrik tenzor matritsasini yozing.',
+                            'answer': '((1, 0), (0, r^2))',
+                            'hint': "dr^2 koeffitsiyenti g_11, d(theta)^2 koeffitsiyenti g_22 bo'ladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun metrik tenzor invariant masofani o'lchashda muhim o'rin tutishini tushuntirib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'topologiyaga-kirish-va-eyler-xarakteristikasi',
+                'title': 'Topologiyaga kirish va Eyler xarakteristikasi',
+                'summary': "Uzluksiz almashtirishlar ostida saqlanadigan geometrik xossalar va sirtlarning Eyler xarakteristikasini o'rganish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Topologiya — shakllarning cho'zilishi, egilishi kabi uzluksiz almashtirishlarda o'zgarmasdan qoladigan xossalarini o'rganadi. Topologiyada masofa o'lchami yo'qoladi, lekin tutashlik, teshiklar soni kabi xossalar saqlanadi. Sirtlarning eng muhim invariantlaridan biri bu Eyler xarakteristikasi (chi) hisoblanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Ko'pyoqlilar uchun Eyler formulasi",
+                        'body': "Ixtiyoriy qavariq ko'pyoqli uchun V (uchlar soni), E (qirralar soni) va F (yoqlar soni) orasidagi bog'liqlik: chi = V - E + F = 2. Masalan, kub uchun: V=8, E=12, F=6 => 8 - 12 + 6 = 2."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Sirtning Eyler xarakteristikasini aniqlash',
+                        'items': [
+                            'Sirtni trianggulyatsiya qilish (uchburchaklarga yoki kataklarga ajratish).',
+                            'Barcha uchlar (V), qirralar (E) va yoqlar (F) sonini hisoblash.',
+                            "chi = V - E + F formulasini qo'llash.",
+                            "Jins (g - teshiklar soni) ma'lum bo'lsa, yopiq mo'ljallangan sirt uchun chi = 2 - 2g formulasi bilan tekshirish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Sfera (g=0) uchun chi = 2, Tor (donut, g=1) uchun chi = 0 ga teng.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Teshigi bitta bo'lgan tor (donut) sirtining Eyler xarakteristikasi nechaga teng?",
+                        'options': [
+                            '2',
+                            '1',
+                            '0',
+                            '-2'
+                        ],
+                        'answer': 2,
+                        'explain': 'Tor uchun jins g=1. Formula: chi = 2 - 2g = 2 - 2(1) = 0.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Topologik homeomorf shakllarning Eyler xarakteristikasi bir xil bo'ladi.",
+                        'answer': True,
+                        'explain': "Eyler xarakteristikasi topologik invariant hisoblanadi va homeomorfizmlarda o'zgarmaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "12 ta uchi va 30 ta qirrasi bo'lgan qavariq ko'pyoqlining nechta yog'i bor?",
+                        'options': [
+                            '18',
+                            '20',
+                            '12',
+                            '24'
+                        ],
+                        'answer': 1,
+                        'explain': 'V - E + F = 2 => 12 - 30 + F = 2 => F = 20 (Ikosadr).'
+                    }
+                ],
+                'homework': {
+                    'intro': "Topologik tushunchalar va Eyler xarakteristikasini hisoblash bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Ikkita teshigi bor sirtning (dastasi 2 ta bo'lgan choynak) Eyler xarakteristikasini toping.",
+                            'answer': '-2',
+                            'hint': "chi = 2 - 2g formulada g = 2 qo'ying."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Mebius tasmasining bir tomonlama sirt ekanligini topologik nuqtai nazardan tushuntiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'projektiv-geometriya-va-bir-jinsli-koordinatalar',
+                'title': 'Projektiv geometriya va bir jinsli koordinatalar',
+                'summary': "Cheksizlikdagi nuqtalar va bir jinsli koordinatalar sistemasida proyektiv almashtirishlarni o'rganish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Projektiv geometriyada parallel to'g'ri chiziqlar cheksizlikda kesishadi deb qaraladi. Cheksiz olis nuqtalarni oddiy nuqtalar bilan bir xil darajada qarash uchun bir jinsli koordinatalar (x, y, w) kiritiladi. Bu yerda (x/w, y/w) oddiy Evklid koordinatalaridir, w=0 bo'lganda esa cheksiz olis nuqtani ifodalaydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Bir jinsli koordinataga o'tish",
+                        'body': "Evklid tekisligidagi (3, 5) nuqta bir jinsli koordinatalarda (3, 5, 1) yoki unga karrali (6, 10, 2) ko'rinishida yoziladi. To'g'ri chiziqning ax + by + c = 0 tenglamasi bir jinsli ko'rinishda ax + by + cw = 0 bo'ladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Ikki to'g'ri chiziqning kesishish nuqtasini vektor ko'paytma orqali topish",
+                        'items': [
+                            "To'g'ri chiziqlarni L1 = (a1, b1, c1) va L2 = (a2, b2, c2) ko'rinishida vektor sifatida yozish.",
+                            "Kesishish nuqtasini P = L1 x L2 (vektor ko'paytma) formula bilan hisoblash.",
+                            "Aralash koordinatalar (x, y, w) hosil bo'ladi. Agar w != 0 bo'lsa, (x/w, y/w) oddiy nuqta, w=0 bo'lsa cheksiz olis nuqta."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Projektiv tekislikda har qanday ikkita har xil to'g'ri chiziq albatta bitta nuqtada kesishadi (parallel to'g'ri chiziqlar ham)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Bir jinsli koordinatalarda (4, 8, 2) nuqta oddiy Dekart koordinatasida qaysi nuqtaga mos keladi?',
+                        'options': [
+                            '(4, 8)',
+                            '(2, 4)',
+                            '(8, 16)',
+                            '(1, 2)'
+                        ],
+                        'answer': 1,
+                        'explain': 'x = 4/2 = 2, y = 8/2 = 4. Shuning uchun nuqta (2, 4).'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Bir jinsli koordinatalarda w = 0 bo'lgan nuqtalar cheksizlikdagi (xos bo'lmagan) nuqtalarni ifodalaydi.",
+                        'answer': True,
+                        'explain': "w ga bo'lish imkoni bo'lmagani uchun bu nuqtalar cheksiz olis yo'nalishlarni ifodalaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Projektiv geometriyada qanday nisbat proyektiv almashtirishlar ostida saqlanadi?',
+                        'options': [
+                            'Kesmalar uzunliklari nisbati',
+                            'Burchaklar darajasi',
+                            "Qo'shnisbat (Cross-ratio / Doynoy otnosheniye)",
+                            'Yuzalar nisbati'
+                        ],
+                        'answer': 2,
+                        'explain': "Projektiv almashtirishlarda 4 ta nuqtaning qo'shnisbati (cross-ratio) invariant bo'lib qoladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Bir jinsli koordinatalar va proyektiv to'g'ri chiziqlar bo'yicha mashqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "x - 2y + 4 = 0 to'g'ri chiziqning bir jinsli tenglamasini yozing (x, y, w o'zgaruvchilarda).",
+                            'answer': 'x - 2y + 4w = 0',
+                            'hint': "Ozod had yoniga w ko'paytuvchisini qo'shing."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Deyzarg (Desargues) teoremasining proyektiv geometriyadagi o'rnini va ahamiyatini yoritib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'affin-geometriya-va-almashtirishlar',
+                'title': 'Affin geometriya va affin almashtirishlar',
+                'summary': "Parallelizm va kesmalar nisbatini saqlovchi, lekin masofa va burchakni o'zgartiruvchi almashtirishlar.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Affin geometriya Evklid geometriyasidan ko'ra umumiyroq bo'lib, unda masofa va burchak tushunchasi asosiy va doimiy emas. Affin almashtirish — bu to'g'ri chiziqlarni to'g'ri chiziqlarga, parallellikni parallellikka va bir to'g'ri chiziqdagi kesmalar nisbatini o'zgarmas saqlovchi akslantirishdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Affin almashtirish tenglamasi',
+                        'body': "Tekislikdagi affin almashtirish matritsa ko'rinishida: X' = A*X + B, ya'ni x' = a11*x + a12*y + b1, y' = a21*x + a22*y + b2. Bu yerda det(A) != 0 bo'lishi shart."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Affin almashtirish invariantlarini aniqlash',
+                        'items': [
+                            "To'g'ri chiziqlarning to'g'ri chiziqqa o'tishini tekshirish.",
+                            "Parallel to'g'ri chiziqlar parallel qolishini ko'rish.",
+                            "Bir to'g'ri chiziqda yotgan uchta nuqta uchun kesmalar nisbati (AC/CB) o'zgarmasligini tekshirish.",
+                            "Yuzalar nisbati det(A) ga ko'payishini hisobga olish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Har qanday ellips affin almashtirish orqali aylanaga, har qanday parallelogramm esa kvadratga o'tkazilishi mumkin."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Affin almashtirishda quyidagilardan qaysi biri HAR DOIM saqlanadi?',
+                        'options': [
+                            'Ikki kesma orasidagi burchak',
+                            'Ikki nuqta orasidagi masofa',
+                            "To'g'ri chiziqlarning parallelligi",
+                            'Uchburchakning yuzi'
+                        ],
+                        'answer': 2,
+                        'explain': "Affin almashtirish parallel to'g'ri chiziqlarni har doim parallel to'g'ri chiziqlarga o'tkazadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Affin almashtirish orqali ixtiyoriy uchburchakni teng tomonli uchburchakka o'tkazish mumkin.",
+                        'answer': True,
+                        'explain': "Affin almashtirish har qanday uchburchakni boshqa ixtiyoriy uchburchakka (jumladan, teng tomonliga) o'tkaza oladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Agar affin almashtirish matritsasining det(A) = 3 bo'lsa, figura yuzi qanday o'zgaradi?",
+                        'options': [
+                            "O'zgarmaydi",
+                            '3 marta ortadi',
+                            '9 marta ortadi',
+                            '3 marta kamayadi'
+                        ],
+                        'answer': 1,
+                        'explain': "Affin almashtirishda figuralarning yuzi determinantning moduliga ko'paytiriladi (S' = |det(A)| * S)."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Affin almashtirishlar matritsalari va invariantlari ustida ishlash.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "x' = 2x + y, y' = x - y almashtirish berilgan. Ushbu almashtirish matritsasining determinantini toping.",
+                            'answer': '-3',
+                            'hint': 'Matritsa: ((2, 1), (1, -1)). Determinant = 2*(-1) - 1*1.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Nima uchun izometriya (harakat) affin almashtirishning xos holati hisoblanishini isbotlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'lobachevskiy-geometriyasi-va-puankare-modeli',
+                'title': 'Lobachevskiy geometriyasi va Puankare modeli',
+                'summary': 'Giperbolik geometriya, parallel chiziqlar aksiomasi va Puankare doirasidagi modellashtirish.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Lobachevskiy (Giperbolik) geometriyasida Evklidning V-postulati o'rniga quyidagi aksioma olinadi: Berilgan to'g'ri chiziqda yotmagan nuqta orqali ushbu to'g'ri chiziqqa kesishmaydigan kamida ikkita parallel to'g'ri chiziq o'tkazish mumkin. Bu geometriyani vizual tushunish uchun Puankare doira modelidan foydalaniladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Puankare doirasidagi to'g'ri chiziqlar",
+                        'body': "Puankare doira modelida giperbolik tekislik — bu birlik doiraning ichki qismidir. Bu doiradagi 'to'g'ri chiziqlar' esa doira chegarasiga ortogonal (perpendikulyar) bo'lgan aylana yoylari yoki doira diametrlaridir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Giperbolik uchburchak burchaklari yig'indisini hisoblash",
+                        'items': [
+                            'Giperbolik tekislikda uchburchak tomonlarini (ortogonal yoylarni) yasash.',
+                            "Uchburchakning ichki burchaklarini (alpha, beta, gamma) o'lchash.",
+                            "Burchaklar yig'indisini hisoblash: S = alpha + beta + gamma.",
+                            'Giperbolik defektni topish: Defekt = pi - (alpha + beta + gamma) > 0.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Lobachevskiy geometriyasida uchburchakning yuzi uning defektiga proporsionaldir: Yuz = k^2 * (pi - S).'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Lobachevskiy geometriyasida uchburchakning ichki burchaklari yig'indisi qanday bo'ladi?",
+                        'options': [
+                            'Har doim 180 darajaga teng',
+                            'Har doim 180 darajadan katta',
+                            'Har doim 180 darajadan (pi radiandan) kichik',
+                            "Uchburchak turiga qarab har xil bo'lishi mumkin"
+                        ],
+                        'answer': 2,
+                        'explain': "Giperbolik geometriyada uchburchak burchaklar yig'indisi har doim pi (180 deg) dan kichik bo'ladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Lobachevskiy geometriyasida o'xshash, lekin teng bo'lmagan uchburchaklar mavjud emas.",
+                        'answer': True,
+                        'explain': "Agar ikki uchburchakning burchaklari mos ravishda teng bo'lsa, ular Lobachevskiy geometriyasida albatta teng (izometrik) bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Puankare doira modelida 'to'g'ri chiziq' rolini nima o'ynaydi?",
+                        'options': [
+                            "Faqat to'g'ri chiziq kesmalari",
+                            "Doira chegarasiga ortogonal bo'lgan aylana yoylari va diametrlar",
+                            'Ixtiyoriy parabola yoylari',
+                            'Doiraga urinma chiziqlar'
+                        ],
+                        'answer': 1,
+                        'explain': "Puankare doirasida to'g'ri chiziqlar doira chegarasi bilan 90 darajali burchak ostida kesishadigan aylana yoylaridir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Giperbolik geometriya xossalari va Puankare modeli bo'yicha masalalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Giperbolik uchburchakning burchaklari pi/4, pi/4, pi/4 ga teng. Ushbu uchburchakning burchaklar defektini toping (radianda).',
+                            'answer': 'pi/4',
+                            'hint': 'Defekt = pi - (pi/4 + pi/4 + pi/4) = pi - 3*pi/4.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Evklid geometriyasi va Lobachevskiy geometriyasining asosiy ayirmalarini qisqacha taqqoslang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'chizma-geometriya-va-fazoviy-kesimlar',
+                'title': 'Chizma geometriya va fazoviy kesimlar',
+                'summary': '3D shakllarni 2D tekislikda proyeksiyalash usullari va murakkab kesim yuzalarini yasash.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Chizma geometriya uch o'lchamli fazoviy shakllarni tekislikda (2D) to'g'ri tasvirlash va ularning o'lchamlarini aniqlash metodlarini o'rgatadi. Monj usuli (ortogonal proyeksiyalash) orqali obyekt ikkita o'zaro perpendikulyar tekislikka (gorizontal H va vertikal V) proyeksiyalanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Tekislik bilan kesishuv chizig'i",
+                        'body': "Piramida va kesuvchi tekislik berilgan bo'lsa, kesim ko'pburchagining uchlari piramida qirralarining kesuvchi tekislik bilan kesishish nuqtalarini izlash orqali topiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Fazoviy shakl kesimini yasash tartibi',
+                        'items': [
+                            'Jism va kesuvchi tekislikning proyeksiyalarini chizmada belgilash.',
+                            'Jismning har bir qirrasi va kesuvchi tekislikning kesishish nuqtalarini (izlarini) topish.',
+                            "Hosil bo'lgan nuqtalarni ketma-ket tutashtirib kesim ko'pburchagini hosil qilish.",
+                            'Kesimning haqiqiy kattaligini (haqiqiy shaklini) tekislikni almashtirish yoki aylantirish usuli bilan aniqlash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Proyeksiyalar tekisligiga parallel bo'lgan shakl proyeksiyasi o'zining haqiqiy kattaligida ko'rinadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Monj usulida H (gorizontal) va V (frontal) proyeksiyalar tekisliklari bir-biriga nisbatan qanday joylashgan?',
+                        'options': [
+                            '45 daraja burchak ostida',
+                            'Parallel',
+                            "O'zaro perpendikulyar (90 daraja)",
+                            'Ustma-ust tushadi'
+                        ],
+                        'answer': 2,
+                        'explain': "Monj usuli ikkita o'zaro perpendikulyar proyeksiyalar tekisligiga asoslangan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Kesuvchi tekislik va jism sirtining kesishuv chizig'i har doim tekis shakl bo'ladi.",
+                        'answer': True,
+                        'explain': "Chunki kesuvchi obyekt tekislik bo'lgani uchun kesim har doim bitta tekislikda yotadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Konusni uning yasovchisiga parallel tekislik bilan kessak, kesimda qanday egri chiziq hosil bo'ladi?",
+                        'options': [
+                            'Ellips',
+                            'Parabola',
+                            'Giperbola',
+                            'Aylana'
+                        ],
+                        'answer': 1,
+                        'explain': "Konus yasovchisiga parallel kesim har doim parabolasimon bo'ladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Chizma geometriyada proyeksiyalar va kesimlar yasash masalalari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Silindrni uning o me'yoriy o'qiga ko'ndalang (perpendikulyar) kessak, kesim shakli nima bo'ladi?",
+                            'answer': 'Aylana',
+                            'hint': "Silindrning ko'ndalang kesimi uning asosiga parallel bo'ladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Proyeksiyalarni almashtirish usuli orqali kesmaning haqiqiy kattaligini topish algoritmini yozing.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kop-olchamli-fazolar-geometriyasi',
+                'title': "Ko'p o'lchamli fazolar geometriyasi",
+                'summary': "4D va undan yuqori o'lchamli fazolarda gipersetka, giperkub va vektorli algebraning qo'llanilishi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Biz yashayotgan 3 o'lchamli fazoni n-o'lchamli Evklid fazosiga (R^n) umumiylashtirish mumkin. n-o'lchamli fazoda nuqta n ta koordinata (x1, x2, ..., xn) bilan beriladi. 4 o'lchamli kub 'tesserakt' deb ataladi va u 16 ta uch, 32 ta qirra, 24 ta kvadrat yoq va 8 ta kubik giperyoqdan iborat."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "n-o'lchamli giperkub elementlari",
+                        'body': "n-o'lchamli giperkubning uchlari soni N_v = 2^n. Masalan: 1D (kesma) -> 2^1=2 uch; 2D (kvadrat) -> 2^2=4 uch; 3D (kub) -> 2^3=8 uch; 4D (tesserakt) -> 2^4=16 uch."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "n-o me'yoriy giperkub qirralari sonini topish formulasi",
+                        'items': [
+                            "Giperkubning o'lchamini n deb belgilash.",
+                            'Uchlar sonini hisoblash: V = 2^n.',
+                            'Har bir uchdan n ta qirra chiqishini hisobga olish.',
+                            "Qirralar soni: E = n * 2^(n-1) formulasi bo'yicha topish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: n-o'lchamli fazoda gipersfera hajmi n ortishi bilan avval o'sadi, lekin n juda katta bo'lib ketganda 0 ga intiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "4-o'lchamli giperkub (tesserakt) nechta qirradan (edges) iborat?",
+                        'options': [
+                            '16',
+                            '24',
+                            '32',
+                            '64'
+                        ],
+                        'answer': 2,
+                        'explain': 'E = 4 * 2^(4-1) = 4 * 8 = 32 ta qirra.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "R^n fazosida ikki vektorning skalyar ko'paytmasi x1*y1 + x2*y2 + ... + xn*yn formulasi bilan hisoblanadi.",
+                        'answer': True,
+                        'explain': "Bu n-o'lchamli Evklid fazosidagi standart skalyar ko'paytma ta'rifidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "5-o'lchamli giperkubning nechta uchi bor?",
+                        'options': [
+                            '10',
+                            '25',
+                            '32',
+                            '64'
+                        ],
+                        'answer': 2,
+                        'explain': 'V = 2^5 = 32 ta uch.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Ko'p o'lchamli fazolardagi geometrik shakllar va ularning xossalari.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': '4D fazodagi (1, 2, 0, 4) va (4, 2, 4, 4) nuqtalar orasidagi masofani hisoblang.',
+                            'answer': '5',
+                            'hint': 'd = sqrt((4-1)^2 + (2-2)^2 + (4-0)^2 + (4-4)^2) = sqrt(9 + 0 + 16 + 0) = sqrt(25).'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "n-o'lchamli fazoda gipersferaning tenglamasini umumiy ko'rinishda yozing va tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'differensial-formalar-va-stoks-teoremasi',
+                'title': 'Differensial formalar va Stoks umumiy teoremasi',
+                'summary': "Fazoviy integrallash, tashqi ko'paytma va umumlashgan Stoks teoremasining geometrik ma'nosi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Differensial formalar apparati ko me'yoriy o'lchamli fazolarda integrallash nazariyasini birlashtiradi. 1-forma dx, dy; 2-forma dx^dy ko'rinishida bo'ladi va tashqi ko'paytma (wedge product ^) antisimmetrikdir (dx ^ dy = - dy ^ dx). Umumlashgan Stoks teoremasi barcha klassik integral teoremalarini bitta formulaga keltiradi: int_{M} d(omega) = int_{dM} omega."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Tashqi ko'paytma xossasi",
+                        'body': "dx ^ dx = 0 bo'ladi, chunki antisimmetriyalikdan dx ^ dx = - (dx ^ dx) => 2(dx ^ dx) = 0. Shu sababli bir xil diferensiallar tashqi ko'paytmasi har doim nolga teng."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Tashqi differensial d(omega) ni hisoblash',
+                        'items': [
+                            "k-forma omega = f * dx_i ^ ... ^ dx_k berilgan bo'lsin.",
+                            "f funksiyaning to'liq differensialini topish: df = sum (df/dx_j * dx_j).",
+                            "d(omega) = df ^ dx_i ^ ... ^ dx_k ko'rinishida yozish.",
+                            'dx_j ^ dx_j = 0 va dx_j ^ dx_i = - dx_i ^ dx_j qoidalaridan foydalanib soddalashtirish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Nyuton-Leybnits, Grin, Gauss-Ostrogradskiy va klassik Stoks teoremalari umumlashgan Stoks teoremasining xos holatlantidir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "dx ^ dy tashqi ko'paytmasi nimaga teng?",
+                        'options': [
+                            'dy ^ dx',
+                            '- (dy ^ dx)',
+                            '0',
+                            'dx + dy'
+                        ],
+                        'answer': 1,
+                        'explain': "Tashqi ko'paytma antisimmetrik xossaga ega: dx ^ dy = - dy ^ dx."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Har qanday differensial forma uchun d(d(omega)) = 0 (tashqi differensialning kvadrat nol) tengligi o me'yoriy o'rinli.",
+                        'answer': True,
+                        'explain': 'd^2 = 0 ushbu apparatning eng asosiy ayaniy va topologik xossasidir.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Umumlashgan Stoks teoremasida dM nimani anglatadi?',
+                        'options': [
+                            "M ko'pobrazligining hajmini",
+                            "M ko'pobrazligining chegarasini (boundary)",
+                            'M ning hosilasini',
+                            "M ko'pobrazligining metrikasini"
+                        ],
+                        'answer': 1,
+                        'explain': "dM belgisi M manifoldining (ko'pobrazligining) geometrik chegarasini bildiradi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Differensial formalar va ularning tashqi differensiallarini hisoblash.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'omega = x^2 * dy 1-formaning tashqi differensiali d(omega) ni toping.',
+                            'answer': '2x dx ^ dy',
+                            'hint': 'd(omega) = d(x^2) ^ dy = (2x dx) ^ dy = 2x dx ^ dy.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Grin teoremasi umumlashgan Stoks teoremasining 2-o'lchamli Evklid tekisligidagi xos holati ekanligini ko'rsatib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'fraktal-geometriya-va-xausdorf-olchami',
+                'title': "Fraktal geometriya va Xausdorf o'lchami",
+                'summary': "O'z-o'ziga o'xshash murakkab shakllar va kasr o'lchamli geometrik obyektlar.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Klassik geometriyada shakllar butun o'lchamga ega: nuqta (0D), chiziq (1D), tekislik (2D), jism (3D). Biroq tabiatdagi ko'plab shakllar (bulutlar, tog'lar, qirg'oq chiziqlari) kasr o'lchamga ega bo'lib, ular 'fraktal' deyiladi. Fraktallar o'z-o'ziga o'xshashlik (self-similarity) xossasiga ega."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kox qor parchasi va Serpinskiy uchburchagi',
+                        'body': "Serpinskiy uchburchagini yasashda har bir bosqichda uchburchak N=3 ta kichik uchburchakka bo'linadi va masshtab r=1/2 barobar kichrayadi. Unining Xausdorf (fraktal) o'lchami: D = log(N) / log(1/r) = log(3) / log(2) approx 1.585 ga teng."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "O'z-o'ziga o'xshash fraktalning Xausdorf o'lchamini hisoblash",
+                        'items': [
+                            "N nusxalar sonini aniqlash (har bir bosqichda nechta yangi shakl hosil bo'lishi).",
+                            'r masshtab koeffitsiyentini topish (uzunlik necha marta kichrayishi).',
+                            "D = log(N) / log(1/r) formulasini qo'llash.",
+                            "Natijani kasr son ko'rinishida olish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Kox egri chizig'i chekli maydonda joylashgan bo'lsa-da, uning perimetri (uzunligi) cheksizga tengdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Serpinskiy gilamining (carpet) fraktal o'lchami qanday hisoblanadi (N=8, r=1/3)?",
+                        'options': [
+                            'log(8) / log(3)',
+                            'log(3) / log(8)',
+                            '8 / 3',
+                            '2'
+                        ],
+                        'answer': 0,
+                        'explain': "Formula D = log(N)/log(1/r) => N=8, 1/r=3 bo'lgani uchun D = log(8)/log(3) approx 1.89."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Fraktal shakllarning Xausdorf o'lchami har doim butun son bo'lishi shart.",
+                        'answer': False,
+                        'explain': "Aksincha, fraktallarning asosiy xususiyati shundaki, ularning o'lchami ko'pincha kasr son (fraksional) bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Kox egri chizig'ida har bir kesma nechta kichik kesmaga bo'linadi (N) va masshtab (r) qanday?",
+                        'options': [
+                            'N=4, r=1/3',
+                            'N=3, r=1/2',
+                            'N=2, r=1/4',
+                            'N=5, r=1/3'
+                        ],
+                        'answer': 0,
+                        'explain': "Kox chizig'ida 1 ta kesma o'rniga 4 ta 1/3 uzunlikdagi kesmalar qo'yiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Fraktal geometriya va o'lchamlarni hisoblashga oid topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Kox egri chizig'ining Xausdorf o'lchamini toping (N=4, r=1/3). Formula: log(N)/log(3).",
+                            'answer': 'log(4)/log(3)',
+                            'hint': 'D = log(4) / log(1 / (1/3)) = log(4)/log(3) approx 1.261.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Mandelbrot to me'yoriy to'plami nima va u qanday kompleks tenglama z_{n+1} = z_n^2 + c orqali hosil bo'lishini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'hisoblash-geometriyasi-konveks-qobiq-va-voronoy',
+                'title': 'Hisoblash geometriyasi: Konveks qobiq va Voronoy diagrammalari',
+                'summary': 'Kompyuter grafikasi va algoritmlarda geometrik obyektlarni qayta ishlash hamda fazoviy ajratish.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Hisoblash geometriyasi (Computational Geometry) geometrik masalalarni samarali algoritmlar orqali yechishni o'rganadi. Ikkita eng asosiy tushuncha: 1) Konveks qobiq (Convex Hull) — berilgan nuqtalar to me'yoriy to'plamini o'rab oluvchi eng kichik qavariq ko'pburchak; 2) Voronoy diagrammasi — tekislikni berilgan nuqtalarga eng yaqin hududlarga bo'lish."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Grem (Graham scan) algoritmi',
+                        'body': "Nuqtalar to'plamining konveks qobig'ini topish uchun eng pastki nuqta tanlanadi, qolgan nuqtalar qutb burchagi bo'yicha saralanadi va stak (stack) yordamida soat miliga teskari burilishlar tekshirib chiqiladi. Vaqt murakkabligi: O(n log n)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Voronoy diagrammasini qurish qadamlari',
+                        'items': [
+                            "Tekislikda S nuqtalar (saytlar) to'plamini belgilash.",
+                            "Har bir juft nuqta orasiga o'rta perpendikulyar to'g'ri chiziq o'tkazish.",
+                            "Har bir nuqta uchun ushbu perpendikulyarlar bilan chegaralangan ko me'yoriy yarimtekisliklar kesishmasini (Voronoy katagini) topish.",
+                            'Voronoy kataklariga duallik tashkil etuvchi Delone (Delaunay) triangulyatsiyasini hosil qilish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Delone triangulyatsiyasi uchburchaklarning eng kichik burchaklarini maksimal darajada oshiradi (ya'ni juda o'tkir uchburchaklar hosil bo'lishiga yo'l qo'ymaydi)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Tekislikdagi n ta nuqtaning konveks qobig'ini topuvchi eng tezkor algoritmlarning vaqt murakkabligi (complexity) qanday?",
+                        'options': [
+                            'O(n)',
+                            'O(n log n)',
+                            'O(n^2)',
+                            'O(n^3)'
+                        ],
+                        'answer': 1,
+                        'explain': 'Nuqtalarni saralash talab qilingani uchun optimal algoritm murakkabligi O(n log n) hisoblanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Voronoy diagrammasidagi har bir qirra ikki nuqtani tutashtiruvchi kesmaning o'rta perpendikulyarida yotadi.",
+                        'answer': True,
+                        'explain': "Voronoy qirralari ikki eng yaqin manbadan teng uzoqlikda joylashgan nuqtalar to me'yoriy to'plamidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Delone triangulyatsiyasi va Voronoy diagrammasi o'rtasidagi bog'liqlik qanday nomlanadi?",
+                        'options': [
+                            'Affin almashtirish',
+                            "Dual (qo'shma) grafiklar",
+                            'Eyler xarakteristikasi',
+                            'Metrik izometriya'
+                        ],
+                        'answer': 1,
+                        'explain': "Delone triangulyatsiyasi va Voronoy diagrammasi geometrik jihatdan bir-biriga dual (qo'shma) strukturalardir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Hisoblash geometriyasi algoritmlari va g'oyalari bo'yicha masalalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Kvadratning 4 ta uchi va ichidagi 1 ta nuqta berilgan (jami 5 nuqta). Bu 5 nuqtaning konveks qobig'i nechta uchdan iborat bo'ladi?",
+                            'answer': '4',
+                            'hint': 'Ichki nuqta qavariq qobiq ichida qolib ketadi, faqat 4 ta tashqi uch qobiqni hosil qiladi.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Voronoy diagrammalarining GPS navigatsiyada va eng yaqin obyektni izlashda (Nearest Neighbor Search) qo'llanilishini tushuntiring."
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -7117,6 +8728,886 @@ SUBJECTS = [
                             'id': 't2',
                             'type': 'open',
                             'prompt': 'Bitta fikrni ham parataktik, ham gipotaktik usulda ifodalab beruvchi gaplar yozing.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'sintaktik-valentlik-va-birikuvchanlik',
+                'title': "Sintaktik valentlik va so'zlarning birikuvchanlik imkoniyatlari",
+                'summary': "So'zlarning grammatik va semantik jihatdan boshqa so'zlar bilan birika olish qobiliyati hamda uning tiplari haqida chuqur ma'lumot.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Sintaktik valentlik deb so'zning o'z semantik va grammatik xususiyatlariga ko'ra boshqa so'zlarni o'ziga biriktira olish va sintaktik aloqaga kirisha olish imkoniyatiga aytiladi. Valentlik majburiy (obshat) va ixtiyoriy (faktultat) turlarga bo'linadi. Fe'llar valentlik markazi hisoblanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "'Berdi' fe'li 3 ta majburiy valentlikka ega: Kim? (ega), Kimga? (vositali to'ldiruvchi), Nimani? (vositasiz to'ldiruvchi). Masalan: 'Ali (1) ukasiga (2) kitobni (3) berdi'."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Valentlikni aniqlash bosqichlari',
+                        'items': [
+                            "Gapdagi hokim so'zning (ko'pincha fe'lning) semantik ma'nosini tahlil qilish.",
+                            "So me'yoran talab qiladigan majburiy o'rinlar sonini ajratish.",
+                            "Ixtiyoriy qurilmalarni (hol, ajratilgan bo'laklar) majburiy valentlikdan farqlash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Valentlik nazariyasi fe'lning nollik (avtonom), bir valentli (o'timli/o'timsiz), ikki va uch valentli shakllarini ajratishga yordam beradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Nechta majburiy valentlikka ega fe'llar uch valentli fe me'yoriy strukturasini hosil qiladi?",
+                        'options': [
+                            '1 ta',
+                            '2 ta',
+                            '3 ta',
+                            '4 ta'
+                        ],
+                        'answer': 2,
+                        'explain': "Uch valentli fe'llar ega, vositasiz va vositali to'ldiruvchi talab qiladi (masalan: yubormoq, bermoq)."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Ixtiyoriy valentlik gapning grammatik kompozitsiyasi uchun mutlaq shart hisoblanadi.',
+                        'answer': False,
+                        'explain': "Ixtiyoriy valentlik (faktualtat) tushib qolganda ham gap grammatik va semantik tugallikni yo'qotmaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Yozdi' fe'lining majburiy valentliklari qaysilar?",
+                        'options': [
+                            'Kim?, Qachon?',
+                            'Kim?, Nimani?',
+                            'Qayerga?, Qanday?',
+                            'Qachon?, Nimani?'
+                        ],
+                        'answer': 1,
+                        'explain': "'Yozdi' fe'li harakat bajaruvchisi (Kim?) va ob'ektini (Nimani?) talab etadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Sintaktik valentlikka oid amaliy mashqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Aytmoq' fe'lining valentlik strukturasini aniqlang va gap tuzing.",
+                            'answer': '3 valentli: Kim?, Kimga?, Nimani? (U menga haqiqatni aytdi).',
+                            'hint': "Fe'l talab qiladigan obyekt va subyekt so'roqlarini o'ylab ko'ring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Valentlik va so'z birikuvchanligi o'rtasidagi farqni misollar bilan tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'tema-va-rema-kommunikativ-sintaksis',
+                'title': 'Gapning aktuallashuvi: Tema va rema munosabati',
+                'summary': "Gapning kommunikativ bo'linishi, ya'ni ma'lum bo'lgan axborot (tema) va yangi axborot (rema) munosabatini o me'yoriy sintaksisda o'rganish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Gapning dolzarb bo'linishi (kommunikativ sintaksis) gapni tinglovchiga ma'lum bo'lgan va yangi axborot beruvchi qismlarga ajratadi. Tema — ma'lum bo me'yoriy axborot (baza), rema — gapdagi eng muhim, yangi axborot (kommunikativ markaz) hisoblanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "'Olim ertaga keladi.' (Tema: Olim, Rema: ertaga keladi). 'Ertaga Olim keladi.' (Tema: Ertaga, Rema: Olim keladi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Tema va remani aniqlash',
+                        'items': [
+                            'Muloqot kontekstini belgilash.',
+                            "Mantiqiy urg'u (intonatsiya) qaysi so'zga tushayotganini aniqlash.",
+                            'Gapdagi tartib va yuklamalar vositasida rema markazini ajratib olish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: O'zbek tilida rema ko'pincha kesim oldidan joylashadi va mantiqiy urg me'yori bilan ajratiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Gapdagi yangi, asosiy axborot beruvchi qism nima deyiladi?',
+                        'options': [
+                            'Tema',
+                            'Rema',
+                            'Inversiya',
+                            'Valentlik'
+                        ],
+                        'answer': 1,
+                        'explain': 'Rema kommunikativ sintaksisda yangi va eng muhim axborot tashuvchi qismdir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbek tilida so'z tartibi o'zgarganda tema va rema o'rni ham o'zgaradi.",
+                        'answer': True,
+                        'explain': "So'z tartibi o'zgarishi gapning aktuallashuvini va mantiqiy urg'u markazini o'zgartiradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Kitobni MEN o'qidim' gapida rema qaysi so'z?",
+                        'options': [
+                            'Kitobni',
+                            'MEN',
+                            "o'qidim",
+                            "Kitobni o'qidim"
+                        ],
+                        'answer': 1,
+                        'explain': "Mantiqiy urg'u 'MEN' so'ziga tushgani uchun bu gapda 'MEN' rema hisoblanadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Kommunikativ bo'linishga oid topsiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Majlis soat beshda boshlanadi' gapida remani aniqlang.",
+                            'answer': "soat beshda boshlanadi (yoki mantiqiy urg'uga ko'ra: soat beshda)",
+                            'hint': "Kesim oldidagi eng muhim ma'lumot beruvchi so'zga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Bitta gapni so'z tartibini o'zgartirish orqali 3 xil kommunikativ variantda yozing va temalarni ko'rsating."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'sintaktik-sinonimiya-va-omonimiya',
+                'title': 'Sintaktik sinonimiya, omonimiya va antonimiya',
+                'summary': "Bir xil ma'noni turli sintaktik qurilmalar orqali ifodalash hamda bir xil shaklli sintaktik strukturalarning har xil ma'no berish hodisasi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Sintaktik sinonimiya — qurilishi har xil, ammo semantik ma'nosi bir xil yoki yaqin bo'lgan gap va birikmalar hodisasi. Sintaktik omonimiya esa bir xil sintaktik shaklning ikki va undan ortiq turlicha mantiqiy ma'noga ega bo'lishidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Sinonimiya: 'Quyosh chiqdi va havo isidi' = 'Quyosh chiqqach, havo isidi'. Omonimiya: 'Olimning qarori' (Olim o'zi qaror qildi / Olim haqida qaror qabul qilindi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Sintaktik hodisalarni tahlil qilish',
+                        'items': [
+                            "Sintaktik birlikning strukturaviy ko'rinishini aniqlash.",
+                            'Uning mantiqiy-semantik munosabatini ochish.',
+                            "Omonimiyada ikkilamchi va uchlamchi ma'no talqinlarini ajratish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Sintaktik sinonimiya uslubiy vosita sifatida nutqning jozibadorligini va aniqligini oshiradi.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'U keldi hamda ishni boshladi' va 'U kelib, ishni boshladi' qurilmalari qanday hodisaga misol?",
+                        'options': [
+                            'Sintaktik omonimiya',
+                            'Sintaktik sinonimiya',
+                            'Sintaktik antonimiya',
+                            'Sintaktik elipsis'
+                        ],
+                        'answer': 1,
+                        'explain': "Har xil struktura bir xil ma'noni ifodalagani uchun sintaktik sinonimiya hisoblanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Sintaktik omonimiya matnda noaniqlik (amfiboliya) keltirib chiqarishi mumkin.',
+                        'answer': True,
+                        'explain': 'Bir xil tuzilish ikki xil tushunilsa, matnda fikr noaniqligi yuzaga keladi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi ibora sintaktik omonimiyaga ega?',
+                        'options': [
+                            'Onamning rasmi',
+                            'Qizil olma',
+                            'Tez yugurish',
+                            'Beshinchi sinf'
+                        ],
+                        'answer': 0,
+                        'explain': "'Onamning rasmi' — onam chizgan rasm yoki onam tasvirlangan rasm ma'nolarini beradi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Sintaktik munosabatlar bo'yicha amaliy topsiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Yomg'ir yog'gani uchun yo'llar sirpanchiq bo'ldi' gapining sinonimik juftini yozing.",
+                            'answer': "Yomg'ir yog'di va yo'llar sirpanchiq bo'ldi (yoki Yomg'ir yog'ib, yo'llar sirpanchiq bo'ldi).",
+                            'hint': "Ergashgan qo'shma gapni bog'langan qo'shma gapga aylantiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Sintaktik antonimiyaga 2 ta misol keltiring va ularning qarama-qarshi ma'nosini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'sintaktik-elipsis-va-reduplikatsiya',
+                'title': 'Sintaktik elipsis va reduplikatsiya hodisalari',
+                'summary': "Nutqda tejamkorlik natijasida gap bo'laklarining tushib qolishi (elipsis) hamda ta'sirchanlikni oshiruvchi sintaktik takrorlar.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Elipsis — nutq tejamkorligi tamoyiliga ko'ra gap strukturasi va kontekstidan osongina tiklanadigan bo'lakning tushirib qoldirilishi. Reduplikatsiya esa ma'no kuchaytirish, ekspressivlik uchun sintaktik unsurlarning takrorlanishidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Elipsis: 'Men olmani yaxshi ko'raman, u esa uzumni [yaxshi ko'radi]'. Reduplikatsiya: 'U uzoq, uzoq o'yladi'."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Tahlil bosqichlari',
+                        'items': [
+                            "Tushirib qoldirilgan bo'lakni kontekst orqali aniqlash.",
+                            'Elipsisning nutqiy tejamkorlikdagi rolini baholash.',
+                            "Sintaktik takror va taftologiyani o'zaro farqlash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Elipsis va tugallanmagan gaplar bir xil emas; eliptik gapda tushirilgan bo'lak osongina tiklanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Sintaktik elipsisning asosiy vazifasi nimadan iborat?',
+                        'options': [
+                            'Fikrni murakkablashtirish',
+                            "Nutq tejamkorligini ta'minlash",
+                            'Gapni uzaytirish',
+                            'Grammatik xatolik yaratish'
+                        ],
+                        'answer': 1,
+                        'explain': 'Elipsis ortiqcha takrorlarning oldini olib, nutq tejamkorligini beradi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Eliptik gaplarda tushib qolgan bo'lakni kontekstsiz tiklab bo'lmaydi.",
+                        'answer': False,
+                        'explain': "Aksariyat eliptik gaplarda tushgan bo'lak semantik mantiq orqali oydinlashadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Biz mevalardan oldik, ular esa sabzavotlardan' gapida qaysi bo'lak elipsisga uchragan?",
+                        'options': [
+                            'Ega',
+                            'Kesim',
+                            'Aniqlovchi',
+                            'Hol'
+                        ],
+                        'answer': 1,
+                        'explain': "Ikkinchi qismda 'oldik/olishdi' kesimi tushirib qoldirilgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Elipsis va reduplikatsiya bo'yicha mashqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Ahmad shaxmat o'ynaydi, Karim esa futbol' gapida elipsisga uchragan so'zni yozing.",
+                            'answer': "o'ynaydi",
+                            'hint': 'Birinchi va ikkinchi qism kesimini solishtiring.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Badiiy asarlardan 3 ta eliptik gap topib, tushirilgan bo'laklarini tiklab yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'matnning-kogerentligi-va-kogeziyasi',
+                'title': 'Matnning kogerentligi va kogeziyasi',
+                'summary': "Matn qismlarining ma'noviy-mantiqiy (kogerentlik) va formal-grammatik (kogeziya) jihatdan o'zaro bog'lanish qonuniyatlari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Matn tilshunosligida matn yaxlitligi ikki asosiy tushunchaga tayanadi: Kogeziya — matn unsurlarining lisoniy, grammatik va leksik vositalar (olmoshlar, bog'lovchilar, takrorlar) orqali yuzaki bog me'yoriy bog'lanishi; Kogerentlik — matnning ichki, mantiqiy va semantik yaxlitligidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Kogeziya: 'Ali keldi. U kitob keltirdi.' ('U' olmoshi kogeziv vosita). Kogerentlik: Ketma-ket kelgan gaplarning umumiy bir mavzuga va mantiqiy zanjirga bo'ysunishi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kogeziya va kogerentlikni tahlil qilish',
+                        'items': [
+                            'Matndagi olmoshlar, konnektorlar va anaforik vositalarni topish (kogeziya).',
+                            "Gaplar o'rtasidagi sabab-oqibat, vaqt va mantiqiy bog me'yoriy zanjirni aniqlash (kogerentlik).",
+                            'Matn mazmunining yaxlit konseptsiyasini shakllantirish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Gaplar formal jihatdan grammatik bog'lanmasada (kogeziyasiz), mantiqan chuqur bog'liq bo'lishi mumkin (kogerentlik)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Matnning formal-grammatik va leksik vositalar orqali bog'lanishi nima deyiladi?",
+                        'options': [
+                            'Kogerentlik',
+                            'Kogeziya',
+                            'Pragmatika',
+                            'Derivatsiya'
+                        ],
+                        'answer': 1,
+                        'explain': "Kogeziya — bu matnning yuzaki, formal-lisoniy bog'liqligi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Matnda kogeziya vositalari bo'lmasa, u hech qachon kogerent bo'la olmaydi.",
+                        'answer': False,
+                        'explain': "Ba'zan gaplar grammatik ko'rsatkichlarsiz ham mantiqiy kogerentlikka ega bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi vosita kogeziyani ta'minlovchi vositalardan biridir?",
+                        'options': [
+                            'Anaforik olmoshlar',
+                            "Tovush o'zgarishi",
+                            "So'z tarkibi",
+                            "Urg'u"
+                        ],
+                        'answer': 0,
+                        'explain': "Anaforik olmoshlar oldingi gapdagi otga ishora qilib, formal bog'liqlikni yaratadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Matn sintaksisi va kogeziya tahlili.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Ahmad a'lochi o'quvchi. U har kuni kutubxonaga boradi.' Matnida kogeziv vositani toping.",
+                            'answer': "'U' kishilik olmoshi",
+                            'hint': "Birinchi gapdagi otning o'rniga ishlatilgan so'zni ko'ring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': '4 gapdan iborat matn tuzing va undagi kogerentlik va kogeziya vositalarini izohlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'nutqiy-aktlar-va-illokutsiya-sintaksisi',
+                'title': 'Nutqiy aktlar nazariyasi va illokutsiya sintaksisi',
+                'summary': "Gapning muloqotdagi pragmatik maqsadi, illokutiv kuchi va nutqiy ta'sir ko'rsatish sintaktik mexanizmlari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Nutqiy aktlar nazariyasi (J. Ostin, J. Syorl) gapning grammatik shakli va u muloqotda bajaradigan vazifasi o'rtasidagi munosabatni o'rganadi. Akt 3 bosqichdan iborat: Lokutsiya (gapirish), Illokutsiya (maqsad, niyat) va Perlokutsiya (natija, ta'sir)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "'Oyna ochiq qolibdi.' (Lokutsiya: faktni aytish; Illokutsiya: iltimos/buyruq — 'Oynani yopib qo'y'; Perlokutsiya: tinglovchining oynani yopishi)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Illokutiv kuchni aniqlash',
+                        'items': [
+                            "Gapning tom ma'nodagi (lisoniy) mazmunini belgilash.",
+                            "Kontekst va so'zlovchining yashirin niyatini ochish (illokutsiya).",
+                            "Sintaktik vositalar (so'roq gap, buyruq fe'li, intonatsiya) rolini baholash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Bilvosita nutqiy aktlarda gapning grammatik shakli (masalan, so'roq gap) va illokutiv maqsadi (masalan, iltimos) mos kelmasligi mumkin."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Nutqiy aktda so'zlovchining gapirishdan ko'zlagan yashirin maqsadi va niyati nima deyiladi?",
+                        'options': [
+                            'Lokutsiya',
+                            'Illokutsiya',
+                            'Perlokutsiya',
+                            'Inversiya'
+                        ],
+                        'answer': 1,
+                        'explain': "Illokutsiya — hamkorlikdagi muloqot maqsadi va pragmatik yo'nalishdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Tuz uzatib yubora olmaysizmi?' gapining illokutiv maqsadi savol berishdir.",
+                        'answer': False,
+                        'explain': "Bu bilvosita nutqiy akt bo'lib, uning illokutiv maqsadi savol berish emas, iltimos qilishdir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Nutqiy akt natijasida tinglovchida yuzaga keladigan ta'sir va harakat nima deyiladi?",
+                        'options': [
+                            'Lokutsiya',
+                            'Illokutsiya',
+                            'Perlokutsiya',
+                            'Semantika'
+                        ],
+                        'answer': 2,
+                        'explain': "Perlokutsiya — nutqiy aktning tinglovchiga o'tkazgan psixologik yoki jismoniy ta'siri."
+                    }
+                ],
+                'homework': {
+                    'intro': "Pragmatik va illokutiv sintaksis bo'yicha mashqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Xonada havo yetishmayapti' gapining illokutiv maqsadi nima bo'lishi mumkin?",
+                            'answer': 'Oynani ochishni iltimos qilish yoki taklif etish.',
+                            'hint': "Kontekstda bu xabar orqali so'zlovchi qanday harakatni kutadi?"
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Bilvosita nutqiy aktga 3 ta misol keltiring va ularning asl va illokutiv ma'nolarini izohlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'sintaktik-derivatsiya-va-transformatsiya',
+                'title': 'Sintaktik derivatsiya va gap transformatsiyasi nazariyasi',
+                'summary': "Birlamchi sintaktik tuzilmalardan ikkilamchi tuzilmalarning hosil bo'lishi va gaplarni qayta shakllantirish qoidalari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Sintaktik derivatsiya deb muayyan bazaviy (yadro) gap strukturasi asosida boshqa sintaktik shakllarning hosil bo'lish jarayoniga aytiladi. Generativ lingvistika va transformatsion grammatikada gaplarni bir shakldan ikkinchi shaklga o'tkazish transformatsiya deyiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Yadro gap: 'Talaba maqola yozdi' (Aniq nisbat) -> Transformatsiya: 'Maqola talaba tomonidan yozildi' (Majhul nisbat) -> Derivat: 'Talabaning maqola yozishi' (Birikmaga ko'chish)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Transformatsiyani amalga oshirish',
+                        'items': [
+                            'Birlamchi yadro struktura (karkas)ni ajratib olish.',
+                            "Grammatik va sintaktik qoidalarga ko'ra passivizatsiya yoki nominalizatsiyani qo'llash.",
+                            "Invariant (asosiy) ma'no saqlanib qolganligini tekshirish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Transformatsiyada gap shakli va sintaktik ma'nosi o'zgarsa-da, asosiy semantik mazmun saqlanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Aniq nisbatdagi gapni majhul nisbatdagi gapga o'tkazish amali nima deyiladi?",
+                        'options': [
+                            'Nominalizatsiya',
+                            'Passivizatsiya transformatsiyasi',
+                            'Reduplikatsiya',
+                            'Elipsis'
+                        ],
+                        'answer': 1,
+                        'explain': "Aniq nisbatdan majhul nisbatga o'tish passivizatsiya transformatsiyasi deyiladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Sintaktik derivatsiyada gapning asosiy lisoniy mazmuni butunlay yo'qoladi.",
+                        'answer': False,
+                        'explain': "Derivatsiyada invariant ma'no saqlanadi, faqat uning sintaktik shakllanishi o'zgaradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Gapning otlashuvi va birikmaga aylanish jarayoni nima deyiladi?',
+                        'options': [
+                            'Passivizatsiya',
+                            'Nominalizatsiya',
+                            'Inversiya',
+                            'Parataxis'
+                        ],
+                        'answer': 1,
+                        'explain': "Nominalizatsiya — fe me'yoriy kesimli gapning otli birikmaga ko'chish hodisasidir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Transformatsion sintaksisga doir topsiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Oqituvchi daftarlarni tekshirdi' gapini majhul nisbatli gapga transformatsiya qiling.",
+                            'answer': "Daftarlar o'qituvchi tomonidan tekshirildi (yoki Daftarlar tekshirildi).",
+                            'hint': "Egani vositali to'ldiruvchiga, to'ldiruvchini egaga aylantiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Bitta sodda gapni oling va uni 3 xil sintaktik derivatga aylantirib ko'rsating."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'modal-sintaksis-va-modallik-kategoriyasi',
+                'title': "Modal sintaksis: Ob'ektiv va sub'ektiv modallik",
+                'summary': "Xabar berilayotgan voqelikka so'zlovchining munosabati hamda ob'ektiv/sub'ektiv modallikning sintaktik vositalari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Modallik gapning ajralmas belgisidir. Ob'ektiv modallik gapda ifodalangan fikrning borliqqa munosabatini (haqiqat, imkoniyat, shartlilik, zaruriyat) bildiradi va barcha gaplarda mavjud. Sub'ektiv modallik esa so me me'yoriy fikrga so'zlovchining shaxsiy munosabatini (shubha, ishonch, quvonch) ko'rsatadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Ob'ektiv modallik: 'Ertaga yomg'ir yog'adi' (Voqelik va vaqt munosabati). Sub'ektiv modallik: 'Ehtimol, ertaga yomg'ir yog'ar' ('Ehtimol' modal so'zi shubha bildirmoqda)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Modallik turlarini aniqlash',
+                        'items': [
+                            "Gapning zamon va mayil ko'rsatkichlarini topish (ob'ektiv modallik).",
+                            "Kiritma so'zlar, modal zarrachalar va intonatsiyani tahlil qilish (sub'ektiv modallik).",
+                            "Modallik vositalarining ma'noviy tonini belgilash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Ob'ektiv modallik har qanday predikativ birlikda bo'ladi, sub'ektiv modallik esa fakultativ hisoblanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Barcha gaplar uchun majburiy hisoblangan modallik turi qaysi?',
+                        'options': [
+                            "Sub'ektiv modallik",
+                            "Ob'ektiv modallik",
+                            'Ekspressiv modallik',
+                            'Nollik modallik'
+                        ],
+                        'answer': 1,
+                        'explain': "Ob'ektiv modallik (zamon va mayil shakllari orqali) barcha gaplarda majburiy mavjud."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Modal so'zlar va yuklamalar sub'ektiv modallikni shakllantirishga xizmat qiladi.",
+                        'answer': True,
+                        'explain': "Modal so'z va yuklamalar so'zlovchining sub'ektiv bahosini va munosabatini beradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Afsuski, u majlisga kela olmadi' gapida 'afsuski' so'zi qanday modallik hosil qilgan?",
+                        'options': [
+                            "Ob'ektiv modallik",
+                            "Sub'ektiv modallik",
+                            'Mantiqiy modallik',
+                            'Sintaktik nollik'
+                        ],
+                        'answer': 1,
+                        'explain': "'Afsuski' so'zi so'zlovchining shaxsiy achinish munosabatini (sub'ektiv modallik) ko'rsatadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Modal sintaksisga oid amaliy topsiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Albatta, biz g'alaba qozonamiz' gapidagi sub'ektiv modallik vositasini ko'rsating.",
+                            'answer': "'Albatta' modal so'zi (ishonch bildiradi)",
+                            'hint': "So'zlovchining ishonch darajasini ko'rsatgan so'zni toping."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Bitta voqelik haqidagi gapga har xil sub'ektiv modallik beruvchi 3 ta modal so'z qo'shib yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'inversiya-va-sintaktik-stilistika',
+                'title': 'Inversiya va sintaktik stilistika',
+                'summary': "Gapda so'z tartibining o'zgarishi (inversiya) va uning badiiy-stilistik hamda emotsional-ekspressiv vazifalari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "O'zbek tilida odatiy (neytral) so'z tartibi: Ega + To'ldiruvchi/Hol + Kesim. Bu tartibning muayyan uslubiy va poetik masadlarda o'zgardiilishi inversiya deb ataladi. Inversiya badiiy, publisistik va so'zlashuv uslublarida hissiyot va rhythm yaratish uchun qo'llaniladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "To'g me'yoriy tartib: 'O'zbekiston mening vatanimdir.' Inversiya: 'Vatanimdir mening O'zbekiston!' (Kesim va egalik egalik o'rni almashtirilib, poetik pafos oshirilgan)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Inversiyani tahlil etish',
+                        'items': [
+                            "Gapdagi grammatik bo'laklarning joylashuv o'rnini aniqlash.",
+                            "O'zbek tilining neytral sinatktik tartibi bilan solishtirish.",
+                            'Inversiya orqali erishilgan stilistik va emotsional samarani baholash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Rasmiy va ilmiy uslubda inversiya uslubiy xatolik hisoblanadi, badiiy uslubda esa muloqot bezagidir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek tilida so'z tartibining muayyan uslubiy maqsad bilan buzilishi nima deyiladi?",
+                        'options': [
+                            'Elipsis',
+                            'Inversiya',
+                            'Kogeziya',
+                            'Valentlik'
+                        ],
+                        'answer': 1,
+                        'explain': "Inversiya — sintaktik so'z tartibining stilistik maqsadda o'zgartirilishidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Rasmiy-idoraviy hujjatlarda inversiyadan keng foydalaniladi.',
+                        'answer': False,
+                        'explain': "Rasmiy-idoraviy uslub qat'iy to'g'ri so me'yoriy so'z tartibini talab qiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Keldi bahor shoshilib' gapida qaysi bo'lak inversiyaga uchragan?",
+                        'options': [
+                            'Ega',
+                            'Kesim',
+                            'Hol',
+                            'Aniqlovchi'
+                        ],
+                        'answer': 1,
+                        'explain': "'Keldi' kesimi gapning boshiga o'tkazilib inversiya hosil qilingan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Sintaktik stilistika va inversiya bo'yicha mashqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Sevaman men seni, jonim Vatanim' gapida kesim qayerda joylashgan va nega?",
+                            'answer': "Gap boshida joylashgan; inversiya orqali his-tuyg'u va poetik ta'sir oshirilgan.",
+                            'hint': "Neytral tartibda kesim gap oxirida bo'lishi kerak edi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "She'riyatdan 3 ta inversiyali gap topib, ularni neytral tartibga o'tkazing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ozbek-tili-tarixiy-sintaksisi',
+                'title': "O'zbek tili tarixiy sintaksisi",
+                'summary': "Qadimgi va eski o'zbek tilidagi gap qurilishining evolyutsiyasi, kelishik va bog me'yoriy vositalarning tarixiy taraqqiyoti.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Tarixiy sintaksis turkiy tillar, xususan eski o'zbek tili (Chag'atay tili) va qadimgi turkiy bitiklar davridagi gap qurilishi xususiyatlarini o'rganadi. Qadimgi sintaksisda bog'lovchisiz ergashish, izofatli qurilmalar va ravishdoshli o'ramlar ustuvor bo'lgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Qadimgi turkiy: 'Kök teŋri erürliginte...' (Ko'k tangri qodir qilganda...). Eski o'zbek tili izofati: 'Bahr-i ummon' (Ummon dengizi — forscha izofat ta'siri)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Tarixiy sintaksisni tahlil qilish',
+                        'items': [
+                            'Matnning tarixiy davrini belgilash (Orxun-Enasoy, Yassaviy, Navoiy davri).',
+                            "Sintaktik aloqa vositalari (izofat, ko'makchi, kelishik)ni hozirgi til bilan solishtirish.",
+                            "Gap tiplari va ko'makchili qurilmalarning o'zgarish tendentsiyasini aniqlash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Navoiy davri eski o'zbek tili sintaksisida arab va fors tillaridan kirib kelgan murakkab izofatli va ergashgan sintaktik o'ramlar ko'p bo'lgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Eski o'zbek tilida fors tilidan o'zlashgan sintaktik birikma shakli nima deyiladi?",
+                        'options': [
+                            'Izofat',
+                            'Parataxis',
+                            'Nominalizatsiya',
+                            'Inversiya'
+                        ],
+                        'answer': 0,
+                        'explain': "Izofat — 'bahr-i ummon', 'dardi dil' kabi aniqlovchi va aniqlanmish munosabatini beruvchi tarixiy shakldir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Qadimgi turkiy tilda ergashgan qo'shma gaplar o'rnida asosan fe'l-atvor va ravishdoshli iboralar (o'ramlar) qo'llanilgan.",
+                        'answer': True,
+                        'explain': "Qadimgi bitiklarda moslashgan ergash gaplar o'rniga ravishdosh va sifatdoshli o'ramlar faol bo'lgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'zbek tili tarixiy sintaksisida qaysi unsurning o'rni va vazifasi asrlar davomida o'zgarmay kelmoqda?",
+                        'options': [
+                            'Ega va kesimning moslashuvi',
+                            'Izofat birikmalari',
+                            "Arabcha ko'makchilar",
+                            "Forscha bog'lovchilar"
+                        ],
+                        'answer': 0,
+                        'explain': 'Ega va kesim munosabati hamda moslashuvi turkiy tillar sintaksisining tub tayanchidir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Tarixiy sintaksis bo'yicha tahlil topsiriqlari.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alisher Navoiy asarlaridagi 'Ko'rgali keldim' iborasining zamonaviy sintaktik muqobilini yozing.",
+                            'answer': "Ko'rgani keldim (yoki Ko'rish uchun keldim).",
+                            'hint': "'-gali' maqsad ravishdoshi hozirgi tilda qaysi shaklga mos keladi?"
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Xamsa' asaridan bitta bayt oling va undagi sintaktik va grammatik xususiyatlarni izohlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kognitiv-va-kompyuter-sintaksisi',
+                'title': 'Kognitiv va kompyuter sintaksisi',
+                'summary': "Inson miyasida gapning shakllanishi hamda sun'iy intellekt va NLP (tabiiy tilni qayta ishlash) uchun avtomatik sintaktik tahlil modellarini yaratish.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Kognitiv sintaksis gap shakllanishini inson miyasi, kognitsiyasi va tushunchalar karkasi bilan bog'liq holda o'rganadi. Kompyuter sintaksisi (va NLP) esa kompyuter dasturlari uchun tildagi gaplarni avtomatik tahlil qilish (parsing), daraxtsimon strukturalar (Dependency Tree) tuzish vositalarini ishlab chiqadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "NLP Parsing: 'Talaba kitobni o'qidi' gapining kompyuter modellaridagi bog'liqlik daraxti: Head: o'qidi -> Subject: Talaba, Object: kitobni."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Sintaktik parse-daraxt tuzish bosqichlari',
+                        'items': [
+                            'Gapdagi kesimni grammatik va mantiqiy ildiz (Root) sifatida belgilash.',
+                            "Root bilan bevosita bog'liq bosh bo'lak va to'ldiruvchilarni bog me'yoriy shoxlarga ajratish.",
+                            'Taqsimot va qaramlik munosabatlarini algoritmlar orqali tavsiflash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Sun'iy intellekt (LLM) modellari o'zbek tili sintaksisini tushunishi uchun dependency grammar (qaramlik grammatikasi) keng qo'llaniladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Tabiiy tilni qayta ishlashda (NLP) gap strukturasini avtomatik ajratish jarayoni nima deyiladi?',
+                        'options': [
+                            'Parsing (Sintaktik tahlil)',
+                            'Inversiya',
+                            'Reduplikatsiya',
+                            'Illokutsiya'
+                        ],
+                        'answer': 0,
+                        'explain': 'Parsing — kompyuter tomonidan gap strukturasini tahlil qilish va daraxt tuzish jarayonidir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Kognitiv sintaksis gapni faqat formal shakl deb qaraydi va inson tafakkurini inkor etadi.',
+                        'answer': False,
+                        'explain': "Aksincha, kognitiv sintaksis gapni inson mental strukturasi va konseptsiyalarining in'ikosi deb biladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Kompyuter sintaksisida qaramlik daraxtining (Dependency Tree) asosiy ildizi (Root) odatda nima hisoblanadi?',
+                        'options': [
+                            'Ega',
+                            'Kesim',
+                            "To'ldiruvchi",
+                            'Hol'
+                        ],
+                        'answer': 1,
+                        'explain': "Zamonaviy qaramlik grammatikasida kesim (fe'l) butun gap strukturasining markaziy ildizi hisoblanadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kompyuter va kognitiv sintaksisga oid amaliy topsiriq.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Ahmad tez yugurdi' gapidagi Root (ildiz) so'z qaysi va unga qaysi so'zlar bo'ysunadi?",
+                            'answer': 'Root: yugurdi. Notalar: Ahmad (Ega), tez (Hol).',
+                            'hint': "Ega va hol qaysi so me'yoriy bo'lakka qaram ekanligini belgilang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbek tili avtomatik parsingini yaratishda so'z tartibi erkinligining qanday qiyinchiliklari borligini tushuntiring."
                         }
                     ]
                 }
@@ -16752,6 +19243,806 @@ SUBJECTS = [
                             'id': 't2',
                             'type': 'open',
                             'prompt': 'Badiiy matnni filologik va poetik tahlil qilishning amaliy ahamiyatini yoritib bering.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'adabiy-semiotika-va-strukturaviy-poetika',
+                'title': 'Adabiy semiotika va strukturaviy poetika',
+                'summary': 'Badiiy matnni belgilar va kodlar tizimi hamda tuzilmaviy birliklar munosabati sifatida tahlil qilish nazariyasi.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Adabiy semiotika matnni ishora (belgi)lar tizimi sifatida o'rganadi. Ferdinand de Sossyur va Yuriy Lotman ta'limotiga ko'ra, badiiy asar ikkilamchi modellashtiruvchi tizim bo'lib, unda har bir lisoniy birlik qo'shimcha semantik yuklama oladi. Strukturaviy poetika esa asarning lisoniy va kompozitsion elementlari o'rtasidagi munosabatlarni qat'iy tizim tarzida tahlil qiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Cho'lponning 'Kecha va kunduz' romanidagi 'kecha' hamda 'kunduz' tushunchalari shunchaki sutka qismlari emas, balki ma'rifatsizlik hamda erkinlik, zulmat va ziyo o'rtasidagi semiotik opsiziyani (qarama-qarshilikni) anglatuvchi belgilar kodidir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Semiotik va strukturaviy tahlil bosqichlari',
+                        'items': [
+                            "Matndagi tayanch belgilar (dengiz, shamol, tun, ranglar) va ularning ramziy ma'nosini ajratish.",
+                            "Belgilar o'rtasidagi binor (juft) qarama-qarshiliklarni aniqlash (masalan: hayot/o'lim, yorug'lik/zulmat).",
+                            "Strukturaviy sathlar (fonetik, leksik, sintaktik, syujet) o'rtasidagi izomorfizm (o'xshashlik)ni tahlil qilish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Strukturaviy tahlilda asardan tashqaridagi omillar (muallif biografiyasi, tarixiy sharoit) ikkinchi darajaga suriladi va diqqat markazida faqat matnning ichki tuzilishi turadi.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Badiiy matnni 'ikkilamchi modellashtiruvchi tizim' deb atagan adabiyotshunos va semiotik olim kim?",
+                        'options': [
+                            'Yuriy Lotman',
+                            'Mixail Baxtin',
+                            'Jerald Jeneut',
+                            'Rolan Bart'
+                        ],
+                        'answer': 0,
+                        'explain': "Yuriy Lotman madaniyat va badiiy adabiyotni tabiiy tildan keyingi ikkilamchi modellashtiruvchi tizim deb ta'riflagan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Strukturaviy poetikada matnning ichki tuzilishi va elementlar aloqasi muallif tarjimai holidan ustun qo'yiladi.",
+                        'answer': True,
+                        'explain': "Strukturaviy tahlil matnning o'ziga immanent hodisa sifatida qaraydi va muallif biografiyasini ikkinchi darajali hisoblaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Semiotikada 'binor oppozitsiya' tushunchasi nimani anglatadi?",
+                        'options': [
+                            "Ikki muallif o'rtasidagi adabiy bahsni",
+                            "Matndagi ikkita zid tushunchaning o'zaro qarama-qarshiligini",
+                            'Qofiyaning ikki turli tuzilishini',
+                            'Dramadagi ikki personaj dialogini'
+                        ],
+                        'answer': 1,
+                        'explain': "Binor oppozitsiya matn ma'nosini shakllantiruvchi ikkita zid belgining (masalan, kecha/kunduz) qarama-qarshiligidir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Semiotik tahlil bo'yicha amaliy topshiriqlar majmui.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Abdulla Qodiriyning 'O'tkan kunlar' romanidagi 'Otabekning oq otda kelishi' va 'Kumushning qora kiyimi' semantik kodlarini izohlang.",
+                            'answer': "Oq ot — poklik, najot va umid kodi; qora kiyim — fojia, motam va taqdirning mash'um ekanligi kodi.",
+                            'hint': "Ranglar va narsalar semiotikasiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zingiz yoqtirgan biror she'rdagi binor oppozitsiyalarni (kamida 2 juft) ajratib, ularning g'oyaviy vazifasini strukturaviy tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'qabul-qilish-estetikasi-va-oquvchi-resepsiyasi',
+                'title': "Qabul qilish estetikasi va o'quvchi resepsiyasi",
+                'summary': "Badiiy asar ma'nosini yaratishda o'quvchi o'rni, kutish ufqi va matndagi ma'noviy bo'shliqlarni to'ldirish nazariyasi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Reseptiv estetika (Xans-Robert Yauss va Volfgang Izer) adabiyot tarixida asosiy e'tiborni o'quvchiga va uning asarni qabul qilish jarayoniga qaratadi. Badiiy matn statik obyekt emas, balki o'quvchi mutolaasi jarayonida qayta tug'iladigan dinamik jarayondir. Matnda 'bo'shliqlar' (unbestimmtheitsstellen) mavjud bo'lib, ularni o'quvchi o'z tajribasi orqali to'ldiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Oybekning 'Navoiy' romanida Alisher Navoiy va Guli munosabatlarining ruhiy-tasavvufiy qatlamlarini kitobxon o'zining ma'naviy saviyasi va tasavvur kuchi darajasida idrok etadi hamda matndagi sukut saqlangan bo'shliqlarni o'zi to'ldiradi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Reseptiv tahlil bosqichlari',
+                        'items': [
+                            "Asar yaratilgan davrdagi kitobxonning 'kutish ufqi' (erwartungshorizont)ni aniqlash.",
+                            "Matnda muallif tomonidan qoldirilgan bo'shliqlar va yashirin ma'nolarni topish.",
+                            'Asarning turli davrlarda har xil talqin qilinishi va resepsiya tarixini solishtirish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Kutish ufqi — bu kitobxonning muayyan davrdagi adabiy tajribasi, me'yorlari va dunyoqarashidan shakllanadigan tayyorgarlik darajasidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Reseptiv estetika nazariyasining asoschilaridan biri kim?',
+                        'options': [
+                            'Volfgang Izer',
+                            'Ferdinand de Sossyur',
+                            'Noam Xomskiy',
+                            'Zigmund Freyd'
+                        ],
+                        'answer': 0,
+                        'explain': 'Volfgang Izer va Xans-Robert Yauss reseptiv estetika (qabul qilish estetikasi) asoschilaridir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Reseptiv estetikaga ko'ra, badiiy asar ma'nosi faqat muallif tomonidan uzil-kesil belgilanadi.",
+                        'answer': False,
+                        'explain': "Yo'q, reseptiv estetikada asar ma me'nosi matn va o'quvchi muloqoti natijasida hosil bo me'yorlanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Volfgang Izer ta'riflagan matndagi 'bo'shliqlar' nima?",
+                        'options': [
+                            'Matbaa hatolari va tushib qolgan harflar',
+                            "O'quvchi fantaziyasi va talqini orqali to'ldiriladigan aytilmagan ma'no nuqtalari",
+                            'Muallif yozishga ulgurmagan boblar',
+                            'Senzura tomonidan olib tashlangan qismlar'
+                        ],
+                        'answer': 1,
+                        'explain': "Bo'shliqlar — bu muallif O'quvchi mutolaasi jarayonida o'zi anglashi va to'ldirishi uchun qoldirgan ma'noviy oraliqlardir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Reseptiv estetika asosida matn tahlili.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Kutish ufqi' (Erwartungshorizont) tushunchasini o'zbek adabiyotidagi biror asar misolida izohlang.",
+                            'answer': "'O'tkan kunlar' romanining 1926-yildagi kitobxon kutish ufqi (yangilik, milliy roman) bilan bugungi kitobxon kutish ufqi va qabul qilishi tubdan farq qiladi.",
+                            'hint': "Davrlar va kitobxonlar saviyasining o'zgarishiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Cho'lponning 'Binafsha' she'ridagi 'aytilmagan bo'shliqlar'ni aniqlang va ularni o'z o'quvchilik tajribangizdan kelib chiqib to'ldirib yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'intertekstualitet-va-diskursiv-tahlil',
+                'title': 'Intertekstualitet va diskursiv tahlil',
+                'summary': "Matnlarning o'zaro muloqoti, iqtiboslik, reminisensiya va badiiy diskursning sotsiokulturolojik tahlili.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Intertekstualitet (Yuliya Kristeva, Mixail Baxtin) — har bir badiiy matn boshqa matnlarning to'qnashuv nuqtasi va ularga berilgan munosabat ekanligini ilgari suradi. Matnlararo aloqa iqtibos, alluziya, reminisensiya va parodiya shaklida namoyon bo'ladi. Diskursiv tahlil esa badiiy matnni muayyan ijtimoiy, mafkuraviy va madaniy kontekstdagi til amaliyoti sifatida o'rganadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Erkin Vohidovning 'Ruhlar isyoni' dostonida Nazrul Islom, Robindranat Tagor she'riyatiga va sharq klassik dostonchiligiga qilingan barcha ishoralar va iqtiboslar intertekstual tarmoqni hosil qiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Intertekstual tahlil bosqichlari',
+                        'items': [
+                            'Matndagi ochiq va yashirin iqtiboslar (sitatalar) hamda alluziyalarni (shaxs yoki hodisaga ishora) aniqlash.',
+                            "Intertekstning manbasini (pretekst) aniqlash va ikki matn o'rtasidagi ma'noviy o'zgarishni tahlil qilish.",
+                            'Diskursiv kontekstni: matn ortida turgan hokimiyat, mafkura yoki madaniy qadriyatlarni ochib berish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Alluziya — aniq bir tarixiy yoki adabiy faktga, asarga nomini rasterik aytmasdan shunchaki ishora qilishdir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Intertekstualitet' terminini adabiyotshunoslikka birinchi bo'lib kim olib kirgan?",
+                        'options': [
+                            'Yuliya Kristeva',
+                            'Mishel Fuko',
+                            'Roland Bart',
+                            'Jaker Derrida'
+                        ],
+                        'answer': 0,
+                        'explain': "Yuliya Kristeva 1967-yilda Mixail Baxtinning 'muloqot' (dialogizm) g'oyalariga tayanib ushbu terminni kiritgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Alluziya — bu boshqa bir matndan parchani aynan, o'zgartirmasdan ko'chirishdir.",
+                        'answer': False,
+                        'explain': "Yo'q, aynan ko'chirish iqtibos (sitata) deyiladi. Alluziya esa shunchaki bilvosita ishora qilishdir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Diskursiv tahlil matnni o'rganishda nimaga ko'proq e'tibor qaratadi?",
+                        'options': [
+                            'Faqat qofiya va vazn qoidalariga',
+                            'Matnning yaratilishidagi ijtimoiy, mafkuraviy va hokimiyat munosabatlariga',
+                            'Muallifning husnixatiga',
+                            'Kitobning sahifalar soniga'
+                        ],
+                        'answer': 1,
+                        'explain': "Diskursiv tahlil lisoniy amaliyotlarni ijtimoiy-siyosiy va mafkuraviy kontekst bilan bog'liqlikda tadqiq etadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Intertekstual aloqalarni aniqlash bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Alisher Navoiyning 'Xamsa'si va Nizomiy Ganjaviy 'Xamsa'si o'rtasidagi aloqadorlik intertekstualitetning qaysi ko'rinishiga kiradi?",
+                            'answer': "Ushbu aloqadorlik ijodiy muloqot, tatabbu (nazira) va intertekstual muloqot ko'rinishiga kiradi.",
+                            'hint': "Nazira yozish an'anasi haqida o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Zamonaviy o'zbek she'riyatidan biror asar tanlab, undagi klasik poeziyaga qilingan alluziya va reminisensiyalarni topib tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'narratologiya-roviy-va-fokalizatsiya',
+                'title': 'Narratologiya: Roviy, fokalizatsiya va vaqt konsepti',
+                'summary': 'Badiiy hikoyalash nazariyasi, roviy tiplari, idrok nuqtasi (fokalizatsiya) hamda matndagi vaqt modellari.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Narratologiya (Jerald Jeneut nazariyasi) badiiy asarning hikoyalanish strukturasini o'rganadi. Asosiy kategoriyalar: Roviy (narrator), Fokalizatsiya (voqealarni kim ko'rib/idrok etib turgani) va Badiiy vaqt. Roviy va Muallif teng tushuncha emas. Fokalizatsiya esa nol darajali (har narsani biluvchi), ichki (personaj nigohi) va tashqi (ob'ektiv kuzatuvchi) turlarga bo me'yorlanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Utkir Hoshimovning 'Dunyoning ishlari' asarida narratsiya (hikoyalash) birinchi shaxs (ichki fokalizatsiya — bola/yozuvchi) nigohi orqali amalga oshiriladi, bu esa voqealarga yuqori darajadagi emotsional samimiyat bag'ishlaydi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Narratologik tahlil bosqichlari',
+                        'items': [
+                            'Roviy tipini aniqlash: ekstradiegetik (voqealar tashqarisida) yoki intradiegetik (voqealar ichida).',
+                            'Fokalizatsiyani belgilash: voqealar kimning nigohi va idroki orqali tasvirlanmoqda?',
+                            "Vaqt tahlili: analepsis (o'tmishga chekinish/fleshbek) va prolepsis (kelajakka o'tib ketish) usullarini aniqlash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Fokalizator — voqeani hikoya qiluvchi shaxs emas, balki Voqeani KO'RIB va HIS ETIB turgan nigoh egasidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Badiiy vaqtda 'analepsis' hodisasi nimani anglatadi?",
+                        'options': [
+                            'Kelajak voqealarini oldindan aytib berishni',
+                            "O'tmishdagi voqealarga qaytishni (fleshbek)",
+                            "Hikoyalash tezligini to'xtatib qo'yishni",
+                            "Bir vaqtning o'zida ikkita voqeani tasvirlashni"
+                        ],
+                        'answer': 1,
+                        'explain': "Analepsis — badiiy vaqt zanjirida o'tmishdagi voqea va hodisalarga orqaga chekinishdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Badiiy asardagi roviy (narrator) va real muallif har doim bir xil shaxs hisoblanadi.',
+                        'answer': False,
+                        'explain': "Roviy — muallif tomonidan yaratilgan estetik kategoriya bo'lib, u real muallif bilan teng emas."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Jerald Jeneut bo'yicha 'Zero (nol) fokalizatsiya' nimani anglatadi?",
+                        'options': [
+                            'Roviy voqealar haqida hechnarsa bilmaydi',
+                            "Roviy har bir personajning o'y-xayollari va barcha voqealardan to'liq xabardor (har narsaga qodir roviy)",
+                            "Voqealar faqat bitta personaj ko'zi bilan ko'riladi",
+                            'Matnda roviy umumiy mavjud emas'
+                        ],
+                        'answer': 1,
+                        'explain': "Nol fokalizatsiyada roviy (ob'ektiv/cheksiz) biluvchi bo'lib, u har bir personajning ichki dunyosini biladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Narratologik tahlil usullarini qo'llash.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Abdulla Qahhorning 'Anor' hikoyasidagi fokalizatsiya turini aniqlang va izohlang.",
+                            'answer': "Hikoyada asosan ichki va nol fokalizatsiya almashinib turadi; roviy Turonboy va Turopning ichki kechinmalarini tashqaridan hamda ularning ko'zi bilan ko'rsatadi.",
+                            'hint': "Roviy personajlarning o'ylarini qanchalik bilishiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kichik bir voqeani avval 1-shaxs rovisi (ichki fokalizatsiya), so'ngra 3-shaxs ob'ektiv rovisi (tashqi fokalizatsiya) tilidan qayta yozib, farqini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'mifokritika-va-arxetipik-tahlil',
+                'title': 'Adabiyotda mifokritika va arxetipik tahlil',
+                'summary': "K.G. Yung va N. Fray ta'limoti bo'yicha matndagi arxetiplar, mifologik sxemalar hamda kollektiv unconsciousness tahlili.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Mifokritika va arxetipik tahlil (K.G. Yung, Nortrop Fray) badiiy asarlarning zamirida yotgan azaliy mifik sxemalar, ramzlar va universal arxetiplarni (Kollektiv ancha/mifologik qoliplar) tadqiq etadi. Badiiy ijod — insoniyatning jamoaviy bexabarlik (kollektiv ruhiyat) qatlamida saqlanib qolgan 'Soya', 'Anima/Animus', 'Qahramon safari', 'Ona arxetipi' kabi modellarning qayta namoyon bo'lishidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "'Alpomish' dostonida va hatto zamonaviy 'Shum bola' asarida qahramonning safarga otlanishi, sinovlardan o'tishi va ramziy 'o'lib-qayta tirilishi' — universal 'Qahramon monomifi' (Jozef Kempbell) arxetipiga mos keladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Arxetipik tahlil bosqichlari',
+                        'items': [
+                            'Matndagi takrorlanuvchi universal motiv va ramzlarni (Suv, Olov, Qariya, Sayohat) ajratish.',
+                            'Personajlar xarakteridagi arxetipik modellarni (Donishmand, Soya, Qahramon, Triksiter) belgilash.',
+                            "Asardagi syujet chizig'ining qadimiy mifologik sikllar (Tug'ilish-O'lim-Qayta tirilish) bilan bog'liqligini ochish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Arxetip — insoniyat ruhiy tajribasining eng qadimiy, tug'ma, universallashgan ruhiy-tasavvuriy qolipidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Kollektiv bexabarlik' (collective unconscious) va arxetiplar nazariyasining asoschisi kim?",
+                        'options': [
+                            'Karl Gustav Yung',
+                            'Zigmund Freyd',
+                            'Jan-Pol Sartr',
+                            'Jak Derrida'
+                        ],
+                        'answer': 0,
+                        'explain': 'Karl Gustav Yung psixologiyaga va adabiyotshunoslikka arxetip va kollektiv bexabarlik tushunchalarini kiritgan.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Arxetipik tahlilga ko'ra, turli madaniyatlardagi adabiy syujetlar o'xshash mifik qoliplarga ega bo'lishi mumkin.",
+                        'answer': True,
+                        'explain': 'Ha, chunki insoniyat ruhiyatida universal arxetipik strukturalar umumiy saqlanadi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Adabiyotda salbiy, yashirin va inkor etilgan xususiyatlarni gavdalantiruvchi Yung arxetipi qaysi?',
+                        'options': [
+                            'Soya (Shadow)',
+                            'Anima',
+                            'Persona',
+                            'Donishmand qariya'
+                        ],
+                        'answer': 0,
+                        'explain': 'Soya (Shadow) arxetipi inson shaxsiyatining yashirin, bostirilgan va salbiy tomonlarini ifodalaydi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Badiiy matnlardan arxetiplarni izlash topshirig'i.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O'zbek xalq ertaklaridagi 'Yalmog'iz kampir' va 'Hukmdor' obrazlari qaysi arxetiplarga misol bo'ladi?",
+                            'answer': "Yalmog'iz kampir — Yovuz Ona / Soya arxetipi; Hukmdor — Ota / Hokimiyat arxetipi.",
+                            'hint': "Yungning asosiy arxetiplar ro'yxatini yodga oling."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tog'ay Murodning 'Otamdan qolgan dalalar' romanidagi 'Dehqon' obrazini arxetipik nuqtai nazardan tahlil qilib, insho yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'psixoanalitik-adabiyotshunoslik',
+                'title': 'Psixoanalitik adabiyotshunoslik',
+                'summary': "Freyd va Lakan ta'limoti bo'yicha matn osti (subtekst), bostirilgan istaklar va ramziy tartib tahlili.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Psixoanalitik adabiyotshunoslik badiiy asarni muallif yoki personajlarning ruhiy osti (bexabar) jarayonlari mahsuli deb qaraydi. Zigmund Freyd bo'yicha, badiiy ijod — bu tush ko'rishga o'xshash hodisa bo'lib, unda libidinoz va bostirilgan istaklar ramziy shaklda yuzaga chiqadi. Jak Lakan esa psixoanalizni lingvistika bilan bog'lab, 'Bexabarlik tili strukturalashgandir' g'oyasini ilgari surdi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Cho'lponning 'Kecha va kunduz' romanidagi Zebi obrazining ruhiy iztiroblari, otasi Razzoqsofining diniy-fobik xatti-harakatlari psixoanalitik nuqtai nazardan psixologik komplekslar va bostirilgan qo'rquvlarning oqibatidir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Psixoanalitik tahlil bosqichlari',
+                        'items': [
+                            'Personajlarning irratsional xatti-harakatlari va tushlarini tahlil qilish.',
+                            'Matndagi ramzlar (fallik, matrisa ramzlari) ortida yashiringan ruhiy sabablarni topish.',
+                            "Muallifning hayoti va matndagi travmatik xotiralar munosabatini o'rganish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Sublimatsiya — ichki psixik energiyani va bostirilgan istaklarni badiiy-ijodiy faoliyatga ko'chirish va yuksaltirishdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Psixoanaliz ta'limotiga ko'ra, bostirilgan energiya va istaklarning jamiyat uchun foydali ijodga aylanishi nima deyiladi?",
+                        'options': [
+                            'Sublimatsiya',
+                            'Depressiya',
+                            'Fokalizatsiya',
+                            'Karsis'
+                        ],
+                        'answer': 0,
+                        'explain': "Sublimatsiya — ruhiy energiyaning badiiy ijod yoki boshqa ijodiy shakllarga ko'chish jarayonidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Jak Lakan bo'yicha, inson bexabarlik ruhiyati dil va dil tuzilishi kabi strukturaga ega.",
+                        'answer': True,
+                        'explain': "Lakan 'Inson bexabarligi til kabi tuzilgandir' degan mashhur formulasini ilgari surgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Psixoanalizda 'Edip kompleksi' tushunchasi nimani anglatadi?",
+                        'options': [
+                            "Ota va o'g'il o'rtasidagi ongsiz ruhiy raqobat va onaga intilishni",
+                            "Do'stlar o'rtasidagi sodiqlikni",
+                            "O'z-o'zini haddan tashqari yaxshi ko'rishni",
+                            "Tabiatga bo'lgan muhabbatni"
+                        ],
+                        'answer': 0,
+                        'explain': "Edip kompleksi — Freyd psixoanalizida o'g'il boladagi otaga nisbatan ongsiz raqobat va onaga bog'liqlik kompleksidir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Badiiy personajlar ruhiyatini psixoanalitik tahlil qilish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Abdulla Qodiriyning 'O'tkan kunlar'ida Otabekning Zaynabga ko'ngil qo'ya olmasligining ruhiy-psixologik sababini ko'rsating.",
+                            'answer': "Otabekning ruhiyatida Kumushga bo'lgan mutlaq fiksatsiya (ruhiy bog'liqlik) va Zaynab obrazining majburiy impose qilinganligi ruhiy rad etishni yuzaga keltirgan.",
+                            'hint': 'Fiksatsiya va ruhiy travma tushunchalaridan foydalaning.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbek adabiyotidagi biror asar personajining tush ko'rish sahnasini tanlab, uning bexabar ruhiy holatini izohlovchi psixoanalitik tahlil yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'postkolonial-adabiy-tanqid',
+                'title': "Postkolonial adabiy tanqid va milliy o'zlik",
+                'summary': 'Orijentalizm, gibridlik, subaltern va mustamlakachilik diskursining adabiyotdagi aks ettirilishi tahlili.',
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Postkolonial adabiyotshunoslik (Edvard Said, Homi Bhabha, Gayatri Spivak) imperiya va mustamlakaga aylantirilgan xalqlar o'rtasidagi madaniy va adabiy munosabatlarni tadqiq etadi. Edvard Saidning 'Orijentalizm' g'oyasiga ko'ra, G'arb Sharqni 'qoloq, ekzotik, irratsional' sifatida konstruksiya qilgan. Postkolonial tanqid matnlarda milliy o'zlikning qanday bosilgani va qayta tiklanganini o'rganadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Hamza va Fitrat asarlarida jadidchilik harakati davridagi 'mustamlaka subyekti'ning (subaltern) o'zligini anglash, chorizm va sovet mustamlakachilik diskursiga qarshe ma'rifiy isyoni yorqin postkolonial matn namunasidir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Postkolonial tahlil bosqichlari',
+                        'items': [
+                            "Matnda 'Biz' va 'Boshqalar' (mustamlakachi va bo'ysundirilgan) oppozitsiyasini aniqlash.",
+                            "Mustamlakachilik imperiyasining tili va madaniyati badiiy matnda qanday hukmronlik qilayotganini ko'rsatish.",
+                            "Gibridlik (ikki madaniyat oralig'ida qolish) va mimetizm (taqlidchilik) holatlarini tahlil qilish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Subaltern — tarixdan va jamiyatdan ovozi o'chirilgan, siyosiy hamda madaniy vakillikdan mahrum qilingan bo'ysundirilgan guruhdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Orijentalizm' (G'arbning Sharq haqidagi stereotipik qarashlari) nazariyasining muallifi kim?",
+                        'options': [
+                            'Edvard Said',
+                            'Homi Bhabha',
+                            'Gayatri Spivak',
+                            'Frantz Fanon'
+                        ],
+                        'answer': 0,
+                        'explain': "Edvard Said 1978-yilda 'Orijentalizm' asarini yozib, ushbu yo'nalishga asos solgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Postkolonial tanqid faqat Yevropa adabiyotini o'rganadi va milliy adabiyotlarga aloqasi yo'q.",
+                        'answer': False,
+                        'explain': "Yo'q, u mustamlakachilik tajribasini boshdan kechirgan barcha milliy adabiyotlarni va ularning imperiya bilan munosabatini o'rganadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Homi Bhabha ilgari surgan 'Gibridlik' (Hybridity) tushunchasi nimani anglatadi?",
+                        'options': [
+                            "Ikki va undan ortiq madaniyatlar to'qnashuvida yangi, oraliq madaniy shaxsiyatning paydo bo'lishini",
+                            'Faqat bir tilda gapirishni',
+                            'Qadimiy miflarni qayta yozishni',
+                            "She'riyatda ikki vaznni aralashtirishni"
+                        ],
+                        'answer': 0,
+                        'explain': 'Gibridlik — mustamlakachi va mustamlakaga aylangan madaniyatlarning chorrahasida vujudga keladigan murakkab shaxsiyat va identiklikdir.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Postkolonial adabiyotshunoslik usulida matn analizi.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Abdulhamid Cho'lponning 'Kecha va kunduz' romanidagi sovet/chor ma'murlari tasvirida postkolonial elementlarni ko'rsating.",
+                            'answer': "To'ra va amaldorlarning mahalliy aholiga ustun, sinik va hukmron ko'z bilan qarashi imperial diskursning namoyon bo'lishidir.",
+                            'hint': 'Hukmron imperiya vakillarining mahalliy xalqqa munosabatini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Fitratning 'Sharq' yoki 'Hind ixtilochilari' asarini postkolonial va anti-kolonial diskurs nuqtai nazaridan tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'fenomenologik-adabiyotshunoslik-va-ekzistensializm',
+                'title': 'Fenomenologik adabiyotshunoslik va ekzistensializm',
+                'summary': "Badiiy matnda inson borlig'i, anglam, absurd, tanlov erkinligi va subyektiv tajriba poetikasi.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Fenomenologik adabiyotshunoslik (Edmund Gusserl, Jenev maktabi) badiiy matnni muallif intensional (yo'naltirilgan) shuurining tajribasi sifatida ta'riflaydi. Ekzistensial poetika (Jan-Pol Sartr, Albert Kamyu) esa matnda inson mavjudligining absurdligi, tanlov erkinligi, yolg'izlik va mas'uliyat muammolarini diqqat markaziga qo'yadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Nazar Eshanqulning 'Murod' yoki 'Maymun yetaklagan odam' hikoyalarida qahramonlarning jamiyatdan uzolashuvi, absurd borliq bilan yuzma-yuz kelishi ekzistensial poetikaning yorqin namunasidir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Fenomenologik va ekzistensial tahlil bosqichlari',
+                        'items': [
+                            'Personajning dunyoni qanday his qilayotgani (subyektiv fenomenologik vaqt va fazo)ni aniqlash.',
+                            "Matnda 'Absurd', 'Yolg'izlik', 'O'lim' va 'Erkin tanlov' ekzistensialiallarining o'rnini belgilash.",
+                            "Qahramonning ozodlikka erishish yoki o'z-o'zini begonalashtirish (otчуждение) bosqichlarini tahlil qilish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Ekzistensializmda 'Mavjudlik mohiyatdan ustundir' (Existence precedes essence) — inson avval tug'iladi, so'ng o'z tanlovlari bilan o'z mohiyatini yaratadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Absurd filosofiyasi' va ekzistensial adabiyotning yirik vakillaridan biri kim?",
+                        'options': [
+                            'Albert Kamyu',
+                            'Yuriy Lotman',
+                            'Ferdinand de Sossyur',
+                            'Mixail Baxtin'
+                        ],
+                        'answer': 0,
+                        'explain': "Albert Kamyu ('Sizif haqida afsona', 'Begi') absurd va ekzistensializmni badiiy shakllantirgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Ekzistensial adabiyotda qahramon har doim tayyor, qat'iy ma'naviy qoidalar va taqdirga to'liq bo'ysunadi.",
+                        'answer': False,
+                        'explain': "Yo'q, ekzistensial qahramon taqdir qoliplariga isyon qiladi va o'z tanlovi hamda mas'uliyati bilan o'zini shakllantiradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Fenomenologiyadagi 'Intensionalik' (Intentionality) nimani anglatadi?",
+                        'options': [
+                            "Inson shuurining har doim biror narsaga/obyektga yo'naltirilganligini",
+                            "She'rda qofiya doshligini",
+                            'Personajning tarixiy kelib chiqishini',
+                            'Badiiy kitobning qattiq muqovasini'
+                        ],
+                        'answer': 0,
+                        'explain': "Intensionalik — san'atkor shuurining va anglamining har doim muayyan obyekt yoki ma'noga qaror topganligidir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Ekzistensial poetika bo'yicha amaliy matn tahlili.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Nazar Eshanqulning 'Maymun yetaklagan odam' hikoyasida 'begonalashuv' (alienation) hodisasi qanday yuz beradi?",
+                            'answer': "Bosh qahramon o'zining ichki erkinligini va san'atini saqlash uchun jamiyatning soxta me'yorlaridan va o'zligidan begonalashadi.",
+                            'hint': "Qahramon va atrof-muhit o'rtasidagi ziddiyatga qarang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbek modern nasridan biror hikoyani tanlab, undagi ekzistensial vaqt hamda absurd tushunchalarini tahlil qilib beruvchi insho yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'genologiya-va-transjanr-hodisalar',
+                'title': 'Genologiya va janrlar evolyutsiyasi: Transjanrlar',
+                'summary': 'Janrlar nazariyasi, hibrid janrlar, metafikshen, va zamonaviy adabiyotda janr chegaralarining buzilishi.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Genologiya — adabiyotshunoslikning janrlar va ularning tarixiy evolyutsiyasini o'rganuvchi sohasi. Postmodern adabiyot davrida an'anaviy janrlar (roman, drama, poema) chegaralari yo'qolib, transjanr va hibrid shakllar paydo bo'ldi. Metafikshen (asarning o'zini yozilish jarayoni haqidagi asar), roman-essey, dramatik poeziya va kollaj shakllari bunga misoldir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Xurshid Do'stmuhammadning 'Jajji roman'i yoki 'Don Kixot'dagi matn ichida matn usuli — an'anaviy roman janri qoliplarini buzuvchi metafiksional va transjanr hodisadir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Genologik tahlil bosqichlari',
+                        'items': [
+                            "Asarning kanonik (an'anaviy) janr belgilarini aniqlash.",
+                            "Matnda boshqa janrlarning (essey, hujjat, lirik chekinish, ilmiy matn) qo'shilish darajasini va hibridlikni belgilash.",
+                            'Metafiksional priyomlarni: muallifning matnga aralashuvi va yozish jarayonini tasvirlashini tahlil qilish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Metafikshen (Metafiction) — o'zining o'ylab topilgan, badiiy to'qima ekanligini ochiq e'tirof etuvchi va matn yaratilish jarayonini namoyish qiluvchi adabiy usuldir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Adabiyotshunoslikning janrlar va ularning rivojlanish qonuniyatlarini o'rganadigan bo'limi nima deyiladi?",
+                        'options': [
+                            'Genologiya',
+                            'Gematologiya',
+                            'Gerontologiya',
+                            'Gnoseologiya'
+                        ],
+                        'answer': 0,
+                        'explain': "Genologiya — adabiy janrlar va ularning tizimini o'rganuvchi fandir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Metafikshen — bu mutlaq real tarixiy hujjatlarga tayangan va to'qimadan xoli bo'lgan adabiy janrdir.",
+                        'answer': False,
+                        'explain': "Yo'q, metafikshen — asarning to'qima va badiiy o'yin ekanligini ta'kidlaydigan shakldir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Postmodern adabiyotda janrlarning o'zaro qo'shilib, chatishib ketishi qanday hodisa deyiladi?",
+                        'options': [
+                            'Janrlar hibridlashuvi / Transjanrlik',
+                            'Janrlar kanonizatsiyasi',
+                            'Janrlar reduksiyasi',
+                            'Janrlar monizmi'
+                        ],
+                        'answer': 0,
+                        'explain': "Janrlar hibridlashuvi — an'anaviy janr chegaralarining buzilishi va sintezlanishidir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Janrlar evolyutsiyasi va transjanr hodisalarni tadqiq qilish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Roman-esse' janriy shakli qaysi ikkita soha sintezidan vujudga keladi?",
+                            'answer': 'Badiiy nasr (roman) hamda falsafiy-publitsistik mushohada (essey) sintezidan.',
+                            'hint': 'Har ikkala janrning asosiy belgilarini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbek adabiyotidagi metafiksional asarlardan birini tanlab, uning an'anaviy nasrdan janriy farqlarini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'dekonstruksiya-va-poststrukturaviy-tahlil',
+                'title': 'Dekonstruksiya va poststrukturaviy matn tahlili',
+                'summary': "Jak Derrida ta'limoti, Différance, matn ma'nosining barqarorsizligi va aporiya nuqtalarini ochish.",
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asos',
+                        'body': "Dekonstruksiya (Jak Derrida, Pol de Man) poststrukturaviy tanqidning eng yuksak bosqichi bo'lib, badiiy matnda yagona, qat'iy va yakuniy ma'no mavjudligini rad etadi. Derridaning 'Différance' (farqlanish va kechiktirish) va Logotsentritsizmni tanqid qilish ta'limotiga ko'ra, matn o'z-o me'yorini inkor etuvchi ichki qarama-qarshiliklarga (aporiya) ega va u cheksiz talqinlarga ochiqdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "Alisher Navoiyning 'Lison ut-tayr' asarini dekonstruktiv tahlil qilganda, Qaf tog'iga yetib borgan 30 murg' (Simurg') va Ulug' Simurg' o'rtasidagi ayniyat va farq matnning markaziy aporiyasi (yechimsiz ichki mantiqiy paradoksi) sifatida namoyon bo'ladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Dekonstruktiv tahlil bosqichlari',
+                        'items': [
+                            "Matndagi hukmron hiyerarxiya va binor opsiziyalarni (masalan: erkak/ayol, og'zaki/yozma) topish va ularni ag'darish.",
+                            "Matndagi 'aporiya' — mantiqiy chalkashlik, matn o'z-o'zini inkor etadigan, ma'no yoriladigan nuqtalarni aniqlash.",
+                            "Matnning yagona qat'iy ma'nosi yo'qligini, ma'no doimiy harakatda hamda kechiktirishda ekanligini ko'rsatish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Dekonstruksiya matnni 'vayron qilish' emas, balki matnning o'z mantig'i ichida yashiringan zidiyat va yorilishlarni ochib berishdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Dekonstruksiya va 'Différance' nazariyasiga asos solgan fransuz filosofi va adabiyotshunosi kim?",
+                        'options': [
+                            'Jak Derrida',
+                            'Roland Bart',
+                            'Yuriy Lotman',
+                            'Giyom Apolliner'
+                        ],
+                        'answer': 0,
+                        'explain': 'Jak Derrida dekonstruksiya metodologiyasining asoschisidir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Dekonstruktiv tahlilda badiiy matn faqat bitta, yagona va to'g'ri haqiqatni aks ettirishi ta'kidlanadi.",
+                        'answer': False,
+                        'explain': "Yo'q, dekonstruksiya har qanday absolut yagona ma'noni rad etadi va ma'nonin barqarorsizligini ko'rsatadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Dekonstruksiyada matndagi mantiqiy tugun, yechimsiz paradoks va ma'noning inqiroz nuqtasi nima deyiladi?",
+                        'options': [
+                            'Aporiya',
+                            'Metonimiya',
+                            'Karsis',
+                            'Alliteratsiya'
+                        ],
+                        'answer': 0,
+                        'explain': "Aporiya — matn mantiqining ziddiyatga uchrashi va yakuniy yechimning yo'qlik nuqtasidir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Dekonstruktiv tahlil metodologiyasini amaliyotda qo'llash.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Dekonstruktsiyadagi 'Logotsentrizm' tushunchasi nimani anglatadi?",
+                            'answer': "Logotsentrizm — matnda doimiy, absolut va o'zgarmas markaziy ma'no (Logos) mavjud deb hisoblovchi qarashdir.",
+                            'hint': "Derrida tanqid qilgan absolut markaz g'oyasini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Klassik yoki zamonaviy biror o'zbek she'rini tanlab, undagi ichki zidiyatlar va aporiya nuqtalarini dekonstruktiv usulda tahlil qiling."
                         }
                     ]
                 }
