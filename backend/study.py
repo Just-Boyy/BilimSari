@@ -100,6 +100,7 @@ def ensure_tables(cur, conn):
         )
     ''')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_topics_subject ON topics (subject_id, seq)')
+    cur.execute('CREATE INDEX IF NOT EXISTS idx_topics_subject_key ON topics (subject_key)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_progress_user ON user_progress (user_id)')
     cur.execute('''
         CREATE TABLE IF NOT EXISTS subject_purchases (
@@ -317,12 +318,7 @@ def last_completion(cur, user_id):
     return row['topic_id'], as_utc(row['completed_at'])
 
 
-def cooldown_state(cur, user_id):
-    """
-    24 soatlik kutish holati. Vaqt SERVERDA hisoblanadi — brauzer soatini
-    o'zgartirish yoki sahifani yangilash bu holatga ta'sir qilmaydi.
-    """
-    topic_id, completed_at = last_completion(cur, user_id)
+def _build_cooldown(topic_id, completed_at):
     if not completed_at:
         return {'active': False, 'seconds_left': 0, 'unlock_at': None,
                 'unlock_at_tashkent': None, 'last_topic_id': None}
@@ -343,6 +339,33 @@ def cooldown_state(cur, user_id):
         'last_topic_id': topic_id,
         'text': format_remaining(seconds_left),
     }
+
+
+def cooldown_state(cur, user_id):
+    """
+    24 soatlik kutish holati. Vaqt SERVERDA hisoblanadi — brauzer soatini
+    o'zgartirish yoki sahifani yangilash bu holatga ta'sir qilmaydi.
+
+    Progress allaqachon _progress_map() bilan olingan bo'lsa, o'rniga
+    _cooldown_from_progress() dan foydalaning — qo'shimcha so'rov shart emas.
+    """
+    topic_id, completed_at = last_completion(cur, user_id)
+    return _build_cooldown(topic_id, completed_at)
+
+
+def _cooldown_from_progress(progress: dict):
+    """`_progress_map()` natijasidan — qo'shimcha bazaga so'rovsiz —
+    cooldown holatini hisoblaydi."""
+    latest_topic_id = None
+    latest_completed_at = None
+    for topic_id, row in progress.items():
+        if row.get('status') != STATUS_COMPLETED:
+            continue
+        completed_at = as_utc(row.get('completed_at'))
+        if completed_at and (latest_completed_at is None or completed_at > latest_completed_at):
+            latest_completed_at = completed_at
+            latest_topic_id = topic_id
+    return _build_cooldown(latest_topic_id, latest_completed_at)
 
 
 def compute_streak(cur, user_id):
@@ -513,7 +536,7 @@ def subject_topics(cur, user_id, subject_key):
     )
     subject = cur.fetchone()
     progress = _progress_map(cur, user_id)
-    cooldown = cooldown_state(cur, user_id)
+    cooldown = _cooldown_from_progress(progress)
     return subject, _compute_states(topics, progress, cooldown)
 
 
@@ -531,7 +554,7 @@ def subjects_overview(cur, user_id):
     )
     all_topics = cur.fetchall()
     progress = _progress_map(cur, user_id)
-    cooldown = cooldown_state(cur, user_id)
+    cooldown = _cooldown_from_progress(progress)
     chosen = get_chosen_subject(cur, user_id)
     cur.execute('SELECT subject_key FROM subject_purchases WHERE user_id = %s', (user_id,))
     purchased_keys = {r['subject_key'] for r in cur.fetchall()}
@@ -603,7 +626,7 @@ def topic_state_for(cur, user_id, topic):
     )
     siblings = cur.fetchall()
     progress = _progress_map(cur, user_id)
-    cooldown = cooldown_state(cur, user_id)
+    cooldown = _cooldown_from_progress(progress)
     states = _compute_states(siblings, progress, cooldown)
     for s in states:
         if s['id'] == topic['id']:

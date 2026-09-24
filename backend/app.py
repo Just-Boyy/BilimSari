@@ -34,6 +34,15 @@ app.register_blueprint(study_api.bp)
 app.register_blueprint(ai_tutor.bp)
 app.register_blueprint(admin_api.bp)
 
+
+@app.after_request
+def _security_headers(response):
+    # Telegram Web mini apps yuklanadi iframe orqali — shuning uchun
+    # X-Frame-Options/frame-ancestors qo'shilmagan, aks holda ochilmay qolardi.
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    return response
+
 # BOT_TOKEN faqat muhit o'zgaruvchisidan olinadi — kodda saqlanmaydi.
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
@@ -77,6 +86,8 @@ def init_db():
             expires_at TIMESTAMP NOT NULL
         )
     ''')
+    cur.execute('CREATE INDEX IF NOT EXISTS idx_tokens_user_id ON tokens (user_id)')
+    conn.commit()
     for stmt in [
         "ALTER TABLE users ALTER COLUMN email DROP NOT NULL",
         "ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL",
