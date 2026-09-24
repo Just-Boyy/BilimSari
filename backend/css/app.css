@@ -168,15 +168,34 @@ svg { display: block; }
 .chaqmoq-belgi {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: #b45309;
-  font-weight: 800;
-  font-size: 15px;
+  gap: 6px;
+  padding: 3px 3px 3px 10px;
+  border-radius: 99px;
+  border: 2px solid var(--yashil);
+  background: linear-gradient(180deg, #f2fdec, #dcf7c4);
   white-space: nowrap;
   flex: 0 0 auto;
 }
 .chaqmoq-belgi .nishon { flex: 0 0 auto; }
-.chaqmoq-belgi .nishon svg { width: 15px; height: 15px; }
+.chaqmoq-belgi .nishon svg {
+  width: 18px; height: 18px;
+  color: var(--yashil-quyuq);
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .5));
+}
+.chaqmoq-belgi .son {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, #8fe066, var(--yashil-quyuq) 78%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: inset 0 -3px 3px rgba(0, 0, 0, .18), inset 0 1.5px 1px rgba(255, 255, 255, .55);
+}
 
 .shapka .sinf {
   display: inline-flex;

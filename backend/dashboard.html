@@ -76,7 +76,7 @@
     document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
 
     var chaqmoqBelgi = document.getElementById('chaqmoqBelgi');
-    chaqmoqBelgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span>' + (res.chaqmoq || 0) + '</span>';
+    chaqmoqBelgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + (res.chaqmoq || 0) + '</span>';
     chaqmoqBelgi.hidden = false;
 
     var av = document.getElementById('avatar');
