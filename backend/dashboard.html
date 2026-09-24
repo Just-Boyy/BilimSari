@@ -16,6 +16,7 @@
     <div>
       <p class="salom" id="salom">Salom!</p>
     </div>
+    <span class="chaqmoq-belgi" id="chaqmoqBelgi" hidden></span>
     <div class="avatar-halqa" id="avatarHalqa">
       <div class="avatar" id="avatar" aria-hidden="true"></div>
     </div>
@@ -73,6 +74,10 @@
     // Sarlavha
     var ism = UI.bosh(res.user && res.user.name);
     document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
+
+    var chaqmoqBelgi = document.getElementById('chaqmoqBelgi');
+    chaqmoqBelgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span>' + (res.chaqmoq || 0) + '</span>';
+    chaqmoqBelgi.hidden = false;
 
     var av = document.getElementById('avatar');
     if (res.user && res.user.photo_url) {

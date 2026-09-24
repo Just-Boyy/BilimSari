@@ -165,6 +165,22 @@ svg { display: block; }
 
 .salom { font-size: 20px; font-weight: 800; color: var(--matn-quyuq); }
 
+.chaqmoq-belgi {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--zarg-fon);
+  color: #b45309;
+  font-weight: 800;
+  font-size: 13px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.chaqmoq-belgi .nishon { flex: 0 0 auto; }
+.chaqmoq-belgi .nishon svg { width: 15px; height: 15px; }
+
 .shapka .sinf {
   display: inline-flex;
   align-items: center;
