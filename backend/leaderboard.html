@@ -36,7 +36,15 @@
   .reyting-qator .o-rin svg { width: 22px; height: 22px; margin: 0 auto; }
   .reyting-qator .avatar { width: 36px; height: 36px; font-size: 14px; }
   .reyting-qator .ism { flex: 1; min-width: 0; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .reyting-qator .xp-son { font-weight: 800; color: var(--yashil-quyuq); white-space: nowrap; }
+  .reyting-qator .chaqmoq-son {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 800;
+    color: #b45309;
+    white-space: nowrap;
+  }
+  .reyting-qator .chaqmoq-son .nishon svg { width: 15px; height: 15px; }
 
   .mening-o-rnim {
     margin-top: 18px;
@@ -53,7 +61,7 @@
 </div>
 
 <main class="sahifa" style="padding-top:18px">
-  <p class="izoh" style="margin-bottom:14px">XP bo'yicha eng faol o'quvchilar</p>
+  <p class="izoh" style="margin-bottom:14px">Chaqmoq bo'yicha eng faol o'quvchilar</p>
   <div id="royxat">
     <div class="skelet" style="height:56px;margin-bottom:8px"></div>
     <div class="skelet" style="height:56px;margin-bottom:8px"></div>
@@ -84,7 +92,7 @@
     return '<div class="reyting-qator' + (u.me ? ' men' : '') + '">' +
       o_rin + avatar +
       '<span class="ism">' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' +
-      '<span class="xp-son">' + u.xp + ' XP</span>' +
+      '<span class="chaqmoq-son">' + UI.nishon('chaqmoq', 'nishon') + u.chaqmoq + '</span>' +
       '</div>';
   }
 
