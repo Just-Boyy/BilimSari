@@ -169,18 +169,24 @@ svg { display: block; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 3px 3px 3px 10px;
+  padding: 3px;
   border-radius: 99px;
   border: 2px solid var(--yashil);
   background: linear-gradient(180deg, #f2fdec, #dcf7c4);
   white-space: nowrap;
   flex: 0 0 auto;
 }
-.chaqmoq-belgi .nishon { flex: 0 0 auto; }
+.chaqmoq-belgi .nishon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--yashil);
+  flex: 0 0 auto;
+}
 .chaqmoq-belgi .nishon svg {
-  width: 18px; height: 18px;
+  width: 16px; height: 16px;
   color: var(--yashil-quyuq);
-  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .5));
 }
 .chaqmoq-belgi .son {
   display: inline-flex;
