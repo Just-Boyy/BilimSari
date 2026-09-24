@@ -124,8 +124,9 @@ def init_db():
         rate_limit.ensure_table(cur, conn)
         admin_audit.ensure_table(cur, conn)
         admin_auth.ensure_table(cur, conn)
+        ai_tutor.ensure_cache_table(cur, conn)
     except Exception:
-        logger.exception('rate_limit/admin_audit/admin_auth jadvallari xatosi')
+        logger.exception('rate_limit/admin_audit/admin_auth/ai_tutor jadvallari xatosi')
         conn.rollback()
 
     # Eski AI-darslar tizimi (saqlanib qoldi, ixtiyoriy qo'shimcha sifatida)

@@ -35,6 +35,59 @@ RATE_LIMIT = int(os.environ.get('AI_RATE_LIMIT', '12'))
 RATE_WINDOW = 60
 
 
+# ───────────────────────── Javoblar keshi ─────────────────────────
+#
+# "AI yordamida tushuntirish" tugmasidagi savol har doim bir xil (mavzu +
+# rejim + til bo'yicha aniqlanadi) — turli o'quvchilar bir xil mavzuda bir
+# xil tugmani bossa, Gemini'ga qayta-qayta bir xil so'rov yuborishning
+# hojati yo'q. Birinchi so'ragan uchun javob generatsiya qilinadi va
+# saqlanadi, qolganlar uchun bazadan darhol qaytariladi — na kvota
+# sarflanadi, na kutish bo'ladi.
+
+def ensure_cache_table(cur, conn):
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS ai_explanations (
+            topic_id TEXT NOT NULL,
+            mode TEXT NOT NULL,
+            lang TEXT NOT NULL,
+            reply TEXT NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+            PRIMARY KEY (topic_id, mode, lang)
+        )
+    ''')
+    conn.commit()
+
+
+def _get_cached_explanation(topic_id, mode, lang):
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            'SELECT reply FROM ai_explanations WHERE topic_id = %s AND mode = %s AND lang = %s',
+            (topic_id, mode, lang),
+        )
+        row = cur.fetchone()
+        return row['reply'] if row else None
+    finally:
+        cur.close()
+        conn.close()
+
+
+def _save_cached_explanation(topic_id, mode, lang, reply):
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            'INSERT INTO ai_explanations (topic_id, mode, lang, reply) VALUES (%s, %s, %s, %s) '
+            'ON CONFLICT (topic_id, mode, lang) DO UPDATE SET reply = EXCLUDED.reply',
+            (topic_id, mode, lang, reply),
+        )
+        conn.commit()
+    finally:
+        cur.close()
+        conn.close()
+
+
 def _rate_ok(user_id) -> bool:
     return rate_limit.hit(f'ai:{user_id}', RATE_LIMIT, RATE_WINDOW)
 
@@ -194,6 +247,26 @@ def explain():
     lang = (body.get('lang') or 'uz')[:5]
     mode = (body.get('mode') or 'simple')[:20]
 
+    grade = body.get('grade') or request.user.get('grade')
+    subject_key = body.get('subject_key')
+    slug = body.get('slug')
+
+    # Kesh — Gemini'ga murojaat qilishdan OLDIN tekshiriladi, shuning uchun
+    # keshdan qaytgan javob tezlik cheklovini (rate limit) ham sarflamaydi.
+    tid = cur_mod.topic_id(int(grade), subject_key, slug) if (grade and subject_key and slug) else None
+    if tid:
+        cached = _get_cached_explanation(tid, mode, lang)
+        if cached:
+            meta = cur_mod.subject_meta(subject_key)
+            return jsonify({
+                'ok': True,
+                'reply': cached,
+                'mode': mode,
+                'subject': meta['name'],
+                'disclaimer': "Bu — AI qo'shimcha tushuntirishi. Rasmiy dars yuqorida.",
+                'cached': True,
+            })
+
     if not _rate_ok(request.user['id']):
         return jsonify({
             'ok': False,
@@ -201,10 +274,7 @@ def explain():
             'code': 'rate_limit',
         }), 429
 
-    grade = body.get('grade') or request.user.get('grade')
-    subject_name, topic_title, lesson_text = _topic_context(
-        request.user['id'], grade, body.get('subject_key'), body.get('slug')
-    )
+    subject_name, topic_title, lesson_text = _topic_context(request.user['id'], grade, subject_key, slug)
     if not topic_title:
         return jsonify({'ok': False, 'error': 'Mavzu topilmadi'}), 404
 
@@ -226,6 +296,10 @@ def explain():
     reply, error = _call_gemini(system, user_content, max_tokens=8192)
     if error:
         return jsonify({'ok': False, 'error': error, 'reply': None}), 502
+
+    if tid:
+        _save_cached_explanation(tid, mode, lang, reply)
+
     return jsonify({
         'ok': True,
         'reply': reply,
