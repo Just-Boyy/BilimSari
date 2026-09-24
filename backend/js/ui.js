@@ -40,7 +40,6 @@
     { yo_l: 'dashboard.html', nishon: 'home', matn: 'Bosh sahifa' },
     { yo_l: 'subjects.html', nishon: 'library', matn: 'Fanlarim' },
     { yo_l: 'leaderboard.html', nishon: 'trophy', matn: 'Reyting' },
-    { yo_l: 'progress.html', nishon: 'chart', matn: 'Natijalar' },
     { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
   ];
 

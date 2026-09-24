@@ -452,7 +452,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'progress.html', 'profile.html', 'leaderboard.html',
+    'profile.html', 'leaderboard.html',
     # eski (AI-darslar) oqimi — ishlashda davom etadi
     'learn.html', 'lesson.html', 'courses.html', 'review.html',
     'admin.html',
