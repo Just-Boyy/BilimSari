@@ -11,6 +11,7 @@ Ishga tushirish: GOOGLE_AI_API_KEY (yoki GEMINI_API_KEY) muhit
 o'zgaruvchisi o'rnatilgan holda, backend/ papkasidan:
     python scripts/generate_curriculum.py
 """
+import ast
 import json
 import os
 import re
@@ -134,14 +135,21 @@ def generate_subject(subject_key: str, subject_name: str, attempts: int = 8):
 
 def load_existing() -> list:
     """Oldingi (uzilib qolgan) ishga tushirishdan qisman natijani o'qiydi —
-    qayta ishga tushirilganda tugallangan fanlar qayta generatsiya qilinmaydi."""
+    qayta ishga tushirilganda tugallangan fanlar qayta generatsiya qilinmaydi.
+
+    exec() o'rniga ast.literal_eval() ishlatiladi — fayl faqat sof
+    literal (SUBJECTS = [...]) bo'lishi kerak, kod ijro etilmaydi."""
     if not os.path.exists(OUT_PATH):
         return []
-    ns = {}
     try:
         with open(OUT_PATH, 'r', encoding='utf-8') as f:
-            exec(f.read(), ns)  # noqa: S102 — o'zimiz yozgan faylni o'qiymiz
-        return ns.get('SUBJECTS', [])
+            tree = ast.parse(f.read(), filename=OUT_PATH)
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and any(
+                isinstance(t, ast.Name) and t.id == 'SUBJECTS' for t in node.targets
+            ):
+                return ast.literal_eval(node.value)
+        return []
     except Exception as exc:  # noqa: BLE001
         print(f'Eski faylni o\'qib bo\'lmadi ({exc}) — noldan boshlanadi.')
         return []

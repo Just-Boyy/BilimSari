@@ -13,6 +13,7 @@ Muhim: to'g'ri javoblar hech qachon frontendga yuborilmaydi.
 Progress faqat shu yerdagi funksiyalar orqali o'zgaradi.
 """
 
+import hashlib
 import json
 import logging
 import os
@@ -110,6 +111,12 @@ def ensure_tables(cur, conn):
             PRIMARY KEY (user_id, subject_key)
         )
     ''')
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS curriculum_meta (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+    ''')
     conn.commit()
 
     # Eski (jadval allaqachon mavjud) bazalarda yetishmayotgan ustunlarni qo'shadi.
@@ -126,16 +133,43 @@ def ensure_tables(cur, conn):
 
 # ───────────────────────── Curriculum → baza ─────────────────────────
 
+def _curriculum_fingerprint() -> str:
+    """Butun curriculum kodining "barmoq izi" — mazmun o'zgarmagan bo'lsa
+    bir xil qiymat qaytadi, shunda har bir restart'da bazani qayta
+    yozmasdan o'tkazib yuborish mumkin."""
+    parts = []
+    for grade in cur_mod.GRADES:
+        for subject in cur_mod.subjects_for_grade(grade):
+            for topic in subject.get('topics', []):
+                parts.append(json.dumps({
+                    'g': grade, 'k': subject['key'], 'slug': topic['slug'],
+                    'title': topic['title'], 'summary': topic.get('summary'),
+                    'duration': topic.get('duration'),
+                    'lesson': topic.get('lesson'),
+                    'quiz': topic.get('quiz'),
+                    'homework': topic.get('homework'),
+                }, sort_keys=True, ensure_ascii=False))
+    raw = '\n'.join(parts).encode('utf-8')
+    return hashlib.sha256(raw).hexdigest()
+
+
 def sync_curriculum(cur, conn, force=False):
     """
     curriculum/ paketidagi darslarni bazaga yozadi va endi mavjud bo'lmagan
     (kodda olib tashlangan yoki subject_key'i o'zgargan) qatorlarni o'chiradi.
 
     Manba — Python modullari (qo'lda yozilgan dastur), baza esa ishchi nusxa.
-    Har safar ishga tushganda to'liq qayta sinxronlanadi (kod = haqiqat manbai),
-    shuning uchun darsni yoki fanlar ro'yxatini kodda tahrirlash kifoya.
+    Mazmun oldingi restart'dan beri o'zgarmagan bo'lsa (fingerprint bir xil),
+    359+ qatorni qayta yozish shart emas — o'tkazib yuboriladi.
     """
     ensure_tables(cur, conn)
+
+    fingerprint = _curriculum_fingerprint()
+    if not force:
+        cur.execute("SELECT value FROM curriculum_meta WHERE key = 'fingerprint'")
+        row = cur.fetchone()
+        if row and row['value'] == fingerprint:
+            return 0
 
     written = 0
     expected_subject_ids = set()
@@ -207,6 +241,11 @@ def sync_curriculum(cur, conn, force=False):
     for sid in stale_subject_ids:
         cur.execute('DELETE FROM subjects WHERE id = %s', (sid,))
 
+    cur.execute(
+        "INSERT INTO curriculum_meta (key, value) VALUES ('fingerprint', %s) "
+        "ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value",
+        (fingerprint,)
+    )
     conn.commit()
     return written
 

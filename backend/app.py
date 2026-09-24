@@ -8,8 +8,8 @@ from flask_compress import Compress
 import hashlib
 import logging
 import os
-import json
-import urllib.request
+
+import requests
 
 import admin_api
 import admin_audit
@@ -112,6 +112,8 @@ def init_db():
         written = study.sync_curriculum(cur, conn)
         if written:
             logger.info('Curriculum sinxronlandi: %d ta mavzu', written)
+        else:
+            logger.info('Curriculum o‘zgarmagan — sinxronlash o‘tkazib yuborildi')
     except Exception:
         logger.exception('Study jadvallari xatosi')
         conn.rollback()
@@ -523,16 +525,9 @@ def tg_api(method, payload):
     if not BOT_TOKEN:
         return None
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/{method}'
-    data = json.dumps(payload).encode('utf-8')
-    req = urllib.request.Request(
-        url,
-        data=data,
-        headers={'Content-Type': 'application/json'},
-        method='POST',
-    )
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            return json.loads(resp.read().decode('utf-8'))
+        r = requests.post(url, json=payload, timeout=15)
+        return r.json()
     except Exception:
         logger.exception('Telegram API xato (%s)', method)
         return None
@@ -640,5 +635,11 @@ except Exception:
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    logger.info('BilimSari API → http://127.0.0.1:%d', port)
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # Debug rejimi endi ATAYLAB yoqilmasa o'chiq — yoqilgan holda Werkzeug
+    # HTTP orqali interaktiv Python konsolini ochadi (PIN bilan himoyalangan
+    # bo'lsa ham, bu productionda hech qachon yoqilmasligi kerak bo'lgan
+    # katta xavf). Ilgari `debug=True` qattiq yozilgan edi va FLASK_DEBUG
+    # muhit o'zgaruvchisi hech qanday ta'sir qilmasdi.
+    debug = os.environ.get('FLASK_DEBUG', '0') == '1'
+    logger.info('BilimSari API → http://127.0.0.1:%d (debug=%s)', port, debug)
+    app.run(host='0.0.0.0', port=port, debug=debug)
