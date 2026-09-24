@@ -509,7 +509,8 @@ def subject_topics(cur, user_id, subject_key):
     """Fan bo'yicha BARCHA sinflardan yig'ilgan mavzular (bitta umumiy dastur,
     grade ASC/seq ASC tartibida — soddadan murakkabga ketma-ket ochiladi)."""
     cur.execute(
-        'SELECT * FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        '''SELECT id, subject_key, grade, seq, slug, title, summary, duration
+           FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC''',
         (subject_key,),
     )
     topics = cur.fetchall()
@@ -533,7 +534,10 @@ def subjects_overview(cur, user_id):
     if not all_subjects:
         return []
 
-    cur.execute('SELECT * FROM topics ORDER BY grade ASC, seq ASC')
+    cur.execute(
+        'SELECT id, subject_key, grade, seq, slug, title, summary, duration '
+        'FROM topics ORDER BY grade ASC, seq ASC'
+    )
     all_topics = cur.fetchall()
     progress = _progress_map(cur, user_id)
     cooldown = cooldown_state(cur, user_id)
@@ -602,7 +606,8 @@ def topic_state_for(cur, user_id, topic):
     """Bitta mavzuning holatini (o'sha fandagi — barcha sinflar bo'ylab
     birlashtirilgan — ketma-ketlikni hisobga olib) aniqlaydi."""
     cur.execute(
-        'SELECT * FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        '''SELECT id, subject_key, grade, seq, slug, title, summary, duration
+           FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC''',
         (topic['subject_key'],),
     )
     siblings = cur.fetchall()

@@ -4,6 +4,7 @@ BilimSari Backend — Flask + PostgreSQL
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+from flask_compress import Compress
 import hashlib
 import logging
 import os
@@ -28,6 +29,7 @@ logger = logging.getLogger('bilimsari')
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
+Compress(app)  # JSON/HTML/CSS/JS javoblarini siqadi — mobil tarmoqda tezroq yuklanadi
 app.register_blueprint(study_api.bp)
 app.register_blueprint(ai_tutor.bp)
 app.register_blueprint(admin_api.bp)
@@ -473,7 +475,9 @@ def serve_page(page):
 
 @app.route('/assets/<path:filename>')
 def assets(filename):
-    return send_from_directory(os.path.join(BASE_DIR, 'assets'), filename)
+    # Rasm/logo fayllari deyarli hech qachon o'sha nom bilan o'zgarmaydi —
+    # brauzer bir kun davomida qayta so'ramasdan keshdan foydalansin.
+    return send_from_directory(os.path.join(BASE_DIR, 'assets'), filename, max_age=86400)
 
 
 @app.route('/js/<path:filename>')

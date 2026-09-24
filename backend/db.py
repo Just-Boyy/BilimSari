@@ -110,15 +110,68 @@ def sqlite_path():
     )
 
 
+# ───────────────────────── Postgres ulanish hovuzi ─────────────────────────
+#
+# Oldin har bir so'rov (har bir API chaqiruvi, ba'zan bittasida bir nechta
+# marta) psycopg2.connect() bilan YANGI TCP+autentifikatsiya ulanishi
+# ochardi — bu Railway'dagi Postgres'gacha bo'lgan tarmoq safari tufayli har
+# bir so'rovga sezilarli kechikish qo'shadi. Endi ulanishlar hovuzda qayta
+# ishlatiladi; har bir gunicorn worker o'zining alohida hovuzini birinchi
+# so'rovda yaratadi (fork qilingandan keyin, shuning uchun xavfsiz).
+
+_pg_pool = None
+
+
+def _get_pg_pool():
+    global _pg_pool
+    if _pg_pool is None:
+        from psycopg2.extras import RealDictCursor
+        from psycopg2.pool import ThreadedConnectionPool
+        max_conn = int(os.environ.get('DB_POOL_MAX', '5'))
+        _pg_pool = ThreadedConnectionPool(
+            1, max_conn, database_url(), cursor_factory=RealDictCursor,
+        )
+    return _pg_pool
+
+
+class _PooledPgConnection:
+    """psycopg2 ulanishini o'raydi — .close() uni haqiqatan yopmaydi,
+    hovuzga qaytaradi. Qaytarishdan oldin har doim rollback qilinadi:
+    aks holda oldingi so'rovda xato bo'lib, commit/rollback qilinmagan
+    tranzaksiya qolib ketsa, keyingi so'rov shu "buzilgan" ulanishni olib,
+    "current transaction is aborted" xatosiga uchraydi."""
+
+    def __init__(self, pool, raw):
+        self._pool = pool
+        self._raw = raw
+
+    def cursor(self, *args, **kwargs):
+        return self._raw.cursor(*args, **kwargs)
+
+    def commit(self):
+        self._raw.commit()
+
+    def rollback(self):
+        self._raw.rollback()
+
+    def close(self):
+        try:
+            self._raw.rollback()
+        except Exception:
+            pass
+        broken = bool(getattr(self._raw, 'closed', 0))
+        self._pool.putconn(self._raw, close=broken)
+
+
 # ───────────────────────── Ulanish ─────────────────────────
 
 def get_connection():
-    """Postgres (prod) yoki SQLite (lokal) ulanishi."""
+    """Postgres (prod, hovuzdan) yoki SQLite (lokal) ulanishi."""
     url = database_url()
     if url:
-        import psycopg2
-        from psycopg2.extras import RealDictCursor
-        return psycopg2.connect(url, cursor_factory=RealDictCursor)
+        pool = _get_pg_pool()
+        raw = pool.getconn()
+        return _PooledPgConnection(pool, raw)
 
     raw = sqlite3.connect(sqlite_path(), timeout=15)
     raw.row_factory = sqlite3.Row
