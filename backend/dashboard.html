@@ -17,9 +17,6 @@
       <p class="salom" id="salom">Salom!</p>
     </div>
     <span class="chaqmoq-belgi" id="chaqmoqBelgi" hidden></span>
-    <div class="avatar-halqa" id="avatarHalqa">
-      <div class="avatar" id="avatar" aria-hidden="true"></div>
-    </div>
   </div>
 </header>
 
@@ -78,14 +75,6 @@
     var chaqmoqBelgi = document.getElementById('chaqmoqBelgi');
     chaqmoqBelgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + (res.chaqmoq || 0) + '</span>';
     chaqmoqBelgi.hidden = false;
-
-    var av = document.getElementById('avatar');
-    if (res.user && res.user.photo_url) {
-      av.outerHTML = '<img class="avatar" id="avatar" alt="" src="' + UI.esc(res.user.photo_url) + '">';
-    } else {
-      av.textContent = UI.harfAvatar(ism);
-    }
-    document.getElementById('avatarHalqa').classList.toggle('bajarildi', !!(res.cooldown && res.cooldown.active));
 
     darsChiz(res.today, res.streak);
     fanChiz(res.subjects);
