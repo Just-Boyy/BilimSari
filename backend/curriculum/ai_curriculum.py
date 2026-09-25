@@ -14421,6 +14421,809 @@ SUBJECTS = [
                         }
                     ]
                 }
+            },
+            {
+                'slug': 'paronimlar-va-leksik-normatillik',
+                'title': "Paronimlar va ularning nutqda qo'llanilishi",
+                'summary': "Talaffuzi va yozilishi yaqin, lekin ma'nosi va leksik birikuvchanligi har xil bo'lgan rus tili paronimlarini to'g'ri farqlash hamda nutq me'yorlariga rioya qilish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Paronimlar haqida tushuncha',
+                        'body': "Paronimlar — bir xil o'zakdan hosil bo'lgan, talaffuzi va yozilishi juda o'xshash, ammo ma'nosi va grammatik birikuvchanligi bilan ajralib turadigan so'zlardir. Rus tilida paronimlarni aralashtirib yuborish jiddiy leksik xatoga (лексическая ошибка) olib keladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Klassik paronimlar juftligi',
+                        'body': "Одевать (kimgadir kiyim kiydirmoq) — Надевать (o'ziga kiyim kiymoq): Одевать ребёнка, но надевать пальто.\nЭффективный (samarali) — Эффектный (taassurotli, ko'rkam): Эффективный метод, но эффектный костюм."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Paronimlarni to'g'ri qo'llash qadamlari",
+                        'items': [
+                            "So'zning o'zagiga va qo'shimchasiga (affiksiga) e'tibor bering (-очн- / -ат-).",
+                            "So'z qaysi ot bilan birikayotganini tekshiring (Лексическая сочетаемость).",
+                            "Ma'no farqini lug'at orqali aniqlang va gapdagi mantiqqa solishtiring."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: 'Одевают Катю, надевают платье' qoidasi paronimlar mavzusidagi eng mashhur grammatik oltin qoidadir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi gapda paronim to'g'ri qo'llanilgan?",
+                        'options': [
+                            'Он надел ребёнка в тёплую куртку.',
+                            "Сегодня sky shaharda эффектный метод лечения qo'llanildi.",
+                            'Учитель представил нового ученика классу.',
+                            'Ученик предоставил результаты конкурса.'
+                        ],
+                        'answer': 2,
+                        'explain': "'Представить' — tanishtirmoq/ko'rsatmoq, 'Предоставить' — berish/taqdim etish (imkoniyat, hujjat). Sinfga yangi o'quvchini tanishtirishda 'представил' to'g'ri."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Дипломатический' va 'Дипломатичный' so'zlari mutlaqo bir xil ma'noga ega.",
+                        'answer': False,
+                        'explain': "Xato. 'Дипломатический' — diplomatiyaga oid (официальный), 'Дипломатичный' — muloyim, ustomon (этичный)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Aбонент' va 'Aбонемент' paronimlarining to'g'ri farqini toping.",
+                        'answer': 0,
+                        'options': [
+                            'Абонент — shaxs (foydalanuvchi), Абонемент — huquq beruvchi hujjat/chipta.',
+                            'Абонент — chipta, Абонемент — shaxs.',
+                            'Ikkalasi ham faqat telefonga tegishli.',
+                            "Ikkalasi ham xizmat ko'rsatish markazini bildiradi."
+                        ],
+                        'explain': 'Абонент — bu xizmatdan foydalanuvchi shaxs, абонемент esa chipta yoki huquqdir.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Paronimlar ustida ishlash uchun topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Qavs ichidagi mos so'zni tanlang: 'Ему дали (длинный / длительный) отпуск.'",
+                            'answer': 'длительный',
+                            'hint': "Vaqtga nisbatan 'длительный' ishlatiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Garantin' va 'Garant' so'zlari ishtirokida bittadan ruscha gap tuzing va ma'nosini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'murakkab-sintaktik-konstruktsiyalar',
+                'title': 'Turli xil aloqa turlariga ega murakkab sintaktik qurilmalar',
+                'summary': "Teng bog'lanish, ergashish va bog'lovchisiz aloqani o'zida jamlagan ko'p tarkibli murakkab gaplar sintaksisi va tinish belgilari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Turli xil aloqali murakkab gaplar',
+                        'body': "Bunday gaplar tarkibida kamida 3 ta predikativ birlik (gap) bo'lib, ular bir vaqtning o'zida teng bog'lanish (сочинительная), ergashish (подчинительная) va bog'lovchisiz (бессоюзная) aloqa orqali birikadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Konstruktsiya misoli',
+                        'body': "[Солнце светило ярко], и [когда мы вышли на улицу], [птицы уже пели], (потому что наступила весна). — Bu yerda ham teng, ham ergashish bog'lanishi bor."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Sintaktik tahlil qilish tartibi',
+                        'items': [
+                            'Barcha gramatik asoslarni (предикативные центры) aniqlang va belgilang.',
+                            'Gaplarni qavslarga ajrating: bosh gaplar [...], ergash gaplar (...).',
+                            "Bog'lovchi vositalarni (союзы, союзные слова) ko'rib chiqib, ulash turini aniqlang.",
+                            "Vergul va boshqa tinish belgilarini chegara bo'yicha qo'yib chiqing."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Yonma-yon kelgan 'и когда', 'и если' bog'lovchilarida, agar keyingi gapda 'то, так, но' bo'lmasa, ularning orasiga vergul qo'yiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Ushbu gapda nechta grammatik asos bor? 'Комната опустела, и хотя прошёл час, никто не возвращался, так как заседание продолжалось.'",
+                        'options': [
+                            '2 ta',
+                            '3 ta',
+                            '4 ta',
+                            '5 ta'
+                        ],
+                        'answer': 2,
+                        'explain': 'Grammatik asoslar: 1) комната опустела; 2) прошёл час; 3) никто не возвращался; 4) заседание продолжалось. Jami 4 ta.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'и если... то' qurilmasida 'и' va 'если' orasiga har doim vergul qo'yiladi.",
+                        'answer': False,
+                        'explain': "Xato. Agar ikkinchi qismda 'то' yoki 'но' sozlar bo'lsa, 'и' va 'если' orasiga vergul QO'YILMAYDI."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Turli xil aloqali murakkab gaplarda vergul qo'yilishining asosiy qoidasi nima?",
+                        'options': [
+                            "Faqat bog'lovchilardan oldin qo'yiladi.",
+                            "Har bir predikativ qism chegarasida grammatik aloqaga qarab qo'yiladi.",
+                            "Faqat gap oxirida qo'yiladi.",
+                            "Nuqtali vergul o'rniga faqat tire ishlatiladi."
+                        ],
+                        'answer': 1,
+                        'explain': "Har bir predikativ birlik o'z chegarasiga ega va uning aloqa turiga qarab tinish belgilari ajratiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Murakkab sintaktik qurilmalarni tahlil qiling.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Quyidagi gapdagi vergullar sonini aniqlang: 'Наступил вечер и хотя sky beqaror bo'lsa ham (небо было пасмурным) мы решили идти дальше потому что время истекало.'",
+                            'answer': '3',
+                            'hint': 'Grammatik asoslar orasidagi va ergash gaplar chegarasidagi vergullarni sanang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Teng va ergash bog'lanishli bitta murakkab ruscha gap tuzing va sxemasini chizing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'sintaktik-sinonimiya-va-transformatsiya',
+                'title': 'Sintaktik sinonimiya va konstruksiyalarni transformatsiya qilish',
+                'summary': "Sifatdosh/ravishdosh iboralarini ergash gaplarga va faol nisbatdagi gaplarni majhul nisbatga ma'nodosh qilib o'zgartirish usullari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Sintaktik sinonimiya nima?',
+                        'body': "Sintaktik sinonimiya — grammatik tuzilishi har xil, ammo anglatadigan ma'nosi bir xil yoki juda yaqin bo'lgan sintaktik qurilmalardir. Masalan: Sifatdosh iborasi (причастный оборот) va Ergash aniqlovchi gap (СПП с придаточным определительным)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Transformatsiya misoli',
+                        'body': '1) Книга, прочитанная мной (Sifatdosh iborasi).\n2) Книга, которую я прочитал (Ergash gap).\n3) Ученик, окончивший школу -> Ученик, который окончил школу.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Transformatsiya qilish qoidalari',
+                        'items': [
+                            "Sifatdoshni fe'lga aylantiring (прочитанный -> прочитал).",
+                            "Bosh gapdagi otga moslab 'который' nisbiy olmoshini kelishikda qo'ying.",
+                            "Ravishdosh iborasini (деепричастие) vaqt yoki sabab ergash gapiga ('когда', 'так как') o'giring."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Diqqat: Ravishdosh iborasidagi harakat ham, asosiy fe'ldagi harakat ham BIR XIL shaxs/narsa tomonidan bajarilishi shart!"
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Студент, написавший статью, получил награду' gapining sintaktik sinonimi qaysi?",
+                        'options': [
+                            'Студент написал статью и получил награду.',
+                            'Студент, который написал статью, получил награду.',
+                            'Написав статью, студент получил награду.',
+                            "Barcha javoblar sintaktik sinonim bo'la oladi."
+                        ],
+                        'answer': 3,
+                        'explain': "Ushbu qurilmalarning barchasi uslubiy va ma'noviy jihatdan bir-biriga sinonim sintaktik variantlardir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Прочитав книгу, она мне понравилась' barcha grammatik qoidalarga mos keladi.",
+                        'answer': False,
+                        'explain': "Xato! Bu qo'pol grammatik xato (ошибка в употреблении деепричастного оборота). Kitobni 'u' o'qigan, lekin kesim 'понравилась'."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Majhul nisbatdagi (Пассивный залог) 'Дом строится рабочими' gapining faol nisbatdagi (Активный залог) sinonimi qaysi?",
+                        'options': [
+                            'Рабочие строят дом.',
+                            'Дом построен рабочими.',
+                            'Строящийся дом был рабочим.',
+                            'Рабочие построили бы дом.'
+                        ],
+                        'answer': 0,
+                        'explain': "Пассив 'Дом строится рабочими' -> Актив 'Рабочие строят дом'."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Sintaktik iboralarni ergash gaplarga almashtiring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Ученик, решить задачу, обрадовался' gapini 'который' olmoshi yordamida qayta yazing.",
+                            'answer': 'Ученик, который решил задачу, обрадовался.',
+                            'hint': "Fe'lni o'tgan zamonga va to'g'ri shaklga qo'ying."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Ravishdosh iborasi qatnashgan gapni sabab ergash gapga (с придаточным причины) o'zgartirib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'boshqaruv-va-moslashuvdagi-murakkab-holatlar',
+                'title': "Fe'l va ot boshqaruvidagi qiyin holatlar hamda uslubiy xatolar",
+                'summary': 'Rus tilida predlogli va predlogsiz boshqaruv (управление), moslashuvdagi (согласование) nozik grammatik holatlar va uslubiy xatolarni tuzatish.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Boshqaruvdagi nozik holatlar (Управление)',
+                        'body': "Rus tilida ma'nodosh fe'llar har xil kelishik va predloglarni talab qilishi mumkin. Masalan: оплатить (что?) счёт — NO: оплатить за счёт; payda bo'ladigan eng ko'p xatolardan biri predloglarni noto'g'ri qo'llashdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Qiyin fe'lli boshqaruvlar",
+                        'body': '• Уделять внимание (чему?) учебе.\n• Обращать внимание (на что?) на детали.\n• Предостеречь (от чего?) от ошибки.\n• Предупредить (о чём?) об опасности.\n• Согласно / Вопреки / Благодаря + Дательный падеж (чему? кому?).'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Xatolarni aniqlash va tuzatish usuli',
+                        'items': [
+                            "'Согласно', 'благодаря', 'вопреки' so'zlaridan keyin Har doim Jo'nalish kelishigi (Дательный падеж) qo'yiladi: Согласно приказУ (приказа emas!).",
+                            'Уверенность (в чём?) va вера (во что?) boshqaruvlarini aralashtirmang.',
+                            'Указывать (на что?), отчитываться (в чём?) shakllarini yodda tuting.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: 'Благодаря' faqat ijobiy natijalar uchun ishlatiladi. 'Благодаря аварии' deyish uslubiy xatodir!"
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi qatorda grammatik xato mavjud?',
+                        'options': [
+                            'Согласно расписанию',
+                            'Благодаря помощи',
+                            'По прибытию в город',
+                            'Вопреки предсказанию'
+                        ],
+                        'answer': 2,
+                        'explain': "'По' predlogi kelish ma'nosida Предложный падеж talab qiladi: 'По прибытиИ в город' bo'lishi kerak."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Оплатить за проезд' iborasi grammatik jihatdan to'g'ri.",
+                        'answer': False,
+                        'explain': "Xato! To'g'risi: 'Оплатить проезд' (без 'за') yoki 'Заплатить за проезд'."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Согласно...' so'zidan keyin ot qaysi kelishikda keladi?",
+                        'options': [
+                            'Родительный падеж',
+                            'Дательный падеж',
+                            'Винительный падеж',
+                            'Творительный падеж'
+                        ],
+                        'answer': 1,
+                        'explain': "'Согласно' predlogi har doim Дательный падеж (кому? чему?) bilan qo'llaniladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Boshqaruvdagi grammatik xatolarni tuzating.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Xatoni tuzating: 'Благодаря дождю концерт был отменён.'",
+                            'answer': 'Из-за дождя концерт был отменён.',
+                            'hint': "Salbiy oqibat uchun 'из-за' predlogi ishlatiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Согласно' va 'Вопреки' predloglari bilan Дательный падежда 2 ta gap tuzing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'ekspressiv-sintaksis-va-ritorik-figuralar',
+                'title': 'Ekspressiv sintaksis: Parsellyatsiya, segmentatsiya va inversiya',
+                'summary': "Badiiy va publitsistik uslublarda ma'no va emotsional ta'sirchanlikni oshiruvchi maxsus sintaktik usullar va stilistik figuralar.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Ekspressiv sintaksis nima?',
+                        'body': "Ekspressiv sintaksis — matnga emotsionallik, mantiqiy urg'u va badiiy tasvirchanlik berish uchun so'z tartibi va gap strukturasini atayin o'zgartirish vositalaridir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Asosiy figuralar',
+                        'body': "• Парцелляция (gapni bo'laklash): Он ушёл. Навсегда. Без слов.\n• Сегментация (Mavzu-рема bo'linishi): Деньги... Где их взять?\n• Инверсия (so'z tartibini buzish): Белеет парус одинокий (одинокий парус белеет emas).\n• Эллипсис (tushirib qoldirish): Мы села — в оригиналы, они — в переводчики."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Ekspressiv figurani tahlil qilish',
+                        'items': [
+                            "Gapda o'zgargan va g'ayrioddiy so'z tartibini toping.",
+                            "Nuqta bilan ajratilgan gap bo'lagini aniqlang (Парцелляция).",
+                            'Tushirib qoldirilgan kesimni mantiqan tiklang (Эллипсис).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Parsellyatsiya vositasida ajratilgan so me'yoriy grammatikada bitta gapning bo'lagi hisoblanadi, lekin muallif uni nuqta bilan alohida gapga aylantiradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Я опять здесь. Один. В тишине.' ushbu gapda qaysi ekspressiv sintaksis usuli qo'llanilgan?",
+                        'options': [
+                            'Эллипсис',
+                            'Парцелляция',
+                            'Инверсия',
+                            'Антитеза'
+                        ],
+                        'answer': 1,
+                        'explain': "Bitta yaxlit gap nuqtalar orqali emotsional bo'laklarga ajratilishi Parsellyatsiya (парцелляция) deyiladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Инверсия' — bu gapda so me'yoriy to'g'ri tartibda (Ega + Kesim) joylashishidir.",
+                        'answer': False,
+                        'explain': "Xato. Inversiya — bu so'zlarning odatiy tartibini atayin o'zgartirishdir (masalan, Kesim + Ega)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Официант! Сок!' gapida kesim tushirib qoldirilgan. Bu hodisa nima deyiladi?",
+                        'options': [
+                            'Парцелляция',
+                            'Градация',
+                            'Эллипсис',
+                            'Оксюморон'
+                        ],
+                        'answer': 2,
+                        'explain': "Gap a'zosining (odatda kesimning) tushirib qoldirilishi 'Эллипсис' deb ataladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Ekspressiv sintaksis vositalarini tahlil qiling.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Он опять опоздал. Снова.' gapidagi ekspressiv usul nomini yazing.",
+                            'answer': 'Парцелляция',
+                            'hint': "Nuqta orqali bo'laklash usuli."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Badiiy uslubda Inversiya va Ellipsis ishlatilgan 2 ta ruscha misol keltiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'staroslavyanizmlar-va-tarixiy-grammatika',
+                'title': 'Staroslavyanizmlar va zamonaviy rus tili grammatikasidagi tarixiy izlar',
+                'summary': "To'liq va to'liq bo'lmagan unlilar (полногласие/неполногласие), ch/shch almashinishlari hamda slavyanizmlarning grammatik xususiyatlari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Staroslavyanizmlar va ularning belgilari',
+                        'body': "Zamonaviy rus tilida qadimiy cherkov-slavyan tilidan kirib kelgan so'zlar (старославянизмы) va sof sharqiy slavyan so'zlari yonma-yon yashaydi. Ularni fonetik va morfemik belgilarga qarab ajratish mumkin."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Фонетические соответствия (To'liq va to'liq bo'lmagan unlilar)",
+                        'body': '• Неполногласие (Старославянизм): -ра-, -ла-, -ре-, -ле- (врата, глад, брег, млечный).\n• Полногласие (Русский): -оро-, -оло-, -ере-, -еле- (ворота, голод, берег, молочный).\n• Almashinuv: ж / жд (чужой / чуждый), ч / щ (ночь / нощь).'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Slavyanizmni aniqlash bosqichlari',
+                        'items': [
+                            "So'z o'zagidagi unlilar birikmasiga qarang (ра/оро, ла/оло).",
+                            "Old qo'shimchalarni (приставка) tekshiring: из-, воз-, низ-, пред-, чрез- (slavyanizmlar).",
+                            'Sufikslarni tekshiring: -ствиj- (бедствие), -эниj- (решение), -ащ-/-ящ- (горящий).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Sifatdoshlarning '-ащ- / -ящ-, -ущ- / -ющ-' sufikslari ham kelib chiqishiga ko'ra staroslavyanizmdir!"
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi so'z juftligida 'Полногласие / Неполногласие' mosligi berilgan?",
+                        'options': [
+                            'Город / Град',
+                            'Дом / Домик',
+                            'Рука / Ручка',
+                            'Лес / Лесник'
+                        ],
+                        'answer': 0,
+                        'explain': "'Город' — ruscha полногласие (-оро-), 'Град' — staroslavyancha неполногласие (-ра-)."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'-ащ-' sufiksli sifatdoshlar sof sharqiy slavyan (rus) kelib chiqishiga ega.",
+                        'answer': False,
+                        'explain': "Xato. Bu sufiks старославянский kelib chiqishga ega. Sof ruscha shakli '-ч-' bilan bo'lgan (горячий / горящий)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi old qo'shimcha (приставка) staroslavyanizm belgisi hisoblanadi?",
+                        'options': [
+                            'вы-',
+                            'пере-',
+                            'из- (изгнать)',
+                            'до-'
+                        ],
+                        'answer': 2,
+                        'explain': "'Из-', 'воз-', 'пре-', 'пред-' old qo'shimchalari staroslavyanizmlarga xosdir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Tarixiy fonetika va slavyanizmlarga oid topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Берег' so'zining staroslavyancha неполногласие shaklini yazing.",
+                            'answer': 'Брег',
+                            'hint': "-ере- o'rniga -ре- ishlatiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Quyidagi so'zlarga полногласие/неполногласие juftligini toping: 'Голова', 'Здравие'."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': "fe'llarning-harakat-tarzi-va-aspektual-ma'nolar",
+                'title': "Fe'l harakat usullari (Способы действия) va aspektsial semantika",
+                'summary': "Fe'l ko me'yorlarining (вид) grammatik toifasidan tashqari semantik harakat turlari: boshlanuvchi, cheklangan, intensiv va takroriy harakatlar.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Способы глагольного действия (СД) nima?',
+                        'body': "Fe'lning 'вид' (Nesovershennyy/Sovershennyy) toifasidan tashqari, uning ma'nosida harakatning qanday kechishi, vaqt va shiddati ko'rsatiladi. Bu grammatik-semantik hodisa 'Способы действия' deyiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Harakat usullari turlari',
+                        'body': "1) Начинательный (Boshlanuvchi): запеть, побежать (за-/по-).\n2) Ограничительный (Vaqt bilan cheklangan): посидеть, поговорить (по-).\n3) Многократный (Ko'p marta qaytarilgan): хаживать, сиживать (-ива-/-ыва-).\n4) Результативный (Natijaviy): дописать, вылечить."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Harakat usulini aniqlash',
+                        'items': [
+                            "Fe'lning suffiks va prefiksiga e'tibor bering.",
+                            'Harakatning boshlanishini bildirsa -> Начинательный (закричать).',
+                            "Harakatning ma'lum muddat davom etib tugashini bildirsa -> Ограничительный (поспать 2 часа).",
+                            'Kuchsiz/kuchli harakatni bildirsa -> Уменьшительный / Интенсивный.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: 'Поговорить' fe'li Sovershennyy vid bo'lsada, harakatning to'liq tugashini emas, balki bir oz vaqt davom etganini (ограничительный) bildiradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Запеть' fe'lida harakatning qaysi usuli (способ действия) ifodalangan?",
+                        'options': [
+                            'Ограничительный',
+                            'Начинательный',
+                            'Многократный',
+                            'Окончательный'
+                        ],
+                        'answer': 1,
+                        'explain': "'За-' prefiksi harakatning boshlanishini (начинательный способ) bildiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Посидеть часок' iborasi harakatning natijaga erishganini anglatadi.",
+                        'answer': False,
+                        'explain': 'Xato. Bu harakatning vaqt jihatidan cheklanganligini (ограничительный способ действия) bildiradi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi prefiks harakatning oxirigacha va natija bilan bajarilganini bildiradi?',
+                        'options': [
+                            'по- (походить)',
+                            'за- (запеть)',
+                            'до- / вы- (дописать, вылечить)',
+                            'при- (присесть)'
+                        ],
+                        'answer': 2,
+                        'explain': "'До-' va 'вы-' prefikslari harakatning to'liq yakunlanib, natijaga erishganini ko'rsatadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Fe'llarning harakat usullarini tahlil qiling.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Поработать' fe'lining harakat usuli (способ действия) nomini yazing.",
+                            'answer': 'Ограничительный',
+                            'hint': 'Bir oz vaqt davom etgan harakat.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Начинательный (boshlanuvchi) va Результативный (natijaviy) harakat usullariga 2 tadan misol keltiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'matn-sintaksisi-va-aloqa-vositalari',
+                'title': 'Matn sintaksisi: Gaplararo aloqa vositalari va matn tiplari',
+                'summary': "Gaplarni matnda bir-biriga bog'lovchi zanjirsimon va parallel aloqalar, leksik, morfologik va sintaktik vositalar va matn tiplari tahlili.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Matn va gaplar o'rtasidagi aloqa",
+                        'body': "Matndagi gaplar shunchaki yonma-yon turmaydi, balki mazmunan va grammatik jihatdan bir-biriga bog'lanadi. Aloqaning 2 asosiy turi bor: Цепная (zanjirsimon) va Параллельная (parallel)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Aloqa turlariga misollar',
+                        'body': "• Цепная связь (zanjirsimon): Наступила осень. Осень принесла дожди. Дожди размыли дороги. (Har bir gap oldingi gapdagi so'zga bog'lanadi).\n• Параллельная связь: Лето прошло. Птицы улетели. Деревья пожелтели. (Hamma gaplar teng va bir-biriga parallel)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Gaplararo aloqa vositalari',
+                        'items': [
+                            "Лексические: Sinonimlar, takroriy so'zlar (лексический повтор), antonimlar.",
+                            "Морфологические: Olmoshlar (он, этот), ravishlar (потом, там), fe'l zamonlarining bir xilligi.",
+                            'Синтаксические: Вводные слова (итак, следовательно), bir xil sintaktik qurilmalar.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Matnning 3 ta asosiy tipi bor: Повествование (voqea bayoni), Описание (tasvirlash) va Рассуждение (muhokama/fikrlash).'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Во-первых..., во-вторых..., следовательно...' so'zlari matnda qaysi tipga ko'proq xos?",
+                        'options': [
+                            'Описание',
+                            'Повествование',
+                            'Рассуждение',
+                            'Все варианты'
+                        ],
+                        'answer': 2,
+                        'explain': "Mantiqiy kirish so'zlar va xulosalar Muhokama (Рассуждение) matn tipining asosiy belgisidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Zanjirsimon aloqada (цепная связь) ikkinchi gapdagi ega birinchi gapdagi to'ldiruvchi yoki kesim bilan bog'liq bo'ladi.",
+                        'answer': True,
+                        'explain': "To'g'ri. Zanjir hosil qilib, birinchi gapning oxiri ikkinchi gapning boshlanishiga xizmat qiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi vosita morfologik aloqa vositasiga kiradi?',
+                        'options': [
+                            'Лексический повтор',
+                            'Указательные местоимения (этот, тот)',
+                            'Синонимы',
+                            'Парцелляция'
+                        ],
+                        'answer': 1,
+                        'explain': 'Olmoshlar (местоимения) morfologik aloqa vositalariga kiradi.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Matn sintaksisiga oid topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Gaplar orasida qaysi olmosh aloqa vositasi bo'lib kelgan: 'Мы увидели лес. Он был прекрасен.'?",
+                            'answer': 'Он',
+                            'hint': 'Shaxs olmoshini toping.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Zanjirsimon aloqaga (цепная связь) ega 3 gapdan iborat ruscha kichik matn yazing.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'rasmiy-va-ilmiy-uslublar-redaktalash',
+                'title': 'Ilmiy va rasmiy-idoraviy uslublar va matnni tahrir qilish (Редактирование)',
+                'summary': "Ilmiy va rasmiy matnlarning kantselyarizm, kliche va sintaktik me'yorlari; matnlardagi stilistik va mantiqiy xatolarni aniqlash hamda tahrirlash.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Uslubiy me'yorlar va Redaktalash",
+                        'body': "Matnni tahrir qilish (редактирование) — grammatik, stilistik va leksik xatolarni topib tuzatish jarayonidir. Ilmiy va rasmiy uslubda o'ziga xos qat'iy normativ talablar mavjud."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kantselyarizm va nutqiy ortiqchalik (Плеоназм/Тавтология)',
+                        'body': "• Канцеляризм (sozlashuvda ishlatilmasligi kerak): Мы совершили прогулку -> Мы прогулялись.\n• Плеоназм (ortiqcha so'z): Главная суть (суть o'zi главная), молодой юноша, расплатиться деньгами.\n• Тавтология: Спросить вопрос, объединить вместе."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Matnni tahrir qilish bosqichlari',
+                        'items': [
+                            "Mantiqiy va nutqiy takrorlarni (плеоназм va тавтология) o'chirib tashlang.",
+                            "Sozlashuv nutqida kantselyar so'z birikmalarini sodda fe'llarga almashtiring.",
+                            "Ilmiy matnda obyektivlikni saqlang (birinchi shaxs 'я' o'rniga 'мы' yoki majhul nisbat)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: 'Моя автобиография' deyish xatodir, chunki 'авто' so'zi o'zi 'mening' degan ma'noni beradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi birikmada pleonazm (nutqiy ortiqchalik) xatosi bor?',
+                        'options': [
+                            'Интересная книга',
+                            'Молодой юноша',
+                            'Быстрый бег',
+                            'Горячий чай'
+                        ],
+                        'answer': 1,
+                        'explain': "'Юноша' o'zi har doim yosh (молодой) bo'ladi, shuning uchun 'молодой' so'zi ortiqchadir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Имеет место быть' iborasi zamonaviy adabiy rus tili me me'yorlariga ko'ra to'g'ri hisoblanadi.",
+                        'answer': False,
+                        'explain': "Xato. Bu noto'g'ri kantselyar duragay bo'lib, adabiy tilda 'имеет место' yoki 'имеет быть' deb ishlatilishi kerak."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Спросить вопрос' xatosi stilistikada nima deyiladi?",
+                        'options': [
+                            'Парцелляция',
+                            'Тавтология',
+                            'Инверсия',
+                            'Антитеза'
+                        ],
+                        'answer': 1,
+                        'explain': "Bir xil o'zakli so'zlarning mantiqsiz takrorlanishi Тавтология deyiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Matnlarni tahrir qiling va xatolarni tuzating.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Xatoni tuzatib yazing: 'Я написал свою автобиографию.'",
+                            'answer': 'Я написал автобиографию.',
+                            'hint': "'Свою' so'zini chiqarib tashlang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Pleonazm va Tavtologiyaga 2 tadan misol topib, ularning to'g'ri variantini yazing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'matnning-kompleks-lingvistik-tahlili',
+                'title': 'Badiiy va publitsistik matnning mukammal lingvistik va filologik tahlili',
+                'summary': 'Fonetik, leksik, morfemik, morfologik, sintaktik va stilistik darajalarda matnni oliy darajada ilmiy va lingvistik tahlil qilish metodologiyasi.',
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kompleks lingvistik tahlil nima?',
+                        'body': "Kompleks tahlil — matnni til bilimi (tilshunoslik)ning barcha bo'limlari bo'yicha har taraflama ilmiy o'rganishdir. Bu oliy ta'lim darajasidagi eng yuqori sintaktik va semantik tahlil bosqichidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tahlil bosqichlari strukturasi',
+                        'body': "1. Leksik va semantik tahlil (kalit so'zlar, trop va figuralar).\n2. Morfologik tahlil (turkumlar nisbati, fe'l zamonlari dinamikasi).\n3. Sintaktik tahlil (gap qurilishlari, parsellyatsiya, murakkab gaplar).\n4. Stilistik va ideyaviy-badiiy xulosa."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Tahlil qilish ketma-ketligi',
+                        'items': [
+                            "Matnning mavzusi, g'oyasi va funksional uslubini aniqlang.",
+                            'Badiiy tasvir vositalarini (метафора, эпитет, олицетворение) toping.',
+                            'Sintaktik xususiyatlarni (bir tarkibli gaplar, kirish birikmalar) ajrating.',
+                            "Muallifning g'oyaviy maqsadiga grammatik vositalar qanday xizmat qilganini xulosalang."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Matn tahlilida grammatik shakllar va badiiy g'oya o'rtasidagi uzviy bog'liqlikni ko'rsatib berish asosiy maqsaddir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Matn tahlilida 'золотая осень' birikmasi qaysi leksik vositaga kiradi?",
+                        'options': [
+                            'Сравнение',
+                            'Эпитет (метафорический)',
+                            'Гипербола',
+                            'Литота'
+                        ],
+                        'answer': 1,
+                        'explain': "'Золая' ko'chma ma'nodagi sifatlovchi bo'lib, Эпитет hisoblanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Kompleks tahlilda faqat grammatik xatolar tekshiriladi.',
+                        'answer': False,
+                        'explain': "Xato. Kompleks lingvistik tahlil matnning barcha til sathlarini (fonetika, leksika, grammatika, stilistika) o'rganadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Matnda fe'llarning ko'p qo'llanilishi (глагольность) nimani beradi?",
+                        'options': [
+                            'Statik tasvir (описание)',
+                            'Dinamika va harakat (динамика повествования)',
+                            'Mantiqiy muhokama',
+                            'Rasmiy tus'
+                        ],
+                        'answer': 1,
+                        'explain': "Fe'llarning ko'pligi matnga harakat, tezkorlik va dinamika bag'ishlaydi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kichik matnni kompleks tahlil qiling.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Шепчут деревья...' gapidagi badiiy tasvir vositasining (троп) nomini yazing.",
+                            'answer': 'Олицетворение',
+                            'hint': 'Jonlantirish usuli (метод одушевления).'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Klassik rus she'ridan 4 qator oling va undagi morfemik va sintaktik xususiyatlarni lingvistik tahlil qilib bering."
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -16831,6 +17634,816 @@ SUBJECTS = [
                             'id': 't2',
                             'type': 'open',
                             'prompt': "Zamonaviy ko'p qutbli (multipolar) dunyoda BMT xavfsizlik kengashining islohotlarga ehtiyojini va uning sabablarini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'diplomatiya-tarixi-va-xalqaro-tizimlar',
+                'title': 'Diplomatiya tarixi va xalqaro munosabatlar tizimlarining evolyutsiyasi',
+                'summary': 'Vestfaliya, Vena, Versal va Yalta-Potsdam xalqaro tizimlarining shakllanishi, ishlash mexanizmlari hamda inqirozi tarixiy tahlil qilinadi.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Xalqaro munosabatlar tarixi davlatlar o'rtasidagi kuchlar muvozanatini tartibga soluvchi global tizimlarning almashinuvidan iborat. Modern diplomatiyaning tamal toshi 1648-yildagi Vestfaliya tinchlik shartnomasi bilan qo'yilgan bo'lib, u davlat suvereniteti va ichki exposesga aralashmaslik prinsipini muhrladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "1815-yildagi Vena kongressi Yevropada 'Kuchlar muvozanati' (Balance of Power) prinsipiga asoslangan Yevropa konsertini yaratdi. Bu tizim salkam bir asr davomida yirik umumyevropa urushlarining oldini olishga xizmat qildi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Xalqaro tizimlarning bosqichma-bosqich evolyutsiyasi',
+                        'items': [
+                            'Vestfaliya tizimi (1648): Milliy davlat va suverenitet tushunchalarining shakllanishi.',
+                            "Vena tizimi (1815): Ko'p qutbli kuchlar muvozanati va monarxiyalar ittifoqi.",
+                            'Versal-Vashington tizimi (1919): Birinchi jahon urushidan keyingi yangi dunyo tartibi va Millatlar Ligasi.',
+                            "Yalta-Potsdam tizimi (1945): Ikki qutbli (AQSH va SSSR) dunyo tartibining o'rnatilishi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Har bir xalqaro tizim inqirozi, odatda, yirik jahon urushlari yoki tizimli geosiyosiy toqnashuvlar oqibatida yuzaga kelgan.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi shartnoma xalqaro munosabatlarda davlat suvereniteti prinsipiga asos soldi?',
+                        'options': [
+                            'Vena kongressi qarorlari',
+                            'Vestfaliya tinchlik shartnomasi',
+                            'Versal sulh shartnomasi',
+                            'Potsdam bitimi'
+                        ],
+                        'answer': 1,
+                        'explain': "1648-yilgi Vestfaliya tinchligi davlat suvereniteti va boshqa davlatning ichki ishlariga aralashmaslik tamoyilini o'rnatdi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Yalta-Potsdam tizimi Ikkinchi jahon urushidan so'ng ko'p qutbli dunyo tartibini shakllantirdi.",
+                        'answer': False,
+                        'explain': "Yalta-Potsdam tizimi ko'p qutbli emas, balki AQSH va SSSR yetakchiligidagi ikki qutbli (bipolar) dunyo tartibini shakllantirgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "1815-yilgi Vena kongressining asosiy g'oyasi nima edi?",
+                        'options': [
+                            'BMTni tashkil etish',
+                            'Yevropada kuchlar muvozanatini saqlash va monarxiyalarni tiklash',
+                            'Mustamlakachilik tizimiga barham berish',
+                            'Yevropa Ittifoqini tuzish'
+                        ],
+                        'answer': 1,
+                        'explain': "Vena kongressi Napoleondan keyingi Yevropada barqarorlikni ta'minlash uchun kuchlar muvozanati (Balance of Power) tizimini yaratdi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Xalqaro tizimlar evolyutsiyasini tahlil qilish uchun topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Vestfaliya va Yalta-Potsdam tizimlarining asosiy farqli 2 ta jihatini ko'rsating.",
+                            'answer': 'Vestfaliya tizimi monokonfessional va hududiy suverenitetga tayanadi, Yalta-Potsdam esa mafkuraviy va yadroviy ikki qutblilikka tayanadi.',
+                            'hint': "Davlatlar o'rtasidagi kuchlar nisbati va mafkura omiliga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Versal-Vashington tizimi nega Ikkinchi jahon urushining oldini ola olmadi? Sabablarini yozing.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'tarixiy-demografiya-va-migratsiya-jarayonlari',
+                'title': "Tarixiy demografiya va migratsiya jarayonlarining jamiyatlar taraqqiyotiga ta'siri",
+                'summary': "Aholi dinamikasi, epidemiyalar va buyuk ko'chishlarning davlatlar taqdiri hamda ijtimoiy-iqtisodiy tuzilmalarga ko'rsatgan ta'siri o'rganiladi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Tarixiy demografiya aholi soni, zichligi, o'lim va tug'ilish ko'rsatkichlari hamda migratsiya oqimlarining tarixiy jarayonlarga ta'sirini tadqiq etadi. Demografik inqirozlar va keskin o'sishlar (demografik portlash) siyosiy tuzumlarning qulashi yoki rivojlanishiga sabab bo'lgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "XIV asrdagi 'Qora o'lim' (vabo pandemiyasi) Yevropa aholisining uchdan bir qismini yo'q qildi. Bu ishchi kuchining kamayishiga, dehqonlar mehnatining qadrli bo'lishiga va feodalizm inqirozining tezlashishiga olib keldi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Demografik jarayonlarni tahlil qilish bosqichlari',
+                        'items': [
+                            'Epidemiya va gumanitar inqirozlarni tahlil qilish (vabo, ocharchilik).',
+                            "Katta migratsiya toqinlarini (xalqlar buyuk ko'chishi, transatlantik qul savdosi) o'rganish.",
+                            "Urbanizatsiya va sanoatlashuvning aholi zichligiga ta'sirini baholash.",
+                            "Demografik o'tish (Demographic Transition) nazariyasini tarixiy manbalarga tatbiq etish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Migratsiya nafaqat ishchi kuchi va aholi ko'chishi, balki madaniyat, texnologiya hamda kasalliklarning tarqalish omilidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "XIV asrdagi Yevroosiyo pandemiyasi ('Qora o'lim') qanday ijtimoiy-iqtisodiy oqibatga olib keldi?",
+                        'options': [
+                            'Feodal munosabatlarning mustahkamlanishi',
+                            'Ishchi kuchi tanqisligi va feodalizm inqirozining tezlashishi',
+                            "Sanoat to'ntarishining boshlanishi",
+                            "Qirollik hokimiyatining batamom yo'qolishi"
+                        ],
+                        'answer': 1,
+                        'explain': 'Aholi keskin kamayishi oqibatida ishchi kuchi qadrlandi, bu esa krepostnoylik va feodal qaramlikning zayiflashishiga olib keldi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Demografik o'tish nazariyasiga ko'ra, an'anaviy jamiyatlarda tug'ilish ham, o'lim ko'rsatkichlari ham yuqori bo'lgan.",
+                        'answer': True,
+                        'explain': "Ha, an'anaviy (sanoatgacha bo'lgan) jamiyatda yuqori tug'ilish yuqori o'lim darajasi bilan muvozanatlashgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Tarixiy demografiyada 'Maltus qozoni' (Malthusian trap) tushunchasi nimani anglatadi?",
+                        'options': [
+                            "Aholi o'sishining oziq-ovqat ishlab chiqarish imkoniyatidan o'zib ketishi natijasidagi inqiroz",
+                            "Migratsiyaning to'xtab qolishi",
+                            'Urbanizatsiyaning keskin pasayishi',
+                            "Sanoat mahsulotlarining haddan tashqari ko'payishi"
+                        ],
+                        'answer': 0,
+                        'explain': "Tomas Maltus nazariyasiga ko'ra, aholi geometrik, oziq-ovqat esa arifmetik progressiyada o'sadi va bu muqarrar inqirozga olib keladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Tarixiy demografik jarayonlar bo'yicha bilimlaringizni sinab ko'ring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Transatlantik qul savdosining Afrika demografiyasi va iqtisodiyotiga ko'rsatgan salbiy ta'sirini qisqacha izohlang.",
+                            'answer': "Mehnatga layoqatli millionlab yosh aholining olib ketilishi Afrikada demografik uzilish va iqtisodiy turg'unlikni keltirib chiqardi.",
+                            'hint': "Aholining yosh va jins tarkibiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "XIX-XX asrlarda Turkistondagi ko'chirish siyosati (pereselenchilik) mintaqaning demografik va milliy tarkibiga qanday ta'sir ko'rsatdi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'goyalar-tarixi-va-siyosiy-ideologiyalar',
+                'title': "G'oyalar tarixi: Siyosiy ideologiyalar va falsafiy-tarixiy ta'limotlar",
+                'summary': "Liberalizm, konservatizm, sotsializm va millatchilik kabi dunyoqarashlarning shakllanishi hamda ularning tarixiy jarayonlarga ta'siri tahlil qilinadi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "G'oyalar tarixi (History of Ideas) insoniyat jamiyatini harakatlantiruvchi konseptual qarashlar, falsafiy oqimlar va siyosiy ideologiyalarning rivojlanishini o'rganadi. XIX-XX asrlardagi global inqiloblar va urushlar ortida doim ma'lum bir ideologik nazariyalar durgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "Jon Lokk va Janga-Jak Russo tomonidan ilgari surilgan 'Ijtimoiy shartnoma' va 'Insonning tabiiy huquqlari' g'oyalari 1776-yildagi AQSH Mustaqillik deklaratsiyasi hamda 1789-yilgi Fransuz inqilobining mafkuraviy poydevori bo'ldi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Asosiy siyosiy ideologiyalarning shakllanishi',
+                        'items': [
+                            'Liberalizm: Shaxs erkinligi, xususiy mulk va huquqiy davlat ustuvorligi (J. Lokk, A. Smit).',
+                            "Konservatizm: An'analar, ijtimoiy tartib va mo'tadil islohotlar tarafdorligi (E. Byork).",
+                            'Sotsializm va Marksizm: Ijtimoiy tenglik, sinfiy kashfiyotlar va mulkning jamoaviyligi (K. Marks, F. Engels).',
+                            "Natsionalizm: Milliy o'zlik va mustaqil milliy davlat qurish g'oyasi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Ideologiyalar faqat g'oya bo'lib qolmay, siyosiy institutlar va davlat tuzumlarini shakllantiruvchi amaliy kuchdir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Modern liberalizm ideologiyasining asosiy tayanch prinsiplaridan biri qaysi?',
+                        'options': [
+                            'Sinfiy kurash va absolyut tenglik',
+                            'Shaxs erkinligi va xususiy daxlsizlik',
+                            "An'anaviy monarxiyani saqlash",
+                            "Iqtisodiyotni to'liq davlat nazoratiga olish"
+                        ],
+                        'answer': 1,
+                        'explain': 'Liberalizm shaxs erkinligi, xususiy mulk daxlsizligi va qonun ustuvorligiga tayanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Edmund Byork konservatizm ideologiyasining asoschilaridan biri hisoblanadi.',
+                        'answer': True,
+                        'explain': "E. Byork o'zining Fransuz inqilobiga bergan tanqidiy baholari bilan zamonaviy konservatizmga poydevor qo'ygan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "XIX asrda Yevropada milliy davlatlarning (masalan, Italiya va Germaniya) birlashishida qaysi g'oya asosiy harakatlantiruvchi kuch bo'ldi?",
+                        'options': [
+                            'Anarchizm',
+                            'Natsionalizm (Millatchilik)',
+                            'Feodalizm',
+                            'Klerikalizm'
+                        ],
+                        'answer': 1,
+                        'explain': "XIX asrdagi millatchilik (natsionalizm) parchalangan xalqlarni yagona milliy davlatga biriktirishda muhim rol o'ynagan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Siyosiy ideologiyalar bo'yicha tahliliy ko'nikmalaringizni sinab ko'ring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Liberalizm va Konservatizm ideologiyalarining jamiyatdagi o'zgarishlarga (islohotlarga) munosabatidagi asosiy farqni yozing.",
+                            'answer': "Liberalizm individual erkinlik uchun tezkor islohotlarni yoqlaydi, Konservatizm esa an'ana va barqarorlikni saqlagan holda sekin, mo'tadil o'zgarishlarni ma'qullaydi.",
+                            'hint': "Islohotlar sur'ati va an'analarga munosabatni taqqoslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "XX asrda totalitar tuzumlarning (Fashizm, Stalinizm) g'oyaviy ildizlari qanday manbalarga tayanadi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'harbiy-sanat-va-strategiyalar-evolyutsiyasi',
+                'title': "Harbiy san'at va strategiyalar evolyutsiyasi: Qadimgi davrdan zamonaviy urushlargacha",
+                'summary': "Harbiy doktrinalar, taktik yondashuvlar va texnologik inqiloblarning geosiyosiy xaritaga ta'siri tahlil etiladi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Harbiy san'at tarixi insoniyatning qurolli toqnashuvlarni rejalashtirish va olib borish usullarining rivojlanishini o'rganadi. Harbiy strategiya nafaqat qurol-yarag' turiga, balki jamiyatning iqtisodiy va texnologik darajasiga ham chambarchas bog'liq."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "Amir Temur qo'shinining taktik tuzilishi (qul, barangor, juvangor, kanchul va boshqalar) va razvedka tizimi XIV asrda harbiy san'atning yuksak cho'qqisi bo'lib, unga yirik imperiyalarga barham berish imkonini yaratgan."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Harbiy inqiloblarning bosqichlari (Revolutions in Military Affairs)',
+                        'items': [
+                            "Qadimgi va o'rta asrlar: Otliq qo'shinlar va qal'a qamal qilish san'ati (Mo'g'ullar, Temuriylar).",
+                            "O'qotar qurollar inqilobi (XVI-XVII asrlar): Porox va artilleriyaning o'rni, doimiy armiyalarning tuzilishi.",
+                            "Ommaviy safarbarlik va sanoatlashgan urushlar (XIX-XX asr boshlari): Sanoat to'ntarishi va temir yo'llarning harbiylashtirilishi.",
+                            'Yadro va axborot davri (XX asr ikkinchi yarmi - XXI asr): Yadroviy tiyib turish, gibrid va kiber urushlar.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Karl fon Klauzevits ta'kidlaganidek: 'Urush — bu siyosatning boshqa vositalar bilan davom ettirilishidir'."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "O'qotar qurollarning (porox) keng qo'llanilishi harbiy san'atda qanday tub burilishga olib keldi?",
+                        'options': [
+                            "Ritsarlik va og'ir otliq qo'shinlarning mavqeyi yo'qolishiga",
+                            'Kamondan otuvchilar sonining ortishiga',
+                            "Qal'a devorlarining mustahkamlanishiga va urushlarning to'xtashiga",
+                            'Dengiz flotining batamom tugatilishiga'
+                        ],
+                        'answer': 0,
+                        'explain': "Porox va artilleriya paydo bo'lishi bilan o'rta asr ritsarlari hamda muhtasham qal'alarning harbiy ahamiyati keskin tushib ketdi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Karl fon Klauzevits o'zining 'Urush haqida' asarida urushni siyosatdan ayro xodisalar sifatida baholagan.",
+                        'answer': False,
+                        'explain': 'Klauzevits urushni siyosatning mantiqiy davomi va uning quroli deb bilgan.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "XXI asrdagi 'Gibrid urush' tushunchasi nimani anglatadi?",
+                        'options': [
+                            'Faqat tank va aviatsiyadan foydalanish',
+                            'Harbiy kuch bilan birga axborot, kiberhujum va iqtisodiy bosimlardan majmuaviy foydalanish',
+                            "Faqat dengiz kuchlari o'rtasidagi toqnashuv",
+                            "Yadro qurolini ochiq qo'llash"
+                        ],
+                        'answer': 1,
+                        'explain': "Gibrid urush — bu an'anaviy harbiy harakatlarni axborot urushi, kiberhujumlar va iqtisodiy sanksiyalar bilan uyg'unlashtirishdir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Harbiy strategiyalar evolyutsiyasi bo'yicha tahlil yuritish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Birinchi va Ikkinchi jahon urushlaridagi taktika va texnologiyalarning asosiy farqini bitta gap bilan izohlang.',
+                            'answer': "Birinchi jahon urushi asosan pozitsion (xandaq) urushi bo'lgan bo'lsa, Ikkinchi jahon urushi manevrli va mexaniatsiyalashgan (Blicfrig) urush bo'ldi.",
+                            'hint': 'Xandaq va manevrli urush tushunchalarini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Yadro qurolining kashf etilishi va 'O'zaro muqarrar yo'q qilish' (MAD) doktrinasi Buyuk davlatlar o'rtasidagi urushlarning oldini olishda qanday rol o'ynadi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'markaziy-osiyo-arxeologiyasi-va-sivilizatsiya',
+                'title': 'Markaziy Osiyo arxeologiyasi va sivilizatsion konsepsiyalar',
+                'summary': "Oks sivilizatsiyasi, Sarazm va Qadimgi Xorazm kabi arxeologik kashfiyotlarning jahon tarixdagi o'rni va konsepsiyalarning o'zgarishi.",
+                'duration': 22,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Markaziy Osiyodagi arxeologik tadqiqotlar mintaqaning nafaqat ko'chmanchi, balki insoniyatning eng qadimgi shaharsozlik va dehqonchilik markazlaridan biri bo'lganini isbotladi. BMAC (Baqtriya-Marg'iyona arxeologik majmuasi) kabi kashfiyotlar Yevroosiyo sivilizatsiyasi haqidagi qarashlarni o'zgartirdi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "Gonur-depe va Jarqo'ton yodgorliklarining o'rganilishi bronza davridayoq Markaziy Osiyoda Oks sivilizatsiyasi (BMAC) mavjud bo'lganini va u Mesopotamiya va Hind vodiysi sivilizatsiyalari bilan teng darajada rivojlanganini ko'rsatdi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Arxeologik kashfiyotlar va ularning ilmiy ahamiyati',
+                        'items': [
+                            "Sarazm (Tojikiston) va Qoyali (O'zbekiston): Ilk dehqonchilik va metallurgiya markazlari.",
+                            "BMAC (Oks sivilizatsiyasi): Bronza davri shaharsozligi, monumental me'morchilik va ibodatxonalar.",
+                            "Tuproqqal'a va Jonbosqal'a (Xorazm): Qadimgi davlatchilik, yozuv va tasviriy san'at manbalari.",
+                            "Sopollitepa va Jarqo'ton: Ilk tabaqalashgan jamiyat va tabaqaviy e'tiqodlar."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Arxeologik topilmalar yozma manbalar mavjud bo'lmagan yoki kam bo'lgan qadimgi davrlarni tiklashning yagona obyektiv manbasidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Oks sivilizatsiyasi (BMAC) qaysi davrga oid arxeologik majmua hisoblanadi?',
+                        'options': [
+                            'Paleolit davri',
+                            'Bronza davri',
+                            "Ilk o'rta asrlar",
+                            'Renessans davri'
+                        ],
+                        'answer': 1,
+                        'explain': "Baqtriya-Marg'iyona arxeologik majmuasi bronza davriga (mil.avv. III-II ming yilliklar) tegishlidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Sopollitepa va Jarqo'ton yodgorliklari Janubiy O'zbekiston hududida joylashgan bo'lib, ilk shaharsozlik madaniyatini aks ettiradi.",
+                        'answer': True,
+                        'explain': 'Surxondaryo viloyatida joylashgan bu yodgorliklar mintaqadagi eng qadimgi shaharsozlik namunalaridir.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Arxeolog V.I. Sarianidi qaysi madaniyatni kashf etish va o'rganishga ulkan hissa qo'shgan?",
+                        'options': [
+                            'Andronovo madaniyati',
+                            "Baqtriya-Marg'iyona (BMAC) sivilizatsiyasi",
+                            'Afanasyevo madaniyati',
+                            'Tripol madaniyati'
+                        ],
+                        'answer': 1,
+                        'explain': "V.I. Sarianidi Gonur-depe va boshqa yodgorliklarni qazib o'rganib, BMAC sivilizatsiyasini dunyoga tanitgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Markaziy Osiyo arxeologiyasi bo'yicha tahliliy topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "BMAC sivilizatsiyasining kashf etilishi Yevroosiyo tarixshunosligidagi qaysi noto'g'ri qarashni rad etdi?",
+                            'answer': "Markaziy Osiyo qadimda faqat ko'chmanchi chorvadorlar hududi bo'lgan degan yanglish qarashni rad etib, bu yerda o'troq shahar sivilizatsiyasi bo'lganini isbotladi.",
+                            'hint': "O'troq va ko'chmanchi madaniyatlar nisbatini o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tuproqqal'a arxeologik yodgorligining Qadimgi Xorazm davlatchiligi va madaniyatini o'rganishdagi ahamiyatini yoritib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'annales-maktabi-va-mikrotarix-metodologiyasi',
+                'title': 'Annales maktabi va mikrotarix: Kundalik hayot va mentalitetlar tarixi',
+                'summary': "Tarixshunoslikdagi inqilobiy yondashuv — makrotarixdan insonlar mentaliteti va kundalik turmush tarzi tahliliga o'tish metodologiyasi.",
+                'duration': 22,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "XX asr fransuz tarixshunosligida shakllangan 'Annales' maktabi (Lien Fevr, Mark Blok, Fernand Brodel) tarixga bo'lgan yondashuvni o'zgartirdi. Ular faqat podshohlar, urushlar va siyosiy voqealarni emas, balki oddiy insonlar hayoti, iqtisodiy tuzilmalar, mentalitet va ekologik omillarni o'rganishni ilgari surdilar."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "Fernand Brodel o'zining 'O'rta yer dengizi va II Filip davrida O'rta yer dengizi dunyosi' asarida tarixni 3 xil vaqt o'lchovida tahlil qilgan: geotarix (uzoq muddatli), ijtimoiy-iqtisodiy tarix (o'rta muddatli) va siyosiy voqealar (qisqa muddatli)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Annales maktabi va Mikrotarixning asosiy tamoyillari',
+                        'items': [
+                            'Tarixiy vaqtning uch darajasi (Longue durée — uzoq davomiylik).',
+                            "Mentalitetlar tarixi: Muayyan davr kishilarining dunyoqarashi, e'tiqodi va qo'rquvlarini o'rganish.",
+                            'Mikrotarix (Microhistory): Kichik bir voqea, qishloq yoki shaxs taqdiri orqali butun jamiyatni tahlil qilish (masalan, Karlo Ginzburg tadqiqotlari).',
+                            'Pleyer-disiplinar yondashuv: Tarixni geografiya, sotsiologiya, psixologiya va ekonomika bilan integratsiyalash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Annales maktabi tarixni 'Voqealar tarixi' (Histoire événementielle) darajasidan 'Yaxlit insoniyat tarixi' darajasiga ko'tardi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Annales maktabining asosiy hissasi va yangiligi nimadan iborat bo'ldi?",
+                        'options': [
+                            'Siyosiy arboblar biografiyasini batafsil yozish',
+                            "Tarixni barcha gumanitar fanlar integratsiyasida va kundalik hayot/mentalitetlar darajasida o'rganish",
+                            "Arxeologik qazishmalarga to'liq barham berish",
+                            "Tarixni faqat xronologik jadval ko'rinishida berish"
+                        ],
+                        'answer': 1,
+                        'explain': "Annales maktabi tarixni ko'p tarmoqli fanlar chorrahasida va teran ijtimoiy-madaniy tuzilmalar vositasida tadqiq etishni boshladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Fernand Brodel 'Longue durée' (uzoq davomiylik) tushunchasi ostida asrlar davomida juda sekin o'zgaradigan geografik va iqlimiy omillarni nazarda tutgan.",
+                        'answer': True,
+                        'explain': "Ha, Brodel uchun uzoq davomiylik geografik va iqlimiy sharoitlar bilan bog'liq eng barqaror darajadir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Pishloq va qurtlar' asari bilan Mikrotarix (Microhistory) yo'nalishiga asos solgan taniqli tarixchi kim?",
+                        'options': [
+                            'Mark Blok',
+                            'Karlo Ginzburg',
+                            'Lusyen Fevr',
+                            'Arnold Toynbi'
+                        ],
+                        'answer': 1,
+                        'explain': 'Karlo Ginzburg bir tegirmonchi (Menokkio) guvohliklari va sud jarayoni orqali XVI asr xalq madaniyatini yoritib, mikrotarixga zamin yaratgan.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Tarixshunoslik metodologiyasidagi zamonaviy yondashuvlar bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Annales maktabining 'Mentalitet tarixi' va an'anaviy 'Siyosiy tarix' o'rtasidagi asosiy farq nimada?",
+                            'answer': "Siyosiy tarix davlatlar, hukmdorlar va urushlarni o'rgansa, mentalitet tarixi oddiy odamlarning dunyoqarashi, psixologiyasi va o'y-xayollarini o'rganadi.",
+                            'hint': "O'rganish obyekti va inson omiliga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Agar siz o'z shahringiz yoki qishlog'ingiz tarixi bo'yicha Mikrotarixiy tadqiqot o'tkazmoqchi bo'lsangiz, qanday manbalardan va mavzudan foydalangan bo'lardingiz?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'postkolonializm-va-dekolonizatsiya-tahlili',
+                'title': 'Postkolonializm va dekolonizatsiya jarayonlarining qiyosiy-tarixiy tahlili',
+                'summary': 'Mustamlakachilik tizimining yemirilishi, uchinchi dunyo mamlakatlarining shakllanishi va postkolonial nazariyalar.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Ikkinchi jahon urushidan so'ng jahon miqyosida Yevropa imperiyalarining parchalanishi va o'nlarcha yangi mustaqil davlatlarning paydo bo'lishi - Dekolonizatsiya davri deb ataladi. Postkolonializm nazariyasi esa mustamlakachilikning sobiq kolaniyalarning madaniyati, tili, iqtisodiyoti va o'zligiga ko'rsatgan chuqur asoratlarini tadqiq etadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "Edvard Said o'zining 'Orientallik' (Orentalizm) asarida G'arb sharq xalqlarini qanday qilib 'orqada qolgan', 'ekzotik' va 'boshqarilishga muhtoj' sifatda tasvirlaganini va bu tasavvur mustamlakachilikni oqlash vositasi bo'lganini ko'rsatib berdi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Dekolonizatsiya va postkolonial tadqiqotlar yo'nalishlari",
+                        'items': [
+                            'Osiyo va Afrikadagi dekolonizatsiya toqinlari (Hindiston mustaqilligi, Jazoir urushi).',
+                            "Neokolonializm: Sobiq metropoliyalarning iqtisodiy va madaniy ta'sirni saqlab qalishi.",
+                            'Postkolonial nazariya: Edvard Said, Gayatri Spivak va Homi Bhabha tadqiqotlari.',
+                            'Markaziy Osiyodagi postsovet va postkolonial diskurs tahlili.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Siyosiy mustaqillikka erishish avtomati ravishda iqtisodiy va madaniy mustaqillikni anglatmaydi; bu uzoq davom etuvchi jarayondir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Edvard Saidning postkolonial tadqiqotlar asosini tashkil etuvchi mashhur asari qaysi?',
+                        'options': [
+                            'Orentalizm (Orientalism)',
+                            'Ijtimoiy shartnoma',
+                            'Sivilizatsiyalar toqnashuvi',
+                            'Tarixning oxiri'
+                        ],
+                        'answer': 0,
+                        'explain': "1978-yilda nashr etilgan 'Orientalism' asari postkolonial nazariyaning asosiy matnlaridan biri hisoblanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Neokolonializm — bu sobiq mustamlakalarning to'g'ridan-to'g'ri harbiy bosqin ostida ushlab turilishi demakdir.",
+                        'answer': False,
+                        'explain': "Neokolonializm harbiy emas, balki moliyaviy, iqtisodiy, madaniy va siyosiy bilvosita ta'sir o'tkazish shaklidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "1960-yil BMT tarixida nima sababdan 'Afrika yili' deb nom olgan?",
+                        'options': [
+                            "Afrikada birinchi marta Olimpiada o'tkazilgani uchun",
+                            "17 ta Afrika davlati mustamlakachilikdan ozod bo'lib, mustaqillikka erishgani uchun",
+                            'Afrika Ittifoqi tuzilgani uchun',
+                            "Afrikada barcha urushlar to'xtagani uchun"
+                        ],
+                        'answer': 1,
+                        'explain': "1960-yilda 17 ta Afrika mamlakati bir vaqtning o'zida mustaqillikni qo'lga kiritgani sababli bu yil 'Afrika yili' deb atalgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Dekolonizatsiya va postkolonial muammolar bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Kognitiv va madaniy mustamlakachilik' tushunchasini qisqacha izohlang.",
+                            'answer': "Bu bo'ysundirilgan xalqlarning o'z tili, tarixi va qadriyatlaridan voz kechib, metropoliyaning madaniy va intellektual standartlarini ustun qo'yish jarayonidir.",
+                            'hint': "Til, ta'lim va dunyoqarashga ta'sir haqida o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Sobiq Sovet Ittifoqi respublikalaridagi dekolonizatsiya jarayonlarining o'ziga xos xususiyatlari va muammolarini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'jahon-tarixidagi-makroiqtisodiy-inqirozlar',
+                'title': 'Jahon tarixidagi makroiqtisodiy inqirozlar va moliya tizimlari',
+                'summary': "1929-yilgi Buyuk depressiya, giperinflyatsiyalar va neft krizislarining siyosiy hamda ijtimoiy tartiblarni o'zgartirishi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': 'Iqtisodiy inqirozlar tarixiy jarayonlarning asosiy katalizatorlaridan biridir. Tovar ishlab chiqarish va moliya tizimlarining izdan chiqishi siyosiy radikallashuvga, hukumatlarning almashishiga va hatto jahon urushlariga zamin yaratgan.'
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': '1929-yilda Uoll-stritdagi birja kasodga uchrashi bilan boshlangan Buyuk Depressiya butun kapitalistik dunyoni qamrab oldi. Germaniyadagi ommaviy ishsizlik va qashshoqlik natsistlarning (Gitler) hokimiyatga kelishini tezlashtirdi.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Jahon moliya tizimi va inqirozlarning evolyutsiyasi',
+                        'items': [
+                            "Oltin standarti (Gold Standard) davri va uning barbod bo'lishi.",
+                            "1929-1933 yillardagi Buyuk Depressiya va Keynschilik iqtisodiy modelining paydo bo'lishi.",
+                            "1944-yilgi Bretton-Vuds tizimi va Xalqaro Valyuta Jamg'armasi (XVJ) yaratilishi.",
+                            '1973-yilgi Neft inqirozi (OPEC embargosi) va Stagflyatsiya hodisasi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Iqtisodiy inqirozlar doimiy ravishda davlatning iqtisodiyotdagi rolini qayta ko'rib chiqishga (Laissez-faire modelidan Keynesianismga va Keynschilikdan Neoliberalizmga) sabab bo'lgan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': '1929-yilgi Buyuk Depressiya oqibatida AQSH Prezidenti F. Ruzvelt qanday iqtisodiy siyosatni amalga oshirdi?',
+                        'options': [
+                            'Marshal rejasi',
+                            "Yangi yo'l (New Deal)",
+                            'Reyganomika',
+                            'Shok terapiyasi'
+                        ],
+                        'answer': 1,
+                        'explain': "Franklin Ruzvelt davlatning iqtisodiyotga faol aralashuviga asoslangan 'New Deal' (Yangi yo'l) dasturini joriy etdi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Bretton-Vuds moliya tizimi oltin standartini to'liq saqlab qolgan va AQSH dollarini oltin bilan ta'minlangan yagona valyutaga aylantirgan.",
+                        'answer': True,
+                        'explain': "Ha, Bretton-Vuds tizimida barcha valyutalar AQSH dollariga, dollar esa 1 unsiya = 35 dollar nisbatida me'yoriy oltinga bog'langan edi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "1973-yildagi neft inqiroziga (OPEC embargosiga) qaysi siyosiy hodisa sabab bo'lgan?",
+                        'options': [
+                            'Vyetnam urushi',
+                            'Yom Kipur (Yaqin Sharq) urushi',
+                            'Koreya urushi',
+                            'Eron-Iroq urushi'
+                        ],
+                        'answer': 1,
+                        'explain': "OPECning arab a'zo davlatlari 1973-yilgi urushda Isroilni qo'llagan G'arb mamlakatlariga neft yetkazishni to'xtatgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Makroiqtisodiy inqirozlar va moliya tarixi bo'yicha tahlil.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Stagflyatsiya' tushunchasini iqtisodiy-tarixiy nuqtai nazardan qisqacha ta'riflang.",
+                            'answer': "Stagflyatsiya — bu iqtisodiy turg'unlik (ishsizlik ortishi) va yuqori inflyatsiyaning bir vaqtda namoyon bo'lish hodisasi.",
+                            'hint': "Inflyatsiya va turg'unlik tushunchalarini birlashtiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "2008-yilgi Global moliyaviy inqiroz va 1929-yilgi Buyuk Depressiya o'rtasidagi o'xshash va farqli tomonlarni tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'raqamli-tarix-va-katta-malumotlar-tahlili',
+                'title': 'Raqamli tarix (Digital History) va tarixiy tadqiqotlarda Big Data',
+                'summary': 'Tarixiy manbalarni koinot va raqamli texnologiyalar yordamida tahlil qilish, miqdoriy metodlar va axborot modellashtirish.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Raqamli tarix (Digital History) — bu tarix fanining axborot texnologiyalari, Sun'iy intellekt, Katta ma'lumotlar (Big Data) va Geografik axborot tizimlari (GIS) bilan tutashgan zamonaviy sohasidir. U millionlab arxiv hujjatlarini tezkor tahlil qilish va yashirin tarixiy qonuniyatlarni topish imkonini beradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "GIS (Geographic Information Systems) texnologiyasi yordamida Qadimgi Ipak yo'lining topografik xaritasi qayta tiklandi. Kompyuter modellashtirishi karvonlarning relyef, suv manbalari va xavfsizlikka qarab qanday marshrut tanlaganini aniq hisoblab berdi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Raqamli tarix metodologiyasining tarkibiy qismlari',
+                        'items': [
+                            'Arxivlarni raqamlashtirish va OCR (matnlarni optik tanib olish) tizimlari.',
+                            "Matn konchiligi (Text Mining) va Klasterli tahlil: Millionlab sahifalardagi kalit so'zlarni qidirish.",
+                            'Xaritalash va GIS: Tarixiy jarayonlarning fazoviy-hududiy modellashtirilishi.',
+                            "3D rekonstruksiya: Yo'qolgan me'moriy obidalar va shaharlarni virtual tiklash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Raqamli texnologiyalar tarixchi o'rnini bosmaydi, balki unga ulkan hajmdagi axborotni qayta ishlash uchun kuchli instrument beradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Tarixiy GIS (Geografik axborot tizimlari) texnologiyasi asosan qanday maqsadlarda qo'llaniladi?",
+                        'options': [
+                            'Faqat matnlardagi imlo xatolarini tuzatish uchun',
+                            'Tarixiy voqea va jarayonlarni xaritalash hamda fazoviy tahlil qilish uchun',
+                            'Qadimgi tangalarning kimyoviy tarkibini aniqlash uchun',
+                            'Arxiv hujjatlarini yoqib yuborish uchun'
+                        ],
+                        'answer': 1,
+                        'explain': "Tarixiy GIS voqea va hodisalarni geografik koordinatalarga bog'lab, ularning fazoviy dinamikasini ko'rsatib beradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Cliometrics (Kliometrika) — bu tarixiy jarayonlarni iqtisodiy va statistik-matematik usullar bilan tadqiq etish yo'nalishidir.",
+                        'answer': True,
+                        'explain': 'Ha, Kliometrika (yoki iqtisodiy tarixiy miqdoriy tahlil) matematik modellar va statistikani tarixga tatbiq etadi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Raqamli tarixdagi 'Text Mining' (matn konchiligi) usuli qanday imkoniyat beradi?",
+                        'options': [
+                            "Qadimgi qo'lyozmalarni jismonan tozalash",
+                            "Minglab raqamlashtirilgan matnlardan statistik qonuniyatlar va konseptual bog'liqliklarni izlab topish",
+                            'Faqat kitob sahifalarini sanash',
+                            "Xaritalarni 3D formatga o'tkazish"
+                        ],
+                        'answer': 1,
+                        'explain': "Text Mining algoritmlari katta hajmda matnli ma'lumotlarni avtomatik skanerlab, undagi yashirin tendensiyalarni topadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Raqamli tarix va zamonaviy tadqiqot usullari bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Tarixiy obidalarni 3D-rekonstruksiya qilishning madaniy merosni saqlashdagi 2 ta afzalligini yozing.',
+                            'answer': "1) Yo'qolgan yoki vayron bo'lgan obidani kelajak avlod uchun raqamli tiklash; 2) Virtual turizm va tadqiqotlar uchun imkoniyat yaratish.",
+                            'hint': "Restavratsiya va virtual imkoniyatlarni o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Sun'iy intellekt (AI) qadimiy va o'qilishi qiyin bo'lgan (qo'lyozma) manbalarni deshifrovka qilishda tarixchilarga qanday yordam bera oladi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kontrfaktual-tarix-va-sotsial-simulyatsiya',
+                'title': 'Kontrfaktual tarix (Gipotetik tarix) va kelajakni modellashtirish',
+                'summary': "Muqobil tarixiy ssenariylarni ilmiy tahlil qilish metodlari va ularning zamonaviy tarixiy bashoratlardagi o'rni.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Kontrfaktual tarix (Counterfactual History) yoki 'Agar bunday bo'lmaganda...' ilmiy yondashuvi tarixiy burilish nuqtalarini (Bifurkatsiya) tahlil qilish vositasidir. Bu shunchaki xayolot emas, balki qaysi omillar (shaxs, tasodif, iqtisodiyot) hodisalar rivojida hal qiluvchi rol o'ynaganini ilmiy baholash usulidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Tarixiy misol',
+                        'body': "Nial Fergyuson kabi tarixchilar 'Kontrfaktual tahlil' orqali: 'Agar Buyuk Britaniya 1914-yilda Birinchi jahon urushiga kirmaganida Yevropa qanday shakllanardi?' degan savolni qo'yib, o'sha davrdagi iqtisodiy va harbiy imkoniyatlar asosida mantiqiy muqobil model tuzishgan."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Kontrfaktual tahlilni o'tkazish qoidalari",
+                        'items': [
+                            "Bifurkatsiya (Burilish) nuqtasini aniqlash: Hodisa yo'nalishi o'zgarishi mumkin bo'lgan aniq vaqt.",
+                            "Minimal o'zgartirish qoidasi (Minimal Rewrite Rule): Faqat bitta o'zgaruvchini o'zgartirish, qolgan barcha shart-sharoitlarni saqlash.",
+                            "Mantiqiy-tarixiy ehtimollik: Taklif qilinayotgan muqobil ssenariy o'sha davr texnologiyasi va resurslariga zid kelmasligi kerak.",
+                            'Sotsial simulyatsiya va bashorat qilish: Olingan xulosalarni zamonaviy geosiyosatga tatbiq etish.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Kontrfaktual tarixning maqsadi uydirma yaratish emas, balki mavjud tarixiy voqelikning sabab-oqibat zanjirini chuqurroq anglashdir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Kontrfaktual tarix metodologiyasining asosiy ilmiy maqsadi nima?',
+                        'options': [
+                            "Tarixiy faktlarni inkor etish va ertaklar to'qish",
+                            'Muqobil ssenariylar orqali muayyan tarixiy omillarning (sabablarning) haqiqiy vaznini baholash',
+                            "Kelajakdan o'tmishga sayohat qilish",
+                            "Darsliklardagi barcha sana va nomlarni o'zgartirish"
+                        ],
+                        'answer': 1,
+                        'explain': 'Kontrfaktual yondashuv muqobil holatlarni simulyatsiya qilish orqali har bir omilning (masalan, shaxs rolining) darajasini aniqlashga xizmat qiladi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Minimal o'zgartirish qoidasi'ga ko'ra, kontrfaktual tahlilda bir vaqtning o'zida barcha tarixiy sharoitlarni o'zgartirish talab etiladi.",
+                        'answer': False,
+                        'explain': "Aksincha, ilmiy aniqlik uchun faqat bitta tayanch omil o'zgartiriladi, qolgan muhit o'zgarishsiz qoldiriladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Tarixiy jarayonlarda kutilmagan kichik bir hodisaning ulkan oqibatlarga olib kelishi ilmiy dilda qanday ataladi?',
+                        'options': [
+                            'Kapalak effekti (Noliziylik/Bifurkatsiya)',
+                            'Stagflyatsiya',
+                            'Maltus qozoni',
+                            'Bretton-Vuds effekti'
+                        ],
+                        'answer': 0,
+                        'explain': "Chiziqsiz tizimlarda va tarixiy bifurkatsiya nuqtalarida kichik bir tasodif (Kapalak effekti) butun jarayon yo'nalishini o'zgartirishi mumkin."
+                    }
+                ],
+                'homework': {
+                    'intro': "Kontrfaktual tarix va modellashtirish bo'yicha tahliliy topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Sohibqiron Amir Temur 1395-yilda Toqtamyshxonni batamom tor-mor etmaganda, Sharqiy Yevropa va Rus knezliklari tarixi qanday rivojlanishi mumkin edi? (Kontrfaktual faraz yozing).',
+                            'answer': "Oltin O'rda parchalanmas edi va Rus knezliklarining markazlashuvi va qudratli imperiyaga aylanishi birmuncha sekinlashishi yoki to'xtashi mumkin edi.",
+                            'hint': "Oltin O'rda va Moskva knezligi o'rtasidagi kuchlar nisbatiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tarixiy jarayonlarni modellashtirish va kontrfaktual metodlar zamonaviy geosiyosiy va iqtisodiy bashoratlar (Future Studies) qilishda qanday qo'llaniladi?"
                         }
                     ]
                 }
