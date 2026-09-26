@@ -216,34 +216,32 @@
 
   // ───────────────────────── O'yin sozlamalari ─────────────────────────
 
-  // O'yin turi ham shu yerda tanlanadi (lobbyda alohida kartalar yo'q)
+  // Room yaratish: o'yin turi tanlanmaydi — har bir room Quiz Battle
+  // (12 fan, bir xil savollar). Boshqa o'yin turlari katalogda qoladi.
+  var DEFAULT_GAME = 'quiz_battle';
+
   G.route('setup', function (key, scope) {
-    G.header({ title: "Yangi o'yin", back: function () { G.go('lobby'); } });
+    G.header({ title: 'Room yaratish', back: function () { G.go('lobby'); } });
     var el = G.el();
-    el.innerHTML = '<div class="skelet" style="height:150px;margin-bottom:12px"></div><div class="skelet" style="height:320px"></div>';
+    el.innerHTML = '<div class="skelet" style="height:420px"></div>';
 
     G.catalog().then(function (cat) {
       if (scope.dead) return;
       if (!cat.ok) { el.innerHTML = UI.xatoHolat(cat.error, function () { G.render(); }); return; }
-      var game = G.gameByKey(cat, key) || G.gameByKey(cat, G.remember('oxirgi_oyin')) || cat.games[0];
-      var s = null;
-      var formScope = null;
-      scope.add(function () { if (formScope) formScope.dispose(); });
+      var game = G.gameByKey(cat, key) || G.gameByKey(cat, DEFAULT_GAME) || cat.games[0];
+      var saved = G.remember('sozlama_' + game.key) || {};
+      var s = {
+        game: game.key,
+        subject: game.subjects.some(function (x) { return x.key === saved.subject; }) ? saved.subject : game.subjects[0].key,
+        topic: saved.topic || '',
+        difficulty: saved.difficulty || 'orta',
+        count: game.counts.indexOf(saved.count) >= 0 ? saved.count : game.default_count,
+        max_players: [2, 4, 8, 16].indexOf(saved.max_players) >= 0 ? saved.max_players : 4,
+      };
 
       el.innerHTML =
-        '<h2 class="oy-sr" data-fokus>Yangi o\'yin yaratish</h2>' +
-        '<div class="oy-maydon" id="turTanlov"><span class="oy-yorliq">O\'yin turi</span>' +
-          '<div class="oy-turlar" role="radiogroup" aria-label="O\'yin turi" data-segment="game">' +
-            cat.games.map(function (g) {
-              var on = g.key === game.key;
-              return '<button type="button" role="radio" aria-checked="' + on + '" tabindex="' + (on ? '0' : '-1') + '"' +
-                ' data-value="' + esc(g.key) + '"><span class="oy-belgi kichik">' + ic(g.icon) + '</span>' +
-                '<span>' + esc(g.name) + '</span></button>';
-            }).join('') +
-          '</div>' +
-          '<p class="izoh oy-tur-qoida" id="oyinQoida"></p>' +
-        '</div>' +
-        '<form class="oy-forma" id="sozlamaForma" novalidate></form>' +
+        '<h2 class="oy-sr" data-fokus>Room yaratish</h2>' +
+        '<form class="oy-forma" id="sozlamaForma" novalidate>' + G.settingsForm(game, s) + '</form>' +
         '<button class="tugma oy-yaratish-tugma" type="button" id="yaratTugma">' + ic('plus') + '<span>Room yaratish</span></button>' +
         '<p class="izoh oy-yaratish-izoh">Room “Faol roomlar” ro\'yxatida hamma uchun darhol ko\'rinadi. ' +
           'Do\'stingizni room ichidagi “Do\'st taklif qilish” tugmasi orqali chaqirasiz.</p>' +
@@ -251,35 +249,9 @@
       G.focusMain();
 
       var errEl = document.getElementById('sozlamaXato');
-
-      /** Tanlangan o'yin uchun forma: fanlar, mavzular va sonlar o'yinga qarab farq qiladi. */
-      function loadGame(g) {
-        game = g;
-        G.remember('oxirgi_oyin', g.key);
-        G.header({ title: g.name, sub: "Yangi o'yin", back: function () { G.go('lobby'); } });
-        document.getElementById('oyinQoida').textContent = g.rules;
-        var saved = G.remember('sozlama_' + g.key) || {};
-        s = {
-          game: g.key,
-          subject: g.subjects.some(function (x) { return x.key === saved.subject; }) ? saved.subject : g.subjects[0].key,
-          topic: saved.topic || '',
-          difficulty: saved.difficulty || 'orta',
-          count: g.counts.indexOf(saved.count) >= 0 ? saved.count : g.default_count,
-          max_players: [2, 4, 8, 16].indexOf(saved.max_players) >= 0 ? saved.max_players : 4,
-        };
-        if (formScope) formScope.dispose();
-        formScope = new G.Scope();
-        var form = document.getElementById('sozlamaForma');
-        form.innerHTML = G.settingsForm(g, s);
-        G.bindSettingsForm(form, g, s, formScope, function () { G.remember('sozlama_' + g.key, s); });
-        // Manzil tanlangan o'yinni eslab qoladi (yangilash yoki "orqaga"da saqlanadi)
-        history.replaceState(null, '', '#setup/' + g.key);
-      }
-
-      G.bindSegment(document.getElementById('turTanlov'), scope, function (name, value) {
-        if (name === 'game') loadGame(G.gameByKey(cat, value) || game);
+      G.bindSettingsForm(document.getElementById('sozlamaForma'), game, s, scope, function () {
+        G.remember('sozlama_' + game.key, s);
       });
-      loadGame(game);
 
       function create() {
         var btn = document.getElementById('yaratTugma');

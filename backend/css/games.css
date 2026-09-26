@@ -120,29 +120,9 @@
 .oy-mening-room span:nth-child(2) { flex: 1; min-width: 0; }
 .oy-oq { font-weight: 800; white-space: nowrap; }
 
-/* ── "O'yin yaratish" va o'yin turi tanlovi ───────────── */
+/* ── "O'yin yaratish" tugmasi ───────────────────────── */
 .oy-yaratish { margin-bottom: 10px; }
 
-.oy-turlar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.oy-turlar button {
-  display: flex; align-items: center; gap: 10px;
-  min-height: 56px;
-  padding: 8px 10px;
-  background: var(--oq);
-  border: 2px solid var(--chiziq);
-  border-radius: 14px;
-  font-family: var(--tana);
-  font-size: 14px; font-weight: 800;
-  color: var(--matn);
-  text-align: left;
-  cursor: pointer;
-  transition: border-color .15s, background .15s;
-}
-.oy-turlar button > span:last-child { min-width: 0; overflow-wrap: anywhere; }
-.oy-turlar button[aria-checked="true"] { border-color: var(--yashil); background: var(--yashil-fon); color: var(--yashil-quyuq); }
-.oy-turlar button[aria-checked="true"] .oy-belgi { background: var(--yashil); border-color: var(--yashil); color: #fff; }
-.oy-tur-qoida { margin: 4px 2px 0; }
-#turTanlov { margin-bottom: 16px; }
 
 .oy-belgi {
   width: 46px; height: 46px;
@@ -568,7 +548,6 @@
 
 /* ── Kengroq ekranlar ──────────────────────────────────── */
 @media (min-width: 560px) {
-  .oy-turlar { grid-template-columns: 1fr 1fr 1fr; }
   .oy-match { grid-template-columns: 1fr 1fr; }
   .oy-match-ustun.javoblar { padding-top: 0; border-top: none; border-left: 2px dashed var(--chiziq); padding-left: 12px; }
   .oy-natija-stat { grid-template-columns: repeat(6, 1fr); }
