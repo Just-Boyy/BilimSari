@@ -20,8 +20,11 @@ import admin_audit
 import curriculum as cur_mod
 import rate_limit
 import study
-from admin_auth import ADMIN_PASSWORD, admin_required, make_admin_token, revoke_all_sessions
+from admin_auth import (
+    ADMIN_PASSWORD, admin_required, is_admin_telegram, make_admin_token, revoke_all_sessions,
+)
 from db import as_utc, get_connection, iso_utc, to_tashkent, utc_now
+from telegram_auth import validate_init_data
 
 bp = Blueprint('admin_api', __name__, url_prefix='/api/admin')
 
@@ -33,6 +36,10 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 # shunda bir necha gunicorn worker orasida ham real chegara bo'lib qoladi.
 LOGIN_RATE_LIMIT = int(os.environ.get('ADMIN_LOGIN_RATE_LIMIT', '5'))
 LOGIN_RATE_WINDOW = int(os.environ.get('ADMIN_LOGIN_RATE_WINDOW', '900'))  # 15 daqiqa
+
+# Telegram orqali admin kirishda initData qancha "yangi" bo'lishi kerak.
+# O'quvchi kirishidagi 24 soatdan qattiqroq — admin huquqi kattaroq.
+ADMIN_INITDATA_MAX_AGE = 60 * 60  # 1 soat
 
 
 def _client_ip():
@@ -66,6 +73,40 @@ def admin_login():
         return jsonify({'ok': False, 'error': "Parol noto'g'ri"}), 401
 
     admin_audit.log('login', ip=ip)
+    return jsonify({'ok': True, 'token': make_admin_token()})
+
+
+@bp.route('/telegram-login', methods=['POST'])
+def admin_telegram_login():
+    """Admin panelga parolsiz kirish — faqat ADMIN_TELEGRAM_IDS ro'yxatidagi
+    Telegram foydalanuvchilari uchun. initData'ning HMAC imzosi bot tokeni
+    bilan tekshiriladi, shuning uchun Telegram ID'ni soxtalashtirib bo'lmaydi.
+
+    Parol kirishidagi urinish cheklovi bu yerda yo'q: HMAC imzoni taxmin
+    qilib bo'lmaydi, cheklov esa bir IP'dagi boshqa odamlar tufayli haqiqiy
+    adminni ham bloklab qo'yardi.
+
+    Barcha rad javoblari 403 (401 emas) — aks holda js/admin.js mavjud
+    yaroqli admin tokenni o'chirib yuborardi."""
+    if not BOT_TOKEN:
+        return jsonify({'ok': False, 'error': "BOT_TOKEN sozlanmagan", 'code': 'no_bot'}), 503
+
+    body = request.get_json(silent=True) or {}
+    tg_user = validate_init_data(body.get('initData') or '', BOT_TOKEN, ADMIN_INITDATA_MAX_AGE)
+    if not tg_user:
+        return jsonify({
+            'ok': False,
+            'error': "Telegram sessiyasi eskirgan. Ilovani yopib, qayta oching.",
+            'code': 'bad_init_data',
+        }), 403
+    if not is_admin_telegram(tg_user.get('telegram_id')):
+        return jsonify({
+            'ok': False,
+            'error': "Bu Telegram hisobida admin huquqi yo'q.",
+            'code': 'not_admin',
+        }), 403
+
+    admin_audit.log('login_telegram', detail=f"telegram_id={tg_user['telegram_id']}", ip=_client_ip())
     return jsonify({'ok': True, 'token': make_admin_token()})
 
 

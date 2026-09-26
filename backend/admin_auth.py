@@ -21,6 +21,20 @@ from db import get_connection
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
 ADMIN_TOKEN_MAX_AGE = 60 * 60 * 24 * 14  # 14 kun
 
+# Shu Telegram ID'lar admin panelga parolsiz, Telegram orqali kira oladi
+# (imzolangan initData tekshiriladi — ID'ni soxtalashtirib bo'lmaydi).
+ADMIN_TELEGRAM_IDS = {
+    int(x) for x in os.environ.get('ADMIN_TELEGRAM_IDS', '5771496552').split(',')
+    if x.strip().isdigit()
+}
+
+
+def is_admin_telegram(telegram_id) -> bool:
+    try:
+        return int(telegram_id) in ADMIN_TELEGRAM_IDS
+    except (TypeError, ValueError):
+        return False
+
 _serializer = URLSafeTimedSerializer(SECRET, salt='bilimsari-admin-panel')
 
 

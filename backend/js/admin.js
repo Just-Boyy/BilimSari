@@ -69,6 +69,15 @@
         });
     },
 
+    /** Telegram Mini App ichida parolsiz kirish (faqat admin Telegram ID'lari uchun). */
+    telegramKirish: function (initData) {
+      return so_rov('/api/admin/telegram-login', { method: 'POST', body: { initData: initData } })
+        .then(function (res) {
+          if (res.ok && res.token) saqlash(res.token);
+          return res;
+        });
+    },
+
     stats: function () { return so_rov('/api/admin/stats'); },
 
     foydalanuvchilar: function (opts) {

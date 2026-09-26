@@ -270,7 +270,7 @@
   <div class="adm-kirish-karta">
     <div class="belgi" data-ikon="lock"></div>
     <h1>Admin panel</h1>
-    <p>BilimSari boshqaruv paneli. Faqat administratorlar uchun.</p>
+    <p id="kirishIzoh">BilimSari boshqaruv paneli. Faqat administratorlar uchun.</p>
     <form id="kirishForma">
       <input type="password" id="parolMaydon" placeholder="Admin paroli" autocomplete="current-password" required>
       <button type="submit" class="tugma">Kirish</button>
@@ -363,6 +363,7 @@
   <div class="adm-modal" id="foydalanuvchiModal"></div>
 </div>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="js/icons.js"></script>
 <script src="js/admin.js"></script>
 <script>
@@ -391,7 +392,7 @@ function sanaVaqt(iso) {
 }
 
 var AUDIT_NOMLARI = {
-  login: 'Kirish', revoke_sessions: 'Seanslar tugatildi', set_grade: 'Sinf o\'zgartirildi',
+  login: 'Kirish', login_telegram: 'Telegram orqali kirish', revoke_sessions: 'Seanslar tugatildi', set_grade: 'Sinf o\'zgartirildi',
   grant_unlock: 'Fan ochildi', revoke_unlock: 'Fan yopildi', delete_user: 'Foydalanuvchi o\'chirildi',
   broadcast: 'Ommaviy xabar yuborildi',
 };
@@ -440,7 +441,14 @@ document.getElementById('kirishForma').addEventListener('submit', async function
   panelniKorsat();
 });
 
+// Telegram Mini App ichida ochilganmi (profildagi "Admin panel" qatori orqali)
+var TG = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData
+  ? window.Telegram.WebApp : null;
+
 document.getElementById('chiqishTugma').addEventListener('click', function () {
+  // Telegram ichida — ilovaga qaytamiz. Tokenni o'chirish foydasiz:
+  // keyingi safar Telegram orqali baribir darhol qayta kiriladi.
+  if (TG) { location.href = 'profile.html'; return; }
   AdminAPI.chiqish();
   location.reload();
 });
@@ -450,11 +458,33 @@ document.getElementById('seanslarniTugatTugma').addEventListener('click', async 
   var res = await AdminAPI.barchaSeanslarniTugat();
   if (res.ok) {
     AdminAPI.chiqish();
-    location.reload();
+    if (TG) location.href = 'profile.html';
+    else location.reload();
   }
 });
 
-if (AdminAPI.kirganmi()) panelniKorsat();
+(async function boshlash() {
+  if (TG) {
+    try { TG.ready(); TG.expand(); } catch (e) {}
+    var forma = document.getElementById('kirishForma');
+    var izoh = document.getElementById('kirishIzoh');
+    var aslIzoh = izoh.textContent;
+    forma.style.display = 'none';
+    izoh.textContent = 'Telegram orqali tekshirilmoqda...';
+
+    var res = await AdminAPI.telegramKirish(TG.initData);
+    if (res.ok) { panelniKorsat(); return; }
+
+    forma.style.display = '';
+    izoh.textContent = aslIzoh;
+    // Avval olingan token bo'lsa (masalan, Telegram sessiyasi eskirgan) — o'sha bilan davom etamiz
+    if (!AdminAPI.kirganmi()) {
+      document.getElementById('kirishXato').textContent = res.error || '';
+      return;
+    }
+  }
+  if (AdminAPI.kirganmi()) panelniKorsat();
+})();
 
 // ─────────────────────── Tablar ───────────────────────
 

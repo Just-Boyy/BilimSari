@@ -206,7 +206,11 @@ def guest():
 @app.route('/api/me', methods=['GET'])
 @auth_required
 def me():
-    return jsonify({'ok': True, 'user': request.user})
+    user = dict(request.user)
+    # Faqat profilda "Admin panel" qatorini ko'rsatish uchun — haqiqiy kirish
+    # /api/admin/telegram-login'da imzolangan initData orqali tekshiriladi.
+    user['is_admin'] = admin_auth.is_admin_telegram(user.get('telegram_id'))
+    return jsonify({'ok': True, 'user': user})
 
 
 @app.route('/api/profile/name', methods=['POST'])

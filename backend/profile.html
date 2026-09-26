@@ -65,6 +65,13 @@
       <span class="o-q" data-ikon="chevronRight"></span>
     </a>
 
+    <!-- Faqat admin Telegram ID'lariga ko'rinadi (.qator display:flex bo'lgani uchun hidden emas, style) -->
+    <a class="qator" href="admin.html" id="adminQator" style="display:none">
+      <span class="nishon" data-ikon="lock"></span>
+      <span class="matn">Admin panel<small>Foydalanuvchilar, to'lovlar va statistika</small></span>
+      <span class="o-q" data-ikon="chevronRight"></span>
+    </a>
+
     <button class="qator xavfli" id="chiqish">
       <span class="nishon" data-ikon="logout"></span>
       <span class="matn">Chiqish<small id="chiqishIzoh">Hisobdan chiqasiz, natijalar saqlanadi</small></span>
@@ -118,6 +125,9 @@
 
   // Mehmon hisobi (email ham, Telegram ham yo'q) — chiqish xavfli
   var men = await API.men();
+  if (men.ok && men.user.is_admin) {
+    document.getElementById('adminQator').style.display = '';
+  }
   var mehmon = men.ok && !men.user.email && !men.user.telegram_id;
   if (mehmon) {
     document.getElementById('mehmonOgoh').hidden = false;
