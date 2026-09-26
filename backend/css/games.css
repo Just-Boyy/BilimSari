@@ -120,25 +120,29 @@
 .oy-mening-room span:nth-child(2) { flex: 1; min-width: 0; }
 .oy-oq { font-weight: 800; white-space: nowrap; }
 
-/* ── O'yin kartalari ──────────────────────────────────── */
-.oy-setka { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.oy-karta-skelet { height: 170px; }
+/* ── "O'yin yaratish" va o'yin turi tanlovi ───────────── */
+.oy-yaratish { margin-bottom: 10px; }
 
-.oy-karta {
-  display: flex; flex-direction: column; gap: 10px;
+.oy-turlar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.oy-turlar button {
+  display: flex; align-items: center; gap: 10px;
+  min-height: 56px;
+  padding: 8px 10px;
   background: var(--oq);
-  border: 1px solid var(--chiziq);
-  border-radius: var(--r-katta);
-  padding: 16px;
-  box-shadow: var(--soya);
-  min-width: 0;
+  border: 2px solid var(--chiziq);
+  border-radius: 14px;
+  font-family: var(--tana);
+  font-size: 14px; font-weight: 800;
+  color: var(--matn);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
 }
-.oy-karta-bosh { display: flex; gap: 12px; align-items: flex-start; }
-.oy-karta-matn { min-width: 0; }
-.oy-karta h3 { font-size: 17px; }
-.oy-karta p { color: var(--matn-2); font-size: 13px; margin: 2px 0 0; }
-.oy-meta { font-size: 12px !important; font-weight: 700; color: var(--matn-3) !important; }
-.oy-karta-past { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; flex-wrap: wrap; }
+.oy-turlar button > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.oy-turlar button[aria-checked="true"] { border-color: var(--yashil); background: var(--yashil-fon); color: var(--yashil-quyuq); }
+.oy-turlar button[aria-checked="true"] .oy-belgi { background: var(--yashil); border-color: var(--yashil); color: #fff; }
+.oy-tur-qoida { margin: 4px 2px 0; }
+#turTanlov { margin-bottom: 16px; }
 
 .oy-belgi {
   width: 46px; height: 46px;
@@ -181,7 +185,6 @@
 }
 .oy-faol { margin-bottom: 22px; }
 .oy-faol .oy-room-qator:last-child { margin-bottom: 0; }
-.oy-oyinlar-bosh { margin-top: 4px; }
 .oy-room-qator.qidiruv { border-color: var(--yashil-chegara); background: var(--yashil-fon); }
 .oy-room-matn { flex: 1; min-width: 0; }
 @media (max-width: 419px) { .oy-room-qator.qidiruv .oy-pill { display: none; } }
@@ -201,9 +204,6 @@
 .oy-bosh p { font-size: 13px; margin: 2px 0 0; }
 
 /* ── Sozlamalar ───────────────────────────────────────── */
-.oy-sozlama-bosh { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
-.oy-sozlama-bosh h2 { font-size: 19px; }
-.oy-sozlama-bosh p { color: var(--matn-2); font-size: 13px; margin: 2px 0 0; }
 
 .oy-forma { display: grid; gap: 14px; }
 .oy-maydon { display: grid; gap: 6px; min-width: 0; }
@@ -611,7 +611,7 @@
 
 /* ── Kengroq ekranlar ──────────────────────────────────── */
 @media (min-width: 560px) {
-  .oy-setka { grid-template-columns: 1fr 1fr; }
+  .oy-turlar { grid-template-columns: 1fr 1fr 1fr; }
   .oy-tanlov { grid-template-columns: 1fr 1fr 1fr; }
   .oy-match { grid-template-columns: 1fr 1fr; }
   .oy-match-ustun.javoblar { padding-top: 0; border-top: none; border-left: 2px dashed var(--chiziq); padding-left: 12px; }

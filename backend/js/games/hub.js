@@ -8,13 +8,6 @@
   var esc = UI.esc;
   var ic = UI.nishon;
 
-  function subjectsLabel(game) {
-    var s = game.subjects || [];
-    if (s.length === 1) return s[0].name;
-    if (s.length === 2) return s[0].name + ', ' + s[1].name;
-    return s.length + ' ta fan';
-  }
-
   function tabs(active) {
     return '<div class="oy-tablar" role="tablist" aria-label="Game Hub bo\'limlari">' +
       '<a role="tab" href="#lobby" aria-selected="' + (active === 'lobby') + '">' + ic('gamepad') + "<span>O'yinlar</span></a>" +
@@ -22,28 +15,7 @@
       '</div>';
   }
 
-  function skeletonCards(n) {
-    var out = '';
-    for (var i = 0; i < n; i++) out += '<div class="skelet oy-karta-skelet"></div>';
-    return out;
-  }
-
   // ───────────────────────── Lobby ─────────────────────────
-
-  function gameCard(g) {
-    return '<article class="oy-karta">' +
-      '<div class="oy-karta-bosh">' +
-        '<span class="oy-belgi">' + ic(g.icon) + '</span>' +
-        '<div class="oy-karta-matn"><h3>' + esc(g.name) + '</h3><p>' + esc(g.tagline) + '</p></div>' +
-      '</div>' +
-      '<p class="oy-meta">' + esc(subjectsLabel(g)) + ' • ' + g.default_count + ' savol • 2–16 o\'yinchi • ~' + g.minutes + ' daqiqa</p>' +
-      '<div class="oy-karta-past">' +
-        '<span class="oy-chip">Oson · O\'rta · Qiyin</span>' +
-        '<button class="tugma tugma-mayda" type="button" data-oyin="' + esc(g.key) + '" aria-label="' + esc(g.name) + ' — o\'ynash">' +
-          ic('play') + "<span>O'ynash</span></button>" +
-      '</div>' +
-    '</article>';
-  }
 
   function roomRow(r) {
     return '<div class="oy-room-qator">' +
@@ -88,37 +60,27 @@
     el.innerHTML =
       tabs('lobby') +
       '<section class="oy-hero">' +
-        '<div><h2 data-fokus>O\'yin tanlang</h2><p>Do\'stlaringiz bilan bilim bellashing</p></div>' +
+        '<div><h2 data-fokus>O\'yinlar markazi</h2><p>Do\'stlaringiz bilan bilim bellashing</p></div>' +
         '<div class="oy-jonli" aria-live="polite">' +
           '<span class="oy-pill"><i class="oy-nuqta" aria-hidden="true"></i><b id="onlaynSon">…</b>&nbsp;onlayn</span>' +
           '<span class="oy-pill"><b id="roomSon">…</b>&nbsp;faol room</span>' +
         '</div>' +
       '</section>' +
       '<div id="meningRoom"></div>' +
+      '<button class="tugma oy-yaratish" type="button" id="yaratishTugma">' + ic('plus') + "<span>O'yin yaratish</span></button>" +
       '<div class="oy-amallar">' +
         '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="qoshilishTugma">' + ic('logIn') + "<span>Roomga qo'shilish</span></button>" +
         '<a class="tugma tugma-ikkilamchi tugma-mayda" href="game.html">' + ic('target') + '<span>Yakka mashq</span></a>' +
       '</div>' +
-      // Jonli ro'yxat o'yin kartalaridan yuqorida — telefonda aylantirmasdan ko'rinadi
       '<section class="oy-faol">' +
         '<div class="bo-lim-bosh"><h2>Faol roomlar</h2><span class="izoh">O\'zi yangilanadi</span></div>' +
         '<div id="roomlar" aria-live="polite"><div class="skelet" style="height:64px"></div></div>' +
-      '</section>' +
-      '<div class="bo-lim-bosh oy-oyinlar-bosh"><h2>Barcha o\'yinlar</h2></div>' +
-      '<div class="oy-setka" id="oyinlar">' + skeletonCards(4) + '</div>';
+      '</section>';
     G.focusMain();
 
     scope.on(document.getElementById('qoshilishTugma'), 'click', function () { openJoin(); });
-
-    G.catalog().then(function (res) {
-      if (scope.dead) return;
-      var box = document.getElementById('oyinlar');
-      if (!res.ok) { box.innerHTML = UI.xatoHolat(res.error, function () { G.render(); }); return; }
-      box.innerHTML = res.games.map(gameCard).join('');
-      box.querySelectorAll('[data-oyin]').forEach(function (b) {
-        scope.on(b, 'click', function () { G.go('setup/' + b.dataset.oyin); });
-      });
-    });
+    scope.on(document.getElementById('yaratishTugma'), 'click', function () { G.go('setup'); });
+    G.catalog();   // yaratish ekrani tez ochilishi uchun katalog oldindan yuklanadi
 
     var lastList = null;
     var searches = [];
@@ -291,35 +253,34 @@
 
   // ───────────────────────── O'yin sozlamalari ─────────────────────────
 
+  // O'yin turi ham shu yerda tanlanadi (lobbyda alohida kartalar yo'q)
   G.route('setup', function (key, scope) {
-    G.header({ title: "O'yin sozlamalari", back: function () { G.go('lobby'); } });
+    G.header({ title: "Yangi o'yin", back: function () { G.go('lobby'); } });
     var el = G.el();
-    el.innerHTML = '<div class="skelet" style="height:120px;margin-bottom:12px"></div><div class="skelet" style="height:320px"></div>';
+    el.innerHTML = '<div class="skelet" style="height:150px;margin-bottom:12px"></div><div class="skelet" style="height:320px"></div>';
 
     G.catalog().then(function (cat) {
       if (scope.dead) return;
       if (!cat.ok) { el.innerHTML = UI.xatoHolat(cat.error, function () { G.render(); }); return; }
-      var game = G.gameByKey(cat, key);
-      if (!game) { G.go('lobby', true); return; }
-      G.header({ title: game.name, sub: "O'yin sozlamalari", back: function () { G.go('lobby'); } });
-
-      var saved = G.remember('sozlama_' + game.key) || {};
-      var s = {
-        game: game.key,
-        subject: game.subjects.some(function (x) { return x.key === saved.subject; }) ? saved.subject : game.subjects[0].key,
-        topic: saved.topic || '',
-        difficulty: saved.difficulty || 'orta',
-        count: game.counts.indexOf(saved.count) >= 0 ? saved.count : game.default_count,
-        max_players: [2, 4, 8, 16].indexOf(saved.max_players) >= 0 ? saved.max_players : 4,
-        public: saved.public !== false,
-      };
+      var game = G.gameByKey(cat, key) || G.gameByKey(cat, G.remember('oxirgi_oyin')) || cat.games[0];
+      var s = null;
+      var formScope = null;
+      scope.add(function () { if (formScope) formScope.dispose(); });
 
       el.innerHTML =
-        '<section class="karta oy-sozlama-bosh">' +
-          '<span class="oy-belgi katta">' + ic(game.icon) + '</span>' +
-          '<div><h2 data-fokus>' + esc(game.name) + '</h2><p>' + esc(game.rules) + '</p></div>' +
-        '</section>' +
-        '<form class="oy-forma" id="sozlamaForma" novalidate>' + G.settingsForm(game, s) + '</form>' +
+        '<h2 class="oy-sr" data-fokus>Yangi o\'yin yaratish</h2>' +
+        '<div class="oy-maydon" id="turTanlov"><span class="oy-yorliq">O\'yin turi</span>' +
+          '<div class="oy-turlar" role="radiogroup" aria-label="O\'yin turi" data-segment="game">' +
+            cat.games.map(function (g) {
+              var on = g.key === game.key;
+              return '<button type="button" role="radio" aria-checked="' + on + '" tabindex="' + (on ? '0' : '-1') + '"' +
+                ' data-value="' + esc(g.key) + '"><span class="oy-belgi kichik">' + ic(g.icon) + '</span>' +
+                '<span>' + esc(g.name) + '</span></button>';
+            }).join('') +
+          '</div>' +
+          '<p class="izoh oy-tur-qoida" id="oyinQoida"></p>' +
+        '</div>' +
+        '<form class="oy-forma" id="sozlamaForma" novalidate></form>' +
         '<div class="oy-tanlov">' +
           '<button class="tugma" type="button" id="randomTugma">' + ic('shuffle') + '<span>Random raqib</span></button>' +
           '<button class="tugma tugma-ikkilamchi" type="button" id="yaratTugma">' + ic('plus') + '<span>Room yaratish</span></button>' +
@@ -329,9 +290,36 @@
       G.focusMain();
 
       var errEl = document.getElementById('sozlamaXato');
-      G.bindSettingsForm(document.getElementById('sozlamaForma'), game, s, scope, function () {
-        G.remember('sozlama_' + game.key, s);
+
+      /** Tanlangan o'yin uchun forma: fanlar, mavzular va sonlar o'yinga qarab farq qiladi. */
+      function loadGame(g) {
+        game = g;
+        G.remember('oxirgi_oyin', g.key);
+        G.header({ title: g.name, sub: "Yangi o'yin", back: function () { G.go('lobby'); } });
+        document.getElementById('oyinQoida').textContent = g.rules;
+        var saved = G.remember('sozlama_' + g.key) || {};
+        s = {
+          game: g.key,
+          subject: g.subjects.some(function (x) { return x.key === saved.subject; }) ? saved.subject : g.subjects[0].key,
+          topic: saved.topic || '',
+          difficulty: saved.difficulty || 'orta',
+          count: g.counts.indexOf(saved.count) >= 0 ? saved.count : g.default_count,
+          max_players: [2, 4, 8, 16].indexOf(saved.max_players) >= 0 ? saved.max_players : 4,
+          public: saved.public !== false,
+        };
+        if (formScope) formScope.dispose();
+        formScope = new G.Scope();
+        var form = document.getElementById('sozlamaForma');
+        form.innerHTML = G.settingsForm(g, s);
+        G.bindSettingsForm(form, g, s, formScope, function () { G.remember('sozlama_' + g.key, s); });
+        // Manzil tanlangan o'yinni eslab qoladi (yangilash yoki "orqaga"da saqlanadi)
+        history.replaceState(null, '', '#setup/' + g.key);
+      }
+
+      G.bindSegment(document.getElementById('turTanlov'), scope, function (name, value) {
+        if (name === 'game') loadGame(G.gameByKey(cat, value) || game);
       });
+      loadGame(game);
 
       function payload(extra) { return G.settingsPayload(s, extra); }
 
