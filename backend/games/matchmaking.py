@@ -96,6 +96,33 @@ def cancel(cur, conn, user) -> dict:
     return {'result': 'cancelled'}
 
 
+def open_searches(cur, user_id, now, limit=8) -> list:
+    """Lobby uchun: hozir random raqib qidirayotganlar (o'zingizdan tashqari).
+    "Bellashish" bosilganda xuddi shu sozlamalar bilan qidiruv boshlanadi va
+    navbatdagi shu o'yinchi bilan darhol juftlashadi. Faqat ism (birinchi
+    so'z) ko'rsatiladi."""
+    cur.execute(
+        '''SELECT q.game_type, q.subject, q.topic, q.difficulty, q.question_count, q.created_ms, u.name
+           FROM game_queue q JOIN users u ON u.id = q.user_id
+           WHERE q.status = 'waiting' AND q.user_id != %s AND q.seen_ms >= %s
+           ORDER BY q.created_ms LIMIT %s''',
+        (user_id, now - QUEUE_TTL_MS, limit),
+    )
+    out = []
+    for r in cur.fetchall():
+        game = catalog.GAMES.get(r['game_type'])
+        if not game:
+            continue
+        out.append({
+            'game': r['game_type'], 'game_name': game['name'], 'icon': game['icon'],
+            'subject': r['subject'], 'subject_name': catalog.subject_info(r['subject'])['name'],
+            'topic': r['topic'], 'difficulty': r['difficulty'],
+            'difficulty_name': catalog.DIFFICULTIES.get(r['difficulty'], r['difficulty']),
+            'count': int(r['question_count']), 'name': rooms.first_name(r['name']),
+        })
+    return out
+
+
 def _try_match(cur, conn, user, me, now):
     cur.execute(
         '''SELECT * FROM game_queue

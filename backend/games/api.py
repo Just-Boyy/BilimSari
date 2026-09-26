@@ -108,6 +108,7 @@ def lobby_view(cur, conn):
     return {
         'online': rooms.online_count(cur, now),
         'rooms': rooms.public_rooms(cur, now),
+        'searches': matchmaking.open_searches(cur, _uid(), now),
         'my_room': rooms.my_room(cur, _uid()),
     }
 

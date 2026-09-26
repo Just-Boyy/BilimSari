@@ -55,6 +55,33 @@
     '</div>';
   }
 
+  /** Random raqib qidirayotgan o'yinchi — bir bosishda u bilan bellashish. */
+  function searchRow(s, i) {
+    return '<div class="oy-room-qator qidiruv">' +
+      '<span class="oy-belgi kichik">' + ic(s.icon) + '</span>' +
+      '<div class="oy-room-matn"><b>' + esc(s.name) + ' raqib qidirmoqda</b>' +
+        '<small>' + esc(s.game_name) + ' • ' + esc(s.subject_name) + ' • ' + esc(s.difficulty_name) + '</small></div>' +
+      '<span class="oy-pill"><i class="oy-nuqta" aria-hidden="true"></i>jonli</span>' +
+      '<button class="tugma tugma-mayda" type="button" data-qidiruv="' + i + '" aria-label="' + esc(s.name) +
+        ' bilan ' + esc(s.game_name) + ' o\'ynash">Bellashish</button>' +
+    '</div>';
+  }
+
+  function challenge(s, btn) {
+    if (!s) return;
+    btn.disabled = true;
+    var settings = { game: s.game, subject: s.subject, topic: s.topic || null, difficulty: s.difficulty, count: s.count };
+    Promise.all([G.catalog(), G.api.mmStart(settings)]).then(function (out) {
+      var cat = out[0], res = out[1];
+      btn.disabled = false;
+      if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
+      if (res.result === 'matched') { G.go('room/' + res.code); return; }
+      // Raqib shu orada boshqa bilan juftlashgan bo'lsa — biz qidiruvda qolamiz
+      G.search = { game: G.gameByKey(cat, s.game), settings: settings, first: res };
+      G.go('izlash');
+    });
+  }
+
   G.route('lobby', function (arg, scope) {
     G.header({ title: "O'yinlar", sub: 'Bilim + raqobat + zavq', back: 'dashboard.html' });
     var el = G.el();
@@ -72,11 +99,13 @@
         '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="qoshilishTugma">' + ic('logIn') + "<span>Roomga qo'shilish</span></button>" +
         '<a class="tugma tugma-ikkilamchi tugma-mayda" href="game.html">' + ic('target') + '<span>Yakka mashq</span></a>' +
       '</div>' +
-      '<div class="oy-setka" id="oyinlar">' + skeletonCards(4) + '</div>' +
-      '<section class="bo-lim">' +
-        '<div class="bo-lim-bosh"><h2>Faol roomlar</h2><span class="izoh">Ochiq roomlarga qo\'shiling</span></div>' +
-        '<div id="roomlar"><div class="skelet" style="height:64px;margin-bottom:8px"></div><div class="skelet" style="height:64px"></div></div>' +
-      '</section>';
+      // Jonli ro'yxat o'yin kartalaridan yuqorida — telefonda aylantirmasdan ko'rinadi
+      '<section class="oy-faol">' +
+        '<div class="bo-lim-bosh"><h2>Faol roomlar</h2><span class="izoh">O\'zi yangilanadi</span></div>' +
+        '<div id="roomlar" aria-live="polite"><div class="skelet" style="height:64px"></div></div>' +
+      '</section>' +
+      '<div class="bo-lim-bosh oy-oyinlar-bosh"><h2>Barcha o\'yinlar</h2></div>' +
+      '<div class="oy-setka" id="oyinlar">' + skeletonCards(4) + '</div>';
     G.focusMain();
 
     scope.on(document.getElementById('qoshilishTugma'), 'click', function () { openJoin(); });
@@ -91,30 +120,39 @@
       });
     });
 
+    var lastList = null;
+    var searches = [];
     var poller = new G.Poller({
       fetch: G.api.lobby,
-      interval: function () { return 10000; },
-      hiddenFactor: 6,
+      interval: function () { return 3000; },   // "jonli" ro'yxat — yangilash tugmasisiz
+      hiddenFactor: 10,
       onError: function () { G.banner("Internet aloqasi uzildi. Qayta ulanmoqda..."); },
       onData: function (res) {
         if (!res.ok) return;
         G.banner(null);
+        searches = res.searches || [];
         document.getElementById('onlaynSon').textContent = res.online;
-        document.getElementById('roomSon').textContent = res.rooms.length;
+        document.getElementById('roomSon').textContent = res.rooms.length + searches.length;
         var mine = document.getElementById('meningRoom');
         mine.innerHTML = res.my_room
           ? '<a class="oy-mening-room" href="#room/' + esc(res.my_room.code) + '">' + ic('play') +
             '<span>Sizning faol roomingiz: <b>' + esc(res.my_room.code) + '</b></span><span class="oy-oq">Qaytish ›</span></a>'
           : '';
-        var box = document.getElementById('roomlar');
-        if (!res.rooms.length) {
-          box.innerHTML = '<div class="oy-bosh">' + ic('users') +
+        var html = searches.map(searchRow).join('') + res.rooms.map(roomRow).join('');
+        if (!html) {
+          html = '<div class="oy-bosh">' + ic('users') +
             '<div><b>Hozircha faol room yo\'q</b><p>Do\'stingiz bilan yangi room yarating yoki random raqib toping.</p></div></div>';
-          return;
         }
-        box.innerHTML = res.rooms.map(roomRow).join('');
+        // Ro'yxat o'zgarmagan bo'lsa qayta chizilmaydi — bosilayotgan tugma yo'qolib qolmaydi
+        if (html === lastList) return;
+        lastList = html;
+        var box = document.getElementById('roomlar');
+        box.innerHTML = html;
         box.querySelectorAll('[data-kod]').forEach(function (b) {
           scope.on(b, 'click', function () { joinCode(b.dataset.kod, b); });
+        });
+        box.querySelectorAll('[data-qidiruv]').forEach(function (b) {
+          scope.on(b, 'click', function () { challenge(searches[Number(b.dataset.qidiruv)], b); });
         });
       },
     });

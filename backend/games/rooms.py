@@ -93,11 +93,17 @@ def _bump(cur, room_id, now, **extra):
     cur.execute(f'UPDATE game_rooms SET {", ".join(sets)} WHERE id = %s', params)
 
 
+PRESENCE_THROTTLE_MS = 20 * 1000
+
+
 def presence_touch(cur, user_id, now):
+    """Onlayn belgisi. Lobby har necha soniyada so'raydi — yozuv faqat 20 s
+    da bir yangilanadi (online_count 60 s oynasini ishlatadi)."""
     cur.execute(
         '''INSERT INTO game_presence (user_id, seen_ms) VALUES (%s, %s)
-           ON CONFLICT (user_id) DO UPDATE SET seen_ms = EXCLUDED.seen_ms''',
-        (user_id, now),
+           ON CONFLICT (user_id) DO UPDATE SET seen_ms = EXCLUDED.seen_ms
+           WHERE game_presence.seen_ms < %s''',
+        (user_id, now, now - PRESENCE_THROTTLE_MS),
     )
 
 
