@@ -24,6 +24,8 @@ from admin_auth import (
     ADMIN_PASSWORD, admin_required, is_admin_telegram, make_admin_token, revoke_all_sessions,
 )
 from db import as_utc, get_connection, iso_utc, to_tashkent, utc_now
+from games import clock
+from games import rooms as game_rooms
 from telegram_auth import validate_init_data
 
 bp = Blueprint('admin_api', __name__, url_prefix='/api/admin')
@@ -503,6 +505,11 @@ def delete_user(user_id):
         cur.execute('DELETE FROM user_progress WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM subject_purchases WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM tokens WHERE user_id = %s', (user_id,))
+        # O'yin ma'lumotlari: avval faol roomlardan to'g'ri chiqariladi (hostlik
+        # boshqaga o'tadi), keyin natijalar reytingda egasiz qolmasligi uchun o'chiriladi
+        game_rooms.leave_all(cur, user_id, clock.now_ms())
+        for table in ('game_room_players', 'game_answers', 'game_results', 'game_queue', 'game_presence'):
+            cur.execute(f'DELETE FROM {table} WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM users WHERE id = %s', (user_id,))
         conn.commit()
         admin_audit.log('delete_user', detail=f'user_id={user_id} name={user["name"]}', ip=_client_ip())
