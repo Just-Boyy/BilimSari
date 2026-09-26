@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>O'yinlar — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/games.css">
+</head>
+<body>
+
+<div class="ustki">
+  <button class="orqaga" type="button" id="orqagaTugma" aria-label="Orqaga">←</button>
+  <h1 id="sarlavha">O'yinlar</h1>
+  <span id="ustkiOng"></span>
+</div>
+<div class="oy-lenta" id="oyLenta" role="status" aria-live="polite" hidden></div>
+
+<main class="sahifa oy-sahifa" id="ekran">
+  <div class="skelet" style="height:52px;margin-bottom:14px"></div>
+  <div class="skelet" style="height:120px;margin-bottom:12px"></div>
+  <div class="skelet" style="height:170px"></div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script src="js/games/core.js?v=1"></script>
+<script src="js/games/hub.js?v=1"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('games.html');
+
+  // Botdagi taklif tugmasi: games.html?kod=AB7K92 → o'sha roomga
+  var kod = (new URLSearchParams(location.search).get('kod') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (kod.length === 6) history.replaceState(null, '', location.pathname + '#room/' + kod);
+
+  Games.render();
+})();
+</script>
+</body>
+</html>

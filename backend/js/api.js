@@ -82,6 +82,7 @@
 
     get: function (yo_l) { return so_rov(yo_l); },
     post: function (yo_l, tana) { return so_rov(yo_l, { method: 'POST', body: tana }); },
+    del: function (yo_l) { return so_rov(yo_l, { method: 'DELETE' }); },
 
     // — Auth —
     /** Ism bilan tezkor hisob — email/parol so'ralmaydi. */

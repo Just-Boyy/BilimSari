@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#58A700">
-<title>O'yin — BilimSari</title>
+<title>Yakka mashq — BilimSari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
 <link rel="stylesheet" href="css/app.css">
@@ -28,8 +28,8 @@
 <body>
 
 <div class="ustki">
-  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
-  <h1>O'yin</h1>
+  <a class="orqaga" href="games.html" aria-label="Orqaga">←</a>
+  <h1>Yakka mashq<small>O'qigan darslaringizdan savollar</small></h1>
   <span class="oyin-hisob" id="hisobBelgi" hidden></span>
 </div>
 
@@ -47,7 +47,7 @@
 <script>
 (async function () {
   if (!(await UI.sessiyaKerak())) return;
-  UI.navChiz('game.html');
+  UI.navChiz('games.html');
 
   var savollar = [];
   var indeks = 0;

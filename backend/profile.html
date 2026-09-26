@@ -56,6 +56,12 @@
     </div>
   </div>
 
+  <!-- O'yinlar statistikasi (Game Hub) — ma'lumot kelgach ko'rinadi -->
+  <section class="bo-lim" id="oyinBolim" hidden>
+    <div class="bo-lim-bosh"><h2>O'yinlar</h2><a class="izoh" href="games.html">O'yinlarga o'tish ›</a></div>
+    <div id="oyinTana"></div>
+  </section>
+
   <section class="bo-lim">
     <h2 style="margin-bottom:12px">Sozlamalar</h2>
 
@@ -122,6 +128,32 @@
     '<div class="stat"><b>' + (s.completed_topics || 0) + '</b><span>Mavzu</span></div>' +
     '<div class="stat"><b>' + (s.percent || 0) + '%</b><span>Progress</span></div>' +
     '<div class="stat"><b>' + (s.finished_subjects || 0) + '</b><span>Tugagan fan</span></div>';
+
+  API.get('/api/games/me').then(function (g) {
+    if (!g.ok) return;
+    var o = g.stats;
+    var tana = document.getElementById('oyinTana');
+    document.getElementById('oyinBolim').hidden = false;
+    if (!o.games) {
+      tana.innerHTML = '<p class="izoh">Hali o\'yin o\'ynamagansiz. Do\'stlaringiz bilan bilim bellashuvida ' +
+        'ball va chaqmoq to\'plang!</p>';
+      return;
+    }
+    var stat = function (b, s) { return '<div class="stat"><b>' + UI.esc(b) + '</b><span>' + UI.esc(s) + '</span></div>'; };
+    var izoh = ['Daraja ' + o.level];
+    if (o.favorite_subjects.length) izoh.push('Sevimli fanlar: ' + o.favorite_subjects.join(', '));
+    if (o.streak) izoh.push('Ketma-ket ' + o.streak + ' kun');
+    tana.innerHTML =
+      '<div class="stat-setka stat-setka-4">' + stat(o.games, "O'yin") + stat(o.wins, "G'alaba") +
+        stat(o.accuracy + '%', 'Aniqlik') + stat(o.xp, 'Ball') + '</div>' +
+      '<p class="izoh" style="margin:10px 0">' + UI.esc(izoh.join(' • ')) + '</p>' +
+      o.subjects.map(function (s) {
+        return '<div class="progress-qator" style="margin-bottom:8px">' +
+          '<span style="min-width:96px;color:var(--matn)">' + UI.esc(s.name) + '</span>' +
+          '<div class="progress" role="img" aria-label="' + UI.esc(s.name) + ': ' + s.accuracy + '% aniqlik"><i style="width:' + s.accuracy + '%"></i></div>' +
+          '<span>' + s.accuracy + '%</span></div>';
+      }).join('');
+  });
 
   // Mehmon hisobi (email ham, Telegram ham yo'q) — chiqish xavfli
   var men = await API.men();

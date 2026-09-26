@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_compress import Compress
 import hashlib
+import html
 import logging
 import os
 
@@ -20,6 +21,9 @@ import study
 import study_api
 from auth_core import SECRET, auth_required, create_token, token_from_request
 from db import add_column_if_missing, get_connection
+from games import api as games_api
+from games import rooms as game_rooms
+from games import schema as game_schema
 
 logging.basicConfig(
     level=os.environ.get('LOG_LEVEL', 'INFO'),
@@ -33,6 +37,7 @@ Compress(app)  # JSON/HTML/CSS/JS javoblarini siqadi — mobil tarmoqda tezroq y
 app.register_blueprint(study_api.bp)
 app.register_blueprint(ai_tutor.bp)
 app.register_blueprint(admin_api.bp)
+app.register_blueprint(games_api.bp)
 
 
 @app.after_request
@@ -127,6 +132,13 @@ def init_db():
         ai_tutor.ensure_cache_table(cur, conn)
     except Exception:
         logger.exception('rate_limit/admin_audit/admin_auth/ai_tutor jadvallari xatosi')
+        conn.rollback()
+
+    # Game Hub (multiplayer o'yinlar) jadvallari
+    try:
+        game_schema.ensure_tables(cur, conn)
+    except Exception:
+        logger.exception("O'yin jadvallari xatosi")
         conn.rollback()
 
     conn.commit()
@@ -329,7 +341,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'leaderboard.html', 'game.html',
+    'profile.html', 'leaderboard.html', 'game.html', 'games.html',
     'admin.html',
 }
 
@@ -394,7 +406,8 @@ def tg_api(method, payload):
 
 
 def send_start_message(chat_id, first_name):
-    name = first_name or 'do‘st'
+    # parse_mode=HTML — ismdagi <, & kabi belgilar xabarni buzmasligi uchun escape
+    name = html.escape(first_name or 'do‘st')
     tg_api('sendMessage', {
         'chat_id': chat_id,
         'text': (
@@ -409,6 +422,29 @@ def send_start_message(chat_id, first_name):
                 {
                     'text': 'Boshlash',
                     'web_app': {'url': WEBAPP_URL},
+                }
+            ]]
+        },
+    })
+
+
+def send_room_invite(chat_id, first_name, code):
+    """Do'st yuborgan taklif havolasi orqali kelganda — roomga to'g'ridan-to'g'ri kirish."""
+    name = html.escape(first_name or 'do‘st')
+    tg_api('sendMessage', {
+        'chat_id': chat_id,
+        'text': (
+            f'Salom, {name}!\n\n'
+            f'Sizni <b>BilimSari</b>da bilim bellashuviga taklif qilishdi.\n'
+            f'Room kodi: <b>{code}</b>\n\n'
+            f'Pastdagi tugma orqali roomga qo‘shiling.'
+        ),
+        'parse_mode': 'HTML',
+        'reply_markup': {
+            'inline_keyboard': [[
+                {
+                    'text': 'Roomga qo‘shilish',
+                    'web_app': {'url': f"{WEBAPP_URL.rstrip('/')}/games.html?kod={code}"},
                 }
             ]]
         },
@@ -472,7 +508,13 @@ def telegram_webhook():
     cmd = text.split()[0].split('@')[0] if text else ''
 
     if cmd in ('/start', '/boshlash'):
-        send_start_message(chat_id, first_name)
+        # Taklif havolasi: t.me/<bot>?start=room_AB7K92 → o'sha roomga kirish tugmasi
+        payload = text.split()[1] if len(text.split()) > 1 else ''
+        room_code = game_rooms.normalize_code(payload[5:]) if payload.lower().startswith('room_') else ''
+        if game_rooms.CODE_RE.match(room_code):
+            send_room_invite(chat_id, first_name, room_code)
+        else:
+            send_start_message(chat_id, first_name)
     elif cmd == '/help':
         send_help_message(chat_id)
     elif text:

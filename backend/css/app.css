@@ -394,6 +394,8 @@ svg { display: block; }
   text-align: center;
 }
 
+.stat-setka-4 { grid-template-columns: repeat(4, 1fr); }
+
 .stat b {
   display: block;
   font-size: 20px;
@@ -1071,6 +1073,42 @@ textarea.kiritish { min-height: 92px; resize: vertical; line-height: 1.5; font-w
   border-top: 1px solid var(--chiziq);
   font-size: 11px;
   color: var(--matn-3);
+}
+
+/* ── Reyting qatori (Reyting sahifasi va O'yinlar) ──────── */
+
+.reyting-qator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--oq);
+  border: 1px solid var(--chiziq);
+  border-radius: var(--r);
+  margin-bottom: 8px;
+}
+.reyting-qator.men {
+  border-color: var(--yashil);
+  background: var(--yashil-fon);
+}
+.reyting-qator .o-rin {
+  width: 28px;
+  flex: 0 0 auto;
+  text-align: center;
+  font-weight: 800;
+  color: var(--matn-3);
+}
+.reyting-qator .o-rin.medal-1 { color: #eab308; }
+.reyting-qator .o-rin.medal-2 { color: #94a3b8; }
+.reyting-qator .o-rin.medal-3 { color: #b45309; }
+.reyting-qator .o-rin svg { width: 22px; height: 22px; margin: 0 auto; }
+.reyting-qator .avatar { width: 36px; height: 36px; font-size: 14px; }
+.reyting-qator .ism { flex: 1; min-width: 0; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mening-o-rnim {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--chiziq);
 }
 
 /* ── Holatlar: yuklanmoqda / bo'sh / xato ───────────────── */
