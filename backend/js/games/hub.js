@@ -1,4 +1,4 @@
-/* BilimSari Game Hub — lobby, o'yin sozlamalari, random raqib qidirish,
+/* BilimSari Game Hub — lobby (jonli roomlar ro'yxati), o'yin yaratish,
    kod orqali qo'shilish va o'yin reytingi. Room ekrani (room.js) va o'yin
    renderlari kerak bo'lgandagina dangasa yuklanadi. */
 (function () {
@@ -25,33 +25,6 @@
       '<span class="oy-pill" aria-label="' + r.players + ' / ' + r.max_players + ' o\'yinchi">' + ic('users') + r.players + '/' + r.max_players + '</span>' +
       '<button class="tugma tugma-mayda" type="button" data-kod="' + esc(r.code) + '">Qo\'shilish</button>' +
     '</div>';
-  }
-
-  /** Random raqib qidirayotgan o'yinchi — bir bosishda u bilan bellashish. */
-  function searchRow(s, i) {
-    return '<div class="oy-room-qator qidiruv">' +
-      '<span class="oy-belgi kichik">' + ic(s.icon) + '</span>' +
-      '<div class="oy-room-matn"><b>' + esc(s.name) + ' raqib qidirmoqda</b>' +
-        '<small>' + esc(s.game_name) + ' • ' + esc(s.subject_name) + ' • ' + esc(s.difficulty_name) + '</small></div>' +
-      '<span class="oy-pill"><i class="oy-nuqta" aria-hidden="true"></i>jonli</span>' +
-      '<button class="tugma tugma-mayda" type="button" data-qidiruv="' + i + '" aria-label="' + esc(s.name) +
-        ' bilan ' + esc(s.game_name) + ' o\'ynash">Bellashish</button>' +
-    '</div>';
-  }
-
-  function challenge(s, btn) {
-    if (!s) return;
-    btn.disabled = true;
-    var settings = { game: s.game, subject: s.subject, topic: s.topic || null, difficulty: s.difficulty, count: s.count };
-    Promise.all([G.catalog(), G.api.mmStart(settings)]).then(function (out) {
-      var cat = out[0], res = out[1];
-      btn.disabled = false;
-      if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
-      if (res.result === 'matched') { G.go('room/' + res.code); return; }
-      // Raqib shu orada boshqa bilan juftlashgan bo'lsa — biz qidiruvda qolamiz
-      G.search = { game: G.gameByKey(cat, s.game), settings: settings, first: res };
-      G.go('izlash');
-    });
   }
 
   G.route('lobby', function (arg, scope) {
@@ -83,7 +56,6 @@
     G.catalog();   // yaratish ekrani tez ochilishi uchun katalog oldindan yuklanadi
 
     var lastList = null;
-    var searches = [];
     var poller = new G.Poller({
       fetch: G.api.lobby,
       interval: function () { return 3000; },   // "jonli" ro'yxat — yangilash tugmasisiz
@@ -92,18 +64,17 @@
       onData: function (res) {
         if (!res.ok) return;
         G.banner(null);
-        searches = res.searches || [];
         document.getElementById('onlaynSon').textContent = res.online;
-        document.getElementById('roomSon').textContent = res.rooms.length + searches.length;
+        document.getElementById('roomSon').textContent = res.rooms.length;
         var mine = document.getElementById('meningRoom');
         mine.innerHTML = res.my_room
           ? '<a class="oy-mening-room" href="#room/' + esc(res.my_room.code) + '">' + ic('play') +
             '<span>Sizning faol roomingiz: <b>' + esc(res.my_room.code) + '</b></span><span class="oy-oq">Qaytish ›</span></a>'
           : '';
-        var html = searches.map(searchRow).join('') + res.rooms.map(roomRow).join('');
+        var html = res.rooms.map(roomRow).join('');
         if (!html) {
           html = '<div class="oy-bosh">' + ic('users') +
-            '<div><b>Hozircha faol room yo\'q</b><p>Do\'stingiz bilan yangi room yarating yoki random raqib toping.</p></div></div>';
+            '<div><b>Hozircha faol room yo\'q</b><p>Room yarating — u shu ro\'yxatda hamma uchun darhol ko\'rinadi.</p></div></div>';
         }
         // Ro'yxat o'zgarmagan bo'lsa qayta chizilmaydi — bosilayotgan tugma yo'qolib qolmaydi
         if (html === lastList) return;
@@ -112,9 +83,6 @@
         box.innerHTML = html;
         box.querySelectorAll('[data-kod]').forEach(function (b) {
           scope.on(b, 'click', function () { joinCode(b.dataset.kod, b); });
-        });
-        box.querySelectorAll('[data-qidiruv]').forEach(function (b) {
-          scope.on(b, 'click', function () { challenge(searches[Number(b.dataset.qidiruv)], b); });
         });
       },
     });
@@ -190,8 +158,6 @@
         G.segment('count', 'Savollar soni', game.counts.map(function (n) { return { value: n, label: n }; }), s.count) + '</div>' +
       '<div class="oy-maydon"><span class="oy-yorliq">O\'yinchilar (room uchun)</span>' +
         G.segment('max_players', "O'yinchilar soni", [2, 4, 8, 16].map(function (n) { return { value: n, label: n }; }), s.max_players) + '</div>' +
-      '<label class="oy-almashtirgich"><input type="checkbox" id="ochiqRoom"' + (s.public ? ' checked' : '') + '>' +
-        '<span><b>Hammaga ochiq room</b><small>Lobbydagi “Faol roomlar” ro\'yxatida ko\'rinadi</small></span></label>' +
       '<p class="izoh" id="davomiylik"></p>';
   };
 
@@ -239,16 +205,13 @@
     var fanSel = root.querySelector('#fanTanlov');
     if (fanSel) scope.on(fanSel, 'change', function () { s.subject = fanSel.value; s.topic = ''; loadTopics(); changed(); });
     scope.on(topicSel, 'change', function () { s.topic = topicSel.value; changed(); });
-    scope.on(root.querySelector('#ochiqRoom'), 'change', function (e) { s.public = e.target.checked; changed(); });
     changed();
     loadTopics();
   };
 
-  G.settingsPayload = function (s, extra) {
-    var p = { game: s.game, subject: s.subject, topic: s.topic || null, difficulty: s.difficulty,
-      count: s.count, max_players: s.max_players, public: s.public };
-    Object.keys(extra || {}).forEach(function (k) { p[k] = extra[k]; });
-    return p;
+  G.settingsPayload = function (s) {
+    return { game: s.game, subject: s.subject, topic: s.topic || null, difficulty: s.difficulty,
+      count: s.count, max_players: s.max_players };
   };
 
   // ───────────────────────── O'yin sozlamalari ─────────────────────────
@@ -281,11 +244,9 @@
           '<p class="izoh oy-tur-qoida" id="oyinQoida"></p>' +
         '</div>' +
         '<form class="oy-forma" id="sozlamaForma" novalidate></form>' +
-        '<div class="oy-tanlov">' +
-          '<button class="tugma" type="button" id="randomTugma">' + ic('shuffle') + '<span>Random raqib</span></button>' +
-          '<button class="tugma tugma-ikkilamchi" type="button" id="yaratTugma">' + ic('plus') + '<span>Room yaratish</span></button>' +
-          '<button class="tugma tugma-ikkilamchi" type="button" id="dostTugma">' + ic('users') + "<span>Do'st bilan o'ynash</span></button>" +
-        '</div>' +
+        '<button class="tugma oy-yaratish-tugma" type="button" id="yaratTugma">' + ic('plus') + '<span>Room yaratish</span></button>' +
+        '<p class="izoh oy-yaratish-izoh">Room “Faol roomlar” ro\'yxatida hamma uchun darhol ko\'rinadi. ' +
+          'Do\'stingizni room ichidagi “Do\'st taklif qilish” tugmasi orqali chaqirasiz.</p>' +
         '<p class="oy-xato" id="sozlamaXato" role="alert"></p>';
       G.focusMain();
 
@@ -305,7 +266,6 @@
           difficulty: saved.difficulty || 'orta',
           count: g.counts.indexOf(saved.count) >= 0 ? saved.count : g.default_count,
           max_players: [2, 4, 8, 16].indexOf(saved.max_players) >= 0 ? saved.max_players : 4,
-          public: saved.public !== false,
         };
         if (formScope) formScope.dispose();
         formScope = new G.Scope();
@@ -321,137 +281,19 @@
       });
       loadGame(game);
 
-      function payload(extra) { return G.settingsPayload(s, extra); }
-
-      function busy(on) {
-        ['randomTugma', 'yaratTugma', 'dostTugma'].forEach(function (id) { document.getElementById(id).disabled = on; });
-      }
-
-      function create(isFriend) {
+      function create() {
+        var btn = document.getElementById('yaratTugma');
         errEl.textContent = '';
-        busy(true);
-        G.api.create(payload(isFriend ? { public: false } : {})).then(function (res) {
+        btn.disabled = true;
+        G.api.create(G.settingsPayload(s)).then(function (res) {
           if (scope.dead) return;
-          busy(false);
+          btn.disabled = false;
           if (!res.ok) { errEl.textContent = res.error; return; }
-          if (isFriend) G.flash = { invite: true };
           G.go('room/' + res.code);
         });
       }
 
-      scope.on(document.getElementById('yaratTugma'), 'click', function () { create(false); });
-      scope.on(document.getElementById('dostTugma'), 'click', function () { create(true); });
-      scope.on(document.getElementById('randomTugma'), 'click', function () {
-        errEl.textContent = '';
-        busy(true);
-        G.api.mmStart(payload()).then(function (res) {
-          if (scope.dead) return;
-          busy(false);
-          if (!res.ok) { errEl.textContent = res.error; return; }
-          G.search = { game: game, settings: payload(), first: res };
-          G.go('izlash');
-        });
-      });
-    });
-  });
-
-  // ───────────────────────── Random raqib qidirish ─────────────────────────
-
-  G.route('izlash', function (arg, scope) {
-    var ctx = G.search;
-    if (!ctx) { G.go('lobby', true); return; }
-    var game = ctx.game;
-    var matched = false;
-
-    function cancelAndGo(hash) {
-      matched = true; // dispose'da qayta bekor qilinmasin
-      G.api.mmCancel().then(function (res) {
-        if (res.ok && res.result === 'matched') { G.go('room/' + res.code, true); return; }
-        G.go(hash);
-      });
-    }
-
-    G.header({ title: 'Raqib qidirish', sub: game.name, back: function () { cancelAndGo('setup/' + game.key); } });
-    var subjectName = (game.subjects.filter(function (x) { return x.key === ctx.settings.subject; })[0] || {}).name || '';
-    var el = G.el();
-    el.innerHTML =
-      '<section class="oy-izlash" role="status" aria-live="polite">' +
-        '<div class="oy-radar" aria-hidden="true"><span></span><span></span><i>' + ic('search') + '</i></div>' +
-        '<h2 data-fokus id="izlashSarlavha">Raqib qidirilmoqda...</h2>' +
-        '<p class="izoh">' + esc(game.name) + ' • ' + esc(subjectName) + ' • ' + esc(G.difficultyName[ctx.settings.difficulty] || '') + '</p>' +
-        '<p class="oy-vaqt" id="izlashVaqt">0:00</p>' +
-        '<p class="izoh" id="izlashHolat">Sizga mos raqib qidiryapmiz</p>' +
-        '<button class="tugma tugma-ikkilamchi tugma-avto" type="button" id="bekorTugma">Bekor qilish</button>' +
-      '</section>';
-    G.focusMain();
-
-    var started = Date.now();
-    scope.interval(function () {
-      var s = Math.floor((Date.now() - started) / 1000);
-      document.getElementById('izlashVaqt').textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
-    }, 1000);
-
-    scope.on(document.getElementById('bekorTugma'), 'click', function () { cancelAndGo('setup/' + game.key); });
-
-    function onMatched(code) {
-      matched = true;
-      document.getElementById('izlashSarlavha').textContent = 'Raqib topildi!';
-      document.getElementById('izlashHolat').textContent = "O'yin boshlanmoqda...";
-      el.querySelector('.oy-izlash').classList.add('topildi');
-      scope.timeout(function () { G.go('room/' + code, true); }, 700);
-    }
-
-    function showTimeout() {
-      matched = true;
-      el.innerHTML = UI.holat({
-        belgi: 'users',
-        sarlavha: 'Hozircha mos raqib topilmadi',
-        matn: "Hozir onlayn o'yinchilar kam. Room yaratib do'stingizni taklif qiling yoki birozdan so'ng qayta urinib ko'ring.",
-      }) +
-      '<div class="tugmalar" style="margin-top:12px">' +
-        '<button class="tugma" type="button" id="qaytaIzla">' + ic('refresh') + '<span>Qayta qidirish</span></button>' +
-        '<button class="tugma tugma-ikkilamchi" type="button" id="roomYarat">' + ic('plus') + '<span>Room yaratish</span></button>' +
-      '</div>';
-      document.getElementById('qaytaIzla').onclick = function () {
-        G.api.mmStart(ctx.settings).then(function (res) {
-          if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
-          G.render();
-        });
-      };
-      document.getElementById('roomYarat').onclick = function () {
-        G.api.create(ctx.settings).then(function (res) {
-          if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
-          G.flash = { invite: true };
-          G.go('room/' + res.code, true);
-        });
-      };
-    }
-
-    function handle(res) {
-      if (!res.ok) { document.getElementById('izlashHolat').textContent = res.error; return true; }
-      if (res.result === 'matched') { onMatched(res.code); return false; }
-      if (res.result === 'timeout') { showTimeout(); return false; }
-      if (res.result === 'idle' || res.result === 'cancelled') { G.go('setup/' + game.key, true); return false; }
-      if (res.relaxed) {
-        document.getElementById('izlashHolat').textContent = 'Qidiruv kengaytirildi: boshqa qiyinlik va mavzular ham';
-      }
-      return true;
-    }
-
-    var poller = new G.Poller({
-      fetch: G.api.mmPoll,
-      interval: function () { return 1500; },
-      hiddenFactor: 2,
-      onError: function () { G.banner('Internet aloqasi uzildi. Qayta ulanmoqda...'); },
-      onData: function (res) { G.banner(null); return handle(res); },
-    });
-    if (ctx.first && handle(ctx.first) === false) return;
-    ctx.first = null;
-    poller.start();
-    scope.add(function () {
-      poller.stop();
-      // Brauzerning "orqaga" tugmasi bilan chiqilsa ham qidiruv bekor bo'ladi
-      if (!matched) G.api.mmCancel();
+      scope.on(document.getElementById('yaratTugma'), 'click', create);
     });
   });
 

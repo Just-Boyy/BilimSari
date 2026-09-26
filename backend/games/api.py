@@ -108,7 +108,6 @@ def lobby_view(cur, conn):
     return {
         'online': rooms.online_count(cur, now),
         'rooms': rooms.public_rooms(cur, now),
-        'searches': matchmaking.open_searches(cur, _uid(), now),
         'my_room': rooms.my_room(cur, _uid()),
     }
 
@@ -120,8 +119,8 @@ def lobby_view(cur, conn):
 @endpoint
 def create_room_view(cur, conn):
     _limit(f'game_create:{_uid()}', 12, 600, "Juda ko'p room yaratildi. Birozdan so'ng urinib ko'ring.")
-    body = _body()
-    code = rooms.create_room(cur, conn, request.user, body, is_public=bool(body.get('public')))
+    # Har bir room avtomatik ochiq — lobbydagi "Faol roomlar"da hamma uchun ko'rinadi
+    code = rooms.create_room(cur, conn, request.user, _body(), is_public=True)
     return {'code': code, 'state': rooms.state(cur, conn, request.user, code)}
 
 

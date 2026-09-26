@@ -217,7 +217,7 @@
           '<div class="oy-kod" aria-label="Room kodi: ' + esc(spelled(code)) + '">' + esc(code) + '</div>' +
           '<div class="oy-kod-tugmalar">' +
             '<button class="tugma tugma-mayda tugma-ikkilamchi" type="button" id="kodNusxa">' + ic('copy') + '<span>Nusxalash</span></button>' +
-            '<button class="tugma tugma-mayda" type="button" id="taklifTugma">' + ic('share') + '<span>Taklif qilish</span></button>' +
+            '<button class="tugma tugma-mayda" type="button" id="taklifTugma">' + ic('share') + "<span>Do'st taklif qilish</span></button>" +
           '</div>' +
         '</section>' +
         '<section class="karta oy-info" id="roomInfo"></section>' +
@@ -229,10 +229,6 @@
       v.on(document.getElementById('kodNusxa'), 'click', function () { G.copy(code); });
       v.on(document.getElementById('taklifTugma'), 'click', openInvite);
       G.focusMain();
-      if (G.flash && G.flash.invite) {
-        G.flash = null;
-        setTimeout(openInvite, 250);
-      }
       ensureRenderer().catch(function () { /* o'yin boshlanganda qayta urinamiz */ });
     }
 
@@ -284,7 +280,6 @@
           chip('target', s.difficulty_name) +
           chip('inbox', s.question_count + (S.game.renderer === 'match' ? ' raund' : ' savol')) +
           chip('clock', '~' + s.minutes + ' daqiqa') +
-          chip(s.is_public ? 'users' : 'lock', s.is_public ? 'Ochiq room' : 'Yopiq room') +
         '</div>');
       var count = document.getElementById('oyinchiSon');
       if (count) count.textContent = S.players.length + ' / ' + s.max_players;
@@ -328,7 +323,7 @@
         var s = {
           game: game.key, subject: S.settings.subject, topic: S.settings.topic || '',
           difficulty: S.settings.difficulty, count: S.settings.question_count,
-          max_players: S.settings.max_players, public: S.settings.is_public,
+          max_players: S.settings.max_players,
         };
         var ms = new G.Scope();
         var m = G.modal(

@@ -185,9 +185,7 @@
 }
 .oy-faol { margin-bottom: 22px; }
 .oy-faol .oy-room-qator:last-child { margin-bottom: 0; }
-.oy-room-qator.qidiruv { border-color: var(--yashil-chegara); background: var(--yashil-fon); }
 .oy-room-matn { flex: 1; min-width: 0; }
-@media (max-width: 419px) { .oy-room-qator.qidiruv .oy-pill { display: none; } }
 .oy-room-matn b { display: block; font-size: 14px; }
 .oy-room-matn small { display: block; color: var(--matn-2); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -242,49 +240,8 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, .1), inset 0 0 0 2px var(--yashil);
 }
 
-.oy-almashtirgich {
-  display: flex; gap: 12px; align-items: center;
-  padding: 12px 14px;
-  background: var(--oq);
-  border: 1px solid var(--chiziq);
-  border-radius: var(--r);
-  cursor: pointer;
-}
-.oy-almashtirgich input { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
-.oy-almashtirgich b { display: block; font-size: 14px; }
-.oy-almashtirgich small { display: block; color: var(--matn-2); font-size: 12px; }
-
-.oy-tanlov { display: grid; gap: 10px; margin-top: 18px; }
-
-/* ── Raqib qidirish ───────────────────────────────────── */
-.oy-izlash { text-align: center; padding: 26px 8px 8px; }
-.oy-izlash h2 { font-size: 20px; margin-top: 18px; }
-.oy-izlash .izoh { margin: 6px 0; }
-.oy-vaqt { font-family: var(--sarlavha); font-size: 30px; font-weight: 800; color: var(--yashil-quyuq); margin: 6px 0; }
-.oy-izlash .tugma { margin-top: 14px; }
-.oy-radar { position: relative; width: 132px; height: 132px; margin: 0 auto; }
-.oy-radar span {
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  border: 3px solid var(--yashil);
-  opacity: 0;
-  animation: oyRadar 2.2s ease-out infinite;
-}
-.oy-radar span:nth-child(2) { animation-delay: 1.1s; }
-.oy-radar i {
-  position: absolute; inset: 30px;
-  border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--yashil); color: #fff;
-  box-shadow: 0 4px 0 var(--yashil-quyuq);
-}
-.oy-radar i svg { width: 34px; height: 34px; }
-@keyframes oyRadar {
-  0% { transform: scale(.45); opacity: .9; }
-  100% { transform: scale(1); opacity: 0; }
-}
-.oy-izlash.topildi .oy-radar span { animation: none; }
-.oy-izlash.topildi .oy-radar i { background: var(--sariq); box-shadow: 0 4px 0 #a16207; }
+.oy-yaratish-tugma { margin-top: 18px; }
+.oy-yaratish-izoh { text-align: center; margin: 10px 4px 0; }
 
 /* ── Modal (mobilda pastdan chiqadi) ──────────────────── */
 .oy-modal-fon {
@@ -612,7 +569,6 @@
 /* ── Kengroq ekranlar ──────────────────────────────────── */
 @media (min-width: 560px) {
   .oy-turlar { grid-template-columns: 1fr 1fr 1fr; }
-  .oy-tanlov { grid-template-columns: 1fr 1fr 1fr; }
   .oy-match { grid-template-columns: 1fr 1fr; }
   .oy-match-ustun.javoblar { padding-top: 0; border-top: none; border-left: 2px dashed var(--chiziq); padding-left: 12px; }
   .oy-natija-stat { grid-template-columns: repeat(6, 1fr); }
@@ -621,7 +577,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .oy-nuqta, .oy-radar span, .oy-countdown-son.pop, .oy-modal, .oy-modal-fon { animation: none !important; }
-  .oy-radar span { opacity: .35; transform: scale(.8); }
+  .oy-nuqta, .oy-countdown-son.pop, .oy-modal, .oy-modal-fon { animation: none !important; }
   .oy-taymer-chiziq i { transition: none; }
 }
