@@ -12017,6 +12017,816 @@ SUBJECTS = [
                         }
                     ]
                 }
+            },
+            {
+                'slug': 'masofadan-turib-zondualash-va-suniy-yoldosh-tasvirlari',
+                'title': "Masofadan turib zondualash va sun'iy yo'ldosh tasvirlarini raqamli tahlil qilish",
+                'summary': "Sun'iy yo'ldoshlar va aerofotosuratlar orqali Yerni masofadan tadqiq qilish, spektral indekslar (NDVI, NDWI) va spektral kanallar bilan ishlash asoslari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Nazariy Asoslar',
+                        'body': "Masofadan turib zondualash (MTZ) — bu Yer sathi haqida jismoniy kontaktga kirishmasdan, elektromagnit nurlanishni qayd etuvchi datchiklar (sensorlar) yordamida axborot olish texnologiyasidir. Tasvirlar ko'rinadigan, infraqizil va radiolokatsion spektr diapazonlarida olinadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "O'simlik qatlamini baholash (NDVI)",
+                        'body': "Normallashtirilgan farqli o'simlik indeksi (NDVI) formulasi: NDVI = (NIR - RED) / (NIR + RED). Bu yerda NIR — yaqin infraqizil kanal, RED — qizil kanal. Qiymat -1 dan +1 gacha o'zgaradi va o'simliklarning xlorofill miqdorini aniq ko'rsatadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Sun'iy yo'ldosh tasvirini qayta ishlash bosqichlari",
+                        'items': [
+                            "Radiometrik va atmosferaviy korreksiyalash (xatoliklarni yo'qotish)",
+                            'Spektral kanallarni kombinatsiya qilish (masalan, RGB = 4-3-2)',
+                            'Vegetatsiya va suv indekslarini hisoblash (NDVI, NDWI)',
+                            'Nazoratli va nazoratsiz klassifikatsiya orqali yer fondi xaritasini tuzish'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Landsat va Sentinel yo'ldosh ma'lumotlari ochiq manba bo'lib, ekologik monitoring va qishloq xo'jaligida eng keng qo'llaniladigan ma'lumotlar bazasidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'NDVI indeksini hisoblashda qaysi spektral diapazonlardan foydalaniladi?',
+                        'options': [
+                            'Ultrabinafsha va rentgen',
+                            'Yaqin infraqizil va qizil',
+                            'Radiotolqin va mikrotolqin',
+                            "Yashil va ko'k"
+                        ],
+                        'answer': 1,
+                        'explain': 'NDVI formulasi yaqin infraqizil (NIR) va qizil (RED) spektral diapazonlaridagi qaytish darajasiga asoslanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "NDVI qiymati +0.8 bo me'yorda bo'lsa, bu hududda zich va sog'lom o'simlik qatlami mavjudligini bildiradi.",
+                        'answer': True,
+                        'explain': "Yuqori musbat qiymatlar (0.6 - 0.8) quyuq o'rmonlar va sog'lom biomassani ko'rsatadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Sentinel-2 yo'ldoshi qaysi tashkilotga tegishli?",
+                        'options': [
+                            'NASA',
+                            'Yevropa Kosmik Agentligi (ESA)',
+                            'JAXA',
+                            'Roskosmos'
+                        ],
+                        'answer': 1,
+                        'explain': 'Sentinel dasturi Yevropa Kosmik Agentligi (ESA) tomonidan amalga oshiriladi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Masofadan turib zondualash indekslari bo'yicha masalalarni yeching va tahlil qiling.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agar hududda NIR qaytishi = 0.5, RED qaytishi = 0.1 bo'lsa, NDVI qiymatini hisoblang.",
+                            'answer': '0.67',
+                            'hint': '(0.5 - 0.1) / (0.5 + 0.1) formuladan foydalaning.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Orol dengizining qurigan tubini monitoring qilishda MTZ texnologiyalarining afzalliklarini tushuntirib bering.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'fazoviy-ekonometrika-va-geografik-statistik-tahlil',
+                'title': 'Fazoviy ekonometrika va geografik statistik tahlil',
+                'summary': "Geografik ma'lumotlarda fazoviy avtokorrelatsiya, Moran I indeksi va fazoviy regresion modellar orqali ijtimoiy-iqtisodiy hodisalarni modellashtirish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Toblerning Birinchi Qonuni',
+                        'body': "Geografiyaning birinchi qonuniga ko'ra (Tobler): 'Hamma narsa hamma narsa bilan bog'liq, ammo yaqinroq narsalar uzoqroq narsalarga qaraganda ko'proq bog'langan'. Fazoviy ekonometrika ma'lumotlarning fazoviy joylashuviga bog'liqligini statistik baholaydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Moran I Koeffitsienti',
+                        'body': "Moran I indeksi fazoviy klasterlanishni o'lchaydi. Agar I > 0 bo'lsa — musbat fazoviy avtokorrelatsiya (o'xshash qiymatlar yonma-yon), I < 0 bo'lsa — manfiy (shaxmat taxtasi tartibi), I = 0 bo me'yorda tasodifiy taqsimot."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Fazoviy regresion tahlil bosqichlari',
+                        'items': [
+                            "Hududlar bo'yicha ma'lumotlar va matritsani shakllantirish (Spatial Weight Matrix W)",
+                            "Moran I indeksi yordamida fazoviy bog'liqlikni tekshirish",
+                            "Oddiy kichik kvadratlar usuli (OLS) o'rniga Spatial Lag yoki Spatial Error modellarini tanlash",
+                            'Natijalarni parametrik baholash va geofazoviy interpretatsiya qilish'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Fazoviy o'zgaruvchilarni oddiy statistik usullarda tahlil qilish xatoliklarga olib keladi, chunki standart regresiyada kuzatuvlarning mustaqilligi gipotezasi buziladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Toblerning geografiya bo'yicha birinchi qonuni mazmuni nimadan iborat?",
+                        'options': [
+                            'Barcha hududlar bir xil rivojlanadi',
+                            "Yaqin joylashgan ob'ektlar uzoqdagilarga nisbatan o'zaro ko'proq bog'liq",
+                            "Aholi zichligi har doim tekislikda yuqori bo'ladi",
+                            'Iqtisodiy resurslar faqat markazda toplanadi'
+                        ],
+                        'answer': 1,
+                        'explain': "Tobler qonuni bo'yicha masofa yaqinligi bog'liqlik kuchini oshiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Moran I koeffitsienti -1 ga teng bo'lsa, bu mukammal musbat fazoviy klasterlanishni anglatadi.",
+                        'answer': False,
+                        'explain': 'Moran I = +1 musbat klasterlanishni, -1 esa manfiy (tarqoq) avtokorrelatsiyani bildiradi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Fazoviy og'irlik matritsasi (W) nimani belgilaydi?",
+                        'options': [
+                            'Hududlarning umumiy maydonini',
+                            "Geografik ob'ektlar o'rtasidagi qo'shnichilik va masofaviy aloqalarni",
+                            "Aholi sonining ko'payish sur'atini",
+                            'Xaritaning masshtab darajasini'
+                        ],
+                        'answer': 1,
+                        'explain': "W matritsasi hududlarning bir-biriga geometrik qo'shnichiligi yoki masofasini raqamlashtiradi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Fazoviy avtokorrelatsiya tushunchasini amaliy misollarda ko'rib chiqing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O'zbekiston viloyatlari bo'yicha ishsizlik darajasi klasterlangan bo'lsa, Moran I indeksi ishorasi qanday bo'ladi?",
+                            'answer': 'Musbat',
+                            'hint': "Bir xil qiymatli viloyatlar yonma-yon joylashganda musbat avtokorrelatsiya hosil bo'ladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun ko'chmas muloqot narxlarini baholashda fazoviy ekonometrika modellaridan foydalanish shart?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'mikroklimatologiya-va-topoklimatologik-modellashtirish',
+                'title': 'Mikroklimatologiya va topoklimatologik modellashtirish',
+                'summary': "Kichik maydonlar, shahar binolari, relyef yonbag'irlari va mikro-ekotizimlardagi issiqlik hamda namlik balansi modellarini o'rganish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Mikroklimat Tushunchasi',
+                        'body': "Mikroklimatologiya — Yer sirtining kichik qismlarida (bir necha metrdan bir necha kilometrgacha) atmosferaning quyi qatlami va sirt o'rtasidagi energiya hamda moddalar almashinuvini o'rganadi. Relyef shakllari, ekspozitsiya va shahar infratuzilmasi bunga kuchli ta'sir qiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Shahar issiqlik oroli (Urban Heat Island - UHI)',
+                        'body': "Shaharlardagi asfalt va beton qoplamalar radiatsiyani yutadi va kechasi issiqlik chiqaradi. Natijada shahar markazi atrofdagi qishloq hududlariga qaraganda 2-6 °C issiqroq bo'ladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Topoklimatologik model tuzish bosqichlari',
+                        'items': [
+                            'Relyefning raqamli modelini (DEM) olish va ekspozitsiyani (nisbatan qiyaligini) aniqlash',
+                            'Quyosh insolyatsiyasi hisobini modellashtirish (Solar Radiation Tool)',
+                            "Shamol tezligi va yo'nalishining micro-aerodinamik tahlili",
+                            'Sirt harorati va namlik taqsimoti xaritasini shakllantirish'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Shimaliy yarimsharda janubiy yonbag'irlar har doim shimoliy yonbag'irlarga qaraganda ko'proq quyosh radiatsiyasini oladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Shahar issiqlik oroli (UHI) effektining asosiy sababi nima?',
+                        'options': [
+                            "Ozon teshiklarining ko'payishi",
+                            "Sanoat va qurilish materiallarining issiqlik yutuvchanligi va sun'iy energiya ajralishi",
+                            'Daryolar oqimining kamayishi',
+                            'Atmosfera bosimining keskin oshishi'
+                        ],
+                        'answer': 1,
+                        'explain': "Beton, asfalt va sun'iy issiqlik manbalari shaharlarda haroratni oshiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Inversiya hodisasida balandlikka ko'tarilgan sari harorat pasaymasdan, aksincha ko'tariladi.",
+                        'answer': True,
+                        'explain': "Harorat inversiyasida sovuq havo vodiy tubida to'planib, yuqorida issiqroq havo qatlami joylashadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi yonbag'ir ekspozitsiyasi Shimoliy yarimsharda eng yuqori quyosh radiatsiyasini qabul qiladi?",
+                        'options': [
+                            'Shimoliy',
+                            'Sharqiy',
+                            'Janubiy',
+                            "G'arbiy"
+                        ],
+                        'answer': 2,
+                        'explain': "Shimoliy yarimsharda quyosh asosan janub tomondan tushgani uchun janubiy qiyaliklar ko'proq isıydi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mikroklimatologik omillarni tahlil qilish bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Tog' vodiylarida kechasi tog'dan vodiyga qarab esadigan shamol qanday nomlanadi?",
+                            'answer': "Tog'-vodiy shamoli",
+                            'hint': "Kechasi tog' yonbag'irlari tezroq soviydi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Toshkent shahri mikroklimatini yaxshilash va issiqlik oroli effektini kamaytirish uchun qanday landshaft-rejalashtirish choralari ko'rilishi kerak?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'gidrologik-modellashtirish-va-daryo-havzalari',
+                'title': 'Gidrologik modellashtirish va daryo havzalarini kompleks boshqarish',
+                'summary': 'Suv balansini tenglamalar yordamida modellashtirish, SWAT va HEC-RAS tizimlarida suv oqimi hamda toshqinlarni bashorat qilish.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Gidrologik Modellashtirish',
+                        'body': "Gidrologik modellashtirish — daryo havzalaridagi yog'in-sochin, bug'lanish, sizot suvlari va yuza oqimlarining harakatini matematik formulalar yordamida simulyatsiya qilishdir. Bu toshqinlar va suv tanqisligini oldindan ko'rish imkonini beradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Suv balansi tenglamasi',
+                        'body': "Daryo havzasi uchun suv balansi: P = ET + Q + dS. Bu yerda P — yog'in, ET — evapotranspiratsiya (bug'lanish), Q — daryo oqimi, dS — suv zaxiralarining o'zgarishi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "SWAT (Soil and Water Assessment Tool) modelini qo'llash",
+                        'items': [
+                            'Havzaning raqamli balandlik modelini (DEM) kiritish va gidro-tarmoqni shakllantirish',
+                            'Tuproq va yerga ishlov berish xaritalarini integratsiya qilish',
+                            "Meteorologik va gidrometric ma'lumotlarni kiritish (harorat, yog'in, oqim)",
+                            'Modelni kalibrovka qilish va oqim rejimini prognozlash'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Markaziy Osiyo daryolari (Amudaryo, Sirdaryo) asosan muzlik-qor to'yinish rejimiga ega bo'lgani uchun harorat o'zgarishiga va global isishga o'ta ta'sirchandir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Suv balansi tenglamasida 'ET' belgisi nimani anglatadi?",
+                        'options': [
+                            'Yer osti suvlari sathi',
+                            "Evapotranspiratsiya (umumiy bug'lanish)",
+                            'Muzliklarning erish hajmi',
+                            "Daryoning gidravlik ko'rsatkichi"
+                        ],
+                        'answer': 1,
+                        'explain': "ET — o'simliklar transpiratsiyasi va tuproq yuzasidan sodir bo'ladigan bug'lanish yig'indisidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Gidrograf — bu daryo oqim sarfining vaqt bo'yicha o'zgarishini ko'rsatadigan grafik.",
+                        'answer': True,
+                        'explain': 'Gidrograf yordamida toshqin piki va suv sarfi vaqt davomida tahlil qilinadi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Daryo havzasida o'rmonlar maydonining qisqarishi yuza oqimiga qanday ta'sir qiladi?",
+                        'options': [
+                            'Yuza oqimini kamaytiradi',
+                            "Yuza oqimini oshiradi va toshqin xavfini ko'paytiradi",
+                            "Hech qanday ta'sir qilmaydi",
+                            "Faqat muzliklar erishini to'xtatadi"
+                        ],
+                        'answer': 1,
+                        'explain': "Daraxtlar suvni tutib qoladi (infiltratsiya); ularning yo'qolishi yuza oqimini keskin oshiradi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Daryo havzasi gidrologiyasiga oid masalalarni yeching.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Yillik yog'in P = 800 mm, bug'lanish ET = 500 mm bo'lsa, daryo oqimi Q (mm da) qanchaga teng bo'ladi (dS = 0 bo'lganda)?",
+                            'answer': '300 mm',
+                            'hint': 'Q = P - ET tenglamasidan foydalaning.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Amudaryo va Sirdaryo havzasida transchegaraviy suv resurslarini kompleks boshqarishdagi muammolar va echimlar haqida fikr bildiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'okean-va-atmosfera-ozaro-tasiri-dinamikasi',
+                'title': "Okean va atmosfera o'zaro ta'siri dinamikasi: El-Ninyo va global sirkulyatsiya",
+                'summary': "Tinch okeanidagi ENSO (El-Ninyo / Janubiy tebranish) sikllari, Shimoliy Atlantika tebranishi (NAO) va ularning planetar iqlimga ta'siri.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Okean-Atmosfera Tizimi',
+                        'body': "Okean va atmosfera yagona gigant issiqlik dvigatelini hosil qiladi. Dunyo okeani issiqlikni saqlash va qayta taqsimlashda asosiy rol o'ynaydi. Ularning o'zaro ta'siridagi tebranishlar global ob-havo anomaliyalariga olib keladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'ENSO (El Niño-Southern Oscillation) Fenomeni',
+                        'body': "El-Ninyo faol fazasida Tinch okeanining ekvatorial g'arbiy qismidagi issiq suvlar sharqqa — Janubiy Amerika qirg'oqlariga suriladi. Bu Passat shamollarining susayishiga, Peru qirg'oqlarida kuchli yomg'irlarga, Avstraliyada esa qurg'oqchilikka sabab bo'ladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'El-Ninyo va La-Ninya sikli rivojlanishi',
+                        'items': [
+                            "Normal holat: Passatlar issiq suvni g'arbga tayyorlaydi, Peru oqimi apvellingni ta'minlaydi",
+                            "El-Ninyo: Passatlar susayadi, issiq suv sharqqa siljiydi, apvelling to'xtaydi",
+                            'La-Ninya: Passatlar favqulodda kuchayadi, Tinch okeani sharqiy qismi odatdagidan ham soviydi',
+                            "Global telekonneksiya: Atmosfera sirkulyatsiyasining o'zgarishi butun dunyo bo me'yoriy iqlimiga ta'sir qiladi"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Apvelling — okean tubidagi sovuq va ozuqa moddalarga boy suvlarning yuzaga ko'tarilishi jarayonidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "El-Ninyo hodisasi paytida Tinch okeanining sharqiy qismida (Janubiy Amerika qirg'oqlarida) nima kuzatiladi?",
+                        'options': [
+                            "Suv haroratining ko'tarilishi va kuchli yog'ingarchilik",
+                            "Kuchli qurg'oqchilik va suvning sovishi",
+                            "Muzliklarning hosil bo'lishi",
+                            'Tsunami tosqinlari'
+                        ],
+                        'answer': 0,
+                        'explain': "El-Ninyo paytida issiq suvlar sharqqa surilib, suv harorati ko'tariladi va yomg'irlar ko'payadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "La-Ninya hodisasi — bu El-Ninyoning qarama-qarshi fazasi bo'lib, Tinch okeani ekvatorial suvlarining keskin sovishi bilan tavsiflanadi.",
+                        'answer': True,
+                        'explain': "La-Ninya vaqtida sharqiy Tinch okeani harorati me'yordan past bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "El-Ninyo paytida Peru qirg'oqlarida baliqchilik sanoatining inqirozga uchrashiga asosiy sabab nima?",
+                        'options': [
+                            'Suvning muzlab qolishi',
+                            "Apvelling jarayonining to'xtashi va ozuqaviy moddalar kamayishi",
+                            'Kema qatnovining taqiqlanishi',
+                            'Tuzlilik darajasining 10 barobar ortishi'
+                        ],
+                        'answer': 1,
+                        'explain': 'Issiq suv qatlami sovuq va ozuqador tub suvlarining yuqoriga chiqishiga (apvelling) toqqinlik qiladi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Okean-atmosfera tebranishlarining amaliy ta'sirini o'rganing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Tinch okeanidagi passat shamollari El-Ninyo vaqtida kuchayadimi yoki susayadimi?',
+                            'answer': 'Susayadi',
+                            'hint': 'Passatlarning susayishi issiq suvning sharqqa siljishiga imkon beradi.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tinch okeanidagi ENSO tebranishlari O'zbekiston iqlimi va bahorgi yog'ingarchilik darajasiga qanday ta'sir ko'rsatishi mumkinligini izohlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'izotopli-gidrologiya-va-izotopik-geoxronologiya',
+                'title': 'Izotopli gidrologiya va izotopik geoxronologiya',
+                'summary': 'Barqaror (O-18, H-2) va radioaktiv (C-14, H-3) izotoplar yordamida suv yoshini, muzliklar tarixini va paleoiqlimni aniqlash usullari.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Izotoplar Geografiyasi',
+                        'body': "Izotopli gidrologiya atom darajasida suvlarning kelib chiqishi, aylanish vaqti va yoshini aniqlashga imkon beradi. Suv molekulasidagi kislorod (18O/16O) va vodorod (2H/1H) izotoplari nisbati iqlimiy sharoitlarning 'barmoq izi' hisoblanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Muzlik yadrolari (Ice Cores) tahlili',
+                        'body': "Grenlandiya va Antarktida muzliklaridan olingan chukur namunalardagi 18O izotopi miqdori o'tmishdagi haroratni ko'rsatadi: 18O qancha kam bo'lsa, o'sha davrda iqlim shunchalik sovuq (muzlik davri) bo'lgan."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Radiuglerodli va tritiumli sanalash metodologiyasi',
+                        'items': [
+                            'Yer osti suvlari yoki namunalardan suv tarkibidagi uglerod yoki tritiyni ajratib olish',
+                            "Akselerator mass-spektrometriyasi (AMS) yordamida 14C / 12C nisbatini o'lchash",
+                            "Yarim yemirilish davri (14C uchun 5730 yil) asosida ob'ektning absolut yoshini hisoblash",
+                            'Gidrogeologik modelda suvning qayta tiklanish tezligini aniqlash'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Reaktiv bo'lmagan izotoplar (barbarar izotoplar) vaqt o'tishi bilan yemirilmaydi, u faqat faza o'zgarishlarida (fraktsiyalanish) o'zgaradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Uglerod-14 (14C) izotopining yarim yemirilish davri taxminan necha yilga teng?',
+                        'options': [
+                            '100 yil',
+                            '1000 yil',
+                            '5730 yil',
+                            '4.5 milliard yil'
+                        ],
+                        'answer': 2,
+                        'explain': '14C radiokarboniy usulda moddalar yoshini aniqlashda 5730 yillik yarim yemirilish davriga tayaniladi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Muzlik namunalarida 18O/16O nisbatining pasayishi iqlimning globallashgan isish davriga to'g'ri keladi.",
+                        'answer': False,
+                        'explain': "Aksincha, sovuq (muzlik) davrlarida eng yengil 16O bug'lanib muzliklarga to'planadi, muzda 18O nisbati kamayadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Gidrologiyada yer osti suvlarining 'yoshi' deb nimaga aytiladi?",
+                        'options': [
+                            "Suv molekulasining hosil bo'lgan vaqtiga",
+                            "Yog'in suvi yerga tushib, g'ovaklarga singib kirganidan beri o'tgan vaqtga",
+                            'Daryoga quyilgan vaqtiga',
+                            "Suvning bug'lanib ketgan vaqtiga"
+                        ],
+                        'answer': 1,
+                        'explain': "Suv yoshi — bu atmosfera yog'inining subterranean (yer osti) gidrosferasiga kirgan vaqtidan boshlab o'tgan davr."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Izotopik metodologiyaga oid amaliy bilimlarni sinang.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O'ta qadimiy fosillashgan yer osti suvlarini (100 000 yildan ortiq) analiz qilishda 14C ishlaydimi?",
+                            'answer': "Yo'q",
+                            'hint': '14C yordamida maksimal 50 000 - 60 000 yillik namunalar aniqlanadi.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbekistonning tog'li hududlarida muzliklarning erish manbalarini aniqlashda stable isotope (barqaror izotop) tahlilining o'rnini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'muhandislik-geomorfologiyasi-va-geoekologik-xatarlar',
+                'title': 'Muhandislik geomorfologiyasi va geoekologik xatarlar riski',
+                'summary': "Ko'chki, sel, eroziya va texnogen ta'sirlar oqibatida relyefning o'zgarishi hamda geologik xatarlarni baholash xaritalarini tuzish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Muhandislik Geomorfologiyasi',
+                        'body': "Muhandislik geomorfologiyasi endogen va ekzogen jarayonlarning muhandislik inshootlari (yo'llar, binolar, suv omborlari) bilan o'zaro ta'sirini va ularning barqarorligini o'rganadi. Bunga yer ko'chkilari, sel hodisalari va karstdan kelib chiqadigan xatarlar kiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Yonbag'ir barqarorligi koeffitsienti (Factor of Safety - FoS)",
+                        'body': "FoS = Resisting Forces (Ushlab turuvchi kuchlar) / Driving Forces (Suruvchi kuchlar). Agar FoS < 1.0 bo'lsa, yonbag'irda muqarrar ko'chki sodir bo'ladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Geografik Xatarlar Riski (Hazard Assessment) bosqichlari',
+                        'items': [
+                            "Relyef qiyalik bucaqlarini (Slope angle) va tog' jinslari tarkibini aniqlash",
+                            'Seysmik va gidrologik omillarni qatlamli tahlil qilish (GIS da overlay)',
+                            'Xatar zonalari va zaiflik (Vulnerability) darajasini hisoblash',
+                            'Geo-risk xaritasini shakllantirish va muhandislik-himoya choralarini ishlab chiqish'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: O'zbekistonning Farg'ona vodiysi va Bo'stonliq tumanlarida bahoriy intensiv yog'ingarchiliklar tufayli sel va ko me'yoriy ko'chkilar havfi o'ta yuqori bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Yonbag'ir barqarorlik koeffitsienti (FoS) 0.8 ga teng bo'lsa, bu nimani bildiradi?",
+                        'options': [
+                            "Yonbag'ir mutlaqo xavfsiz va barqaror",
+                            "Yonbag'ir beqaror va ko'chki sodir bo'lish xavfi bor",
+                            'U yerda seysmik faollik nolga teng',
+                            "Yonbag'irda karst g'orlari hosil bo'lgan"
+                        ],
+                        'answer': 1,
+                        'explain': "FoS < 1 bo'lganda suruvchi kuchlar ushlab turuvchi kuchlardan ustun keladi, bu ko'chki keltirib chiqaradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Deflyatsiya — bu oqar suvlarning yer yuzasini yemirishi jarayonidir.',
+                        'answer': False,
+                        'explain': "Deflyatsiya — bu shamol ta'sirida yumshoq jinslarning urilib yo'qotilishi va uchirilishi jarayonidir (oqar suv eroziyasi emas)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Karst jarayonlari asosan qaysi tog' jinslarining suvda erishidan hosil bo'ladi?",
+                        'options': [
+                            'Granit va bazalt',
+                            'Ohatstosh va gips',
+                            'Qumtosh va slanets',
+                            'Gley va torf'
+                        ],
+                        'answer': 1,
+                        'explain': 'Karst oklash va gips kabi eruvchan karbonatli hamda sulfatli jinslarda yuzaga keladi.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Muhandislik geomorfologiyasiga doir amaliy topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agarda ushlab turuvchi kuch 150 kN va suruvchi kuch 100 kN bo'lsa, FoS qiymati nechaga teng?",
+                            'answer': '1.5',
+                            'hint': 'FoS = 150 / 100 natijasini hisoblang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tog'li hududlarda avtomobil yo'llari qurishda sel va ko'chkilardan saqlanish uchun qo'llaniladigan asosiy muhandislik-geografik usullarni sanang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'shaharlar-fazoviy-strukturasi-va-urbanistika',
+                'title': 'Shaharlar fazoviy strukturasi va urbanistik rejalashtirish modellari',
+                'summary': 'Burgess, Hoyt, Harris-Ullman modellari, fraktal urbanizm va aqlli shaharlarning (Smart Cities) fazoviy-funktsional tahlili.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Urbanistik Modellar',
+                        'body': "Urbanizatsiya nafaqat aholining shaharlarga ko'chishi, balki murakkab fazoviy va funktsional tizimlarning shakllanishidir. Shaharlarning rivojlanishini tushuntirish uchun klassik va zamonaviy fazoviy modellar qo'llaniladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Burgess va Hoyt Modellari',
+                        'body': "Burgess modeli shaharni markaziy biznes tumani (CBD) atrofidagi konsentrik halqalar ko'rinishida tasvirlaydi. Hoyt sektorial modelida esa shahar transport va temir yo'l koridorlari bo'ylab sektorlar shaklida kengayadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Ko'p markazli (Harris-Ullman) va zamonaviy Smart City modellari",
+                        'items': [
+                            "Yagona markaz o'rniga bir nechta ixtisoslashgan sub-markazlarning (Polycenric) rivojlanishi",
+                            'Sanoat, turar joy va tijorat zonalarining tugunli integratsiyasi',
+                            'IoT (Asyolar interneti) va geoinformatsion tizimlar orqali shahar transportini boshqarish',
+                            'Kompakt va ekologik barqaror urbanistik muhit tuzish'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: CBD (Central Business District) — shaharning moliyaviy, ma'muriy va ishchi quvvati eng yuqori bo'lgan markaziy qismidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Burgess modeli bo'yicha shahar qanday geometrik shakllarda rivojlanadi?",
+                        'options': [
+                            "To'rtburchaklar shaklida",
+                            "Konsentrik doiralar (halqalar) ko'rinishida",
+                            "Uchburchak sektorlar ko'rinishida",
+                            "Tartibsiz chiziqli ko'rinishda"
+                        ],
+                        'answer': 1,
+                        'explain': "Burgessning 'Konsentrik zonalar modeli' markazdan atrofga halqasimon kengayishni gipoteza qiladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Harris va Ullman modeli shaharning faqat bitta markazdan iborat bo'lishini ta'kidlaydi.",
+                        'answer': False,
+                        'explain': "Harris va Ullman modeli ko'p markazli (Multiple Nuclei) model deb atalib, bir nechta sub-markazlarni ko'zda tutadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Gentrifikatsiya' jarayoni nimani anglatadi?",
+                        'options': [
+                            "Shahardan qishloqqa aholi ko'chishi",
+                            "Eski va eskirgan shahar tumanlarining qayta ta'mirlanib, boyroq qatlamlar tomonidan egallanishi",
+                            'Sanoat korxonalarining shahar tashqarisiga chiqarilishi',
+                            'Shahar maydonining kamayishi'
+                        ],
+                        'answer': 1,
+                        'explain': 'Gentrifikatsiya — shahar hududlarini modernizatsiya qilish va ijtimoiy-iqtisodiy maqomini oshirish jarayoni.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Urbanistika va shahar tuzilishi modellariga oid vazifalar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Shahar markazida joylashgan va moliyaviy muassasalar to'plangan zona qisqartmasi nima?",
+                            'answer': 'CBD',
+                            'hint': 'Central Business District iborasining bosh harflari.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Toshkent aglomeratsiyasining fazoviy o'sish modelini (yagona markazli yoki ko'p markazli) tahlil qiling va 'Yangi Toshkent' loyihasi unga qanday ta'sir qilishini baholang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'geoiqtisodiyot-va-global-qiymat-zanjirlari',
+                'title': 'Geoiqtisodiyot va global qiymat zanjirlari geografiyasi',
+                'summary': 'Global ishlab chiqarish tarmoqlari, xalqaro mehnat taqsimotining fazoviy transformatsiyasi va geoiqtisodiy qutblanish.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Geoiqtisodiy Kontseptsiya',
+                        'body': "Geoiqtisodiyot — bu davlatlar va transmilliydan ustun bo'lgan kompaniyalarning iqtisodiy kuch va resurslar uchun global fazodagi raqobatini o'rganuvchi fan. U an'anaviy geosiyosatning harbiy unsurlarini iqtisodiy vositalar (savdo, texnologiya, sanksiyalar) bilan almashtiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Global qiymat zanjirlari (Global Value Chains - GVC)',
+                        'body': "Aysfon (iPhone) dizayni va dasturiy ta'minoti AQShda yaratiladi, yarim o'tkazgichlar Tayvanda va Janubiy Koreyada ishlab chiqariladi, yig'ish Xitoyda amalga oshiriladi va mahsulot butun dunyoga sotiladi. Bu GVC ning fazoviy fragmentatsiyasidir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Iqtisodiyotning Markaz-Periferiya (Core-Periphery) model tahlili',
+                        'items': [
+                            'Markaz (Core): Yuqori texnologiya, kapital va qaror qabul qilish markazlari (AQSh, Yevroittifoq, Yaponiya)',
+                            "Yarim-periferiya (Semi-periphery): Sanoatlashgan, o'rta darajali texnologiyalar (Xitoy, Hindiston, Braziliya)",
+                            'Periferiya (Periphery): Xom ashyo yetkazib beruvchi va arzon mehnat manbalari',
+                            "Qiymat zanjirida yuqori qo'shilgan qiymat bosqichlariga o'tish strategiyalari"
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Nearshoring va Friendshoring — bu ta'minot zanjirlarini xavfsiz va yaqin do'stona mamlakatlarga ko'chirish sifatidagi zamonaviy geoiqtisodiy trenddir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Valersteynning Dunyo-tizim nazariyasiga ko'ra xom-ashyo yetkazib beruvchi rivojlanayotgan mamlakatlar qaysi zonaga kiradi?",
+                        'options': [
+                            'Markaz (Core)',
+                            'Yarim-periferiya',
+                            'Periferiya',
+                            'Metropoliya'
+                        ],
+                        'answer': 2,
+                        'explain': 'Periferiya mamlakatlari asosan xom ashyo va arzon ishchi kuchi eksport qiladi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Global qiymat zanjirlari (GVC) ishlab chiqarish bosqichlarining faqat bitta mamlakat ichida to'planishini ko'zda tutadi.",
+                        'answer': False,
+                        'explain': "GVC aksincha, ishlab chiqarish jarayonini bir nechta mamlakatlar o'rtasida bo'lib tashlaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Nearshoring' tushunchasi nimani anglatadi?",
+                        'options': [
+                            "Ishlab chiqarishni okean tubiga ko'chirish",
+                            "Ta'minot zanjirlarini geografik jihatdan yaqinroq mamlakatlarga ko'chirish",
+                            "Kompaniyalarni to'liq davlat tasarrufiga o'tkazish",
+                            "Eksportni to'xtatib, faqat ichki bozorga ishlash"
+                        ],
+                        'answer': 1,
+                        'explain': 'Nearshoring risklarni kamaytirish uchun ishlab chiqarishni geografik yaqin hududlarga joylashtirishdir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Geoiqtisodiy jarayonlar bo'yicha masalalarni tahlil qiling.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Xitoyning 'Bir makon, bir yo'l' (Belt and Road Initiative) loyihasi qaysi turdagi geoiqtisodiy strategiyaga misol bo'ladi?",
+                            'answer': 'Geo-infratuzilma ekspansiyasi',
+                            'hint': 'Loyiha transport koridorlarini va logistikani birlashtiradi.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbekistonning global qiymat zanjirlaridagi o'rnini xom-ashyo yetkazib beruvchidan tayyor mahsulot ishlab chiqaruvchiga o'tkazish uchun qanday geoiqtisodiy qadamlar zarur?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'amaliy-geosiyosiy-prognozlashtirish-va-geostrategiya',
+                'title': 'Amaliy geosiyosiy prognozlashtirish va geostratemik modellashtirish',
+                'summary': 'Makenzi, Spaykmen va Severskiy nazariyalari basisida zamonaviy xalqaro nizolar, geostrategik tugunlar va fazoviy doiralar prognozi.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish va Geostrategik Doktrinalar',
+                        'body': "Geosiyosiy modellashtirish geografik omillar (joylashuv, resurslar, relyef) va davlatlarning xalqaro siyosati o'rtasidagi bog'liqlikni tizimli ravishda tahlil qiladi. Xarlord Makinderning Hirtland (Heartland) nazariyasi va Nikolas Spaykmenning Rimland (Rimland) nazariyasi buring geosiyosiy maktablar poydevoridir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Heartland vs Rimland',
+                        'body': "Makinder fikricha: 'Kimki Yevroosiyo markazi (Heartland)ni boshqarsa, dunyo adasini boshqaradi'. Spaykmen esa: 'Kimki sohilbo'yi hududlari (Rimland)ni nazorat qilsa, Yevroosiyoni nazorat qiladi' degan gipotezani ilgari surgan."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Geosiyosiy scenariylarni modellashtirish bosqichlari',
+                        'items': [
+                            "Geostrategik tugunlar va 'Choke Points' (Xormuz, Malakka, Suvaysh bo'g'ozlari) barqarorligini baholash",
+                            'Katta davlatlarning Yevroosiyodagi manfaatlari kesishuv xaritasini (Overlay) tuzish',
+                            "Gibrid va geo-iqtisodiy resurslar ta'sirini miqdoriy ko'rsatkichlarga o'tkazish",
+                            'Ssenariylar metodologiyasi (SWOT, Delphi) yordamida regional xatarlarni prognozlash'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: 'Choke Points' — xalqaro savdo va neft va gaz tashishda strategik muhim bo'lgan tor dengiz va bo me'yoriiy o'tish joylaridir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Xalford Makinder nazariyasida 'Heartland' hududi qayerda joylashgan?",
+                        'options': [
+                            'Shimoliy Amerika va Kanada',
+                            "Yevroosiyoning ichki va kirish qiyin bo'lgan markaziy hududlari",
+                            'Avstraliya va Okeaniya',
+                            'Janubiy Amerikaning pampa zonalari'
+                        ],
+                        'answer': 1,
+                        'explain': "Heartland — Yevroosiyoning ichki tekisliklari va okean floti to'g'ridan-to'g'ri yetib borolmaydigan hududdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Malakka va Xormuz bo'g'ozlari geosiyosatda 'Choke Points' (strategik bo'g'ilish nuqtalari) deb ataladi.",
+                        'answer': True,
+                        'explain': "Bu tor bo'g'ozlar orqali dunyo energota'minotining asosiy qismi o'tadi va ular o'ta sezgirdir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Nikolas Spaykmen geosiyosatida qaysi zona dunyo hukmronligida hal qiluvchi deb hisoblangan?',
+                        'options': [
+                            "Rimland (Yevroosiyo sohilbo'yi zonalari)",
+                            'Antarktida',
+                            'Sahroi Kabir',
+                            "Tinch okeanining o'rtasidagi orollar"
+                        ],
+                        'answer': 0,
+                        'explain': 'Spaykmen Rimland (Yevropa, Yaqin Sharq, Janubiy va Sharqiy Osiyo sohillari)ni asosiy deb bilgan.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Amaliy geosiyosiy prognozlashtirish bo'yicha mustaqil ish.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Markaziy Osiyo geografik joylashuviga ko'ra Heartland zonalari tarkibiga kiradimi?",
+                            'answer': 'Ha',
+                            'hint': 'Markaziy Osiyo Yevroosiyoning markaziy va ichki qismida joylashgan.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Markaziy Osiyo (xususan O'zbekiston)ning dengiz yo'llariga chiqish imkoniyati cheklanganligi (Double Landlocked) sharoitida geostrategik transport koridorlarini rivojlantirish istiqbollarini tahlil qiling."
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -24073,6 +24883,814 @@ SUBJECTS = [
                         }
                     ]
                 }
+            },
+            {
+                'slug': 'heterotsiklik-birikmalar-va-nuklein-kislotalar',
+                'title': 'Heterotsiklik birikmalar va nuklein kislotalar',
+                'summary': "Halqasida ugleroddan tashqari N, O, S kabi geteroatomlar saqlagan birikmalar hamda irsiy axborot tashuvchilari bo'lgan DNK va RNK tuzilishi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Heterotsiklik birikmalar tushunchasi',
+                        'body': "Heterotsiklik birikmalar — halqasida uglerod atomlaridan tashqari boshqa element (azot, kislorod, oltingugurt kabi geteroatom) atomlarini saqlagan organik moddalardir. Besh a'zoli (piroll, furon, tiofen) va olti a'zoli (piridin) geterotsikllar muhim biologik va sanoat ahamiyatiga ega."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Pirimidin va Purin asoslari',
+                        'body': 'Nuklein kislotalar tarkibiga kiruvchi azotli asoslar piro- va purin unumlaridir. Pirimidin hosilalari: timin (T), sitozin (C), uratsil (U). Purin hosilalari: adenin (A), guanin (G).'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Nukleotid shakllanishi bosqichlari',
+                        'items': [
+                            'Azotli asos monosa xariddagi (riboza yoki dezoksiriboza) 1-uglerodga birikib nukleozid hosil qiladi.',
+                            "Nukleozidning 5-uglerodidagi OH guruhiga fosfat kislota qoldig'i birikib nukleotid hosil bo'ladi.",
+                            "Nukleotidlar phosphodiefir bog'lari orqali polimerlanib DNK va RNK zanjirini hosil qiladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "DNK qo'sh spirali Chargaff qoidasiga va komplementarlik prinsipiga bo'ysunadi: Adenin doim Timin bilan (2 ta vodorod bog'i), Guanin esa Sitozin bilan (3 ta vodorod bog'i) birikadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "DNK zanjirida Guanin azotli asosiga komplementar bo'lgan asos qaysi?",
+                        'options': [
+                            'Adenin',
+                            'Timin',
+                            'Sitozin',
+                            'Uratsil'
+                        ],
+                        'answer': 2,
+                        'explain': "DNKda Guanin doim Sitozin bilan 3 ta vodorod bog'i orqali juftlashadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "RNK molekulasida Timin o'rniga Uratsil azotli asosi bo'ladi.",
+                        'answer': True,
+                        'explain': "RNK tarkibida timin o'rnini uratsil egallaydi va riboza uglevodiga birikadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Olti a'zoli, bitta azot atomi tutgan geterotsiklik birikma qaysi?",
+                        'options': [
+                            'Piroll',
+                            'Piridin',
+                            'Furon',
+                            'Tiofen'
+                        ],
+                        'answer': 1,
+                        'explain': "Piridin (C5H5N) olti a'zoli aromatik geterotsiklik birikmadir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Heterotsiklik birikmalar va nuklein kislotalar mavzusini mustahkamlash uchun mashqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "DNK fragmentidagi bir zanjir tartibi A-T-G-C-C-A bo'lsa, ikkinchi komplementar zanjir ketma-ketligini toping.",
+                            'answer': 'T-A-C-G-G-T',
+                            'hint': "Komplementarlik qoidasiga ko'ra A-T va G-C juftlashadi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Piroll va piridin birikmalarining asoslik xossalarini solishtiring hamda azot atomidagi bo'sh elektron juftining aromatik sistemada tutgan o'rnini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'organik-birikmalar-izomeriyasi-va-stereokimyo',
+                'title': 'Organik birikmalarning izomeriyasi va stereokimyo',
+                'summary': "Tarkibi va molekulyar massasi bir xil, lekin tuzilishi va fazoviy tuzilishi hamda xossalari har xil bo'lgan moddalarning izomeriya turlari va stereokimyo asoslari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Izomeriya turlari klassifikatsiyasi',
+                        'body': "Izomeriya ikki asosiy turga bo'linadi: Tuzilish (struktura) izomeriyasi va Fazo (stereoisomeriya) izomeriyasi. Tuzilish izomeriyasiga uglerod zanjiri, holat va sinflararo izomeriyalar kiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Geometrik (tsis-trans) va Optik izomeriya',
+                        'body': "Geometrik izomeriya qo'sh bog' atrofida erkin aylanish bo'lmaganda yuzaga keladi (masalan, buten-2 ning tsis- va trans- shakllari). Optik izomeriya esa molekulada asimmetrik (xiral) uglerod atomi (xiral markaz) bo'lganda kuzatiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Xiral markazni aniqlash tartibi',
+                        'items': [
+                            'Molekuladagi sp3-gibridlangan uglerod atomlarini toping.',
+                            "Ushbu uglerod atomiga birikgan 4 ta o'rinbosarni belgilang.",
+                            "Agar 4 ta o'rinbosarning hammasi har xil bo'lsa, bu uglerod asimmetrik (xiral) atom hisoblanadi.",
+                            'Optik izomerlar soni N = 2^n formulasi bilan topiladi (n — xiral markazlar soni).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Enantiomerlar — bir-birining ko'zgudagi aksidek joylashgan, bir-birining ustiga tushmaydigan va qutblangan nur tekisligini qarama-qarshi tomonga buradigan izomerlardir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': '2-xlorbutan molekulasida nechta asimmetrik (xiral) uglerod atomi bor?',
+                        'options': [
+                            '0',
+                            '1',
+                            '2',
+                            '3'
+                        ],
+                        'answer': 1,
+                        'explain': "2-uglerod atomiga 4 xil o'rinbosar birikgan: -H, -CH3, -Cl, -C2H5. Shuning uchun 1 ta xiral markaz bor."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Tsis- va trans-izomerlar bir-birining ko'zgudagi aksi hisoblanadi va optik aktivdir.",
+                        'answer': False,
+                        'explain': 'Tsis- va trans-izomerlar geometrik (diastereomer) izomerlardir, enantiomer (optik) emas.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Bitta xiral markazga ega bo'lgan molekulaning maksimal nechta optik izomeri mavjud?",
+                        'options': [
+                            '1',
+                            '2',
+                            '3',
+                            '4'
+                        ],
+                        'answer': 1,
+                        'explain': "N = 2^1 = 2 ta optik izomer (enantiomerlar jufti) mavjud bo'ladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Stereokimyo va izomeriya turlariga doir nazariy hamda amaliy topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'C4H8 tarkibli uglevodorodning barcha tarkibiy va geometrik izomerlari soni nechta?',
+                            'answer': '6',
+                            'hint': 'Alkenlar (buten-1, tsis-buten-2, trans-buten-2, 2-metilpropen) va sikloalkanlarni (siklobutan, metilsiklopropan) hisobga oling.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Sut kislotasi (2-gidroksipropan kislota) molekulasining xiral markazini ko'rsating va uning D- va L- enantiomerlarining proyeksion formulalarini chizib beringsiz."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kompleks-va-koordinatsion-birikmalar',
+                'title': 'Kompleks va koordinatsion birikmalar',
+                'summary': "Kompleks birikmalarning Verner bo'yicha koordinatsion nazariyasi, ularning tuzilishi, ligandlar, koordinatsion son va nomenklaturasi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Koordinatsion nazariya asoslari',
+                        'body': "A. Verner nazariyasiga ko'ra, kompleks birikmada markaziy ion (kompleks hosil qiluvchi) va uning atrofida donor-atseptor bog'lanish orqali birikgan neytral molekulalar yoki ionlar — ligandlar joylashadi. Ular kompleksning ichki sferasini hosil qiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kompleks birikma tuzilishi',
+                        'body': '[Co(NH3)6]Cl3 birikmasida: Co3+ — markaziy ion, NH3 — neutral ligand, koordinatsion son — 6, [Co(NH3)6]3+ — ichki sfera (kation), Cl- — tashqi sfera (anion).'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kompleks birikmalarni nomlash tartibi',
+                        'items': [
+                            "Kation qism birinchi, anion qism ikkinchi o'qiladi.",
+                            "Kompleks kation yoki neytral kompleksda avval ligandlar alfabit bo'yicha, keyin metall nomi va uning valentligi (oksidlanish darajasi) ko'rsatiladi.",
+                            "Agar kompleks anion bo'lsa, metall nomiga '-at' qo'shimchasi qo'shiladi va oksidlanish darajasi qavsda ko'rsatiladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Ligandlarning denta-ligi (koordinatsiyalanish imkoniyati) monodentat (NH3, H2O, Cl-), bidentat (etilendiamin) va polydentat (EDTA) bo'lishi mumkin."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'K4[Fe(CN)6] birikmasida temirning oksidlanish darajasi nechaga teng?',
+                        'options': [
+                            '+2',
+                            '+3',
+                            '+4',
+                            '0'
+                        ],
+                        'answer': 0,
+                        'explain': '4*(+1) + x + 6*(-1) = 0 => x = +2.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Kompleks birikmaning ichki sferasidagi ionlar suvda eritilganda osonlikcha dissotsilanadi va ion reaksiyalarini beradi.',
+                        'answer': False,
+                        'explain': 'Ichki sfera suvli eritmalarda deyarli dissotsilanmaydi va bir butun kompleks ion sifatida saqlanadi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "IUPAC nomenklaturasiga ko'ra [Cu(NH3)4]SO4 birikmasining nomi qaysi?",
+                        'options': [
+                            'Mis tetrammoniy sulfat',
+                            'Tetraamminmis(II) sulfat',
+                            'Sulfat tetraamminmisat',
+                            'Mis sulfat tetraammiak'
+                        ],
+                        'answer': 1,
+                        'explain': "Ligand (tetraammin), metall (mis) va uning oksidlanish darajasi (II), so'ngra anion (sulfat)."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kompleks birikmalarning tuzilishini tahlil qilish va nomenklaturasiga doir topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Na3[Al(OH)6] birikmasida markaziy ionning koordinatsion sonini ko'rsating.",
+                            'answer': '6',
+                            'hint': 'Al3+ ioniga 6 ta gidroksid ligand birikgan.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kaloniyalash va xelat hosil bo'lish hodisasini EDTA komplekslanishi misolida tushuntiring hamda tibbiyotdagi ahamiyatini ko'rsating."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kimyoviy-termodinamika-va-termokimyo',
+                'title': 'Kimyoviy termodinamika va termokimyo',
+                'summary': "Gess qonuni, entalpiya, entropiya, Gibbs erkin energiyasi va kimyoviy jarayonlarning o'z-o'zidan sodir bo'lish yo'nalishini aniqlash.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Termodinamikaning birinchi va ikkinchi qonunlari',
+                        'body': "Termodinamika reaksiyalarning energiyaviy o'zgarishlarini va o'z-o me'yorda borish imkoniyatini o'rganadi. Entalpiya (ΔH) — issiqlik effekti, Entropiya (ΔS) — sistemaning tartibsizlik darajasi ko'rsatkichi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Gess qonuni va undan kelib chiqadigan oqibatlar',
+                        'body': "Reaksiyaning issiqlik effekti reaksiyaning borish yo'liga bog'liq bo'lmay, faqat dastlabki va oxirgi moddalarning holatiga bog'liq. ΔH_reaksiya = ΣΔH_f(mahsulotlar) - ΣΔH_f(dastlabki moddalar)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Gibbs energiyasi (ΔG) orqali reaksiya yo'nalishini baholash",
+                        'items': [
+                            'ΔG = ΔH - T*ΔS tenglamasi ishlatiladi.',
+                            "Agar ΔG < 0 bo'lsa, reaksiya berilgan haroratda o'z-o'zidan (spontan) sodir bo'ladi.",
+                            "Agar ΔG > 0 bo'lsa, reaksiya o me'yorida o'z-o'zidan bormaydi (teskari reaksiya boradi).",
+                            "Agar ΔG = 0 bo'lsa, sistema kimyoviy muvozanat holatida bo'ladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Ekzotermik reaksiyalarda ΔH < 0, endotermik reaksiyalarda esa ΔH > 0 bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Harorat T va ΔS > 0 bo'lganda, ekzotermik reaksiya (ΔH < 0) uchun ΔG ishorasi qanday bo'ladi?",
+                        'options': [
+                            'Doim ΔG < 0',
+                            'Doim ΔG > 0',
+                            'Faqat yuqori haroratda ΔG < 0',
+                            'Faqat past haroratda ΔG < 0'
+                        ],
+                        'answer': 0,
+                        'explain': "ΔH manfiy va (-T*ΔS) ham manfiy bo'lgani uchun har qanday haroratda ΔG manfiy bo'ladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Gess qonuniga ko'ra reaksiyaning issiqlik effekti reaksiyaning necha bosqichda borishiga bog'liq.",
+                        'answer': False,
+                        'explain': "Gess qonuniga ko'ra reaksiya issiqlik effekti bosqichlar soniga bog'liq emas, faqat boshlang'ich va oxirgi holatga bog'liq."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Agregat holat o'zgarganda (qattiq -> suyuq -> gaz) entropiya (S) qanday o'zgaradi?",
+                        'options': [
+                            'Kamayadi',
+                            "O'zgarmaydi",
+                            'Ortadi',
+                            'Nolga tenglashadi'
+                        ],
+                        'answer': 2,
+                        'explain': "Gaz holatida molekulalar tartibsizligi eng yuqori bo'lgani uchun entropiya ortadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Termodinamik hisoblashlar va Gess qonunini qo'llashga doir masalalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'C(q) + O2(g) = CO2(g) reaksiya uchun ΔH = -393.5 kJ/mol. 12 g uglerod yonganda qancha kJ issiqlik ajralib chiqadi?',
+                            'answer': '393.5',
+                            'hint': '12 g uglerod bu 1 mol demakdir.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Endotermik reaksiya yuqori haroratda o'z-o'zidan borishi mumkinmi? ΔG = ΔH - T*ΔS tenglamasidan foydalanib tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'eritmalarning-kolligativ-xossalari-va-osmos',
+                'title': 'Eritmalarning kolligativ xossalari va osmos',
+                'summary': "Suyuq eritmalarning zarrachalar soniga bog'liq bo'lgan xossalari: Raul qonunlari, ebullioskopiya, krioskopiya va osmatik bosim.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kolligativ xossalar tushunchasi',
+                        'body': "Eritmalarning eritilgan modda tabiatiga emas, balki eritmada mavjud bo'lgan zarrachalar (molekulalar yoki ionlar) soniga bog'liq xossalari kolligativ xossalar deyiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Raul qonunlari va osmatik bosim',
+                        'body': "1-Raul qonuni: Eritma ustidagi erituvi bug' bosimining nisbiy pasayishi erigan moddaning molyar ulushiga teng. Vant-Goff tenglamasi bo'yicha osmatik bosim: Posm = C * R * T (noelektrolitlar uchun)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Ebullioskopiya va Krioskopiya orqali molyar massani aniqlash',
+                        'items': [
+                            "Eritmaning qaynash harorati ko'tariladi: ΔTq = Kq * m (m — molyallik).",
+                            'Eritmaning muzlash harorati pasayadi: ΔTm = Km * m.',
+                            'Elektrolitlar uchun Vant-Goffning izotonik koeffitsienti (i) hisobga olinadi: ΔT = i * K * m.',
+                            'Olingan ΔT qiymatidan moddaning molyar massasi (M) hisoblab topiladi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Elektrolitlar eritmalarda ionlarga dissotsilangani uchun zarrachalar soni ortadi, shu sababli ularning kolligativ ko'rsatkichlari noelektrolitlarnikiga qaraganda 'i' marta yuqori bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi 0.1 M eritmaning osmatik bosimi eng yuqori bo'ladi?",
+                        'options': [
+                            'Glyukoza (C6H12O6)',
+                            'Natriy xlorid (NaCl)',
+                            'Bariy xlorid (BaCl2)',
+                            'Alyuminiy xlorid (AlCl3)'
+                        ],
+                        'answer': 3,
+                        'explain': "AlCl3 to'liq dissotsilanganda 4 ta ion beradi (i=4), zarrachalar soni eng ko'p bo'ladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Eritmaning qaynash harorati toza erituvchinikiga qaraganda pastroq bo'ladi.",
+                        'answer': False,
+                        'explain': "Eritmaning qaynash harorati har doim toza erituvchinikiga qaraganda yuqoriroq bo'ladi (ΔTq > 0)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Vant-Goff izotonik koeffitsienti (i) va dissotsilanish darajasi (alpha) o'rtasidagi bog'liqlik formulasi qaysi? (n - ionlar soni)",
+                        'options': [
+                            'i = 1 + alpha*(n - 1)',
+                            'i = alpha*(n + 1)',
+                            'i = 1 - alpha*n',
+                            'i = n / alpha'
+                        ],
+                        'answer': 0,
+                        'explain': "i = 1 + alpha*(n - 1) tenglamasi to'g'ri formuladir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Kolligativ xossalarga va Vant-Goff koeffitsientiga bag'ishlangan masalalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': '1 molal glyukoza eritmasi va 1 molal NaCl eritmasining muzlash haroratini solishtiring. Qaysi biri pastroq haroratda muzlaydi?',
+                            'answer': 'NaCl eritmasi',
+                            'hint': "NaCl dissotsilana olgani uchun zarrachalar soni ko'proq va muzlash harorati ko'proq pasayadi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tibbiyotda qo me'yordagi fiziologik eritma (0.9% li NaCl) tushunchasi va gipotonik hamda gipertonik eritmalarning qon hujayralariga (eritrotsitlarga) ta'sirini izohlang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kimyoviy-kinetika-va-arrenius-tenglamasi',
+                'title': 'Kimyoviy kinetika va Arrenius tenglamasi',
+                'summary': "Reaksiya tezligining reagentlar konsentratsiyasiga va haroratga bog'liqligi, aktivlanish energiyasi va Arrenius tenglamasi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Reaksiya tartibi va tezlik tenglamasi',
+                        'body': "Reaksiya kinetik tenglamasi (ta'sir etuvchi massalar qonuni): v = k * [A]^a * [B]^b. Bu yerda (a+b) reaksiya tartibini, k — reaksiya tezlik konstantasini bildiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Arrenius tenglamasi',
+                        'body': "Harorat ortishi bilan tezlik konstantasining o'zgarishi Arrenius tenglamasi bilan ifodalanadi: k = A * e^(-Ea / (R*T)). Bu yerda Ea — aktivlanish energiyasi, A — eksponent oldi koeffitsienti."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Aktivlanish energiyasini grafik usulda aniqlash',
+                        'items': [
+                            "Turli haroratlarda (T) reaksiya tezlik konstantasi (k) tajribada o'lchanadi.",
+                            "ln(k) ning 1/T ga bog'liqlik grafigi chiziladi (Arrenius grafigi).",
+                            "Tog'ri chiziqning og'ish burchagi tangensi (-Ea/R) ga teng bo'ladi.",
+                            'Ushbu qiymatdan aktivlanish energiyasi Ea = - tg(alpha) * R topiladi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Katalizatorlar reaksiyaning muqobil (past aktivlanish energiyali) yo'lini ta'minlash orqali reaksiya tezligini oshiradi, lekin muvozanat konstantasini o'zgartirmaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Aktivlanish energiyasi (Ea) qanchalik kichik bo'lsa, reaksiya tezligi qanday bo me'yorda bo'ladi?",
+                        'options': [
+                            'Shunchalik sekin boradi',
+                            'Shunchalik tez boradi',
+                            "Tezlikka ta'sir qilmaydi",
+                            "Tezlik nolga teng bo'ladi"
+                        ],
+                        'answer': 1,
+                        'explain': "Ea qanchalik past bo'lsa, aktiv molekulalar ulushi shunchalik ko'p bo'ladi va reaksiya shunchalik tez kechadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Katalizator to'g'ri va teskari reaksiyalar tezligini bir xil darajada oshiradi.",
+                        'answer': True,
+                        'explain': 'Katalizator ikkala reaksiya uchun ham aktivlanish energiyasini teng qiymatga pasaytiradi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Vant-Goff qoidasiga ko'ra harorat har 10 gradusga oshirilganda reaksiya tezligi 2-4 marta ortadi. Harorat harorat koeffitsienti gamma=3 bo'lganda 30 gradusga oshsa, tezlik necha marta ortadi?",
+                        'options': [
+                            '9',
+                            '27',
+                            '81',
+                            '12'
+                        ],
+                        'answer': 1,
+                        'explain': 'v2/v1 = gamma^(Delta T / 10) = 3^(30/10) = 3^3 = 27 marta.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kimyoviy kinetika va Arrenius tenglamasiga doir hisoblash masalalari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Reaksiya harorati 20 °C dan 50 °C ga ko'tarilganda tezlik 8 marta ortdi. Harorat koeffitsienti (gamma) nechaga teng?",
+                            'answer': '2',
+                            'hint': '8 = gamma^((50-20)/10) => 8 = gamma^3 => gamma = 2.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Gomogen va geterogen kataliz jarayonlarining farqini misollar yordamida tushuntiring hamda fermentativ katalizning o'ziga xosligini yoritib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'elektrokimyoviy-jarayonlar-va-nernst-tenglamasi',
+                'title': 'Elektrokimyoviy jarayonlar va Nernst tenglamasi',
+                'summary': 'Galvani elementlari, standart elektrod potentsiallari, Nernst tenglamasi va kimyoviy energiyaning elektr energiyasiga aylanishi.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Galvani elementi va Elektrod potentsiali',
+                        'body': "Galvani elementi — OQR energiyasini elektr energiyasiga aylantiruvchi qurilma. Anodda oksidlanish, katodda qaytarilish jarayoni sodir bo'ladi. Standart elektrod potentsiali (E°) standart vodorod elektrodiga nisbatan o'lchanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Nernst tenglamasi',
+                        'body': "Nostandart sharoitda elektrod potentsialini hisoblash uchun Nernst tenglamasi qo'llaniladi: E = E° - (R*T / (n*F)) * ln(Q). 298 K haroratda: E = E° - (0.0591 / n) * lg([Qaytarilgan shakl] / [Oksidlangan shakl])."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Galvani elementining EYuK (EYK) ini hisoblash',
+                        'items': [
+                            "Ikkala elektrod uchun ham Nernst tenglamasi bo'yicha potentsiallarni (E_katod va E_anod) toping.",
+                            "Katta potentsialga ega elektrod Katod, kichik potentsialga egasi Anod bo'ladi.",
+                            'EYuK = E_katod - E_anod formulasidan foydalanib elektr yurituvchi kuchni hisoblang.',
+                            "EYuK va Gibbs energiyasi bog'liqligi: ΔG = -n * F * EYuK."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Agar EYuK > 0 bo'lsa, Galvani elementidagi reaksiya to'g'ri yo'nalishda o'z-o'zidan boradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Galvani elementida Anodda qanday jarayon sodir bo'ladi?",
+                        'options': [
+                            'Oksidlanish',
+                            'Qaytarilish',
+                            'Neytrallanish',
+                            'Gidroliz'
+                        ],
+                        'answer': 0,
+                        'explain': "Galvani elementida anod manfiy qutb bo'lib, unda har doim oksidlanish jarayoni kechadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Elektrod potentsiali ionlar konsentratsiyasi ortishi bilan o'zgaradi.",
+                        'answer': True,
+                        'explain': "Nernst tenglamasiga ko'ra elektrod potentsiali eritmadagi ionlar aktivligi (konsentratsiyasi)ga bog'liq."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "E°(Zn2+/Zn) = -0.76 V va E°(Cu2+/Cu) = +0.34 V bo'lsa, Daniell-Yakobi elementining standart EYuK qiymati qancha?",
+                        'options': [
+                            '-0.42 V',
+                            '+0.42 V',
+                            '+1.10 V',
+                            '-1.10 V'
+                        ],
+                        'answer': 2,
+                        'explain': 'EYuK = E°(katod) - E°(anod) = +0.34 - (-0.76) = +1.10 V.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Elektrokimyo, Nernst tenglamasi va Galvani elementlariga doir masalalar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "E° = 1.10 V bo'lgan Galvani elementi uchun n=2 bo'lganda standart Gibbs energiyasi o'zgarishini (kJ/mol) hisoblang. (F = 96500 C/mol)",
+                            'answer': '-212.3',
+                            'hint': 'ΔG° = -n * F * E° = -2 * 96500 * 1.10 = -212300 J = -212.3 kJ.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Korroziya jarayonining elektrokimyoviy mexanizmini va metallarni korroziyadan himoya qilish usullari (protektor himoya, galvanizatsiya)ni izohlang.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'yadro-kimyosi-va-radioaktiv-parchalanish',
+                'title': 'Yadro kimyosi va radioaktiv parchalanish',
+                'summary': "Atom yadrolarining o'zgarishi, radioaktiv nurlanish turlari, yarim yemirilish davri va yadro reaksiyalari tenglamalari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Yadro reaksiyalari va Radioaktivlik',
+                        'body': "Yadro kimyosi — atom yadrolarining tarkibi va ularda kechadigan transformatsiyalarni o'rganadi. Radioaktiv parchalanishda alfa (alpha), beta (beta) va gamma (gamma) nurlanishlar ajralib chiqadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Parchalanish qoidalari (Soddi-Fayans siljish qonuni)',
+                        'body': "Alfa-parchalanish: massasi 4 ga, zaryadi 2 ga kamayadi. Beta-parchalanish: massasi o'zgarmaydi, zaryadi 1 ga ortadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Yarim yemirilish davri (T1/2) bo'yicha hisoblash",
+                        'items': [
+                            'Yarim yemirilish davri — dastlabki radioaktiv yadrolarning yarmi yemirilishi uchun ketgan vaqt.',
+                            'Qolgan modda massasi tenglamasi: N(t) = N0 * (1/2)^(t / T1/2).',
+                            'Parchalanish konstantasi k = ln(2) / T1/2 = 0.693 / T1/2.',
+                            'Moddaning radioaktiv yoshi ushbu munosabatlar orqali topiladi (masalan, uglerod-14 usuli).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Yadro sintezi (termonuklear reaksiya) yengil yadrolarning birlashishidir va u yadro bo'linishiga qaraganda ko'proq energiya ajratadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Uran-238 (238/92 U) bitta alpha-zarracha chiqarsa, hosil bo'lgan yangi elementning massa va zaryad soni nechaga teng bo'ladi?",
+                        'options': [
+                            '234 va 90',
+                            '238 va 93',
+                            '234 va 91',
+                            '242 va 94'
+                        ],
+                        'answer': 0,
+                        'explain': 'Alpha-zarracha bu He-4 (massa 4, zaryad 2). Massa = 238 - 4 = 234; Zaryad = 92 - 2 = 90 (Toriy).'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Gamma-nurlanish tarqalganda atom yadrosining zaryad va massa soni o'zgarmaydi.",
+                        'answer': True,
+                        'explain': "Gamma-nurlanish — yuqori energiyali elektromagnit to'lqin bo'lib, zarracha emas, shuning uchun A va Z o'zgarmaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Radioaktiv izotopning yarim yemirilish davri 10 kun. 40 kundan keyin dastlabki moddaning qancha qismi (ulushi) qoladi?',
+                        'options': [
+                            '1/2',
+                            '1/4',
+                            '1/8',
+                            '1/16'
+                        ],
+                        'answer': 3,
+                        'explain': "t / T1/2 = 40 / 10 = 4 ta yarim yemirilish davri o'tdi. (1/2)^4 = 1/16 qismi qoladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Yadro reaksiyalari va izotoplar yemirilishiga bag'ishlangan hisobiy vazifalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "100 g radioaktiv izotopdan 3 ta yarim yemirilish davri o'tgach necha gramm qoladi?",
+                            'answer': '12.5',
+                            'hint': '100 -> 50 -> 25 -> 12.5 g.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Arxeologiyada radiouglrodli tanishuv (C-14 metodi) tamoyilini va uning tirik va o'lik organizmlardagi uglerod muvozanatiga bog'liqligini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'analitik-kimyo-va-miqdoriy-tahlil-usullari',
+                'title': 'Analitik kimyo va miqdoriy tahlil usullari',
+                'summary': 'Sifat va miqdoriy tahlil: titrimetriya (hajmiy tahlil), gravimetriya va fizik-kimyoviy instrumentallik usullari (spektroskopiya, xromatografiya).',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Titrimetrik (hajmiy) tahlil usuli',
+                        'body': "Titrimetriya — reaksiyaga kirishgan aniq konsentratsiyali reaktiv (titrant) hajmini o'lchashga asoslangan. Ekvivalentlik nuqtasi indikatorlar rangining o'zgarishi orqali aniqlanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Ekvivalentlik qonuni hisoblashlari',
+                        'body': 'Kislota-asosli titrashda: C1 * V1 = C2 * V2 (bu yerda C — normal konsentratsiya yoki molyarlik va ekvivalentlik omili).'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Titrimetrik tahlilni o'tkazish tartibi",
+                        'items': [
+                            "Byuretkaga ma'lum konsentratsiyali standart eritma (titrant) quyiladi.",
+                            'Elenmeyyer kolbasiga tekshirilayotgan eritma va 2-3 tomchi indikator solinadi.',
+                            "Titrant kolbaga tomchilab qo'shiladi va indikator rangi o'zgarguncha aralashtiriladi.",
+                            "Sarflangan titrant hajmi byuretkadan aniq (0.05 ml aniqlikda) o'qib olinadi va konsentratsiya hisoblanadi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Zamonaviy analitik kimyoda UB-Ko'rinadigan Spektrofotometriya va Yuqori Samcontentli Suyuqlik Xromatografiyasi (HPLC) aralashmalarni ajratish va miqdorini aniqlashda asosiy o'rin tutadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': '25 ml NaOH eritmasini titrash uchun 0.1 M li HCl eritmasidan 20 ml sarflandi. NaOH ning molyar konsentratsiyasini toping.',
+                        'options': [
+                            '0.08 M',
+                            '0.10 M',
+                            '0.125 M',
+                            '0.16 M'
+                        ],
+                        'answer': 0,
+                        'explain': 'C1 * V1 = C2 * V2 => C(NaOH) * 25 = 0.1 * 20 => C(NaOH) = 2 / 25 = 0.08 M.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Gravimetrik tahlil usulida reaksiyada hosil bo'lgan cho'kma filtrlanadi, yuviladi, quritiladi va tortiladi.",
+                        'answer': True,
+                        'explain': "Gravimetriya modda massasini aniq tortib o'lchashga asoslangan og'irlik tahlili usulidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Kuchli kislota va kuchli asos titrilganda ekvivalentlik nuqtasida pH nechaga teng bo'ladi?",
+                        'options': [
+                            '3',
+                            '7',
+                            '9',
+                            '12'
+                        ],
+                        'answer': 1,
+                        'explain': "Kuchli kislota va kuchli asos bir-birini to'liq neytrallaganda hosil bo'lgan tuz gidrolizlanmaydi va pH = 7 bo'ladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Miqdoriy tahlil usullari va ekvivalentlik qoidasiga bag'ishlangan mashqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': '0.2 M li H2SO4 eritmasining normal konsentratsiyasini (N) toping.',
+                            'answer': '0.4',
+                            'hint': 'H2SO4 ikkita H+ bergani uchun ekvivalentlik omili 2 ga teng: N = M * 2.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Xromatografiya usulining harakatchan va qo'zg'almas fazalari tushunchasini hamda uning moddalarni ajratishdagi fizik-kimyoviy tamoyillarini bayon eting."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kvant-kimyosi-va-molekulyar-orbitalar-nazariyasi',
+                'title': 'Kvant kimyosi va molekulyar orbitalar nazariyasi',
+                'summary': "Valent bog'lanishlar usuli (VBU) va Molekulyar orbitalar usuli (MOU). Bog'lovchi va bo'shashtiruvchi orbitalar, bog' karraligi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Molekulyar Orbitalar Usuli (MOU) tushunchasi',
+                        'body': "MOU (MO LKAO — Atom orbitalarining chiziqli kombinatsiyasi) ga ko'ra, molekuladagi elektronlar butun molekulaga tegishli bo'lgan ko'p markazli molekulyar orbitalarda (MO) joylashadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Bog'lovchi va Bo'shashtiruvchi orbitalar",
+                        'body': "Ikki atom orbitalining qo'shilishidan ikkita MO hosil bo me'yorda bo'ladi: energiyasi pastroq bo'lgan 'bog'lovchi MO' (sigma, pi) va energiyasi yuqoriroq bo'lgan 'bo'shashtiruvchi MO' (sigma*, pi*)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "MOU bo'yicha bog' karraligini hisoblash",
+                        'items': [
+                            'Molekuladagi barcha valent elektronlar soni hisoblanadi.',
+                            'Elektronlar energiyasi ortib borish tartibida MO larga joylashtiriladi (Pauli va Hund qoidalariga binoan).',
+                            "Bog'lovchi orbitalardagi elektronlar soni (N_b) va bo'shashtiruvchi orbitalardagi elektronlar soni (N_bo'sh) aniqlanadi.",
+                            "Bog' karraligi = (N_b - N_bo'sh) / 2 formulasidan hisoblanadi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Kislorod molekulasi (O2) VBU bo'yicha diamagnit ko'rinsada, amalda paramagnitdir. Buni faqat MOU orqali pi* bo'shashtiruvchi orbitalardagi 2 ta toqlangan elektron mavjudligi bilan tushuntirish mumkin."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Geli gipotetik molekulasi He2 uchun bog' karraligi nechaga teng va u mavjud bo'ladimi?",
+                        'options': [
+                            '1, mavjud',
+                            '0.5, mavjud',
+                            '0, mavjud emas',
+                            '2, mavjud'
+                        ],
+                        'answer': 2,
+                        'explain': "He2 da 4 ta elektron bor: 2 ta sigma_1s (bog'lovchi) va 2 ta sigma*_1s (bo'shashtiruvchi). Bog' karraligi = (2-2)/2 = 0. Molekula mavjud emas."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Bo'shashtiruvchi molekulyar orbitalning energiyasi uni hosil qilgan dastlabki atom orbitalarining energiyasidan past bo'ladi.",
+                        'answer': False,
+                        'explain': "Bo'shashtiruvchi MO ning energiyasi dastlabki atom orbitalaridan YUQORI bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "N2 molekulasida (valent elektronlar soni = 10) MOU bo'yicha bog' karraligi nechaga teng?",
+                        'options': [
+                            '1',
+                            '2',
+                            '3',
+                            '4'
+                        ],
+                        'answer': 2,
+                        'explain': "N2 da 8 ta bog'lovchi va 2 ta bo'shashtiruvchi elektron bor. Bog' karraligi = (8 - 2) / 2 = 3."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kvant kimyosi, atom va molekulyar orbitalar nazariyasiga doir chuqurlashtirilgan topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "O2+ kationi uchun MOU bo'yicha bog' karraligini hisoblang (O2 da 12 valent elektron bor edi, O2+ da 11 ta).",
+                            'answer': '2.5',
+                            'hint': "Bog'lovchi orbitalda 8 ta, bo'shashtiruvchi orbitalda 3 ta elektron: (8 - 3) / 2 = 2.5."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Paramagnetizm va diamagnetizm hodisalarining elektronlarning spini hamda molekulyar orbitalardagi joylashuviga bog'liqligini O2 va N2 molekulalari misolida batafsil tushuntiring."
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -26489,6 +28107,815 @@ SUBJECTS = [
                             'id': 't2',
                             'type': 'open',
                             'prompt': "Noosfera (aqliy boshqariladigan biosfera) tushunchasi va insoniyatning biosferadagi barqaror o'rnini ta'minlash yo'llarini tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'hujayra-bioenergetikasi-va-atf-sintezi',
+                'title': 'Hujayra bioenergetikasi va ATF sintezi',
+                'summary': "Mitoxondriya va xloroplastlarda xemiosmotik nazariya bo'yicha ATF hosil bo'lish mexanizmi va ATF-sintaza fermentining strukturaviy ishlash prinsipi.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Xemiosmotik nazariya gipotezasi',
+                        'body': "Piter Mitchell tomonidan taklif etilgan xemiosmotik nazariyaga ko'ra, elektron transport zanjiri (ETZ) orqali elektronlar harakatlanganda, protonlar (H+) mitoxondriya matriksidan membranalararo bo'shliqqa haydaladi. Bu holat elektrokimyoviy proton gradientini (proton harakatlantiruvchi kuch - PMF) hosil qiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'ATF-sintaza rotorining ishlashi',
+                        'body': "Protonlar o'z gradienti bo'ylab membranalararo bo'shliqdan matriksga faqat ATF-sintaza kompleksi (F0 va F1 subbirliklari) orqali qaytishi mumkin. Protonlar o'tganda F0 subbirligi aylanadi va F1 subbirligida ADF va vaqtinchalik fosfatdan ATF sintezlanadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Oksidlanishli fosforillanish bosqichlari',
+                        'items': [
+                            'NADH va FADH2 molekulalarining ETZ komplekslarida oksidlanishi va elektronlarni berishi.',
+                            "Elektronlar energiyasi hisobiga protonlarning membranalararo bo'shliqqa nosimmetrik nasoslanishi.",
+                            "Membrana ikkala tomonida pH va zaryadlar farqi (gradient) hosil bo'lishi.",
+                            "Protonlarning ATF-sintaza kanali orqali oqib o'tishi va ATF sintezlanishi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Har bir NADH molekulasi oksidlanganda taxminan 2.5 ATF, FADH2 oksidlanganda esa 1.5 ATF molekulasi hosil bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Xemiosmotik nazariyaga ko'ra, ATF sintezi uchun bevosita harakatlantiruvchi kuch nima?",
+                        'options': [
+                            'Glyukoza parchalanishi',
+                            'Protonlar (H+) ning elektrokimyoviy gradienti',
+                            "Kislorodning to'g'ridan-to'g'ri birikishi",
+                            'Katriy-kaliy nasosining ishlashi'
+                        ],
+                        'answer': 1,
+                        'explain': "Membrananing ikki tomonida hosil bo'lgan proton gradienti ATF-sintaza orqali ATF sintezini harakatlantiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "ATF-sintazaning F0 subbirligi mitoxondriyaning ichki membranasi ichida joylashgan va proton kanali vazifasini o'taydi.",
+                        'answer': True,
+                        'explain': "F0 subbirligi membranalararo gidrofob domen bo'lib, protonlarni o'tkazuvchi rotordan iborat."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Bitta NADH molekulasi ETZ orqali to'liq oksidlanganda qancha ATF hosil bo'ladi?",
+                        'options': [
+                            '1.5 ATF',
+                            '2.5 ATF',
+                            '38 ATF',
+                            '4 ATF'
+                        ],
+                        'answer': 1,
+                        'explain': "Zamonaviy bioenergetik hisoblarga ko'ra 1 ta NADH taxminan 2.5 ta ATF beradi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Hujayra bioenergetikasi va xemiosmoz bo'yicha bilimlaringizni sinang.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Mitoxondriya ichki membranasi teshilsa (o'tkazuvchan bo'lib qolsa), ATF sintezi va issiqlik ajralishiga qanday ta'sir qiladi?",
+                            'answer': "Proton gradienti yo'qoladi, ATF sintezi to'xtaydi va energiya issiqlik shaklida tarqaladi.",
+                            'hint': "Gipoksiya va unkoplervchi moddalar (dinitrofenol) ta'sirini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Xloroplastlardagi tiilakoid va mitoxondriyadagi krishtalarda kechuvchi xemiosmoz jarayonlarini o'zaro solishtiring va farqlarini yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'gen-ekspressiyasining-boshqarilishi-operon-nazariyasi',
+                'title': 'Gen ekspressiyasining boshqarilishi: Operon nazariyasi',
+                'summary': 'Prokariotlarda genlar faoliyatining repressor va induktorlar orqali boshqarilish mexanizmi (Jatob va Monodning Lak-operon modeli).',
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Operon tushunchasi va strukturasi',
+                        'body': "Operon — bir xil metabolik yo'lda ishtirok etuvchi fermentlarni kodlaydigan va bitta promotor hamda operator nazorati ostida bo'lgan genlar guruhidir. U promotor, operator va strukturaviy genlardan (masalan, lacZ, lacY, lacA) tashkil topgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Lak-operon ishlash mexanizmi',
+                        'body': "Muhitda laktoza bo'lmaganda repressor oqsil operatorga birikadi va RNK-polimeraza harakatiga g'ov bo'ladi (transkripsiya 'OFF'). Muhitga laktoza qo'shilganda u induktor (allolaktoza) sifatida repressorga birikadi, uning konformatsiyasini o'zgartiradi va operator bo'shab transkripsiya boshlanadi (transkripsiya 'ON')."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Operon represiyasi va induksiyasi',
+                        'items': [
+                            'Regulyator gen repressor oqsilini sintezlaydi.',
+                            "Induktor bo'lmaganda repressor operator ketma-ketligi bilan bog'lanadi.",
+                            'RNK-polimeraza promotorga biriksa ham transkripsiyani davom ettira olmaydi.',
+                            'Induktor birikishi bilanoq repressor inaktivatsiyalanadi va genlar transkripsiyalanadi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Triptofan (Trp) operoni repressiyalanuvchi operondir. Triptofan ko'payganda u repressor bilan birikib, gen transkripsiyasini to'xtatadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Lak-operonda allolaktoza qanday rol o'ynaydi?",
+                        'options': [
+                            'Repressor vazifasini',
+                            'Induktor vazifasini',
+                            'Promotor vazifasini',
+                            'Ferment vazifasini'
+                        ],
+                        'answer': 1,
+                        'explain': 'Allolaktoza repressor bilan birikib, uni inaktivlaydi va induktor vazifasini bajaradi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Operon faqat eukariot organizmlarga xos bo'lgan genetik guruhlanishdir.",
+                        'answer': False,
+                        'explain': "Operon tashkil bo'lishi asosan prokariotlar (bakteriyalar) uchun xarakterlidir."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'RNK-polimeraza transkripsiyani boshlash uchun DNKning qaysi qismiga birikadi?',
+                        'options': [
+                            'Operator',
+                            'Promotor',
+                            'Terminator',
+                            'Exon'
+                        ],
+                        'answer': 1,
+                        'explain': 'RNK-polimeraza mRNK sintezini boshlash uchun aynan promotor sohasini tanib birikadi.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Genetik regulyatsiya va operon tuzilishi bo mezonlarini tahlil qiling.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "E. coli o'sadigan muhitda glyukoza ham, laktoza ham bo'lsa, bakteriya birinchi bo'lib qaysi uglevodni o'zlashtiradi va nega?",
+                            'answer': "Glyukozani o'zlashtiradi. Chunki katabolit repressiya mexanizmi orqali cAMF darajasi past bo'ladi va lak-operon aktivlashmaydi.",
+                            'hint': "Katabolit activator oqsil (CAP) va cAMF rolini o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Pozitiv va negativ genetik regulyatsiyaning farqlarini misollar bilan tushuntirib bering.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'epigenetika-dnk-metillanishi-va-gistonlar',
+                'title': 'Epigenetika: DNK metillanishi va giston modifikatsiyalari',
+                'summary': "Nukleotidlar ketma-ketligini o'zgartirmasdan genlar aktivligini va fenotipik namoyon bo'lishini nazorat qiluvchi molekulyar mexanizmlar.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Epigenetikaning mohiyati',
+                        'body': "Epigenetika — DNKning birinchi darajali ketma-ketligi (A, T, G, S) o'zgarmagan holda, genlar ekspressiyasining o'zgarishi va bu o'zgarishlarning bo'linish jarayonida nasldan-naslga o'tishini o'rganadigan fan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'DNK metillanishi va giston atsetillanishi',
+                        'body': "DNKdagi sitozin asoslariga metil guruhining birikishi (CpG orolchalarida) odatda transkripsiyani bostiradi (genni 'o'chiradi'). Aksincha, giston oqsillarining atsetillanishi xromatinni bo'shashtiradi (euxromatin) va transkripsiyani faollashtiradi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Epigenetik o'zgarish mexanizmlari",
+                        'items': [
+                            'DNK-metiltransferaza (DNMT) fermenti sitozinga metil guruhini biriktiradi.',
+                            "Giston atsetiltransferaza (HAT) gistonlar dumi bilan bog'lanib, musbat zaryadni kamaytiradi va DNK-giston bog'lanishini bo'shashtiradi.",
+                            'Giston deatsetilaza (HDAC) atsetil guruhini olib tashlaydi va xromatinni zichlashtiradi (geteroxromatin).',
+                            'Nokodlovchi rRNK va miRNKlar transkripsiyadan keyingi gen susaytirilishida (silencing) qatnashadi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Epigenetik belgilarga atrof-muhit, ovqatlanish va turmush tarzi bevosita ta'sir ko'rsatishi mumkin va ular qaytar xarakterga ega."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "DNKning sitozin nukleotidiga metil guruhining birikishi gen ekspressiyasiga qanday ta'sir qiladi?",
+                        'options': [
+                            'Gen transkripsiyasini har doim tezlashtiradi',
+                            "Gen transkripsiyasini susaytiradi yoki to'xtatadi",
+                            'DNK strukturasini butunlay buzadi',
+                            'Mutoziyaga olib keladi'
+                        ],
+                        'answer': 1,
+                        'explain': "DNK metillanishi transkripsiya omillarining birikishiga to'sqinlik qilib, genlarni faolsizlantiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Gistonlarning atsetillanishi xromatinning zichlashuviga (geteroxromatin) olib keladi.',
+                        'answer': False,
+                        'explain': "Atsetillanish xromatinni bo'shashtirib euxromatin hosil qiladi, natijada transkripsiya faollashadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Bir xil genotipga ega bo'lgan bir tuxum ikizaklarining yosh o'tishi bilan fenotipik farqlari nimaga bog'liq?",
+                        'options': [
+                            "Genetik mutatsiyalar to'planishiga",
+                            'Epigenetik belgilardagi (metillanish) farqlarga',
+                            "Xromosoma sonining o'zgarishiga",
+                            'Meyoz buzilishiga'
+                        ],
+                        'answer': 1,
+                        'explain': "Bir tuxum ikizaklari bir xil DNKga ega bo'lsa-da, hayot davomida to'plangan epigenetik modifikatsiyalar sababli fenotipik farqlanishadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Epigenetik o'zgarishlar va gen regulyatsiyasiga oid savollarga javob bering.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Giston deatsetilaza (HDAC) ingibitorlari saraton kasalligini davolashda qanday biologik mexanizmga asoslanib qo'llaniladi?",
+                            'answer': "HDAC ingibitorlari gistonlar atsetillanishini saqlab qoladi, bu esa o'simtani bosuvchi (tumor-suppressor) genlarning qayta faollashishiga olib keladi.",
+                            'hint': "O'simtani bosuvchi genlarning faollashuvini ko'z oldingizga keltiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Genomik imprinting tushunchasi va uning epigenetik tabiatini misollar yordamida tushuntiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'genetik-muhandislik-va-rekombinant-dnk',
+                'title': 'Genetik muhandislik va rekombinant DNK',
+                'summary': 'Restriktaza fermentlari, vektori plasmidlar va maqsadli genlarni klonlash orqali rekombinant DNK molekulalarini olish texnologiyasi.',
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Rekombinant DNK texnologiyasi asoslari',
+                        'body': "Genetik muhandislik — organizmlarning genotipini maqsadli o'zgartirish texnologiyasidir. Rekombinant DNK (rDNK) turlicha manbalardan olingan DNK parchalarining sun'iy ravishda laboratoriya sharoitida biriktirilishi natijasida hosil bo'ladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Insulin genini bakteriyada klonlash',
+                        'body': 'Odamning insulin geni restriksion endonukleazalar (restriktaza) yordamida kesib olinadi va xuddi shu ferment bilan kesilgan bakteriya plazmidiga DNK-ligaza fermenti yordamida ulanadi. Natijada insulinn hosil qiluvchi rekombinant plazmida olinadi.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Gen klonlash bosqichlari',
+                        'items': [
+                            "Maqsadli geni bo'lgan DNK fragmentini va vektor (plazmida)ni ajratib olish.",
+                            'Ikkala DNKni ham bir xil restriktaza fermenti bilan kesib, yopishqoq uchlar (sticky ends) hosil qilish.',
+                            'DNK-ligaza yordamida target gen va vektorni biriktirib rDNK hosil qilish.',
+                            'rDNKni resipiyent bakteriyaga kiritish (transformatsiya) va seleksiyalash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Restriktazalar DNKdagi pallindrom ketma-ketliklarni tanib kesadi (masalan, GAATTC ketma-ketligini kesuvchi EcoRI).'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "DNK zanjiridagi yopishqoq uchlarni kovalent bog'lar orqali qayta ulagich ferment qaysi?",
+                        'options': [
+                            'DNK-polimeraza',
+                            'DNK-ligaza',
+                            'Restriktaza',
+                            'RNK-primaza'
+                        ],
+                        'answer': 1,
+                        'explain': "DNK-ligaza fermenti DNK parchalarining fosfodiefer bog'larini qayta tiklaydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Plazmidlar — bu bakteriyalarda asosiy xromosomadan tashqari joylashgan halqasimon DNK molekulalaridir.',
+                        'answer': True,
+                        'explain': "Plazmidlar avtonom replikatsiyalanuvchi halqasimon DNK bo'lib, vektori sifatida keng qo'llaniladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Restriktaza fermentlarining biologik kelib chiqishi va asosiy vazifasi nimadan iborat?',
+                        'options': [
+                            'Bakteriyalarning viruslar (bakteriofag)dan himoyalanish fermentlari',
+                            'Osimliklarda fotosintezni boshqaruvchi fermentlar',
+                            'Odamda ovqat hazm qilish fermentlari',
+                            "DNK replikatsiyasini to'xtatuvchi inaktivatorlar"
+                        ],
+                        'answer': 0,
+                        'explain': 'Bakteriyalar yot (bakteriofag) DNK xromosomasini kesib tashlash uchun restriktazalardan foydalanadi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Genetik muhandislik bosqichlari bo'yicha amaliy masalalarni ko'rib chiqing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Eukariot genida intronlar bo'lganligi sababli, inson genini bakteriyaga to'g'ridan-to me'yorda klonlab bo'lmaydi. Bu muammo qanday hal etiladi?",
+                            'answer': 'Yetuk mRNK molekulasidan qaytar transkriptaza (revertaza) fermenti yordamida intronlarsiz cDNK (komplementar DNK) sintez qilinadi.',
+                            'hint': 'Qaytar transkriptaza (revertaza) fermentini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Genetik o'zgartirilgan organizmlar (GMO) yaratishning afzalliklari va xavflari haqida fikr bildiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'genomika-va-bioinformatika-sekvenirlash',
+                'title': 'Genomika va bioinformatika: Genom sekvenirlash',
+                'summary': "DNK nukleotidlar ketma-ketligini aniqlash metodlari (Senger va NGS sekvenirlash) va bioinformatik ma'lumotlar bazalarini tahlil qilish.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Sekvenirlash nima?',
+                        'body': "Sekvenirlash — nuklein kislotalar (DNK va RNK) molekulasidagi nukleotidlarning (A, T, G, S) aniq ketma-ketligini aniqlash jarayonidir. Genomika butun organizm genomining tuzilishi va funksiyasini o'rganadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Senger usulidagi zanjir terminatsiyasi',
+                        'body': "Senger usulida dideoksinukleotidlar (ddNTP) ishlatiladi. ddNTP tarkibida 3'-OH guruhining yo'qligi sababli u sintezlanayotgan DNK zanjiriga qo'shilgach, polimerazatsiya jarayoni to'xtaydi (terminatsiya)."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Keyingi avlod sekvenirlashi (NGS) va bioinformatika',
+                        'items': [
+                            "Genomik DNKni tasodifiy kichik bo'laklarga ajratish (fragmentatsiya).",
+                            "Fragmentlarga maxsus adapterlarni ulash va millonlab reaksiya o'choqlarida parallel sekvenirlash.",
+                            "Bioinformatik dasturlar (BLAST, BWA) yordamida olingan qisqa o'qishlarni (reads) moslashtirib tekislash.",
+                            'Genom annotatsiyasi va variantlarni aniqlash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Bioinformatika kompyuter va statistik usullar yordamida biologik ma'lumotlarni (DNK va oqsil ketma-ketliklari) saqlash, izlash va tahlil qilish fanidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Senger usulida zanjir sintezining to'xtashiga (terminatsiyaga) sabab bo'ladigan molekula nima?",
+                        'options': [
+                            'Deoksinukleotid tri-fosfat (dNTP)',
+                            'Dideoksinukleotid tri-fosfat (ddNTP)',
+                            'RNK-pramer',
+                            'DNK-ligaza'
+                        ],
+                        'answer': 1,
+                        'explain': "ddNTP molekulasida 3'-OH guruhi yo'q, shuning uchun keyingi nukleotid fosfodiefer bog' orqali birika olmaydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "NGS (Next-Generation Sequencing) bir vaqtning o'zida millionlab DNK parchalarini parallel ravishda sekvenirlash imkonini beradi.",
+                        'answer': True,
+                        'explain': "NGS massiv parallel sekvenirlash texnologiyasiga asoslangan bo'lib, vaqt va xarajatni keskin kamaytirgan."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Nukleotid yoki oqsil ketma-ketliklarini ma'lumotlar bazasidan qidirish va solishtirish uchun eng keng qo'llaniladigan bioinformatik algoritm qaysi?",
+                        'options': [
+                            'CRISPR',
+                            'BLAST',
+                            'PCR',
+                            'ELISA'
+                        ],
+                        'answer': 1,
+                        'explain': "BLAST (Basic Local Alignment Search Tool) ketma-ketliklarni moslashtirish va o'xshashlikni topish uchun standart dasturdir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Genomika va genetik ma'lumotlarni tahlil qilish bo'yicha bilimlarni mustahkamlang.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Inson genomi loyihasi (Human Genome Project) doirasida inson genomida nechtaga yaqin oqsil kodlovchi gen borligi aniqlandi?',
+                            'answer': 'Taxminan 20,000 - 25,000 ta oqsil kodlovchi genlar aniqlandi.',
+                            'hint': 'Ilgari taxmin qilingan 100,000 tadan ancha kam.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Shaxsiy tibbiyot (personalized medicine) rivojlanishida genetik sekvenirlashning o'rnini asoslab bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'hujayraviy-signalizatsiya-va-signal-transduksiyasi',
+                'title': 'Hujayraviy signalizatsiya va signal transduksiyasi',
+                'summary': 'Hujayralararo kimyoviy signallarni qabul qilish, G-oqsil retseptorlari va ikkinchi marta vositachilar (cAMF, IP3) orqali kaskadli uzatish.',
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Signal transduksiyasi tushunchasi',
+                        'body': "Hujayra tashqarisidagi signal molekulalari (gormonlar, neyromediatorlar) hujayra yuzasidagi retseptorlar bilan bog'lanadi. Bu signal hujayra ichiga ikkinchi marta vositachilar va proteinkinaza fermentlari kaskadi orqali uzatiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "GPCR (G-oqsil bilan bog'langan retseptor) mexanizmi",
+                        'body': "Adrenalin retseptorga birikkach, G-oqsilning alpha-subbirligi GDF o'rniga GTFni biriktiradi va adenilattsiklaza fermentini faollashtiradi. Adenilattsiklaza ATFdan cAMF (tsiklik AMF) hosil qiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kaskadli javob reaksiyasi',
+                        'items': [
+                            'Birinchi vositachi (ligand) retseptorga birikadi.',
+                            "Retseptor konformatsiyasi o'zgarib, membranadagi effektorni faollashtiradi.",
+                            'Ikkinchi marta vositachi (cAMF, Ca2+, IP3, DAG) konsentratsiyasi keskin oshadi.',
+                            'Proteinkinazalar maqsadli oqsillarni fosforillaydi va fiziologik javob (masalan, glikogen parchalanishi) yuzaga keladi.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Proteinkinazalar oqsillarga fosfat guruhini qo'shadi (aktivlaydi/inaktivlaydi), proteinfosfatazalar esa fosfatni olib tashlaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "G-oqsil aktiv holatda bo'lganda uning subbirligiga qaysi molekula birikkan bo'ladi?",
+                        'options': [
+                            'GDF (GDP)',
+                            'GTF (GTP)',
+                            'ATF (ATP)',
+                            'cAMF'
+                        ],
+                        'answer': 1,
+                        'explain': "G-oqsil GTF birikkanda aktiv holatga o'tadi va signallarni keyingi bosqichga uzatadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Steroid gormonlar gidrofil bo'lganligi sababli faqat hujayra yuzasidagi membran retseptorlariga birikadi.",
+                        'answer': False,
+                        'explain': "Steroid gormonlar lipofil bo'lib, membranadan erkin o'tadi va hujayra ichidagi (sitoplazmatik/yadro) retseptorlarga birikadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi molekula signal uzatilishida ikkinchi marta vositachi (second messenger) hisoblanmaydi?',
+                        'options': [
+                            'tsiklik AMF (cAMF)',
+                            'Inozitol trifosfat (IP3)',
+                            'Kalsiy ionlari (Ca2+)',
+                            'Adrenalin'
+                        ],
+                        'answer': 3,
+                        'explain': 'Adrenalin birinchi marta vositachi (ligand) hisoblanadi.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Hujayraviy signalizatsiya kaskadini tahlil qilish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Signal transduksiyasidagi 'fermentativ amplifikatsiya' (kuchayish) hodisasi nima va u hujayraga qanday afzallik beradi?",
+                            'answer': "Bir dona gormon molekulasi retseptor bilan bog'lanib, minglab ikkinchi vositachilar va millionlab yakuniy mahsulotlar hosil bo'lishiga olib kelishi. Bu juda kichik signalga ham tez va kuchli javob berishni ta'minlaydi.",
+                            'hint': "Bir dona signal molekulasining ko'p bosqichli ko'payishini ko'z oldingizga keltiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Tirozinkinaza retseptorlari (RTK) va ularning insulin signal uzatishdagi rolini yoritib bering.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'onkogenetik-asoslar-va-apoptoz',
+                'title': 'Onkogenetik asoslar va apoptoz',
+                'summary': "Proto-onkogenlar va onkosuppressor genlar mutatsiyasi, hujayra sikli nazoratining buzilishi hamda apoptoz (rejalashtirilgan o'lim).",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Saraton kasalligining molekulyar genetikasi',
+                        'body': "Saraton hujayralarining nazoratsiz bo'linishi ikki guruh genlarning mutatsiyasiga bog'liq: proto-onkogenlar (bo'linishni rag'batlantiruvchi) va o'simtani bostiruvchi genlar (tumor suppressors)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'p53 oqsili — genom posboni',
+                        'body': "p53 geni o'simtani bostiruvchi gen hisoblanadi. DNK shikastlanganda p53 hujayra siklini (G1/S nuqtasida) to'xtatadi va tiklash fermentlarini chaqiradi. Agar DNK tiklanmasa, p53 hujayrani apoptozga (dasturlangan o'limga) yo'naltiradi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Apoptoz kaskadining kechiishi',
+                        'items': [
+                            'Ichki (mitoxondrial) yoki tashqi signal tufayli apoptoz faollashadi.',
+                            'Mitoxondriyadan sitoxrom C sitoplazmaga chiqadi.',
+                            'Kaspaza fermentlari (prokaspazalar) kaskadli aktivlashadi.',
+                            "Hujayra skeleti va DNK parchalanadi, apoptotik tanachalar hosil bo'lib fagotsitoz qilinadi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Nekroz va Apoptoz bir-biridan farq qiladi. Nekroz — shikastlanish natijasidagi tartibsiz va yallig'lanishli o'lim, apoptoz esa energiya sarflovchi toza rejalashtirilgan jarayon."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Proto-onkogen dominant mutatsiyaga uchrasa u qanday gen holatiga o'tadi va o'simta hosil bo'lishiga olib keladi?",
+                        'options': [
+                            'Onkogen',
+                            'Antigen',
+                            'Epigen',
+                            'Onkosuppressor'
+                        ],
+                        'answer': 0,
+                        'explain': 'Proto-onkogen funksiya ortishi (gain-of-function) mutatsiyasi natijasida onkogen deyiladi va saratonni keltirib chiqaradi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Apoptoz jarayonida hujayraning yorilishi atrof to'qimalarda kuchli yallig'lanish reaksiyasini keltirib chiqaradi.",
+                        'answer': False,
+                        'explain': "Apoptozda yallig'lanish bo'lmaydi, hujayra pufakchalar (apoptotik tanachalar)ga ajraladi va fagotsitlar tomonidan yutiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Apoptoz kaskadida proteolitik parchalanishni amalga oshiruvchi asosiy fermentlar oilasi qaysi?',
+                        'options': [
+                            'Restriktazalar',
+                            'Kaspazalar',
+                            'Polimerazalar',
+                            'Lipazalar'
+                        ],
+                        'answer': 1,
+                        'explain': 'Kaspazalar (cysteine-aspartic proteases) apoptoz jarayonini bajaruvchi fermentlardir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Onkogenetika va apoptoz jarayonlarini chuqurroq o'rganing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Ras oqsili va p53 genidagi mutatsiyalarning saraton rivojlanishidagi farqini tushuntiring (funksiya ortishi vs yo'qolishi).",
+                            'answer': "Ras - proto-onkogen bo'lib, funksiya ortishi (gain-of-function) mutatsiyasida uzluksiz bo'linish signalini beradi. p53 - suppressor bo'lib, funksiya yo'qolishi (loss-of-function) mutatsiyasida shikastlangan bo'linish to'xtamaydi.",
+                            'hint': "Onkogenlar akselerator, suppressorlar esa tormoz pedaliga o'xshatiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Telomer va telomeraza fermentining saraton hujayralarining 'o'lmasligi' (immortality)dagi rolini tavsiflang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'immunogenetika-va-vdj-rekombinatsiyasi',
+                'title': 'Immunogenetika va V(D)J rekombinatsiyasi',
+                'summary': "B va T-limfotsitlar retseptorlarining va antitelolarning ulkan xilma-xilligini ta'minlovchi somatik genetik rekombinatsiya mexanizmi.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Immunoglobulinlar diversifikatsiyasi',
+                        'body': "Inson organizmi millionlab xilma-xil antigenlarni tanib olish xususiyatiga ega. Biroq, inson genomida atigi 20,000 ga yaqin gen bor. Bu xilma-xillik V(D)J somatik rekombinatsiyasi orqali ta'minlanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'V(D)J rekombinatsiyasi mexanizmi',
+                        'body': "Immunoglobulin og'ir zanjiri lokusida ko'plab Variable (V), Diversity (D), va Joining (J) gen segmentlari mavjud. Limfotsitlar rivojlanishi davomida RAG1 va RAG2 fermentlari ushbu segmentlarni tasodifiy kombinatsiyada birlashtiradi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Antitelolar xilma-xilligining manbalari',
+                        'items': [
+                            'V, D, J segmentlarining tasodifiy rekombinatsiyasi.',
+                            "Segmentlar birikish joyida nukleotidlarning tasodifiy qo'shilishi yoki o'chirilishi (junctional diversity).",
+                            "Og'ir va engil zanjirlarning tasodifiy juftlashuvi.",
+                            "Antigen bilan to'qnashgandan sohn B-hujayralardagi Somatik gipermutatsiya (SHM)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: V(D)J rekombinatsiyasi faqat yetilayotgan B va T limfotsitlarda sodir bo'ladi, boshqa tanadagi somatik hujayralarda bu segmentlar o'zgarmas holatda qoladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'V(D)J rekombinatsiyasini amalga oshiruvchi asosiy rekombinaza ferment majmuasi qaysi?',
+                        'options': [
+                            'RAG1 va RAG2',
+                            'DNK-polimeraza va ligaza',
+                            'Cas9 va gRNK',
+                            'Restriktaza va topoisomeraza'
+                        ],
+                        'answer': 0,
+                        'explain': "RAG1 va RAG2 (Recombination Activating Genes) V, D va J segmentlarini kesib biriktirishda hal qiluvchi rol o'ynaydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "MHC (To'qima moslashuvchanligi bosh kompleksi) oqsillari polimorfizmi a'zolar ko'chirilganda (transplantatsiya) ko'chirilgan a'zoning bitib ketishiga ta'sir qilmaydi.",
+                        'answer': False,
+                        'explain': 'MHC genlari juda yuqori polimorfizmga ega va transplantatning retsepsiya qilinishi yoki rad etilishida asosiy omildir.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "B-limfotsitlar antigen bilan to'qnashgandan keyin ularning immunoglobulin genlarida yuqori tezlikda mutatsiyalar yuz berishi jarayoni nima deyiladi?",
+                        'options': [
+                            'Apoptoz',
+                            'Somatik gipermutatsiya',
+                            'Transkripsiya',
+                            'Metillanish'
+                        ],
+                        'answer': 1,
+                        'explain': "Somatik gipermutatsiya (SHM) antitelolarning antigenga afilligini (bog'lanish kuchini) oshirishga xizmat qiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Immunogenetika va antitelolar tuzilishi haqidagi bilimlarni tekshirish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'MHC I va MHC II oqsillari orasidagi asosiy genetik va funksional farqlarni ayting.',
+                            'answer': "MHC I barcha yadroga ega hujayralarda bo'lib Cytotoxic T (CD8+) hujayralarga antigen ko'rsatadi; MHC II esa antigen taqdim etuvchi professional hujayralarda (makrofag, B-hujayra) bo'lib Helper T (CD4+) hujayralarga antigen ko'rsatadi.",
+                            'hint': "Qaysi hujayra turlarida ekspressiya bo'lishiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Monoklonal antitelolarni olishning gibridoma texnologiyasi va uning tibbiyotdagi ahamiyatini tushuntiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'molekulyar-filogenetika-va-molekulyar-soatlar',
+                'title': 'Molekulyar filogenetika va molekulyar soatlar',
+                'summary': 'Nuklein kislotalar va oqsillar ketma-ketligi asosida turlarning evolyutsion qarindoshligini, filogenetik daraxatlarni hamda ajralish vaqtini aniqlash.',
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Molekulyar filogenetika asoslari',
+                        'body': "Molekulyar filogenetika biologik turlar o'rtasidagi evolyutsion qarindoshlikni morfologik belgilardan ko'ra aniqroq bo'lgan DNK, RNK va oqsil ketma-ketliklarini taqqoslash orqali o'rganadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': '16S rRNK va hayotning uchta domeni',
+                        'body': 'Karl Veze 16S rRNK geni ketma-ketligini tahlil qilish orqali barcha tirik organizmlarni 3 ta domenga: Bakteriyalar, Arxeyalar va Eukariotlarga ajratgan.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Molekulyar soat gipotezasi',
+                        'items': [
+                            "Neytral mutatsiyalar genotipda vaqt o'tishi bilan doimiy va o'rtacha teng tezlikda to'planadi (Zukerkandl va Pauling).",
+                            "Ikki tur o'rtasidagi mutatsiyalar soni (farqlar) ularning so'nggi umumiy ajdodidan qachon ajralganiga to'g'ri mutanosib bo'ladi.",
+                            "Qazilma qoldiqlar (fossillar) ma'lumotlari yordamida molekulyar soat kalibrlanadi (vaqt shkalasi beriladi)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Gomologik genlar ikki guruhga bo'linadi: Ortologlar (tur hosil bo'lishi natijasida ajralgan) va Paraloglar (gen duplikatsiyasi natijasida hosil bo'lgan)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Organizmlarning 3 ta domenga (Bakteriyalar, Arxeyalar, Eukariotlar) ajratilishida qaysi molekulyar marker asos bo'lib xizmat qilgan?",
+                        'options': [
+                            'Gemoglobin geni',
+                            '16S/18S rRNK geni',
+                            'ATF-sintaza oqsili',
+                            'Sitoxrom c'
+                        ],
+                        'answer': 1,
+                        'explain': "16S rRNK barcha tirik organizmlarda o'ta konservativ bo'lib, filogenetik daraxt qurishda standart marker hisoblanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Molekulyar soat gipotezasiga ko'ra, neytral mutatsiyalarning to'planish tezligi doimiy va evolyutsion vaqtga proporsionaldir.",
+                        'answer': True,
+                        'explain': "Neytral evolyutsiya nazariyasi mutatsiyalar ma'lum o'rtacha tezlikda to'planishini ta'minlaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Bitta tur ichida gen duplikatsiyasi (ikki baravar ortishi) natijasida paydo bo'lgan gomologik genlar nima deyiladi?",
+                        'options': [
+                            'Ortologlar',
+                            'Paraloglar',
+                            'Analoglar',
+                            'Allellar'
+                        ],
+                        'answer': 1,
+                        'explain': "Bir tur ichida gen duplikatsiyasi tufayli hosil bo'lgan genlar paralog genlar deb ataladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Molekulyar evolyutsiya va filogenetik tahlilga oid topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Nimaga filogenetik tahlilda sinonim mutatsiyalar (oqsil ketma-ketligini o'zgartirmaydigan) sinonim bo'lmagan mutatsiyalarga qaraganda molekulyar soat sifatida aniqroq ishlaydi?",
+                            'answer': "Sinonim mutatsiyalar neytral bo'lib, tabiiy tanlanish bosimiga uchramaydi va doimiy tezlikda to'planadi.",
+                            'hint': "Neytral evolyutsiya va tabiiy tanlanish ta'sirini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Filogenetik darratlarni qurishda 'Maximum Parsimony' (eng kam bosqichlilik) prinsipi qanday qo'llaniladi?"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'crispr-cas9-va-genom-tahrirlash',
+                'title': 'CRISPR-Cas9 va genom tahrirlash',
+                'summary': 'Bakteriyalarning moslashuvchan immunitet tizimiga asoslangan va genomni aniq nuqtalarda kesib tahrirlash (CRISPR-Cas9) texnologiyasi.',
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'CRISPR-Cas9 tizimi kelib chiqishi',
+                        'body': "CRISPR (Clustered Regularly Interspaced Short Palindromic Repeats) — bakteriya va arxeyalarning viruslarga (bakteriofaglarga) qarshi moslashuvchan immunitet tizimidir. Emmanuelle Charpentier va Jennifer Doudna uni genomni tahrirlash quroliga aylantirishgani uchun Nobel mukofotiga sazovor bo'lishgan."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Cas9 va gRNK (Yo'naltiruvchi RNK) ishlash prinsipi",
+                        'body': "gRNK (guide RNA) nishon DNK ketma-ketligiga komplementar birikadi va Cas9 endonukleaza fermentini aynan o'sha joyga olib keladi. Cas9 DNKning ikkala zanjirini kesib qo'shaloq uzilish (DSB) hosil qiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'CRISPR yordamida genomni tahrirlash mexanizmi',
+                        'items': [
+                            'gRNK va Cas9 majmuasining hujayraga kiritilishi va PAM (Protospacer Adjacent Motif) ketma-ketligini tanishi.',
+                            'Cas9 fermentining nishon DNKda ikkita zanjirli uzilish (DSB) hosil qilishi.',
+                            'NHEJ (Nogomologik uchlarni biriktirish) orqali gen faoliyatini buzish (knockout).',
+                            "HDR (Gomologik rekonstruksiya) orqali donor DNK kiritib, genni to'g'rilash yoki yangi gen kiritish (knock-in)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: CRISPR texnologiyasining eng katta afzalligi — uning yuqori aniqligi, arzonligi va bir vaqtning o'zida ko'plab genlarni (multiplexing) tahrirlash imkoniyatidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "CRISPR-Cas9 tizimida Cas9 fermentini maqsadli DNK ketma-ketligiga yo'naltiruvchi molekula qaysi?",
+                        'options': [
+                            "gRNK (yo'naltiruvchi RNK)",
+                            'Plazmida DNKsi',
+                            'ATF molekulasi',
+                            'Restriktaza oqsili'
+                        ],
+                        'answer': 0,
+                        'explain': "gRNK (guide RNA) maqsadli DNK ketma-ketligiga komplementar bog'lanib, Cas9 ni to'g'ri manzilga boshqaradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Cas9 fermenti DNKni ixtiyoriy joyidan kesa beradi, unga maxsus PAM ketma-ketligi talab qilinmaydi.',
+                        'answer': False,
+                        'explain': "Cas9 kesishi uchun nishon DNK ketma-ketligi yonida albatta PAM (Protospacer Adjacent Motif) bloki bo'lishi shart."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "DNK zanjiri kesilgandan so'ng donor DNK matritsasi ishtirokida genni aniq tuzatish (rekombinatsiya) yo'li nima deyiladi?",
+                        'options': [
+                            'NHEJ (Non-homologous end joining)',
+                            'HDR (Homology-directed repair)',
+                            'Meyotik krossingover',
+                            'Transkripsiya'
+                        ],
+                        'answer': 1,
+                        'explain': "HDR (Gomologik yo'naltirilgan репарация) donor DNK yordamida aniq genetik tuzatishni ta'minlaydi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'CRISPR-Cas9 texnologiyasi va uning istiqbollarini tahlil qilish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "CRISPR-Cas9 yordamida inson muloqot va somatik hujayralarini tahrirlash o'rtasidagi bioetik farqlarni tushuntiring.",
+                            'answer': "Somatik hujayralar tahrirlanganda o'zgarishlar faqat o'sha bemorning o'zida qoladi va nasldan-naslga o'tmaydi. Muloqot (jinsiy/murtak) hujayralari tahriri esa barcha kelajak avlodlarga o'tadi va kutilmagan evolyutsion xavflar tug'diradi.",
+                            'hint': "Kelajak avlodlarga nasldan-naslga o'tish imkoniyatini o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "CRISPR-Cas9 ning 'off-target' (noto'g'ri nishonni kesish) ta'siri nima va uni kamaytirish uchun bioinjeneriyada qanday usullar qo'llanilmoqda?"
                         }
                     ]
                 }
@@ -33745,6 +36172,806 @@ SUBJECTS = [
                             'id': 't2',
                             'type': 'open',
                             'prompt': "Badiiy yoki ilmiy uslubda Locative Inversion qatnashtirgan 2 ta ta'sirchan gap tuzing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'matn-koheziyasi-va-diskurs-markyorlari',
+                'title': 'Matn Koheziyasi va Diskurs Markyorlari (Academic Cohesion)',
+                'summary': "Ushbu darsda akademik matnlarda mantiqiy bog'liqlikni ta'minlovchi diskurs markyorlari va grammatik koheziya zanjirlari o'rganiladi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Akademik va ilmiy matnlarda g'oyalarni mantiqiy bog'lash uchun shunchaki bog'lovchilar etarli emas. Diskurs markyorlari (Discourse Markers) va anaforik/kataforik ishoralar matnning ravonligi hamda mantiqiy koheziyasini ta'minlaydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "The primary cause was economic instability; notwithstanding this fact, policy makers refused to intervene. ('notwithstanding this fact' - ilmiy diskurs markyori)"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Koheziya usullari',
+                        'items': [
+                            "Anaforik ishora: Ilgari tilga olingan tushunchaga qaytish (e.g., 'this trend').",
+                            "Lexical Reiterative: So'zlarni sinonim va giponimlar bilan almashtirish.",
+                            'Textual Connectors: Ziddiyat, sabab va natijani ifodalovchi akademik markyorlar.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Diskurs markyorlari gap boshida, ortida vergul bilan ajratilib, matnning akademik uslubini oshiradi.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi diskurs markyori ilmiy matnda kutilmagan qarama-qarshilikni ko'rsatish uchun ishlatiladi?",
+                        'options': [
+                            'Consequently',
+                            'Notwithstanding this',
+                            'Furthermore',
+                            'In other words'
+                        ],
+                        'answer': 1,
+                        'explain': "'Notwithstanding this' - 'shunga qaramay / shunga qaramasdan' degan ma'noni anglatadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Anaforik ishora matnda kelajakda tilga olinadigan axborotga ishora qiladi.',
+                        'answer': False,
+                        'explain': "Anaforik ishora o'zidan oldin kelgan axborotga, kataforik ishora esa keyingisiga ishora qiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'The research failed. ______, valuable data was gathered.' Boshliqni to'ldiring.",
+                        'options': [
+                            'Be that as it may',
+                            'As a result',
+                            'Namely',
+                            'In short'
+                        ],
+                        'answer': 0,
+                        'explain': "'Be that as it may' - 'Qanday bo'lmasin / Shunday bo'lsa-da' ma'nosini beradi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Matn koheziyasi bo'yicha berilgan topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Furthermore' o'rnida akademik matnda ishlatish mumkin bo'lgan 2 ta muqobil diskurs markyorini yozing.",
+                            'answer': 'Moreover, Additionally, In addition',
+                            'hint': "Qo'shimcha axborot beruvchi rasmiy markyorlarni eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Berilgan g'oyalarni 3 ta gapdan iborat akademik koheziyaga ega kichik matnga aylantiring: (1. Global warming is accelerating. 2. Carbon emissions remain high. 3. Immediate policy intervention is crucial.)"
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'epistemik-va-deontik-modallik',
+                'title': 'Epistemik va Deontik Modallik Chuqur Tahlili',
+                'summary': "Modal fe'llarning ehtimollik (epistemik) va majburiyat/buyruq (deontik) funksiyalarining akademik diskursdagi o'rni tahlil qilinadi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Lingvistikada modallik ikki asosiy turga bo'linadi: Deontic (harakatni majburiy qilish, ruxsat berish) va Epistemic (so'zlovchining borliq haqidagi bilimiga asoslangan ehtimollik va daraja)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': '1. You must submit the thesis tomorrow. (Deontic - majburiyat)\n2. The conclusion must be correct given the evidence. (Epistemic - yuqori darajadagi mantiqiy ehtimol)'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Modallik turlarini ajratish',
+                        'items': [
+                            "Deontic modallik sub'yekt ustidan nazorat va irodani ifodalaydi (must, should, may).",
+                            'Epistemic modallik dalillarga asoslangan ehtimollik va haqiqat darajasini bildiradi (might, must, could).',
+                            'Akademik matnlarda Epistemik modallik xulosalarni ehtiyotkorlik bilan bildirishda (hedging) muhim vositadir.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Epistemik modallik o'tgan zamonga tegishli bo'lsa 'Modal + have + V3' strukturasi qo'llaniladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'The artifacts may belong to the Bronze Age.' Ushbu gapda 'may' qaysi modallik turini ifodalamoqda?",
+                        'options': [
+                            'Deontic (Ruxsat)',
+                            'Epistemic (Ehtimollik)',
+                            'Deontic (Majburiyat)',
+                            'Dynamic (Qobiliyat)'
+                        ],
+                        'answer': 1,
+                        'explain': "Bu yerda 'may' taxmin va ehtimollikni ifodalagani uchun Epistemik modallikdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Deontic modallik so'zlovchining axborot haqiqatiga bo'lgan ishonch darajasini baholaydi.",
+                        'answer': False,
+                        'explain': 'Axborot haqiqatini baholash Epistemik modallikka taalluqli.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi gapda Epistemik 'must' qo'llanilgan?",
+                        'options': [
+                            'Students must wear uniforms.',
+                            'You must not enter this room.',
+                            'The theory must have been developed in the 19th century.',
+                            'Candidates must complete the task in 10 minutes.'
+                        ],
+                        'answer': 2,
+                        'explain': "Dalillarga asoslangan o'tgan zamon mantiqiy xulosasi epistemik modallikdir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Epistemik va deontik modallikni farqlash va to'g'ri qo'llash mashqlari.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'It is mandatory that all variables be controlled.' ushbu deontik mazmundagi gapni modal fe'l yordamida qayta yozing.",
+                            'answer': 'All variables must be controlled.',
+                            'hint': "'Must' yoki 'should' ishlatishingiz mumkin."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Epistemik 'could' va 'should' fe'llari ishtirokida ilmiy gipotezani ifodalovchi 2 ta gap tuzing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'nominalizatsiya-va-grammatik-zichlik',
+                'title': 'Nominalizatsiya va Grammatik Zichlik (Nominalization)',
+                'summary': "Fe'l va sifatlarni otga aylantirish orqali akademik matnning axborot zichligini oshirish hamda rasmiy uslubni shakllantirish usullari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Nominalizatsiya (Nominalization) - bu fe'l yoki sifatlarning otga aylantirilishi jarayoni bo'lib, akademik ingliz tilining asosiy xususiyatidir. Bu usul matnga yuqori grammatik zichlik (grammatical density) beradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': 'Norasmiy: The climate reacted quickly because the temperature rose rapidly.\nAkademik/Nominalizatsiyalashgan: The rapid rise in temperature caused a swift climatic reaction.'
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Nominalizatsiya jarayoni',
+                        'items': [
+                            "Harakatni ifodalovchi fe'llarni aniqlang (e.g., analyze -> analysis).",
+                            "Sifatlarni ot shakliga o'tkazing (e.g., stable -> stability).",
+                            "Otli birikmalarni 'of', 'in', 'by' predloglari orqali murakkab zanjirga biriktiring."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Haddan tashqari nominalizatsiya matnni tushunishni qiyinlashtirishi mumkin, shuning uchun mutanosiblikni saqlang.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'They analyzed the data thoroughly.' gapining nominalizatsiyalashgan shakli qaysi?",
+                        'options': [
+                            'They made a analysis of data.',
+                            'A thorough analysis of the data was conducted.',
+                            'Data was analyzed thoroughly by them.',
+                            'Analyzing data was thorough.'
+                        ],
+                        'answer': 1,
+                        'explain': "Fe'l (analyzed) otga (analysis) va ravish (thoroughly) sifatga (thorough) aylantirilgan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Nominalizatsiya matndagi grammatik zichlikni kamaytiradi.',
+                        'answer': False,
+                        'explain': "Aksincha, nominalizatsiya bir gap ichida ko'proq ot birikmalarini to'plab, grammatik zichlikni oshiradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi so'z 'implement' fe'lining nominalizatsiyalangan shakli hisoblanadi?",
+                        'options': [
+                            'Implementable',
+                            'Implementation',
+                            'Implementing',
+                            'Implemented'
+                        ],
+                        'answer': 1,
+                        'explain': "'Implementation' ot shaklidir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Norasmiy va oddiy gaplarni nominalizatsiya usuli orqali akademik uslubga o'tkazing.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Because the economy grew steadily, poverty declined.' gapini nominalizatsiya qiling.",
+                            'answer': 'The steady growth of the economy led to a decline in poverty.',
+                            'hint': "'grew' va 'declined' fe'llarini otga aylantiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zingiz tanlagan ilmiy yo'nalishda 2 ta nominalizatsiyalashgan murakkab akademik gap tuzing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'axborot-strukturasi-va-end-weight-tamoyili',
+                'title': 'Axborot Strukturasi va End-Weight Tamoyili',
+                'summary': "Gapda ma'lum (Given) va yangi (New) axborot taqsimoti hamda gap oxirini og'irlashtirish (End-Weight) tamoyillari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Ingliz tili sintaksisida axborot tushunilishi oson bo'lishi uchun 'Given-to-New' prinsipi va 'End-Weight' tamoyili qo'llaniladi. Ma'lum axborot gap boshida, yangi va eng muhim axborot hamda murakkab birikmalar gap oxirida kelishi kerak."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Yomon struktura: That the government will increase taxes on luxury goods without consulting the public is unexpected.\nEnd-Weight qo'llangan: It is unexpected that the government will increase taxes on luxury goods without consulting the public."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "End-Weight qo'llash usullari",
+                        'items': [
+                            "Tayyorlovchi 'It' (Dummy/Preparatory It) qo'llash.",
+                            "Passiv qurilmalardan foydalanib, og'ir ot birikmasini oxirga surish.",
+                            "Existential 'There' sintaksisidan foydalanish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Gap boshida juda uzun ega (heavy subject) qo'llash ingliz tili uslubiyatida noqulay va noo'rin hisoblanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'End-Weight tamoyilining asosiy maqsadi nima?',
+                        'options': [
+                            'Gapni iloji boricha qisqartirish',
+                            'Uzun va murakkab sintaktik birliklarni gap oxiriga joylashtirish',
+                            "Barcha fe'llarni past tense ga o'tkazish",
+                            "Egani har doim gap oxirida qo'llash"
+                        ],
+                        'answer': 1,
+                        'explain': "End-Weight tamoyili og'ir va murakkab iboralarni gap oxiriga surish orqali o'qishni osonlashtiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Given-to-New tamoyiliga ko'ra, kitobxonga allaqachon ma'lum bo'lgan axborot gap oxirida beriladi.",
+                        'answer': False,
+                        'explain': "Ma'lum (Given) axborot gap boshida, yangi (New) axborot gap oxirida keladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi gap End-Weight tamoyiliga to'liq amal qilgan?",
+                        'options': [
+                            'To accept the offer without any hesitation was difficult.',
+                            'It was difficult to accept the offer without any hesitation.',
+                            'Accepting the offer without hesitation difficult was.',
+                            'Without hesitation to accept the offer was difficult.'
+                        ],
+                        'answer': 1,
+                        'explain': "Preparatory 'It' orqali uzun infitinitiv birikma gap oxiriga surilgan."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Gap axborot strukturasini qayta tartiblash mashqlari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'That we need to reform the educational system from scratch is obvious.' gapini Preparatory 'It' orqali qayta yozing.",
+                            'answer': 'It is obvious that we need to reform the educational system from scratch.',
+                            'hint': "'It is obvious that...' strukturasi bilan boshlang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Uzun eganing gap boshida kelishi o'qishni qiyinlashtiradigan bitta misol keltiring va uni End-Weight tamoyili bo'yicha to'g'rilang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'subyunkativ-mayl-va-arxaik-konstruksiyalar',
+                'title': "Sub'yunkativ Mayl va Arxaik Grammatik Konstruksiyalar",
+                'summary': 'Rasmiy, yuridik va akademik ingliz tilidagi Subjunctive Mood (Be-subjunctive, Were-subjunctive) va sintaktik arxaizmlar.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Subjunctive Mood (Istak-istak va gipoteza mayli) zamonaviy so'zlashuvda kamaysa-da, rasmiy yuridik hujjatlar va akademik matnlarda saqlanib qolgan. U Be-subjunctive (fe'lning yalang'och negizi) va Were-subjunctive (barcha shaxslar uchun were) shakllarida uchraydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "1. The board demanded that the CEO resign immediately. (resign - 'resigns' emas)\n2. Be that as it may, the contract remains valid. (Arxaik birikma)"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Subjunctive formulalari',
+                        'items': [
+                            'Mandative Subjunctive: Verb of demand/proposal + THAT + subject + Bare Verb (e.g., recommend that he be present).',
+                            'Formulaic Subjunctive: Qotib qolgan iboralar (e.g., Suffice it to say, God save the King, Come what may).',
+                            "Were-subjunctive: Real bo'lmagan gipotezalarda (e.g., If I were to accept...)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Mandative subjunctive ingliz tilida 'should + verb' shakli bilan ham berilishi mumkin (ayniqsa British English da)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'The committee insisted that the report ______ published without delay.' Boshliqni to'ldiring.",
+                        'options': [
+                            'is',
+                            'was',
+                            'be',
+                            'been'
+                        ],
+                        'answer': 2,
+                        'explain': "'Insist that...' fe'lidan keyin Be-subjunctive (yalang'och fe'l) qo'llaniladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Subjunctive mood da uchinchi shaxs birlikda fe'lga '-s' qo'shimchasi qo'shiladi.",
+                        'answer': False,
+                        'explain': "Subjunctive da fe'l har qanday shaxsda boshlang'ich yalang'och (infinitive without to) shaklida bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Suffice it to say' iborasining ma'nosi nima?",
+                        'options': [
+                            "Aytish yetarli bo'lsaki",
+                            "Xulosa qilib aytganda yo'q",
+                            'Aytish taqiqlanadi',
+                            'Tushunish qiyinki'
+                        ],
+                        'answer': 0,
+                        'explain': "'Suffice it to say' - 'Aytish kifoyaki / Shuni aytish yetarliki' degan ma'nodagi arxaik subjunctive iboradir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Subjunctive mood va rasmiy iboralarni qo'llash bo'yicha vazifalar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'It is imperative that every citizen (to follow) the new legislation.' Qavs ichidagi fe'lni subjunctive shaklida yozing.",
+                            'answer': 'follow',
+                            'hint': "Bare infinitive shaklini ishlating, '-s' qo'shmang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Yuridik yoki akademik uslubda Mandative Subjunctive (propose, demand, recommend) qatnashgan 2 ta gap tuzing.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'grammatik-metafora-va-funksional-grammatika',
+                'title': 'Grammatik Metafora va Funksional Grammatika',
+                'summary': "M.A.K. Halliday nazariyasiga ko'ra ma'no va grammatik shaklning o'zaro o'rin almashishi hamda ideatsional metafora.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Sistem-funksional grammatikada (Systemic Functional Linguistics) Grammatik Metafora - bu ma'lum bir semantik ma'noning nodatdiy (incongruent) grammatik shaklda ifodalanishidir. Leksik metaforada so'z o'zgaradi, grammatik metaforada esa sintaktik kategoriya o'zgaradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Congruent (Oddiy/Ochiq): We walked for hours, which exhausted us.\nIncongruent (Grammatik Metafora): Our multi-hour walk resulted in utter exhaustion. (Harakat va natija ot va sifat birlashmasiga ko'chgan)"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Grammatik Metaforani shakllantirish',
+                        'items': [
+                            "Jarayonni (Fe'l) Ismga (Ot) o'tkazish (Ideational metaphor).",
+                            "Modallikni (Modal fe'l) Sifat yoki Otga o'tkazish (Interpersonal metaphor, e.g., 'It is probable that...' instead of 'probably').",
+                            "Mantiqiy bog'lanishlarni fe'lga o'tkazish (e.g., 'cause', 'lead to', 'result in')."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Grammatik metafora ilmiy va akademik yozuvning eng yuqori darajadagi belgisi hisoblanadi.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Grammatik metafora Leksik metaforadan nimasi bilan farq qiladi?',
+                        'options': [
+                            "So'zlarning ma'nosi o'zgarmasdan grammatik kategoriyasi (sintaksisi) o'zgaradi",
+                            "Faqat ko'chma ma'nodagi so'zlar ishlatiladi",
+                            "Faqat she'riyatda qo'llaniladi",
+                            "Grammatik xatolardan iborat bo'ladi"
+                        ],
+                        'answer': 0,
+                        'explain': "Grammatik metaforada semantik mazmun saqlangan holda grammatik sinf (fe'l -> ot va b.) o'zgaradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'It is obvious that...' iborasi Interpersonal Grammatical Metaphor ga misol bo'la oladi.",
+                        'answer': True,
+                        'explain': 'Chunki modal ravish (obviously) obyektivlashgan ot/sifat birikmasi shakliga keltirilgan.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Because it rained heavily, the river flooded.' gapining Grammatik Metaforaga mos variantini toping.",
+                        'options': [
+                            'Heavy rain caused the river to flood.',
+                            'The heavy rainfall resulted in a river flood.',
+                            'It rained heavily so the river flooded.',
+                            'Rain was heavy and river flooded.'
+                        ],
+                        'answer': 1,
+                        'explain': "Sababiy ergash gap (because) ot va fe'l birikmasiga ('rainfall resulted in flood') transformatsiya qilingan."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Grammatik metafora orqali akademik matnlarni qayta shakllantirish.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'If technology advances rapidly, society transforms deeply.' gapini Grammatical Metaphor (Ideational) shakliga o'tkazing.",
+                            'answer': 'Rapid technological advancement leads to deep societal transformation.',
+                            'hint': "Shart ergash gapni 'leads to' yoki 'causes' fe'li va ot birikmalariga almashtiring."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Funksional grammatikaga ko'ra, 'I strongly believe that...' subyektiv modal iborasini ob'yektiv Interpersonal Metaphor shakliga o'tkazib yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'pragmatik-markyorlar-va-nutqiy-aktlar',
+                'title': 'Pragmatik Markyorlar va Nutqiy Aktlar Nazariyasi',
+                'summary': "Nutqiy aktlar (Lokutsiya, Illokutsiya, Perlokutsiya) va og'zaki/yozma muloqotda pragmatik markyorlarning rolini o'rganish.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "J.L. Austin va J. Searle nazariyasiga ko'ra, gapirish - bu amalni bajarishdir (Speech Acts). Nutqiy akt 3 bosqichdan iborat: Lokutsiya (gapning to'g'ridan-to'g'ri ma'nosi), Illokutsiya (so'zlovchining yashirin maqsadi) va Perlokutsiya (tinglovchida qoldirilgan ta'sir). Pragmatik markyorlar (strictly speaking, as it were, mind you) bu maqsadni tushunishga yordam beradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "Gap: 'It's cold in here.'\n- Lokutsiya: Xonadagi harorat past.\n- Illokutsiya (Pragmatik maqsad): 'Oynani yoping' iltimosi/so'rovi.\n- Perlokutsiya: Tinglovchi turib oynani yopadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Pragmatik tahlil adamlari',
+                        'items': [
+                            "Illokutsiya kuchini aniqlash (Buyruq, taklif, va'da, so'rov).",
+                            'Pragmatik markyorlar funksiyasini tahlil qilish (Hedge, Face-saving, Focus).',
+                            "Kontekst va so'zlovchi hamda tinglovchi o'rtasidagi ijtimoiy maqomni inobatga olish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Pragmatik markyorlar gapning propozitsional (semantik) mazmunini o'zgartirmaydi, lekin so mezonlar munosabatini tartiblaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Nutqiy aktlar nazariyasida illokutsiya (illocutionary act) nimani anglatadi?',
+                        'options': [
+                            "So'zlarning grammatik to'g'riligini",
+                            "So'zlovchining gapni aytishdan ko'zlagan amaliy maqsadi va niyatini",
+                            'Tinglovchining bergan fiziologik reaksiyasini',
+                            'Tovushlarning talaffuz etilishini'
+                        ],
+                        'answer': 1,
+                        'explain': "Illokutsiya - bu so'zlovchining gap ortidagi yashirin maqsadi (intention) dir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "'Mind you' pragmatik markyor sentimenti suhbatdoshni kutilmagan qo'shimcha shart yoki istisnodan ogohlantirish uchun ishlatiladi.",
+                        'answer': True,
+                        'explain': "'Mind you' suhbatdoshga 'esingda tutginki / e'tibor bergin' ma'nosida qo'shimcha shartni bildiradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "'Strictly speaking, whales are mammals, not fish.' gapida 'Strictly speaking' qaysi pragmatik vazifani bajarmoqda?",
+                        'options': [
+                            'Hedging (Ehtiyotkorlik)',
+                            "Precision/Boundary Marker (Aniq chegaralash/Ta'riflash)",
+                            "Apology (Uzr so'rash)",
+                            'Turn-taking (Navbat olish)'
+                        ],
+                        'answer': 1,
+                        'explain': "'Strictly speaking' - qat'iy ta'rif va aniqlik chegarasini belgiliydigan markyordir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Nutqiy aktlar va pragmatik markyorlarni kontekstda tahlil qilish topshiriqlari.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Could you pass the salt?' gapining Illokutsiya (Illocutionary force) maqsadi nima?",
+                            'answer': 'A polite request / Request to pass the salt',
+                            'hint': "Bu so'rov savol emas, balki qanday amaliy harakat taklifi?"
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Akademik munozarada o'z fikrini keskin aytmaslik uchun 'As it were' va 'So to speak' pragmatik markyorlari qatnashgan 2 ta gap yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'leksik-prayming-va-kollokatsion-grammatika',
+                'title': 'Leksik Prayming va Kollokatsion Grammatika',
+                'summary': "Michael Hoey nazariyasi bo'yicha so'zlarning psixolingvistik birga kelish ehtimoli (Colligation va Collocation) va grammatik tanlov.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Michael Hoey tomonidan ilgari surilgan Lexical Priming nazariyasiga ko'ra, inson miyasi grammatika va leksikani alohida saqlamaydi. Har bir so'z muayyan grammatik qurilmalar (colligation), matn pozitsiyalari va semantik qo'shnichilar (collocation) bilan 'praym' qilingan (dasturlangan)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "'Incur' fe'li miyamizda salbiy oqibatlar bilan praym qilingan: incur losses, incur debts, incur wrath. U ijobiy so'zlar bilan ishlatilmaydi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kollokatsion va Kolligatsion tahlil',
+                        'items': [
+                            "Collocation: So'zlarning leksik jihatdan birga kelishi (e.g., fast food, heavy rain).",
+                            "Colligation: So'zning muayyan grammatik kategoriya yoki pozitsiya bilan birikishi (e.g., 'deny' fe'lining GERUND talab qilishi).",
+                            "Semantic Preference: So mezonning ma'lum semantik guruh so'zlari bilan birikishi (e.g., 'cause' + salbiy oqibatlar)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Oliy darajadagi ingliz tili egalari ushbu prayming qoidalarini intuitiv sezishadi va buzmaydilar.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Kolligatsiya (Colligation) nimani anglatadi?',
+                        'options': [
+                            "So'zning boshqa sifatlar bilan moslashuvi",
+                            "So'zning muayyan grammatik struktura va shakllar bilan afzallik birikishi",
+                            "Matndagi grammatik xatolar yig'indisi",
+                            "Faqat bir xil harf bilan boshlanadigan so'zlar zanjiri"
+                        ],
+                        'answer': 1,
+                        'explain': "Colligation - so'z va grammatik kategoriya (masalan, fe'l + gerund) o'rtasidagi bog'liqlikdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Lexical Priming nazariyasiga ko'ra grammatika va lug'at miyada bir-biridan butunlay ayri ikkita tizimdir.",
+                        'answer': False,
+                        'explain': "Aksincha, nazariya grammatika va lug'at birga integratsiyalashgan deb ta'kidlaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi kollokatsiya leksik prayming qoidasiga to'g'ri keladi?",
+                        'options': [
+                            'Incur success',
+                            'Commit a crime',
+                            'Do a mistake',
+                            'Make damage'
+                        ],
+                        'answer': 1,
+                        'explain': "'Commit' fe'li salbiy va noqonuniy amallar (crime, suicide, fraud) bilan praym qilingan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Leksik prayming va kollikatsiya qoidalarini amalda qo'llash.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Conducive' sifati qaysi predlog va grammatik shakl bilan birga kelishga praym qilingan?",
+                            'answer': 'to / conducive to + Noun/V-ing',
+                            'hint': "'Conducive ___ learning' birikmasini eslang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Foster', 'Trigger', 'Prompt' fe'llarining har biri uchun ularning leksik va semantik birikish xususiyatlarini ko'rsatuvchi gaplar tuzing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'semantik-prozodiya-va-korpus-stilistikasi',
+                'title': 'Semantik Prozodiya va Korpus Stilistikasi',
+                'summary': "Neytral so'zlarning kontekstda yashirin ijobiy yoki salbiy ma'no bo'yoqlari (Semantic Prosody) va Korpus usullari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Korpus lingvistikasidagi eng muhim kashfiyotlardan biri - Semantik Prozodiya (Semantic Prosody) dir. Bu so'zning o'zi luqoda neytral ko'rinsada, u tez-tez birga keladigan so'zlar hisobiga yashirin ijobiy (positive prosody) yoki salbiy (negative prosody) avra va ohang kasb etishidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "1. 'Cause' fe'li salbiy prozodiyaga ega: cause damage, cause trouble, cause cancer.\n2. 'Provide' fe'li ijobiy prozodiyaga ega: provide assistance, provide opportunities."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Korpus tahlil bosqichlari',
+                        'items': [
+                            'Konkordans (Concordance) qatorlarini tahlil qilish.',
+                            "So'z atrofidagi konkurentlarni (Collocates) ijobiy/salbiy guruhlarga ajratish.",
+                            'Yozma diskursda muallifning yashirin munosabatini aniqlash.'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Semantik prozodiyani bilmaslik akademik yozuvda 'grammatik jihatdan to'g'ri, lekin g'alati' iboralar paydo bo'lishiga olib keladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "'Break out' fe'lida qanday semantik prozodiya mavjud?",
+                        'options': [
+                            'Ijobiy (Positive)',
+                            'Salbiy (Negative)',
+                            'Mutloq neytral',
+                            'Arxaik'
+                        ],
+                        'answer': 1,
+                        'explain': "'Break out' odatda urush, kasallik, yong'in kabi salbiy voqealar bilan ishlatiladi (Negative Prosody)."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Semantik prozodiyani oddiy lug'at ta'rifidan har doim ham darhol aniqlab bo'lmaydi.",
+                        'answer': True,
+                        'explain': 'Chunki u korpuslardagi katta hajmdagi matnlarni va kollokatsiyalarni tahlil qilish orqali namoyon bo mezon yashirin aura hisoblanadi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi gapda semantik prozodiya buzilishi (g'alati qo'llanish) kuzatilgan?",
+                        'options': [
+                            'The project generated significant interest.',
+                            'The new medicine caused complete recovery.',
+                            'The storm brought severe destruction.',
+                            'He harbored resentment for years.'
+                        ],
+                        'answer': 1,
+                        'explain': "'Cause' fe'li salbiy prozodiyaga ega, uni 'complete recovery' (ijobiy) bilan ishlatish nozik uslubiy g'alatilik yaratadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Semantik prozodiyani aniqlash va mashqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Set in' phrasal verb'i (e.g. Winter set in, Panic set in) ijobiy prozodiyagami yoki salbiymi?",
+                            'answer': 'Salbiy (Negative prosody)',
+                            'hint': "Ushbu fe mezon yeyilishi mumkin bo'lgan holatlarni eslang (winter, decay, depression)."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "'Commit', 'Undergo', va 'Attain' so'zlarining korpusiy prozodiyasini (salbiy/ijobiy/neytral) tushuntirib, har biriga 1 tadan ilmiy gap yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kritik-diskurs-tahlili-va-sintaktik-freyming',
+                'title': 'Kritik Diskurs Tahlili va Sintaktik Freyming',
+                'summary': 'Media va siyosiy matnlarda sintaksis, majhul nisbat va nominalizatsiya orqali javobgarlikni yashirish hamda mafkuraviy freyming.',
+                'duration': 30,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Kritik Diskurs Tahlili (Critical Discourse Analysis - CDA) til va hokimiyat, mafkura va manipulyatsiya o'rtasidagi bog'liqlikni o'rganadi. Sintaktik Freyming (Syntactic Framing) orqali yozuvchi harakat bajaruvchisini (agent) yashirishi yoki diqqatni boshqa tomonga burishi mumkin."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Misol',
+                        'body': "1. Agent qatnashgan (Aniq): 'Police shot civilians.'\n2. Passive Agentless (Yashiringan): 'Civilians were shot.'\n3. Nominalized (Tabiiylashtirilgan): 'Shooting occurred.' (Javobgarlik mutlaqo yo'qotilgan)"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Sintaktik manipulyatsiyani aniqlash',
+                        'items': [
+                            'Agent-deletions: Passiv nisbat orqali harakat bajaruvchisini tushirib qoldirish.',
+                            'Transitivity Tahlili: Kim kimga nisbatan harakat qilayotganini tahlil qilish (Actor vs. Goal).',
+                            "Lexical Naming & Framing: Insonlar yoki voqealarga berilgan grammatik va leksik teglar (e.g., 'freedom fighters' vs 'terrorists')."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'C2 darajadagi lingvist matnning nafaqat nima deyilganini, balki grammatik tanlov orqali nimani yashirganini ham tahlil eta olishi kerak.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Kritik Diskurs Tahlilida Agentless Passive (Bajaruvchisiz passiv) dan foydalanishning asosiy ideologik maqsadi nima?',
+                        'options': [
+                            'Matn hajmini uzaytirish',
+                            "Harakat uchun javobgar shaxs/tomonni yashirish yoki e'tibordan chetda qoldirish",
+                            'Matnning emotsionalligini oshirish',
+                            'Grammatik xatolarni tuzatish'
+                        ],
+                        'answer': 1,
+                        'explain': "Bajaruvchisi ko'rsatilmagan passiv majhul nisbat javobgarlikni muallif/bajaruvchi zimmasidan soqit qiladi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Nominalizatsiya voqealarni inson irodasidan tashqari tabiiy hodisaday ko'rsatish (Reification) imkonini beradi.",
+                        'answer': True,
+                        'explain': "Masalan, 'Prices increased' o'rniga 'Price increases occurred' deyilsa, bunga hech kim aybdor emasdek tuyuladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi gapda harakat sub'yekti va javobgarlik eng yuqori darajada yashiringan?",
+                        'options': [
+                            'The manager fired fifty employees.',
+                            'Fifty employees were fired by the manager.',
+                            'Fifty employees were fired.',
+                            'Redundancies occurred in the company.'
+                        ],
+                        'answer': 3,
+                        'explain': "'Redundancies occurred' jumlasi nominalizatsiya orqali bajarguvchi va hatto fe'l harakatini ham tamoman neytrallashtirgan."
+                    }
+                ],
+                'homework': {
+                    'intro': "Kritik diskurs tahlili bo'yicha amaliy matn tahlili topshiriqlari.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'The government increased energy prices rapidly.' gapini javobgarlik tamoman yashiringan nominalizatsiyalashgan shaklga o'tkazing.",
+                            'answer': 'Rapid energy price increases occurred. / There was a rapid increase in energy prices.',
+                            'hint': "Hukumat (government) so'zini tushirib qoldiring va ot birikmasi hosil qiling."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Yangiliklar portalidan olingan istalgan biror siyosiy yoki iqtisodiy xabarni Kritik Diskurs Tahlili (CDA) nuqtai nazaridan sintaktik freyming bo'yicha tahlil qiling (3-4 gap)."
                         }
                     ]
                 }

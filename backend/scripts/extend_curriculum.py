@@ -31,6 +31,11 @@ OUT_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 
 TARGET_TOPICS = 40
 
+
+class QuotaExhausted(RuntimeError):
+    """429 — kunlik kvota tugagan; skript darhol to'xtaydi (qayta ishga
+    tushirilsa, tayyor fanlarni o'tkazib yuborib davom etadi)."""
+
 SCHEMA_HINT = """
 Har bir mavzu quyidagi JSON tuzilishida bo'lishi shart:
 {
@@ -98,6 +103,9 @@ def call_gemini(prompt: str) -> list:
     }
     r = requests.post(url, json=payload, headers={'x-goog-api-key': API_KEY}, timeout=300)
     data = r.json() if r.content else {}
+    if r.status_code == 429:
+        # Kunlik kvota tugagan — qayta urinish foydasiz, kvota ertaga yangilanadi
+        raise QuotaExhausted(f'Gemini kvotasi tugadi (429): {json.dumps(data)[:300]}')
     if r.status_code != 200:
         raise RuntimeError(f'Gemini xatosi ({r.status_code}): {json.dumps(data)[:500]}')
     cands = data.get('candidates') or []
@@ -127,6 +135,8 @@ def generate_more(subject_name: str, existing_titles: list, need: int, attempts:
             topics = call_gemini(build_prompt(subject_name, existing_titles, need))
             print(f'    {len(topics)} ta yangi mavzu olindi', flush=True)
             return topics
+        except QuotaExhausted:
+            raise
         except Exception as exc:  # noqa: BLE001
             last_err = exc
             print(f'    xato: {exc}', flush=True)
@@ -194,6 +204,9 @@ def main():
         titles = [t['title'] for t in existing]
         try:
             new_topics = generate_more(meta['name'], titles, need)
+        except QuotaExhausted as exc:
+            print(f'  TO\'XTATILDI: {exc}', flush=True)
+            break
         except Exception as exc:  # noqa: BLE001
             print(f'  [{key}] TASHLAB KETILDI: {exc}', flush=True)
             continue
