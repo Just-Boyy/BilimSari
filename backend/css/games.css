@@ -106,19 +106,6 @@
 .tugma svg { width: 20px; height: 20px; flex: 0 0 auto; }
 .tugma-mayda svg { width: 18px; height: 18px; }
 
-.oy-mening-room {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  border-radius: var(--r);
-  background: var(--kok-och);
-  border: 1px solid #bae6fd;
-  color: #075985;
-  font-size: 14px; font-weight: 600;
-}
-.oy-mening-room svg { width: 20px; height: 20px; flex: 0 0 auto; }
-.oy-mening-room span:nth-child(2) { flex: 1; min-width: 0; }
-.oy-oq { font-weight: 800; white-space: nowrap; }
 
 /* ── "O'yin yaratish" tugmasi ───────────────────────── */
 .oy-yaratish { margin-bottom: 10px; }

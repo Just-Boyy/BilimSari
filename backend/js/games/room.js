@@ -66,6 +66,26 @@
 
     scope.add(function () { if (vs) vs.dispose(); });
 
+    // Room ekranidan qaysi yo'l bilan ketilsa ham (lobbiga o'tish, pastki menyu,
+    // telefonning "orqaga" tugmasi, ilovani yopish) — roomdan chiqiladi. Aks holda
+    // server o'quvchini roomda deb hisoblab qolardi.
+    var chiqildi = false;
+    function jimChiqish(sahifaYopilmoqda) {
+      if (chiqildi || !S || view === 'terminal') return;
+      chiqildi = true;
+      if (!sahifaYopilmoqda) { G.api.leave(code); return; }
+      // Sahifa yopilayotganda oddiy so'rov uzilib qolishi mumkin — keepalive bilan yuboriladi
+      try {
+        fetch('/api/games/rooms/' + encodeURIComponent(code) + '/leave', {
+          method: 'POST', keepalive: true,
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (API.token() || '') },
+          body: '{}',
+        });
+      } catch (e) { /* sahifa allaqachon yopilgan */ }
+    }
+    scope.add(function () { jimChiqish(false); });
+    scope.on(window, 'pagehide', function () { jimChiqish(true); });
+
     function setHeader() {
       G.header({ title: S ? S.game.name : 'Room', sub: 'Room ' + code, back: leave });
     }
@@ -157,6 +177,7 @@
       (msg ? G.confirm(msg) : Promise.resolve(true)).then(function (ok) {
         if (!ok) return;
         poller.stop();
+        chiqildi = true;
         G.api.leave(code).then(function () { G.go('lobby'); });
       });
     }
@@ -674,6 +695,7 @@
       var hub = document.getElementById('markazTugma');
       if (hub) vs.on(hub, 'click', function () {
         poller.stop();
+        chiqildi = true;
         G.api.leave(code).then(function () { G.go('lobby'); });
       });
     }

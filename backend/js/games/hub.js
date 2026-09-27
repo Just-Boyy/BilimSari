@@ -39,7 +39,6 @@
           '<span class="oy-pill"><b id="roomSon">…</b>&nbsp;faol room</span>' +
         '</div>' +
       '</section>' +
-      '<div id="meningRoom"></div>' +
       '<button class="tugma oy-yaratish" type="button" id="yaratishTugma">' + ic('plus') + "<span>O'yin yaratish</span></button>" +
       '<div class="oy-amallar">' +
         '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="qoshilishTugma">' + ic('logIn') + "<span>Roomga qo'shilish</span></button>" +
@@ -66,11 +65,6 @@
         G.banner(null);
         document.getElementById('onlaynSon').textContent = res.online;
         document.getElementById('roomSon').textContent = res.rooms.length;
-        var mine = document.getElementById('meningRoom');
-        mine.innerHTML = res.my_room
-          ? '<a class="oy-mening-room" href="#room/' + esc(res.my_room.code) + '">' + ic('play') +
-            '<span>Sizning faol roomingiz: <b>' + esc(res.my_room.code) + '</b></span><span class="oy-oq">Qaytish ›</span></a>'
-          : '';
         var html = res.rooms.map(roomRow).join('');
         if (!html) {
           html = '<div class="oy-bosh">' + ic('users') +
