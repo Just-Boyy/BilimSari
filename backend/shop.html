@@ -97,10 +97,16 @@
       return;
     }
     if (!d.configured) {
-      tana.innerHTML = tepa + UI.holat({
-        belgi: 'clock', sarlavha: "To'lov vaqtincha ishlamayapti",
-        matn: "Birozdan keyin qayta urinib ko'ring yoki savolingizni botga yozing.",
-      });
+      tana.innerHTML = tepa + (d.is_admin
+        ? UI.holat({
+            belgi: 'settings', sarlavha: 'Karta raqami kiritilmagan',
+            matn: "Siz adminsiz. O'quvchilar to'lov qila olishi uchun karta raqamini kiriting — u botda o'quvchiga ko'rsatiladi.",
+            tugma: 'Kartani kiritish', tugmaYo_l: 'admin.html#tolovlar',
+          })
+        : UI.holat({
+            belgi: 'clock', sarlavha: "To'lov vaqtincha ishlamayapti",
+            matn: "Birozdan keyin qayta urinib ko'ring yoki savolingizni botga yozing.",
+          }));
       bogla();
       return;
     }

@@ -511,6 +511,10 @@ function panelniKorsat() {
   document.getElementById('admPanel').classList.add('faol');
   yuklaStatistika();
   tolovBelgisi();
+  // admin.html#tolovlar — do'kondagi "Kartani kiritish" tugmasidan kelinganda
+  if (location.hash === '#tolovlar') {
+    setTimeout(function () { document.querySelector('.adm-tab[data-bolim="tolovlar"]').click(); }, 0);
+  }
 }
 
 document.getElementById('foydalanuvchilarCsvTugma').addEventListener('click', function () {

@@ -57,6 +57,8 @@ def shop():
             'active_order': payments.order_public(active) if active else None,
             'telegram': bool(request.user.get('telegram_id')),
             'configured': bool(settings['card_number']),
+            # Adminga karta kiritilmagan bo'lsa — to'g'ridan-to'g'ri sozlashga havola ko'rsatiladi
+            'is_admin': payments.is_admin(request.user.get('telegram_id')),
             'bot': BOT_USERNAME,
         })
     finally:
