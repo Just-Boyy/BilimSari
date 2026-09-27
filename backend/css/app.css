@@ -1235,6 +1235,97 @@ textarea.kiritish { min-height: 92px; resize: vertical; line-height: 1.5; font-w
 .qator.xavfli { color: var(--qizil); }
 .qator input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
 
+/* ── Fan sotib olish (do'kon) ───────────────────────────── */
+
+.dokon-qadamlar {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+  margin-bottom: 16px;
+  counter-reset: qadam;
+}
+.dokon-qadamlar li {
+  list-style: none;
+  padding: 10px 6px;
+  background: var(--oq);
+  border: 1px solid var(--chiziq);
+  border-radius: var(--r-kichik);
+  font-size: 11.5px; line-height: 1.3; font-weight: 700; color: var(--matn-2);
+  text-align: center;
+}
+.dokon-qadamlar li::before {
+  counter-increment: qadam; content: counter(qadam);
+  display: grid; place-items: center;
+  width: 22px; height: 22px; margin: 0 auto 5px;
+  border-radius: 50%;
+  background: var(--yashil-fon); color: var(--yashil-quyuq);
+  font-size: 12px; font-weight: 800;
+}
+.dokon-fan {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px 10px 10px;
+  margin-bottom: 8px;
+  background: var(--oq);
+  border: 2px solid var(--chiziq);
+  border-radius: var(--r);
+  cursor: pointer;
+}
+.dokon-fan.tanlangan { border-color: var(--yashil); background: var(--yashil-fon); }
+.dokon-fan img, .dokon-fan .dokon-belgi {
+  width: 46px; height: 46px; flex: 0 0 auto;
+  border-radius: 12px; object-fit: cover;
+  display: grid; place-items: center;
+  background: var(--yashil-fon); color: var(--yashil);
+}
+.dokon-fan .matn { flex: 1; min-width: 0; font-weight: 700; }
+.dokon-fan .matn small { display: block; font-weight: 600; color: var(--matn-2); font-size: 13px; }
+.dokon-fan input { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
+.dokon-paket {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 12px 14px; margin-bottom: 12px;
+  background: var(--zarg-fon);
+  border: 1px solid #fde68a;
+  border-radius: var(--r);
+  font-size: 13px; font-weight: 700; color: #92400e;
+}
+.dokon-paket span { flex: 1 1 180px; }
+.dokon-paket > svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.dokon-jami .tugma > svg, .dokon-buyurtma .tugma > svg, .dokon-yuborildi .tugma > svg,
+.sahifa > .tugma > svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.dokon-paket .matn-tugma { color: #b45309; }
+.dokon-promo { display: flex; gap: 8px; margin: 14px 0; }
+.dokon-promo .kiritish { flex: 1; min-width: 0; min-height: 48px; padding: 10px 14px; text-transform: uppercase; }
+.dokon-promo .tugma { width: auto; min-height: 48px; }
+.dokon-jami { display: grid; gap: 6px; }
+.dokon-jami .qator-summa { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--matn-2); }
+.dokon-jami .qator-summa.chegirma { color: var(--yashil-quyuq); font-weight: 700; }
+.dokon-jami .qator-summa.jami { padding-top: 8px; border-top: 1px dashed var(--chiziq); font-size: 18px; font-weight: 800; color: var(--matn-quyuq); }
+.dokon-jami .tugma { margin-top: 8px; }
+.dokon-buyurtma { border: 2px solid #fde68a; background: var(--zarg-fon); }
+.dokon-buyurtma.kutilmoqda { border-color: var(--kok); background: var(--kok-och); }
+.dokon-buyurtma h2 { font-size: 17px; margin-bottom: 4px; }
+.dokon-buyurtma p { font-size: 14px; color: var(--matn-2); margin-bottom: 10px; }
+.dokon-buyurtma .dokon-tugmalar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.dokon-buyurtma .dokon-tugmalar .tugma { width: auto; }
+.dokon-yuborildi { text-align: center; padding: 28px 20px; }
+.dokon-yuborildi .belgi { color: var(--yashil); display: inline-flex; margin-bottom: 8px; }
+.dokon-yuborildi .belgi svg { width: 48px; height: 48px; }
+.dokon-yuborildi h2 { font-size: 20px; margin-bottom: 6px; }
+.dokon-yuborildi p { color: var(--matn-2); font-size: 14px; margin-bottom: 16px; }
+.tolov-qator {
+  padding: 12px 14px; margin-bottom: 8px;
+  background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r);
+}
+.tolov-qator .yuqori { display: flex; justify-content: space-between; gap: 10px; font-weight: 800; }
+.tolov-qator .fanlar-nomi { font-size: 13px; color: var(--matn-2); margin: 2px 0 6px; }
+.tolov-chip {
+  display: inline-block; padding: 2px 10px; border-radius: 99px;
+  font-size: 12px; font-weight: 800;
+  background: var(--fon); color: var(--matn-2);
+}
+.tolov-chip.approved { background: var(--yashil-fon); color: var(--yashil-quyuq); }
+.tolov-chip.pending { background: var(--kok-och); color: #0369a1; }
+.tolov-chip.awaiting_receipt { background: var(--zarg-fon); color: #b45309; }
+.tolov-chip.rejected { background: var(--qizil-och); color: var(--qizil-quyuq); }
+
 /* ── Sozlamalar ─────────────────────────────────────────── */
 
 .sozlama-profil { display: grid; gap: 16px; }

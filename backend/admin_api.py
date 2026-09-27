@@ -18,6 +18,7 @@ from flask import Blueprint, Response, jsonify, request
 
 import admin_audit
 import curriculum as cur_mod
+import payments
 import rate_limit
 import study
 from admin_auth import (
@@ -217,7 +218,8 @@ def stats():
             'total_completed_topics': total_completed,
             'completions_today': completions_today,
             'total_purchases': total_purchases,
-            'revenue': total_purchases * study.SUBJECT_PRICE,
+            # Haqiqiy tushum — admin tasdiqlagan to'lovlar (paket va promo-kod chegirmalari bilan)
+            'revenue': payments.overview(cur)['all']['sum'],
             'subject_price': study.SUBJECT_PRICE,
             'by_grade': by_grade,
             'subjects': subjects,

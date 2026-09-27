@@ -64,6 +64,12 @@
     <p class="izoh" id="eslatmaIzoh" hidden>Eslatmalar faqat BilimSari'ga Telegram orqali kirganlarga yuboriladi.</p>
   </section>
 
+  <!-- To'lovlar tarixi -->
+  <section class="bo-lim" id="tolovBolim" hidden>
+    <div class="bo-lim-bosh"><h2>To'lovlarim</h2><a class="izoh" href="shop.html">Fan sotib olish ›</a></div>
+    <div id="tolovlar"></div>
+  </section>
+
   <!-- Boshqa -->
   <section class="bo-lim">
     <h2 style="margin-bottom:12px">Boshqa</h2>
@@ -283,6 +289,25 @@
   } else {
     document.getElementById('eslatmaIzoh').hidden = false;
   }
+
+  // ── To'lovlarim ───────────────────────────────────────
+  var HOLAT = {
+    awaiting_receipt: 'Chek kutilmoqda', pending: 'Tekshirilmoqda', approved: 'Tasdiqlangan',
+    rejected: 'Rad etilgan', expired: 'Muddati tugagan',
+  };
+  API.tolovlarim().then(function (r) {
+    if (!r.ok || !r.orders.length) return;
+    document.getElementById('tolovlar').innerHTML = r.orders.map(function (o) {
+      var sana = new Date(o.created_ms).toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      return '<div class="tolov-qator">' +
+        '<div class="yuqori"><span>' + UI.esc(o.code) + '</span><span>' + UI.pul(o.amount) + '</span></div>' +
+        '<div class="fanlar-nomi">' + UI.esc(o.items.map(function (i) { return i.name; }).join(', ')) + ' • ' + sana + '</div>' +
+        '<span class="tolov-chip ' + UI.esc(o.status) + '">' + UI.esc(HOLAT[o.status] || o.status) + '</span>' +
+        (o.reject_reason ? '<span class="izoh-kichik"> ' + UI.esc(o.reject_reason) + '</span>' : '') +
+        '</div>';
+    }).join('');
+    document.getElementById('tolovBolim').hidden = false;
+  });
 
   // ── Boshqa ────────────────────────────────────────────
   if (u.is_admin) document.getElementById('adminQator').style.display = '';

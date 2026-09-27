@@ -117,6 +117,36 @@
       return faylYukla('/api/admin/purchases/export.csv', 'tolovlar.csv');
     },
 
+    // — Bot orqali to'lovlar (cheklar) —
+    tolovUmumiy: function () { return so_rov('/api/admin/pay/overview'); },
+    buyurtmalar: function (holat, page) {
+      return so_rov('/api/admin/pay/orders?page=' + (page || 1) + (holat ? '&status=' + holat : ''));
+    },
+    buyurtmaQaror: function (id, amal, sabab) {
+      return so_rov('/api/admin/pay/orders/' + id + '/' + amal, { method: 'POST', body: { reason: sabab || null } });
+    },
+    tolovSozlama: function (malumot) {
+      return so_rov('/api/admin/pay/settings', { method: 'POST', body: malumot });
+    },
+    promoYarat: function (malumot) { return so_rov('/api/admin/pay/promos', { method: 'POST', body: malumot }); },
+    promoAlmashtir: function (kod) {
+      return so_rov('/api/admin/pay/promos/' + encodeURIComponent(kod) + '/toggle', { method: 'POST' });
+    },
+    /** Chek rasmini (Authorization bilan) olib, vaqtinchalik blob-manzil qaytaradi. */
+    chekRasm: async function (id) {
+      var t = token();
+      try {
+        var javob = await fetch('/api/admin/pay/orders/' + id + '/receipt', {
+          headers: t ? { 'Authorization': 'Bearer ' + t } : {},
+        });
+        if (!javob.ok) return { ok: false };
+        var blob = await javob.blob();
+        return { ok: true, url: URL.createObjectURL(blob), pdf: blob.type === 'application/pdf' };
+      } catch (e) {
+        return { ok: false };
+      }
+    },
+
     faoliyat: function (limit) { return so_rov('/api/admin/activity?limit=' + (limit || 50)); },
 
     xabarYuborish: function (matn) {

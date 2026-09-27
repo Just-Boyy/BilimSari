@@ -69,14 +69,14 @@
         ? '<span class="fan-halqa" style="--foiz:' + f.percent + '%"><span>' + f.percent + '%</span></span>'
         : '';
       return '<a class="fan' + (f.finished ? ' tugagan' : '') + (f.image ? ' fan-rasmli' : '') + (f.locked ? ' qulflangan' : '') + '"' +
-        ' href="topics.html?fan=' + encodeURIComponent(f.key) + '"' +
+        ' href="' + (f.locked ? 'shop.html' : 'topics.html') + '?fan=' + encodeURIComponent(f.key) + '"' +
         ' style="' + (f.image
           ? "background-image:url('" + UI.esc(f.image) + "')"
           : 'border-left-color:' + UI.esc(f.color)) + '">' +
         (f.locked ? '<span class="fan-qulf">' + UI.nishon('lock') + '</span>' : halqa) +
         (f.image ? '' : '<span class="belgi">' + UI.fanBelgi(f.image, f.icon) + '</span>') +
         '<h3>' + UI.esc(f.name) + '</h3>' +
-        '<p class="holat">' + (f.locked ? f.price.toLocaleString('uz-UZ') + ' so\'m' : holat) + '</p>' +
+        '<p class="holat">' + (f.locked ? UI.esc(UI.qulfHolat(f)) : holat) + '</p>' +
         (f.locked ? '' :
           '<div class="progress"><i style="width:' + f.percent + '%;background:' +
             UI.esc(f.color) + '"></i></div>' +

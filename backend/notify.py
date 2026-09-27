@@ -8,6 +8,8 @@ Telegram eslatmalari va ularni vaqtida yuboruvchi rejalashtiruvchi.
   * "Keyingi mavzu ochildi" — 24 soatlik kutish tugagan zahoti.
   * O'yin taklifi — oldin birga o'ynagan odam yangi room ochsa.
   * Haftalik turnir — hafta tugagach top-3 ga medal va tabrik xabari.
+  * To'lovlar — muddati o'tgan buyurtmalarni yopish, 30 daqiqadan beri
+    tekshirilmagan chek haqida adminga eslatma, 21:00 da kunlik hisobot.
 
 Alohida fon xizmati (cron) yo'q: har bir gunicorn worker'da bitta fon oqimi
 daqiqada bir marta tick() ni chaqiradi. Vazifa job_runs jadvalidagi noyob
@@ -25,6 +27,7 @@ import time
 from datetime import datetime, timedelta, timezone
 
 import daily
+import payments
 import study
 from db import TASHKENT_TZ, add_column_if_missing, as_utc, get_connection
 from games import clock
@@ -42,6 +45,7 @@ COOLDOWN_WINDOW_MIN = 30    # kutish shu oraliqda tugagan bo'lsa — xabar
 INVITE_WINDOW_MS = 2 * 3600 * 1000   # bitta odamga 2 soatda ko'pi bilan 1 ta taklif
 MAX_INVITES = 10
 TICK_SECONDS = 60
+PAY_SUMMARY_HOUR = 21        # adminga kunlik to'lov hisoboti (Toshkent)
 FOOTER = "\n\n<i>Eslatmalarni Profil → Sozlamalar bo'limida o'chirishingiz mumkin.</i>"
 
 
@@ -262,12 +266,18 @@ def tick(now_ms=None):
     try:
         if _claim(cur, conn, 'cooldown', str(now_ms // (5 * 60 * 1000))):
             cooldown_ready(cur, conn, now_ms)
+            payments.housekeeping(cur, conn, now_ms)
         local = datetime.fromtimestamp(now_ms / 1000, TASHKENT_TZ)
         if (QUESTION_HOUR <= local.hour < QUESTION_LAST_HOUR
                 and _claim(cur, conn, 'question', local.date().isoformat())):
             logger.info('Kun savoli xabari: %d ta', question_ready(cur, conn, now_ms))
         if DAILY_HOUR <= local.hour < DAILY_LAST_HOUR and _claim(cur, conn, 'daily', local.date().isoformat()):
             logger.info('Kunlik eslatma: %d ta', daily_reminders(cur, conn, now_ms))
+        if (PAY_SUMMARY_HOUR <= local.hour < DAILY_LAST_HOUR + 1
+                and _claim(cur, conn, 'pay_summary', local.date().isoformat())):
+            summary = payments.daily_summary(cur, now_ms)
+            for admin in payments.admin_ids() if summary else []:
+                send(admin, summary, 'Admin panel', 'admin.html')
         week_start = clock.period_start_ms('week', now_ms) - game_stats.WEEK_MS
         if _claim(cur, conn, 'weekly', str(week_start)):
             logger.info('Haftalik turnir g\'oliblari: %s', weekly_awards(cur, conn, now_ms))

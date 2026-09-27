@@ -65,28 +65,22 @@
       if (res.code === 'subject_locked') {
         document.getElementById('fanNomi').textContent = res.subject_name || 'Qulflangan fan';
         document.getElementById('ustPanel').innerHTML = '';
+        // To'lov holati (bot orqali buyurtma berilgan bo'lsa)
+        var st = res.pay_status || {};
+        var holatMatn = {
+          awaiting_receipt: 'Buyurtma ' + (st.code || '') + ': kartaga to\'lab, chek rasmini botga yuboring.',
+          pending: 'Chekingiz (' + (st.code || '') + ') tekshirilmoqda. Tasdiqlangach fan ochiladi.',
+          rejected: 'To\'lov rad etildi' + (st.reason ? ': ' + st.reason : '') + '. Qayta urinib ko\'ring.',
+        }[st.status];
         ro_yxat.innerHTML =
           '<div class="qulf-karta">' +
             '<span class="qulf-belgi">' + UI.nishon('lock', null, 32) + '</span>' +
             '<h2>' + UI.esc(res.subject_name || 'Bu fan') + ' qulflangan</h2>' +
             '<p>Ushbu fanni ochish uchun sotib oling.</p>' +
-            '<p class="qulf-narx">' + Number(res.price || 0).toLocaleString('uz-UZ') + ' so\'m</p>' +
-            '<button type="button" class="tugma" id="sotibOlBtn">To\'lash</button>' +
+            '<p class="qulf-narx">' + UI.pul(res.price) + '</p>' +
+            (holatMatn ? '<p class="izoh" style="margin-bottom:12px">' + UI.esc(holatMatn) + '</p>' : '') +
+            '<a class="tugma" href="shop.html?fan=' + encodeURIComponent(fan) + '">Sotib olish</a>' +
           '</div>';
-        document.getElementById('sotibOlBtn').onclick = async function () {
-          var btn = this;
-          btn.disabled = true;
-          btn.textContent = 'To\'lanmoqda...';
-          var natija = await API.fanSotibOl(fan);
-          if (!natija.ok) {
-            UI.xabar(natija.error);
-            btn.disabled = false;
-            btn.textContent = 'To\'lash';
-            return;
-          }
-          UI.xabar('Fan ochildi!', 'muvaffaqiyat');
-          yukla();
-        };
         return;
       }
       ro_yxat.innerHTML = res.code === 'empty_subject'

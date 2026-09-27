@@ -15,8 +15,11 @@ import admin_api
 import admin_audit
 import admin_auth
 import ai_tutor
+import botchat
 import daily
 import notify
+import pay_api
+import payments
 import photos
 import rate_limit
 import study
@@ -42,6 +45,8 @@ app.register_blueprint(study_api.bp)
 app.register_blueprint(ai_tutor.bp)
 app.register_blueprint(admin_api.bp)
 app.register_blueprint(games_api.bp)
+app.register_blueprint(pay_api.bp)
+app.register_blueprint(pay_api.admin_bp)
 
 
 @app.after_request
@@ -153,6 +158,7 @@ def init_db():
         daily.ensure_tables(cur, conn)
         achievements.ensure_tables(cur, conn)
         photos.ensure_tables(cur, conn)
+        payments.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
         conn.rollback()
@@ -455,7 +461,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html',
+    'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
     'admin.html',
 }
 
@@ -582,8 +588,10 @@ def send_help_message(chat_id):
             'Buyruqlar:\n'
             '/start — ilovani ochish\n'
             '/kun — kun savoli\n'
+            '/sotib_olish — fan sotib olish\n'
+            '/tolovlarim — to‘lovlarim\n'
             '/help — yordam\n\n'
-            'O‘rganish uchun Boshlash tugmasini bosing.'
+            'Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'
         ),
     })
 
@@ -596,7 +604,7 @@ def setup_telegram_bot():
     webhook_url = WEBAPP_URL.rstrip('/') + '/telegram/webhook'
     r = tg_api('setWebhook', {
         'url': webhook_url,
-        'allowed_updates': ['message'],
+        'allowed_updates': ['message', 'callback_query'],
         'drop_pending_updates': False,
         'secret_token': WEBHOOK_SECRET,
     })
@@ -605,6 +613,8 @@ def setup_telegram_bot():
         'commands': [
             {'command': 'start', 'description': 'Ilovani ochish'},
             {'command': 'kun', 'description': 'Kun savoli'},
+            {'command': 'sotib_olish', 'description': 'Fan sotib olish'},
+            {'command': 'tolovlarim', 'description': "To'lovlarim"},
             {'command': 'help', 'description': 'Yordam'},
         ]
     })
@@ -623,6 +633,11 @@ def telegram_webhook():
         return jsonify({'ok': False}), 403
 
     data = request.get_json(silent=True) or {}
+    # Inline tugmalar: admin "Tasdiqlash / Rad etish", o'quvchi "Promo-kod / Bekor qilish"
+    if data.get('callback_query'):
+        botchat.handle_callback(data['callback_query'])
+        return jsonify({'ok': True})
+
     message = data.get('message') or {}
     text = (message.get('text') or '').strip()
     chat = message.get('chat') or {}
@@ -631,7 +646,7 @@ def telegram_webhook():
         return jsonify({'ok': True})
 
     first_name = (message.get('from') or {}).get('first_name') or chat.get('first_name') or ''
-    cmd = text.split()[0].split('@')[0] if text else ''
+    cmd = text.split()[0].split('@')[0] if text.startswith('/') else ''
 
     if cmd in ('/start', '/boshlash'):
         # Taklif havolasi: t.me/<bot>?start=room_AB7K92 → o'sha roomga kirish tugmasi
@@ -641,14 +656,25 @@ def telegram_webhook():
             send_room_invite(chat_id, first_name, room_code)
         elif payload.lower() == 'kun':
             send_daily_invite(chat_id, first_name)
+        elif payload.lower() == 'pay':
+            botchat.send_shop(chat_id)
         else:
             send_start_message(chat_id, first_name)
     elif cmd == '/kun':
         send_daily_invite(chat_id, first_name)
+    elif cmd in ('/sotib_olish', '/tolov'):
+        botchat.send_shop(chat_id)
+    elif cmd == '/tolovlarim':
+        botchat.send_my_orders(chat_id)
+    elif cmd == '/tolovlar' and admin_auth.is_admin_telegram((message.get('from') or {}).get('id')):
+        botchat.send_pending(chat_id)
     elif cmd == '/help':
         send_help_message(chat_id)
-    elif text:
+    elif cmd:
         send_start_message(chat_id, first_name)
+    else:
+        # Chek rasmi, promo-kod, admin javobi yoki adminga yozilgan savol (jonli chat)
+        botchat.handle_message(message)
 
     return jsonify({'ok': True})
 

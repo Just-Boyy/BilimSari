@@ -229,6 +229,28 @@
     return s ? s[0].toUpperCase() : '?';
   }
 
+  // ── Yopiq fan kartasi: narx yoki to'lov holati ───────────
+  var TOLOV_HOLATI = {
+    awaiting_receipt: 'Chek kutilmoqda',
+    pending: 'Tekshirilmoqda',
+    rejected: "To'lov rad etildi",
+  };
+  /** 12000 → "12 000 so'm" (bot xabarlari bilan bir xil; brauzer tiliga bog'liq emas). */
+  function pul(n) {
+    return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + " so'm";
+  }
+  function qulfHolat(f) {
+    return TOLOV_HOLATI[f.pay_status] || pul(f.price);
+  }
+
+  /** Telegram ichida bot chatini ochadi (Mini App'dan), brauzerda — yangi oynada. */
+  function botniOch(bot, start) {
+    var url = 'https://t.me/' + (bot || 'bilimsaribot') + (start ? '?start=' + encodeURIComponent(start) : '');
+    var tg = window.Telegram && window.Telegram.WebApp;
+    if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(url);
+    else window.open(url, '_blank', 'noopener');
+  }
+
   // ── Yangi yutuq (nishon) tabrigi ─────────────────────────
   // Server har bir yangi nishonni bir marta qaytaradi (new_achievements).
   function yutuqTabrik(yangilar) {
@@ -281,5 +303,8 @@
     bosh: bosh,
     harfAvatar: harfAvatar,
     yutuqTabrik: yutuqTabrik,
+    qulfHolat: qulfHolat,
+    pul: pul,
+    botniOch: botniOch,
   };
 })();

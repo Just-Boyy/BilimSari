@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Fan sotib olish — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="subjects.html" aria-label="Orqaga">←</a>
+  <h1>Fan sotib olish<small>To'lov bot orqali, admin tasdiqlaydi</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="tana">
+    <div class="skelet" style="height:220px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('subjects.html');
+
+  var tana = document.getElementById('tana');
+  var dokon = null;
+  var tanlangan = [];
+  var promo = '';
+  var hisobTimer = null;
+  var oxirgiHisob = 0;
+
+  var som = UI.pul;
+
+  async function yukla() {
+    var d = await API.do_kon();
+    if (!d.ok) { tana.innerHTML = UI.xatoHolat(d.error, yukla); return; }
+    dokon = d;
+    var boshi = new URLSearchParams(location.search).get('fan');
+    tanlangan = d.subjects.some(function (s) { return s.key === boshi; }) ? [boshi] : [];
+    chiz();
+  }
+
+  function buyurtmaHtml(o) {
+    var nomlar = o.items.map(function (i) { return i.name; }).join(', ');
+    if (o.status === 'pending') {
+      return '<div class="karta dokon-buyurtma kutilmoqda" style="margin-bottom:16px">' +
+        '<h2>Chekingiz tekshirilmoqda ⏳</h2>' +
+        '<p>Buyurtma ' + UI.esc(o.code) + ' • ' + UI.esc(nomlar) + ' • ' + som(o.amount) + '.<br>' +
+          'Odatda 5–30 daqiqa. Tasdiqlangach fan ochiladi va botga xabar keladi.</p>' +
+        '<div class="dokon-tugmalar"><button class="tugma tugma-mayda" type="button" data-bot>' +
+          UI.nishon('send') + '<span>Botni ochish</span></button></div></div>';
+    }
+    return '<div class="karta dokon-buyurtma" style="margin-bottom:16px">' +
+      '<h2>Buyurtma ' + UI.esc(o.code) + ' — chek kutilmoqda</h2>' +
+      '<p>' + UI.esc(nomlar) + ' • <b>' + som(o.amount) + '</b>.<br>' +
+        'Karta raqami botga yuborilgan. To\'lab, chek rasmini botga yuboring.</p>' +
+      '<div class="dokon-tugmalar">' +
+        '<button class="tugma tugma-mayda" type="button" data-bot>' + UI.nishon('send') + '<span>Botni ochish</span></button>' +
+        '<button class="matn-tugma xavfli" type="button" id="bekorTugma">Bekor qilish</button>' +
+      '</div></div>';
+  }
+
+  function chiz() {
+    var d = dokon;
+    if (!d.telegram) {
+      tana.innerHTML = UI.holat({
+        belgi: 'send', sarlavha: "To'lov Telegram orqali",
+        matn: "Fan sotib olish uchun BilimSari'ni Telegram botdan oching — to'lov bot chatida amalga oshiriladi.",
+      }) + '<button class="tugma" type="button" style="margin-top:12px" data-bot>Botni ochish</button>';
+      bogla();
+      return;
+    }
+    var faol = d.active_order;
+    var tepa = faol ? buyurtmaHtml(faol) : '';
+    if (faol && faol.status === 'pending') {
+      tana.innerHTML = tepa;
+      bogla();
+      return;
+    }
+    if (!d.subjects.length) {
+      tana.innerHTML = tepa + UI.holat({
+        belgi: 'party', sarlavha: 'Barcha fanlar ochiq!',
+        matn: "Sizda sotib olinadigan fan qolmadi. O'qishda omad!",
+        tugma: 'Fanlarim', tugmaYo_l: 'subjects.html',
+      });
+      bogla();
+      return;
+    }
+    if (!d.configured) {
+      tana.innerHTML = tepa + UI.holat({
+        belgi: 'clock', sarlavha: "To'lov vaqtincha ishlamayapti",
+        matn: "Birozdan keyin qayta urinib ko'ring yoki savolingizni botga yozing.",
+      });
+      bogla();
+      return;
+    }
+    var p = d.prices;
+    var paketlar = [];
+    if (p.price_three && d.subjects.length >= 3) paketlar.push('3 ta fan — ' + som(p.price_three));
+    if (p.price_all && d.subjects.length >= 2) paketlar.push('Barcha fanlar (' + d.subjects.length + ' ta) — ' + som(p.price_all));
+
+    tana.innerHTML = tepa +
+      '<ol class="dokon-qadamlar" aria-label="Qanday ishlaydi">' +
+        '<li>Fan tanlang</li><li>Botga karta raqami keladi</li><li>To\'lab, chekni botga yuboring</li><li>Admin tasdiqlaydi</li>' +
+      '</ol>' +
+      (paketlar.length
+        ? '<div class="dokon-paket">' + UI.nishon('gem') + '<span>Paketlar arzonroq: ' + UI.esc(paketlar.join(' • ')) + '</span>' +
+            '<button class="matn-tugma" type="button" id="hammasi">Hammasini tanlash</button></div>'
+        : '') +
+      '<div id="fanRoyxat">' + d.subjects.map(function (s) {
+        var rasm = s.image
+          ? '<img src="' + UI.esc(s.image) + '" alt="">'
+          : '<span class="dokon-belgi">' + UI.nishon(s.icon) + '</span>';
+        return '<label class="dokon-fan" data-kalit="' + UI.esc(s.key) + '">' + rasm +
+          '<span class="matn">' + UI.esc(s.name) + '<small>' + som(p.price_single) + '</small></span>' +
+          '<input type="checkbox" value="' + UI.esc(s.key) + '"></label>';
+      }).join('') + '</div>' +
+      '<div class="dokon-promo">' +
+        '<input class="kiritish" id="promoInput" placeholder="Promo-kod (ixtiyoriy)" maxlength="20" autocomplete="off">' +
+        '<button class="tugma tugma-ikkilamchi" type="button" id="promoTugma">Qo\'llash</button>' +
+      '</div>' +
+      '<div class="karta dokon-jami" id="jami"></div>';
+
+    document.querySelectorAll('.dokon-fan input').forEach(function (inp) {
+      inp.checked = tanlangan.indexOf(inp.value) >= 0;
+      inp.onchange = function () {
+        tanlangan = Array.prototype.filter.call(document.querySelectorAll('.dokon-fan input'), function (x) { return x.checked; })
+          .map(function (x) { return x.value; });
+        belgila();
+        hisobla();
+      };
+    });
+    var hammasi = document.getElementById('hammasi');
+    if (hammasi) hammasi.onclick = function () {
+      tanlangan = d.subjects.map(function (s) { return s.key; });
+      document.querySelectorAll('.dokon-fan input').forEach(function (x) { x.checked = true; });
+      belgila();
+      hisobla();
+    };
+    var promoInput = document.getElementById('promoInput');
+    promoInput.value = promo;
+    document.getElementById('promoTugma').onclick = function () {
+      promo = promoInput.value.trim().toUpperCase();
+      hisobla(true);
+    };
+    promoInput.onkeydown = function (e) { if (e.key === 'Enter') document.getElementById('promoTugma').click(); };
+    belgila();
+    hisobla();
+    bogla();
+  }
+
+  function belgila() {
+    document.querySelectorAll('.dokon-fan').forEach(function (l) {
+      l.classList.toggle('tanlangan', tanlangan.indexOf(l.dataset.kalit) >= 0);
+    });
+  }
+
+  function bogla() {
+    document.querySelectorAll('[data-bot]').forEach(function (b) {
+      b.onclick = function () { UI.botniOch(dokon && dokon.bot); };
+    });
+    var bekor = document.getElementById('bekorTugma');
+    if (bekor) bekor.onclick = async function () {
+      if (!confirm('Buyurtma bekor qilinsinmi?')) return;
+      var r = await API.buyurtmaBekor(dokon.active_order.id);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+      UI.xabar('Buyurtma bekor qilindi', 'muvaffaqiyat');
+      yukla();
+    };
+  }
+
+  function jamiChiz(q, xato) {
+    var el = document.getElementById('jami');
+    if (!el) return;
+    if (!tanlangan.length) {
+      el.innerHTML = '<p class="izoh" style="text-align:center">Sotib olmoqchi bo\'lgan fanlarni tanlang.</p>';
+      return;
+    }
+    if (!q) {
+      el.innerHTML = '<p class="izoh" style="text-align:center">' + UI.esc(xato || 'Hisoblanmoqda...') + '</p>';
+      return;
+    }
+    var qator = function (nom, qiymat, cls) {
+      return '<div class="qator-summa' + (cls ? ' ' + cls : '') + '"><span>' + UI.esc(nom) + '</span><span>' + UI.esc(qiymat) + '</span></div>';
+    };
+    el.innerHTML =
+      qator(q.items.length + ' ta fan', som(q.base)) +
+      (q.bundle ? qator(q.bundle, '−' + som(q.base - q.bundled), 'chegirma') : '') +
+      (q.promo ? qator('Promo-kod ' + q.promo.code + ' (−' + q.promo.percent + '%)', '−' + som(q.discount), 'chegirma') : '') +
+      qator('Jami', som(q.amount), 'jami') +
+      '<button class="tugma" type="button" id="tolashTugma">' + UI.nishon('send') + '<span>Botda to\'lash</span></button>' +
+      '<p class="izoh-kichik" style="text-align:center">Bot sizga karta raqami va buyurtma kodini yuboradi.</p>';
+    document.getElementById('tolashTugma').onclick = buyurtma;
+  }
+
+  function hisobla(promoTekshir) {
+    clearTimeout(hisobTimer);
+    if (!tanlangan.length) { jamiChiz(null); return; }
+    jamiChiz(null);
+    var raqam = ++oxirgiHisob;
+    hisobTimer = setTimeout(async function () {
+      var r = await API.narxHisobla(tanlangan, promo);
+      if (raqam !== oxirgiHisob) return;
+      if (!r.ok && r.code === 'bad_promo') {
+        UI.xabar(r.error, 'xato');
+        promo = '';
+        var inp = document.getElementById('promoInput');
+        if (inp) inp.value = '';
+        hisobla();
+        return;
+      }
+      if (!r.ok) { jamiChiz(null, r.error); return; }
+      if (promoTekshir && r.promo) UI.xabar('Promo-kod qo\'llandi: −' + r.promo.percent + '%', 'muvaffaqiyat');
+      jamiChiz(r);
+    }, 200);
+  }
+
+  async function buyurtma() {
+    var btn = document.getElementById('tolashTugma');
+    btn.disabled = true;
+    btn.lastChild.textContent = 'Yuborilmoqda...';
+    var r = await API.buyurtmaBer(tanlangan, promo);
+    if (!r.ok) {
+      UI.xabar(r.error, 'xato');
+      btn.disabled = false;
+      btn.lastChild.textContent = 'Botda to\'lash';
+      if (r.code === 'pending_exists') yukla();
+      return;
+    }
+    var o = r.order;
+    tana.innerHTML =
+      '<div class="karta dokon-yuborildi">' +
+        '<span class="belgi">' + UI.nishon('checkCircle') + '</span>' +
+        '<h2>' + (r.bot_sent ? 'Yo\'riqnoma botga yuborildi!' : 'Buyurtma yaratildi') + '</h2>' +
+        '<p>Buyurtma <b>' + UI.esc(o.code) + '</b> • ' + som(o.amount) + '<br>' +
+          (r.bot_sent
+            ? 'Botda karta raqami bor: to\'lovni qiling va chek rasmini botga yuboring. Admin tasdiqlagach fan ochiladi.'
+            : 'Bot sizga yoza olmadi. Botni oching va «Start» tugmasini bosing — yo\'riqnoma keladi.') + '</p>' +
+        '<button class="tugma" type="button" id="botTugma">' + UI.nishon('send') + '<span>Botni ochish</span></button>' +
+      '</div>';
+    document.getElementById('botTugma').onclick = function () { UI.botniOch(r.bot, r.bot_sent ? '' : 'pay'); };
+    if (r.bot_sent) setTimeout(function () { UI.botniOch(r.bot); }, 900);
+  }
+
+  yukla();
+  // Botdan qaytganda holatni yangilash (chek yuborilgan yoki tasdiqlangan bo'lishi mumkin)
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden && dokon && dokon.active_order) yukla();
+  });
+})();
+</script>
+</body>
+</html>

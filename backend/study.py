@@ -329,19 +329,14 @@ def choose_subject(cur, conn, user_id, subject_key):
 
 
 def unlock_subject(cur, conn, user_id, subject_key):
-    """DEMO to'lov — haqiqiy to'lov tizimi hali ulanmagan, "to'lash" bosilsa
-    fan shu zahoti ochiladi."""
+    """Eskirgan DEMO yo'l (pulsiz ochardi). Endi fan faqat admin tasdiqlagan
+    to'lovdan keyin ochiladi — payments.py, "Fan sotib olish" sahifasi."""
     if subject_key not in cur_mod.SUBJECT_CATALOG:
         raise StudyError("Bunday fan mavjud emas", code='bad_subject', http_status=404)
     if is_subject_unlocked(cur, user_id, subject_key):
         return True
-    cur.execute(
-        'INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '
-        'ON CONFLICT (user_id, subject_key) DO NOTHING',
-        (user_id, subject_key),
-    )
-    conn.commit()
-    return True
+    raise StudyError("Fan to'lovdan keyin ochiladi: «Sotib olish» tugmasini bosing.",
+                     code='use_shop', http_status=402)
 
 
 # ───────────────────────── 24 soatlik kutish ─────────────────────────

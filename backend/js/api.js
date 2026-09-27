@@ -110,9 +110,16 @@
     fanTanla: function (fan) {
       return so_rov('/api/study/subjects/' + encodeURIComponent(fan) + '/choose', { method: 'POST' });
     },
-    fanSotibOl: function (fan) {
-      return so_rov('/api/study/subjects/' + encodeURIComponent(fan) + '/unlock', { method: 'POST' });
+    // — To'lov (bot orqali, admin tasdiqlaydi) —
+    do_kon: function () { return so_rov('/api/pay/shop'); },
+    narxHisobla: function (fanlar, promo) {
+      return so_rov('/api/pay/quote', { method: 'POST', body: { keys: fanlar, promo: promo || null } });
     },
+    buyurtmaBer: function (fanlar, promo) {
+      return so_rov('/api/pay/orders', { method: 'POST', body: { keys: fanlar, promo: promo || null } });
+    },
+    buyurtmaBekor: function (id) { return so_rov('/api/pay/orders/' + id + '/cancel', { method: 'POST' }); },
+    tolovlarim: function () { return so_rov('/api/pay/orders'); },
     mavzu: function (fan, slug, sinf) {
       return so_rov('/api/study/topic/' + encodeURIComponent(fan) + '/' + encodeURIComponent(slug)
         + '?grade=' + encodeURIComponent(sinf));

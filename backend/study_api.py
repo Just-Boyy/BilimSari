@@ -9,6 +9,7 @@ qulf, 24 soatlik kutish va javoblarni baholash serverda hal qilinadi.
 import achievements
 import curriculum as cur_mod
 import daily
+import payments
 import study
 from auth_core import auth_required
 from db import get_connection
@@ -56,7 +57,7 @@ def grades():
 def subjects():
     conn, cur = _conn()
     try:
-        items = study.subjects_overview(cur, request.user['id'])
+        items = payments.annotate_subjects(cur, request.user['id'], study.subjects_overview(cur, request.user['id']))
         return jsonify({
             'ok': True,
             'subjects': items,
@@ -72,6 +73,7 @@ def dashboard():
     conn, cur = _conn()
     try:
         data = study.dashboard(cur, request.user['id'])
+        payments.annotate_subjects(cur, request.user['id'], data.get('subjects'))
         data['ok'] = True
         data['needs_onboarding'] = (
             not bool(request.user.get('onboarded')) or not request.user.get('chosen_subject_key')
@@ -105,7 +107,7 @@ def choose_subject(subject_key):
 @bp.route('/subjects/<subject_key>/unlock', methods=['POST'])
 @auth_required
 def unlock_subject(subject_key):
-    """DEMO to'lov — hozircha haqiqiy to'lov tizimi yo'q, so'rov kelsa fan ochiladi."""
+    """Eskirgan: endi fan faqat admin tasdiqlagan to'lovdan keyin ochiladi (pay_api)."""
     conn, cur = _conn()
     try:
         study.unlock_subject(cur, conn, request.user['id'], subject_key)
@@ -143,7 +145,8 @@ def topics(subject_key):
                 'code': 'subject_locked',
                 'subject_key': subject_key,
                 'subject_name': (row or {}).get('name') or subject_key,
-                'price': study.SUBJECT_PRICE,
+                'price': payments.get_settings(cur)['price_single'],
+                'pay_status': payments.subject_statuses(cur, request.user['id']).get(subject_key),
             }), 403
         subject, items = study.subject_topics(cur, request.user['id'], subject_key)
         if subject is None:
