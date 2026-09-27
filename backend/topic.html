@@ -54,7 +54,7 @@
 <script>
 (async function () {
   if (!(await UI.sessiyaKerak())) return;
-  UI.navChiz('subjects.html');
+  UI.navChiz('dashboard.html');
 
   var parametr = new URLSearchParams(location.search);
   var fan = parametr.get('fan');

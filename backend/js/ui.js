@@ -38,7 +38,7 @@
   // ── Navigatsiya ──────────────────────────────────────────
   var NAV = [
     { yo_l: 'dashboard.html', nishon: 'home', matn: 'Bosh sahifa' },
-    { yo_l: 'subjects.html', nishon: 'library', matn: 'Fanlarim' },
+    { yo_l: 'shop.html', nishon: 'shop', matn: "Do'kon" },
     { yo_l: 'games.html', nishon: 'gamepad', matn: "O'yinlar" },
     { yo_l: 'leaderboard.html', nishon: 'trophy', matn: 'Reyting' },
     { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
