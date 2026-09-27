@@ -134,8 +134,8 @@
     },
     reyting: function () { return so_rov('/api/study/leaderboard'); },
 
-    o_yinSavollari: function (soni) {
-      return so_rov('/api/study/game/questions?count=' + (soni || 10));
+    o_yinSavollari: function (soni, rejim) {
+      return so_rov('/api/study/game/questions?count=' + (soni || 10) + (rejim ? '&mode=' + encodeURIComponent(rejim) : ''));
     },
     o_yinTekshir: function (topicId, qIndex, javob) {
       return so_rov('/api/study/game/check', {

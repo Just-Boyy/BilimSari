@@ -14,6 +14,7 @@ from functools import wraps
 
 from flask import Blueprint, jsonify, request
 
+import notify
 import rate_limit
 from auth_core import auth_required
 from db import get_connection
@@ -121,7 +122,10 @@ def create_room_view(cur, conn):
     _limit(f'game_create:{_uid()}', 12, 600, "Juda ko'p room yaratildi. Birozdan so'ng urinib ko'ring.")
     # Har bir room avtomatik ochiq — lobbydagi "Faol roomlar"da hamma uchun ko'rinadi
     code = rooms.create_room(cur, conn, request.user, _body(), is_public=True)
-    return {'code': code, 'state': rooms.state(cur, conn, request.user, code)}
+    state = rooms.state(cur, conn, request.user, code)
+    notify.invite_co_players(_uid(), request.user.get('name'), code, state['game']['name'],
+                             state['settings']['subject_name'])
+    return {'code': code, 'state': state}
 
 
 @bp.route('/rooms/join', methods=['POST'])
@@ -153,6 +157,14 @@ def ready_view(cur, conn, code):
 @endpoint
 def settings_view(cur, conn, code):
     rooms.update_settings(cur, conn, request.user, code, _body())
+    return {'state': rooms.state(cur, conn, request.user, code)}
+
+
+@bp.route('/rooms/<code>/bot', methods=['POST'])
+@auth_required
+@endpoint
+def add_bot_view(cur, conn, code):
+    rooms.add_bot(cur, conn, request.user, code, _body().get('level') or 'orta')
     return {'state': rooms.state(cur, conn, request.user, code)}
 
 

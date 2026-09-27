@@ -233,10 +233,10 @@
     }
 
     function playerRow(p) {
-      return '<li class="oy-oyinchi' + (p.me ? ' men' : '') + (p.online ? '' : ' oflayn') + '">' +
-        '<span class="avatar" aria-hidden="true">' + esc(G.initial(p.name)) + '</span>' +
+      return '<li class="oy-oyinchi' + (p.me ? ' men' : '') + (p.online ? '' : ' oflayn') + (p.bot ? ' bot' : '') + '">' +
+        '<span class="avatar" aria-hidden="true">' + (p.bot ? ic('bot') : esc(G.initial(p.name))) + '</span>' +
         '<span class="oy-oyinchi-matn"><b>' + esc(p.name) + (p.me ? ' (siz)' : '') + '</b>' +
-          '<small>Daraja ' + p.level + (p.online ? '' : ' • oflayn') + '</small></span>' +
+          '<small>' + (p.bot ? 'Kompyuter raqib' : 'Daraja ' + p.level) + (p.online ? '' : ' • oflayn') + '</small></span>' +
         (p.host ? '<span class="oy-toj" title="Host">' + ic('crown') + '<span class="oy-sr">Host</span></span>' : '') +
         '<span class="oy-tayyor ' + (p.ready ? 'ha' : 'yoq') + '">' + (p.ready ? ic('check') + 'Tayyor' : 'Kutilmoqda') + '</span>' +
         (S.me.host && !p.me ? '<button class="oy-chiqar" type="button" data-pid="' + p.pid + '" aria-label="' +
@@ -261,8 +261,12 @@
         return '<button class="tugma" type="button" id="startTugma"' + (S.can_start ? '' : ' disabled') + '>' +
             ic('play') + "<span>O'yinni boshlash</span></button>" +
           '<p class="izoh oy-panel-izoh">' + esc(S.can_start ? "Hamma tayyor — boshlashingiz mumkin!" : S.start_hint) + '</p>' +
-          '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="sozlashTugma">' + ic('settings') +
-            '<span>Sozlamalar</span></button>';
+          '<div class="oy-panel-qator">' +
+            '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="botTugma">' + ic('bot') +
+              '<span>Kompyuter qo\'shish</span></button>' +
+            '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="sozlashTugma">' + ic('settings') +
+              '<span>Sozlamalar</span></button>' +
+          '</div>';
       }
       return '<button class="tugma' + (S.me.ready ? ' tugma-ikkilamchi' : '') + '" type="button" id="tayyorTugma" aria-pressed="' +
           S.me.ready + '">' + ic(S.me.ready ? 'checkCircle' : 'check') + '<span>' +
@@ -306,8 +310,37 @@
       if (start) vs.on(start, 'click', function () { act(G.api.start(code), start); });
       var settings = document.getElementById('sozlashTugma');
       if (settings) vs.on(settings, 'click', openSettings);
+      var bot = document.getElementById('botTugma');
+      if (bot) vs.on(bot, 'click', openAddBot);
       var ready = document.getElementById('tayyorTugma');
       if (ready) vs.on(ready, 'click', function () { act(G.api.ready(code, !S.me.ready), ready); });
+    }
+
+    /** Kompyuter raqib: onlayn odam bo'lmasa ham o'yinni boshlash mumkin. */
+    function openAddBot() {
+      var level = 'orta';
+      var ms = new G.Scope();
+      var m = G.modal(
+        '<h2 id="oyModalSarlavha">Kompyuter qo\'shish</h2>' +
+        '<p class="izoh">Kompyuter raqib hamma bilan birga javob beradi. Uning javoblari va ballari ham server tomonidan hisoblanadi.</p>' +
+        '<div class="oy-maydon" style="margin:14px 0"><span class="oy-yorliq">Darajasi</span>' +
+          G.segment('level', 'Kompyuter darajasi', [
+            { value: 'oson', label: 'Oson' }, { value: 'orta', label: "O'rta" }, { value: 'qiyin', label: 'Qiyin' }], level) +
+        '</div>' +
+        '<p class="oy-xato" id="botXato" role="alert"></p>' +
+        '<button class="tugma" type="button" id="botQosh" data-avto-fokus>' + ic('bot') + '<span>Qo\'shish</span></button>',
+        { onClose: function () { ms.dispose(); } });
+      G.bindSegment(m, ms, function (name, value) { level = value; });
+      var add = m.querySelector('#botQosh');
+      ms.on(add, 'click', function () {
+        add.disabled = true;
+        G.api.addBot(code, level).then(function (res) {
+          add.disabled = false;
+          if (!res.ok) { m.querySelector('#botXato').textContent = res.error; return; }
+          G.closeModal();
+          apply(res.state);
+        });
+      });
     }
 
     function kick(pid, label) {
@@ -618,7 +651,8 @@
         '<h3>' + ic('sparkle') + "<span>Nimalarni o'rgandingiz?</span></h3>" +
         '<p>' + esc(L.summary || '') + '</p>' +
         (strong ? '<div class="oy-mavzular yaxshi"><b>Kuchli mavzularingiz</b><ul>' + strong + '</ul></div>' : '') +
-        (weak ? '<div class="oy-mavzular zaif"><b>Ko\'proq mashq qilish kerak</b><ul>' + weak + '</ul></div>' : '') +
+        (weak ? '<div class="oy-mavzular zaif"><b>Ko\'proq mashq qilish kerak</b><ul>' + weak + '</ul>' +
+          '<a class="oy-dars-havola" href="game.html?rejim=takror">Zaif mavzularni takrorlash ›</a></div>' : '') +
         (review ? '<details class="oy-korib"><summary>Savollarni ko\'rib chiqish</summary><ol>' + review + '</ol></details>' : '') +
       '</section>';
     }

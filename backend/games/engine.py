@@ -18,6 +18,7 @@ Adolatli o'yin:
 """
 
 import json
+import random
 
 from games import catalog, clock, questions
 from games.errors import GameError
@@ -108,7 +109,70 @@ def _cas(cur, session, changes: dict) -> bool:
 
 
 def _alive(players, now, window):
-    return [p for p in players if p['state'] == 'active' and now - int(p['seen_ms']) <= window]
+    """Faol o'yinchilar: kompyuter doim "onlayn", odam — oxirgi so'rovi window ichida."""
+    return [p for p in players
+            if p['state'] == 'active' and (p.get('is_bot') or now - int(p['seen_ms']) <= window)]
+
+
+def _everyone_answered(cur, session, players, now) -> bool:
+    cur.execute('SELECT COUNT(*) AS n FROM game_answers WHERE session_id = %s AND q_index = %s',
+                (session['id'], session['q_index']))
+    return int(cur.fetchone()['n']) >= max(1, len(_alive(players, now, OFFLINE_MS)))
+
+
+# ───────────────────────── Kompyuter raqib ─────────────────────────
+#
+# Daraja → (aniqlik, eng tez, eng sekin javob — vaqt limitining ulushi).
+# Javob oldindan (deterministik) rejalashtiriladi va poll/javob kelganda,
+# rejalashtirilgan vaqti o'tgan bo'lsa, bazaga yoziladi.
+BOT_SKILL = {1: (0.45, 0.45, 0.9), 3: (0.65, 0.3, 0.75), 5: (0.85, 0.15, 0.55)}
+
+
+def _bot_plan(session, q, bot):
+    accuracy, fastest, slowest = BOT_SKILL.get(int(bot['level']), BOT_SKILL[3])
+    rng = random.Random(f"{session['id']}:{session['q_index']}:{bot['user_id']}")
+    delay = int(time_limit_ms(session) * rng.uniform(fastest, slowest))
+    right = rng.random() < accuracy
+    if q['kind'] == 'match':
+        answer = list(q['answer'])
+        if not right:
+            i, j = rng.sample(range(len(answer)), 2)
+            answer[i], answer[j] = answer[j], answer[i]
+    else:
+        wrong = [i for i in range(len(q['options'])) if i != q['answer']]
+        answer = q['answer'] if right or not wrong else rng.choice(wrong)
+    correct, partial, stored = questions.evaluate(q, answer)
+    return delay, correct, partial, stored
+
+
+def _bot_turns(cur, session, players, now):
+    """Vaqti kelgan bot javoblarini yozadi. (yozildimi, birortasi to'g'rimi)."""
+    bots = [p for p in players if p['state'] == 'active' and p.get('is_bot')]
+    if not bots:
+        return False, False
+    cur.execute('SELECT user_id FROM game_answers WHERE session_id = %s AND q_index = %s',
+                (session['id'], session['q_index']))
+    done = {r['user_id'] for r in cur.fetchall()}
+    q = questions_for(cur, session['id'])[session['q_index']]
+    start = int(session['phase_started_ms'])
+    inserted = any_correct = False
+    for bot in bots:
+        if bot['user_id'] in done:
+            continue
+        delay, correct, partial, stored = _bot_plan(session, q, bot)
+        if start + delay > now:
+            continue
+        cur.execute(
+            '''INSERT INTO game_answers (session_id, user_id, q_index, answer, correct, partial, points, answered_ms, elapsed_ms)
+               VALUES (%s, %s, %s, %s, %s, %s, 0, %s, %s)
+               ON CONFLICT (session_id, user_id, q_index) DO NOTHING''',
+            (session['id'], bot['user_id'], session['q_index'], json.dumps(stored), int(correct), int(partial),
+             start + delay, delay),
+        )
+        if cur.rowcount == 1:
+            inserted = True
+            any_correct = any_correct or correct
+    return inserted, any_correct
 
 
 def _start_question(cur, session, index, now) -> bool:
@@ -156,13 +220,28 @@ def tick(cur, conn, room, session, players, now=None):
         phase = session['phase']
         if phase in ('finished', 'cancelled'):
             break
-        if len(_alive(players, now, GONE_MS)) < 2:
+        alive = _alive(players, now, GONE_MS)
+        if len(alive) < 2 or all(p.get('is_bot') for p in alive):
             ok = _finish(cur, room, session, players, now, 'players_left')
+        elif phase == 'question' and now < int(session['phase_ends_ms']):
+            # Kompyuter javoblari: hamma javob bergan bo'lsa (yoki Quick Answer'da
+            # to'g'ri javob kelsa) savol darhol yopiladi, aks holda davom etadi
+            inserted, bot_correct = _bot_turns(cur, session, players, now)
+            if not inserted:
+                break
+            if not ((session['mode'] == 'first' and bot_correct) or _everyone_answered(cur, session, players, now)):
+                cur.execute('UPDATE game_sessions SET version = version + 1 WHERE id = %s', (session['id'],))
+                conn.commit()
+                session['version'] = int(session['version']) + 1
+                moved = True
+                break
+            ok = _reveal(cur, session, now)
         elif now < int(session['phase_ends_ms']):
             break
         elif phase == 'countdown':
             ok = _start_question(cur, session, 0, now)
         elif phase == 'question':
+            _bot_turns(cur, session, players, now)
             ok = _reveal(cur, session, now)
         elif session['q_index'] + 1 < session['total']:
             ok = _start_question(cur, session, session['q_index'] + 1, now)
@@ -205,11 +284,7 @@ def submit_answer(cur, conn, room, session, players, me, q_index, raw):
     # Erta yopish: Quick Answer'da to'g'ri javob kelsa yoki hamma javob bersa
     fresh = load_session(cur, session['id'])
     if fresh and fresh['phase'] == 'question' and fresh['q_index'] == q_index:
-        done = fresh['mode'] == 'first' and correct
-        if not done:
-            cur.execute('SELECT COUNT(*) AS n FROM game_answers WHERE session_id = %s AND q_index = %s',
-                        (session['id'], q_index))
-            done = int(cur.fetchone()['n']) >= max(1, len(_alive(players, now, OFFLINE_MS)))
+        done = (fresh['mode'] == 'first' and correct) or _everyone_answered(cur, fresh, players, now)
         if done and _reveal(cur, fresh, clock.now_ms()):
             conn.commit()
         else:
@@ -267,7 +342,7 @@ def _finish(cur, room, session, players, now, reason) -> bool:
         bonus = (BONUS_COMPLETE if played and stayed and r['answered'] * 2 >= played else 0) + (BONUS_WIN if won else 0)
         earned = r['points'] + bonus
         xp = 0
-        if multiplayer and earned > 0 and r['answered'] > 0:
+        if not p.get('is_bot') and multiplayer and earned > 0 and r['answered'] > 0:
             xp = max(0, min(earned, DAILY_XP_CAP - _today_xp(cur, p['user_id'], now)))
         cur.execute(
             '''INSERT INTO game_results (session_id, room_id, user_id, game_type, subject, topic, difficulty,
@@ -281,12 +356,39 @@ def _finish(cur, room, session, players, now, reason) -> bool:
              now - int(session['started_ms']), now),
         )
 
+    _save_topic_stats(cur, session, [r['p'] for r in rows if not r['p'].get('is_bot')], played, now)
+
     cur.execute("UPDATE game_rooms SET status = 'finished', version = version + 1, activity_ms = %s WHERE id = %s",
                 (now, room['id']))
-    cur.execute('UPDATE game_room_players SET ready = 0 WHERE room_id = %s AND user_id != %s',
+    # Keyingi o'yin uchun hamma qaytadan "Tayyor" bosadi (host va kompyuter doim tayyor)
+    cur.execute('UPDATE game_room_players SET ready = 0 WHERE room_id = %s AND user_id != %s AND is_bot = 0',
                 (room['id'], room['host_user_id']))
     room['status'] = 'finished'
     return True
+
+
+def _save_topic_stats(cur, session, humans, played, now):
+    """Curriculum mavzulari bo'yicha doimiy natija (to'g'ri / jami) — "Takrorlash"
+    zaif mavzularni shundan topadi. Javob berilmagan savol ham hisobga olinadi."""
+    asked = [(i, q['topic']) for i, q in enumerate(questions_for(cur, session['id'])[:played])
+             if q.get('link') and q.get('topic')]
+    if not asked or not humans:
+        return
+    cur.execute('SELECT user_id, q_index, correct FROM game_answers WHERE session_id = %s AND q_index < %s',
+                (session['id'], played))
+    answers = {(a['user_id'], a['q_index']): int(a['correct']) for a in cur.fetchall()}
+    for p in humans:
+        per_topic = {}
+        for i, topic in asked:
+            right, total = per_topic.get(topic, (0, 0))
+            per_topic[topic] = (right + answers.get((p['user_id'], i), 0), total + 1)
+        for topic, (right, total) in per_topic.items():
+            cur.execute(
+                '''INSERT INTO game_topic_stats (user_id, topic, correct, total, updated_ms) VALUES (%s, %s, %s, %s, %s)
+                   ON CONFLICT (user_id, topic) DO UPDATE SET correct = game_topic_stats.correct + EXCLUDED.correct,
+                       total = game_topic_stats.total + EXCLUDED.total, updated_ms = EXCLUDED.updated_ms''',
+                (p['user_id'], topic, right, total, now),
+            )
 
 
 # ───────────────────────── Mijozga holat ─────────────────────────

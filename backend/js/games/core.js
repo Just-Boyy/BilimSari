@@ -11,7 +11,7 @@
   'use strict';
 
   var G = window.Games = window.Games || {};
-  G.V = '5';                       // dangasa yuklanadigan fayllar keshini yangilash uchun
+  G.V = '6';                       // dangasa yuklanadigan fayllar keshini yangilash uchun
   G.renderers = G.renderers || {};
 
   function enc(s) { return encodeURIComponent(s == null ? '' : s); }
@@ -32,6 +32,7 @@
     ready: function (code, v) { return API.post(roomUrl(code) + '/ready', { ready: v }); },
     settings: function (code, s) { return API.post(roomUrl(code) + '/settings', s); },
     kick: function (code, pid) { return API.post(roomUrl(code) + '/kick', { pid: pid }); },
+    addBot: function (code, level) { return API.post(roomUrl(code) + '/bot', { level: level }); },
     start: function (code) { return API.post(roomUrl(code) + '/start', {}); },
     rematch: function (code) { return API.post(roomUrl(code) + '/rematch', {}); },
     answer: function (code, q, a) { return API.post(roomUrl(code) + '/answer', { q: q, answer: a }); },

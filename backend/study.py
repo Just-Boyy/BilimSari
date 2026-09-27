@@ -1102,6 +1102,42 @@ def dashboard(cur, user_id):
 # hech qanday mavzuni yakunlamaydi, cooldown'ga ta'sir qilmaydi va chaqmoq
 # bermaydi — faqat o'quvchi allaqachon o'qigan darslarini mashq qilish uchun.
 
+def _practice_items(row):
+    """Mavzu testidagi savollar — javobsiz (to'g'ri javob serverda tekshiriladi)."""
+    meta = cur_mod.subject_meta(row['subject_key'])
+    return [{
+        'topic_id': row['id'],
+        'topic_title': row['title'],
+        'subject_name': meta['name'],
+        'q_index': i,
+        'type': q.get('type', 'mc'),
+        'q': q.get('q'),
+        'options': q.get('options'),
+    } for i, q in enumerate(_json(row['quiz'], []))]
+
+
+def review_questions(cur, user_id, count=10):
+    """Takrorlash: zaif mavzular (o'yinlarda aniqlik past yoki mavzu testidan
+    o'tilmagan) savollari. (savollar, zaif mavzular ro'yxati)."""
+    weak = game_stats.weak_topics(cur, user_id)
+    if not weak:
+        return [], []
+    ids = [w['topic_id'] for w in weak]
+    marks = ', '.join(['%s'] * len(ids))
+    cur.execute(f'SELECT id, title, subject_key, quiz FROM topics WHERE id IN ({marks})', ids)
+    rows = {r['id']: r for r in cur.fetchall()}
+    topics, pool = [], []
+    for w in weak:
+        row = rows.get(w['topic_id'])
+        if not row:
+            continue
+        topics.append({'topic_id': row['id'], 'title': row['title'], 'accuracy': w['accuracy'],
+                       'subject_name': cur_mod.subject_meta(row['subject_key'])['name']})
+        pool.extend(_practice_items(row))
+    random.shuffle(pool)
+    return pool[:count], topics
+
+
 def game_questions(cur, user_id, count=10):
     """O'quvchi darsini o'qigan (lesson_read) mavzulardan tasodifiy test
     savollari — to'g'ri javob hech qachon frontendga yuborilmaydi."""
@@ -1114,18 +1150,7 @@ def game_questions(cur, user_id, count=10):
     )
     pool = []
     for row in cur.fetchall():
-        quiz = _json(row['quiz'], [])
-        meta = cur_mod.subject_meta(row['subject_key'])
-        for i, q in enumerate(quiz):
-            pool.append({
-                'topic_id': row['id'],
-                'topic_title': row['title'],
-                'subject_name': meta['name'],
-                'q_index': i,
-                'type': q.get('type', 'mc'),
-                'q': q.get('q'),
-                'options': q.get('options'),
-            })
+        pool.extend(_practice_items(row))
     random.shuffle(pool)
     return pool[:count]
 

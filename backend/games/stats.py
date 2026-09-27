@@ -23,7 +23,7 @@ def xp_by_user(cur) -> dict:
     """Umumiy chaqmoq reytingi uchun: user_id → hisobga o'tgan ball."""
     if not schema.READY:
         return {}
-    cur.execute('SELECT user_id, SUM(xp) AS xp FROM game_results GROUP BY user_id')
+    cur.execute('SELECT user_id, SUM(xp) AS xp FROM game_results WHERE user_id > 0 GROUP BY user_id')
     return {r['user_id']: int(r['xp'] or 0) for r in cur.fetchall()}
 
 
@@ -38,7 +38,7 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
     period = period if period in PERIODS else 'week'
     scope = scope if scope in SCOPES else 'global'
     now = clock.now_ms()
-    where, params, join = ['r.created_ms >= %s'], [clock.period_start_ms(period, now)], ''
+    where, params, join = ['r.created_ms >= %s', 'r.user_id > 0'], [clock.period_start_ms(period, now)], ''
 
     if scope == 'subject':
         if subject not in cur_mod.SUBJECT_CATALOG:
@@ -92,7 +92,8 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
         if r['user_id'] == user_id:
             me = entry(rank, r)
     return {'top': top, 'me': me, 'total_players': len(rows), 'period': period, 'scope': scope,
-            'subject': subject if scope == 'subject' else None, 'grade': grade}
+            'subject': subject if scope == 'subject' else None, 'grade': grade,
+            'tournament': tournament(cur, now) if period == 'week' else None}
 
 
 def _streak(days: set, today) -> int:
@@ -161,4 +162,89 @@ def my_stats(cur, user_id) -> dict:
         'favorite_subjects': [s['name'] for s in subjects[:2]],
         'subjects': subjects[:6],
         'recent': recent,
+        'medals': medals(cur, user_id),
     }
+
+
+# ───────────────────────── Haftalik turnir ─────────────────────────
+#
+# Hafta dushanba 00:00 (Toshkent) dan boshlanadi. Hafta tugagach eng ko'p
+# ball to'plagan 3 kishi medal oladi (notify.py'dagi haftalik vazifa
+# award_week'ni chaqiradi; takror chaqirilsa ham bir marta yoziladi).
+
+WEEK_MS = 7 * 24 * 3600 * 1000
+
+
+def medals(cur, user_id) -> dict:
+    cur.execute('SELECT place, COUNT(*) AS n FROM game_awards WHERE user_id = %s GROUP BY place', (user_id,))
+    got = {int(r['place']): int(r['n']) for r in cur.fetchall()}
+    return {'gold': got.get(1, 0), 'silver': got.get(2, 0), 'bronze': got.get(3, 0)}
+
+
+def week_top(cur, start_ms, end_ms, limit=3) -> list:
+    cur.execute(
+        '''SELECT user_id, SUM(xp) AS xp, SUM(won) AS wins FROM game_results
+           WHERE created_ms >= %s AND created_ms < %s AND user_id > 0
+           GROUP BY user_id''',
+        (start_ms, end_ms),
+    )
+    rows = [r for r in cur.fetchall() if int(r['xp'] or 0) > 0]
+    rows.sort(key=lambda r: (-int(r['xp']), -int(r['wins'] or 0), r['user_id']))
+    return [{'user_id': r['user_id'], 'xp': int(r['xp'])} for r in rows[:limit]]
+
+
+def award_week(cur, conn, week_start_ms) -> list:
+    """O'tgan hafta top-3'iga medal yozadi. Yangi yozilgan g'oliblarni qaytaradi."""
+    winners = []
+    now = clock.now_ms()
+    for place, w in enumerate(week_top(cur, week_start_ms, week_start_ms + WEEK_MS), start=1):
+        cur.execute(
+            '''INSERT INTO game_awards (week_start_ms, place, user_id, xp, created_ms) VALUES (%s, %s, %s, %s, %s)
+               ON CONFLICT (week_start_ms, place) DO NOTHING''',
+            (week_start_ms, place, w['user_id'], w['xp'], now),
+        )
+        if cur.rowcount == 1:
+            winners.append(dict(w, place=place))
+    conn.commit()
+    return winners
+
+
+def tournament(cur, now) -> dict:
+    """Joriy hafta qachon tugashi va o'tgan hafta g'oliblari."""
+    start = clock.period_start_ms('week', now)
+    cur.execute(
+        '''SELECT a.place, a.xp, u.name FROM game_awards a LEFT JOIN users u ON u.id = a.user_id
+           WHERE a.week_start_ms = %s ORDER BY a.place''',
+        (start - WEEK_MS,),
+    )
+    return {
+        'ends_ms': start + WEEK_MS,
+        'last_winners': [{'place': int(r['place']), 'xp': int(r['xp']), 'name': r['name'] or "O'yinchi"}
+                         for r in cur.fetchall()],
+    }
+
+
+# ───────────────────────── Takrorlash (zaif mavzular) ─────────────────────────
+
+WEAK_ACCURACY = 0.6
+
+
+def weak_topics(cur, user_id, limit=5) -> list:
+    """Zaif mavzular: o'yinlarda aniqlik 60% dan past yoki mavzu testidan
+    o'tolmagan. Eng zaifi birinchi."""
+    scores = {}
+    if schema.READY:
+        cur.execute('SELECT topic, correct, total FROM game_topic_stats WHERE user_id = %s AND total > 0', (user_id,))
+        for r in cur.fetchall():
+            accuracy = int(r['correct']) / int(r['total'])
+            if accuracy < WEAK_ACCURACY:
+                scores[r['topic']] = accuracy
+    cur.execute(
+        'SELECT topic_id, quiz_score FROM user_progress WHERE user_id = %s AND quiz_attempts > 0 AND quiz_passed = 0',
+        (user_id,),
+    )
+    for r in cur.fetchall():
+        accuracy = (int(r['quiz_score'] or 0)) / 100
+        scores[r['topic_id']] = min(scores.get(r['topic_id'], 1.0), accuracy)
+    ordered = sorted(scores.items(), key=lambda kv: kv[1])[:limit]
+    return [{'topic_id': t, 'accuracy': round(a * 100)} for t, a in ordered]

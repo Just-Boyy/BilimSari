@@ -23,17 +23,41 @@
     margin-bottom: 10px;
   }
   .oyin-hisob { font-weight: 800; color: var(--yashil-quyuq); }
+
+  .rejim-tablar {
+    display: flex; gap: 4px; padding: 4px; margin-bottom: 14px;
+    background: var(--oq); border: 1px solid var(--chiziq); border-radius: 14px;
+  }
+  .rejim-tablar a {
+    flex: 1; min-height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--matn-2);
+  }
+  .rejim-tablar a[aria-selected="true"] {
+    background: var(--yashil-fon); color: var(--yashil-quyuq); box-shadow: inset 0 0 0 1px var(--yashil-chegara);
+  }
+  .zaif-mavzular { margin-bottom: 14px; }
+  .zaif-mavzular b { display: block; font-size: 13px; margin-bottom: 6px; color: var(--matn-2); }
+  .zaif-mavzular span {
+    display: inline-block; margin: 0 6px 6px 0; padding: 4px 10px; border-radius: 99px;
+    background: var(--zarg-fon); border: 1px solid #fde68a; color: #92400e; font-size: 12px; font-weight: 700;
+  }
 </style>
 </head>
 <body>
 
 <div class="ustki">
   <a class="orqaga" href="games.html" aria-label="Orqaga">←</a>
-  <h1>Yakka mashq<small>O'qigan darslaringizdan savollar</small></h1>
+  <h1>Yakka mashq<small id="rejimIzoh">O'qigan darslaringizdan savollar</small></h1>
   <span class="oyin-hisob" id="hisobBelgi" hidden></span>
 </div>
 
 <main class="sahifa" style="padding-top:18px">
+  <nav class="rejim-tablar" role="tablist" aria-label="Mashq turi">
+    <a role="tab" href="game.html" id="tabAralash" aria-selected="false">Aralash mashq</a>
+    <a role="tab" href="game.html?rejim=takror" id="tabTakror" aria-selected="false">Takrorlash</a>
+  </nav>
+  <div class="zaif-mavzular" id="zaifMavzular" hidden></div>
   <div id="tana">
     <div class="skelet" style="height:220px"></div>
   </div>
@@ -57,6 +81,11 @@
   var tana = document.getElementById('tana');
   var hisobBelgi = document.getElementById('hisobBelgi');
 
+  // Takrorlash: o'yinlarda va mavzu testlarida natijasi past bo'lgan mavzular
+  var takror = new URLSearchParams(location.search).get('rejim') === 'takror';
+  document.getElementById(takror ? 'tabTakror' : 'tabAralash').setAttribute('aria-selected', 'true');
+  if (takror) document.getElementById('rejimIzoh').textContent = "Zaif mavzularingiz bo'yicha";
+
   function hisobniYangila() {
     hisobBelgi.textContent = togri + ' / ' + indeks;
     hisobBelgi.hidden = indeks === 0;
@@ -64,13 +93,31 @@
 
   async function boshlash() {
     tana.innerHTML = UI.yuklanmoqda('Savollar tayyorlanmoqda...');
-    var res = await API.o_yinSavollari(10);
+    var res = await API.o_yinSavollari(10, takror ? 'review' : null);
     if (!res.ok) { tana.innerHTML = UI.xatoHolat(res.error, boshlash); return; }
 
     savollar = res.questions || [];
     indeks = 0;
     togri = 0;
     hisobniYangila();
+
+    var zaif = document.getElementById('zaifMavzular');
+    if (takror && (res.weak_topics || []).length) {
+      zaif.innerHTML = '<b>Takrorlanadigan mavzular</b>' + res.weak_topics.map(function (t) {
+        return '<span>' + UI.esc(t.title) + ' — ' + t.accuracy + '%</span>';
+      }).join('');
+      zaif.hidden = false;
+    }
+
+    if (takror && !savollar.length) {
+      tana.innerHTML = UI.holat({
+        belgi: 'target',
+        sarlavha: "Hozircha zaif mavzu yo'q",
+        matn: "O'yinlarda qatnashing va dars testlarini ishlang — natijangiz past bo'lgan mavzular shu yerda takrorlash uchun paydo bo'ladi.",
+        tugma: "O'yinlarga o'tish", tugmaYo_l: 'games.html',
+      });
+      return;
+    }
 
     if (!savollar.length) {
       tana.innerHTML = UI.holat({

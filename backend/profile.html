@@ -35,6 +35,7 @@
   .qator .matn small { display: block; color: var(--matn-2); font-size: .82rem; }
   .qator .o-q { color: var(--matn-3); }
   .qator.xavfli { color: var(--qizil); }
+  .qator input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
 </style>
 </head>
 <body>
@@ -77,6 +78,13 @@
       <span class="matn">Admin panel<small>Foydalanuvchilar, to'lovlar va statistika</small></span>
       <span class="o-q" data-ikon="chevronRight"></span>
     </a>
+
+    <!-- Telegram eslatmalari: kunlik eslatma, "keyingi mavzu ochildi", o'yin takliflari -->
+    <label class="qator" id="eslatmaQator" style="display:none">
+      <span class="nishon" data-ikon="bell"></span>
+      <span class="matn">Telegram eslatmalari<small>Kunlik eslatma, yangi mavzu ochilishi, o'yin takliflari</small></span>
+      <input type="checkbox" id="eslatmaTugma">
+    </label>
 
     <button class="qator xavfli" id="chiqish">
       <span class="nishon" data-ikon="logout"></span>
@@ -141,6 +149,11 @@
     }
     var stat = function (b, s) { return '<div class="stat"><b>' + UI.esc(b) + '</b><span>' + UI.esc(s) + '</span></div>'; };
     var izoh = ['Daraja ' + o.level];
+    var m = o.medals || {};
+    if (m.gold || m.silver || m.bronze) {
+      izoh.push('Turnir medallari: ' + [[m.gold, 'oltin'], [m.silver, 'kumush'], [m.bronze, 'bronza']]
+        .filter(function (x) { return x[0]; }).map(function (x) { return x[0] + ' ' + x[1]; }).join(', '));
+    }
     if (o.favorite_subjects.length) izoh.push('Sevimli fanlar: ' + o.favorite_subjects.join(', '));
     if (o.streak) izoh.push('Ketma-ket ' + o.streak + ' kun');
     tana.innerHTML =
@@ -157,6 +170,18 @@
 
   // Mehmon hisobi (email ham, Telegram ham yo'q) — chiqish xavfli
   var men = await API.men();
+  // Eslatmalar faqat Telegram orqali kirganlarga yuboriladi
+  if (men.ok && men.user.telegram_id) {
+    var eslatma = document.getElementById('eslatmaTugma');
+    eslatma.checked = men.user.notify !== false;
+    document.getElementById('eslatmaQator').style.display = '';
+    eslatma.onchange = async function () {
+      var yoq = eslatma.checked;
+      var r = await API.post('/api/profile/notify', { on: yoq });
+      if (!r.ok) { eslatma.checked = !yoq; UI.xabar(r.error, 'xato'); return; }
+      UI.xabar(yoq ? 'Eslatmalar yoqildi' : "Eslatmalar o'chirildi", 'muvaffaqiyat');
+    };
+  }
   if (men.ok && men.user.is_admin) {
     document.getElementById('adminQator').style.display = '';
   }

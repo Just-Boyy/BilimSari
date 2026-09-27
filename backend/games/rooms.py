@@ -33,7 +33,12 @@ OFFLINE_MS = engine.OFFLINE_MS
 
 ROOM_COLS = ('id, code, host_user_id, game_type, subject, topic, difficulty, question_count, '
              'max_players, is_public, source, status, session_id, version, created_ms, activity_ms')
-PLAYER_COLS = 'id, room_id, user_id, name, level, ready, state, joined_ms, seen_ms, left_ms'
+PLAYER_COLS = 'id, room_id, user_id, name, level, ready, state, joined_ms, seen_ms, left_ms, is_bot'
+
+# Kompyuter raqib darajalari: nomi va roomda ko'rinadigan daraja belgisi.
+# Aniqlik va tezlik engine.BOT_SKILL'da.
+BOT_LEVELS = {'oson': ('Oson', 1), 'orta': ("O'rta", 3), 'qiyin': ('Qiyin', 5)}
+MAX_BOTS = 3
 
 
 def normalize_code(raw) -> str:
@@ -79,7 +84,7 @@ def _active(players):
 
 
 def _is_online(p, now) -> bool:
-    return now - int(p['seen_ms']) <= OFFLINE_MS
+    return bool(p.get('is_bot')) or now - int(p['seen_ms']) <= OFFLINE_MS
 
 
 def _bump(cur, room_id, now, **extra):
@@ -111,8 +116,9 @@ def _remove_player(cur, room, user_id, now, new_state):
     cur.execute('UPDATE game_room_players SET state = %s, ready = 0, left_ms = %s WHERE room_id = %s AND user_id = %s',
                 (new_state, now, room['id'], user_id))
     extra = {}
+    # Hostlik va "room bo'sh qoldi" faqat odamlar bo'yicha — kompyuter host bo'lmaydi
     cur.execute(
-        '''SELECT user_id FROM game_room_players WHERE room_id = %s AND state = 'active'
+        '''SELECT user_id FROM game_room_players WHERE room_id = %s AND state = 'active' AND is_bot = 0
            ORDER BY joined_ms, id''',
         (room['id'],),
     )
@@ -309,6 +315,32 @@ def update_settings(cur, conn, user, code, raw):
     conn.commit()
 
 
+def add_bot(cur, conn, user, code, level):
+    """Host roomga kompyuter raqib qo'shadi — onlayn o'yinchi bo'lmasa ham
+    o'yin boshlanadi. Bot doim tayyor, manfiy user_id bilan saqlanadi."""
+    room = _room_or_404(cur, code)
+    _host_only(room, user['id'])
+    _waiting_only(room)
+    if level not in BOT_LEVELS:
+        raise GameError('bad_request', "Kompyuter darajasi noto'g'ri.")
+    players, _ = _member(cur, room, user['id'])
+    active = _active(players)
+    if len(active) >= int(room['max_players']):
+        raise GameError('room_full', "Roomda bo'sh joy yo'q. O'yinchilar sonini sozlamalarda oshiring.", 409)
+    if sum(1 for p in active if p['is_bot']) >= MAX_BOTS:
+        raise GameError('bad_request', f"Ko'pi bilan {MAX_BOTS} ta kompyuter qo'shish mumkin.")
+    bot_id = min([p['user_id'] for p in players if p['user_id'] < 0] + [0]) - 1
+    label, lvl = BOT_LEVELS[level]
+    now = clock.now_ms()
+    cur.execute(
+        '''INSERT INTO game_room_players (room_id, user_id, name, level, ready, state, joined_ms, seen_ms, is_bot)
+           VALUES (%s, %s, %s, %s, 1, 'active', %s, %s, 1)''',
+        (room['id'], bot_id, f'Kompyuter ({label})', lvl, now, now),
+    )
+    _bump(cur, room['id'], now)
+    conn.commit()
+
+
 def kick(cur, conn, user, code, pid):
     room = _room_or_404(cur, code)
     _host_only(room, user['id'])
@@ -370,7 +402,7 @@ def _start_check(room, players, now):
         return False, ''
     online = [p for p in _active(players) if _is_online(p, now)]
     if len(online) < 2:
-        return False, "Boshlash uchun kamida 2 ta o'yinchi kerak."
+        return False, "Kamida 2 o'yinchi kerak — do'stingizni taklif qiling yoki kompyuter qo'shing."
     waiting = [p for p in online if not p['ready'] and p['user_id'] != room['host_user_id']]
     if waiting:
         return False, f"{len(waiting)} ta o'yinchi hali tayyor emas."
@@ -447,6 +479,7 @@ def state(cur, conn, user, code, since=None) -> dict:
             'me': p['user_id'] == user['id'],
             'score': scores.get(p['user_id'], 0),
             'answered': p['user_id'] in answered,
+            'bot': bool(p['is_bot']),
         } for p in active],
         'me': {'pid': mine['id'], 'host': user['id'] == host_id,
                'ready': bool(mine['ready']) or user['id'] == host_id},

@@ -286,6 +286,24 @@
       '<span class="oy-ball">' + u.xp + '<small>ball</small></span></div>';
   }
 
+  /** Haftalik turnir: qachon tugashi, sovrin va o'tgan hafta g'oliblari. */
+  function tournamentHtml(t) {
+    var left = Math.max(0, t.ends_ms - Date.now());
+    var days = Math.floor(left / 86400000);
+    var hours = Math.floor((left % 86400000) / 3600000);
+    var names = ['Oltin', 'Kumush', 'Bronza'];
+    return '<section class="oy-turnir">' +
+      '<span class="oy-belgi oltin">' + ic('trophy') + '</span>' +
+      '<div><b>Haftalik turnir</b>' +
+        '<p>Tugashiga: <b>' + (days ? days + ' kun ' : '') + hours + ' soat</b>. Top-3 medal oladi.</p>' +
+        (t.last_winners.length
+          ? '<p class="oy-turnir-golib">O\'tgan hafta: ' + t.last_winners.map(function (w) {
+              return names[w.place - 1] + ' — ' + esc(w.name) + ' (' + w.xp + ')';
+            }).join(', ') + '</p>'
+          : '') +
+      '</div></section>';
+  }
+
   G.route('reyting', function (arg, scope) {
     G.header({ title: "O'yinlar", sub: 'Reyting', back: 'dashboard.html' });
     var saved = G.remember('reyting') || {};
@@ -304,6 +322,7 @@
         '<select class="kiritish" id="fanTanlov" aria-label="Fan" hidden></select>' +
       '</div>' +
       '<p class="izoh" style="margin:10px 0">O\'yinlarda hisobga o\'tgan ball bo\'yicha. Har 10 ball — 1 chaqmoq.</p>' +
+      '<div id="turnir"></div>' +
       '<div id="reytingRoyxat"></div><div id="reytingMen"></div>';
     G.focusMain();
 
@@ -337,6 +356,7 @@
       G.api.leaderboard(f).then(function (res) {
         if (scope.dead || mySeq !== seq) return;   // eskirgan javob yangisini bosib ketmasin
         if (!res.ok) { box.innerHTML = UI.xatoHolat(res.error, load); return; }
+        document.getElementById('turnir').innerHTML = res.tournament ? tournamentHtml(res.tournament) : '';
         if (!res.top.length) {
           box.innerHTML = UI.holat({
             belgi: 'trophy',

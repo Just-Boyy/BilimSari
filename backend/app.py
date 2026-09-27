@@ -10,12 +10,11 @@ import html
 import logging
 import os
 
-import requests
-
 import admin_api
 import admin_audit
 import admin_auth
 import ai_tutor
+import notify
 import rate_limit
 import study
 import study_api
@@ -24,6 +23,7 @@ from db import add_column_if_missing, get_connection
 from games import api as games_api
 from games import rooms as game_rooms
 from games import schema as game_schema
+from tgbot import BOT_TOKEN, WEBAPP_URL, tg_api
 
 logging.basicConfig(
     level=os.environ.get('LOG_LEVEL', 'INFO'),
@@ -48,9 +48,7 @@ def _security_headers(response):
     response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
     return response
 
-# BOT_TOKEN faqat muhit o'zgaruvchisidan olinadi — kodda saqlanmaydi.
-BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
-WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
+# BOT_TOKEN va WEBAPP_URL — tgbot.py'da (muhit o'zgaruvchilaridan) o'qiladi.
 
 # Webhook'ga faqat Telegram o'zi yuborayotganini tekshirish uchun maxfiy token.
 # SECRET_KEY'dan hosil qilinadi — barcha worker'larda bir xil bo'lishi shart
@@ -141,6 +139,13 @@ def init_db():
         logger.exception("O'yin jadvallari xatosi")
         conn.rollback()
 
+    # Telegram eslatmalari (jurnal, rejalashtiruvchi, users.notify)
+    try:
+        notify.ensure_tables(cur, conn)
+    except Exception:
+        logger.exception('Eslatma jadvallari xatosi')
+        conn.rollback()
+
     conn.commit()
     cur.close()
     conn.close()
@@ -214,7 +219,34 @@ def me():
     # Faqat profilda "Admin panel" qatorini ko'rsatish uchun — haqiqiy kirish
     # /api/admin/telegram-login'da imzolangan initData orqali tekshiriladi.
     user['is_admin'] = admin_auth.is_admin_telegram(user.get('telegram_id'))
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('SELECT notify FROM users WHERE id = %s', (user['id'],))
+        user['notify'] = bool((cur.fetchone() or {}).get('notify', 1))
+    except Exception:
+        conn.rollback()
+        user['notify'] = True
+    finally:
+        cur.close()
+        conn.close()
     return jsonify({'ok': True, 'user': user})
+
+
+@app.route('/api/profile/notify', methods=['POST'])
+@auth_required
+def update_notify():
+    """Telegram eslatmalarini yoqish/o'chirish (profil → Sozlamalar)."""
+    on = bool((request.get_json(silent=True) or {}).get('on'))
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('UPDATE users SET notify = %s WHERE id = %s', (int(on), request.user['id']))
+        conn.commit()
+        return jsonify({'ok': True, 'notify': on})
+    finally:
+        cur.close()
+        conn.close()
 
 
 @app.route('/api/profile/name', methods=['POST'])
@@ -393,18 +425,6 @@ def service_worker():
 
 # ───────────────────────────── Telegram bot (webhook) ─────────────────────────────
 
-def tg_api(method, payload):
-    if not BOT_TOKEN:
-        return None
-    url = f'https://api.telegram.org/bot{BOT_TOKEN}/{method}'
-    try:
-        r = requests.post(url, json=payload, timeout=15)
-        return r.json()
-    except Exception:
-        logger.exception('Telegram API xato (%s)', method)
-        return None
-
-
 def send_start_message(chat_id, first_name):
     # parse_mode=HTML — ismdagi <, & kabi belgilar xabarni buzmasligi uchun escape
     name = html.escape(first_name or 'do‘st')
@@ -534,6 +554,9 @@ try:
     setup_telegram_bot()
 except Exception:
     logger.exception('Telegram webhook ogohlantirish')
+
+# Eslatmalar rejalashtiruvchisi (har worker'da fon oqimi; vazifalar bazada egallanadi)
+notify.start()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

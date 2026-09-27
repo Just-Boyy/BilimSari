@@ -12,6 +12,8 @@ INTEGER 0/1 — PostgreSQL va lokal SQLite'da bir xil ishlashi uchun.
     game_presence      — "onlayn o'yinchilar" hisobi uchun oxirgi faollik
 """
 
+from db import add_column_if_missing
+
 READY = False
 
 
@@ -134,7 +136,32 @@ def ensure_tables(cur, conn):
             seen_ms BIGINT NOT NULL
         )
     ''')
+    # Mavzular bo'yicha doimiy natija — "Takrorlash" (zaif mavzular) shundan
+    # olinadi; game_answers esa room bilan birga 24 soatdan keyin o'chadi.
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS game_topic_stats (
+            user_id INTEGER NOT NULL,
+            topic TEXT NOT NULL,
+            correct INTEGER NOT NULL DEFAULT 0,
+            total INTEGER NOT NULL DEFAULT 0,
+            updated_ms BIGINT NOT NULL,
+            PRIMARY KEY (user_id, topic)
+        )
+    ''')
+    # Haftalik turnir g'oliblari (top-3)
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS game_awards (
+            week_start_ms BIGINT NOT NULL,
+            place INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            xp INTEGER NOT NULL,
+            created_ms BIGINT NOT NULL,
+            PRIMARY KEY (week_start_ms, place)
+        )
+    ''')
     conn.commit()
+    # Kompyuter raqib (bot) — manfiy user_id bilan roomdagi o'yinchi
+    add_column_if_missing(cur, conn, 'game_room_players', 'is_bot', 'INTEGER NOT NULL DEFAULT 0')
 
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_rooms_lobby ON game_rooms (status, is_public, activity_ms)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_players_user ON game_room_players (user_id, state)')
@@ -145,5 +172,6 @@ def ensure_tables(cur, conn):
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_results_time ON game_results (created_ms)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_queue_match ON game_queue (status, game_type, subject)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_presence_seen ON game_presence (seen_ms)')
+    cur.execute('CREATE INDEX IF NOT EXISTS idx_game_awards_user ON game_awards (user_id)')
     conn.commit()
     READY = True

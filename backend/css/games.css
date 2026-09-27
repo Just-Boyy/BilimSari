@@ -349,6 +349,9 @@
 .oy-panel:empty { display: none; }
 .oy-panel-izoh { text-align: center; margin: 0; }
 .oy-panel .tugma-mayda { justify-self: center; }
+.oy-panel-qator { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.oy-oyinchi.bot .avatar { background: var(--kok-och); border-color: #bae6fd; color: #0369a1; }
+.oy-oyinchi.bot .avatar svg { width: 20px; height: 20px; }
 
 /* ── Countdown ─────────────────────────────────────────── */
 .oy-countdown { text-align: center; padding: 30px 8px; }
@@ -541,6 +544,18 @@
 .oy-belgi-kichik svg { width: 15px; height: 15px; }
 .oy-belgi-kichik.togri { background: var(--yashil); }
 .oy-belgi-kichik.xato { background: var(--qizil); }
+
+/* ── Haftalik turnir ──────────────────────────────────── */
+.oy-turnir {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: var(--r);
+  background: var(--zarg-fon);
+  border: 1px solid #fde68a;
+}
+.oy-turnir p { font-size: 13px; color: var(--matn-2); margin: 2px 0 0; }
+.oy-turnir-golib { font-size: 12px !important; }
 
 /* ── Reyting filtrlari ─────────────────────────────────── */
 .oy-filtr { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }

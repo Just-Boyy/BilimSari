@@ -268,6 +268,9 @@ def game_questions():
             count = min(20, max(1, int(request.args.get('count', 10))))
         except ValueError:
             count = 10
+        if request.args.get('mode') == 'review':
+            questions, weak = study.review_questions(cur, request.user['id'], count)
+            return jsonify({'ok': True, 'questions': questions, 'weak_topics': weak})
         questions = study.game_questions(cur, request.user['id'], count)
         return jsonify({'ok': True, 'questions': questions})
     finally:
