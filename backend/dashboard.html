@@ -21,10 +21,6 @@
 </header>
 
 <main class="sahifa sahifa-keng">
-  <section class="bo-lim" id="darsBo-lim" hidden>
-    <div id="darsKarta"></div>
-  </section>
-
   <section class="bo-lim" id="kunBo-lim" hidden></section>
 
   <section class="bo-lim" id="fanBo-lim" hidden>
@@ -78,7 +74,6 @@
     chaqmoqBelgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + (res.chaqmoq || 0) + '</span>';
     chaqmoqBelgi.hidden = false;
 
-    darsChiz(res.today, res.streak);
     kunChiz(res.daily);
     fanChiz(res.subjects);
     UI.yutuqTabrik(res.new_achievements);
@@ -99,29 +94,6 @@
         UI.nishon('chevronRight') +
       '</a>';
     bo_lim.hidden = false;
-  }
-
-  // ── Bugungi/joriy mavzu kartasi ──
-  function darsChiz(today, streak) {
-    var bo_lim = document.getElementById('darsBo-lim');
-    if (!today) {
-      bo_lim.hidden = true;
-      return;
-    }
-    bo_lim.hidden = false;
-    document.getElementById('darsKarta').innerHTML =
-      '<div class="dars-karta">' +
-        '<div class="dars-tepa">' +
-          '<p class="dars-fan">' + UI.esc(today.subject_name) + '</p>' +
-          (streak > 0
-            ? '<span class="dars-streak">' + UI.nishon('flame') + streak + '</span>'
-            : '') +
-        '</div>' +
-        '<h2 class="dars-mavzu">' + UI.esc(today.topic_title) + '</h2>' +
-        '<a class="tugma" href="topics.html?fan=' + encodeURIComponent(today.subject_key) + '">' +
-          'O\'tish' + UI.nishon('chevronRight') +
-        '</a>' +
-      '</div>';
   }
 
   // ── Fan kartasi HTML'i (ochilgan va qulflangan uchun umumiy) ──
