@@ -11,8 +11,26 @@
 <style>
   .profil-bosh { text-align: center; }
   .profil-bosh .avatar {
-    width: 84px; height: 84px; font-size: 2rem; margin: 0 auto 12px;
+    width: 84px; height: 84px; font-size: 2rem; margin: 0 auto;
   }
+
+  /* Avatar atrofidagi nishonlar (Telegram profilidagi sovg'alar kabi) */
+  .avatar-orbita { position: relative; width: 84px; margin: 0 auto 12px; }
+  .yutuq-belgi.orbita-nishon {
+    position: absolute; left: 50%; top: 50%;
+    width: var(--s); height: var(--s);
+    margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+    padding: 0;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 0 #b45309, 0 6px 14px rgba(180, 83, 9, .22);
+    cursor: pointer;
+    transform: translate(var(--x), var(--y));
+    animation: orbitaKir .45s cubic-bezier(.2, 1.4, .4, 1) var(--d) backwards,
+               orbitaSuz 3.4s ease-in-out calc(var(--d) + .45s) infinite alternate;
+  }
+  .yutuq-belgi.orbita-nishon svg { width: 56%; height: 56%; }
+  @keyframes orbitaKir { from { opacity: 0; scale: .3; } }
+  @keyframes orbitaSuz { to { transform: translate(var(--x), calc(var(--y) - 6px)); } }
   .qator {
     display: flex; align-items: center; gap: 12px;
     padding: 15px 16px;
@@ -42,7 +60,9 @@
 
 <header class="shapka">
   <div class="profil-bosh">
-    <div class="avatar" id="avatar" aria-hidden="true">?</div>
+    <div class="avatar-orbita" id="avatarOrbita">
+      <div class="avatar" id="avatar" aria-hidden="true">?</div>
+    </div>
     <h1 id="ism">Yuklanmoqda...</h1>
     <span class="sinf" id="sinfYorliq" hidden></span>
   </div>
@@ -182,7 +202,31 @@
     }
     bo_lim.hidden = false;
     if (location.hash === '#yutuqlar') bo_lim.scrollIntoView();
+    orbitaChiz(y.items);
   });
+
+  // Avatar atrofida eng so'nggi olingan nishonlar (Telegram sovg'alari kabi suzib turadi).
+  // Joylar avatar markaziga nisbatan: x, y, o'lcham — eng yangi nishon eng katta joyda.
+  var ORBITA = [
+    [-72, -30, 36], [74, -26, 34], [-104, 8, 30], [104, 12, 30], [-78, 36, 24], [80, 38, 24],
+  ];
+  function orbitaChiz(items) {
+    var olingan = items.filter(function (a) { return a.unlocked; })
+      .sort(function (p, q) { return q.unlocked_ms - p.unlocked_ms; })
+      .slice(0, ORBITA.length);
+    var orbita = document.getElementById('avatarOrbita');
+    olingan.forEach(function (a, i) {
+      var j = ORBITA[i];
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'yutuq-belgi orbita-nishon';
+      b.style.cssText = '--x:' + j[0] + 'px;--y:' + j[1] + 'px;--s:' + j[2] + 'px;--d:' + (i * 0.12).toFixed(2) + 's';
+      b.setAttribute('aria-label', 'Nishon: ' + a.title);
+      b.innerHTML = UI.nishon(a.icon);
+      b.onclick = function () { UI.xabar(a.title + ' — ' + a.desc); };
+      orbita.appendChild(b);
+    });
+  }
 
   API.get('/api/games/me').then(function (g) {
     if (!g.ok) return;
