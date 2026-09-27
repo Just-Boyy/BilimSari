@@ -31,34 +31,27 @@
   .yutuq-belgi.orbita-nishon svg { width: 56%; height: 56%; }
   @keyframes orbitaKir { from { opacity: 0; scale: .3; } }
   @keyframes orbitaSuz { to { transform: translate(var(--x), calc(var(--y) - 6px)); } }
-  .qator {
-    display: flex; align-items: center; gap: 12px;
-    padding: 15px 16px;
+
+  /* Yuqori o'ng burchakdagi Sozlamalar tugmasi */
+  .profil-shapka { position: relative; }
+  .sozlama-tugma {
+    position: absolute; top: 14px; right: 14px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid; place-items: center;
     background: var(--oq);
     border: 1px solid var(--chiziq);
-    border-radius: var(--r);
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-    font-family: var(--tana);
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
+    box-shadow: var(--soya);
+    color: var(--matn-2);
   }
-  .qator .nishon { color: var(--yashil); }
-  .qator.xavfli .nishon { color: var(--qizil); }
-  .qator .o-q svg { width: 18px; height: 18px; }
-  .qator .matn { flex: 1; }
-  .qator .matn small { display: block; color: var(--matn-2); font-size: .82rem; }
-  .qator .o-q { color: var(--matn-3); }
-  .qator.xavfli { color: var(--qizil); }
-  .qator input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
+  .sozlama-tugma:active { transform: scale(.94); }
+  .sozlama-tugma svg { width: 22px; height: 22px; }
 </style>
 </head>
 <body>
 
-<header class="shapka">
+<header class="shapka profil-shapka">
+  <a class="sozlama-tugma" href="settings.html" aria-label="Sozlamalar" data-ikon="settings"></a>
   <div class="profil-bosh">
     <div class="avatar-orbita" id="avatarOrbita">
       <div class="avatar" id="avatar" aria-hidden="true">?</div>
@@ -83,27 +76,11 @@
   </section>
 
   <section class="bo-lim">
-    <h2 style="margin-bottom:12px">Sozlamalar</h2>
-
     <a class="qator" href="game.html">
       <span class="nishon" data-ikon="sparkle"></span>
       <span class="matn">Mashq<small>Qo'shimcha, dastur tashqarisidagi darslar</small></span>
       <span class="o-q" data-ikon="chevronRight"></span>
     </a>
-
-    <!-- Faqat admin Telegram ID'lariga ko'rinadi (.qator display:flex bo'lgani uchun hidden emas, style) -->
-    <a class="qator" href="admin.html" id="adminQator" style="display:none">
-      <span class="nishon" data-ikon="lock"></span>
-      <span class="matn">Admin panel<small>Foydalanuvchilar, to'lovlar va statistika</small></span>
-      <span class="o-q" data-ikon="chevronRight"></span>
-    </a>
-
-    <!-- Telegram eslatmalari: kunlik eslatma, "keyingi mavzu ochildi", o'yin takliflari -->
-    <label class="qator" id="eslatmaQator" style="display:none">
-      <span class="nishon" data-ikon="bell"></span>
-      <span class="matn">Telegram eslatmalari<small>Kunlik eslatma, yangi mavzu ochilishi, o'yin takliflari</small></span>
-      <input type="checkbox" id="eslatmaTugma">
-    </label>
   </section>
 
   <p class="izoh-kichik" style="text-align:center;margin-top:20px">
@@ -178,18 +155,23 @@
     }
     bo_lim.hidden = false;
     if (location.hash === '#yutuqlar') bo_lim.scrollIntoView();
-    orbitaChiz(y.items);
+    orbitaChiz(y.items, y.pinned || []);
   });
 
-  // Avatar atrofida eng so'nggi olingan nishonlar (Telegram sovg'alari kabi suzib turadi).
-  // Joylar avatar markaziga nisbatan: x, y, o'lcham — eng yangi nishon eng katta joyda.
+  // Avatar atrofidagi nishonlar (Telegram sovg'alari kabi suzib turadi): Sozlamalarda
+  // tanlanganlari, tanlanmagan bo'lsa — eng so'nggi olinganlari.
+  // Joylar avatar markaziga nisbatan: x, y, o'lcham — birinchi nishon eng katta joyda.
   var ORBITA = [
     [-72, -30, 36], [74, -26, 34], [-104, 8, 30], [104, 12, 30], [-78, 36, 24], [80, 38, 24],
   ];
-  function orbitaChiz(items) {
-    var olingan = items.filter(function (a) { return a.unlocked; })
-      .sort(function (p, q) { return q.unlocked_ms - p.unlocked_ms; })
-      .slice(0, ORBITA.length);
+  function orbitaChiz(items, tanlangan) {
+    var byKey = {};
+    items.forEach(function (a) { byKey[a.key] = a; });
+    var olingan = tanlangan.length
+      ? tanlangan.map(function (k) { return byKey[k]; }).filter(Boolean)
+      : items.filter(function (a) { return a.unlocked; })
+          .sort(function (p, q) { return q.unlocked_ms - p.unlocked_ms; });
+    olingan = olingan.slice(0, ORBITA.length);
     var orbita = document.getElementById('avatarOrbita');
     olingan.forEach(function (a, i) {
       var j = ORBITA[i];
@@ -234,23 +216,6 @@
           '<span>' + s.accuracy + '%</span></div>';
       }).join('');
   });
-
-  var men = await API.men();
-  // Eslatmalar faqat Telegram orqali kirganlarga yuboriladi
-  if (men.ok && men.user.telegram_id) {
-    var eslatma = document.getElementById('eslatmaTugma');
-    eslatma.checked = men.user.notify !== false;
-    document.getElementById('eslatmaQator').style.display = '';
-    eslatma.onchange = async function () {
-      var yoq = eslatma.checked;
-      var r = await API.post('/api/profile/notify', { on: yoq });
-      if (!r.ok) { eslatma.checked = !yoq; UI.xabar(r.error, 'xato'); return; }
-      UI.xabar(yoq ? 'Eslatmalar yoqildi' : "Eslatmalar o'chirildi", 'muvaffaqiyat');
-    };
-  }
-  if (men.ok && men.user.is_admin) {
-    document.getElementById('adminQator').style.display = '';
-  }
 })();
 </script>
 </body>

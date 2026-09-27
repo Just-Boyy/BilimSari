@@ -140,6 +140,13 @@
       return so_rov('/api/study/daily/answer', { method: 'POST', body: { answer: javob } });
     },
     yutuqlar: function () { return so_rov('/api/study/achievements'); },
+    nishonTanla: function (kalitlar) {
+      return so_rov('/api/study/achievements/pin', { method: 'POST', body: { keys: kalitlar } });
+    },
+    rasmYukla: function (dataUrl) {
+      return so_rov('/api/profile/photo', { method: 'POST', body: { image: dataUrl } });
+    },
+    rasmOchir: function () { return so_rov('/api/profile/photo/remove', { method: 'POST' }); },
 
     o_yinSavollari: function (soni, rejim) {
       return so_rov('/api/study/game/questions?count=' + (soni || 10) + (rejim ? '&mode=' + encodeURIComponent(rejim) : ''));

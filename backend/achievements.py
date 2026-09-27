@@ -8,9 +8,15 @@ seen_ms — tabriklash xabari ko'rsatilganmi (bir marta ko'rsatiladi).
 Nishonlar faqat bezak: chaqmoqqa ta'sir qilmaydi.
 """
 
+import json
+
 import daily
 import study
+from db import add_column_if_missing
 from games import clock
+from games.errors import GameError
+
+MAX_PINNED = 6   # avatar atrofida ko'rinadigan nishonlar soni
 
 # (kalit, nomi, tavsifi, ikonka, metrika, chegara) — tartib profildagi tartib
 ACHIEVEMENTS = [
@@ -44,6 +50,36 @@ def ensure_tables(cur, conn):
         )
     ''')
     conn.commit()
+    # Avatar atrofida ko'rsatish uchun o'quvchi tanlagan nishonlar (JSON ro'yxat);
+    # bo'sh bo'lsa — eng so'nggi olinganlari avtomatik ko'rsatiladi
+    add_column_if_missing(cur, conn, 'users', 'pinned_badges', 'TEXT')
+
+
+def _pinned(cur, user_id) -> list:
+    cur.execute('SELECT pinned_badges FROM users WHERE id = %s', (user_id,))
+    row = cur.fetchone()
+    try:
+        keys = json.loads((row or {}).get('pinned_badges') or '[]')
+    except (TypeError, ValueError):
+        return []
+    return [k for k in keys if isinstance(k, str)] if isinstance(keys, list) else []
+
+
+def pin(cur, conn, user_id, keys) -> list:
+    """Avatar atrofidagi nishonlarni saqlaydi (faqat olinganlari, ko'pi bilan 6 ta).
+    Bo'sh ro'yxat — avtomatik rejimga qaytish."""
+    if not isinstance(keys, list) or not all(isinstance(k, str) for k in keys):
+        raise GameError('bad_request', "Nishonlar ro'yxati noto'g'ri.")
+    keys = list(dict.fromkeys(keys))
+    if len(keys) > MAX_PINNED:
+        raise GameError('too_many', f"Ko'pi bilan {MAX_PINNED} ta nishon tanlash mumkin.")
+    cur.execute('SELECT key FROM user_achievements WHERE user_id = %s', (user_id,))
+    have = {r['key'] for r in cur.fetchall()}
+    if any(k not in have for k in keys):
+        raise GameError('not_unlocked', "Faqat olingan nishonlarni tanlash mumkin.")
+    cur.execute('UPDATE users SET pinned_badges = %s WHERE id = %s', (json.dumps(keys) if keys else None, user_id))
+    conn.commit()
+    return keys
 
 
 def _metrics(cur, user_id, now_ms) -> dict:
@@ -106,4 +142,6 @@ def evaluate(cur, conn, user_id, now_ms=None, mark_seen=True) -> dict:
         cur.execute(f'UPDATE user_achievements SET seen_ms = %s WHERE user_id = %s AND key IN ({marks}) '
                     'AND seen_ms IS NULL', [now_ms, user_id] + [n['key'] for n in new])
     conn.commit()
-    return {'items': items, 'new': new, 'unlocked': sum(1 for i in items if i['unlocked']), 'total': len(items)}
+    pinned = [k for k in _pinned(cur, user_id) if k in have]
+    return {'items': items, 'new': new, 'unlocked': sum(1 for i in items if i['unlocked']), 'total': len(items),
+            'pinned': pinned, 'max_pinned': MAX_PINNED}

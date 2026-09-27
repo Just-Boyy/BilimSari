@@ -1209,6 +1209,99 @@ textarea.kiritish { min-height: 92px; resize: vertical; line-height: 1.5; font-w
 @keyframes yutuqFon { from { opacity: 0; } }
 @keyframes yutuqChiq { from { opacity: 0; transform: scale(.85); } }
 
+/* ── Ro'yxat qatorlari (Profil, Sozlamalar) ─────────────── */
+
+.qator {
+  display: flex; align-items: center; gap: 12px;
+  padding: 15px 16px;
+  background: var(--oq);
+  border: 1px solid var(--chiziq);
+  border-radius: var(--r);
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  font-family: var(--tana);
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+.qator .nishon { color: var(--yashil); }
+.qator.xavfli .nishon { color: var(--qizil); }
+.qator .o-q svg { width: 18px; height: 18px; }
+.qator .matn { flex: 1; }
+.qator .matn small { display: block; color: var(--matn-2); font-size: .82rem; }
+.qator .o-q { color: var(--matn-3); }
+.qator.xavfli { color: var(--qizil); }
+.qator input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
+
+/* ── Sozlamalar ─────────────────────────────────────────── */
+
+.sozlama-profil { display: grid; gap: 16px; }
+.rasm-tanla { display: flex; align-items: center; gap: 16px; }
+.rasm-tugma {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0; border: 0; background: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.rasm-tugma .avatar { width: 84px; height: 84px; font-size: 2rem; }
+.rasm-tugma.band .avatar { opacity: .45; }
+.rasm-kamera {
+  position: absolute; right: -2px; bottom: -2px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--yashil);
+  border: 3px solid var(--oq);
+  color: #fff;
+}
+.rasm-kamera svg { width: 16px; height: 16px; }
+.rasm-amallar { display: grid; gap: 8px; justify-items: start; min-width: 0; }
+.rasm-amallar .tugma { width: auto; }
+.matn-tugma {
+  padding: 4px 2px;
+  border: 0; background: none;
+  font-family: var(--tana); font-size: 14px; font-weight: 700;
+  color: var(--matn-2);
+  cursor: pointer;
+}
+.matn-tugma.xavfli { color: var(--qizil); }
+.matn-tugma[hidden], .rasm-amallar [hidden] { display: none; }
+.ism-qator { display: flex; gap: 10px; }
+.ism-qator .kiritish { flex: 1; min-width: 0; }
+.ism-qator .tugma { width: auto; flex: 0 0 auto; }
+
+.nishon-tanlov {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.nishon-tanla {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 12px 6px 10px;
+  background: var(--oq);
+  border: 2px solid var(--chiziq);
+  border-radius: var(--r);
+  font-family: var(--tana);
+  cursor: pointer;
+}
+.nishon-tanla b { font-size: 12px; line-height: 1.25; color: var(--matn-quyuq); }
+.nishon-tanla[aria-pressed="true"] { border-color: var(--yashil); background: var(--yashil-fon); }
+.nishon-tartib {
+  position: absolute; top: 6px; right: 6px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: none; place-items: center;
+  background: var(--yashil);
+  color: #fff;
+  font-size: 12px; font-weight: 800;
+}
+.nishon-tanla[aria-pressed="true"] .nishon-tartib { display: grid; }
+
 /* ── Holatlar: yuklanmoqda / bo'sh / xato ───────────────── */
 
 .holat-karta {

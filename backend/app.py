@@ -17,6 +17,7 @@ import admin_auth
 import ai_tutor
 import daily
 import notify
+import photos
 import rate_limit
 import study
 import study_api
@@ -25,7 +26,7 @@ from db import add_column_if_missing, get_connection
 from games import api as games_api
 from games import rooms as game_rooms
 from games import schema as game_schema
-from tgbot import BOT_TOKEN, WEBAPP_URL, tg_api
+from tgbot import BOT_TOKEN, BOT_USERNAME, WEBAPP_URL, tg_api
 
 logging.basicConfig(
     level=os.environ.get('LOG_LEVEL', 'INFO'),
@@ -34,6 +35,7 @@ logging.basicConfig(
 logger = logging.getLogger('bilimsari')
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024   # eng katta so'rov — profil rasmi (~0.4 MB)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 Compress(app)  # JSON/HTML/CSS/JS javoblarini siqadi — mobil tarmoqda tezroq yuklanadi
 app.register_blueprint(study_api.bp)
@@ -108,6 +110,11 @@ def init_db():
         ('username', 'TEXT'),
         ('photo_url', 'TEXT'),
         ('onboarded', 'BOOLEAN NOT NULL DEFAULT FALSE'),
+        # O'quvchi ismini/rasmini o'zi o'zgartirgan bo'lsa (1) — Telegram orqali
+        # kirish ularni qayta yozmaydi. Telegram rasmi alohida saqlanadi.
+        ('custom_name', 'INTEGER NOT NULL DEFAULT 0'),
+        ('custom_photo', 'INTEGER NOT NULL DEFAULT 0'),
+        ('tg_photo_url', 'TEXT'),
     ]:
         add_column_if_missing(cur, conn, 'users', column, ddl)
 
@@ -141,10 +148,11 @@ def init_db():
         logger.exception("O'yin jadvallari xatosi")
         conn.rollback()
 
-    # Kun savoli va yutuqlar (nishonlar)
+    # Kun savoli, yutuqlar (nishonlar) va profil rasmlari
     try:
         daily.ensure_tables(cur, conn)
         achievements.ensure_tables(cur, conn)
+        photos.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
         conn.rollback()
@@ -232,15 +240,17 @@ def me():
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('SELECT notify FROM users WHERE id = %s', (user['id'],))
-        user['notify'] = bool((cur.fetchone() or {}).get('notify', 1))
+        cur.execute('SELECT notify, custom_photo FROM users WHERE id = %s', (user['id'],))
+        row = cur.fetchone() or {}
+        user['notify'] = bool(row.get('notify', 1))
+        user['custom_photo'] = bool(row.get('custom_photo'))
     except Exception:
         conn.rollback()
         user['notify'] = True
     finally:
         cur.close()
         conn.close()
-    return jsonify({'ok': True, 'user': user})
+    return jsonify({'ok': True, 'user': user, 'bot': BOT_USERNAME})
 
 
 @app.route('/api/profile/notify', methods=['POST'])
@@ -259,19 +269,25 @@ def update_notify():
         conn.close()
 
 
+NAME_MAX = 40
+
+
 @app.route('/api/profile/name', methods=['POST'])
 @auth_required
 def update_name():
-    """Onboarding: Telegram'dan aniqlangan ismni foydalanuvchi o'zi
-    o'zgartirmoqchi bo'lsa ("O'zim kiritaman") shu yerdan saqlanadi."""
+    """Ismni o'zgartirish (onboarding'da "O'zim kiritaman" va Sozlamalar).
+    Shundan keyin Telegram orqali kirish ismni qayta yozmaydi."""
     body = request.get_json(silent=True) or {}
-    name = (body.get('name') or '').strip()
+    name = ' '.join(str(body.get('name') or '').split())
     if len(name) < 2:
         return jsonify({'ok': False, 'error': "Ismingizni to'liq yozing.", 'code': 'bad_name'}), 400
+    if len(name) > NAME_MAX:
+        return jsonify({'ok': False, 'error': f"Ism {NAME_MAX} ta belgidan oshmasin.", 'code': 'bad_name'}), 400
 
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute('UPDATE users SET name = %s, onboarded = TRUE WHERE id = %s', (name, request.user['id']))
+    cur.execute('UPDATE users SET name = %s, onboarded = TRUE, custom_name = 1 WHERE id = %s',
+                (name, request.user['id']))
     conn.commit()
     cur.close()
     conn.close()
@@ -293,6 +309,56 @@ def mark_onboarded():
     cur.close()
     conn.close()
     return jsonify({'ok': True})
+
+
+@app.route('/api/profile/photo', methods=['POST'])
+@auth_required
+def upload_photo():
+    """Sozlamalar: o'quvchi o'z rasmini yuklaydi (brauzer oldindan kichraytiradi)."""
+    if not rate_limit.hit(f'photo:{request.user["id"]}', 20, 3600):
+        return jsonify({'ok': False, 'error': "Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring."}), 429
+    body = request.get_json(silent=True) or {}
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        url = photos.save(cur, conn, request.user['id'], body.get('image'))
+        return jsonify({'ok': True, 'photo_url': url})
+    except photos.PhotoError as exc:
+        return jsonify({'ok': False, 'error': str(exc), 'code': 'bad_photo'}), 400
+    finally:
+        cur.close()
+        conn.close()
+
+
+@app.route('/api/profile/photo/remove', methods=['POST'])
+@auth_required
+def remove_photo():
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return jsonify({'ok': True, 'photo_url': photos.remove(cur, conn, request.user['id'])})
+    finally:
+        cur.close()
+        conn.close()
+
+
+@app.route('/api/photo/<int:user_id>', methods=['GET'])
+def user_photo(user_id):
+    """O'quvchi yuklagan rasm. URL'da ?v=<vaqt> bor — rasm almashsa URL ham
+    o'zgaradi, shuning uchun uzoq keshlash xavfsiz."""
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        found = photos.load(cur, user_id)
+    finally:
+        cur.close()
+        conn.close()
+    if not found:
+        return jsonify({'ok': False, 'error': 'Rasm topilmadi'}), 404
+    mime, data = found
+    resp = app.response_class(data, mimetype=mime)
+    resp.headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+    return resp
 
 
 @app.route('/api/logout', methods=['POST'])
@@ -340,18 +406,24 @@ def telegram_auth():
 
     if row:
         user_id = row['id']
+        # O'quvchi Sozlamalarda o'zgartirgan ism/rasm Telegram'dagisi bilan qayta yozilmaydi
         cur.execute(
-            'UPDATE users SET name = %s, username = %s, photo_url = COALESCE(%s, photo_url) WHERE id = %s',
-            (name, username, photo, user_id)
+            '''UPDATE users SET name = CASE WHEN custom_name = 1 THEN name ELSE %s END,
+                                username = %s,
+                                tg_photo_url = COALESCE(%s, tg_photo_url),
+                                photo_url = CASE WHEN custom_photo = 1 THEN photo_url ELSE COALESCE(%s, photo_url) END
+               WHERE id = %s''',
+            (name, username, photo, photo, user_id)
         )
+        cur.execute('SELECT name, photo_url FROM users WHERE id = %s', (user_id,))
+        saved = cur.fetchone()
         conn.commit()
-        # Javobda eng so‘nggi rasm
-        photo = photo or row.get('photo_url')
+        name, photo = saved['name'], saved['photo_url']
     else:
         cur.execute(
-            'INSERT INTO users (name, email, password_hash, telegram_id, username, photo_url) '
-            'VALUES (%s, NULL, NULL, %s, %s, %s) RETURNING id',
-            (name, tg_id, username, photo)
+            'INSERT INTO users (name, email, password_hash, telegram_id, username, photo_url, tg_photo_url) '
+            'VALUES (%s, NULL, NULL, %s, %s, %s, %s) RETURNING id',
+            (name, tg_id, username, photo, photo)
         )
         user_id = cur.fetchone()['id']
         conn.commit()
@@ -383,7 +455,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html',
+    'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html',
     'admin.html',
 }
 

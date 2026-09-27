@@ -340,6 +340,20 @@ def daily_answer():
         _close(conn, cur)
 
 
+@bp.route('/achievements/pin', methods=['POST'])
+@auth_required
+def achievements_pin():
+    """Sozlamalar: avatar atrofida ko'rinadigan nishonlarni tanlash."""
+    conn, cur = _conn()
+    try:
+        keys = achievements.pin(cur, conn, request.user['id'], (request.get_json(silent=True) or {}).get('keys'))
+        return jsonify({'ok': True, 'pinned': keys})
+    except GameError as exc:
+        return _game_fail(exc)
+    finally:
+        _close(conn, cur)
+
+
 @bp.route('/achievements', methods=['GET'])
 @auth_required
 def achievements_list():

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Sozlamalar — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="profile.html" aria-label="Orqaga">←</a>
+  <h1>Sozlamalar<small>Profil va ilova sozlamalari</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <!-- Profil: rasm va ism -->
+  <section class="bo-lim">
+    <h2 style="margin-bottom:12px">Profil</h2>
+    <div class="karta sozlama-profil">
+      <div class="rasm-tanla">
+        <button class="rasm-tugma" type="button" id="rasmTugma" aria-label="Rasmni o'zgartirish">
+          <span class="avatar" id="rasmAvatar" aria-hidden="true">?</span>
+          <span class="rasm-kamera" data-ikon="camera"></span>
+        </button>
+        <div class="rasm-amallar">
+          <button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="rasmYangi">Rasmni o'zgartirish</button>
+          <button class="matn-tugma xavfli" type="button" id="rasmOchir" hidden>Rasmni o'chirish</button>
+        </div>
+        <input type="file" id="rasmFayl" accept="image/*" hidden>
+      </div>
+      <div class="maydon" style="margin:0">
+        <label for="ismInput">Ism</label>
+        <div class="ism-qator">
+          <input class="kiritish" id="ismInput" maxlength="40" autocomplete="name" placeholder="Ismingiz">
+          <button class="tugma" type="button" id="ismSaqla" disabled>Saqlash</button>
+        </div>
+        <p class="izoh-kichik" style="margin-top:6px">Reyting, o'yinlar va kun savolida shu ism ko'rinadi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avatar atrofida ko'rinadigan nishonlar -->
+  <section class="bo-lim" id="nishonBolim" hidden>
+    <div class="bo-lim-bosh"><h2>Avatar nishonlari</h2><span class="izoh" id="nishonSoni"></span></div>
+    <p class="izoh">Profilda avatar atrofida qaysi nishonlar tursin? 6 tagacha tanlang.
+      Tanlanmasa — eng so'nggi olinganlari ko'rinadi.</p>
+    <div class="nishon-tanlov" id="nishonTanlov"></div>
+    <button class="matn-tugma" type="button" id="nishonAvto" style="margin-top:8px" hidden>Avtomatik tanlashga qaytarish</button>
+  </section>
+
+  <!-- Bildirishnomalar -->
+  <section class="bo-lim">
+    <h2 style="margin-bottom:12px">Bildirishnomalar</h2>
+    <!-- .qator display:flex bo'lgani uchun hidden emas, style -->
+    <label class="qator" id="eslatmaQator" style="display:none">
+      <span class="nishon" data-ikon="bell"></span>
+      <span class="matn">Telegram eslatmalari<small>Kun savoli, kunlik eslatma, yangi mavzu ochilishi, o'yin takliflari</small></span>
+      <input type="checkbox" id="eslatmaTugma">
+    </label>
+    <p class="izoh" id="eslatmaIzoh" hidden>Eslatmalar faqat BilimSari'ga Telegram orqali kirganlarga yuboriladi.</p>
+  </section>
+
+  <!-- Boshqa -->
+  <section class="bo-lim">
+    <h2 style="margin-bottom:12px">Boshqa</h2>
+    <button class="qator" type="button" id="taklifTugma">
+      <span class="nishon" data-ikon="users"></span>
+      <span class="matn">Do'stlarni taklif qilish<small>BilimSari havolasini do'stlaringizga yuboring</small></span>
+      <span class="o-q" data-ikon="chevronRight"></span>
+    </button>
+    <a class="qator" href="admin.html" id="adminQator" style="display:none">
+      <span class="nishon" data-ikon="lock"></span>
+      <span class="matn">Admin panel<small>Foydalanuvchilar, to'lovlar va statistika</small></span>
+      <span class="o-q" data-ikon="chevronRight"></span>
+    </a>
+  </section>
+
+  <p class="izoh-kichik" style="text-align:center;margin-top:20px">
+    BilimSari — o'zbek maktab o'quvchilari uchun
+  </p>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('profile.html');
+
+  document.querySelectorAll('[data-ikon]').forEach(function (el) {
+    el.innerHTML = UI.nishon(el.dataset.ikon);
+  });
+
+  var men = await API.men();
+  if (!men.ok) { UI.xabar(men.error, 'xato'); return; }
+  var u = men.user;
+
+  // ── Rasm ──────────────────────────────────────────────
+  var rasmTugma = document.getElementById('rasmTugma');
+  var rasmFayl = document.getElementById('rasmFayl');
+  var rasmOchir = document.getElementById('rasmOchir');
+  var rasmYangi = document.getElementById('rasmYangi');
+
+  function avatarChiz(url, ism) {
+    var el = document.getElementById('rasmAvatar');
+    var yangi = document.createElement(url ? 'img' : 'span');
+    yangi.id = 'rasmAvatar';
+    yangi.className = 'avatar';
+    yangi.setAttribute('aria-hidden', 'true');
+    if (url) { yangi.src = url; yangi.alt = ''; } else { yangi.textContent = UI.harfAvatar(ism); }
+    el.replaceWith(yangi);
+  }
+  avatarChiz(u.photo_url, u.name);
+  rasmOchir.hidden = !u.custom_photo;
+
+  // Brauzerning o'zida kvadrat qilib kesib, 320×320 JPEG'ga kichraytiramiz (~30 KB)
+  function kichraytir(fayl) {
+    return new Promise(function (resolve, reject) {
+      var manzil = URL.createObjectURL(fayl);
+      var img = new Image();
+      img.onload = function () {
+        var o = 320, s = Math.min(img.naturalWidth, img.naturalHeight);
+        var canvas = document.createElement('canvas');
+        canvas.width = canvas.height = o;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, o, o);
+        ctx.drawImage(img, (img.naturalWidth - s) / 2, (img.naturalHeight - s) / 2, s, s, 0, 0, o, o);
+        URL.revokeObjectURL(manzil);
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = function () { URL.revokeObjectURL(manzil); reject(); };
+      img.src = manzil;
+    });
+  }
+
+  function band(ha) {
+    rasmTugma.classList.toggle('band', ha);
+    rasmTugma.disabled = rasmYangi.disabled = rasmOchir.disabled = ha;
+    rasmYangi.textContent = ha ? 'Yuklanmoqda...' : "Rasmni o'zgartirish";
+  }
+
+  rasmTugma.onclick = rasmYangi.onclick = function () { rasmFayl.click(); };
+  rasmFayl.onchange = async function () {
+    var fayl = rasmFayl.files && rasmFayl.files[0];
+    rasmFayl.value = '';
+    if (!fayl) return;
+    if (!/^image\//.test(fayl.type)) { UI.xabar('Rasm faylini tanlang', 'xato'); return; }
+    if (fayl.size > 20 * 1024 * 1024) { UI.xabar('Rasm juda katta (20 MB dan kichik bo\'lsin)', 'xato'); return; }
+    band(true);
+    var data;
+    try { data = await kichraytir(fayl); } catch (e) {
+      band(false);
+      UI.xabar("Bu rasmni ochib bo'lmadi. Boshqa rasm tanlang.", 'xato');
+      return;
+    }
+    var r = await API.rasmYukla(data);
+    band(false);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+    u.photo_url = r.photo_url;
+    API.userYangilash({ photo_url: r.photo_url });
+    avatarChiz(r.photo_url, u.name);
+    rasmOchir.hidden = false;
+    UI.xabar('Rasm saqlandi', 'muvaffaqiyat');
+  };
+
+  rasmOchir.onclick = async function () {
+    if (!confirm("Rasmingiz o'chirilsinmi?")) return;
+    band(true);
+    var r = await API.rasmOchir();
+    band(false);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+    u.photo_url = r.photo_url;
+    API.userYangilash({ photo_url: r.photo_url });
+    avatarChiz(r.photo_url, u.name);
+    rasmOchir.hidden = true;
+    UI.xabar("Rasm o'chirildi", 'muvaffaqiyat');
+  };
+
+  // ── Ism ───────────────────────────────────────────────
+  var ismInput = document.getElementById('ismInput');
+  var ismSaqla = document.getElementById('ismSaqla');
+  var joriyIsm = u.name || '';
+  ismInput.value = joriyIsm;
+  function tozala(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+  ismInput.oninput = function () {
+    var v = tozala(ismInput.value);
+    ismSaqla.disabled = v.length < 2 || v === joriyIsm;
+  };
+  ismInput.onkeydown = function (e) { if (e.key === 'Enter' && !ismSaqla.disabled) ismSaqla.click(); };
+  ismSaqla.onclick = async function () {
+    var ism = tozala(ismInput.value);
+    ismSaqla.disabled = true;
+    var r = await API.ismYangilash(ism);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); ismSaqla.disabled = false; return; }
+    joriyIsm = u.name = r.user.name;
+    ismInput.value = joriyIsm;
+    API.userYangilash({ name: joriyIsm });
+    if (!u.photo_url) avatarChiz(null, joriyIsm);
+    UI.xabar('Ism saqlandi', 'muvaffaqiyat');
+  };
+
+  // ── Avatar nishonlari ─────────────────────────────────
+  var tanlangan = [];
+  var MAX = 6;
+  var saqlashTimer = null;
+  var tanlovEl = document.getElementById('nishonTanlov');
+
+  function nishonYangila() {
+    tanlovEl.querySelectorAll('.nishon-tanla').forEach(function (b) {
+      var i = tanlangan.indexOf(b.dataset.kalit);
+      b.setAttribute('aria-pressed', i >= 0 ? 'true' : 'false');
+      b.querySelector('.nishon-tartib').textContent = i >= 0 ? i + 1 : '';
+    });
+    document.getElementById('nishonSoni').textContent = tanlangan.length ? tanlangan.length + ' / ' + MAX : 'Avtomatik';
+    document.getElementById('nishonAvto').hidden = !tanlangan.length;
+  }
+
+  function nishonSaqla() {
+    clearTimeout(saqlashTimer);
+    saqlashTimer = setTimeout(async function () {
+      var r = await API.nishonTanla(tanlangan);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+      UI.xabar(tanlangan.length ? 'Avatar nishonlari saqlandi' : 'Avtomatik tanlash yoqildi', 'muvaffaqiyat');
+    }, 500);
+  }
+
+  API.yutuqlar().then(function (y) {
+    if (!y.ok) return;
+    MAX = y.max_pinned || MAX;
+    tanlangan = (y.pinned || []).slice();
+    var olingan = y.items.filter(function (a) { return a.unlocked; });
+    document.getElementById('nishonBolim').hidden = false;
+    if (!olingan.length) {
+      tanlovEl.outerHTML = '<p class="izoh" style="margin-top:10px">Hali nishon yo\'q. Dars o\'qing, o\'yin o\'ynang va ' +
+        'kun savoliga javob bering — olingan nishonlar shu yerda paydo bo\'ladi.</p>';
+      document.getElementById('nishonSoni').textContent = '';
+      return;
+    }
+    tanlovEl.innerHTML = olingan.map(function (a) {
+      return '<button class="nishon-tanla" type="button" data-kalit="' + UI.esc(a.key) + '" aria-pressed="false">' +
+        '<span class="nishon-tartib" aria-hidden="true"></span>' +
+        '<span class="yutuq-belgi">' + UI.nishon(a.icon) + '</span>' +
+        '<b>' + UI.esc(a.title) + '</b></button>';
+    }).join('');
+    tanlovEl.querySelectorAll('.nishon-tanla').forEach(function (b) {
+      b.onclick = function () {
+        var k = b.dataset.kalit, i = tanlangan.indexOf(k);
+        if (i >= 0) tanlangan.splice(i, 1);
+        else if (tanlangan.length >= MAX) { UI.xabar("Ko'pi bilan " + MAX + ' ta nishon tanlash mumkin', 'xato'); return; }
+        else tanlangan.push(k);
+        nishonYangila();
+        nishonSaqla();
+      };
+    });
+    nishonYangila();
+  });
+
+  document.getElementById('nishonAvto').onclick = function () {
+    tanlangan = [];
+    nishonYangila();
+    nishonSaqla();
+  };
+
+  // ── Bildirishnomalar ──────────────────────────────────
+  if (u.telegram_id) {
+    var eslatma = document.getElementById('eslatmaTugma');
+    eslatma.checked = u.notify !== false;
+    document.getElementById('eslatmaQator').style.display = '';
+    eslatma.onchange = async function () {
+      var yoq = eslatma.checked;
+      var r = await API.post('/api/profile/notify', { on: yoq });
+      if (!r.ok) { eslatma.checked = !yoq; UI.xabar(r.error, 'xato'); return; }
+      UI.xabar(yoq ? 'Eslatmalar yoqildi' : "Eslatmalar o'chirildi", 'muvaffaqiyat');
+    };
+  } else {
+    document.getElementById('eslatmaIzoh').hidden = false;
+  }
+
+  // ── Boshqa ────────────────────────────────────────────
+  if (u.is_admin) document.getElementById('adminQator').style.display = '';
+
+  document.getElementById('taklifTugma').onclick = function () {
+    var link = 'https://t.me/' + (men.bot || 'bilimsaribot');
+    var matn = "BilimSari'da maktab fanlarini o'rganyapman: darslar, o'yinlar va kun savoli. Sen ham qo'shil!";
+    var url = 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(matn);
+    var tg = window.Telegram && window.Telegram.WebApp;
+    if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(url);
+    else if (navigator.share) navigator.share({ title: 'BilimSari', text: matn, url: link }).catch(function () {});
+    else window.open(url, '_blank', 'noopener');
+  };
+})();
+</script>
+</body>
+</html>

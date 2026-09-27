@@ -33,7 +33,8 @@
     try {
       const raw = localStorage.getItem('bilimsari_user');
       const user = raw ? JSON.parse(raw) : {};
-      if (user.photo_url === photoUrl) return;
+      // O'quvchi Sozlamalarda o'z rasmini yuklagan bo'lsa — Telegram rasmi uni almashtirmaydi
+      if (user.photo_url === photoUrl || String(user.photo_url || '').indexOf('/api/photo/') === 0) return;
       user.photo_url = photoUrl;
       localStorage.setItem('bilimsari_user', JSON.stringify(user));
     } catch (e) {}
@@ -59,7 +60,7 @@
       const data = await res.json();
       if (data.ok && data.token && data.user) {
         // Prefer server photo, else Telegram client photo
-        if (!data.user.photo_url && tgUser && tgUser.photo_url) {
+        if (!data.user.photo_url && !data.user.custom_photo && tgUser && tgUser.photo_url) {
           data.user.photo_url = tgUser.photo_url;
         }
         localStorage.setItem('bilimsari_token', data.token);

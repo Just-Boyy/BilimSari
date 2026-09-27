@@ -509,7 +509,7 @@ def delete_user(user_id):
         # boshqaga o'tadi), keyin natijalar reytingda egasiz qolmasligi uchun o'chiriladi
         game_rooms.leave_all(cur, user_id, clock.now_ms())
         for table in ('game_room_players', 'game_answers', 'game_results', 'game_queue', 'game_presence',
-                      'game_topic_stats', 'notify_log', 'daily_answers', 'user_achievements'):
+                      'game_topic_stats', 'notify_log', 'daily_answers', 'user_achievements', 'user_photos'):
             cur.execute(f'DELETE FROM {table} WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM users WHERE id = %s', (user_id,))
         conn.commit()
