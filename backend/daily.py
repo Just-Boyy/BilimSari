@@ -117,14 +117,15 @@ def _first(name):
 
 def ranking(cur, day, user_id, limit=10) -> dict:
     cur.execute(
-        '''SELECT a.user_id, a.answered_ms - a.opened_ms AS ms, u.name FROM daily_answers a
+        '''SELECT a.user_id, a.answered_ms - a.opened_ms AS ms, u.name, u.photo_url FROM daily_answers a
            LEFT JOIN users u ON u.id = a.user_id
            WHERE a.day = %s AND a.correct = 1 ORDER BY ms, a.answered_ms''',
         (day,),
     )
     rows = cur.fetchall()
-    top = [{'rank': i + 1, 'name': _first(r['name']), 'seconds': round(int(r['ms']) / 1000, 1),
-            'me': r['user_id'] == user_id} for i, r in enumerate(rows[:limit])]
+    top = [{'rank': i + 1, 'name': _first(r['name']), 'photo_url': r['photo_url'],
+            'seconds': round(int(r['ms']) / 1000, 1), 'me': r['user_id'] == user_id}
+           for i, r in enumerate(rows[:limit])]
     mine = next(({'rank': i + 1, 'seconds': round(int(r['ms']) / 1000, 1)}
                  for i, r in enumerate(rows) if r['user_id'] == user_id), None)
     cur.execute('SELECT COUNT(*) AS n FROM daily_answers WHERE day = %s AND answered_ms IS NOT NULL', (day,))
@@ -207,14 +208,40 @@ def answer(cur, conn, user_id, raw, now_ms) -> dict:
     return state(cur, conn, user_id, now_ms)
 
 
+WEEK_LABELS = ('Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya')
+
+
+def week(cur, user_id, now_ms) -> list:
+    """Joriy hafta (dushanbadan): har kuni javob berilganmi — streak taqvimi uchun."""
+    t = clock.tashkent_date(now_ms)
+    monday = t - timedelta(days=t.weekday())
+    days = [monday + timedelta(days=i) for i in range(7)]
+    cur.execute('SELECT day, correct FROM daily_answers WHERE user_id = %s AND answered_ms IS NOT NULL '
+                'AND day >= %s AND day <= %s', (user_id, days[0].isoformat(), days[-1].isoformat()))
+    got = {r['day']: bool(r['correct']) for r in cur.fetchall()}
+    return [{'day': d.isoformat(), 'label': WEEK_LABELS[i], 'answered': d.isoformat() in got,
+             'correct': got.get(d.isoformat(), False), 'today': d == t, 'future': d > t}
+            for i, d in enumerate(days)]
+
+
 def status(cur, user_id, now_ms) -> dict:
-    """Bosh sahifa kartasi uchun qisqa holat (savolni ochmaydi — vaqt boshlanmaydi)."""
+    """Bosh sahifa kartasi uchun holat (savolni ochmaydi — vaqt boshlanmaydi):
+    javob, streak, keyingi savolgacha vaqt, bugungi mini reyting va hafta taqvimi."""
     day = today(now_ms)
     cur.execute('SELECT answered_ms, correct FROM daily_answers WHERE day = %s AND user_id = %s', (day, user_id))
     mine = cur.fetchone()
     answered = bool(mine and mine['answered_ms'] is not None)
-    return {'answered': answered, 'correct': bool(answered and mine['correct']),
-            'streak': streak(cur, user_id, now_ms)}
+    rk = ranking(cur, day, user_id, limit=3)
+    return {
+        'day': day,
+        'answered': answered, 'correct': bool(answered and mine['correct']),
+        'streak': streak(cur, user_id, now_ms),
+        'next_in_s': (clock.period_start_ms('day', now_ms) + DAY_MS - now_ms) // 1000,
+        'answered_count': rk['answered_count'], 'correct_count': rk['correct_count'],
+        'my_rank': rk['me']['rank'] if rk['me'] else None,
+        'top': [{'name': t['name'], 'photo_url': t['photo_url']} for t in rk['top']],
+        'week': week(cur, user_id, now_ms),
+    }
 
 
 def chaqmoq_by_user(cur) -> dict:

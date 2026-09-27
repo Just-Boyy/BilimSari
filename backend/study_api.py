@@ -84,8 +84,13 @@ def dashboard():
             'photo_url': request.user.get('photo_url'),
         }
         now = clock.now_ms()
-        data['daily'] = daily.status(cur, request.user['id'], now)
-        data['new_achievements'] = achievements.evaluate(cur, conn, request.user['id'], now)['new']
+        uid = request.user['id']
+        data['daily'] = daily.status(cur, uid, now)
+        data['plan'] = study.today_plan(cur, uid, data['daily']['answered'], now)
+        board = study.leaderboard(cur, uid, limit=1)
+        data['rank'] = {'rank': (board['me'] or {}).get('rank'), 'total': board['total_players']}
+        data['chaqmoq_parts'] = study.chaqmoq_parts(cur, uid)
+        data['new_achievements'] = achievements.evaluate(cur, conn, uid, now)['new']
         return jsonify(data)
     finally:
         _close(conn, cur)

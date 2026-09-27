@@ -13,15 +13,27 @@
 
 <header class="shapka shapka-qotgan">
   <div class="shapka-qator">
-    <div>
-      <p class="salom" id="salom">Salom!</p>
-    </div>
-    <span class="chaqmoq-belgi" id="chaqmoqBelgi" hidden></span>
+    <!-- Avatar atrofidagi halqa — "Bugungi reja" bajarilishi -->
+    <a class="bosh-profil" href="profile.html" aria-label="Profil">
+      <span class="avatar-halqa" id="maqsadHalqa"><span class="avatar" id="boshAvatar" aria-hidden="true"></span></span>
+      <span class="bosh-matn">
+        <span class="salom" id="salom">Salom!</span>
+        <span class="bosh-qator" id="boshQator"></span>
+      </span>
+    </a>
+    <button class="chaqmoq-belgi" id="chaqmoqBelgi" type="button" aria-label="Chaqmoq haqida" hidden></button>
   </div>
 </header>
 
-<main class="sahifa sahifa-keng">
+<main class="sahifa sahifa-keng bosh-sahifa">
+  <!-- Tezkor tugmalar -->
+  <section class="bo-lim">
+    <nav class="tezkor" aria-label="Tezkor o'tish" id="tezkor"></nav>
+  </section>
+
   <section class="bo-lim" id="kunBo-lim" hidden></section>
+
+  <section class="bo-lim" id="rejaBo-lim" hidden></section>
 
   <section class="bo-lim" id="fanBo-lim" hidden>
     <div class="bo-lim-bosh">
@@ -66,34 +78,196 @@
     }
     if (res.needs_onboarding) { location.href = 'onboarding.html'; return; }
 
-    // Sarlavha
-    var ism = UI.bosh(res.user && res.user.name);
-    document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
-
-    var chaqmoqBelgi = document.getElementById('chaqmoqBelgi');
-    chaqmoqBelgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + (res.chaqmoq || 0) + '</span>';
-    chaqmoqBelgi.hidden = false;
-
+    oxirgi = res;
+    sarlavhaChiz(res);
     kunChiz(res.daily);
+    rejaChiz(res.plan, res.today, res.daily && res.daily.day);
     fanChiz(res.subjects);
     UI.yutuqTabrik(res.new_achievements);
   }
 
-  // ── Kun savoli kartasi ──
+  var oxirgi = null;
+  var taymer = null;
+
+  function avatarHtml(nom, rasm, cls) {
+    return rasm
+      ? '<img class="avatar' + (cls ? ' ' + cls : '') + '" alt="" src="' + UI.esc(rasm) + '">'
+      : '<span class="avatar' + (cls ? ' ' + cls : '') + '">' + UI.esc(UI.harfAvatar(nom)) + '</span>';
+  }
+
+  // ── Sarlavha: avatar + maqsad halqasi, streak va reytingdagi o'rin, chaqmoq ──
+  function sarlavhaChiz(res) {
+    var u = res.user || {};
+    var ism = UI.bosh(u.name);
+    document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
+    var halqa = document.getElementById('maqsadHalqa');
+    halqa.innerHTML = avatarHtml(u.name, u.photo_url);
+    var reja = res.plan || { done: 0, total: 3 };
+    halqa.style.setProperty('--halqa', Math.round(100 * reja.done / (reja.total || 1)));
+    halqa.title = 'Bugungi reja: ' + reja.done + ' / ' + reja.total;
+
+    var qator = [];
+    if (res.streak > 0) {
+      qator.push('<span class="olov">' + UI.nishon('flame') + '<span>' + res.streak + ' kun</span></span>');
+    }
+    if (res.rank && res.rank.rank) {
+      qator.push('<span class="kubok">' + UI.nishon('trophy') + '<span>' + res.rank.rank + '-o\'rin</span></span>');
+    }
+    document.getElementById('boshQator').innerHTML = qator.join('');
+
+    var belgi = document.getElementById('chaqmoqBelgi');
+    belgi.innerHTML = UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + (res.chaqmoq || 0) + '</span>';
+    belgi.hidden = false;
+    belgi.onclick = chaqmoqOyna;
+  }
+
+  // ── Chaqmoq belgisi bosilganda: qayerdan yig'ilgani va reytingdagi o'rin ──
+  function chaqmoqOyna() {
+    var res = oxirgi;
+    if (!res || document.getElementById('chaqmoqOyna')) return;
+    var q = res.chaqmoq_parts || { topics: 0, games: 0, daily: 0 };
+    var manba = function (ikon, nom, izoh, son) {
+      return '<div><span class="nishon-doira">' + UI.nishon(ikon) + '</span>' +
+        '<span>' + nom + '<small>' + izoh + '</small></span><b>+' + son + '</b></div>';
+    };
+    var oyna = document.createElement('div');
+    oyna.id = 'chaqmoqOyna';
+    oyna.className = 'pastki-oyna';
+    oyna.innerHTML =
+      '<div class="pastki-oyna-karta" role="dialog" aria-modal="true" aria-labelledby="chaqmoqSarlavha">' +
+        '<div class="chaqmoq-katta"><span class="belgi">' + UI.nishon('chaqmoq') + '</span>' +
+          '<b id="chaqmoqSarlavha">' + (res.chaqmoq || 0) + ' chaqmoq</b></div>' +
+        '<p class="izoh">' + (res.rank && res.rank.rank
+          ? 'Reytingda <b>' + res.rank.rank + '-o\'rin</b> (' + res.rank.total + ' o\'quvchi orasida)'
+          : 'Chaqmoq to\'plab reytingga chiqing!') + '</p>' +
+        '<div class="chaqmoq-manba">' +
+          manba('bookOpen', 'Mavzular', 'Har bir tugallangan mavzu +20', q.topics) +
+          manba('gamepad', 'O\'yinlar', 'O\'yinda har 10 ball +1', q.games) +
+          manba('sparkle', 'Kun savoli', 'To\'g\'ri javob +5', q.daily) +
+        '</div>' +
+        '<a class="tugma" href="leaderboard.html">Reytingni ochish</a>' +
+        '<button class="matn-tugma" type="button" data-yop style="display:block;margin:10px auto 0">Yopish</button>' +
+      '</div>';
+    function yop() {
+      oyna.remove();
+      document.removeEventListener('keydown', tugma);
+    }
+    function tugma(e) { if (e.key === 'Escape') yop(); }
+    oyna.onclick = function (e) { if (e.target === oyna || e.target.hasAttribute('data-yop')) yop(); };
+    document.addEventListener('keydown', tugma);
+    document.body.appendChild(oyna);
+    oyna.querySelector('[data-yop]').focus();
+  }
+
+  // ── Tezkor tugmalar ──
+  document.getElementById('tezkor').innerHTML = [
+    ['daily.html', 'sparkle', 'Kun savoli', '#fff7ed', '#ea580c'],
+    ['games.html', 'gamepad', 'O\'yin', '#f5f3ff', '#7c3aed'],
+    ['game.html', 'dumbbell', 'Mashq', '#e0f2fe', '#0284c7'],
+    ['leaderboard.html', 'trophy', 'Reyting', '#fefce8', '#ca8a04'],
+  ].map(function (t) {
+    return '<a href="' + t[0] + '"><span class="doira" style="--doira-fon:' + t[3] + ';--doira-rang:' + t[4] + '">' +
+      UI.nishon(t[1]) + '</span>' + t[2] + '</a>';
+  }).join('');
+
+  function vaqt(s) {
+    s = Math.max(0, s);
+    var ikki = function (n) { return (n < 10 ? '0' : '') + n; };
+    return ikki(Math.floor(s / 3600)) + ':' + ikki(Math.floor(s % 3600 / 60)) + ':' + ikki(s % 60);
+  }
+
+  // ── Kun savoli kartasi: holatga mos rang, taymer, mini reyting, hafta taqvimi ──
   function kunChiz(kun) {
     var bo_lim = document.getElementById('kunBo-lim');
+    clearInterval(taymer);
     if (!kun) { bo_lim.hidden = true; return; }
-    var izoh = !kun.answered
-      ? 'Bugungi savol tayyor — to\'g\'ri va tez javob bering!'
-      : (kun.correct ? 'To\'g\'ri javob berdingiz. Reytingni ko\'ring' : 'Bugun adashdingiz. Ertaga yangi savol');
+    var holat = !kun.answered ? 'kutilmoqda' : (kun.correct ? 'togri' : 'xato');
+
+    var tana;
+    if (holat === 'kutilmoqda') {
+      tana = '<h3 class="kun-sarlavha">Bugungi savol tayyor!</h3>' +
+        '<p class="kun-izoh">To\'g\'ri va tez javob bering — +5 chaqmoq va kunlik reyting.</p>' +
+        '<span class="kun-tugma">Savolni ochish' + UI.nishon('chevronRight') + '</span>';
+    } else {
+      var sarlavha = kun.correct
+        ? 'To\'g\'ri javob!' + (kun.my_rank ? ' ' + kun.my_rank + '-o\'rin' : '')
+        : 'Bugun adashdingiz';
+      tana = '<div class="kun-holat"><span class="belgi">' + UI.nishon(kun.correct ? 'check' : 'x') + '</span>' +
+        '<span><b>' + sarlavha + '</b><small>Keyingi savol: <span class="kun-taymer" id="kunTaymer">' +
+          vaqt(kun.next_in_s) + '</span></small></span></div>';
+    }
+
+    var reyting = '';
+    if (kun.answered_count > 0) {
+      reyting = '<div class="kun-reyting">' +
+        (kun.top && kun.top.length
+          ? '<span class="kun-avatarlar">' + kun.top.map(function (t) { return avatarHtml(t.name, t.photo_url); }).join('') + '</span>'
+          : '') +
+        '<span>Bugun ' + kun.answered_count + ' kishi javob berdi' +
+          (kun.my_rank ? ', <span style="white-space:nowrap">siz ' + kun.my_rank + '-o\'rindasiz</span>' : '') +
+        '</span></div>';
+    }
+
+    var hafta = '<div class="kun-hafta" aria-label="Shu haftadagi kun savollari">' + (kun.week || []).map(function (d) {
+      var cls = 'kun-kun' + (d.answered ? ' bor' : '') + (d.correct ? ' togri' : '') +
+        (d.today ? ' bugun' : '') + (d.future ? ' kelajak' : '');
+      return '<span class="' + cls + '"><i>' + (d.answered ? UI.nishon('flame') : '') + '</i>' + d.label + '</span>';
+    }).join('') + '</div>';
+
     bo_lim.innerHTML =
-      '<a class="kun-karta' + (kun.answered ? ' bajarildi' : '') + '" href="daily.html">' +
-        '<span class="kun-belgi">' + UI.nishon(kun.answered ? 'checkCircle' : 'sparkle') + '</span>' +
-        '<span class="kun-matn"><b>Kun savoli</b><small>' + izoh + '</small></span>' +
-        (kun.streak > 0 ? '<span class="kun-streak">' + UI.nishon('flame') + kun.streak + '</span>' : '') +
-        UI.nishon('chevronRight') +
+      '<a class="kun-karta ' + holat + '" href="daily.html">' +
+        '<div class="kun-tepa"><span class="kun-yorliq">' + UI.nishon('sparkle') + 'Kun savoli</span>' +
+          (kun.streak > 0 ? '<span class="kun-streak">' + UI.nishon('flame') + kun.streak + '</span>' : '') + '</div>' +
+        tana + reyting + hafta +
       '</a>';
     bo_lim.hidden = false;
+
+    // Keyingi savolgacha jonli taymer; vaqt tugasa — yangi savol bilan qayta yuklanadi
+    var el = document.getElementById('kunTaymer');
+    if (el) {
+      var tugash = Date.now() + kun.next_in_s * 1000;
+      taymer = setInterval(function () {
+        var qoldi = Math.round((tugash - Date.now()) / 1000);
+        el.textContent = vaqt(qoldi);
+        if (qoldi <= 0) { clearInterval(taymer); setTimeout(yukla, 1500); }
+      }, 1000);
+    }
+  }
+
+  // ── Bugungi reja: kun savoli, 1 ta mavzu, 1 ta o'yin ──
+  function rejaChiz(reja, bugun, kun) {
+    var bo_lim = document.getElementById('rejaBo-lim');
+    if (!reja) { bo_lim.hidden = true; return; }
+    var mavzuYo_l = bugun ? 'topics.html?fan=' + encodeURIComponent(bugun.subject_key) : 'subjects.html';
+    var vazifa = function (bajarildi, yo_l, matn) {
+      return '<a class="reja-vazifa' + (bajarildi ? ' bajarildi' : '') + '" href="' + yo_l + '">' +
+        '<span class="reja-check">' + UI.nishon('check') + '</span><span>' + matn + '</span>' +
+        UI.nishon('chevronRight') + '</a>';
+    };
+    var hammasi = reja.done >= reja.total;
+    bo_lim.innerHTML =
+      '<div class="karta reja-karta' + (hammasi ? ' hammasi' : '') + '">' +
+        '<div class="reja-bosh"><h2>Bugungi reja</h2><span class="reja-son">' + reja.done + ' / ' + reja.total + '</span></div>' +
+        '<div class="reja-chiziq" role="img" aria-label="' + reja.done + ' / ' + reja.total + ' bajarildi">' +
+          '<i style="width:' + Math.round(100 * reja.done / reja.total) + '%"></i></div>' +
+        (hammasi ? '<p class="reja-tabrik">' + UI.nishon('party') + 'Barakalla! Bugungi reja bajarildi.</p>' : '') +
+        vazifa(reja.daily, 'daily.html', 'Kun savoliga javob berish') +
+        vazifa(reja.topic, mavzuYo_l, '1 ta mavzuni tugatish') +
+        vazifa(reja.game, 'games.html', '1 ta o\'yin o\'ynash') +
+      '</div>';
+    bo_lim.hidden = false;
+
+    // Reja to'liq bajarilgan kuni bir marta tabrik
+    if (hammasi && kun) {
+      var kalit = 'bs_reja_' + kun;
+      var avval = null;
+      try { avval = localStorage.getItem(kalit); } catch (e) { /* xotira yo'q */ }
+      if (!avval) {
+        try { localStorage.setItem(kalit, '1'); } catch (e) { /* xotira yo'q */ }
+        UI.xabar('Barakalla! Bugungi reja to\'liq bajarildi', 'muvaffaqiyat');
+        try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
+      }
+    }
   }
 
   // ── Fan kartasi HTML'i (ochilgan va qulflangan uchun umumiy) ──

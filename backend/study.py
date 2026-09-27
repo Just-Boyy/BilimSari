@@ -19,11 +19,12 @@ import logging
 import os
 import random
 import re
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 
 import curriculum as cur_mod
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
 import daily
+from games import clock
 from games import stats as game_stats
 
 logger = logging.getLogger('bilimsari')
@@ -435,13 +436,33 @@ CHAQMOQ_PER_TOPIC = 20  # har bir tugallangan mavzu uchun
 # Kun savoliga to'g'ri javob — +5 chaqmoq (daily.py)
 
 
-def compute_chaqmoq(cur, user_id) -> int:
+def chaqmoq_parts(cur, user_id) -> dict:
+    """Chaqmoq qayerdan kelgani: mavzular, o'yinlar, kun savoli."""
     cur.execute(
         'SELECT COUNT(*) AS n FROM user_progress WHERE user_id = %s AND status = %s',
         (user_id, STATUS_COMPLETED),
     )
     topics = int(cur.fetchone()['n'] or 0) * CHAQMOQ_PER_TOPIC
-    return topics + game_stats.chaqmoq_from_games(cur, user_id) + daily.chaqmoq_total(cur, user_id)
+    return {'topics': topics, 'games': game_stats.chaqmoq_from_games(cur, user_id),
+            'daily': daily.chaqmoq_total(cur, user_id)}
+
+
+def compute_chaqmoq(cur, user_id) -> int:
+    return sum(chaqmoq_parts(cur, user_id).values())
+
+
+def today_plan(cur, user_id, daily_answered, now_ms) -> dict:
+    """Bugungi reja: kun savoli, 1 ta mavzu va 1 ta o'yin (Toshkent kuni bo'yicha)."""
+    start_ms = clock.period_start_ms('day', now_ms)
+    day_start = datetime.fromtimestamp(start_ms / 1000, timezone.utc).replace(tzinfo=None)   # naive UTC, bazadagidek
+    cur.execute('SELECT MAX(completed_at) AS c FROM user_progress WHERE user_id = %s AND status = %s',
+                (user_id, STATUS_COMPLETED))
+    last = as_utc((cur.fetchone() or {}).get('c'))
+    topic = bool(last and last >= day_start)
+    cur.execute('SELECT 1 FROM game_results WHERE user_id = %s AND created_ms >= %s LIMIT 1', (user_id, start_ms))
+    game = cur.fetchone() is not None
+    tasks = {'daily': bool(daily_answered), 'topic': topic, 'game': game}
+    return dict(tasks, done=sum(tasks.values()), total=len(tasks))
 
 
 def leaderboard(cur, user_id, limit=20):
