@@ -69,14 +69,6 @@
 </header>
 
 <main class="sahifa">
-  <div class="ko-tarilgan">
-    <div class="stat-setka" id="statlar">
-      <div class="skelet" style="height:74px"></div>
-      <div class="skelet" style="height:74px"></div>
-      <div class="skelet" style="height:74px"></div>
-    </div>
-  </div>
-
   <!-- Yutuqlar: ochilgan va yopiq nishonlar -->
   <section class="bo-lim" id="yutuqlar" hidden>
     <div class="bo-lim-bosh"><h2>Yutuqlar</h2><span class="izoh" id="yutuqSoni"></span></div>
@@ -157,12 +149,6 @@
   } else {
     av.textContent = UI.harfAvatar(ism);
   }
-
-  var s = d.stats || {};
-  document.getElementById('statlar').innerHTML =
-    '<div class="stat"><b>' + (s.completed_topics || 0) + '</b><span>Mavzu</span></div>' +
-    '<div class="stat"><b>' + (s.percent || 0) + '%</b><span>Progress</span></div>' +
-    '<div class="stat"><b>' + (s.finished_subjects || 0) + '</b><span>Tugagan fan</span></div>';
 
   UI.yutuqTabrik(d.new_achievements);
 
