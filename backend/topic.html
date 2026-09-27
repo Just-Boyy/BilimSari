@@ -109,14 +109,15 @@
 
   function kutishHtml(kutish) {
     return '<div class="kutish-karta">' +
-      '<h2>Bugungi mavzuni yakunladingiz</h2>' +
-      '<p>Keyingi mavzu quyidagi vaqtdan so\'ng ochiladi</p>' +
+      '<h2>Bu fanda bugungi mavzuni yakunladingiz</h2>' +
+      '<p>Keyingi mavzu quyidagi vaqtdan so\'ng ochiladi. Bu orada boshqa fanlarni o\'qishingiz mumkin.</p>' +
       '<div class="taymer" id="taymer" role="timer">--:--:--</div>' +
       '<p class="izoh-kichik">' +
         UI.esc((kutish && kutish.unlock_at_tashkent) || '') + ' (Toshkent vaqti)</p>' +
       '</div>' +
       '<a class="tugma tugma-ikkilamchi" style="margin-top:14px"' +
-      ' href="topics.html?fan=' + encodeURIComponent(fan) + '">Mavzular ro\'yxati</a>';
+      ' href="topics.html?fan=' + encodeURIComponent(fan) + '">Mavzular ro\'yxati</a>' +
+      '<a class="tugma tugma-ikkilamchi" style="margin-top:10px" href="subjects.html">Boshqa fanlar</a>';
   }
 
   function boshlaTaymer(kutish) {

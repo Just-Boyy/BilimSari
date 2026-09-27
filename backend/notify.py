@@ -5,7 +5,8 @@ Telegram eslatmalari va ularni vaqtida yuboruvchi rejalashtiruvchi.
   * Kun savoli (09:00, Toshkent) — "Bugungi savol tayyor!".
   * Kunlik eslatma (19:00, Toshkent) — so'nggi 14 kunda faol bo'lgan, lekin
     bugun hali o'qimagan o'quvchilarga; streak bo'lsa, uni eslatadi.
-  * "Keyingi mavzu ochildi" — 24 soatlik kutish tugagan zahoti.
+  * "Keyingi mavzu ochildi" — biror fanda 24 soatlik kutish tugagan zahoti
+    (kutish har fanga alohida, xabar ham fan nomi bilan).
   * O'yin taklifi — oldin birga o'ynagan odam yangi room ochsa.
   * Haftalik turnir — hafta tugagach top-3 ga medal va tabrik xabari.
   * To'lovlar — muddati o'tgan buyurtmalarni yopish, 30 daqiqadan beri
@@ -26,6 +27,7 @@ import threading
 import time
 from datetime import datetime, timedelta, timezone
 
+import curriculum as cur_mod
 import daily
 import payments
 import study
@@ -132,6 +134,18 @@ def daily_reminders(cur, conn, now_ms) -> int:
     progress = {r['user_id']: (as_utc(r['s']), as_utc(r['c'])) for r in cur.fetchall()}
     cur.execute('SELECT user_id, MAX(created_ms) AS g FROM game_results WHERE user_id > 0 GROUP BY user_id')
     games = {r['user_id']: _utc(r['g']) for r in cur.fetchall()}
+    # Kutish har fanga alohida: qaysi fanlar hozir kutishda va o'quvchida qaysi fanlar ochiq
+    waiting = {}
+    for (uid, subject), last in _subject_completions(cur).items():
+        if now - last < cooldown:
+            waiting.setdefault(uid, set()).add(subject)
+    opened = {}
+    cur.execute('SELECT id, chosen_subject_key FROM users WHERE chosen_subject_key IS NOT NULL')
+    for r in cur.fetchall():
+        opened.setdefault(r['id'], set()).add(r['chosen_subject_key'])
+    cur.execute('SELECT user_id, subject_key FROM subject_purchases')
+    for r in cur.fetchall():
+        opened.setdefault(r['user_id'], set()).add(r['subject_key'])
 
     sent = 0
     for u in _recipients(cur):
@@ -143,8 +157,9 @@ def daily_reminders(cur, conn, now_ms) -> int:
             continue                                  # uzoq vaqt kirmagan
         if studied and max(studied) >= day_start:
             continue                                  # bugun o'qigan yoki o'ynagan
-        if completed and now - completed < cooldown:
-            continue                                  # kutishda — "ochildi" xabari keladi
+        mine = opened.get(u['id'], set())
+        if mine and mine <= waiting.get(u['id'], set()):
+            continue                                  # barcha fanlari kutishda — "ochildi" xabari keladi
         streak = study.compute_streak(cur, u['id'])
         text = f'{_first_name(u["name"])}, bugun hali dars qilmadingiz.\n'
         text += (f'Streak: <b>{streak} kun</b> — uzilib qolmasin!' if streak
@@ -186,22 +201,37 @@ def question_ready(cur, conn, now_ms) -> int:
     return sent
 
 
+def _subject_completions(cur) -> dict:
+    """{(o'quvchi, fan): oxirgi tugallangan mavzu vaqti} — kutish har fanga alohida."""
+    cur.execute(
+        '''SELECT p.user_id, t.subject_key, MAX(p.completed_at) AS last FROM user_progress p
+           JOIN topics t ON t.id = p.topic_id
+           WHERE p.status = %s AND p.completed_at IS NOT NULL
+           GROUP BY p.user_id, t.subject_key''',
+        (study.STATUS_COMPLETED,),
+    )
+    return {(r['user_id'], r['subject_key']): as_utc(r['last']) for r in cur.fetchall() if r['last']}
+
+
 def cooldown_ready(cur, conn, now_ms) -> int:
-    """24 soatlik kutish endigina tugagan o'quvchilarga "keyingi mavzu ochildi"."""
+    """Biror fanda 24 soatlik kutish endigina tugagan o'quvchilarga — shu fan
+    bo'yicha "keyingi mavzu ochildi" (har fan uchun alohida xabar)."""
     now = _utc(now_ms)
     hours = timedelta(hours=study.COOLDOWN_HOURS)
     lo, hi = now - hours - timedelta(minutes=COOLDOWN_WINDOW_MIN), now - hours
-    cur.execute(
-        'SELECT user_id, MAX(completed_at) AS last FROM user_progress WHERE status = %s AND completed_at IS NOT NULL '
-        'GROUP BY user_id',
-        (study.STATUS_COMPLETED,),
-    )
-    due = {r['user_id']: as_utc(r['last']) for r in cur.fetchall() if lo <= as_utc(r['last']) <= hi}
+    due = {}
+    for (uid, subject), last in _subject_completions(cur).items():
+        if lo <= last <= hi:
+            due.setdefault(uid, []).append((subject, last))
     sent = 0
     for u in _recipients(cur, list(due)):
-        text = f'{_first_name(u["name"])}, kutish tugadi — <b>keyingi mavzu ochildi!</b>\nDavom etamizmi?'
-        if _deliver(cur, conn, u, 'cooldown', due[u['id']].isoformat(), text, 'Davom etish', 'dashboard.html'):
-            sent += 1
+        for subject, last in due[u['id']]:
+            name = html.escape(cur_mod.subject_meta(subject)['name'])
+            text = (f'{_first_name(u["name"])}, kutish tugadi — <b>{name}</b> fanida '
+                    f'<b>keyingi mavzu ochildi!</b>\nDavom etamizmi?')
+            if _deliver(cur, conn, u, 'cooldown', f'{subject}:{last.isoformat()}', text, 'Davom etish',
+                        f'topics.html?fan={subject}'):
+                sent += 1
     return sent
 
 

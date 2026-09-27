@@ -175,10 +175,11 @@ check('Kutish vaqtida mavzu ochilmaydi', code == 403 and data.get('code') == 'co
       f'{code} {data.get("code")}')
 check('Kutish xabari aniq', 'soat' in data.get('error', ''), data.get('error'))
 
-# Boshqa FAN ham qulflanadi (kuniga 1 mavzu — global qoida)
+# Kutish har fanga alohida — boshqa fan ochiq qoladi
 code, data = call('get', '/api/study/topics/uzbek', TOKEN)
-check('Boshqa fan ham kutishda', data['topics'][0]['state'] == 'cooldown',
+check('Boshqa fan kutishda EMAS', data['topics'][0]['state'] == 'current',
       data['topics'][0]['state'])
+check('Boshqa fanda kutish yo\'q', not (data.get('cooldown') or {}).get('active'), str(data.get('cooldown')))
 
 
 print('\n═══ 10. BRAUZERNI ALDASH MUMKIN EMAS ═══')
@@ -264,10 +265,9 @@ check('Bo\'sh sinf uchun xabar bor',
       str(data))
 
 
-print('\n═══ 15. CHEKKA HOLAT: ikkita mavzuni parallel boshlash ═══')
-# Yangi foydalanuvchi: ikkita fandan bittadan mavzuni OCHADI (kutish hali yo'q),
-# keyin bittasini yakunlaydi. Ikkinchisi allaqachon boshlangani uchun ochiq qoladi —
-# lekin uni YAKUNLASH 24 soatlik qoida bilan to'silishi kerak.
+print('\n═══ 15. IKKI FANDA BIR KUNDA ═══')
+# Yangi foydalanuvchi ikkita fandan bittadan mavzu o'qiydi. Kutish har fanga
+# alohida bo'lgani uchun ikkalasi ham shu kuni yakunlanadi.
 code, data = call('post', '/api/register', json={
     'name': 'Chekka', 'email': 'chekka@bilimsari.uz', 'password': 'parol123'})
 T4 = data['token']
@@ -286,11 +286,10 @@ code, data = call('post', '/api/study/homework', T4, json={
 check('Math mavzusi yakunlandi', (data.get('completion') or {}).get('completed'),
       str(data.get('completion')))
 
-# Boshlangan ikkinchi mavzu hali ochiq bo'lishi kerak (davom ettirish mumkin)
+# Boshqa fandagi mavzu ochiq (kutish faqat math'ga tegishli)
 code, data = call('get', '/api/study/topic/uzbek/tovush-harf', T4)
-check('Boshlangan mavzu ochiq qoladi', data.get('ok'), f'{code} {data.get("code")}')
+check('Boshqa fandagi mavzu ochiq', data.get('ok'), f'{code} {data.get("code")}')
 
-# Lekin uni YAKUNLASH to'silishi kerak
 call('post', '/api/study/lesson-read', T4, json={'subject_key': 'uzbek', 'slug': 'tovush-harf'})
 call('post', '/api/study/quiz', T4, json={
     'subject_key': 'uzbek', 'slug': 'tovush-harf', 'answers': [1, 1, 1, True, 1, '3']})
@@ -299,14 +298,10 @@ code, data = call('post', '/api/study/homework', T4, json={
     'answers': {'h1': '5', 'h2': '2', 'h3': '29', 'h4': 'a-l-i'}})
 comp = data.get('completion') or {}
 check('Uy ishi qabul qilindi', data.get('passed'), str(data.get('message')))
-check('Ikkinchi mavzu YAKUNLANMAYDI', not comp.get('completed'), str(comp))
-check('Sabab — 24 soatlik qoida', comp.get('blocked_by_cooldown'), str(comp))
-check('Sabab tushunarli yozilgan',
-      'bitta mavzu' in (comp.get('message') or ''), comp.get('message'))
+check('Boshqa fandagi mavzu ham yakunlandi', comp.get('completed'), str(comp))
 
 code, data = call('get', '/api/study/dashboard', T4)
-check('Kuniga faqat 1 mavzu hisoblanadi',
-      data['stats']['completed_topics'] == 1, str(data['stats']))
+check('Ikki fanda 2 ta mavzu', data['stats']['completed_topics'] == 2, str(data['stats']))
 
 
 print('\n═══ 16. MEHMON HISOBI (ism bilan tezkor kirish) ═══')

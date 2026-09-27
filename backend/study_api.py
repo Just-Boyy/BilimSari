@@ -175,7 +175,7 @@ def topics(subject_key):
             'completed': done,
             'total': len(items),
             'percent': round(done * 100 / len(items)) if items else 0,
-            'cooldown': study.cooldown_state(cur, request.user['id']),
+            'cooldown': study.cooldown_state(cur, request.user['id'], subject_key),   # faqat shu fan
         })
     finally:
         _close(conn, cur)
@@ -258,7 +258,8 @@ def homework():
 def cooldown():
     conn, cur = _conn()
     try:
-        return jsonify({'ok': True, 'cooldown': study.cooldown_state(cur, request.user['id'])})
+        subject = request.args.get('subject') or None   # kutish har fanga alohida
+        return jsonify({'ok': True, 'cooldown': study.cooldown_state(cur, request.user['id'], subject)})
     finally:
         _close(conn, cur)
 

@@ -342,13 +342,23 @@ def unlock_subject(cur, conn, user_id, subject_key):
 
 # ───────────────────────── 24 soatlik kutish ─────────────────────────
 
-def last_completion(cur, user_id):
-    cur.execute(
-        '''SELECT topic_id, completed_at FROM user_progress
-           WHERE user_id = %s AND status = %s AND completed_at IS NOT NULL
-           ORDER BY completed_at DESC''',
-        (user_id, STATUS_COMPLETED),
-    )
+def last_completion(cur, user_id, subject_key=None):
+    """Oxirgi tugallangan mavzu. subject_key berilsa — faqat shu fandagi."""
+    if subject_key:
+        cur.execute(
+            '''SELECT p.topic_id, p.completed_at FROM user_progress p
+               JOIN topics t ON t.id = p.topic_id
+               WHERE p.user_id = %s AND p.status = %s AND p.completed_at IS NOT NULL AND t.subject_key = %s
+               ORDER BY p.completed_at DESC''',
+            (user_id, STATUS_COMPLETED, subject_key),
+        )
+    else:
+        cur.execute(
+            '''SELECT topic_id, completed_at FROM user_progress
+               WHERE user_id = %s AND status = %s AND completed_at IS NOT NULL
+               ORDER BY completed_at DESC''',
+            (user_id, STATUS_COMPLETED),
+        )
     rows = cur.fetchall()
     if not rows:
         return None, None
@@ -379,25 +389,30 @@ def _build_cooldown(topic_id, completed_at):
     }
 
 
-def cooldown_state(cur, user_id):
+def cooldown_state(cur, user_id, subject_key=None):
     """
-    24 soatlik kutish holati. Vaqt SERVERDA hisoblanadi — brauzer soatini
-    o'zgartirish yoki sahifani yangilash bu holatga ta'sir qilmaydi.
+    24 soatlik kutish holati. Kutish HAR BIR FANGA ALOHIDA: bir fanda mavzu
+    tugatilsa, faqat o'sha fanning keyingi mavzusi 24 soat yopiladi — boshqa
+    fanlarni o'qish mumkin. subject_key berilmasa — eng oxirgi tugallangan
+    mavzu bo'yicha (umumiy ma'lumot uchun).
 
-    Progress allaqachon _progress_map() bilan olingan bo'lsa, o'rniga
-    _cooldown_from_progress() dan foydalaning — qo'shimcha so'rov shart emas.
+    Vaqt SERVERDA hisoblanadi — brauzer soatini o'zgartirish yoki sahifani
+    yangilash bu holatga ta'sir qilmaydi.
     """
-    topic_id, completed_at = last_completion(cur, user_id)
+    topic_id, completed_at = last_completion(cur, user_id, subject_key)
     return _build_cooldown(topic_id, completed_at)
 
 
-def _cooldown_from_progress(progress: dict):
+def _cooldown_from_progress(progress: dict, topic_ids=None):
     """`_progress_map()` natijasidan — qo'shimcha bazaga so'rovsiz —
-    cooldown holatini hisoblaydi."""
+    cooldown holatini hisoblaydi. topic_ids — bitta fanning mavzulari
+    (kutish fanga alohida)."""
     latest_topic_id = None
     latest_completed_at = None
     for topic_id, row in progress.items():
         if row.get('status') != STATUS_COMPLETED:
+            continue
+        if topic_ids is not None and topic_id not in topic_ids:
             continue
         completed_at = as_utc(row.get('completed_at'))
         if completed_at and (latest_completed_at is None or completed_at > latest_completed_at):
@@ -604,7 +619,7 @@ def subject_topics(cur, user_id, subject_key):
     )
     subject = cur.fetchone()
     progress = _progress_map(cur, user_id)
-    cooldown = _cooldown_from_progress(progress)
+    cooldown = _cooldown_from_progress(progress, {t['id'] for t in topics})
     return subject, _compute_states(topics, progress, cooldown)
 
 
@@ -622,7 +637,6 @@ def subjects_overview(cur, user_id):
     )
     all_topics = cur.fetchall()
     progress = _progress_map(cur, user_id)
-    cooldown = _cooldown_from_progress(progress)
     chosen = get_chosen_subject(cur, user_id)
     cur.execute('SELECT subject_key FROM subject_purchases WHERE user_id = %s', (user_id,))
     purchased_keys = {r['subject_key'] for r in cur.fetchall()}
@@ -636,6 +650,7 @@ def subjects_overview(cur, user_id):
         seen_keys.add(key)
 
         topics = [t for t in all_topics if t['subject_key'] == key]
+        cooldown = _cooldown_from_progress(progress, {t['id'] for t in topics})   # har fanga alohida
         states = _compute_states(topics, progress, cooldown)
         done = sum(1 for s in states if s['state'] == STATUS_COMPLETED)
         current = next((s for s in states if s['state'] in (STATUS_CURRENT, STATUS_COOLDOWN)), None)
@@ -694,7 +709,7 @@ def topic_state_for(cur, user_id, topic):
     )
     siblings = cur.fetchall()
     progress = _progress_map(cur, user_id)
-    cooldown = _cooldown_from_progress(progress)
+    cooldown = _cooldown_from_progress(progress, {t['id'] for t in siblings})
     states = _compute_states(siblings, progress, cooldown)
     for s in states:
         if s['id'] == topic['id']:
@@ -729,7 +744,8 @@ def open_topic(cur, conn, user_id, topic_id, register=True):
         )
     if state['state'] == STATUS_COOLDOWN:
         raise StudyError(
-            f"Bugungi mavzuni yakunladingiz. Keyingi mavzu {cooldown.get('text')}dan so'ng ochiladi.",
+            f"Bu fanda bugungi mavzuni yakunladingiz. Keyingi mavzu {cooldown.get('text')}dan so'ng ochiladi. "
+            f"Bu orada boshqa fanlarni o'qishingiz mumkin.",
             code='cooldown', http_status=403, extra={'cooldown': cooldown},
         )
 
@@ -1012,8 +1028,8 @@ def _try_complete(cur, conn, user_id, topic_id):
     Barcha shartlar bajarilsa mavzuni yakunlaydi:
     dars o'qilgan + quiz o'tilgan + uyga vazifa topshirilgan.
 
-    24 soatlik cheklov shu yerda ham tekshiriladi — bir kunda ikkita mavzu
-    yakunlab bo'lmaydi.
+    24 soatlik cheklov shu yerda ham tekshiriladi — BITTA FANDA bir kunda
+    ikkita mavzu yakunlab bo'lmaydi (boshqa fanlarning hisobi alohida).
     """
     cur.execute(
         'SELECT * FROM user_progress WHERE user_id = %s AND topic_id = %s',
@@ -1038,13 +1054,14 @@ def _try_complete(cur, conn, user_id, topic_id):
             },
         }
 
-    cooldown = cooldown_state(cur, user_id)
+    topic = _topic_row(cur, topic_id)
+    cooldown = cooldown_state(cur, user_id, topic['subject_key'] if topic else None)
     if cooldown.get('active'):
         return {
             'completed': False,
             'blocked_by_cooldown': True,
             'cooldown': cooldown,
-            'message': f"Bir kunda faqat bitta mavzu yakunlanadi. "
+            'message': f"Bu fanda bir kunda faqat bitta mavzu yakunlanadi. "
                        f"{cooldown.get('text')}dan so'ng qayta urinib ko'ring.",
         }
 
