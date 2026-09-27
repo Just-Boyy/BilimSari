@@ -1410,6 +1410,18 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .qator .o-q { color: var(--matn-3); }
 .qator.xavfli { color: var(--qizil); }
 .qator input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--yashil); flex: 0 0 auto; }
+.vaqt-tanlov {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border: 2px solid var(--chiziq);
+  border-radius: 10px;
+  background: var(--oq);
+  font-family: var(--tana); font-size: 15px; font-weight: 800; color: var(--matn);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.vaqt-tanlov:focus { border-color: var(--kok); outline: none; }
+.qator.o-chiq { opacity: .5; }
 
 /* ── Fan sotib olish (do'kon) ───────────────────────────── */
 

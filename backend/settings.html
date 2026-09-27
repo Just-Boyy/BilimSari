@@ -61,6 +61,11 @@
       <span class="matn">Telegram eslatmalari<small>Kun savoli, kunlik eslatma, yangi mavzu ochilishi, o'yin takliflari</small></span>
       <input type="checkbox" id="eslatmaTugma">
     </label>
+    <label class="qator" id="vaqtQator" style="display:none">
+      <span class="nishon" data-ikon="clock"></span>
+      <span class="matn">Eslatma vaqti<small>Kunlik dars eslatmasi shu vaqtda keladi</small></span>
+      <select class="vaqt-tanlov" id="vaqtTanlov" aria-label="Eslatma vaqti"></select>
+    </label>
     <p class="izoh" id="eslatmaIzoh" hidden>Eslatmalar faqat BilimSari'ga Telegram orqali kirganlarga yuboriladi.</p>
   </section>
 
@@ -284,7 +289,33 @@
       var yoq = eslatma.checked;
       var r = await API.post('/api/profile/notify', { on: yoq });
       if (!r.ok) { eslatma.checked = !yoq; UI.xabar(r.error, 'xato'); return; }
+      vaqtHolati();
       UI.xabar(yoq ? 'Eslatmalar yoqildi' : "Eslatmalar o'chirildi", 'muvaffaqiyat');
+    };
+
+    // Kunlik eslatma soati: 07:00 … 22:00 (Toshkent vaqti)
+    var vaqt = document.getElementById('vaqtTanlov');
+    var soat = function (h) { return (h < 10 ? '0' : '') + h + ':00'; };
+    var tanlangan = u.remind_hour || 19;
+    for (var h = 7; h <= 22; h++) {
+      var opt = document.createElement('option');
+      opt.value = h;
+      opt.textContent = soat(h);
+      vaqt.appendChild(opt);
+    }
+    vaqt.value = String(tanlangan);
+    var vaqtHolati = function () {
+      document.getElementById('vaqtQator').classList.toggle('o-chiq', !eslatma.checked);
+      vaqt.disabled = !eslatma.checked;
+    };
+    document.getElementById('vaqtQator').style.display = '';
+    vaqtHolati();
+    vaqt.onchange = async function () {
+      var yangi = Number(vaqt.value);
+      var r = await API.post('/api/profile/notify', { remind_hour: yangi });
+      if (!r.ok) { vaqt.value = String(tanlangan); UI.xabar(r.error, 'xato'); return; }
+      tanlangan = r.remind_hour;
+      UI.xabar('Eslatma har kuni soat ' + soat(tanlangan) + ' da keladi', 'muvaffaqiyat');
     };
   } else {
     document.getElementById('eslatmaIzoh').hidden = false;

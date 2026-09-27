@@ -246,10 +246,11 @@ def me():
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('SELECT notify, custom_photo FROM users WHERE id = %s', (user['id'],))
+        cur.execute('SELECT notify, custom_photo, remind_hour FROM users WHERE id = %s', (user['id'],))
         row = cur.fetchone() or {}
         user['notify'] = bool(row.get('notify', 1))
         user['custom_photo'] = bool(row.get('custom_photo'))
+        user['remind_hour'] = notify.remind_hour(row.get('remind_hour'))
     except Exception:
         conn.rollback()
         user['notify'] = True
@@ -262,14 +263,29 @@ def me():
 @app.route('/api/profile/notify', methods=['POST'])
 @auth_required
 def update_notify():
-    """Telegram eslatmalarini yoqish/o'chirish (profil → Sozlamalar)."""
-    on = bool((request.get_json(silent=True) or {}).get('on'))
+    """Sozlamalar: Telegram eslatmalarini yoqish/o'chirish ({"on": bool}) va
+    kunlik eslatma soatini tanlash ({"remind_hour": 7..22}). Ikkalasi alohida
+    ham yuborilishi mumkin."""
+    body = request.get_json(silent=True) or {}
+    if 'remind_hour' in body:
+        try:
+            hour = int(body['remind_hour'])
+        except (TypeError, ValueError):
+            hour = None
+        if hour not in notify.REMIND_HOURS:
+            return jsonify({'ok': False, 'error': "Soat 07:00 dan 22:00 gacha bo'lishi kerak.",
+                            'code': 'bad_hour'}), 400
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('UPDATE users SET notify = %s WHERE id = %s', (int(on), request.user['id']))
+        if 'on' in body:
+            cur.execute('UPDATE users SET notify = %s WHERE id = %s', (int(bool(body['on'])), request.user['id']))
+        if 'remind_hour' in body:
+            cur.execute('UPDATE users SET remind_hour = %s WHERE id = %s', (hour, request.user['id']))
         conn.commit()
-        return jsonify({'ok': True, 'notify': on})
+        cur.execute('SELECT notify, remind_hour FROM users WHERE id = %s', (request.user['id'],))
+        row = cur.fetchone()
+        return jsonify({'ok': True, 'notify': bool(row['notify']), 'remind_hour': notify.remind_hour(row['remind_hour'])})
     finally:
         cur.close()
         conn.close()

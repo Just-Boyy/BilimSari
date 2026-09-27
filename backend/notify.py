@@ -3,8 +3,9 @@
 Telegram eslatmalari va ularni vaqtida yuboruvchi rejalashtiruvchi.
 
   * Kun savoli (09:00, Toshkent) — "Bugungi savol tayyor!".
-  * Kunlik eslatma (19:00, Toshkent) — so'nggi 14 kunda faol bo'lgan, lekin
-    bugun hali o'qimagan o'quvchilarga; streak bo'lsa, uni eslatadi.
+  * Kunlik eslatma (o'quvchi Sozlamalarda tanlagan soatda, standart 19:00,
+    Toshkent) — so'nggi 14 kunda faol bo'lgan, lekin bugun hali o'qimagan
+    o'quvchilarga; streak bo'lsa, uni eslatadi.
   * "Keyingi mavzu ochildi" — biror fanda 24 soatlik kutish tugagan zahoti
     (kutish har fanga alohida, xabar ham fan nomi bilan).
   * O'yin taklifi — oldin birga o'ynagan odam yangi room ochsa.
@@ -40,8 +41,9 @@ logger = logging.getLogger('bilimsari.notify')
 
 QUESTION_HOUR = 9           # "Bugungi savol tayyor!" vaqti (Toshkent)
 QUESTION_LAST_HOUR = 12
-DAILY_HOUR = 19             # kunlik eslatma vaqti (Toshkent)
-DAILY_LAST_HOUR = 22        # server kech ishga tushsa — o'sha kuni kechasi yubormaydi
+DAILY_HOUR = 19             # kunlik eslatmaning standart vaqti (Toshkent)
+REMIND_HOURS = range(7, 23)  # o'quvchi tanlashi mumkin bo'lgan soatlar: 07:00 … 22:00
+REMIND_GRACE_H = 2          # server shu soatda ishlamagan bo'lsa — keyingi 2 soat ichida yuboriladi
 ACTIVE_DAYS = 14            # shundan uzoq kirmaganlarni bezovta qilmaymiz
 COOLDOWN_WINDOW_MIN = 30    # kutish shu oraliqda tugagan bo'lsa — xabar
 INVITE_WINDOW_MS = 2 * 3600 * 1000   # bitta odamga 2 soatda ko'pi bilan 1 ta taklif
@@ -71,6 +73,17 @@ def ensure_tables(cur, conn):
     ''')
     conn.commit()
     add_column_if_missing(cur, conn, 'users', 'notify', 'INTEGER NOT NULL DEFAULT 1')
+    # Kunlik eslatma soati (Toshkent), NULL — standart DAILY_HOUR
+    add_column_if_missing(cur, conn, 'users', 'remind_hour', 'INTEGER')
+
+
+def remind_hour(value):
+    """Saqlangan soat yoki standart."""
+    try:
+        h = int(value)
+    except (TypeError, ValueError):
+        return DAILY_HOUR
+    return h if h in REMIND_HOURS else DAILY_HOUR
 
 
 def _utc(ms):
@@ -110,7 +123,7 @@ def _deliver(cur, conn, user, kind, ref, text, button, path) -> bool:
 
 
 def _recipients(cur, ids=None):
-    sql = 'SELECT id, name, telegram_id, created_at FROM users WHERE telegram_id IS NOT NULL AND notify = 1'
+    sql = 'SELECT id, name, telegram_id, created_at, remind_hour FROM users WHERE telegram_id IS NOT NULL AND notify = 1'
     params = []
     if ids is not None:
         if not ids:
@@ -123,7 +136,9 @@ def _recipients(cur, ids=None):
 
 # ───────────────────────── Vazifalar ─────────────────────────
 
-def daily_reminders(cur, conn, now_ms) -> int:
+def daily_reminders(cur, conn, now_ms, hour=None) -> int:
+    """hour berilsa — faqat eslatma soati shu soatga to'g'ri kelganlarga
+    (REMIND_GRACE_H soatgacha kechikkanlar ham). Kuniga bir martadan ortiq emas."""
     today = clock.tashkent_date(now_ms)
     day_start = _utc(clock.period_start_ms('day', now_ms))
     now = _utc(now_ms)
@@ -149,6 +164,9 @@ def daily_reminders(cur, conn, now_ms) -> int:
 
     sent = 0
     for u in _recipients(cur):
+        own = remind_hour(u.get('remind_hour'))
+        if hour is not None and not hour - REMIND_GRACE_H <= own <= hour:
+            continue                                  # boshqa soatni tanlagan
         started, completed = progress.get(u['id'], (None, None))
         played = games.get(u['id'])
         studied = [m for m in (started, completed, played) if m]
@@ -161,7 +179,10 @@ def daily_reminders(cur, conn, now_ms) -> int:
         if mine and mine <= waiting.get(u['id'], set()):
             continue                                  # barcha fanlari kutishda — "ochildi" xabari keladi
         streak = study.compute_streak(cur, u['id'])
-        text = f'{_first_name(u["name"])}, bugun hali dars qilmadingiz.\n'
+        if own < 12:                                  # ertalabki eslatma boshqacha ohangda
+            text = f'Xayrli tong, {_first_name(u["name"])}! Bugungi darsni boshlaymizmi?\n'
+        else:
+            text = f'{_first_name(u["name"])}, bugun hali dars qilmadingiz.\n'
         text += (f'Streak: <b>{streak} kun</b> — uzilib qolmasin!' if streak
                  else 'Bitta mavzu atigi 10–15 daqiqa oladi — boshlaymizmi?')
         if _deliver(cur, conn, u, 'daily', today.isoformat(), text, 'Darsni boshlash', 'dashboard.html'):
@@ -301,10 +322,12 @@ def tick(now_ms=None):
         if (QUESTION_HOUR <= local.hour < QUESTION_LAST_HOUR
                 and _claim(cur, conn, 'question', local.date().isoformat())):
             logger.info('Kun savoli xabari: %d ta', question_ready(cur, conn, now_ms))
-        if DAILY_HOUR <= local.hour < DAILY_LAST_HOUR and _claim(cur, conn, 'daily', local.date().isoformat()):
-            logger.info('Kunlik eslatma: %d ta', daily_reminders(cur, conn, now_ms))
-        if (PAY_SUMMARY_HOUR <= local.hour < DAILY_LAST_HOUR + 1
-                and _claim(cur, conn, 'pay_summary', local.date().isoformat())):
+        # Kunlik eslatma har soatda — o'sha soatni tanlagan o'quvchilarga
+        if (REMIND_HOURS.start <= local.hour
+                and _claim(cur, conn, 'daily', f'{local.date().isoformat()}:{local.hour:02d}')):
+            logger.info('Kunlik eslatma (%02d:00): %d ta', local.hour,
+                        daily_reminders(cur, conn, now_ms, hour=local.hour))
+        if PAY_SUMMARY_HOUR <= local.hour and _claim(cur, conn, 'pay_summary', local.date().isoformat()):
             summary = payments.daily_summary(cur, now_ms)
             for admin in payments.admin_ids() if summary else []:
                 send(admin, summary, 'Admin panel', 'admin.html')
