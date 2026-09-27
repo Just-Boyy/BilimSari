@@ -178,7 +178,7 @@
   };
 
   rasmOchir.onclick = async function () {
-    if (!confirm("Rasmingiz o'chirilsinmi?")) return;
+    if (!(await UI.tasdiq("Rasmingiz o'chirilsinmi?"))) return;
     band(true);
     var r = await API.rasmOchir();
     band(false);

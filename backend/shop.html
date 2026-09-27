@@ -177,7 +177,7 @@
     });
     var bekor = document.getElementById('bekorTugma');
     if (bekor) bekor.onclick = async function () {
-      if (!confirm('Buyurtma bekor qilinsinmi?')) return;
+      if (!(await UI.tasdiq('Buyurtma bekor qilinsinmi?'))) return;
       var r = await API.buyurtmaBekor(dokon.active_order.id);
       if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
       UI.xabar('Buyurtma bekor qilindi', 'muvaffaqiyat');

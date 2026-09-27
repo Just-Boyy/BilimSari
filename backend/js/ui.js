@@ -243,6 +243,18 @@
     return TOLOV_HOLATI[f.pay_status] || pul(f.price);
   }
 
+  /** Ha/yo'q so'rovi. Telegram ichida — Telegram'ning o'z oynasi (brauzer confirm()
+   * ba'zi Telegram ilovalarida ko'rinmaydi va jimgina "yo'q" qaytaradi). */
+  function tasdiq(savol) {
+    return new Promise(function (resolve) {
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (tg && tg.initData && tg.showConfirm && tg.isVersionAtLeast && tg.isVersionAtLeast('6.2')) {
+        try { tg.showConfirm(String(savol).slice(0, 250), function (ha) { resolve(!!ha); }); return; } catch (e) { /* brauzer oynasi */ }
+      }
+      resolve(window.confirm(savol));
+    });
+  }
+
   /** Telegram ichida bot chatini ochadi (Mini App'dan), brauzerda — yangi oynada. */
   function botniOch(bot, start) {
     var url = 'https://t.me/' + (bot || 'bilimsaribot') + (start ? '?start=' + encodeURIComponent(start) : '');
@@ -306,5 +318,6 @@
     qulfHolat: qulfHolat,
     pul: pul,
     botniOch: botniOch,
+    tasdiq: tasdiq,
   };
 })();

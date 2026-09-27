@@ -289,15 +289,22 @@
   .adm-badge.sariq { background: var(--zarg-fon); color: #b45309; }
   .adm-badge.kok { background: var(--kok-och); color: #0369a1; }
   .adm-badge.kulrang { background: #f3f4f6; color: var(--matn-2); }
-  .adm-ikki { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-top: 22px; }
+  .adm-ikki { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; margin-top: 22px; }
+  .adm-ikki > * { min-width: 0; }
   .adm-ikki .adm-xabar-karta { max-width: none; }
   .adm-forma { display: grid; gap: 10px; }
-  .adm-forma label { display: grid; gap: 4px; font-size: 12px; font-weight: 700; color: var(--matn-2); }
+  .adm-forma label { display: grid; gap: 4px; min-width: 0; font-size: 12px; font-weight: 700; color: var(--matn-2); }
   .adm-forma input {
+    width: 100%; min-width: 0;
     padding: 9px 12px; border: 2px solid var(--chiziq); border-radius: 10px;
     font-family: var(--tana); font-size: 14px; color: var(--matn);
   }
-  .adm-forma .qator3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .adm-forma input::placeholder { color: #b8bec8; font-style: italic; }
+  .adm-forma .qator3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .adm-forma .qator3.kod-qator { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .adm-forma-xabar { min-height: 18px; font-size: 13px; font-weight: 700; }
+  .adm-forma-xabar.xato { color: var(--qizil-quyuq); }
+  .adm-forma-xabar.ok { color: var(--yashil-quyuq); }
   .adm-rasm-katta { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.85); display: grid; place-items: center; padding: 16px; }
   .adm-rasm-katta img { max-width: 100%; max-height: 100%; border-radius: 10px; }
 </style>
@@ -391,19 +398,21 @@
               <label>Barcha fanlar<input id="sHammasi" type="number" min="0" step="1000"></label>
             </div>
             <button class="tugma" type="submit">Saqlash</button>
+            <p class="adm-forma-xabar" id="sXabar" role="status"></p>
           </form>
         </div>
         <div class="adm-xabar-karta">
           <h2 style="margin-bottom:6px">Promo-kodlar</h2>
           <p class="izoh-kichik" style="margin-bottom:12px">O'quvchi kodni do'konda yoki botda kiritadi. Har kim bir kodni bir marta ishlatadi.</p>
           <form class="adm-forma" id="promoForma">
-            <div class="qator3">
-              <label>Kod<input id="pKod" placeholder="MAKTAB20" maxlength="20" style="text-transform:uppercase"></label>
+            <div class="qator3 kod-qator">
+              <label>Kod<input id="pKod" placeholder="masalan, MAKTAB20" maxlength="20" autocomplete="off" style="text-transform:uppercase"></label>
               <label>Chegirma %<input id="pFoiz" type="number" min="1" max="90" value="20"></label>
               <label>Limit (ixt.)<input id="pLimit" type="number" min="1" placeholder="∞"></label>
             </div>
             <label>Muddati, kun (ixtiyoriy)<input id="pKun" type="number" min="1" placeholder="Muddatsiz"></label>
             <button class="tugma" type="submit">Promo-kod yaratish</button>
+            <p class="adm-forma-xabar" id="pXabar" role="status"></p>
           </form>
           <div id="promolarQuti" style="margin-top:12px"></div>
         </div>
@@ -549,8 +558,25 @@ document.getElementById('chiqishTugma').addEventListener('click', function () {
   location.reload();
 });
 
+/** Tasdiqlash oynasi: Telegram ichida — Telegram'ning o'z oynasi (brauzer confirm()
+ * ba'zi Telegram ilovalarida ko'rinmaydi va jimgina "yo'q" qaytaradi). */
+function tasdiqSora(savol) {
+  return new Promise(function (resolve) {
+    if (TG && TG.showConfirm && TG.isVersionAtLeast && TG.isVersionAtLeast('6.2')) {
+      try { TG.showConfirm(savol.slice(0, 250), function (ha) { resolve(!!ha); }); return; } catch (e) { /* brauzer oynasi */ }
+    }
+    resolve(window.confirm(savol));
+  });
+}
+function ogohlantir(matn) {
+  if (TG && TG.showAlert && TG.isVersionAtLeast && TG.isVersionAtLeast('6.2')) {
+    try { TG.showAlert(String(matn).slice(0, 250)); return; } catch (e) { /* brauzer oynasi */ }
+  }
+  window.alert(matn);
+}
+
 document.getElementById('seanslarniTugatTugma').addEventListener('click', async function () {
-  if (!confirm("Barcha qurilmalardagi admin seanslari (shu jumladan hozirgisi) tugatiladi. Davom etilsinmi?")) return;
+  if (!(await tasdiqSora("Barcha qurilmalardagi admin seanslari (shu jumladan hozirgisi) tugatiladi. Davom etilsinmi?"))) return;
   var res = await AdminAPI.barchaSeanslarniTugat();
   if (res.ok) {
     AdminAPI.chiqish();
@@ -822,7 +848,7 @@ async function foydalanuvchiModalniOch(id) {
   }
 
   document.getElementById('foydalanuvchiO_chir').addEventListener('click', async function () {
-    if (!confirm(esc(u.name) + ' butunlay o\'chirilsinmi? Bu amalni qaytarib bo\'lmaydi.')) return;
+    if (!(await tasdiqSora((u.name || 'Foydalanuvchi') + ' butunlay o\'chirilsinmi? Bu amalni qaytarib bo\'lmaydi.'))) return;
     var res2 = await AdminAPI.foydalanuvchiO_chirish(id);
     if (res2.ok) {
       fon.classList.remove('ochiq');
@@ -1007,11 +1033,11 @@ async function qaror(id, amal, sabab) {
   var savol = amal === 'approve'
     ? "To'lov tasdiqlansinmi? Fan(lar) darhol ochiladi."
     : 'To\'lov rad etilsinmi? Sabab: ' + (SABABLAR[sabab] || '');
-  if (!confirm(savol)) return;
+  if (!(await tasdiqSora(savol))) return;
   var karta = document.querySelector('.adm-chek[data-id="' + id + '"]');
   if (karta) karta.style.opacity = '.5';
   var r = await AdminAPI.buyurtmaQaror(id, amal, sabab);
-  if (!r.ok) { alert(r.error || 'Xatolik'); if (karta) karta.style.opacity = ''; }
+  if (!r.ok) { ogohlantir(r.error || 'Xatolik'); if (karta) karta.style.opacity = ''; }
   yuklaTolovUmumiy();
   yuklaCheklar();
   bPage = 1;
@@ -1057,8 +1083,16 @@ async function yuklaBuyurtmalar() {
 
 document.getElementById('buyurtmaFiltr').addEventListener('change', function () { bPage = 1; yuklaBuyurtmalar(); });
 
+/** Forma tagidagi xabar (Telegram ichida alert() har doim ko'rinmaydi). */
+function formaXabar(id, matn, ok) {
+  var el = document.getElementById(id);
+  el.textContent = matn || '';
+  el.className = 'adm-forma-xabar' + (matn ? (ok ? ' ok' : ' xato') : '');
+}
+
 document.getElementById('tolovSozlamaForma').addEventListener('submit', async function (e) {
   e.preventDefault();
+  formaXabar('sXabar', 'Saqlanmoqda...', true);
   var r = await AdminAPI.tolovSozlama({
     card_number: document.getElementById('sKarta').value,
     card_holder: document.getElementById('sEgasi').value,
@@ -1066,8 +1100,8 @@ document.getElementById('tolovSozlamaForma').addEventListener('submit', async fu
     price_three: document.getElementById('sUchta').value,
     price_all: document.getElementById('sHammasi').value,
   });
-  if (!r.ok) { alert(r.error || 'Xatolik'); return; }
-  alert('Saqlandi');
+  if (!r.ok) { formaXabar('sXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  formaXabar('sXabar', '✅ Saqlandi', true);
   yuklaTolovUmumiy();
 });
 
@@ -1084,21 +1118,30 @@ function promolarChiz(promos) {
   quti.querySelectorAll('[data-promo]').forEach(function (b) {
     b.onclick = async function () {
       var r = await AdminAPI.promoAlmashtir(b.dataset.promo);
-      if (r.ok) promolarChiz(r.promos); else alert(r.error || 'Xatolik');
+      if (r.ok) promolarChiz(r.promos); else formaXabar('pXabar', '❌ ' + (r.error || 'Xatolik'));
     };
   });
 }
 
 document.getElementById('promoForma').addEventListener('submit', async function (e) {
   e.preventDefault();
+  var kodMaydon = document.getElementById('pKod');
+  var kod = kodMaydon.value.trim().toUpperCase();
+  if (!kod) {
+    formaXabar('pXabar', '❌ Kodni yozing (masalan, MAKTAB20)');
+    kodMaydon.focus();
+    return;
+  }
+  formaXabar('pXabar', 'Yaratilmoqda...', true);
   var r = await AdminAPI.promoYarat({
-    code: document.getElementById('pKod').value,
+    code: kod,
     percent: document.getElementById('pFoiz').value,
     max_uses: document.getElementById('pLimit').value,
     days: document.getElementById('pKun').value,
   });
-  if (!r.ok) { alert(r.error || 'Xatolik'); return; }
-  document.getElementById('pKod').value = '';
+  if (!r.ok) { formaXabar('pXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  kodMaydon.value = '';
+  formaXabar('pXabar', '✅ ' + kod + ' yaratildi', true);
   promolarChiz(r.promos);
 });
 
@@ -1228,7 +1271,7 @@ document.getElementById('xabarYuborTugma').addEventListener('click', async funct
   natija.style.color = '';
 
   if (!matn) { natija.style.color = 'var(--qizil)'; natija.textContent = "Xabar matnini yozing."; return; }
-  if (!confirm("Bu xabar Telegram orqali kirgan BARCHA foydalanuvchilarga yuboriladi. Davom etilsinmi?")) return;
+  if (!(await tasdiqSora("Bu xabar Telegram orqali kirgan BARCHA foydalanuvchilarga yuboriladi. Davom etilsinmi?"))) return;
 
   this.disabled = true;
   natija.textContent = 'Yuborilmoqda...';
