@@ -229,6 +229,38 @@
     return s ? s[0].toUpperCase() : '?';
   }
 
+  // ── Yangi yutuq (nishon) tabrigi ─────────────────────────
+  // Server har bir yangi nishonni bir marta qaytaradi (new_achievements).
+  function yutuqTabrik(yangilar) {
+    if (!yangilar || !yangilar.length || document.getElementById('yutuqTabrik')) return;
+    var oyna = document.createElement('div');
+    oyna.id = 'yutuqTabrik';
+    oyna.className = 'yutuq-tabrik';
+    oyna.innerHTML =
+      '<div class="yutuq-tabrik-karta" role="dialog" aria-modal="true" aria-labelledby="yutuqTabrikSarlavha">' +
+        '<p class="yutuq-tabrik-ust">' + nishon('party') + '<span>Tabriklaymiz!</span></p>' +
+        '<h2 id="yutuqTabrikSarlavha">' + (yangilar.length > 1 ? 'Yangi nishonlar' : 'Yangi nishon') + '</h2>' +
+        yangilar.map(function (y) {
+          return '<div class="yutuq-tabrik-qator">' +
+            '<span class="yutuq-belgi">' + nishon(y.icon) + '</span>' +
+            '<span><b>' + esc(y.title) + '</b><small>' + esc(y.desc) + '</small></span></div>';
+        }).join('') +
+        '<button class="tugma" type="button">Zo\'r!</button>' +
+        '<a class="izoh" href="profile.html#yutuqlar">Barcha nishonlar</a>' +
+      '</div>';
+    function yop() {
+      oyna.remove();
+      document.removeEventListener('keydown', tugmaBilan);
+    }
+    function tugmaBilan(e) { if (e.key === 'Escape') yop(); }
+    oyna.querySelector('button').onclick = yop;
+    oyna.onclick = function (e) { if (e.target === oyna) yop(); };
+    document.addEventListener('keydown', tugmaBilan);
+    document.body.appendChild(oyna);
+    oyna.querySelector('button').focus();
+    try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
+  }
+
   window.UI = {
     esc: esc,
     matnHtml: matnHtml,
@@ -248,5 +280,6 @@
     sinfKerak: sinfKerak,
     bosh: bosh,
     harfAvatar: harfAvatar,
+    yutuqTabrik: yutuqTabrik,
   };
 })();

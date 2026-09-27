@@ -57,6 +57,13 @@
     </div>
   </div>
 
+  <!-- Yutuqlar: ochilgan va yopiq nishonlar -->
+  <section class="bo-lim" id="yutuqlar" hidden>
+    <div class="bo-lim-bosh"><h2>Yutuqlar</h2><span class="izoh" id="yutuqSoni"></span></div>
+    <div class="yutuq-javon" id="yutuqJavon"></div>
+    <button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="yutuqHammasi" style="margin-top:10px" hidden></button>
+  </section>
+
   <!-- O'yinlar statistikasi (Game Hub) — ma'lumot kelgach ko'rinadi -->
   <section class="bo-lim" id="oyinBolim" hidden>
     <div class="bo-lim-bosh"><h2>O'yinlar</h2><a class="izoh" href="games.html">O'yinlarga o'tish ›</a></div>
@@ -136,6 +143,46 @@
     '<div class="stat"><b>' + (s.completed_topics || 0) + '</b><span>Mavzu</span></div>' +
     '<div class="stat"><b>' + (s.percent || 0) + '%</b><span>Progress</span></div>' +
     '<div class="stat"><b>' + (s.finished_subjects || 0) + '</b><span>Tugagan fan</span></div>';
+
+  UI.yutuqTabrik(d.new_achievements);
+
+  var KO_RINADI = 6;   // javonda dastlab nechta nishon ko'rinadi
+  API.yutuqlar().then(function (y) {
+    if (!y.ok) return;
+    document.getElementById('yutuqSoni').textContent = y.unlocked + ' / ' + y.total;
+    // Olinganlar oldinda, keyin maqsadga eng yaqinlari
+    var tartib = y.items.map(function (a, i) { return { a: a, i: i }; }).sort(function (p, q) {
+      if (p.a.unlocked !== q.a.unlocked) return p.a.unlocked ? -1 : 1;
+      var d = q.a.progress / q.a.goal - p.a.progress / p.a.goal;
+      return d || p.i - q.i;
+    }).map(function (x) { return x.a; });
+    var javon = document.getElementById('yutuqJavon');
+    javon.innerHTML = tartib.map(function (a, i) {
+      var foiz = Math.round(100 * a.progress / a.goal);
+      return '<div class="yutuq' + (a.unlocked ? '' : ' yopiq') + '"' + (i >= KO_RINADI ? ' hidden' : '') +
+        ' aria-label="' + UI.esc(a.title + ' — ' + (a.unlocked ? 'olingan' : 'hali olinmagan')) + '">' +
+        '<span class="yutuq-belgi">' + UI.nishon(a.unlocked ? a.icon : 'lock') + '</span>' +
+        '<b>' + UI.esc(a.title) + '</b>' +
+        '<small>' + UI.esc(a.desc) + '</small>' +
+        (!a.unlocked && a.goal > 1
+          ? '<span class="yutuq-progress" role="img" aria-label="' + a.progress + ' / ' + a.goal + '"><i style="width:' + foiz + '%"></i></span>' +
+            '<small>' + a.progress + ' / ' + a.goal + '</small>'
+          : '') +
+        '</div>';
+    }).join('');
+    var bo_lim = document.getElementById('yutuqlar');
+    var hammasi = document.getElementById('yutuqHammasi');
+    if (tartib.length > KO_RINADI) {
+      hammasi.hidden = false;
+      hammasi.textContent = 'Hammasini ko\'rish (' + tartib.length + ')';
+      hammasi.onclick = function () {
+        javon.querySelectorAll('.yutuq[hidden]').forEach(function (e) { e.hidden = false; });
+        hammasi.hidden = true;
+      };
+    }
+    bo_lim.hidden = false;
+    if (location.hash === '#yutuqlar') bo_lim.scrollIntoView();
+  });
 
   API.get('/api/games/me').then(function (g) {
     if (!g.ok) return;

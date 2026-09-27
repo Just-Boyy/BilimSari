@@ -328,6 +328,7 @@ def _finish(cur, room, session, players, now, reason) -> bool:
                      'correct': int(a.get('correct') or 0), 'points': int(a.get('points') or 0)})
 
     multiplayer = sum(1 for r in rows if r['answered'] > 0) >= 2
+    bot_level = max((int(r['p']['level']) for r in rows if r['p'].get('is_bot')), default=0)
     rows.sort(key=lambda r: -r['points'])
     rank, prev = 0, None
     for i, r in enumerate(rows):
@@ -347,13 +348,13 @@ def _finish(cur, room, session, players, now, reason) -> bool:
         cur.execute(
             '''INSERT INTO game_results (session_id, room_id, user_id, game_type, subject, topic, difficulty,
                                          score, earned, xp, correct, wrong, total, accuracy, rank, players, won,
-                                         duration_ms, created_ms)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                         duration_ms, created_ms, bot_level)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                ON CONFLICT (session_id, user_id) DO NOTHING''',
             (session['id'], room['id'], p['user_id'], session['game_type'], session['subject'], session['topic'],
              session['difficulty'], r['points'], earned, xp, r['correct'], r['answered'] - r['correct'],
              played, round(100 * r['correct'] / played) if played else 0, r['rank'], len(rows), int(won),
-             now - int(session['started_ms']), now),
+             now - int(session['started_ms']), now, bot_level),
         )
 
     _save_topic_stats(cur, session, [r['p'] for r in rows if not r['p'].get('is_bot')], played, now)

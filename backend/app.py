@@ -10,10 +10,12 @@ import html
 import logging
 import os
 
+import achievements
 import admin_api
 import admin_audit
 import admin_auth
 import ai_tutor
+import daily
 import notify
 import rate_limit
 import study
@@ -137,6 +139,14 @@ def init_db():
         game_schema.ensure_tables(cur, conn)
     except Exception:
         logger.exception("O'yin jadvallari xatosi")
+        conn.rollback()
+
+    # Kun savoli va yutuqlar (nishonlar)
+    try:
+        daily.ensure_tables(cur, conn)
+        achievements.ensure_tables(cur, conn)
+    except Exception:
+        logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
         conn.rollback()
 
     # Telegram eslatmalari (jurnal, rejalashtiruvchi, users.notify)
@@ -373,7 +383,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'leaderboard.html', 'game.html', 'games.html',
+    'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html',
     'admin.html',
 }
 
@@ -471,12 +481,35 @@ def send_room_invite(chat_id, first_name, code):
     })
 
 
+def send_daily_invite(chat_id, first_name):
+    """Kun savoli havolasi (t.me/<bot>?start=kun) yoki /kun buyrug'i."""
+    name = html.escape(first_name or 'do‘st')
+    tg_api('sendMessage', {
+        'chat_id': chat_id,
+        'text': (
+            f'Salom, {name}!\n\n'
+            f'<b>Kun savoli</b> — bugun hamma uchun bitta savol. '
+            f'To‘g‘ri va tez javob bering, kunlik reytingga chiqing!'
+        ),
+        'parse_mode': 'HTML',
+        'reply_markup': {
+            'inline_keyboard': [[
+                {
+                    'text': 'Savolni ochish',
+                    'web_app': {'url': f"{WEBAPP_URL.rstrip('/')}/daily.html"},
+                }
+            ]]
+        },
+    })
+
+
 def send_help_message(chat_id):
     tg_api('sendMessage', {
         'chat_id': chat_id,
         'text': (
             'Buyruqlar:\n'
             '/start — ilovani ochish\n'
+            '/kun — kun savoli\n'
             '/help — yordam\n\n'
             'O‘rganish uchun Boshlash tugmasini bosing.'
         ),
@@ -499,6 +532,7 @@ def setup_telegram_bot():
     tg_api('setMyCommands', {
         'commands': [
             {'command': 'start', 'description': 'Ilovani ochish'},
+            {'command': 'kun', 'description': 'Kun savoli'},
             {'command': 'help', 'description': 'Yordam'},
         ]
     })
@@ -533,8 +567,12 @@ def telegram_webhook():
         room_code = game_rooms.normalize_code(payload[5:]) if payload.lower().startswith('room_') else ''
         if game_rooms.CODE_RE.match(room_code):
             send_room_invite(chat_id, first_name, room_code)
+        elif payload.lower() == 'kun':
+            send_daily_invite(chat_id, first_name)
         else:
             send_start_message(chat_id, first_name)
+    elif cmd == '/kun':
+        send_daily_invite(chat_id, first_name)
     elif cmd == '/help':
         send_help_message(chat_id)
     elif text:

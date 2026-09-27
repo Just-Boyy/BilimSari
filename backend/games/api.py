@@ -8,7 +8,6 @@ Xatolar foydalanuvchiga tushunarli o'zbekcha matn bilan qaytadi.
 """
 
 import logging
-import os
 import random
 from functools import wraps
 
@@ -20,12 +19,12 @@ from auth_core import auth_required
 from db import get_connection
 from games import catalog, clock, matchmaking, rooms, stats
 from games.errors import GameError
+from tgbot import BOT_USERNAME
 
 logger = logging.getLogger('bilimsari.games')
 
 bp = Blueprint('games', __name__, url_prefix='/api/games')
 
-BOT_USERNAME = os.environ.get('BOT_USERNAME', 'bilimsaribot').lstrip('@')
 CLEANUP_CHANCE = 0.1   # lobby so'rovlarining ~10% ida eski roomlar tozalanadi
 
 

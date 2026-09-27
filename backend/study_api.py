@@ -6,11 +6,16 @@ Barcha progress shu yerda tekshiriladi. Frontend faqat natijani ko'rsatadi —
 qulf, 24 soatlik kutish va javoblarni baholash serverda hal qilinadi.
 """
 
+import achievements
 import curriculum as cur_mod
+import daily
 import study
 from auth_core import auth_required
 from db import get_connection
 from flask import Blueprint, jsonify, request
+from games import clock
+from games.errors import GameError
+from tgbot import BOT_USERNAME
 
 bp = Blueprint('study', __name__, url_prefix='/api/study')
 
@@ -76,6 +81,9 @@ def dashboard():
             'name': request.user.get('name'),
             'photo_url': request.user.get('photo_url'),
         }
+        now = clock.now_ms()
+        data['daily'] = daily.status(cur, request.user['id'], now)
+        data['new_achievements'] = achievements.evaluate(cur, conn, request.user['id'], now)['new']
         return jsonify(data)
     finally:
         _close(conn, cur)
@@ -288,5 +296,57 @@ def game_check():
             return jsonify({'ok': False, 'error': "Savol topilmadi"}), 404
         result['ok'] = True
         return jsonify(result)
+    finally:
+        _close(conn, cur)
+
+
+# ───────────────────────── Kun savoli va yutuqlar ─────────────────────────
+
+def _game_fail(exc: GameError):
+    return jsonify({'ok': False, 'error': exc.message, 'code': exc.code}), exc.http_status
+
+
+@bp.route('/daily', methods=['GET'])
+@auth_required
+def daily_question():
+    """Bugungi savol. Birinchi ochilishda vaqt hisobi boshlanadi; ?peek=1 — ochmasdan holat."""
+    conn, cur = _conn()
+    try:
+        data = daily.state(cur, conn, request.user['id'], clock.now_ms(), peek=request.args.get('peek') == '1')
+        data['bot'] = BOT_USERNAME
+        data['ok'] = True
+        return jsonify(data)
+    except GameError as exc:
+        return _game_fail(exc)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/daily/answer', methods=['POST'])
+@auth_required
+def daily_answer():
+    conn, cur = _conn()
+    try:
+        body = request.get_json(silent=True) or {}
+        now = clock.now_ms()
+        data = daily.answer(cur, conn, request.user['id'], body.get('answer'), now)
+        data['new_achievements'] = achievements.evaluate(cur, conn, request.user['id'], now)['new']
+        data['bot'] = BOT_USERNAME
+        data['ok'] = True
+        return jsonify(data)
+    except GameError as exc:
+        return _game_fail(exc)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/achievements', methods=['GET'])
+@auth_required
+def achievements_list():
+    conn, cur = _conn()
+    try:
+        data = achievements.evaluate(cur, conn, request.user['id'])
+        data['ok'] = True
+        return jsonify(data)
     finally:
         _close(conn, cur)

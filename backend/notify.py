@@ -2,6 +2,7 @@
 """
 Telegram eslatmalari va ularni vaqtida yuboruvchi rejalashtiruvchi.
 
+  * Kun savoli (09:00, Toshkent) — "Bugungi savol tayyor!".
   * Kunlik eslatma (19:00, Toshkent) — so'nggi 14 kunda faol bo'lgan, lekin
     bugun hali o'qimagan o'quvchilarga; streak bo'lsa, uni eslatadi.
   * "Keyingi mavzu ochildi" — 24 soatlik kutish tugagan zahoti.
@@ -23,6 +24,7 @@ import threading
 import time
 from datetime import datetime, timedelta, timezone
 
+import daily
 import study
 from db import TASHKENT_TZ, add_column_if_missing, as_utc, get_connection
 from games import clock
@@ -31,6 +33,8 @@ from tgbot import BOT_TOKEN, send
 
 logger = logging.getLogger('bilimsari.notify')
 
+QUESTION_HOUR = 9           # "Bugungi savol tayyor!" vaqti (Toshkent)
+QUESTION_LAST_HOUR = 12
 DAILY_HOUR = 19             # kunlik eslatma vaqti (Toshkent)
 DAILY_LAST_HOUR = 22        # server kech ishga tushsa — o'sha kuni kechasi yubormaydi
 ACTIVE_DAYS = 14            # shundan uzoq kirmaganlarni bezovta qilmaymiz
@@ -146,6 +150,38 @@ def daily_reminders(cur, conn, now_ms) -> int:
     return sent
 
 
+def question_ready(cur, conn, now_ms) -> int:
+    """Ertalab "Bugungi savol tayyor!" — so'nggi 14 kunda faol bo'lgan, bugungi
+    savolni hali ochmagan o'quvchilarga."""
+    day = daily.today(now_ms)
+    since_ms = now_ms - ACTIVE_DAYS * 24 * 3600 * 1000
+    since = _utc(since_ms)
+    cur.execute('SELECT DISTINCT user_id FROM user_progress WHERE started_at >= %s OR completed_at >= %s',
+                (since, since))
+    active = {r['user_id'] for r in cur.fetchall()}
+    cur.execute('SELECT DISTINCT user_id FROM game_results WHERE user_id > 0 AND created_ms >= %s', (since_ms,))
+    active |= {r['user_id'] for r in cur.fetchall()}
+    cur.execute('SELECT DISTINCT user_id FROM daily_answers WHERE opened_ms >= %s', (since_ms,))
+    active |= {r['user_id'] for r in cur.fetchall()}
+    cur.execute('SELECT user_id FROM daily_answers WHERE day = %s', (day,))
+    opened = {r['user_id'] for r in cur.fetchall()}
+
+    subject = daily.subject_of_day(cur, conn, now_ms)
+    sent = 0
+    for u in _recipients(cur):
+        created = as_utc(u['created_at'])
+        if u['id'] in opened or not (u['id'] in active or (created and created >= since)):
+            continue
+        streak = daily.streak(cur, u['id'], now_ms)
+        text = (f'{_first_name(u["name"])}, <b>bugungi savol tayyor!</b>\n'
+                f'Bugun — {html.escape(subject)}. To\'g\'ri va tez javob berib, kunlik reytingga chiqing.')
+        if streak:
+            text += f'\nKun savoli streak: <b>{streak} kun</b>.'
+        if _deliver(cur, conn, u, 'question', day, text, 'Savolni ochish', 'daily.html'):
+            sent += 1
+    return sent
+
+
 def cooldown_ready(cur, conn, now_ms) -> int:
     """24 soatlik kutish endigina tugagan o'quvchilarga "keyingi mavzu ochildi"."""
     now = _utc(now_ms)
@@ -227,6 +263,9 @@ def tick(now_ms=None):
         if _claim(cur, conn, 'cooldown', str(now_ms // (5 * 60 * 1000))):
             cooldown_ready(cur, conn, now_ms)
         local = datetime.fromtimestamp(now_ms / 1000, TASHKENT_TZ)
+        if (QUESTION_HOUR <= local.hour < QUESTION_LAST_HOUR
+                and _claim(cur, conn, 'question', local.date().isoformat())):
+            logger.info('Kun savoli xabari: %d ta', question_ready(cur, conn, now_ms))
         if DAILY_HOUR <= local.hour < DAILY_LAST_HOUR and _claim(cur, conn, 'daily', local.date().isoformat()):
             logger.info('Kunlik eslatma: %d ta', daily_reminders(cur, conn, now_ms))
         week_start = clock.period_start_ms('week', now_ms) - game_stats.WEEK_MS

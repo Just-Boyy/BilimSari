@@ -25,6 +25,8 @@
     <div id="darsKarta"></div>
   </section>
 
+  <section class="bo-lim" id="kunBo-lim" hidden></section>
+
   <section class="bo-lim" id="fanBo-lim" hidden>
     <div class="bo-lim-bosh">
       <h2>Mening fanlarim</h2>
@@ -77,7 +79,26 @@
     chaqmoqBelgi.hidden = false;
 
     darsChiz(res.today, res.streak);
+    kunChiz(res.daily);
     fanChiz(res.subjects);
+    UI.yutuqTabrik(res.new_achievements);
+  }
+
+  // ── Kun savoli kartasi ──
+  function kunChiz(kun) {
+    var bo_lim = document.getElementById('kunBo-lim');
+    if (!kun) { bo_lim.hidden = true; return; }
+    var izoh = !kun.answered
+      ? 'Bugungi savol tayyor — to\'g\'ri va tez javob bering!'
+      : (kun.correct ? 'To\'g\'ri javob berdingiz. Reytingni ko\'ring' : 'Bugun adashdingiz. Ertaga yangi savol');
+    bo_lim.innerHTML =
+      '<a class="kun-karta' + (kun.answered ? ' bajarildi' : '') + '" href="daily.html">' +
+        '<span class="kun-belgi">' + UI.nishon(kun.answered ? 'checkCircle' : 'sparkle') + '</span>' +
+        '<span class="kun-matn"><b>Kun savoli</b><small>' + izoh + '</small></span>' +
+        (kun.streak > 0 ? '<span class="kun-streak">' + UI.nishon('flame') + kun.streak + '</span>' : '') +
+        UI.nishon('chevronRight') +
+      '</a>';
+    bo_lim.hidden = false;
   }
 
   // ── Bugungi/joriy mavzu kartasi ──

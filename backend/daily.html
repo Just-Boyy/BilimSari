@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Kun savoli — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
+  <h1>Kun savoli<small>Hamma uchun bitta savol</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="tana">
+    <div class="skelet" style="height:220px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('dashboard.html');
+
+  var tana = document.getElementById('tana');
+  var soatTimer = null;
+  var yuborilmoqda = false;
+
+  function soniya(s) {
+    return String(s).replace('.', ',') + ' s';
+  }
+
+  function soniyada(s) {
+    return String(s).replace('.', ',') + ' soniyada';
+  }
+
+  function keyingiMatn(s) {
+    var soat = Math.floor(s / 3600);
+    var daqiqa = Math.floor((s % 3600) / 60);
+    return soat > 0 ? soat + ' soat ' + daqiqa + ' daqiqa' : Math.max(1, daqiqa) + ' daqiqa';
+  }
+
+  function infoHtml(d, soat) {
+    return '<div class="kun-info">' +
+      '<span class="kun-chip">' + UI.esc(d.subject_name) + '</span>' +
+      (d.streak > 0
+        ? '<span class="kun-chip zarg">' + UI.nishon('flame') + d.streak + ' kun</span>'
+        : '') +
+      (soat ? '<span class="kun-chip kun-soat" id="kunSoat">' + UI.nishon('clock') + '<span>0 s</span></span>' : '') +
+      '</div>';
+  }
+
+  async function yukla() {
+    var d = await API.kunSavoli(true);
+    if (!d.ok) { tana.innerHTML = UI.xatoHolat(d.error, yukla); return; }
+    if (d.answered) natijaChiz(d);
+    else if (d.opened) savolChiz(d);
+    else kirishChiz(d);
+  }
+
+  // Savol hali ochilmagan: vaqt tugma bosilganda boshlanadi
+  function kirishChiz(d) {
+    tana.innerHTML = infoHtml(d, false) +
+      '<div class="karta kun-kirish">' +
+        '<span class="kun-belgi">' + UI.nishon('sparkle') + '</span>' +
+        '<h2>Bugungi savol tayyor!</h2>' +
+        '<p>Bugun — ' + UI.esc(d.subject_name) + '. Faqat bitta urinish. Vaqt savolni ochganingizda ' +
+          'boshlanadi: to\'g\'ri va tez javob bersangiz, kunlik reytingga chiqasiz (+5 chaqmoq).</p>' +
+        '<button class="tugma" type="button" id="ochTugma">Savolni ochish</button>' +
+      '</div>';
+    document.getElementById('ochTugma').onclick = async function () {
+      this.disabled = true;
+      var r = await API.kunSavoli(false);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); this.disabled = false; return; }
+      if (r.answered) natijaChiz(r); else savolChiz(r);
+    };
+  }
+
+  function variantlarHtml(d, natija) {
+    return '<div class="variantlar">' + d.options.map(function (o, i) {
+      var cls = '';
+      if (natija) {
+        if (i === natija.right_answer) cls = ' to-g-ri';
+        else if (i === natija.your_answer) cls = ' xato';
+      }
+      var harf = natija && cls
+        ? UI.nishon(cls === ' to-g-ri' ? 'check' : 'x')
+        : (d.kind === 'tf' ? UI.nishon(i === 0 ? 'check' : 'x') : 'ABCD'[i]);
+      return '<button class="variant' + cls + '" type="button" data-javob="' + i + '"' + (natija ? ' disabled' : '') + '>' +
+        '<span class="harf" aria-hidden="true">' + harf + '</span>' +
+        '<span>' + UI.esc(o) + '</span></button>';
+    }).join('') + '</div>';
+  }
+
+  function savolChiz(d) {
+    tana.innerHTML = infoHtml(d, true) +
+      '<div class="karta">' +
+        '<p class="savol-son">' + UI.esc(d.topic_title) + '</p>' +
+        '<p class="savol-matn">' + UI.matnHtml(d.prompt) + '</p>' +
+        variantlarHtml(d, null) +
+      '</div>';
+
+    // Ko'rinadigan sekundomer (haqiqiy vaqtni server o'lchaydi)
+    var boshi = Date.now() - (d.elapsed_ms || 0);
+    var soat = document.querySelector('#kunSoat span');
+    clearInterval(soatTimer);
+    soatTimer = setInterval(function () {
+      soat.textContent = Math.floor((Date.now() - boshi) / 1000) + ' s';
+    }, 250);
+
+    tana.querySelectorAll('.variant').forEach(function (b) {
+      b.onclick = async function () {
+        if (yuborilmoqda) return;
+        yuborilmoqda = true;
+        tana.querySelectorAll('.variant').forEach(function (x) { x.disabled = true; });
+        b.setAttribute('aria-pressed', 'true');
+        var r = await API.kunJavob(Number(b.dataset.javob));
+        yuborilmoqda = false;
+        if (!r.ok) {
+          if (r.code === 'already_answered') { yukla(); return; }
+          UI.xabar(r.error, 'xato');
+          b.removeAttribute('aria-pressed');
+          tana.querySelectorAll('.variant').forEach(function (x) { x.disabled = false; });
+          return;
+        }
+        clearInterval(soatTimer);
+        natijaChiz(r);
+        UI.yutuqTabrik(r.new_achievements);
+      };
+    });
+  }
+
+  function reytingHtml(rt) {
+    if (!rt || !rt.top.length) {
+      return '<p class="izoh">Bugun hali hech kim to\'g\'ri javob bermadi.</p>';
+    }
+    var qator = function (e) {
+      var o_rin = e.rank <= 3
+        ? '<span class="o-rin medal-' + e.rank + '">' + UI.nishon('medal') + '</span>'
+        : '<span class="o-rin">' + e.rank + '</span>';
+      return '<div class="reyting-qator' + (e.me ? ' men' : '') + '">' + o_rin +
+        '<span class="ism">' + UI.esc(e.me ? e.name + ' (siz)' : e.name) + '</span>' +
+        '<span class="soniya">' + soniya(e.seconds) + '</span></div>';
+    };
+    var html = rt.top.map(qator).join('');
+    var menTopda = rt.top.some(function (e) { return e.me; });
+    if (rt.me && !menTopda) {
+      html += '<div class="mening-o-rnim">' + qator({ rank: rt.me.rank, name: 'Siz', seconds: rt.me.seconds, me: false }) + '</div>';
+    }
+    return html;
+  }
+
+  function natijaChiz(d) {
+    clearInterval(soatTimer);
+    var n = d.result;
+    var rt = d.ranking;
+    tana.innerHTML = infoHtml(d, false) +
+      '<div class="kun-natija' + (n.correct ? '' : ' xato') + '">' +
+        '<h2>' + (n.correct ? 'To\'g\'ri!' : 'Noto\'g\'ri') + '</h2>' +
+        '<p>' + soniyada(n.seconds) + ' javob berdingiz' +
+          (n.correct && rt.me ? ' • ' + rt.me.rank + '-o\'rin' : '') + '</p>' +
+        (n.chaqmoq ? '<p class="kun-chaqmoq">+' + n.chaqmoq + ' chaqmoq</p>' : '') +
+      '</div>' +
+      '<div class="karta">' +
+        '<p class="savol-son">' + UI.esc(d.topic_title) + '</p>' +
+        '<p class="savol-matn">' + UI.matnHtml(d.prompt) + '</p>' +
+        variantlarHtml(d, n) +
+        (n.explain ? '<div class="tushuntirish" style="margin-top:12px">' + UI.esc(n.explain) + '</div>' : '') +
+      '</div>' +
+      '<section class="bo-lim kun-reyting">' +
+        '<div class="bo-lim-bosh"><h2>Bugungi reyting</h2>' +
+          '<span class="izoh">' + rt.answered_count + ' javob, ' + rt.correct_count + ' to\'g\'ri</span></div>' +
+        reytingHtml(rt) +
+      '</section>' +
+      '<p class="izoh" style="text-align:center;margin-top:14px">Keyingi savol ' + keyingiMatn(d.next_in_s) + 'dan keyin</p>' +
+      '<div class="kun-tugmalar">' +
+        '<button class="tugma" type="button" id="ulashTugma">' + UI.nishon('share') + '<span>Do\'stlarga ulashish</span></button>' +
+        '<a class="tugma tugma-ikkilamchi" href="dashboard.html">Bosh sahifaga</a>' +
+      '</div>';
+
+    document.getElementById('ulashTugma').onclick = function () {
+      var link = 'https://t.me/' + (d.bot || 'bilimsaribot') + '?start=kun';
+      var matn = n.correct
+        ? 'BilimSari kun savoliga ' + soniyada(n.seconds) + ' to\'g\'ri javob berdim' +
+          (rt.me ? ' (' + rt.me.rank + '-o\'rin)' : '') + '! Sen qancha vaqtda yecha olasan?'
+        : 'BilimSari kun savoli — bugun men adashdim. Sen yecha olasanmi?';
+      var url = 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(matn);
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(url);
+      else if (navigator.share) navigator.share({ title: 'BilimSari', text: matn, url: link }).catch(function () {});
+      else window.open(url, '_blank', 'noopener');
+    };
+  }
+
+  yukla();
+})();
+</script>
+</body>
+</html>

@@ -162,6 +162,9 @@ def ensure_tables(cur, conn):
     conn.commit()
     # Kompyuter raqib (bot) — manfiy user_id bilan roomdagi o'yinchi
     add_column_if_missing(cur, conn, 'game_room_players', 'is_bot', 'INTEGER NOT NULL DEFAULT 0')
+    # O'yindagi eng kuchli kompyuterning darajasi (0 — kompyuter yo'q) — "Qiyin
+    # kompyuterni yutish" yutug'i room o'chib ketgandan keyin ham shundan olinadi
+    add_column_if_missing(cur, conn, 'game_results', 'bot_level', 'INTEGER NOT NULL DEFAULT 0')
 
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_rooms_lobby ON game_rooms (status, is_public, activity_ms)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_game_players_user ON game_room_players (user_id, state)')

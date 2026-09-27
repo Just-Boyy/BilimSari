@@ -23,6 +23,7 @@ from datetime import timedelta
 
 import curriculum as cur_mod
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
+import daily
 from games import stats as game_stats
 
 logger = logging.getLogger('bilimsari')
@@ -436,6 +437,7 @@ def compute_streak(cur, user_id):
 
 CHAQMOQ_PER_TOPIC = 20  # har bir tugallangan mavzu uchun
 # O'yinlarda (Game Hub) hisobga o'tgan har 10 ball = 1 chaqmoq — games/stats.py
+# Kun savoliga to'g'ri javob — +5 chaqmoq (daily.py)
 
 
 def compute_chaqmoq(cur, user_id) -> int:
@@ -444,11 +446,11 @@ def compute_chaqmoq(cur, user_id) -> int:
         (user_id, STATUS_COMPLETED),
     )
     topics = int(cur.fetchone()['n'] or 0) * CHAQMOQ_PER_TOPIC
-    return topics + game_stats.chaqmoq_from_games(cur, user_id)
+    return topics + game_stats.chaqmoq_from_games(cur, user_id) + daily.chaqmoq_total(cur, user_id)
 
 
 def leaderboard(cur, user_id, limit=20):
-    """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar)."""
+    """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar + kun savoli)."""
     cur.execute(
         'SELECT user_id, COUNT(*) AS n FROM user_progress WHERE status = %s GROUP BY user_id',
         (STATUS_COMPLETED,),
@@ -456,6 +458,9 @@ def leaderboard(cur, user_id, limit=20):
     chaqmoq_by_user = {row['user_id']: row['n'] * CHAQMOQ_PER_TOPIC for row in cur.fetchall()}
     for uid, xp in game_stats.xp_by_user(cur).items():
         bonus = xp // game_stats.GAME_XP_PER_CHAQMOQ
+        if bonus:
+            chaqmoq_by_user[uid] = chaqmoq_by_user.get(uid, 0) + bonus
+    for uid, bonus in daily.chaqmoq_by_user(cur).items():
         if bonus:
             chaqmoq_by_user[uid] = chaqmoq_by_user.get(uid, 0) + bonus
 

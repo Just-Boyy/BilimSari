@@ -184,7 +184,11 @@
         if (key === 'lobby') drawLobby();
         else if (key.indexOf('cd:') === 0) drawCountdown();
         else if (key.indexOf('q:') === 0) drawQuestion();
-        else if (key.indexOf('res:') === 0) drawResults();
+        else if (key.indexOf('res:') === 0) {
+          drawResults();
+          // O'yin tugadi — yangi nishonlar (birinchi g'alaba, kompyuterni yutish...)
+          API.yutuqlar().then(function (y) { if (y.ok && !scope.dead) UI.yutuqTabrik(y.new); });
+        }
         else el.innerHTML = UI.yuklanmoqda("O'yin tayyorlanmoqda...");
       }
       if (view === 'lobby') updateLobby();

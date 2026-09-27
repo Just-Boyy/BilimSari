@@ -134,6 +134,13 @@
     },
     reyting: function () { return so_rov('/api/study/leaderboard'); },
 
+    // — Kun savoli va yutuqlar —
+    kunSavoli: function (ko_rish) { return so_rov('/api/study/daily' + (ko_rish ? '?peek=1' : '')); },
+    kunJavob: function (javob) {
+      return so_rov('/api/study/daily/answer', { method: 'POST', body: { answer: javob } });
+    },
+    yutuqlar: function () { return so_rov('/api/study/achievements'); },
+
     o_yinSavollari: function (soni, rejim) {
       return so_rov('/api/study/game/questions?count=' + (soni || 10) + (rejim ? '&mode=' + encodeURIComponent(rejim) : ''));
     },
