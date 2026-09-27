@@ -104,16 +104,6 @@
       <span class="matn">Telegram eslatmalari<small>Kunlik eslatma, yangi mavzu ochilishi, o'yin takliflari</small></span>
       <input type="checkbox" id="eslatmaTugma">
     </label>
-
-    <button class="qator xavfli" id="chiqish">
-      <span class="nishon" data-ikon="logout"></span>
-      <span class="matn">Chiqish<small id="chiqishIzoh">Hisobdan chiqasiz, natijalar saqlanadi</small></span>
-    </button>
-
-    <p class="izoh-kichik" id="mehmonOgoh" hidden
-       style="color:var(--qizil);margin-top:6px;padding:0 4px">
-      Hisobingiz email va parolsiz. Chiqsangiz, natijalaringizga qayta kira olmaysiz.
-    </p>
   </section>
 
   <p class="izoh-kichik" style="text-align:center;margin-top:20px">
@@ -245,7 +235,6 @@
       }).join('');
   });
 
-  // Mehmon hisobi (email ham, Telegram ham yo'q) — chiqish xavfli
   var men = await API.men();
   // Eslatmalar faqat Telegram orqali kirganlarga yuboriladi
   if (men.ok && men.user.telegram_id) {
@@ -262,23 +251,6 @@
   if (men.ok && men.user.is_admin) {
     document.getElementById('adminQator').style.display = '';
   }
-  var mehmon = men.ok && !men.user.email && !men.user.telegram_id;
-  if (mehmon) {
-    document.getElementById('mehmonOgoh').hidden = false;
-    document.getElementById('chiqishIzoh').textContent = 'Natijalar tiklanmaydi';
-  }
-
-  document.getElementById('chiqish').onclick = async function () {
-    if (mehmon && !confirm(
-        'Hisobingiz email va parolsiz.\n' +
-        'Chiqsangiz, ' + (s.completed_topics || 0) + ' ta tugallangan mavzu va butun ' +
-        'progressingizga qayta kira olmaysiz.\n\nChiqasizmi?')) {
-      return;
-    }
-    this.disabled = true;
-    await API.chiqish();
-    location.href = 'index.html';
-  };
 })();
 </script>
 </body>
