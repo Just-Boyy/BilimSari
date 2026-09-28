@@ -308,6 +308,28 @@
   .adm-rasm-katta { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.85); display: grid; place-items: center; padding: 16px; }
   .adm-rasm-katta img { max-width: 100%; max-height: 100%; border-radius: 10px; }
 
+  /* Batafsil tahlil */
+  .adm-davr { display: inline-flex; gap: 4px; margin-left: auto; }
+  .adm-davr button {
+    padding: 5px 11px; border-radius: 99px; border: 1px solid var(--chiziq); background: var(--oq);
+    font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--tana); color: var(--matn-2);
+  }
+  .adm-davr button.faol { background: var(--yashil); border-color: var(--yashil); color: #fff; }
+  .adm-tahlil-karta { background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r-katta); padding: 16px; margin-bottom: 14px; }
+  .adm-tahlil-karta h3 { font-size: 14px; margin-bottom: 4px; }
+  .adm-tahlil-karta .izoh-kichik { margin-bottom: 10px; }
+  .adm-tahlil-karta .adm-chart { margin-bottom: 4px; }
+  .adm-chart-yorliq { display: flex; justify-content: space-between; font-size: 11px; color: var(--matn-2); }
+  .adm-stat .son.kichik-son { font-size: 20px; }
+  .adm-voronka { display: grid; gap: 8px; }
+  .adm-voronka .qadam { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 44px; align-items: center; gap: 10px; font-size: 13px; }
+  .adm-voronka .yol { height: 22px; border-radius: 8px; background: #eef2f7; overflow: hidden; }
+  .adm-voronka .yol > i { display: block; height: 100%; background: var(--yashil); border-radius: inherit; min-width: 2px; }
+  .adm-voronka .n { font-weight: 800; text-align: right; color: var(--matn-quyuq); }
+  .adm-fan-tahlil td .yol { height: 8px; border-radius: 99px; background: #eef2f7; overflow: hidden; min-width: 80px; }
+  .adm-fan-tahlil td .yol > i { display: block; height: 100%; border-radius: inherit; }
+  @media (max-width: 480px) { .adm-fan-tahlil .yol-ustun { display: none; } }
+
   /* Telegram Stars hamyoni */
   .adm-stars { max-width: none; margin-bottom: 22px; }
   .adm-stars-bosh { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -761,8 +783,114 @@ async function yuklaStatistika() {
       "Diqqat: BOT_TOKEN sozlanmagan — Telegram orqali xabar yuborish ishlamaydi." + '</p>';
   }
 
+  html += '<div id="tahlilQuti" style="margin-top:24px"></div>';
   quti.className = '';
   quti.innerHTML = html;
+  yuklaTahlil(tahlilDavr);
+}
+
+// ─────────────────────── Batafsil tahlil ───────────────────────
+
+var tahlilDavr = 30;
+
+function foizMatn(f) { return f === null || f === undefined ? '—' : f + '%'; }
+
+/** Pastida sana/soat yorliqlari bor ustunli grafik. */
+function yorliqliChart(punktlar, yorliq, tip) {
+  var maxN = Math.max.apply(null, punktlar.map(function (p) { return p.n; }).concat([1]));
+  var tanlangan = [0, Math.floor((punktlar.length - 1) / 2), punktlar.length - 1];
+  return '<div class="adm-chart">' + punktlar.map(function (p) {
+      return '<div class="ustun" style="height:' + Math.max(Math.round((p.n / maxN) * 100), 3) + '%" data-tip="' +
+        esc(tip(p)) + '"></div>';
+    }).join('') + '</div>' +
+    '<div class="adm-chart-yorliq">' + tanlangan.map(function (i) { return '<span>' + esc(yorliq(punktlar[i])) + '</span>'; }).join('') + '</div>';
+}
+
+async function yuklaTahlil(kun) {
+  tahlilDavr = kun;
+  var quti = document.getElementById('tahlilQuti');
+  if (!quti) return;
+  var sarlavha = '<h2 class="adm-sarlavha" style="margin-top:0">Batafsil tahlil' +
+    '<span class="adm-davr">' + [7, 30, 90].map(function (d) {
+      return '<button type="button" data-davr="' + d + '"' + (d === kun ? ' class="faol"' : '') + '>' + d + ' kun</button>';
+    }).join('') + '</span></h2>';
+  quti.innerHTML = sarlavha + '<p class="adm-bosh">Yuklanmoqda...</p>';
+  bogla();
+  var r = await AdminAPI.statBatafsil(kun);
+  if (!r.ok) { quti.innerHTML = sarlavha + '<p class="adm-bosh">' + esc(r.error || 'Xatolik') + '</p>'; bogla(); return; }
+
+  var ret = r.retention;
+  var kartalar = [
+    ['Bugun faol', r.dau_today, "bugun ilovani ochgan o'quvchilar"],
+    ['7 kunda faol', r.wau, 'kamida bir marta kirganlar'],
+    [kun + ' kunda faol', r.period_active, "o'rtacha kuniga " + r.avg_dau],
+    ['Ertasi kuni qaytgan', foizMatn(ret.d1), ret.d1_base + " ta yangi o'quvchidan"],
+    ['7 kun ichida qaytgan', foizMatn(ret.d7), ret.d7_base + " ta yangi o'quvchidan"],
+    ["Do'kon konversiyasi", foizMatn(r.funnel.conversion), "do'konni ochganlardan to'laganlar"],
+  ];
+  var html = sarlavha + '<div class="adm-statlar">' + kartalar.map(function (k) {
+    return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son kichik-son">' + esc(k[1]) +
+      '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
+  }).join('') + '</div>';
+
+  html += '<div class="adm-tahlil-karta"><h3>Kunlik faol o\'quvchilar</h3>' +
+    '<p class="izoh-kichik">Ilovani ochgan, dars o\'qigan, o\'yin o\'ynagan yoki kun savolini ochganlar — har kuni.</p>' +
+    yorliqliChart(r.dau, function (p) { return kunOy(p.date); }, function (p) { return kunOy(p.date) + ': ' + p.n + ' ta'; }) +
+    '</div>';
+
+  var soatlar = r.hours.map(function (n, h) { return { n: n, h: h }; });
+  var eng = soatlar.slice().sort(function (a, b) { return b.n - a.n; })[0];
+  html += '<div class="adm-tahlil-karta"><h3>Faol soatlar</h3>' +
+    '<p class="izoh-kichik">O\'quvchilar kunning qaysi soatida ko\'proq o\'qiydi (Toshkent vaqti)' +
+    (eng && eng.n ? ' — eng faol: <b>' + String(eng.h).padStart(2, '0') + ':00</b>. Eslatma va xabarlarni shu vaqtga yaqin yuborgan ma\'qul.' : '.') + '</p>' +
+    yorliqliChart(soatlar, function (p) { return String(p.h).padStart(2, '0') + ':00'; },
+      function (p) { return String(p.h).padStart(2, '0') + ':00 — ' + p.n + ' ta harakat'; }) +
+    '</div>';
+
+  var f = r.funnel;
+  var qadamlar = [["Do'konni ochgan", f.visitors], ['Buyurtma bergan', f.ordered],
+    ["To'lagan", f.paid]];
+  html += '<div class="adm-tahlil-karta"><h3>Do\'kon: ochgan → buyurtma bergan → to\'lagan</h3>' +
+    '<p class="izoh-kichik">Oxirgi ' + kun + ' kun. To\'laganlar: karta — ' + f.paid_card + ', Telegram Stars — ' + f.paid_stars + '.' +
+    (f.shop_tracked_since ? ' Do\'konga kirishlar ' + kunOy(f.shop_tracked_since) + ' dan beri hisoblanadi.' : '') + '</p>' +
+    '<div class="adm-voronka">' + qadamlar.map(function (q) {
+      var foiz = f.visitors ? Math.round((q[1] / f.visitors) * 100) : 0;
+      return '<div class="qadam"><span>' + esc(q[0]) + '</span><span class="yol"><i style="width:' + foiz + '%"></i></span>' +
+        '<span class="n">' + q[1] + '</span></div>';
+    }).join('') + '</div></div>';
+
+  var maxL = Math.max.apply(null, r.subjects.map(function (s) { return s.learners; }).concat([1]));
+  html += '<div class="adm-tahlil-karta"><h3>Eng mashhur fanlar</h3>' +
+    '<p class="izoh-kichik">Oxirgi ' + kun + " kunda shu fandan dars o'qigan o'quvchilar, tugatilgan mavzular va o'yinlar.</p>" +
+    (r.subjects.length
+      ? '<div class="adm-jadval-o-rash"><table class="adm-jadval adm-fan-tahlil"><thead><tr><th>Fan</th><th>O\'quvchilar</th><th class="yol-ustun"></th>' +
+        '<th>Mavzular</th><th>O\'yinlar</th></tr></thead><tbody>' + r.subjects.map(function (s) {
+          return '<tr><td class="nomzod">' + esc(s.name) + '</td><td>' + s.learners + '</td>' +
+            '<td class="yol-ustun" style="width:40%"><div class="yol"><i style="width:' + Math.round((s.learners / maxL) * 100) + '%;background:' +
+            esc(s.color || 'var(--yashil)') + '"></i></div></td>' +
+            '<td>' + s.completed + '</td><td>' + s.games + '</td></tr>';
+        }).join('') + '</tbody></table></div>'
+      : '<p class="adm-bosh">Bu davrda hali faollik yo\'q.</p>') +
+    '</div>';
+
+  if (r.cohorts.length) {
+    html += '<div class="adm-tahlil-karta"><h3>Yangi o\'quvchilar qaytib keldimi?</h3>' +
+      '<p class="izoh-kichik">Har kuni ro\'yxatdan o\'tganlar va ulardan nechtasi ertasi kuni / 7 kun ichida yana kirgani.</p>' +
+      '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr><th>Kun</th><th>Yangi</th><th>Ertasi kuni</th><th>7 kun ichida</th></tr></thead><tbody>' +
+      r.cohorts.slice().reverse().map(function (c) {
+        function hujayra(n) { return n === null ? '<span class="kichik">hali erta</span>' : n + ' <span class="kichik">(' + Math.round((n / c.signups) * 100) + '%)</span>'; }
+        return '<tr><td>' + kunOy(c.date) + '</td><td>' + c.signups + '</td><td>' + hujayra(c.d1) + '</td><td>' + hujayra(c.d7) + '</td></tr>';
+      }).join('') + '</tbody></table></div></div>';
+  }
+
+  quti.innerHTML = html;
+  bogla();
+
+  function bogla() {
+    quti.querySelectorAll('[data-davr]').forEach(function (b) {
+      b.onclick = function () { yuklaTahlil(Number(b.dataset.davr)); };
+    });
+  }
 }
 
 function chartHtml(sarlavha, punktlar) {

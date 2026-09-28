@@ -79,6 +79,7 @@
     },
 
     stats: function () { return so_rov('/api/admin/stats'); },
+    statBatafsil: function (kun) { return so_rov('/api/admin/stats/detail?days=' + (kun || 30)); },
 
     foydalanuvchilar: function (opts) {
       opts = opts || {};

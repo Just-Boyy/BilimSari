@@ -15,6 +15,7 @@ from functools import wraps
 
 from flask import jsonify, request
 
+import analytics
 from db import get_connection, utc_now
 
 SECRET = os.environ.get('SECRET_KEY', 'bilimsari-dev-secret-change-me')
@@ -105,5 +106,6 @@ def auth_required(fn):
                 'code': 'unauthorized',
             }), 401
         request.user = user
+        analytics.touch(user['id'])     # "bugun faol" — kuniga bir marta yoziladi
         return fn(*args, **kwargs)
     return wrapper

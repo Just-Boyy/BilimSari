@@ -5,6 +5,7 @@ Biznes-logika payments.py'da.
 """
 
 import admin_audit
+import analytics
 import curriculum as cur_mod
 import payments
 import rate_limit
@@ -48,6 +49,7 @@ def shop():
     conn, cur = _conn()
     try:
         uid = request.user['id']
+        analytics.touch(uid, analytics.SHOP)    # do'kon konversiyasi uchun
         settings = payments.get_settings(cur)
         active = payments.active_order(cur, uid)
         return jsonify({

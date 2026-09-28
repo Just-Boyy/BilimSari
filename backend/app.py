@@ -17,6 +17,7 @@ import admin_audit
 import admin_auth
 import ai_tutor
 import alerts
+import analytics
 import backup
 import botchat
 import broadcast
@@ -193,6 +194,7 @@ def _init_db():
         broadcast.ensure_tables(cur, conn)
         alerts.ensure_tables(cur, conn)
         backup.ensure_tables(cur, conn)
+        analytics.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
         conn.rollback()

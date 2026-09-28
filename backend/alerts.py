@@ -176,6 +176,8 @@ def _worker():
             _handle(item)
         except Exception:  # noqa: BLE001
             pass
+        finally:
+            _queue.task_done()
 
 
 def install():
@@ -189,11 +191,10 @@ def install():
 
 
 def flush(timeout=5.0):
-    """Testlar uchun: navbat bo'shaguncha kutadi."""
+    """Testlar uchun: navbatdagi barcha xatolar ishlanguncha kutadi."""
     end = time.time() + timeout
-    while not _queue.empty() and time.time() < end:
+    while _queue.unfinished_tasks and time.time() < end:
         time.sleep(0.02)
-    time.sleep(0.1)
 
 
 # ───────────────────────── Admin panel ─────────────────────────

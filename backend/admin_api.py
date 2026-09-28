@@ -18,6 +18,7 @@ from flask import Blueprint, Response, jsonify, request
 import admin_audit
 import admin_auth
 import alerts
+import analytics
 import backup
 import broadcast
 import curriculum as cur_mod
@@ -231,6 +232,23 @@ def stats():
             'completions_14d': [{'date': d.isoformat(), 'n': completion_buckets[d.isoformat()]} for d in days_range],
             'bot_configured': bool(BOT_TOKEN),
         })
+    finally:
+        cur.close()
+        conn.close()
+
+
+@bp.route('/stats/detail', methods=['GET'])
+@admin_required
+def stats_detail():
+    """Batafsil statistika: faol o'quvchilar, qaytganlar, mashhur fanlar, do'kon konversiyasi."""
+    try:
+        days = int(request.args.get('days', 30))
+    except ValueError:
+        days = 30
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return jsonify(dict(analytics.report(cur, days), ok=True))
     finally:
         cur.close()
         conn.close()
