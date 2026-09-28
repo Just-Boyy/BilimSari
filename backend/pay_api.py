@@ -236,3 +236,11 @@ def admin_toggle_promo(code):
         return jsonify({'ok': True, 'promos': payments.list_promos(cur)})
     finally:
         _close(conn, cur)
+
+
+@admin_bp.route('/stars', methods=['GET'])
+@admin_required
+def admin_stars():
+    """Botning Telegram Stars balansi va yechib olish holati (1 daqiqa keshlanadi)."""
+    data = payments.stars_balance(refresh=request.args.get('refresh') == '1')
+    return jsonify(data), (200 if data.get('ok') else 502)

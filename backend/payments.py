@@ -20,6 +20,7 @@ Promo-kod foizli chegirma beradi. Narxlar va karta admin panelda sozlanadi.
 
 import html
 import json
+import os
 import random
 from datetime import datetime
 
@@ -783,6 +784,66 @@ def overview(cur, now=None) -> dict:
     # so'mdagi tushum — faqat karta orqali; Stars alohida hisoblanadi
     return {'today': total(day), 'month': total(month), 'all': total(0), 'pending': pending,
             'stars_month': total(month, STARS), 'stars_all': total(0, STARS)}
+
+
+# Telegram qoidalari: bot olgan Stars 21 kundan keyin yechib olinadi (Fragment
+# orqali, TON'ga), bir martada kamida 1000 Stars; egasiga 1 Star ≈ 0.013 $.
+STARS_HOLD_DAYS = 21
+STARS_MIN_WITHDRAW = 1000
+STARS_USD = 0.013
+USD_UZS = int(os.environ.get('USD_UZS', '12700'))   # taxminiy kurs — faqat ko'rsatish uchun
+STARS_CACHE_MS = 60 * 1000
+_stars_cache = {'at': 0, 'data': None}
+
+
+def _star_transactions(max_pages=10) -> list:
+    txs, offset = [], 0
+    for _ in range(max_pages):
+        res = _tg_result(tgbot.tg_api('getStarTransactions', {'offset': offset, 'limit': 100}))
+        batch = (res or {}).get('transactions') or []
+        txs += batch
+        if len(batch) < 100:
+            break
+        offset += len(batch)
+    return txs
+
+
+def stars_balance(now=None, refresh=False) -> dict:
+    """Botning Stars balansi (Telegram'dan) va qachon yechib olish mumkinligi."""
+    now = now or clock.now_ms()
+    cached = _stars_cache['data']
+    if cached and not refresh and now - _stars_cache['at'] < STARS_CACHE_MS:
+        return cached
+    bal = _tg_result(tgbot.tg_api('getMyStarBalance', {}))
+    if bal is None:
+        return {'ok': False, 'error': "Telegram'dan balansni olib bo'lmadi."}
+    balance = int(bal.get('amount') or 0)
+    hold_from = now // 1000 - STARS_HOLD_DAYS * 86400
+    held, releases, received, withdrawn, refunded = 0, {}, 0, 0, 0
+    for t in _star_transactions():
+        amount, when = int(t.get('amount') or 0), int(t.get('date') or 0)
+        if t.get('source'):                                   # kirim
+            received += amount
+            if when > hold_from:
+                held += amount
+                day = datetime.fromtimestamp(when + STARS_HOLD_DAYS * 86400, TASHKENT_TZ).date().isoformat()
+                releases[day] = releases.get(day, 0) + amount
+        elif (t.get('receiver') or {}).get('type') == 'fragment':
+            withdrawn += amount                               # yechib olingan
+        elif t.get('receiver'):
+            refunded += amount                                # qaytarilgan (refund)
+    ready = max(0, balance - held)
+    data = {
+        'ok': True, 'balance': balance, 'held': min(held, balance), 'ready': ready,
+        'can_withdraw': ready >= STARS_MIN_WITHDRAW, 'min_withdraw': STARS_MIN_WITHDRAW,
+        'hold_days': STARS_HOLD_DAYS,
+        'releases': [{'date': d, 'amount': a} for d, a in sorted(releases.items())][:10],
+        'received': received, 'withdrawn': withdrawn, 'refunded': refunded,
+        'usd': round(balance * STARS_USD, 2), 'uzs': int(round(balance * STARS_USD * USD_UZS, -2)),
+        'usd_rate': STARS_USD, 'checked_ms': now,
+    }
+    _stars_cache.update(at=now, data=data)
+    return data
 
 
 def admin_orders(cur, status=None, page=1, per_page=30) -> dict:

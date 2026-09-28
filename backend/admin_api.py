@@ -17,6 +17,8 @@ from flask import Blueprint, Response, jsonify, request
 
 import admin_audit
 import admin_auth
+import alerts
+import backup
 import broadcast
 import curriculum as cur_mod
 import payments
@@ -663,6 +665,67 @@ def broadcast_status(bid):
     if not info:
         return jsonify({'ok': False, 'error': 'Topilmadi'}), 404
     return jsonify(dict(info, ok=True))
+
+
+# ───────────────────────── Tizim: zaxira nusxa va xatolar ─────────────────────────
+
+@bp.route('/system', methods=['GET'])
+@admin_required
+def system_info():
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return jsonify({
+            'ok': True,
+            'bot': bool(BOT_TOKEN),
+            'owners': len(admin_auth.ADMIN_TELEGRAM_IDS),
+            'backup_hour': backup.BACKUP_HOUR,
+            'backups': backup.history(cur),
+            'errors': alerts.recent(cur),
+            'error_counts': alerts.counts(cur),
+        })
+    finally:
+        cur.close()
+        conn.close()
+
+
+@bp.route('/backup', methods=['POST'])
+@admin_required
+def backup_now():
+    """Hozir zaxira nusxa olish — fayl egalarning Telegram chatiga boradi."""
+    if not BOT_TOKEN:
+        return jsonify({'ok': False, 'error': "BOT_TOKEN sozlanmagan — faylni yuborib bo'lmaydi"}), 503
+    if not rate_limit.hit('backup_now', 6, 3600):
+        return jsonify({'ok': False, 'error': "Soatiga 6 martadan ko'p emas. Birozdan keyin urinib ko'ring."}), 429
+    info = backup.run('manual')
+    admin_audit.log('backup_now', detail=f'size={info["size"]} rows={info["rows"]} sent={info["sent"]}',
+                    ip=_client_ip())
+    return jsonify(dict(info, ok=True))
+
+
+@bp.route('/errors/test', methods=['POST'])
+@admin_required
+def errors_test():
+    if not rate_limit.hit('errors_test', 5, 3600):
+        return jsonify({'ok': False, 'error': "Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring."}), 429
+    sent = alerts.send_test()
+    if not sent:
+        return jsonify({'ok': False, 'error': "Xabar yuborilmadi — egasi botda /start bosganini tekshiring."}), 502
+    return jsonify({'ok': True, 'sent': sent})
+
+
+@bp.route('/errors/clear', methods=['POST'])
+@admin_required
+def errors_clear():
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        alerts.clear(cur, conn)
+    finally:
+        cur.close()
+        conn.close()
+    admin_audit.log('errors_clear', ip=_client_ip())
+    return jsonify({'ok': True})
 
 
 # ───────────────────────── Adminlar ─────────────────────────

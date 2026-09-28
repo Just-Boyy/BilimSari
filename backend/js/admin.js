@@ -147,6 +147,14 @@
       }
     },
 
+    starsBalans: function (yangila) { return so_rov('/api/admin/pay/stars' + (yangila ? '?refresh=1' : '')); },
+
+    // — Tizim: zaxira nusxa va xatolar —
+    tizim: function () { return so_rov('/api/admin/system'); },
+    zaxiraOl: function () { return so_rov('/api/admin/backup', { method: 'POST' }); },
+    xatoSinov: function () { return so_rov('/api/admin/errors/test', { method: 'POST' }); },
+    xatolarTozala: function () { return so_rov('/api/admin/errors/clear', { method: 'POST' }); },
+
     faoliyat: function (limit) { return so_rov('/api/admin/activity?limit=' + (limit || 50)); },
 
     xabarYuborish: function (matn) {

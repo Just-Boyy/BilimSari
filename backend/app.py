@@ -16,6 +16,8 @@ import admin_api
 import admin_audit
 import admin_auth
 import ai_tutor
+import alerts
+import backup
 import botchat
 import broadcast
 import daily
@@ -38,6 +40,7 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)s [%(name)s] %(message)s',
 )
 logger = logging.getLogger('bilimsari')
+alerts.install()   # ERROR darajasidagi xatolar — jurnalga va egaga Telegram xabari
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024   # eng katta so'rov — profil rasmi (~0.4 MB)
@@ -188,6 +191,8 @@ def _init_db():
         payments.ensure_tables(cur, conn)
         botchat.ensure_tables(cur, conn)
         broadcast.ensure_tables(cur, conn)
+        alerts.ensure_tables(cur, conn)
+        backup.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
         conn.rollback()

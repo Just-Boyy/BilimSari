@@ -307,6 +307,35 @@
   .adm-forma-xabar.ok { color: var(--yashil-quyuq); }
   .adm-rasm-katta { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.85); display: grid; place-items: center; padding: 16px; }
   .adm-rasm-katta img { max-width: 100%; max-height: 100%; border-radius: 10px; }
+
+  /* Telegram Stars hamyoni */
+  .adm-stars { max-width: none; margin-bottom: 22px; }
+  .adm-stars-bosh { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .adm-stars-bosh .son { font-family: var(--sarlavha); font-size: 28px; font-weight: 800; color: var(--matn-quyuq); }
+  .adm-stars-bosh .izoh { font-size: 12px; color: var(--matn-2); }
+  .adm-stars-qatorlar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: 8px; margin: 14px 0 10px; }
+  .adm-stars-qatorlar > div { background: #f8fafc; border: 1px solid var(--chiziq); border-radius: 12px; padding: 10px 12px; font-size: 12px; color: var(--matn-2); }
+  .adm-stars-qatorlar b { display: block; font-size: 17px; color: var(--matn-quyuq); margin-top: 2px; }
+  .adm-stars-bosh .adm-mini-tugma { display: grid; place-items: center; padding: 6px; }
+  .adm-stars-bosh .adm-mini-tugma svg { width: 16px; height: 16px; }
+  .adm-yol { height: 8px; border-radius: 99px; background: #eef2f7; overflow: hidden; margin: 6px 0 4px; }
+  .adm-yol > i { display: block; height: 100%; background: linear-gradient(90deg, #f5b301, #f59e0b); border-radius: inherit; }
+  .adm-stars details { margin-top: 12px; font-size: 13px; }
+  .adm-stars summary { cursor: pointer; font-weight: 700; color: var(--yashil-quyuq); }
+  .adm-stars ol { margin: 8px 0 0 18px; display: grid; gap: 4px; color: var(--matn); }
+  .adm-stars .ochilish { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+  /* Tizim: zaxira nusxa va xatolar */
+  .adm-zaxira { display: grid; gap: 6px; margin: 10px 0 14px; }
+  .adm-zaxira .adm-qator { padding: 8px 0; }
+  .adm-xato { background: var(--oq); border: 1px solid var(--chiziq); border-radius: 12px; margin-bottom: 8px; font-size: 13px; }
+  .adm-xato summary { cursor: pointer; padding: 10px 12px; display: grid; gap: 2px; list-style: none; }
+  .adm-xato summary::-webkit-details-marker { display: none; }
+  .adm-xato .joy { font-weight: 700; color: var(--qizil-quyuq); word-break: break-word; }
+  .adm-xato .vaqt { font-size: 12px; color: var(--matn-2); }
+  .adm-xato .matn { white-space: pre-wrap; word-break: break-word; }
+  .adm-xato pre { margin: 0; padding: 10px 12px; border-top: 1px solid var(--chiziq); background: #0f172a; color: #e2e8f0;
+    font-size: 11px; overflow-x: auto; border-radius: 0 0 12px 12px; max-height: 320px; }
 </style>
 </head>
 <body class="no-nav">
@@ -343,6 +372,7 @@
     <div class="adm-tab" data-bolim="xabar"><span class="nishon" data-ikon="send"></span> Xabar</div>
     <div class="adm-tab" data-bolim="adminlar"><span class="nishon" data-ikon="users"></span> Adminlar</div>
     <div class="adm-tab" data-bolim="jurnal"><span class="nishon" data-ikon="clock"></span> Jurnal</div>
+    <div class="adm-tab" data-bolim="tizim"><span class="nishon" data-ikon="tools"></span> Tizim</div>
   </nav>
 
   <main class="adm-ichi">
@@ -369,6 +399,7 @@
     <section class="adm-bolim" id="bolim-tolovlar">
       <!-- Bot orqali to'lovlar: tushum, kutilayotgan cheklar, tarix -->
       <div id="tolovStatQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      <div class="adm-xabar-karta adm-stars" id="starsQuti"><p class="izoh-kichik">Stars hamyoni yuklanmoqda...</p></div>
 
       <h2 class="adm-sarlavha" style="margin-top:0">Kutilayotgan cheklar <span class="adm-badge sariq" id="cheklarSoni">0</span></h2>
       <div id="cheklarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
@@ -478,6 +509,37 @@
       <div id="jurnalQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
     </section>
 
+    <section class="adm-bolim" id="bolim-tizim">
+      <div class="adm-ikki" style="margin-top:0">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Zaxira nusxa</h2>
+          <p class="izoh-kichik">
+            Har kuni <b id="zaxiraSoat">03:00</b> da butun baza — o'quvchilar, progress, to'lovlar, nishonlar — bitta
+            fayl bo'lib egasining Telegram chatiga yuboriladi. Railway'da nimadir buzilsa ham ma'lumotlar yo'qolmaydi:
+            shu fayldan qayta tiklanadi.
+          </p>
+          <div class="adm-zaxira" id="zaxiraQuti"></div>
+          <button class="tugma" id="zaxiraTugma" type="button">Hozir zaxira olish</button>
+          <p class="adm-forma-xabar" id="zaxiraXabar" role="status" style="margin-top:8px"></p>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Xato xabarlari</h2>
+          <p class="izoh-kichik">
+            Serverda jiddiy xato chiqsa, bot egaga darhol yozadi — muammoni o'quvchilardan oldin bilasiz. Bir xil
+            xato 30 daqiqada ko'pi bilan bir marta xabar qilinadi.
+          </p>
+          <div class="adm-statlar" id="xatoStat" style="margin:12px 0"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="adm-mini-tugma" id="xatoSinovTugma" type="button">Sinov xabari yuborish</button>
+            <button class="adm-mini-tugma" id="xatoTozalaTugma" type="button">Jurnalni tozalash</button>
+          </div>
+          <p class="adm-forma-xabar" id="xatoXabar" role="status" style="margin-top:8px"></p>
+        </div>
+      </div>
+      <h2 class="adm-sarlavha">So'nggi xatolar</h2>
+      <div id="xatolarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
   </main>
 </div>
 
@@ -521,6 +583,8 @@ var AUDIT_NOMLARI = {
   payment_approve: "To'lov tasdiqlandi", payment_reject: "To'lov rad etildi",
   admin_add: "Admin qo'shildi", admin_remove: 'Admin olib tashlandi', message_user: "O'quvchiga xabar yozildi",
   payment_settings: "Karta/narxlar o'zgardi", promo_create: 'Promo-kod yaratildi',
+  backup_now: 'Zaxira nusxa olindi', errors_clear: 'Xatolar jurnali tozalandi',
+  topic_edit: 'Mavzu tahrirlandi', topic_reset: 'Mavzu asl holiga qaytarildi',
 };
 
 var SUBJECT_NAMES = {
@@ -656,6 +720,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'faoliyat' && !yuklandi.faoliyat) { yuklandi.faoliyat = true; yuklaFaoliyat(); }
     if (nomi === 'jurnal' && !yuklandi.jurnal) { yuklandi.jurnal = true; yuklaJurnal(); }
     if (nomi === 'adminlar') yuklaAdminlar();
+    if (nomi === 'tizim') yuklaTizim();
   });
 });
 
@@ -1029,6 +1094,53 @@ async function yuklaTolovUmumiy() {
       "Karta raqami kiritilmagan — o'quvchilar to'lov qila olmaydi. Pastdagi «Karta va narxlar» bo'limini to'ldiring.</p>";
   }
   promolarChiz(r.promos);
+  yuklaStars();
+}
+
+function son(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+function kunOy(iso) { var p = String(iso).split('-'); return p[2] + '.' + p[1]; }
+
+/** Botning Telegram Stars hamyoni: balans, qachon va qancha yechib olish mumkin. */
+async function yuklaStars(yangila) {
+  var quti = document.getElementById('starsQuti');
+  var r = await AdminAPI.starsBalans(yangila);
+  if (!r.ok) {
+    quti.innerHTML = '<p class="izoh-kichik">Stars hamyoni: ' + esc(r.error || 'Xatolik') + '</p>';
+    return;
+  }
+  var yetadi = r.ready >= r.min_withdraw;
+  var foiz = Math.min(100, Math.round((r.ready / r.min_withdraw) * 100));
+  var holat = yetadi
+    ? '<b style="color:var(--yashil-quyuq)">✅ Yechib olsa bo\'ladi!</b> Pastdagi yo\'riqnomaga qarang.'
+    : 'Yechib olish uchun kamida ' + son(r.min_withdraw) + ' Stars kerak — yana <b>' + son(r.min_withdraw - r.ready) + '</b> Stars.';
+  quti.innerHTML =
+    '<div class="adm-stars-bosh"><div>' +
+      '<div class="izoh">Telegram Stars hamyoni (botdagi balans)</div>' +
+      '<div class="son">⭐ ' + son(r.balance) + '</div>' +
+      '<div class="izoh">≈ ' + r.usd.toFixed(2) + ' $ ≈ ' + pul(r.uzs) + ' (taxminan, yechib olinganda)</div>' +
+    '</div><button class="adm-mini-tugma" type="button" id="starsYangila" title="Yangilash">' + BSIcons.icon('refresh') + '</button></div>' +
+    '<div class="adm-stars-qatorlar">' +
+      '<div>Yechib olish mumkin<b>' + son(r.ready) + ' Stars</b></div>' +
+      '<div>Kutilmoqda (' + r.hold_days + ' kun)<b>' + son(r.held) + ' Stars</b></div>' +
+      '<div>Jami tushgan<b>' + son(r.received) + ' Stars</b></div>' +
+      '<div>Yechib olingan<b>' + son(r.withdrawn) + ' Stars</b></div>' +
+    '</div>' +
+    '<div class="adm-yol"><i style="width:' + foiz + '%"></i></div>' +
+    '<p class="izoh-kichik">' + holat + '</p>' +
+    (r.releases.length
+      ? '<p class="izoh-kichik" style="margin-top:8px">Kutilayotgan Stars ochiladigan kunlar:</p><div class="ochilish">' +
+        r.releases.map(function (x) {
+          return '<span class="adm-badge sariq">' + kunOy(x.date) + ' — ' + son(x.amount) + ' Stars</span>';
+        }).join('') + '</div>'
+      : '') +
+    '<details><summary>Qanday yechib olinadi?</summary><ol>' +
+      '<li>Telegram qoidasi: o\'quvchi to\'lagan Stars ' + r.hold_days + ' kundan keyin yechib olinadi, bir martada kamida ' + son(r.min_withdraw) + ' Stars.</li>' +
+      '<li>Telegram\'da <b>@BotFather</b> → botingiz → <b>Balance</b> (yoki bot profili → Tahrirlash → Balans) bo\'limini oching.</li>' +
+      '<li><b>Withdraw</b> tugmasini bosing — Fragment sayti ochiladi.</li>' +
+      '<li>Fragment\'ga TON hamyon (masalan, Tonkeeper) ulang — Stars TON ko\'rinishida tushadi. Keyin TON\'ni so\'mga almashtirish mumkin (buni ota-onangiz bilan qiling).</li>' +
+      '<li>Kurs: 1 Star ≈ ' + r.usd_rate + ' $.</li>' +
+    '</ol></details>';
+  document.getElementById('starsYangila').onclick = function () { yuklaStars(true); };
 }
 
 async function yuklaCheklar() {
@@ -1323,6 +1435,75 @@ async function yuklaJurnal() {
         '<td>' + sanaVaqt(it.ts) + '</td></tr>';
     }).join('') + '</tbody></table>';
 }
+
+// ─────────────────────── Tizim: zaxira nusxa va xatolar ───────────────────────
+
+function hajm(n) { return n >= 1048576 ? (n / 1048576).toFixed(2) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
+
+async function yuklaTizim() {
+  var r = await AdminAPI.tizim();
+  var xatolar = document.getElementById('xatolarQuti');
+  if (!r.ok) { xatolar.className = 'adm-bosh'; xatolar.textContent = r.error || 'Xatolik'; return; }
+
+  var soat = String(r.backup_hour).padStart(2, '0') + ':00';
+  document.getElementById('zaxiraSoat').textContent = soat;
+  var zq = document.getElementById('zaxiraQuti');
+  zq.innerHTML = r.backups.length
+    ? r.backups.slice(0, 5).map(function (b) {
+        return '<div class="adm-qator"><span><b>' + msVaqt(b.ms) + '</b><span class="yorliq"> • ' +
+          (b.origin === 'manual' ? 'qo\'lda' : 'avtomatik') + ' • ' + hajm(b.size) + ' • ' + son(b.row_count) + ' qator</span>' +
+          (b.note ? '<br><span class="yorliq">' + esc(b.note) + '</span>' : '') + '</span>' +
+          (b.sent ? '<span class="adm-badge yashil">Telegramga yuborildi</span>' : '<span class="adm-badge qizil">Yuborilmadi</span>') +
+          '</div>';
+      }).join('')
+    : '<p class="izoh-kichik">Hali zaxira nusxa olinmagan. Birinchisi ' + soat +
+      ' dan keyin avtomatik olinadi yoki pastdagi tugmani bosing.</p>';
+
+  document.getElementById('xatoStat').innerHTML = [
+    ['Oxirgi 24 soat', r.error_counts.day], ['Oxirgi 7 kun', r.error_counts.week],
+  ].map(function (k) {
+    return '<div class="adm-stat"><div class="son">' + k[1] + '</div><div class="izoh">' + k[0] + ' — xatolar</div></div>';
+  }).join('');
+
+  if (!r.errors.length) {
+    xatolar.className = 'adm-bosh';
+    xatolar.textContent = 'Xato yo\'q — hammasi joyida ✅';
+    return;
+  }
+  xatolar.className = '';
+  xatolar.innerHTML = r.errors.map(function (e) {
+    return '<details class="adm-xato"><summary>' +
+      '<span class="joy">' + esc(e.source) + '</span>' +
+      '<span class="vaqt">' + msVaqt(e.ms) + (e.path ? ' • ' + esc(e.path) : '') + '</span>' +
+      '<span class="matn">' + esc(e.message.slice(0, 300)) + '</span>' +
+      '</summary>' + (e.trace ? '<pre>' + esc(e.trace) + '</pre>' : '') + '</details>';
+  }).join('');
+}
+
+document.getElementById('zaxiraTugma').addEventListener('click', async function () {
+  var tugma = this;
+  tugma.disabled = true;
+  formaXabar('zaxiraXabar', 'Zaxira olinmoqda...', true);
+  var r = await AdminAPI.zaxiraOl();
+  tugma.disabled = false;
+  if (!r.ok) { formaXabar('zaxiraXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  formaXabar('zaxiraXabar', r.sent
+    ? '✅ Tayyor: ' + hajm(r.size) + ', ' + son(r.rows) + ' qator. Fayl Telegram\'ga yuborildi.'
+    : '❌ Nusxa olindi, lekin Telegram\'ga yuborilmadi — egasi botda /start bosganini tekshiring.', !!r.sent);
+  yuklaTizim();
+});
+
+document.getElementById('xatoSinovTugma').addEventListener('click', async function () {
+  var r = await AdminAPI.xatoSinov();
+  formaXabar('xatoXabar', r.ok ? '✅ Sinov xabari Telegram\'ga yuborildi' : '❌ ' + (r.error || 'Xatolik'), r.ok);
+});
+
+document.getElementById('xatoTozalaTugma').addEventListener('click', async function () {
+  if (!(await tasdiqSora('Xatolar jurnali tozalansinmi?'))) return;
+  var r = await AdminAPI.xatolarTozala();
+  formaXabar('xatoXabar', r.ok ? '✅ Tozalandi' : '❌ ' + (r.error || 'Xatolik'), r.ok);
+  yuklaTizim();
+});
 
 // ─────────────────────── Xabar (broadcast) ───────────────────────
 

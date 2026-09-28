@@ -12,6 +12,8 @@ Telegram eslatmalari va ularni vaqtida yuboruvchi rejalashtiruvchi.
   * Haftalik turnir — hafta tugagach top-3 ga medal va tabrik xabari.
   * To'lovlar — muddati o'tgan buyurtmalarni yopish, 30 daqiqadan beri
     tekshirilmagan chek haqida adminga eslatma, 21:00 da kunlik hisobot.
+  * Zaxira nusxa — har kuni 03:00 da butun baza egaga Telegram'da fayl
+    bo'lib yuboriladi (backup.py).
 
 Alohida fon xizmati (cron) yo'q: har bir gunicorn worker'da bitta fon oqimi
 daqiqada bir marta tick() ni chaqiradi. Vazifa job_runs jadvalidagi noyob
@@ -28,6 +30,8 @@ import threading
 import time
 from datetime import datetime, timedelta, timezone
 
+import alerts
+import backup
 import botchat
 import broadcast
 import curriculum as cur_mod
@@ -52,6 +56,7 @@ INVITE_WINDOW_MS = 2 * 3600 * 1000   # bitta odamga 2 soatda ko'pi bilan 1 ta ta
 MAX_INVITES = 10
 TICK_SECONDS = 60
 PAY_SUMMARY_HOUR = 21        # adminga kunlik to'lov hisoboti (Toshkent)
+JOB_KEEP_MS = 30 * 24 * 3600 * 1000   # job_runs qatorlari shuncha saqlanadi
 FOOTER = "\n\n<i>Eslatmalarni Profil → Sozlamalar bo'limida o'chirishingiz mumkin.</i>"
 
 
@@ -322,6 +327,9 @@ def tick(now_ms=None):
             payments.housekeeping(cur, conn, now_ms)
             broadcast.resume_stale(cur, conn, now_ms)      # worker o'lib qolgan tarqatishni davom ettirish
             botchat.cleanup_updates(cur, conn, now_ms)
+            alerts.cleanup(cur, conn, now_ms)
+            cur.execute('DELETE FROM job_runs WHERE ran_ms < %s', (now_ms - JOB_KEEP_MS,))
+            conn.commit()
         local = datetime.fromtimestamp(now_ms / 1000, TASHKENT_TZ)
         if (QUESTION_HOUR <= local.hour < QUESTION_LAST_HOUR
                 and _claim(cur, conn, 'question', local.date().isoformat())):
@@ -335,6 +343,13 @@ def tick(now_ms=None):
             summary = payments.daily_summary(cur, now_ms)
             for admin in payments.admin_ids() if summary else []:
                 send(admin, summary, 'Admin panel', 'admin.html')
+        # Kunlik zaxira nusxa (03:00 dan keyin, kuniga bir marta) — egaga Telegram'da fayl
+        if backup.BACKUP_HOUR <= local.hour and _claim(cur, conn, 'backup', local.date().isoformat()):
+            try:
+                backup.run('auto', now_ms)
+            except Exception:  # noqa: BLE001
+                conn.rollback()
+                logger.exception('Zaxira nusxa olinmadi')
         week_start = clock.period_start_ms('week', now_ms) - game_stats.WEEK_MS
         if _claim(cur, conn, 'weekly', str(week_start)):
             logger.info('Haftalik turnir g\'oliblari: %s', weekly_awards(cur, conn, now_ms))

@@ -31,6 +31,19 @@ def tg_api(method, payload):
         return None
 
 
+def tg_upload(method, data, files, timeout=120):
+    """Fayl yuboradigan Bot API chaqiruvi (multipart), masalan sendDocument."""
+    if not BOT_TOKEN:
+        return None
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/{method}'
+    try:
+        r = requests.post(url, data=data, files=files, timeout=timeout)
+        return r.json()
+    except Exception:  # noqa: BLE001
+        logger.exception('Telegram API xato (%s)', method)
+        return None
+
+
 def app_url(path=''):
     return WEBAPP_URL.rstrip('/') + '/' + path.lstrip('/')
 
