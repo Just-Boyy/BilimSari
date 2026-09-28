@@ -91,8 +91,10 @@ def _question(cur, conn, day, now_ms):
         row = cur.fetchone()
     cur.execute('SELECT id, title, subject_key, quiz FROM topics WHERE id = %s', (row['topic_id'],))
     topic = cur.fetchone()
-    q = _quiz(topic['quiz'])[row['q_index']] if topic else None
-    if not q:
+    quiz = _quiz(topic['quiz']) if topic else []
+    # Admin mavzuni tahrirlab, savolni o'chirgan yoki turini o'zgartirgan bo'lishi mumkin
+    q = quiz[row['q_index']] if 0 <= int(row['q_index']) < len(quiz) else None
+    if not isinstance(q, dict) or q.get('type', 'mc') not in ('mc', 'tf') or not q.get('q'):
         raise GameError('no_question', "Bugungi savol topilmadi.", 503)
     kind = q.get('type', 'mc')
     if kind == 'tf':

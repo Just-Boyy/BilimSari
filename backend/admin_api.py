@@ -22,6 +22,7 @@ import analytics
 import backup
 import broadcast
 import curriculum as cur_mod
+import lesson_edit
 import payments
 import rate_limit
 import study
@@ -601,14 +602,66 @@ def subject_topics(subject_key):
             'SELECT id, grade, seq, title, duration FROM topics WHERE subject_key = %s ORDER BY grade, seq',
             (subject_key,)
         )
+        rows = cur.fetchall()
+        edited = lesson_edit.overrides(cur)
         topics = [{
             'id': r['id'], 'grade': r['grade'], 'seq': r['seq'],
-            'title': r['title'], 'duration': r['duration'],
-        } for r in cur.fetchall()]
+            'title': r['title'], 'duration': r['duration'], 'edited': r['id'] in edited,
+        } for r in rows]
         return jsonify({'ok': True, 'topics': topics, 'subject_name': cur_mod.subject_meta(subject_key)['name']})
     finally:
         cur.close()
         conn.close()
+
+
+@bp.route('/topics/<topic_id>', methods=['GET'])
+@admin_required
+def topic_get(topic_id):
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        topic = lesson_edit.get(cur, topic_id)
+        if not topic:
+            return jsonify({'ok': False, 'error': 'Mavzu topilmadi'}), 404
+        return jsonify({'ok': True, 'topic': topic})
+    finally:
+        cur.close()
+        conn.close()
+
+
+@bp.route('/topics/<topic_id>', methods=['PUT'])
+@admin_required
+def topic_save(topic_id):
+    """Mavzu matni va test savollarini saqlash (kod yangilansa ham saqlanib qoladi)."""
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        topic = lesson_edit.save(cur, conn, topic_id, request.get_json(silent=True) or {})
+    except lesson_edit.EditError as exc:
+        conn.rollback()
+        return jsonify({'ok': False, 'error': exc.message}), 400
+    finally:
+        cur.close()
+        conn.close()
+    admin_audit.log('topic_edit', detail=f'{topic_id}: {topic["title"]}', ip=_client_ip())
+    return jsonify({'ok': True, 'topic': topic})
+
+
+@bp.route('/topics/<topic_id>/reset', methods=['POST'])
+@admin_required
+def topic_reset(topic_id):
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        topic = lesson_edit.reset(cur, conn, topic_id)
+    except lesson_edit.EditError as exc:
+        conn.rollback()
+        return jsonify({'ok': False, 'error': exc.message}), 400
+    finally:
+        cur.close()
+        conn.close()
+    admin_audit.log('topic_reset', detail=topic_id, ip=_client_ip())
+    return jsonify({'ok': True, 'topic': topic})
 
 
 @bp.route('/activity', methods=['GET'])

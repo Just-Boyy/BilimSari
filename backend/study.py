@@ -22,6 +22,7 @@ import re
 from datetime import datetime, timedelta, timezone
 
 import curriculum as cur_mod
+import lesson_edit
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
 import daily
 from games import clock
@@ -167,6 +168,7 @@ def sync_curriculum(cur, conn, force=False):
     359+ qatorni qayta yozish shart emas — o'tkazib yuboriladi.
     """
     ensure_tables(cur, conn)
+    lesson_edit.ensure_tables(cur, conn)
 
     fingerprint = _curriculum_fingerprint()
     if not force:
@@ -244,6 +246,9 @@ def sync_curriculum(cur, conn, force=False):
     stale_subject_ids = {r['id'] for r in cur.fetchall()} - expected_subject_ids
     for sid in stale_subject_ids:
         cur.execute('DELETE FROM subjects WHERE id = %s', (sid,))
+
+    # Admin paneldagi tahrirlar kod'dagi matn ustidan qayta qo'yiladi
+    lesson_edit.apply_overrides(cur)
 
     cur.execute(
         "INSERT INTO curriculum_meta (key, value) VALUES ('fingerprint', %s) "

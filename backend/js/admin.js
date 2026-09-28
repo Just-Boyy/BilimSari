@@ -112,6 +112,13 @@
 
     fanlar: function () { return so_rov('/api/admin/subjects'); },
     fanMavzulari: function (subjectKey) { return so_rov('/api/admin/subjects/' + subjectKey + '/topics'); },
+    mavzu: function (id) { return so_rov('/api/admin/topics/' + encodeURIComponent(id)); },
+    mavzuSaqla: function (id, malumot) {
+      return so_rov('/api/admin/topics/' + encodeURIComponent(id), { method: 'PUT', body: malumot });
+    },
+    mavzuAsliga: function (id) {
+      return so_rov('/api/admin/topics/' + encodeURIComponent(id) + '/reset', { method: 'POST' });
+    },
 
     tolovlar: function (page) { return so_rov('/api/admin/purchases?page=' + (page || 1)); },
     tolovlarCsvYukla: function () {

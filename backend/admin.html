@@ -308,6 +308,50 @@
   .adm-rasm-katta { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.85); display: grid; place-items: center; padding: 16px; }
   .adm-rasm-katta img { max-width: 100%; max-height: 100%; border-radius: 10px; }
 
+  /* Mavzu tahrirlagichi */
+  .adm-mavzu-qator { cursor: pointer; }
+  .adm-mavzu-qator:hover { background: var(--yashil-fon); }
+  .adm-mavzu-qator .ong { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .adm-tahrir-fon { position: fixed; inset: 0; z-index: 55; background: #f3f4f6; overflow-y: auto; display: none; }
+  .adm-tahrir-fon.ochiq { display: block; }
+  .adm-tahrir { max-width: 760px; margin: 0 auto; padding: 0 16px 110px; }
+  .adm-tahrir-bosh {
+    position: sticky; top: 0; z-index: 2; background: #f3f4f6; padding: 12px 0 10px;
+    display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--chiziq); margin-bottom: 14px;
+  }
+  .adm-tahrir-bosh .yol-matn { flex: 1; min-width: 0; }
+  .adm-tahrir-bosh h2 { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .adm-tahrir-bosh .izoh-kichik { margin: 0; }
+  .adm-tahrir h3 { font-size: 15px; margin: 22px 0 10px; display: flex; align-items: center; gap: 8px; }
+  .adm-tahrir textarea, .adm-tahrir select.t-tur {
+    width: 100%; min-width: 0; padding: 9px 12px; border: 2px solid var(--chiziq); border-radius: 10px;
+    font-family: var(--tana); font-size: 14px; color: var(--matn); resize: vertical; background: var(--oq);
+  }
+  .adm-tahrir .adm-forma textarea { line-height: 1.45; }
+  .t-karta { background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r); padding: 12px; margin-bottom: 10px; display: grid; gap: 8px; }
+  .t-karta-bosh { display: flex; align-items: center; gap: 6px; }
+  .t-karta-bosh .raqam { font-weight: 800; color: var(--matn-2); font-size: 13px; min-width: 22px; }
+  .t-karta-bosh select.t-tur { width: auto; flex: 1; padding: 6px 10px; font-size: 13px; }
+  .t-ikon { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--chiziq); background: var(--oq); cursor: pointer;
+    display: grid; place-items: center; color: var(--matn-2); font-weight: 800; font-family: var(--tana); padding: 0; flex: 0 0 auto; }
+  .t-ikon:disabled { opacity: .35; cursor: default; }
+  .t-ikon.qizil { color: var(--qizil); }
+  .t-ikon svg { width: 15px; height: 15px; }
+  .t-variant { display: flex; align-items: center; gap: 8px; }
+  .t-variant input[type="radio"] { width: 18px; height: 18px; flex: 0 0 auto; accent-color: var(--yashil); }
+  .t-variant input[type="text"] { flex: 1; }
+  .t-variant.togri input[type="text"] { border-color: var(--yashil); background: var(--yashil-fon); }
+  .t-tf { display: flex; gap: 16px; font-size: 14px; }
+  .t-tf label { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--matn); font-size: 14px; }
+  .t-qosh { display: flex; gap: 8px; flex-wrap: wrap; }
+  .adm-tahrir-oyoq {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; background: var(--oq); border-top: 1px solid var(--chiziq);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+  .adm-tahrir-oyoq .ichi { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .adm-tahrir-oyoq .tugma { width: auto; padding: 11px 22px; }
+  .adm-tahrir-oyoq .adm-forma-xabar { flex: 1 1 200px; }
+
   /* Batafsil tahlil */
   .adm-davr { display: inline-flex; gap: 4px; margin-left: auto; }
   .adm-davr button {
@@ -563,6 +607,18 @@
     </section>
 
   </main>
+</div>
+
+<!-- Mavzu tahrirlagichi (to'liq ekran) -->
+<div class="adm-tahrir-fon" id="tahrirFon">
+  <div class="adm-tahrir" id="tahrirQuti"></div>
+  <div class="adm-tahrir-oyoq">
+    <div class="ichi">
+      <button class="tugma" type="button" id="tahrirSaqla">Saqlash</button>
+      <button class="adm-mini-tugma" type="button" id="tahrirAsliga" hidden>Asl holiga qaytarish</button>
+      <p class="adm-forma-xabar" id="tahrirXabar" role="status"></p>
+    </div>
+  </div>
 </div>
 
 <!-- Universal modal (foydalanuvchi tafsiloti / mavzular ro'yxati) -->
@@ -1151,13 +1207,282 @@ async function fanMavzulariniKorsat(subjectKey, subjectName) {
       '<h2>' + esc(res.subject_name) + ' — mavzular</h2>' +
       '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button>' +
     '</div>' +
+    '<p class="izoh-kichik" style="margin-bottom:6px">Mavzuni bosing — dars matni va test savollarini tahrirlash mumkin.</p>' +
     (res.topics || []).map(function (t) {
-      return '<div class="adm-qator"><span class="yorliq">' + t.seq + '. ' + esc(t.title) + '</span>' +
-        '<span>' + t.duration + ' daqiqa</span></div>';
+      return '<div class="adm-qator adm-mavzu-qator" data-mavzu="' + esc(t.id) + '"><span class="yorliq">' + t.seq + '. ' + esc(t.title) + '</span>' +
+        '<span class="ong">' + (t.edited ? '<span class="adm-badge kok">Tahrirlangan</span>' : '') +
+        t.duration + ' daq. ' + BSIcons.icon('pencil') + '</span></div>';
     }).join('');
 
   document.getElementById('modalYop').addEventListener('click', function () { fon.classList.remove('ochiq'); });
+  modal.querySelectorAll('[data-mavzu]').forEach(function (el) {
+    el.addEventListener('click', function () { mavzuTahrirla(el.dataset.mavzu, subjectKey, subjectName); });
+  });
 }
+
+// ─────────────────────── Mavzu tahrirlagichi ───────────────────────
+
+var BLOK_TURLARI = {
+  text: 'Matn', example: 'Misol', steps: 'Qadamlar', note: 'Eslatma', life: 'Hayotdan misol',
+  formula: 'Formula', table: 'Jadval',
+};
+var SAVOL_TURLARI = { mc: 'Variantli', tf: "To'g'ri / Noto'g'ri", fill: 'Javob yozish' };
+var tahrir = null;          // { id, fan, fanNomi, malumot, asl, ozgardi }
+
+function tahrirMatn(v) { return v == null ? '' : String(v); }
+
+async function mavzuTahrirla(id, fanKey, fanNomi) {
+  var res = await AdminAPI.mavzu(id);
+  if (!res.ok) { ogohlantir(res.error || 'Xatolik'); return; }
+  var t = res.topic;
+  tahrir = {
+    id: id, fan: fanKey, fanNomi: fanNomi, ozgardi: false, topic: t,
+    m: {
+      title: t.title, summary: t.summary, duration: t.duration,
+      lesson: JSON.parse(JSON.stringify(t.lesson)), quiz: JSON.parse(JSON.stringify(t.quiz)),
+    },
+  };
+  document.getElementById('foydalanuvchiModalFon').classList.remove('ochiq');
+  document.getElementById('tahrirFon').classList.add('ochiq');
+  document.body.style.overflow = 'hidden';
+  formaXabar('tahrirXabar', '');
+  tahrirChiz();
+  document.getElementById('tahrirFon').scrollTop = 0;
+}
+
+function blokHtml(b, i, n) {
+  var turlar = Object.keys(BLOK_TURLARI).map(function (k) {
+    return '<option value="' + k + '"' + (k === b.type ? ' selected' : '') + '>' + BLOK_TURLARI[k] + '</option>';
+  }).join('');
+  var ichi = '';
+  if (['text', 'example', 'steps', 'note', 'life'].indexOf(b.type) >= 0) {
+    ichi += '<label>Sarlavha (ixtiyoriy)<input data-bf="title" value="' + esc(tahrirMatn(b.title)) + '" maxlength="160"></label>';
+  }
+  if (b.type === 'steps') {
+    ichi += '<label>Qadamlar — har biri yangi qatorda<textarea data-bf="items" rows="4">' +
+      esc((b.items || []).join('\n')) + '</textarea></label>';
+  } else if (b.type === 'table') {
+    ichi += '<label>Ustun nomlari — | bilan ajrating<input data-bf="head" value="' + esc((b.head || []).join(' | ')) + '"></label>' +
+      '<label>Qatorlar — har biri yangi qatorda, kataklar | bilan<textarea data-bf="rows" rows="4">' +
+      esc((b.rows || []).map(function (r) { return r.join(' | '); }).join('\n')) + '</textarea></label>';
+  } else {
+    ichi += '<label>' + (b.type === 'formula' ? 'Formula' : 'Matn') + '<textarea data-bf="body" rows="' +
+      (b.type === 'formula' ? 1 : 4) + '">' + esc(tahrirMatn(b.body)) + '</textarea></label>';
+  }
+  return '<div class="t-karta adm-forma" data-b="' + i + '">' +
+    '<div class="t-karta-bosh"><span class="raqam">' + (i + 1) + '.</span>' +
+      '<select class="t-tur" data-bturi aria-label="Blok turi">' + turlar + '</select>' +
+      '<button type="button" class="t-ikon" data-amal="b-yuqori" title="Yuqoriga"' + (i === 0 ? ' disabled' : '') + '>↑</button>' +
+      '<button type="button" class="t-ikon" data-amal="b-past" title="Pastga"' + (i === n - 1 ? ' disabled' : '') + '>↓</button>' +
+      '<button type="button" class="t-ikon qizil" data-amal="b-ochir" title="O\'chirish">' + BSIcons.icon('x') + '</button>' +
+    '</div>' + ichi + '</div>';
+}
+
+function savolHtml(q, i, n) {
+  var turlar = Object.keys(SAVOL_TURLARI).map(function (k) {
+    return '<option value="' + k + '"' + (k === q.type ? ' selected' : '') + '>' + SAVOL_TURLARI[k] + '</option>';
+  }).join('');
+  var ichi = '<label>Savol<textarea data-qf="q" rows="2">' + esc(tahrirMatn(q.q)) + '</textarea></label>';
+  if (q.type === 'mc') {
+    var opts = q.options || [];
+    ichi += '<div class="izoh-kichik">Variantlar — to\'g\'ri javobni doira bilan belgilang</div>' +
+      opts.map(function (o, j) {
+        return '<div class="t-variant' + (j === q.answer ? ' togri' : '') + '">' +
+          '<input type="radio" name="togri' + i + '" data-togri="' + j + '"' + (j === q.answer ? ' checked' : '') + ' aria-label="To\'g\'ri javob">' +
+          '<input type="text" data-opt="' + j + '" value="' + esc(tahrirMatn(o)) + '" maxlength="300">' +
+          '<button type="button" class="t-ikon qizil" data-amal="opt-ochir" data-j="' + j + '" title="Variantni o\'chirish"' +
+            (opts.length <= 2 ? ' disabled' : '') + '>' + BSIcons.icon('x') + '</button></div>';
+      }).join('') +
+      (opts.length < 6 ? '<div><button type="button" class="adm-mini-tugma" data-amal="opt-qosh">+ Variant</button></div>' : '');
+  } else if (q.type === 'tf') {
+    ichi += '<div class="t-tf">' +
+      '<label><input type="radio" name="tf' + i + '" data-tf="1"' + (q.answer === true ? ' checked' : '') + '> To\'g\'ri</label>' +
+      '<label><input type="radio" name="tf' + i + '" data-tf="0"' + (q.answer === false ? ' checked' : '') + '> Noto\'g\'ri</label></div>';
+  } else {
+    ichi += '<label>To\'g\'ri javob<input data-qf="answer" value="' + esc(tahrirMatn(q.answer)) + '" maxlength="200"></label>' +
+      '<label>Boshqa qabul qilinadigan javoblar (ixtiyoriy, vergul bilan)<input data-qf="accept" value="' +
+      esc((q.accept || []).join(', ')) + '"></label>';
+  }
+  ichi += '<label>Izoh — javobdan keyin ko\'rsatiladi (ixtiyoriy)<textarea data-qf="explain" rows="2">' +
+    esc(tahrirMatn(q.explain)) + '</textarea></label>';
+  return '<div class="t-karta adm-forma" data-q="' + i + '">' +
+    '<div class="t-karta-bosh"><span class="raqam">' + (i + 1) + '.</span>' +
+      '<select class="t-tur" data-qturi aria-label="Savol turi">' + turlar + '</select>' +
+      '<button type="button" class="t-ikon" data-amal="q-yuqori" title="Yuqoriga"' + (i === 0 ? ' disabled' : '') + '>↑</button>' +
+      '<button type="button" class="t-ikon" data-amal="q-past" title="Pastga"' + (i === n - 1 ? ' disabled' : '') + '>↓</button>' +
+      '<button type="button" class="t-ikon qizil" data-amal="q-ochir" title="O\'chirish">' + BSIcons.icon('x') + '</button>' +
+    '</div>' + ichi + '</div>';
+}
+
+function tahrirChiz() {
+  var t = tahrir.topic, m = tahrir.m;
+  var quti = document.getElementById('tahrirQuti');
+  quti.innerHTML =
+    '<div class="adm-tahrir-bosh">' +
+      '<button type="button" class="t-ikon" id="tahrirYop" title="Orqaga">' + BSIcons.icon('arrowLeft') + '</button>' +
+      '<div class="yol-matn"><h2>' + esc(m.title || 'Mavzu') + '</h2>' +
+        '<p class="izoh-kichik">' + esc(t.subject_name) + ' • ' + t.grade + '-sinf • ' + t.seq + '-mavzu' +
+        (t.edited ? ' • <span class="adm-badge kok">Tahrirlangan ' + msVaqt(t.edited_ms) + '</span>' : '') + '</p></div>' +
+    '</div>' +
+    '<div class="adm-forma">' +
+      '<label>Sarlavha<input data-f="title" value="' + esc(m.title) + '" maxlength="120"></label>' +
+      '<label>Qisqa tavsif<textarea data-f="summary" rows="2" maxlength="300">' + esc(m.summary) + '</textarea></label>' +
+      '<label style="max-width:180px">Davomiylik, daqiqa<input data-f="duration" type="number" min="1" max="120" value="' + esc(m.duration) + '"></label>' +
+    '</div>' +
+    '<h3>Dars matni <span class="adm-badge kulrang">' + m.lesson.length + ' blok</span></h3>' +
+    m.lesson.map(function (b, i) { return blokHtml(b, i, m.lesson.length); }).join('') +
+    '<div class="t-qosh"><select class="adm-select" id="yangiBlokTuri">' +
+      Object.keys(BLOK_TURLARI).map(function (k) { return '<option value="' + k + '">' + BLOK_TURLARI[k] + '</option>'; }).join('') +
+    '</select><button type="button" class="adm-mini-tugma yashil" data-amal="b-qosh">+ Blok qo\'shish</button></div>' +
+    '<h3>Test savollari <span class="adm-badge kulrang">' + m.quiz.length + ' savol</span></h3>' +
+    m.quiz.map(function (q, i) { return savolHtml(q, i, m.quiz.length); }).join('') +
+    '<div class="t-qosh"><button type="button" class="adm-mini-tugma yashil" data-amal="q-qosh">+ Savol qo\'shish</button></div>' +
+    '<p class="izoh-kichik" style="margin-top:18px">O\'zgarishlar saqlangandan keyin darhol barcha o\'quvchilarga ko\'rinadi. ' +
+    'Kod yangilansa ham tahrir saqlanib qoladi; «Asl holiga qaytarish» — birinchi matnni tiklaydi. Uy vazifasi o\'zgarmaydi.</p>';
+  document.getElementById('tahrirAsliga').hidden = !t.edited;
+  document.getElementById('tahrirYop').onclick = tahrirYop;
+}
+
+function blokTuriniAlmashtir(b, tur) {
+  var matn = b.body || (b.items || []).join('\n') || '';
+  var yangi = { type: tur };
+  if (b.title && ['text', 'example', 'steps', 'note', 'life'].indexOf(tur) >= 0) yangi.title = b.title;
+  if (tur === 'steps') yangi.items = matn ? matn.split('\n') : [''];
+  else if (tur === 'table') { yangi.head = b.head || ['', '']; yangi.rows = b.rows || [['', '']]; }
+  else yangi.body = matn;
+  return yangi;
+}
+
+function savolTuriniAlmashtir(q, tur) {
+  var yangi = { type: tur, q: q.q || '' };
+  if (q.explain) yangi.explain = q.explain;
+  if (tur === 'mc') { yangi.options = q.options && q.options.length ? q.options : ['', '', '', '']; yangi.answer = q.type === 'mc' ? q.answer : 0; }
+  else if (tur === 'tf') yangi.answer = q.type === 'tf' ? q.answer : true;
+  else { yangi.answer = q.type === 'fill' ? q.answer : ''; yangi.accept = q.accept || []; }
+  return yangi;
+}
+
+function tahrirOzgardi() { tahrir.ozgardi = true; }
+
+document.getElementById('tahrirQuti').addEventListener('input', function (e) {
+  if (!tahrir) return;
+  var el = e.target, m = tahrir.m;
+  var bk = el.closest('[data-b]'), qk = el.closest('[data-q]');
+  if (el.dataset.f) {
+    m[el.dataset.f] = el.dataset.f === 'duration' ? Number(el.value) : el.value;
+  } else if (bk && el.dataset.bf) {
+    var b = m.lesson[Number(bk.dataset.b)], f = el.dataset.bf;
+    if (f === 'items') b.items = el.value.split('\n');
+    else if (f === 'head') b.head = el.value.split('|').map(function (x) { return x.trim(); });
+    else if (f === 'rows') b.rows = el.value.split('\n').filter(function (x) { return x.trim(); })
+      .map(function (r) { return r.split('|').map(function (x) { return x.trim(); }); });
+    else b[f] = el.value;
+  } else if (qk) {
+    var q = m.quiz[Number(qk.dataset.q)];
+    if (el.dataset.qf === 'accept') q.accept = el.value.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+    else if (el.dataset.qf) q[el.dataset.qf] = el.value;
+    else if (el.dataset.opt !== undefined) q.options[Number(el.dataset.opt)] = el.value;
+  }
+  tahrirOzgardi();
+});
+
+document.getElementById('tahrirQuti').addEventListener('change', function (e) {
+  if (!tahrir) return;
+  var el = e.target, m = tahrir.m;
+  var bk = el.closest('[data-b]'), qk = el.closest('[data-q]');
+  if (bk && el.hasAttribute('data-bturi')) {
+    m.lesson[Number(bk.dataset.b)] = blokTuriniAlmashtir(m.lesson[Number(bk.dataset.b)], el.value);
+  } else if (qk && el.hasAttribute('data-qturi')) {
+    m.quiz[Number(qk.dataset.q)] = savolTuriniAlmashtir(m.quiz[Number(qk.dataset.q)], el.value);
+  } else if (qk && el.dataset.togri !== undefined) {
+    m.quiz[Number(qk.dataset.q)].answer = Number(el.dataset.togri);
+  } else if (qk && el.dataset.tf !== undefined) {
+    m.quiz[Number(qk.dataset.q)].answer = el.dataset.tf === '1';
+  } else {
+    return;
+  }
+  tahrirOzgardi();
+  tahrirChiz();
+});
+
+function almashtir(arr, i, j) { var x = arr[i]; arr[i] = arr[j]; arr[j] = x; }
+
+document.getElementById('tahrirQuti').addEventListener('click', async function (e) {
+  var btn = e.target.closest('[data-amal]');
+  if (!btn || !tahrir) return;
+  var m = tahrir.m, amal = btn.dataset.amal;
+  var bk = btn.closest('[data-b]'), qk = btn.closest('[data-q]');
+  var bi = bk ? Number(bk.dataset.b) : -1, qi = qk ? Number(qk.dataset.q) : -1;
+  if (amal === 'b-yuqori') almashtir(m.lesson, bi, bi - 1);
+  else if (amal === 'b-past') almashtir(m.lesson, bi, bi + 1);
+  else if (amal === 'b-ochir') {
+    if (m.lesson.length <= 1) { formaXabar('tahrirXabar', '❌ Darsda kamida bitta blok bo\'lishi kerak'); return; }
+    if (!(await tasdiqSora(bi + 1 + '-blok o\'chirilsinmi?'))) return;
+    m.lesson.splice(bi, 1);
+  } else if (amal === 'b-qosh') {
+    m.lesson.push(blokTuriniAlmashtir({}, document.getElementById('yangiBlokTuri').value));
+  } else if (amal === 'q-yuqori') almashtir(m.quiz, qi, qi - 1);
+  else if (amal === 'q-past') almashtir(m.quiz, qi, qi + 1);
+  else if (amal === 'q-ochir') {
+    if (m.quiz.length <= 1) { formaXabar('tahrirXabar', '❌ Testda kamida bitta savol bo\'lishi kerak'); return; }
+    if (!(await tasdiqSora(qi + 1 + '-savol o\'chirilsinmi?'))) return;
+    m.quiz.splice(qi, 1);
+  } else if (amal === 'q-qosh') {
+    m.quiz.push({ type: 'mc', q: '', options: ['', '', '', ''], answer: 0 });
+  } else if (amal === 'opt-qosh') {
+    m.quiz[qi].options.push('');
+  } else if (amal === 'opt-ochir') {
+    var q = m.quiz[qi], j = Number(btn.dataset.j);
+    q.options.splice(j, 1);
+    if (q.answer === j) q.answer = 0;
+    else if (q.answer > j) q.answer -= 1;
+  } else {
+    return;
+  }
+  tahrirOzgardi();
+  tahrirChiz();
+  if (amal === 'b-qosh' || amal === 'q-qosh') {
+    var kartalar = document.querySelectorAll(amal === 'b-qosh' ? '#tahrirQuti [data-b]' : '#tahrirQuti [data-q]');
+    var oxirgi = kartalar[kartalar.length - 1];
+    if (oxirgi) { oxirgi.scrollIntoView({ block: 'center' }); var f = oxirgi.querySelector('textarea') || oxirgi.querySelector('input'); if (f) f.focus(); }
+  }
+});
+
+async function tahrirYop() {
+  if (tahrir && tahrir.ozgardi && !(await tasdiqSora('Saqlanmagan o\'zgarishlar bor. Chiqib ketilsinmi?'))) return;
+  document.getElementById('tahrirFon').classList.remove('ochiq');
+  document.body.style.overflow = '';
+  var t = tahrir;
+  tahrir = null;
+  if (t) fanMavzulariniKorsat(t.fan, t.fanNomi);
+}
+
+document.getElementById('tahrirSaqla').addEventListener('click', async function () {
+  if (!tahrir) return;
+  var tugma = this;
+  tugma.disabled = true;
+  formaXabar('tahrirXabar', 'Saqlanmoqda...', true);
+  var r = await AdminAPI.mavzuSaqla(tahrir.id, tahrir.m);
+  tugma.disabled = false;
+  if (!r.ok) { formaXabar('tahrirXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  tahrir.topic = r.topic;
+  tahrir.m = { title: r.topic.title, summary: r.topic.summary, duration: r.topic.duration, lesson: r.topic.lesson, quiz: r.topic.quiz };
+  tahrir.ozgardi = false;
+  tahrirChiz();
+  formaXabar('tahrirXabar', '✅ Saqlandi — o\'quvchilar yangi matnni ko\'radi', true);
+});
+
+document.getElementById('tahrirAsliga').addEventListener('click', async function () {
+  if (!tahrir) return;
+  if (!(await tasdiqSora('Barcha tahrirlar o\'chib, mavzuning birinchi (asl) matni tiklansinmi?'))) return;
+  var r = await AdminAPI.mavzuAsliga(tahrir.id);
+  if (!r.ok) { formaXabar('tahrirXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  tahrir.topic = r.topic;
+  tahrir.m = { title: r.topic.title, summary: r.topic.summary, duration: r.topic.duration, lesson: r.topic.lesson, quiz: r.topic.quiz };
+  tahrir.ozgardi = false;
+  tahrirChiz();
+  formaXabar('tahrirXabar', '✅ Asl matn tiklandi', true);
+});
 
 document.getElementById('foydalanuvchiModalFon').addEventListener('click', function (e) {
   if (e.target === this) this.classList.remove('ochiq');
