@@ -148,6 +148,8 @@
     'Mavzular': 'Темы', 'Yakunlash': 'Завершить', 'Tekshirish': 'Проверить',
     'AI yordamida tushuntirish': 'Объяснение с помощью ИИ', 'AI o\'ylayapti...': 'ИИ думает...',
     'Misol ber': 'Приведи пример', 'To\'liqroq tushuntir': 'Объясни подробнее',
+    'Bu AI faqat Bilim Premium olgan foydalanuvchilar uchun': 'Этот ИИ доступен только пользователям Bilim Premium',
+    'Premium olish': 'Получить Premium', 'Bilim Premium tez orada ishga tushadi': 'Bilim Premium скоро появится',
     'Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.': 'Это дополнительная помощь. Официальный урок — выше.',
     'Birozdan keyin qayta urinib ko\'ring yoki savolingizni botga yozing.': 'Попробуйте чуть позже или напишите вопрос боту.',
     'Mavzu topilmadi': 'Тема не найдена', 'Mavzu topilmadi.': 'Тема не найдена.', 'Savol topilmadi': 'Вопрос не найден',

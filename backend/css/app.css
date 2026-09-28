@@ -999,6 +999,28 @@ textarea.kiritish { min-height: 92px; resize: vertical; line-height: 1.5; font-w
 }
 
 .ai-qavs h3 { color: var(--yashil-quyuq); font-size: 15px; margin-bottom: 3px; }
+
+/* AI — faqat Bilim Premium: ustida kulrang shaffof parda, o'rtada qulf */
+.ai-qavs.qulfli { position: relative; overflow: hidden; min-height: 190px; }
+.ai-qulf {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 18px; text-align: center;
+  background: rgba(55, 65, 81, .55);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+.ai-qulf-belgi {
+  width: 46px; height: 46px; border-radius: 50%; background: rgba(255, 255, 255, .95); color: #374151;
+  display: grid; place-items: center; box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+}
+.ai-qulf-belgi svg { width: 22px; height: 22px; }
+.ai-qulf p { margin: 0; color: #fff; font-weight: 700; font-size: 14px; line-height: 1.35; max-width: 260px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35); }
+.ai-qulf a {
+  color: #fff; font-weight: 800; font-size: 14px; padding: 7px 16px; border-radius: 99px;
+  border: 2px solid rgba(255, 255, 255, .9); text-decoration: none; background: rgba(255, 255, 255, .12);
+}
+.ai-qulf a:hover, .ai-qulf a:focus-visible { background: rgba(255, 255, 255, .25); }
 .ai-qavs .izoh { margin-bottom: 12px; }
 
 .ai-javob {

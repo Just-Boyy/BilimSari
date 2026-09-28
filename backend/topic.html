@@ -220,19 +220,39 @@
   }
 
   // ── AI qo'shimcha tushuntirish ─────────────────────────
+  // AI faqat Bilim Premium olgan foydalanuvchilar uchun. Premium hali ishga
+  // tushmagan — hozircha hamma uchun qulf (server M.premium yuborsa ochiladi).
+  function aiOchiqmi() { return !!M.premium; }
+
   function aiHtml() {
-    return '<div class="ai-qavs">' +
-      '<h3>AI yordamida tushuntirish</h3>' +
-      '<p class="izoh">Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.</p>' +
-      '<div class="ai-rejimlar" id="aiRejimlar">' +
-        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="full">To\'liqroq tushuntir</button>' +
-        '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="examples">Misol ber</button>' +
+    var ochiq = aiOchiqmi();
+    return '<div class="ai-qavs' + (ochiq ? '' : ' qulfli') + '">' +
+      '<div class="ai-ichi"' + (ochiq ? '' : ' inert aria-hidden="true"') + '>' +
+        '<h3>AI yordamida tushuntirish</h3>' +
+        '<p class="izoh">Bu — qo\'shimcha yordam. Rasmiy dars yuqorida turibdi.</p>' +
+        '<div class="ai-rejimlar" id="aiRejimlar">' +
+          '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="full">To\'liqroq tushuntir</button>' +
+          '<button class="tugma tugma-ikkilamchi tugma-mayda" data-ai="examples">Misol ber</button>' +
+        '</div>' +
+        '<div id="aiJavob" translate="no"></div>' +
       '</div>' +
-      '<div id="aiJavob" translate="no"></div>' +
+      (ochiq ? '' :
+        '<div class="ai-qulf">' +
+          '<span class="ai-qulf-belgi" aria-hidden="true">' + UI.nishon('lock') + '</span>' +
+          '<p>Bu AI faqat Bilim Premium olgan foydalanuvchilar uchun</p>' +
+          '<a href="#" id="premiumOlish">Premium olish</a>' +
+        '</div>') +
     '</div>';
   }
 
   function aiUlash() {
+    if (!aiOchiqmi()) {
+      document.getElementById('premiumOlish').onclick = function (e) {
+        e.preventDefault();
+        UI.xabar('Bilim Premium tez orada ishga tushadi');
+      };
+      return;
+    }
     var javobQuti = document.getElementById('aiJavob');
 
     function kutish() {
