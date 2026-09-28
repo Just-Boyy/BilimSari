@@ -36,11 +36,13 @@ BTN_SUPPORT = "💬 Admin bilan bog'lanish"
 
 
 def menu_keyboard():
+    """Tugmalar matn yuboradi, bot esa inline "Ochish" tugmasi bilan javob beradi.
+    Pastki menyudagi web_app tugmasidan ochilgan Mini App'ga Telegram initData
+    bermaydi — yangi o'quvchi kira olmasdi, Telegram Stars ham ishlamasdi."""
     return {
         'keyboard': [
-            [{'text': BTN_APP, 'web_app': {'url': tgbot.app_url('dashboard.html')}}],
-            [{'text': BTN_DAILY, 'web_app': {'url': tgbot.app_url('daily.html')}},
-             {'text': BTN_SHOP, 'web_app': {'url': tgbot.app_url('shop.html')}}],
+            [{'text': BTN_APP}],
+            [{'text': BTN_DAILY}, {'text': BTN_SHOP}],
             [{'text': BTN_ORDERS}, {'text': BTN_SUPPORT}],
         ],
         'resize_keyboard': True,
@@ -236,6 +238,16 @@ def handle_message(message):
         if text == BTN_ORDERS:
             send_my_orders(chat_id)
             return
+        if text == BTN_APP:
+            tgbot.send(chat_id, "📚 BilimSari'ni ochish uchun tugmani bosing:", 'Ilovani ochish', 'dashboard.html')
+            return
+        if text == BTN_DAILY:
+            tgbot.send(chat_id, "❓ <b>Kun savoli</b> — bugun hamma uchun bitta savol. To'g'ri va tez javob bering, "
+                                "kunlik reytingga chiqing!", 'Savolni ochish', 'daily.html')
+            return
+        if text == BTN_SHOP:
+            send_shop(chat_id)
+            return
         if text == BTN_SUPPORT:
             _send(chat_id, "💬 Savolingizni shu yerga yozing — admin javob beradi. Rasm yoki skrinshot ham yuborishingiz mumkin.")
             return
@@ -357,8 +369,9 @@ def send_shop(chat_id):
             return
     finally:
         _close(conn, cur)
-    tgbot.send(chat_id, "🛒 <b>Fan sotib olish</b>\nFanlarni tanlang — 3 ta fan va barcha fanlar paketlari arzonroq. "
-                        "To'lov karta orqali, admin tasdiqlaydi.", "Do'konni ochish", 'shop.html')
+    tgbot.send(chat_id, "🛒 <b>Fan sotib olish</b>\nFanlarni tanlang — 3 ta fan va barcha fanlar paketlari arzonroq.\n\n"
+                        "To'lov usullari:\n1️⃣ Karta orqali — admin chekni tasdiqlaydi\n"
+                        "2️⃣ Telegram Stars ⭐ — fan darhol ochiladi", "Do'konni ochish", 'shop.html')
 
 
 STATUS_LABELS = {

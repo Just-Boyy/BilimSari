@@ -1487,6 +1487,37 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .dokon-jami .qator-summa.chegirma { color: var(--yashil-quyuq); font-weight: 700; }
 .dokon-jami .qator-summa.jami { padding-top: 8px; border-top: 1px dashed var(--chiziq); font-size: 18px; font-weight: 800; color: var(--matn-quyuq); }
 .dokon-jami .tugma { margin-top: 8px; }
+/* To'lov usuli: 1 — karta (admin), 2 — Telegram Stars */
+.tolov-usullari { display: grid; gap: 8px; margin-top: 10px; }
+.usul-sarlavha { font-size: 14px; font-weight: 800; color: var(--matn-quyuq); }
+.tolov-usul {
+  position: relative;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px;
+  background: var(--oq);
+  border: 2px solid var(--chiziq);
+  border-radius: var(--r);
+  cursor: pointer;
+}
+.tolov-usul input { position: absolute; opacity: 0; pointer-events: none; }
+.tolov-usul:focus-within { outline: 3px solid var(--kok-och); outline-offset: 1px; }
+.tolov-usul.tanlangan { border-color: var(--yashil); background: var(--yashil-fon); }
+.tolov-usul.mavjud-emas { opacity: .55; cursor: not-allowed; }
+.usul-raqam {
+  flex: 0 0 auto;
+  width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--fon); color: var(--matn-2);
+  font-weight: 800; font-size: 14px;
+}
+.tolov-usul.tanlangan .usul-raqam { background: var(--yashil); color: #fff; }
+.usul-matn { flex: 1; min-width: 0; }
+.usul-matn b { display: block; font-size: 14px; color: var(--matn-quyuq); }
+.usul-matn small { display: block; font-size: 12px; line-height: 1.35; color: var(--matn-2); }
+.usul-narx { flex: 0 0 auto; font-weight: 800; font-size: 14px; white-space: nowrap; color: var(--matn-quyuq); }
+.stars-yordam { font-size: 13px; color: var(--matn-2); }
+.stars-yordam summary { cursor: pointer; font-weight: 700; color: #0369a1; padding: 4px 0; }
+.stars-yordam p { margin-top: 6px; line-height: 1.45; }
 .dokon-buyurtma { border: 2px solid #fde68a; background: var(--zarg-fon); }
 .dokon-buyurtma.kutilmoqda { border-color: var(--kok); background: var(--kok-och); }
 .dokon-buyurtma h2 { font-size: 17px; margin-bottom: 4px; }

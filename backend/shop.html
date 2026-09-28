@@ -38,7 +38,8 @@
   var promo = '';
   var hisobTimer = null;
   var oxirgiHisob = 0;
-  var oxirgiNarx = null;   // oxirgi hisoblangan narx (tugma matni uchun)
+  var oxirgiNarx = null;   // oxirgi hisoblangan narx (qayta chizish uchun)
+  var usul = null;         // tanlangan to'lov usuli: 'card' | 'stars'
 
   var som = UI.pul;
 
@@ -97,7 +98,7 @@
       bogla();
       return;
     }
-    if (!d.configured && !starsMumkin()) {
+    if (!d.configured && !(d.stars_enabled && starsMumkin())) {
       tana.innerHTML = tepa + (d.is_admin
         ? UI.holat({
             belgi: 'settings', sarlavha: 'Karta raqami kiritilmagan',
@@ -116,9 +117,10 @@
     if (p.price_three && d.subjects.length >= 3) paketlar.push('3 ta fan — ' + som(p.price_three));
     if (p.price_all && d.subjects.length >= 2) paketlar.push('Barcha fanlar (' + d.subjects.length + ' ta) — ' + som(p.price_all));
 
-    var qadamlar = starsMumkin() && d.configured
+    var starsBor = d.stars_enabled && starsMumkin();
+    var qadamlar = starsBor && d.configured
       ? ['Fan tanlang', 'To\'lov usulini tanlang', 'Stars — fan darhol ochiladi', 'Karta — admin chekni tasdiqlaydi']
-      : starsMumkin()
+      : starsBor
         ? ['Fan tanlang', 'Telegram Stars bilan to\'lang', 'Fan darhol ochiladi']
         : ['Fan tanlang', 'Botga karta raqami keladi', 'To\'lab, chekni botga yuboring', 'Admin tasdiqlaydi'];
     tana.innerHTML = tepa +
@@ -206,37 +208,67 @@
       return '<div class="qator-summa' + (cls ? ' ' + cls : '') + '"><span>' + UI.esc(nom) + '</span><span>' + UI.esc(qiymat) + '</span></div>';
     };
     oxirgiNarx = q;
-    var stars = q.stars && starsMumkin();
-    var karta = dokon.configured;
+    var karta = !!dokon.configured;
+    var starsYoqilgan = !!(dokon.stars_enabled && q.stars);   // admin yoqqan
+    var stars = starsYoqilgan && starsMumkin();                // va Telegram ichidamiz
+    if (usul === 'card' && !karta) usul = null;
+    if (usul === 'stars' && !stars) usul = null;
+    if (!usul) usul = karta ? 'card' : (stars ? 'stars' : null);
+
+    var usulHtml = function (kalit, raqam, nom, izoh, narx, mumkin, sabab) {
+      var tanlangan = usul === kalit;
+      return '<label class="tolov-usul' + (tanlangan ? ' tanlangan' : '') + (mumkin ? '' : ' mavjud-emas') + '">' +
+        '<input type="radio" name="usul" value="' + kalit + '"' + (tanlangan ? ' checked' : '') + (mumkin ? '' : ' disabled') + '>' +
+        '<span class="usul-raqam" aria-hidden="true">' + raqam + '</span>' +
+        '<span class="usul-matn"><b>' + nom + '</b><small>' + (mumkin ? izoh : sabab) + '</small></span>' +
+        '<span class="usul-narx">' + narx + '</span></label>';
+    };
+    var tugmaMatn = usul === 'stars'
+      ? UI.nishon('star') + '<span>Stars bilan to\'lash — ' + q.stars + ' Stars</span>'
+      : UI.nishon('send') + '<span>Karta orqali to\'lash — ' + som(q.amount) + '</span>';
+
     el.innerHTML =
       qator(q.items.length + ' ta fan', som(q.base)) +
       (q.bundle ? qator(q.bundle, '−' + som(q.base - q.bundled), 'chegirma') : '') +
       (q.promo ? qator('Promo-kod ' + q.promo.code + ' (−' + q.promo.percent + '%)', '−' + som(q.discount), 'chegirma') : '') +
-      (karta ? qator('Jami', som(q.amount), 'jami') : qator('Jami', q.stars + ' Stars', 'jami')) +
-      // Telegram Stars — to'lov Telegram oynasida, fan darhol ochiladi
-      (stars
-        ? '<button class="tugma" type="button" id="starsTugma">' + UI.nishon('star') +
-            '<span>Telegram Stars — ' + q.stars + ' Stars</span></button>' +
-          '<p class="izoh-kichik" style="text-align:center">Telegram ichida to\'lanadi, fan darhol ochiladi.</p>'
+      qator('Jami', usul === 'stars' ? q.stars + ' Stars' : som(q.amount), 'jami') +
+      '<div class="tolov-usullari" role="radiogroup" aria-labelledby="usulSarlavha">' +
+        '<p class="usul-sarlavha" id="usulSarlavha">To\'lov usuli</p>' +
+        usulHtml('card', 1, 'Karta orqali (admin bilan)',
+          'Kartaga o\'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach fan ochiladi.',
+          som(q.amount), karta, 'Hozircha mavjud emas') +
+        (starsYoqilgan
+          ? usulHtml('stars', 2, 'Telegram Stars', 'Telegram ichida to\'lanadi — fan darhol, admin kutmasdan ochiladi.',
+              q.stars + ' Stars', stars, 'Faqat Telegram ilovasi ichida ishlaydi')
+          : '') +
+      '</div>' +
+      (starsYoqilgan
+        ? '<details class="stars-yordam"><summary>Telegram Stars nima va qanday olinadi?</summary>' +
+            '<p>Stars — Telegram\'ning ichki to\'lov birligi. Ularni Telegram\'ning o\'zida sotib olasiz: ' +
+            'Sozlamalar → «Mening Stars\'larim» yoki to\'lov oynasidagi «Stars sotib olish» tugmasi orqali — ' +
+            'bank kartasi, Apple Pay yoki Google Pay bilan. To\'lov tugagach fan shu zahoti ochiladi.</p></details>'
         : '') +
-      (karta
-        ? '<button class="tugma' + (stars ? ' tugma-ikkilamchi' : '') + '" type="button" id="tolashTugma">' +
-            UI.nishon('send') + '<span>Karta orqali — ' + som(q.amount) + '</span></button>' +
-          '<p class="izoh-kichik" style="text-align:center">Bot karta raqamini yuboradi, chekni admin tasdiqlaydi.</p>'
-        : '');
-    if (karta) document.getElementById('tolashTugma').onclick = buyurtma;
-    if (stars) document.getElementById('starsTugma').onclick = starsTolov;
+      (usul
+        ? '<button class="tugma" type="button" id="tolashTugma">' + tugmaMatn + '</button>'
+        : '<p class="izoh" style="text-align:center">Hozircha to\'lov usuli mavjud emas.</p>');
+
+    el.querySelectorAll('input[name="usul"]').forEach(function (inp) {
+      inp.onchange = function () { usul = inp.value; jamiChiz(oxirgiNarx); };
+    });
+    var tugma = document.getElementById('tolashTugma');
+    if (tugma) tugma.onclick = function () { if (usul === 'stars') starsTolov(); else buyurtma(); };
   }
 
-  /** Telegram Stars faqat Telegram ichida (openInvoice, Bot API 6.1+) va admin yoqqan bo'lsa. */
+  /** Telegram Stars faqat Telegram ilovasi ichida (openInvoice, Bot API 6.1+). Pastki menyu
+   * tugmasidan ochilgan Mini App'da initData bo'sh bo'ladi, shuning uchun platforma bo'yicha aniqlanadi. */
   function starsMumkin() {
     var tg = window.Telegram && window.Telegram.WebApp;
-    return !!(dokon && dokon.stars_enabled && tg && tg.initData && tg.openInvoice &&
+    return !!(tg && tg.openInvoice && tg.platform && tg.platform !== 'unknown' &&
       tg.isVersionAtLeast && tg.isVersionAtLeast('6.1'));
   }
 
   async function starsTolov() {
-    var btn = document.getElementById('starsTugma');
+    var btn = document.getElementById('tolashTugma');
     btn.disabled = true;
     var r = await API.starsBuyurtma(tanlangan, promo);
     if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; return; }
@@ -300,9 +332,8 @@
     var r = await API.buyurtmaBer(tanlangan, promo);
     if (!r.ok) {
       UI.xabar(r.error, 'xato');
-      btn.disabled = false;
-      btn.lastChild.textContent = 'Karta orqali — ' + som(oxirgiNarx ? oxirgiNarx.amount : 0);
       if (r.code === 'pending_exists') yukla();
+      else jamiChiz(oxirgiNarx);          // tugmani asl holatiga qaytaradi
       return;
     }
     var o = r.order;
