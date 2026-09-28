@@ -259,8 +259,9 @@
 
     function playerRow(p) {
       return '<li class="oy-oyinchi' + (p.me ? ' men' : '') + (p.online ? '' : ' oflayn') + (p.bot ? ' bot' : '') + '">' +
-        '<span class="avatar" aria-hidden="true">' + (p.bot ? ic('bot') : esc(G.initial(p.name))) + '</span>' +
-        '<span class="oy-oyinchi-matn"><b>' + esc(p.name) + (p.me ? ' (siz)' : '') + '</b>' +
+        '<span class="avatar' + (p.premium ? ' premium-halqa' : '') + '" aria-hidden="true">' + (p.bot ? ic('bot') : esc(G.initial(p.name))) + '</span>' +
+        '<span class="oy-oyinchi-matn"><b><span>' + esc(p.name) + (p.me ? ' (siz)' : '') + '</span>' +
+          (p.emoji ? '<img class="nik-emoji" src="assets/emoji/' + esc(p.emoji) + '.png" alt="" aria-hidden="true">' : '') + '</b>' +
           '<small>' + (p.bot ? 'Kompyuter raqib' : 'Daraja ' + p.level) + (p.online ? '' : ' • oflayn') + '</small></span>' +
         (p.host ? '<span class="oy-toj" title="Host">' + ic('crown') + '<span class="oy-sr">Host</span></span>' : '') +
         '<span class="oy-tayyor ' + (p.ready ? 'ha' : 'yoq') + '">' + (p.ready ? ic('check') + 'Tayyor' : 'Kutilmoqda') + '</span>' +

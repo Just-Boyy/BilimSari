@@ -40,6 +40,7 @@
     { yo_l: 'dashboard.html', nishon: 'home', matn: 'Bosh sahifa' },
     { yo_l: 'shop.html', nishon: 'shop', matn: "Do'kon" },
     { yo_l: 'games.html', nishon: 'gamepad', matn: "O'yinlar" },
+    { yo_l: 'shaxsiy.html', nishon: 'sparkle', matn: 'Shaxsiy' },
     { yo_l: 'leaderboard.html', nishon: 'trophy', matn: 'Reyting' },
     { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
   ];
@@ -255,6 +256,13 @@
     });
   }
 
+  /** Premium o'quvchi tanlagan emoji (ism yonida). Kalit bo'lmasa — bo'sh. */
+  function emoji(kalit) {
+    return kalit
+      ? '<img class="nik-emoji" src="assets/emoji/' + esc(kalit) + '.png" alt="" aria-hidden="true" loading="lazy">'
+      : '';
+  }
+
   /** Telegram ichida bot chatini ochadi (Mini App'dan), brauzerda — yangi oynada. */
   function botniOch(bot, start) {
     var url = 'https://t.me/' + (bot || 'bilimsaribot') + (start ? '?start=' + encodeURIComponent(start) : '');
@@ -319,5 +327,6 @@
     pul: pul,
     botniOch: botniOch,
     tasdiq: tasdiq,
+    emoji: emoji,
   };
 })();

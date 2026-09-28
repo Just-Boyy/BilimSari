@@ -150,7 +150,7 @@
         ? '<span class="o-rin medal-' + e.rank + '">' + UI.nishon('medal') + '</span>'
         : '<span class="o-rin">' + e.rank + '</span>';
       return '<div class="reyting-qator' + (e.me ? ' men' : '') + '">' + o_rin +
-        '<span class="ism">' + UI.esc(e.me ? e.name + ' (siz)' : e.name) + '</span>' +
+        '<span class="ism"><span>' + UI.esc(e.me ? e.name + ' (siz)' : e.name) + '</span>' + UI.emoji(e.emoji) + '</span>' +
         '<span class="soniya">' + soniya(e.seconds) + '</span></div>';
     };
     var html = rt.top.map(qator).join('');

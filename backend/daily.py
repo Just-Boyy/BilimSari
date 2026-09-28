@@ -16,6 +16,7 @@ import json
 from datetime import date, timedelta
 
 import curriculum as cur_mod
+import premium
 from games import clock
 from games.errors import GameError
 
@@ -125,9 +126,10 @@ def ranking(cur, day, user_id, limit=10) -> dict:
         (day,),
     )
     rows = cur.fetchall()
-    top = [{'rank': i + 1, 'name': _first(r['name']), 'photo_url': r['photo_url'],
+    top = [{'rank': i + 1, 'user_id': r['user_id'], 'name': _first(r['name']), 'photo_url': r['photo_url'],
             'seconds': round(int(r['ms']) / 1000, 1), 'me': r['user_id'] == user_id}
            for i, r in enumerate(rows[:limit])]
+    premium.decorate(cur, top)
     mine = next(({'rank': i + 1, 'seconds': round(int(r['ms']) / 1000, 1)}
                  for i, r in enumerate(rows) if r['user_id'] == user_id), None)
     cur.execute('SELECT COUNT(*) AS n FROM daily_answers WHERE day = %s AND answered_ms IS NOT NULL', (day,))
@@ -241,7 +243,8 @@ def status(cur, user_id, now_ms) -> dict:
         'next_in_s': (clock.period_start_ms('day', now_ms) + DAY_MS - now_ms) // 1000,
         'answered_count': rk['answered_count'], 'correct_count': rk['correct_count'],
         'my_rank': rk['me']['rank'] if rk['me'] else None,
-        'top': [{'name': t['name'], 'photo_url': t['photo_url']} for t in rk['top']],
+        'top': [{'name': t['name'], 'photo_url': t['photo_url'], 'premium': t['premium'], 'emoji': t['emoji']}
+                for t in rk['top']],
         'week': week(cur, user_id, now_ms),
     }
 

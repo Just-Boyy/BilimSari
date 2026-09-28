@@ -85,6 +85,16 @@
     rejaChiz(res.plan, res.today, res.daily && res.daily.day);
     fanChiz(res.subjects);
     UI.yutuqTabrik(res.new_achievements);
+    shaxsiyXabar(res.personal_news);
+  }
+
+  // Tayyor bo'lgan (yoki yaratilmay qolgan) shaxsiy darslar — bir martalik xabar
+  function shaxsiyXabar(yangilar) {
+    if (!yangilar || !yangilar.length) return;
+    var tayyor = yangilar.filter(function (x) { return x.status === 'ready'; });
+    if (tayyor.length) UI.xabar('«' + tayyor[0].title + '» shaxsiy darslaringizga qo\'shildi', 'muvaffaqiyat');
+    else UI.xabar('«' + yangilar[0].title + '» darsini tayyorlab bo\'lmadi. Qayta urinib ko\'ring.', 'xato');
+    API.shaxsiyKorildi(yangilar.map(function (x) { return x.id; }));
   }
 
   var oxirgi = null;
@@ -100,9 +110,12 @@
   function sarlavhaChiz(res) {
     var u = res.user || {};
     var ism = UI.bosh(u.name);
-    document.getElementById('salom').textContent = salomlashuv() + ', ' + ism + '!';
+    var pr = u.premium || {};
+    var salom = document.getElementById('salom');
+    salom.innerHTML = '<span>' + UI.esc(salomlashuv() + ', ' + ism + '!') + '</span>' + UI.emoji(pr.active && pr.emoji);
     var halqa = document.getElementById('maqsadHalqa');
     halqa.innerHTML = avatarHtml(u.name, u.photo_url);
+    halqa.classList.toggle('premium-halqa', !!pr.active);
     var reja = res.plan || { done: 0, total: 3 };
     halqa.style.setProperty('--halqa', Math.round(100 * reja.done / (reja.total || 1)));
     halqa.title = 'Bugungi reja: ' + reja.done + ' / ' + reja.total;
@@ -142,7 +155,7 @@
           ? 'Reytingda <b>' + res.rank.rank + '-o\'rin</b> (' + res.rank.total + ' o\'quvchi orasida)'
           : 'Chaqmoq to\'plab reytingga chiqing!') + '</p>' +
         '<div class="chaqmoq-manba">' +
-          manba('bookOpen', 'Mavzular', 'Har bir tugallangan mavzu +20', q.topics) +
+          manba('bookOpen', 'Darslar', 'Testda har to\'g\'ri javob +5 (1-urinish), uy vazifasi +15', q.topics) +
           manba('gamepad', 'O\'yinlar', 'O\'yinda har 10 ball +1', q.games) +
           manba('sparkle', 'Kun savoli', 'To\'g\'ri javob +5', q.daily) +
         '</div>' +

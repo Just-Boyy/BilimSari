@@ -16,6 +16,7 @@ import math
 import re
 import secrets
 
+import premium
 from games import catalog, clock, engine
 from games.errors import GameError
 
@@ -460,6 +461,7 @@ def state(cur, conn, user, code, since=None) -> dict:
     answered = engine.answered_users(cur, session) if live else set()
     host_id = room['host_user_id']
     ok, hint = _start_check(room, players, now)
+    badges = premium.badges(cur, [p['user_id'] for p in active], now)   # ism yonidagi emoji, oltin halqa
     return {
         'etag': etag,
         'now': now,
@@ -472,6 +474,8 @@ def state(cur, conn, user, code, since=None) -> dict:
         'players': [{
             'pid': p['id'],
             'name': names[p['user_id']],
+            'premium': p['user_id'] in badges,
+            'emoji': (badges.get(p['user_id']) or {}).get('emoji'),
             'level': int(p['level']),
             'ready': bool(p['ready']) or p['user_id'] == host_id,
             'host': p['user_id'] == host_id,

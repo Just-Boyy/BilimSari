@@ -155,6 +155,10 @@
       }
     },
 
+    premium: function () { return so_rov('/api/admin/premium'); },
+    premiumBer: function (kim, kun) { return so_rov('/api/admin/premium/grant', { method: 'POST', body: { who: kim, days: kun } }); },
+    premiumOlib: function (id) { return so_rov('/api/admin/premium/revoke', { method: 'POST', body: { user_id: Number(id) } }); },
+
     starsBalans: function (yangila) { return so_rov('/api/admin/pay/stars' + (yangila ? '?refresh=1' : '')); },
 
     // — Tizim: zaxira nusxa va xatolar —

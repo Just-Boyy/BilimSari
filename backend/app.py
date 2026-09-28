@@ -25,7 +25,10 @@ import daily
 import notify
 import pay_api
 import payments
+import personal
 import photos
+import premium
+import premium_api
 import rate_limit
 import study
 import study_api
@@ -53,6 +56,8 @@ app.register_blueprint(admin_api.bp)
 app.register_blueprint(games_api.bp)
 app.register_blueprint(pay_api.bp)
 app.register_blueprint(pay_api.admin_bp)
+app.register_blueprint(premium_api.bp)
+app.register_blueprint(premium_api.admin_bp)
 
 
 @app.after_request
@@ -155,6 +160,14 @@ def _init_db():
         ('lang', 'TEXT'),
     ]:
         add_column_if_missing(cur, conn, 'users', column, ddl)
+
+    # Bilim Premium va shaxsiy darslar (chaqmoq hisobi personal_topics'ni ham o'qiydi)
+    try:
+        premium.ensure_tables(cur, conn)
+        personal.ensure_tables(cur, conn)
+    except Exception:
+        logger.exception('Premium jadvallari xatosi')
+        conn.rollback()
 
     # Yangi o'quv tizimi: subjects / topics / user_progress + curriculum sinxroni
     try:
@@ -290,6 +303,7 @@ def me():
         user['custom_photo'] = bool(row.get('custom_photo'))
         user['remind_hour'] = notify.remind_hour(row.get('remind_hour'))
         user['lang'] = row.get('lang') or 'uz'
+        user['premium'] = premium.status(cur, user['id'])
     except Exception:
         conn.rollback()
         user['notify'] = True
@@ -539,6 +553,7 @@ PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
     'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
+    'premium.html', 'shaxsiy.html',
     'admin.html',
 }
 

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Shaxsiy darslarim — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .sx-yarat h2 { font-size: 17px; margin-bottom: 4px; }
+  .sx-yarat .izoh { margin-bottom: 12px; }
+  .sx-qadam-nom { font-size: 12px; font-weight: 800; color: var(--matn-2); text-transform: uppercase; letter-spacing: .04em; margin: 14px 0 8px; }
+  .sx-fanlar { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sx-fan {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px 8px 8px; border-radius: 14px;
+    border: 2px solid var(--chiziq); background: var(--oq); font: inherit; font-weight: 700; font-size: 14px;
+    color: var(--matn); cursor: pointer;
+  }
+  .sx-fan img, .sx-fan svg { width: 26px; height: 26px; border-radius: 8px; object-fit: cover; }
+  .sx-fan[aria-pressed="true"] { border-color: var(--yashil); background: var(--yashil-fon); color: var(--yashil-quyuq); }
+  .sx-kirit { display: flex; gap: 8px; }
+  .sx-kirit .kiritish { flex: 1; min-width: 0; }
+  .sx-kirit .tugma { width: auto; padding: 0 18px; }
+  .sx-xato { color: var(--qizil-quyuq); font-size: 13px; font-weight: 700; margin-top: 8px; min-height: 18px; }
+  .sx-variantlar { display: grid; gap: 8px; }
+  .sx-variant {
+    text-align: left; padding: 12px 14px; border-radius: 14px; border: 2px solid var(--chiziq); background: var(--oq);
+    font: inherit; font-size: 15px; font-weight: 700; color: var(--matn); cursor: pointer; display: flex; gap: 10px; align-items: center;
+  }
+  .sx-variant .raqam {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--yashil-fon); color: var(--yashil-quyuq);
+    display: grid; place-items: center; font-size: 13px; flex: 0 0 auto;
+  }
+  .sx-variant:hover { border-color: var(--yashil); }
+  .sx-yoq { margin-top: 4px; }
+  .sx-tayyorlanmoqda { display: flex; align-items: center; gap: 12px; }
+  .sx-tayyorlanmoqda .aylana { flex: 0 0 auto; }
+  .sx-guruh { margin-top: 20px; }
+  .sx-guruh-bosh { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .sx-guruh-bosh .belgi { width: 34px; height: 34px; border-radius: 10px; overflow: hidden; display: grid; place-items: center; }
+  .sx-guruh-bosh .belgi img, .sx-guruh-bosh .belgi svg { width: 100%; height: 100%; object-fit: cover; }
+  .sx-guruh-bosh h2 { font-size: 16px; flex: 1; }
+  .sx-dars {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--oq);
+    border: 1px solid var(--chiziq); margin-bottom: 8px; color: var(--matn);
+  }
+  .sx-dars .matn { flex: 1; min-width: 0; }
+  .sx-dars b { display: block; font-size: 15px; }
+  .sx-dars small { color: var(--matn-2); font-size: 12px; }
+  .sx-dars .nishon-kichik { color: var(--yashil); flex: 0 0 auto; }
+  .sx-dars .nishon-kichik svg { width: 20px; height: 20px; }
+  .sx-dars.tayyorlanmoqda { opacity: .75; }
+  .sx-premium { text-align: center; }
+  .sx-premium .toj {
+    width: 62px; height: 62px; margin: 0 auto 12px; border-radius: 20px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #fde68a, #f5b301); color: #7c4a03;
+  }
+  .sx-premium .toj svg { width: 32px; height: 32px; }
+  .sx-premium h2 { font-size: 19px; margin-bottom: 6px; }
+  .sx-premium p { color: var(--matn-2); font-size: 14px; margin-bottom: 14px; }
+</style>
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
+  <h1>Shaxsiy darslarim<small>AI siz uchun tayyorlagan darslar</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="yarat"></div>
+  <div id="royxat"><div class="skelet" style="height:220px"></div></div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('shaxsiy.html');
+
+  var D = null;              // /api/personal javobi
+  var fan = null;            // tanlangan fan kaliti
+  var matn = '';             // o'quvchi yozgan mavzu
+  var variantlar = null;     // AI taklif qilgan 3 ta nom
+  var kuzatuv = null;        // tayyorlanayotgan darsni kuzatish
+  var to_xtat = null;        // taymer
+
+  async function yukla() {
+    var r = await API.shaxsiy();
+    if (!r.ok) { document.getElementById('royxat').innerHTML = UI.xatoHolat(r.error, yukla); return; }
+    D = r;
+    if (fan && !D.subjects.some(function (s) { return s.key === fan; })) fan = null;
+    if (!fan && D.subjects.length === 1) fan = D.subjects[0].key;
+    xabarlar();
+    yaratChiz();
+    royxatChiz();
+    kuzat();
+  }
+
+  // Tayyor bo'lgan / yaratilmay qolgan darslar haqida bir martalik xabar
+  function xabarlar() {
+    var idlar = [];
+    (D.fresh || []).forEach(function (f) {
+      UI.xabar('«' + f.title + '» shaxsiy darslaringizga qo\'shildi', 'muvaffaqiyat');
+      idlar.push(f.id);
+    });
+    (D.failed || []).forEach(function (f) {
+      UI.xabar('«' + f.title + '» darsini tayyorlab bo\'lmadi. Qayta urinib ko\'ring.', 'xato');
+      idlar.push(f.id);
+    });
+    if (idlar.length) API.shaxsiyKorildi(idlar);
+  }
+
+  function fanNomi(kalit) {
+    var s = (D.subjects || []).filter(function (x) { return x.key === kalit; })[0];
+    return s ? s.name : kalit;
+  }
+
+  // ── Yangi dars yaratish ────────────────────────────────
+  function yaratChiz() {
+    var el = document.getElementById('yarat');
+    if (to_xtat) { to_xtat(); to_xtat = null; }
+    if (!D.premium.active) {
+      el.innerHTML = '<div class="karta sx-premium">' +
+        '<div class="toj" aria-hidden="true">' + UI.nishon('crown') + '</div>' +
+        '<h2>Shaxsiy darslar — Bilim Premium imkoniyati</h2>' +
+        '<p>O\'zingizda ochiq fanlardan istalgan mavzuni yozing — AI siz uchun dars, test va uy vazifasini tayyorlaydi.</p>' +
+        '<a class="tugma" href="premium.html">' + UI.nishon('crown') + '<span>Premium olish</span></a>' +
+      '</div>';
+      return;
+    }
+    if (D.generating.length) {
+      var g = D.generating[0];
+      el.innerHTML = '<div class="karta sx-tayyorlanmoqda">' +
+        '<span class="aylana" aria-hidden="true"></span>' +
+        '<div><b>«' + UI.esc(g.title) + '» tayyorlanmoqda...</b>' +
+        '<p class="izoh-kichik">Odatda 1 daqiqagacha. Tayyor bo\'lgach ilovada va botda xabar beramiz.</p></div></div>';
+      return;
+    }
+    if (!D.limit.can) {
+      el.innerHTML = '<div class="karta sx-yarat">' +
+        '<h2>Yangi dars yaratish</h2>' +
+        '<p class="izoh">Har 24 soatda bitta shaxsiy dars yaratiladi. Keyingisi:</p>' +
+        '<div class="taymer" id="sxTaymer" role="timer">--:--:--</div></div>';
+      to_xtat = UI.taymer(document.getElementById('sxTaymer'), D.limit.seconds_left, yukla);
+      return;
+    }
+    if (!D.subjects.length) {
+      el.innerHTML = UI.holat({ belgi: 'book', sarlavha: 'Ochiq fan yo\'q', matn: 'Avval fan tanlang yoki sotib oling.',
+        tugma: "Do'kon", tugmaYo_l: 'shop.html' });
+      return;
+    }
+    var qadam = variantlar ? 3 : (fan ? 2 : 1);
+    var html = '<div class="karta sx-yarat">' +
+      '<h2>Yangi dars yaratish</h2>' +
+      '<p class="izoh">Fanni tanlang va o\'rganmoqchi bo\'lgan mavzuingiz nomini yozing — AI siz uchun dars tayyorlaydi.</p>' +
+      '<p class="sx-qadam-nom">1. Fan</p>' +
+      '<div class="sx-fanlar" role="group" aria-label="Fan">' + D.subjects.map(function (s) {
+        return '<button class="sx-fan" type="button" data-fan="' + s.key + '" aria-pressed="' + (s.key === fan) + '">' +
+          UI.fanBelgi(s.image, s.icon) + '<span>' + UI.esc(s.name) + '</span></button>';
+      }).join('') + '</div>';
+    if (qadam >= 2) {
+      html += '<p class="sx-qadam-nom">2. Mavzu nomi</p>' +
+        '<form class="sx-kirit" id="sxForma">' +
+          '<input class="kiritish" id="sxMatn" maxlength="120" autocomplete="off" placeholder="Masalan: kasrlarni qo\'shish" value="' + UI.esc(matn) + '">' +
+          '<button class="tugma" type="submit" id="sxDavom">Davom etish</button>' +
+        '</form><p class="sx-xato" id="sxXato" role="status"></p>';
+    }
+    if (qadam === 3) {
+      html += '<p class="sx-qadam-nom">3. Qaysi birini nazarda tutdingiz?</p>' +
+        '<div class="sx-variantlar">' + variantlar.map(function (v, i) {
+          return '<button class="sx-variant" type="button" data-variant="' + i + '"><span class="raqam">' + (i + 1) + '</span>' +
+            '<span translate="no">' + UI.esc(v) + '</span></button>';
+        }).join('') +
+        '<button class="tugma tugma-ikkilamchi sx-yoq" type="button" id="sxYoq">Yo\'q, bularning hech biri emas</button></div>';
+    }
+    el.innerHTML = html + '</div>';
+    bogla();
+  }
+
+  function bogla() {
+    document.querySelectorAll('[data-fan]').forEach(function (b) {
+      b.onclick = function () {
+        fan = b.dataset.fan;
+        variantlar = null;
+        yaratChiz();
+        var m = document.getElementById('sxMatn');
+        if (m) m.focus();
+      };
+    });
+    var forma = document.getElementById('sxForma');
+    if (forma) forma.onsubmit = async function (e) {
+      e.preventDefault();
+      var inp = document.getElementById('sxMatn');
+      matn = inp.value.trim();
+      var xato = document.getElementById('sxXato');
+      xato.textContent = '';
+      if (matn.length < 2) { xato.textContent = 'Iltimos, ' + fanNomi(fan) + ' fanidan mavzu nomini kiriting.'; return; }
+      var btn = document.getElementById('sxDavom');
+      btn.disabled = true;
+      btn.textContent = 'AI o\'ylayapti...';
+      var r = await API.shaxsiyVariant(fan, matn);
+      btn.disabled = false;
+      btn.textContent = 'Davom etish';
+      if (!r.ok) {
+        variantlar = null;
+        if (r.code === 'limit' || r.code === 'premium_required') { UI.xabar(r.error, 'xato'); yukla(); return; }
+        xato.textContent = r.error;
+        return;
+      }
+      variantlar = r.options;
+      yaratChiz();
+    };
+    document.querySelectorAll('[data-variant]').forEach(function (b) {
+      b.onclick = async function () {
+        var nom = variantlar[Number(b.dataset.variant)];
+        document.querySelectorAll('[data-variant], #sxYoq').forEach(function (x) { x.disabled = true; });
+        var r = await API.shaxsiyYarat(fan, nom);
+        if (!r.ok) {
+          UI.xabar(r.error, 'xato');
+          document.querySelectorAll('[data-variant], #sxYoq').forEach(function (x) { x.disabled = false; });
+          if (r.code === 'limit' || r.code === 'busy') yukla();
+          return;
+        }
+        matn = '';
+        variantlar = null;
+        UI.xabar('Dars tayyorlanmoqda — tayyor bo\'lgach xabar beramiz', 'muvaffaqiyat');
+        yukla();
+      };
+    });
+    var yoq = document.getElementById('sxYoq');
+    if (yoq) yoq.onclick = function () {
+      variantlar = null;
+      matn = '';
+      yaratChiz();
+      var inp = document.getElementById('sxMatn');
+      document.getElementById('sxXato').textContent = 'Mavzu nomini qaytadan, aniqroq yozing.';
+      if (inp) inp.focus();
+    };
+  }
+
+  // Tayyorlanayotgan dars — har 4 soniyada tekshiriladi
+  function kuzat() {
+    clearTimeout(kuzatuv);
+    if (D && D.generating.length) kuzatuv = setTimeout(yukla, 4000);
+  }
+
+  // ── Darslar ro'yxati (fanlar bo'yicha) ─────────────────
+  function holatMatn(t) {
+    if (t.status === 'generating') return 'Tayyorlanmoqda...';
+    var p = t.progress || {};
+    if (p.state === 'completed') return 'Tugallandi • ' + p.chaqmoq + ' / 30 chaqmoq';
+    var bosqich = (p.lesson_read ? 1 : 0) + (p.quiz_passed ? 1 : 0) + (p.homework_status === 'passed' ? 1 : 0);
+    return bosqich + ' / 3 bosqich • ' + p.chaqmoq + ' / 30 chaqmoq';
+  }
+
+  function royxatChiz() {
+    var el = document.getElementById('royxat');
+    if (!D.groups.length) {
+      el.innerHTML = D.premium.active
+        ? '<p class="izoh" style="text-align:center;margin-top:18px">Hali shaxsiy dars yo\'q. Birinchisini yuqorida yarating!</p>'
+        : '';
+      return;
+    }
+    el.innerHTML = D.groups.map(function (g) {
+      return '<section class="sx-guruh">' +
+        '<div class="sx-guruh-bosh"><span class="belgi" style="background:' + UI.esc(g.color || '#e5e7eb') + '">' +
+          UI.fanBelgi(g.image, g.icon) + '</span><h2>' + UI.esc(g.name) + '</h2>' +
+          '<span class="izoh">' + g.topics.length + ' ta dars</span></div>' +
+        g.topics.map(function (t) {
+          var tayyor = t.status === 'ready';
+          var ichi = '<span class="matn"><b translate="no">' + UI.esc(t.title) + '</b><small>' + UI.esc(holatMatn(t)) + '</small></span>' +
+            '<span class="nishon-kichik">' + UI.nishon(tayyor && t.progress.state === 'completed' ? 'checkCircle' : (tayyor ? 'chevronRight' : 'clock')) + '</span>';
+          return tayyor
+            ? '<a class="sx-dars" href="topic.html?shaxsiy=' + t.id + '">' + ichi + '</a>'
+            : '<div class="sx-dars tayyorlanmoqda">' + ichi + '</div>';
+        }).join('') +
+      '</section>';
+    }).join('');
+  }
+
+  yukla();
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) yukla(); });
+})();
+</script>
+</body>
+</html>

@@ -10,6 +10,7 @@ import achievements
 import curriculum as cur_mod
 import daily
 import payments
+import premium
 import study
 from auth_core import auth_required
 from db import get_connection
@@ -78,13 +79,18 @@ def dashboard():
         data['needs_onboarding'] = (
             not bool(request.user.get('onboarded')) or not request.user.get('chosen_subject_key')
         )
+        now = clock.now_ms()
+        uid = request.user['id']
         data['user'] = {
             'id': request.user['id'],
             'name': request.user.get('name'),
             'photo_url': request.user.get('photo_url'),
+            'premium': premium.status(cur, uid, now),
         }
-        now = clock.now_ms()
-        uid = request.user['id']
+        # Tayyor bo'lgan (yoki yaratilmay qolgan) shaxsiy darslar — ilovada bir marta xabar
+        cur.execute("SELECT id, title, status FROM personal_topics WHERE user_id = %s AND seen = 0 "
+                    "AND status IN ('ready', 'failed')", (uid,))
+        data['personal_news'] = [dict(r) for r in cur.fetchall()]
         data['daily'] = daily.status(cur, uid, now)
         data['plan'] = study.today_plan(cur, uid, data['daily']['answered'], now)
         board = study.leaderboard(cur, uid, limit=1)
@@ -189,6 +195,7 @@ def topic(subject_key, slug):
         grade = _grade_or_400(request.args.get('grade'))
         tid = cur_mod.topic_id(grade, subject_key, slug)
         data = study.topic_payload(cur, conn, request.user['id'], tid)
+        data['premium'] = premium.is_active(premium.until(cur, request.user['id']))
         data['ok'] = True
         return jsonify(data)
     except study.StudyError as exc:

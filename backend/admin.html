@@ -438,6 +438,7 @@
     <div class="adm-tab" data-bolim="xabar"><span class="nishon" data-ikon="send"></span> Xabar</div>
     <div class="adm-tab" data-bolim="adminlar"><span class="nishon" data-ikon="users"></span> Adminlar</div>
     <div class="adm-tab" data-bolim="jurnal"><span class="nishon" data-ikon="clock"></span> Jurnal</div>
+    <div class="adm-tab" data-bolim="premium"><span class="nishon" data-ikon="crown"></span> Premium</div>
     <div class="adm-tab" data-bolim="tizim"><span class="nishon" data-ikon="tools"></span> Tizim</div>
   </nav>
 
@@ -500,6 +501,11 @@
               <label>1 fan, Stars<input id="stBitta" type="number" min="0" step="10"></label>
               <label>3 ta fan, Stars<input id="stUchta" type="number" min="0" step="10"></label>
               <label>Barchasi, Stars<input id="stHammasi" type="number" min="0" step="10"></label>
+            </div>
+            <p class="izoh-kichik" style="margin-top:4px">Bilim Premium (1 oy): so'mda va Telegram Stars'da (0 — Stars o'chiq).</p>
+            <div class="qator3">
+              <label>Premium, so'm<input id="sPremium" type="number" min="1000" step="100"></label>
+              <label>Premium, Stars<input id="stPremium" type="number" min="0" step="10"></label>
             </div>
             <button class="tugma" type="submit">Saqlash</button>
             <p class="adm-forma-xabar" id="sXabar" role="status"></p>
@@ -573,6 +579,30 @@
 
     <section class="adm-bolim" id="bolim-jurnal">
       <div id="jurnalQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-premium">
+      <div id="premiumStat" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      <div class="adm-ikki" style="margin-top:0">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Premium berish</h2>
+          <p class="izoh-kichik" style="margin-bottom:12px">Qo'lda Premium berish yoki uzaytirish (faol bo'lsa — qolgan kunlar ustiga qo'shiladi). O'quvchiga botda xabar boradi.</p>
+          <form class="adm-forma" id="premiumForma">
+            <div class="qator3 kod-qator">
+              <label>Ilovadagi ID, Telegram ID yoki @username<input id="prKim" maxlength="40" autocomplete="off" placeholder="masalan, @ali_valiyev"></label>
+              <label>Kun<input id="prKun" type="number" min="1" max="366" value="30"></label>
+            </div>
+            <button class="tugma" type="submit">Premium berish</button>
+            <p class="adm-forma-xabar" id="prXabar" role="status"></p>
+          </form>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Faol premiumlar</h2>
+          <div id="premiumRoyxat"></div>
+        </div>
+      </div>
+      <h2 class="adm-sarlavha">Oxirgi amallar</h2>
+      <div id="premiumJurnal"></div>
     </section>
 
     <section class="adm-bolim" id="bolim-tizim">
@@ -663,6 +693,7 @@ var AUDIT_NOMLARI = {
   payment_settings: "Karta/narxlar o'zgardi", promo_create: 'Promo-kod yaratildi',
   backup_now: 'Zaxira nusxa olindi', errors_clear: 'Xatolar jurnali tozalandi',
   topic_edit: 'Mavzu tahrirlandi', topic_reset: 'Mavzu asl holiga qaytarildi',
+  premium_grant: 'Premium berildi', premium_revoke: 'Premium olib qo\'yildi',
 };
 
 var SUBJECT_NAMES = {
@@ -799,6 +830,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'jurnal' && !yuklandi.jurnal) { yuklandi.jurnal = true; yuklaJurnal(); }
     if (nomi === 'adminlar') yuklaAdminlar();
     if (nomi === 'tizim') yuklaTizim();
+    if (nomi === 'premium') yuklaPremium();
   });
 });
 
@@ -1542,6 +1574,8 @@ async function yuklaTolovUmumiy() {
   document.getElementById('stBitta').value = st.stars_single;
   document.getElementById('stUchta').value = st.stars_three;
   document.getElementById('stHammasi').value = st.stars_all;
+  document.getElementById('sPremium').value = st.premium_price;
+  document.getElementById('stPremium').value = st.premium_stars;
   if (!st.card_number) {
     quti.innerHTML += '<p class="izoh-kichik" style="color:var(--qizil);margin:-10px 0 16px">' +
       "Karta raqami kiritilmagan — o'quvchilar to'lov qila olmaydi. Pastdagi «Karta va narxlar» bo'limini to'ldiring.</p>";
@@ -1726,6 +1760,8 @@ document.getElementById('tolovSozlamaForma').addEventListener('submit', async fu
     stars_single: document.getElementById('stBitta').value,
     stars_three: document.getElementById('stUchta').value,
     stars_all: document.getElementById('stHammasi').value,
+    premium_price: document.getElementById('sPremium').value,
+    premium_stars: document.getElementById('stPremium').value,
   });
   if (!r.ok) { formaXabar('sXabar', '❌ ' + (r.error || 'Xatolik')); return; }
   formaXabar('sXabar', '✅ Saqlandi', true);
@@ -1888,6 +1924,65 @@ async function yuklaJurnal() {
         '<td>' + sanaVaqt(it.ts) + '</td></tr>';
     }).join('') + '</tbody></table>';
 }
+
+// ─────────────────────── Bilim Premium ───────────────────────
+
+var PREMIUM_MANBA = { card: 'karta', stars: 'Stars', admin: 'admin', revoke: 'olib qo\'yildi' };
+
+function premiumChiz(r) {
+  var m = r.month;
+  document.getElementById('premiumStat').className = '';
+  document.getElementById('premiumStat').innerHTML = '<div class="adm-statlar">' + [
+    ['Faol premiumlar', r.active_count, 'hozir'],
+    ['Shu oy — karta', m.card.count + ' ta', pul(m.card.sum)],
+    ['Shu oy — Stars', m.stars.count + ' ta', m.stars.sum + ' Stars'],
+    ['Shaxsiy darslar', r.lessons, 'jami yaratilgan'],
+    ['Narx', pul(r.settings.premium_price), r.settings.premium_stars + ' Stars'],
+  ].map(function (k) {
+    return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son">' + esc(k[1]) +
+      '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
+  }).join('') + '</div>';
+  var royxat = document.getElementById('premiumRoyxat');
+  royxat.innerHTML = r.active.length ? r.active.map(function (a) {
+    return '<div class="adm-qator"><span><b>' + esc(a.name) + '</b><span class="yorliq"> • ID ' + a.id +
+      (a.username ? ' • @' + esc(a.username) : '') + '<br>' + msVaqt(a.until_ms) + ' gacha (' + a.days_left + ' kun)</span></span>' +
+      '<button class="adm-mini-tugma qizil" type="button" data-pr-olib="' + a.id + '">Olib qo\'yish</button></div>';
+  }).join('') : '<p class="izoh-kichik">Hozircha faol premium yo\'q.</p>';
+  royxat.querySelectorAll('[data-pr-olib]').forEach(function (b) {
+    b.onclick = async function () {
+      if (!(await tasdiqSora('Bu o\'quvchidan Premium olib qo\'yilsinmi?'))) return;
+      var x = await AdminAPI.premiumOlib(b.dataset.prOlib);
+      if (!x.ok) { ogohlantir(x.error || 'Xatolik'); return; }
+      premiumChiz(x);
+    };
+  });
+  document.getElementById('premiumJurnal').innerHTML = r.log.length
+    ? '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr><th>O\'quvchi</th><th>Amal</th><th>Tugash</th><th>Vaqt</th></tr></thead><tbody>' +
+      r.log.map(function (l) {
+        return '<tr><td class="nomzod">' + esc(l.name || ('ID ' + l.user_id)) + '</td><td>' +
+          esc(l.source === 'revoke' ? 'olib qo\'yildi' : '+' + l.days + ' kun (' + (PREMIUM_MANBA[l.source] || l.source) + ')') +
+          '</td><td>' + (l.source === 'revoke' ? '—' : msVaqt(l.until_ms)) + '</td><td>' + msVaqt(l.created_ms) + '</td></tr>';
+      }).join('') + '</tbody></table></div>'
+    : '<p class="adm-bosh">Hali yozuv yo\'q.</p>';
+}
+
+async function yuklaPremium() {
+  var r = await AdminAPI.premium();
+  if (!r.ok) { document.getElementById('premiumStat').textContent = r.error || 'Xatolik'; return; }
+  premiumChiz(r);
+}
+
+document.getElementById('premiumForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var kim = document.getElementById('prKim').value.trim();
+  if (!kim) { formaXabar('prXabar', '❌ ID yoki @username ni yozing'); return; }
+  formaXabar('prXabar', 'Berilmoqda...', true);
+  var r = await AdminAPI.premiumBer(kim, Number(document.getElementById('prKun').value));
+  if (!r.ok) { formaXabar('prXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  document.getElementById('prKim').value = '';
+  formaXabar('prXabar', '✅ Premium berildi — ' + msVaqt(r.until_ms) + ' gacha', true);
+  premiumChiz(r);
+});
 
 // ─────────────────────── Tizim: zaxira nusxa va xatolar ───────────────────────
 

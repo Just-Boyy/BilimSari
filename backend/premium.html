@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Bilim Premium — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .pr-hero {
+    position: relative; overflow: hidden; border-radius: var(--r-katta); padding: 22px 18px 20px; color: #fff;
+    background: radial-gradient(120% 90% at 100% 0%, rgba(245, 179, 1, .55) 0%, rgba(245, 179, 1, 0) 55%),
+                linear-gradient(135deg, #0c2417 0%, #14532d 55%, #166534 100%);
+    box-shadow: 0 14px 30px rgba(12, 36, 23, .25);
+  }
+  .pr-hero .toj {
+    width: 58px; height: 58px; border-radius: 18px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #fde68a, #f5b301); color: #7c4a03; box-shadow: 0 6px 16px rgba(245, 179, 1, .45);
+    margin-bottom: 12px;
+  }
+  .pr-hero .toj svg { width: 30px; height: 30px; }
+  .pr-hero h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  .pr-hero p { color: rgba(255, 255, 255, .85); font-size: 14px; }
+  .pr-hero .narx { margin-top: 14px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .pr-hero .narx b { font-family: var(--sarlavha); font-size: 28px; color: #fde68a; }
+  .pr-hero .narx span { font-size: 13px; color: rgba(255, 255, 255, .8); }
+  .pr-faol {
+    margin-top: 14px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px;
+    background: rgba(255, 255, 255, .12); border: 1px solid rgba(253, 230, 138, .5); font-size: 14px;
+  }
+  .pr-faol svg { width: 22px; height: 22px; color: #fde68a; flex: 0 0 auto; }
+  .pr-afzallik { display: grid; gap: 10px; margin-top: 18px; }
+  .pr-band { display: flex; gap: 12px; align-items: flex-start; }
+  .pr-band .belgi {
+    width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: 0 0 auto;
+    background: var(--yashil-fon); color: var(--yashil-quyuq);
+  }
+  .pr-band .belgi svg { width: 22px; height: 22px; }
+  .pr-band h3 { font-size: 15px; margin-bottom: 3px; }
+  .pr-band p { font-size: 13px; color: var(--matn-2); line-height: 1.5; }
+  .pr-emojilar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pr-emojilar img { width: 28px; height: 28px; object-fit: contain; }
+  .pr-halqa-namuna { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .pr-halqa-namuna .avatar { width: 44px; height: 44px; }
+  .pr-eslatma { margin-top: 14px; font-size: 12px; color: var(--matn-2); text-align: center; }
+  .pr-tolov { margin-top: 18px; }
+  .pr-tolov h2 { font-size: 17px; margin-bottom: 10px; }
+  .pr-promo { display: flex; gap: 8px; margin: 12px 0; }
+  .pr-promo .kiritish { flex: 1; min-width: 0; }
+</style>
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
+  <h1>Bilim Premium<small>AI, shaxsiy darslar, emoji va oltin halqa</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:18px">
+  <div id="tana">
+    <div class="skelet" style="height:200px;margin-bottom:14px"></div>
+    <div class="skelet" style="height:320px"></div>
+  </div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('premium.html');
+
+  var tana = document.getElementById('tana');
+  var P = null;
+  var usul = null;
+  var promo = '';
+  var som = UI.pul;
+
+  function sana(ms) {
+    var d = new Date(ms);
+    return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
+  }
+
+  /** Telegram Stars faqat Telegram ilovasi ichida (openInvoice, Bot API 6.1+). */
+  function starsMumkin() {
+    var tg = window.Telegram && window.Telegram.WebApp;
+    return !!(tg && tg.openInvoice && tg.platform && tg.platform !== 'unknown' &&
+      tg.isVersionAtLeast && tg.isVersionAtLeast('6.1'));
+  }
+
+  async function yukla() {
+    var r = await API.premium();
+    if (!r.ok) { tana.innerHTML = UI.xatoHolat(r.error, yukla); return; }
+    P = r;
+    chiz();
+  }
+
+  function heroHtml() {
+    var st = P.premium;
+    return '<section class="pr-hero">' +
+      '<div class="toj" aria-hidden="true">' + UI.nishon('crown') + '</div>' +
+      '<h2>Bilim Premium</h2>' +
+      '<p>O\'qishni yanada qiziqarli va samarali qiladigan imkoniyatlar.</p>' +
+      (st.active
+        ? '<div class="pr-faol">' + UI.nishon('checkCircle') + '<span>Premium faol — <b>' + sana(st.until_ms) +
+            '</b> gacha (' + st.days_left + ' kun qoldi)</span></div>'
+        : '<div class="narx"><b>' + som(P.price) + '</b><span>1 oyga' +
+            (P.stars ? ' • yoki ' + P.stars + ' Stars' : '') + '</span></div>') +
+    '</section>';
+  }
+
+  function afzalliklarHtml() {
+    var emojilar = (P.emoji || []).slice(0, 12).map(function (k) {
+      return '<img src="assets/emoji/' + UI.esc(k) + '.png" alt="" loading="lazy">';
+    }).join('');
+    var u = API.user() || {};
+    var avatar = u.photo_url
+      ? '<img class="avatar premium-halqa" alt="" src="' + UI.esc(u.photo_url) + '">'
+      : '<span class="avatar premium-halqa">' + UI.esc(UI.harfAvatar(u.name || '')) + '</span>';
+    var band = function (ikon, sarlavha, matn, qoshimcha) {
+      return '<div class="karta pr-band"><span class="belgi" aria-hidden="true">' + UI.nishon(ikon) + '</span>' +
+        '<div><h3>' + sarlavha + '</h3><p>' + matn + '</p>' + (qoshimcha || '') + '</div></div>';
+    };
+    return '<div class="pr-afzallik">' +
+      band('brain', 'AI tushuntirish',
+        'Har bir darsda AI mavzuni to\'liqroq tushuntiradi va yangi misollar bilan qadam-baqadam yechib beradi.') +
+      band('sparkle', 'Shaxsiy darslar',
+        'O\'zingizda ochiq fanlardan istalgan mavzuni yozing — AI siz uchun dars, 3 savolli test va uy vazifasini ' +
+        'tayyorlaydi. Har 24 soatda bitta yangi dars yaratiladi, o\'qish esa cheksiz. Darslar faqat sizga ko\'rinadi ' +
+        'va Premium tugasa ham o\'zingizda qoladi.') +
+      band('star', 'Ism yonida emoji',
+        (P.emoji || []).length + ' ta maxsus emoji\'dan birini tanlang — u reyting, o\'yinlar va kun savolida ismingiz ' +
+        'yonida ko\'rinadi.', emojilar ? '<div class="pr-emojilar" aria-hidden="true">' + emojilar + '</div>' : '') +
+      band('medal', 'Oltin halqa',
+        'Avataringiz atrofida oltin halqa paydo bo\'ladi — hamma sizni Premium o\'quvchi ekaningizni ko\'radi.',
+        '<div class="pr-halqa-namuna" aria-hidden="true">' + avatar + '</div>') +
+    '</div>' +
+    '<p class="pr-eslatma">Premium fanlarni ochmaydi — fanlar Do\'konda alohida sotiladi. ' +
+      'Muddat 1 oy; tugagach, qayta olish mumkin.</p>';
+  }
+
+  function buyurtmaHtml(o) {
+    if (o.status === 'pending') {
+      return '<div class="karta dokon-buyurtma kutilmoqda">' +
+        '<h2>Chekingiz tekshirilmoqda ⏳</h2>' +
+        '<p>Buyurtma ' + UI.esc(o.code) + ' • ' + som(o.amount) + '.<br>' +
+          'Odatda 5–30 daqiqa. Tasdiqlangach Premium faollashadi va botga xabar keladi.</p>' +
+        '<div class="dokon-tugmalar"><button class="tugma tugma-mayda" type="button" data-bot>' +
+          UI.nishon('send') + '<span>Botni ochish</span></button></div></div>';
+    }
+    return '<div class="karta dokon-buyurtma">' +
+      '<h2>Buyurtma ' + UI.esc(o.code) + ' — chek kutilmoqda</h2>' +
+      '<p>Bilim Premium (1 oy) • <b>' + som(o.amount) + '</b>.<br>' +
+        'Karta raqami botga yuborilgan. To\'lab, chek rasmini botga yuboring.</p>' +
+      '<div class="dokon-tugmalar">' +
+        '<button class="tugma tugma-mayda" type="button" data-bot>' + UI.nishon('send') + '<span>Botni ochish</span></button>' +
+        '<button class="matn-tugma xavfli" type="button" id="bekorTugma">Bekor qilish</button>' +
+      '</div></div>';
+  }
+
+  function tolovHtml() {
+    var st = P.premium;
+    if (st.active) {
+      return '<div class="pr-tolov"><div class="tugmalar">' +
+        '<a class="tugma" href="shaxsiy.html">' + UI.nishon('sparkle') + '<span>Shaxsiy darslarim</span></a>' +
+        '<a class="tugma tugma-ikkilamchi" href="settings.html#emoji">' + UI.nishon('star') + '<span>Emoji tanlash</span></a>' +
+      '</div><p class="pr-eslatma">Muddati tugagach, shu yerdan yana 1 oyga olishingiz mumkin.</p></div>';
+    }
+    if (P.active_order) return '<div class="pr-tolov">' + buyurtmaHtml(P.active_order) + '</div>';
+    if (!P.telegram) {
+      return '<div class="pr-tolov">' + UI.holat({
+        belgi: 'send', sarlavha: "To'lov Telegram orqali",
+        matn: "Premium olish uchun BilimSari'ni Telegram botdan oching — to'lov bot chatida amalga oshiriladi.",
+      }) + '<button class="tugma" type="button" style="margin-top:12px" data-bot>Botni ochish</button></div>';
+    }
+    var karta = !!P.configured;
+    var stars = !!P.stars && starsMumkin();
+    if (usul === 'card' && !karta) usul = null;
+    if (usul === 'stars' && !stars) usul = null;
+    if (!usul) usul = karta ? 'card' : (stars ? 'stars' : null);
+    var usulHtml = function (kalit, raqam, nom, izoh, narx, mumkin, sabab) {
+      var tanlangan = usul === kalit;
+      return '<label class="tolov-usul' + (tanlangan ? ' tanlangan' : '') + (mumkin ? '' : ' mavjud-emas') + '">' +
+        '<input type="radio" name="usul" value="' + kalit + '"' + (tanlangan ? ' checked' : '') + (mumkin ? '' : ' disabled') + '>' +
+        '<span class="usul-raqam" aria-hidden="true">' + raqam + '</span>' +
+        '<span class="usul-matn"><b>' + nom + '</b><small>' + (mumkin ? izoh : sabab) + '</small></span>' +
+        '<span class="usul-narx">' + narx + '</span></label>';
+    };
+    var tugmaMatn = usul === 'stars'
+      ? UI.nishon('star') + '<span>Stars bilan to\'lash — ' + P.stars + ' Stars</span>'
+      : UI.nishon('send') + '<span>Karta orqali to\'lash — ' + som(P.price) + '</span>';
+    return '<section class="pr-tolov karta">' +
+      '<h2>Premium olish</h2>' +
+      '<div class="tolov-usullari" role="radiogroup" aria-labelledby="usulSarlavha">' +
+        '<p class="usul-sarlavha" id="usulSarlavha">To\'lov usuli</p>' +
+        usulHtml('card', 1, 'Karta orqali (admin bilan)',
+          'Kartaga o\'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach Premium faollashadi.',
+          som(P.price), karta, 'Hozircha mavjud emas') +
+        (P.stars
+          ? usulHtml('stars', 2, 'Telegram Stars', 'Telegram ichida to\'lanadi — Premium darhol faollashadi.',
+              P.stars + ' Stars', stars, 'Faqat Telegram ilovasi ichida ishlaydi')
+          : '') +
+      '</div>' +
+      '<div class="pr-promo">' +
+        '<input class="kiritish" id="promoInput" placeholder="Promo-kod (ixtiyoriy)" maxlength="20" autocomplete="off" value="' + UI.esc(promo) + '">' +
+      '</div>' +
+      (usul
+        ? '<button class="tugma" type="button" id="tolashTugma">' + tugmaMatn + '</button>'
+        : '<p class="izoh" style="text-align:center">Hozircha to\'lov usuli mavjud emas.</p>') +
+      (P.other_order ? '<p class="izoh-kichik" style="margin-top:8px">Fan uchun ochiq buyurtmangiz bor — Premium olsangiz, u bekor qilinadi.</p>' : '') +
+    '</section>';
+  }
+
+  function chiz() {
+    tana.innerHTML = heroHtml() + tolovHtml() + afzalliklarHtml();
+    tana.querySelectorAll('[data-bot]').forEach(function (b) { b.onclick = function () { UI.botniOch(); }; });
+    tana.querySelectorAll('input[name="usul"]').forEach(function (inp) {
+      inp.onchange = function () { usul = inp.value; chiz(); };
+    });
+    var promoInput = document.getElementById('promoInput');
+    if (promoInput) promoInput.oninput = function () { promo = promoInput.value.trim().toUpperCase(); };
+    var tugma = document.getElementById('tolashTugma');
+    if (tugma) tugma.onclick = function () { if (usul === 'stars') starsTolov(); else kartaTolov(); };
+    var bekor = document.getElementById('bekorTugma');
+    if (bekor) bekor.onclick = async function () {
+      if (!(await UI.tasdiq('Buyurtma bekor qilinsinmi?'))) return;
+      var r = await API.buyurtmaBekor(P.active_order.id);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+      UI.xabar('Buyurtma bekor qilindi', 'muvaffaqiyat');
+      yukla();
+    };
+  }
+
+  async function kartaTolov() {
+    var btn = document.getElementById('tolashTugma');
+    btn.disabled = true;
+    var r = await API.premiumBuyurtma(promo);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; if (r.code === 'premium_active') yukla(); return; }
+    var o = r.order;
+    tana.innerHTML =
+      '<div class="karta dokon-yuborildi">' +
+        '<span class="belgi">' + UI.nishon('checkCircle') + '</span>' +
+        '<h2>' + (r.bot_sent ? 'Yo\'riqnoma botga yuborildi!' : 'Buyurtma yaratildi') + '</h2>' +
+        '<p>Buyurtma <b>' + UI.esc(o.code) + '</b> • ' + som(o.amount) + '<br>' +
+          (r.bot_sent
+            ? 'Botda karta raqami bor: to\'lovni qiling va chek rasmini botga yuboring. Admin tasdiqlagach Premium faollashadi.'
+            : 'Bot sizga yoza olmadi. Botni oching va «Start» tugmasini bosing — yo\'riqnoma keladi.') + '</p>' +
+        '<button class="tugma" type="button" id="botTugma">' + UI.nishon('send') + '<span>Botni ochish</span></button>' +
+      '</div>';
+    document.getElementById('botTugma').onclick = function () { UI.botniOch(r.bot, r.bot_sent ? '' : 'pay'); };
+    if (r.bot_sent) setTimeout(function () { UI.botniOch(r.bot); }, 900);
+  }
+
+  async function starsTolov() {
+    var btn = document.getElementById('tolashTugma');
+    btn.disabled = true;
+    var r = await API.premiumStars(promo);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; return; }
+    Telegram.WebApp.openInvoice(r.link, function (holat) {
+      if (holat === 'paid') { starsTolandi(); return; }
+      btn.disabled = false;
+      if (holat === 'failed') UI.xabar("To'lov amalga oshmadi. Qayta urinib ko'ring.", 'xato');
+    });
+  }
+
+  // To'lov Telegram'da bo'ldi — webhook Premium'ni faollashtirguncha kutamiz
+  function starsTolandi() {
+    tana.innerHTML =
+      '<div class="karta dokon-yuborildi">' +
+        '<span class="belgi">' + UI.nishon('checkCircle') + '</span>' +
+        '<h2>To\'lov qabul qilindi!</h2>' +
+        '<p id="starsHolat">Bilim Premium faollashmoqda...</p>' +
+        '<a class="tugma" href="shaxsiy.html">Shaxsiy darslarim</a>' +
+      '</div>';
+    var urinish = 0;
+    (function tekshir() {
+      API.premium().then(function (r) {
+        if (r.ok && r.premium.active) {
+          document.getElementById('starsHolat').textContent = 'Premium faollashdi! Omad!';
+          try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
+        } else if (++urinish < 10) {
+          setTimeout(tekshir, 1500);
+        }
+      });
+    })();
+  }
+
+  yukla();
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden && P && P.active_order) yukla();
+  });
+})();
+</script>
+</body>
+</html>

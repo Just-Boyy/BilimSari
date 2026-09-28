@@ -37,6 +37,8 @@ import broadcast
 import curriculum as cur_mod
 import daily
 import payments
+import personal
+import premium
 import study
 from db import TASHKENT_TZ, add_column_if_missing, as_utc, get_connection
 from games import clock
@@ -263,6 +265,33 @@ def cooldown_ready(cur, conn, now_ms) -> int:
     return sent
 
 
+PREMIUM_SOON_DAYS = 3
+PREMIUM_HOURS = range(9, 22)        # eslatmalar kunduzi yuboriladi
+
+
+def premium_reminders(cur, conn, now_ms) -> int:
+    """Premium tugashiga 3 kun qolganda va tugagan kuni — bir martadan (muddat bo'yicha)."""
+    day = premium.DAY_MS
+    cur.execute('''SELECT id, name, telegram_id, premium_until FROM users
+                   WHERE telegram_id IS NOT NULL AND notify = 1 AND premium_until IS NOT NULL
+                     AND premium_until > %s AND premium_until <= %s''',
+                (now_ms - 2 * day, now_ms + PREMIUM_SOON_DAYS * day))
+    sent = 0
+    for u in cur.fetchall():
+        until = int(u['premium_until'])
+        till = datetime.fromtimestamp(until / 1000, TASHKENT_TZ).strftime('%d.%m.%Y')
+        if until > now_ms:
+            text = (f'{_first_name(u["name"])}, <b>Bilim Premium</b> {till} kuni tugaydi. '
+                    'Muddati tugagach, Premium sahifasidan yana 1 oyga olishingiz mumkin.')
+            ok = _deliver(cur, conn, u, 'premium_soon', str(until), text, 'Premium', 'premium.html')
+        else:
+            text = (f'{_first_name(u["name"])}, <b>Bilim Premium</b> muddati tugadi. AI tushuntirish va yangi '
+                    "shaxsiy darslar yopildi — yaratgan darslaringiz o'zingizda qoladi. Qayta olasizmi?")
+            ok = _deliver(cur, conn, u, 'premium_end', str(until), text, 'Premium olish', 'premium.html')
+        sent += int(bool(ok))
+    return sent
+
+
 def weekly_awards(cur, conn, now_ms) -> list:
     """O'tgan hafta top-3'iga medal va tabrik xabari."""
     week_start = clock.period_start_ms('week', now_ms) - game_stats.WEEK_MS
@@ -328,6 +357,7 @@ def tick(now_ms=None):
             broadcast.resume_stale(cur, conn, now_ms)      # worker o'lib qolgan tarqatishni davom ettirish
             botchat.cleanup_updates(cur, conn, now_ms)
             alerts.cleanup(cur, conn, now_ms)
+            personal.housekeeping(cur, conn, now_ms)      # yarim qolgan shaxsiy dars yaratishlari
             cur.execute('DELETE FROM job_runs WHERE ran_ms < %s', (now_ms - JOB_KEEP_MS,))
             conn.commit()
         local = datetime.fromtimestamp(now_ms / 1000, TASHKENT_TZ)
@@ -343,6 +373,8 @@ def tick(now_ms=None):
             summary = payments.daily_summary(cur, now_ms)
             for admin in payments.admin_ids() if summary else []:
                 send(admin, summary, 'Admin panel', 'admin.html')
+        if local.hour in PREMIUM_HOURS and _claim(cur, conn, 'premium', f'{local.date().isoformat()}:{local.hour:02d}'):
+            premium_reminders(cur, conn, now_ms)
         # Kunlik zaxira nusxa (03:00 dan keyin, kuniga bir marta) — egaga Telegram'da fayl
         if backup.BACKUP_HOUR <= local.hour and _claim(cur, conn, 'backup', local.date().isoformat()):
             try:

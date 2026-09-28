@@ -110,12 +110,19 @@
   var u = d.user || API.user() || {};
   var ism = u.name || 'O\'quvchi';
 
-  document.getElementById('ism').textContent = ism;
+  var pr = u.premium || {};
+  document.getElementById('ism').innerHTML = '<span>' + UI.esc(ism) + '</span>' + UI.emoji(pr.active && pr.emoji);
   var av = document.getElementById('avatar');
   if (u.photo_url) {
-    av.outerHTML = '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">';
+    av.outerHTML = '<img class="avatar' + (pr.active ? ' premium-halqa' : '') + '" alt="" src="' + UI.esc(u.photo_url) + '">';
   } else {
     av.textContent = UI.harfAvatar(ism);
+    av.classList.toggle('premium-halqa', !!pr.active);
+  }
+  if (pr.active) {
+    document.getElementById('ism').insertAdjacentHTML('afterend',
+      '<p style="text-align:center;margin:6px 0 2px"><a class="premium-pill" href="premium.html">' +
+      UI.nishon('crown') + '<span>Bilim Premium</span></a></p>');
   }
 
   UI.yutuqTabrik(d.new_achievements);

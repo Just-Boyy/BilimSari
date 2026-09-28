@@ -1499,7 +1499,8 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .dokon-paket span { flex: 1 1 180px; }
 .dokon-paket > svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .dokon-jami .tugma > svg, .dokon-buyurtma .tugma > svg, .dokon-yuborildi .tugma > svg,
-.sahifa > .tugma > svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.sahifa > .tugma > svg, .pr-tolov .tugma > svg, .sx-premium .tugma > svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.pr-tolov #tolashTugma { margin-top: 4px; }
 .dokon-paket .matn-tugma { color: #b45309; }
 .dokon-promo { display: flex; gap: 8px; margin: 14px 0; }
 .dokon-promo .kiritish { flex: 1; min-width: 0; min-height: 48px; padding: 10px 14px; text-transform: uppercase; }
@@ -1736,7 +1737,7 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 
 .pastki-nav .nishon {
   height: 24px;
-  padding: 2px 14px;
+  padding: 2px 12px;
   border-radius: 99px;
   transition: background .15s;
 }
@@ -1934,3 +1935,27 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
   font: inherit; font-size: 13px; font-weight: 700; color: var(--matn-2); cursor: pointer;
 }
 .til-kichik button.faol { background: var(--yashil); border-color: var(--yashil); color: #fff; }
+
+/* Pastki menyuda 6 ta band — yozuvlar bir qatorda */
+.pastki-nav a > span:last-child { white-space: nowrap; font-size: 10.5px; letter-spacing: -.1px; }
+
+/* ── Bilim Premium: ism yonidagi emoji va oltin halqa ── */
+.nik-emoji { width: 1.25em; height: 1.25em; vertical-align: -0.28em; margin-left: 4px; object-fit: contain; }
+.premium-halqa { border-radius: 50%; box-shadow: 0 0 0 2.5px #fff, 0 0 0 5px #f5b301, 0 0 14px 4px rgba(245, 179, 1, .45); }
+.premium-pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px;
+  background: linear-gradient(135deg, #fff7d6, #ffe7a3); color: #92400e; font-size: 12px; font-weight: 800;
+  border: 1px solid #f5d27a;
+}
+.premium-pill svg { width: 14px; height: 14px; }
+
+.emoji-tanlov { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 8px; margin-top: 10px; }
+.emoji-katak {
+  aspect-ratio: 1; border-radius: 14px; border: 2px solid var(--chiziq); background: var(--oq);
+  display: grid; place-items: center; padding: 6px; cursor: pointer;
+}
+.emoji-katak img { width: 100%; height: 100%; object-fit: contain; }
+.emoji-katak.tanlangan { border-color: #f5b301; background: #fff7d6; box-shadow: 0 0 0 3px rgba(245, 179, 1, .25); }
+.emoji-tanlov.qulf { opacity: .55; filter: grayscale(.3); }
+.emoji-tanlov.qulf .emoji-katak { cursor: default; }
+.reyting-qator .ism .nik-emoji, .salom .nik-emoji { flex: 0 0 auto; }

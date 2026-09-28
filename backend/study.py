@@ -23,6 +23,7 @@ from datetime import datetime, timedelta, timezone
 
 import curriculum as cur_mod
 import lesson_edit
+import premium
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
 import daily
 from games import clock
@@ -134,6 +135,25 @@ def ensure_tables(cur, conn):
     add_column_if_missing(cur, conn, 'users', 'grade', 'INTEGER')
     # Onboarding'da tanlangan bepul fan
     add_column_if_missing(cur, conn, 'users', 'chosen_subject_key', 'TEXT')
+    # Testning BIRINCHI urinishidagi to'g'ri javoblar soni — chaqmoq shundan hisoblanadi
+    add_column_if_missing(cur, conn, 'user_progress', 'quiz_first_correct', 'INTEGER')
+    backfill_first_quiz(cur, conn)
+
+
+def backfill_first_quiz(cur, conn):
+    """Yangi chaqmoq qoidasidan oldingi urinishlar: bitta urinish bo'lsa — natijadan aniq
+    hisoblanadi; bir necha urinish bo'lsa birinchisi o'tmagan — 1 ta to'g'ri deb olinadi
+    (tugallangan mavzu 5 + 15 = 20 chaqmoq — eski qoidadagi bilan bir xil)."""
+    cur.execute('''SELECT p.id, p.quiz_attempts, p.quiz_score, t.quiz FROM user_progress p
+                   LEFT JOIN topics t ON t.id = p.topic_id
+                   WHERE p.quiz_first_correct IS NULL AND p.quiz_attempts >= 1''')
+    rows = cur.fetchall()
+    for r in rows:
+        n = len(_json(r['quiz'], [])) or 3
+        value = round((r['quiz_score'] or 0) * n / 100) if int(r['quiz_attempts']) == 1 else 1
+        cur.execute('UPDATE user_progress SET quiz_first_correct = %s WHERE id = %s', (value, r['id']))
+    if rows:
+        conn.commit()
 
 
 # ───────────────────────── Curriculum → baza ─────────────────────────
@@ -451,18 +471,42 @@ def compute_streak(cur, user_id):
 
 # ───────────────────────── Chaqmoq va reyting ─────────────────────────
 
-CHAQMOQ_PER_TOPIC = 20  # har bir tugallangan mavzu uchun
+# Har bir dars (oddiy va shaxsiy) uchun ko'pi bilan 30 chaqmoq:
+#   test — BIRINCHI urinishda har to'g'ri javobga 5 (ko'pi bilan 15), qayta topshirish chaqmoq bermaydi;
+#   uy vazifasi — to'liq bajarilganda 15.
 # O'yinlarda (Game Hub) hisobga o'tgan har 10 ball = 1 chaqmoq — games/stats.py
 # Kun savoliga to'g'ri javob — +5 chaqmoq (daily.py)
+QUIZ_CHAQMOQ_PER_CORRECT = 5
+QUIZ_CHAQMOQ_MAX = 15
+HOMEWORK_CHAQMOQ = 15
+LESSON_CHAQMOQ_SQL = (
+    '(CASE WHEN quiz_first_correct IS NULL THEN 0 '
+    f'WHEN quiz_first_correct * {QUIZ_CHAQMOQ_PER_CORRECT} >= {QUIZ_CHAQMOQ_MAX} THEN {QUIZ_CHAQMOQ_MAX} '
+    f'ELSE quiz_first_correct * {QUIZ_CHAQMOQ_PER_CORRECT} END'
+    f" + CASE WHEN homework_status = 'passed' THEN {HOMEWORK_CHAQMOQ} ELSE 0 END)"
+)
+
+
+def quiz_chaqmoq(correct) -> int:
+    return min(QUIZ_CHAQMOQ_MAX, max(0, int(correct or 0)) * QUIZ_CHAQMOQ_PER_CORRECT)
+
+
+def lesson_chaqmoq_by_user(cur) -> dict:
+    """{user_id: darslardan (oddiy + shaxsiy) olingan chaqmoq}."""
+    out = {}
+    for table in ('user_progress', 'personal_topics'):
+        cur.execute(f'SELECT user_id, SUM({LESSON_CHAQMOQ_SQL}) AS c FROM {table} GROUP BY user_id')
+        for r in cur.fetchall():
+            out[r['user_id']] = out.get(r['user_id'], 0) + int(r['c'] or 0)
+    return out
 
 
 def chaqmoq_parts(cur, user_id) -> dict:
-    """Chaqmoq qayerdan kelgani: mavzular, o'yinlar, kun savoli."""
-    cur.execute(
-        'SELECT COUNT(*) AS n FROM user_progress WHERE user_id = %s AND status = %s',
-        (user_id, STATUS_COMPLETED),
-    )
-    topics = int(cur.fetchone()['n'] or 0) * CHAQMOQ_PER_TOPIC
+    """Chaqmoq qayerdan kelgani: darslar (oddiy + shaxsiy), o'yinlar, kun savoli."""
+    topics = 0
+    for table in ('user_progress', 'personal_topics'):
+        cur.execute(f'SELECT COALESCE(SUM({LESSON_CHAQMOQ_SQL}), 0) AS c FROM {table} WHERE user_id = %s', (user_id,))
+        topics += int(cur.fetchone()['c'] or 0)
     return {'topics': topics, 'games': game_stats.chaqmoq_from_games(cur, user_id),
             'daily': daily.chaqmoq_total(cur, user_id)}
 
@@ -487,11 +531,7 @@ def today_plan(cur, user_id, daily_answered, now_ms) -> dict:
 
 def leaderboard(cur, user_id, limit=20):
     """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar + kun savoli)."""
-    cur.execute(
-        'SELECT user_id, COUNT(*) AS n FROM user_progress WHERE status = %s GROUP BY user_id',
-        (STATUS_COMPLETED,),
-    )
-    chaqmoq_by_user = {row['user_id']: row['n'] * CHAQMOQ_PER_TOPIC for row in cur.fetchall()}
+    chaqmoq_by_user = {uid: c for uid, c in lesson_chaqmoq_by_user(cur).items() if c}
     for uid, xp in game_stats.xp_by_user(cur).items():
         bonus = xp // game_stats.GAME_XP_PER_CHAQMOQ
         if bonus:
@@ -527,6 +567,7 @@ def leaderboard(cur, user_id, limit=20):
         if rank <= limit:
             top.append(entry)
 
+    premium.decorate(cur, top + ([me] if me and me not in top else []))
     return {'top': top, 'me': me, 'total_players': len(ranked)}
 
 
@@ -932,15 +973,20 @@ def grade_quiz(cur, conn, user_id, topic_id, answers):
     percent = round(correct * 100 / total) if total else 0
     passed = percent >= QUIZ_PASS_PERCENT
 
+    earned = 0
     if state['state'] != STATUS_COMPLETED:
+        first = not (prog or {}).get('quiz_attempts') and (prog or {}).get('quiz_first_correct') is None
+        if first:
+            earned = quiz_chaqmoq(correct)
         cur.execute(
             '''UPDATE user_progress
                SET quiz_score = %s,
                    quiz_attempts = quiz_attempts + 1,
                    quiz_passed = %s,
+                   quiz_first_correct = COALESCE(quiz_first_correct, %s),
                    lesson_read = 1
                WHERE user_id = %s AND topic_id = %s''',
-            (percent, 1 if passed else 0, user_id, topic_id),
+            (percent, 1 if passed else 0, correct, user_id, topic_id),
         )
         conn.commit()
 
@@ -957,6 +1003,7 @@ def grade_quiz(cur, conn, user_id, topic_id, answers):
                     if passed else
                     "Yana bir bor mavzuni o'rganib, quizni qayta ishlashingiz mumkin."),
         'completion': completion,
+        'chaqmoq': earned,               # shu urinishda olingan (faqat birinchi urinishda)
     }
 
 
@@ -988,8 +1035,8 @@ def submit_homework(cur, conn, user_id, topic_id, answers):
         expected = task.get('answer')
         if expected:
             ok = answers_match(given, expected, task.get('accept'))
-            results.append({'id': tid, 'correct': ok, 'checked': True,
-                            'correct_answer': expected if not ok else None})
+            # To'g'ri javob o'quvchiga ko'rsatilmaydi — o'zi topishi kerak
+            results.append({'id': tid, 'correct': ok, 'checked': True, 'correct_answer': None})
         else:
             # ochiq savol — javob yozilgan bo'lsa qabul qilinadi
             ok = len(normalize(given)) >= 2
@@ -1000,6 +1047,8 @@ def submit_homework(cur, conn, user_id, topic_id, answers):
 
     passed = ok_count == len(tasks)
     status = 'passed' if passed else 'submitted'
+    earned = HOMEWORK_CHAQMOQ if passed and (prog or {}).get('homework_status') != 'passed' \
+        and state['state'] != STATUS_COMPLETED else 0
 
     if state['state'] != STATUS_COMPLETED:
         cur.execute(
@@ -1023,6 +1072,7 @@ def submit_homework(cur, conn, user_id, topic_id, answers):
         'message': ('Uyga vazifa qabul qilindi!' if passed else
                     f"{len(missing)} ta javob noto'g'ri yoki bo'sh. Tekshirib, qayta yuboring."),
         'completion': completion,
+        'chaqmoq': earned,
     }
 
 

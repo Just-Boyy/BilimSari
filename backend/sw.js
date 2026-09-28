@@ -7,7 +7,7 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v20';
+const CACHE = 'bilimsari-v21';
 
 const ASSETS = [
   '/',
@@ -24,6 +24,8 @@ const ASSETS = [
   '/daily.html',
   '/settings.html',
   '/shop.html',
+  '/premium.html',
+  '/shaxsiy.html',
   '/profile.html',
   '/manifest.json',
   '/css/app.css',

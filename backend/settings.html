@@ -54,6 +54,12 @@
     <p class="izoh" style="margin-top:8px">Darslar o'zbek tilida qoladi</p>
   </section>
 
+  <!-- Bilim Premium: ism yonidagi emoji -->
+  <section class="bo-lim" id="emoji">
+    <div class="bo-lim-bosh"><h2>Ism yonidagi emoji</h2><a class="premium-pill" href="premium.html" id="premiumBelgi"></a></div>
+    <div id="emojiQuti"></div>
+  </section>
+
   <!-- Avatar atrofida ko'rinadigan nishonlar -->
   <section class="bo-lim" id="nishonBolim" hidden>
     <div class="bo-lim-bosh"><h2>Avatar nishonlari</h2><span class="izoh" id="nishonSoni"></span></div>
@@ -123,6 +129,48 @@
   var men = await API.men();
   if (!men.ok) { UI.xabar(men.error, 'xato'); return; }
   var u = men.user;
+
+  // ── Ism yonidagi emoji (Bilim Premium) ─────────────────
+  var emojiKatalog = [];
+  API.premium().then(function (p) {
+    if (!p.ok) return;
+    emojiKatalog = p.emoji || [];
+    emojiChiz(p.premium);
+  });
+  function emojiChiz(st) {
+    var quti = document.getElementById('emojiQuti');
+    document.getElementById('premiumBelgi').innerHTML = UI.nishon('crown') +
+      '<span>' + (st.active ? 'Premium faol' : 'Premium olish') + '</span>';
+    if (!st.active) {
+      quti.innerHTML = '<p class="izoh">Bilim Premium bilan ' + emojiKatalog.length + ' ta maxsus emoji\'dan birini ' +
+        'tanlaysiz — u reyting, o\'yinlar va kun savolida ismingiz yonida ko\'rinadi.</p>' +
+        '<div class="emoji-tanlov qulf" aria-hidden="true">' + emojiKatalog.slice(0, 8).map(function (k) {
+          return '<span class="emoji-katak"><img src="assets/emoji/' + UI.esc(k) + '.png" alt=""></span>';
+        }).join('') + '</div>';
+      return;
+    }
+    var tanlangan = st.emoji_saved && emojiKatalog.indexOf(st.emoji_saved) >= 0 ? st.emoji_saved : null;
+    quti.innerHTML = '<p class="izoh">Tanlaganingiz ismingiz yonida hamma joyda ko\'rinadi.</p>' +
+      '<div class="emoji-tanlov" role="radiogroup" aria-label="Emoji">' + emojiKatalog.map(function (k) {
+        return '<button type="button" class="emoji-katak' + (k === tanlangan ? ' tanlangan' : '') + '" role="radio" ' +
+          'aria-checked="' + (k === tanlangan) + '" data-emoji="' + UI.esc(k) + '"><img src="assets/emoji/' + UI.esc(k) + '.png" alt=""></button>';
+      }).join('') + '</div>' +
+      (tanlangan ? '<button class="matn-tugma" type="button" id="emojiOlib" style="margin-top:8px">Emoji\'ni olib tashlash</button>' : '');
+    quti.querySelectorAll('[data-emoji]').forEach(function (b) {
+      b.onclick = async function () {
+        var r = await API.emojiTanla(b.dataset.emoji);
+        if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+        UI.xabar('Emoji saqlandi', 'muvaffaqiyat');
+        emojiChiz({ active: true, emoji_saved: b.dataset.emoji });
+      };
+    });
+    var olib = document.getElementById('emojiOlib');
+    if (olib) olib.onclick = async function () {
+      var r = await API.emojiTanla(null);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+      emojiChiz({ active: true, emoji_saved: null });
+    };
+  }
 
   // ── Interfeys tili ────────────────────────────────────
   document.querySelectorAll('.til-tugma').forEach(function (b) {

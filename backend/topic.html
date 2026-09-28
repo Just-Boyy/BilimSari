@@ -30,6 +30,11 @@
   .qadam-yakun {
     margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--chiziq);
   }
+  .chaqmoq-olindi {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 12px; border-radius: 99px;
+    background: #fff7d6; color: #92400e; font-weight: 800; font-size: 14px;
+  }
+  .chaqmoq-olindi svg { width: 16px; height: 16px; }
 </style>
 <script src="js/i18n.js"></script>
 </head>
@@ -55,15 +60,33 @@
 <script>
 (async function () {
   if (!(await UI.sessiyaKerak())) return;
-  UI.navChiz('dashboard.html');
+  if (!new URLSearchParams(location.search).get('shaxsiy')) UI.navChiz('dashboard.html');
 
   var parametr = new URLSearchParams(location.search);
   var fan = parametr.get('fan');
   var slug = parametr.get('mavzu');
   var sinf = parametr.get('sinf');
-  if (!fan || !slug || !sinf) { location.replace('subjects.html'); return; }
+  // Shaxsiy dars (Bilim Premium): topic.html?shaxsiy=<id> — kutish yo'q, faqat egasiga
+  var shaxsiy = parametr.get('shaxsiy');
+  if (!shaxsiy && (!fan || !slug || !sinf)) { location.replace('subjects.html'); return; }
+  if (shaxsiy) UI.navChiz('shaxsiy.html');
 
-  document.getElementById('orqaga').href = 'topics.html?fan=' + encodeURIComponent(fan);
+  document.getElementById('orqaga').href = shaxsiy ? 'shaxsiy.html' : 'topics.html?fan=' + encodeURIComponent(fan);
+
+  // Oddiy va shaxsiy darslar uchun bir xil interfeys — faqat API yo'llari farq qiladi
+  var yol = shaxsiy ? {
+    yukla: function () { return API.shaxsiyDars(shaxsiy); },
+    oqildi: function () { return API.shaxsiyOqildi(shaxsiy); },
+    quiz: function (j) { return API.shaxsiyQuiz(shaxsiy, j); },
+    uy: function (j) { return API.shaxsiyUy(shaxsiy, j); },
+    ai: function (rejim) { return API.aiShaxsiy(shaxsiy, rejim); },
+  } : {
+    yukla: function () { return API.mavzu(fan, slug, sinf); },
+    oqildi: function () { return API.darsO_qildi(fan, slug, sinf); },
+    quiz: function (j) { return API.quizYuborish(fan, slug, j, sinf); },
+    uy: function (j) { return API.uyIshiYuborish(fan, slug, j, sinf); },
+    ai: function (rejim) { return API.aiTushuntir(fan, slug, rejim, sinf); },
+  };
 
   var M = null;             // mavzu ma'lumotlari
   var quizJavoblar = [];    // o'quvchi javoblari
@@ -72,12 +95,20 @@
 
   // ── Yuklash ────────────────────────────────────────────
   async function yukla() {
-    var res = await API.mavzu(fan, slug, sinf);
-    if (UI.sinfKerak(res)) return;
+    var res = await yol.yukla();
+    if (!shaxsiy && UI.sinfKerak(res)) return;
 
     var tana = document.getElementById('tana');
 
     if (!res.ok) {
+      if (shaxsiy) {
+        tana.innerHTML = UI.holat({
+          belgi: res.code === 'generating' ? 'clock' : 'inbox',
+          sarlavha: res.code === 'generating' ? 'Dars tayyorlanmoqda' : 'Dars topilmadi',
+          matn: res.error, tugma: 'Shaxsiy darslarim', tugmaYo_l: 'shaxsiy.html',
+        });
+        return;
+      }
       if (res.code === 'cooldown') {
         tana.innerHTML = kutishHtml(res.cooldown);
         boshlaTaymer(res.cooldown);
@@ -99,10 +130,11 @@
     quizJavoblar = new Array((M.quiz || []).length).fill(null);
     quizIndeks = 0;
 
+    if (shaxsiy) fan = M.subject.key;
     document.getElementById('sarlavha').innerHTML =
       UI.esc(M.title) +
       '<small>' + UI.esc(M.subject.name) +
-      ', ' + M.position + '-mavzu (' + M.total_topics + ' tadan)</small>';
+      (shaxsiy ? ' • Shaxsiy dars' : ', ' + M.position + '-mavzu (' + M.total_topics + ' tadan)') + '</small>';
     document.title = M.title + ' — BilimSari';
 
     chiz();
@@ -202,7 +234,7 @@
     var tugma = document.getElementById('darsTugadi');
     if (tugma) tugma.onclick = async function () {
       this.disabled = true;
-      var res = await API.darsO_qildi(fan, slug, sinf);
+      var res = await yol.oqildi();
       this.disabled = false;
       if (!res.ok) { UI.xabar(res.error, 'xato'); return; }
       M.progress.lesson_read = true;
@@ -220,8 +252,7 @@
   }
 
   // ── AI qo'shimcha tushuntirish ─────────────────────────
-  // AI faqat Bilim Premium olgan foydalanuvchilar uchun. Premium hali ishga
-  // tushmagan — hozircha hamma uchun qulf (server M.premium yuborsa ochiladi).
+  // AI faqat Bilim Premium olgan foydalanuvchilar uchun (server ham tekshiradi).
   function aiOchiqmi() { return !!M.premium; }
 
   function aiHtml() {
@@ -240,19 +271,13 @@
         '<div class="ai-qulf">' +
           '<span class="ai-qulf-belgi" aria-hidden="true">' + UI.nishon('lock') + '</span>' +
           '<p>Bu AI faqat Bilim Premium olgan foydalanuvchilar uchun</p>' +
-          '<a href="#" id="premiumOlish">Premium olish</a>' +
+          '<a href="premium.html" id="premiumOlish">Premium olish</a>' +
         '</div>') +
     '</div>';
   }
 
   function aiUlash() {
-    if (!aiOchiqmi()) {
-      document.getElementById('premiumOlish').onclick = function (e) {
-        e.preventDefault();
-        UI.xabar('Bilim Premium tez orada ishga tushadi');
-      };
-      return;
-    }
+    if (!aiOchiqmi()) return;
     var javobQuti = document.getElementById('aiJavob');
 
     function kutish() {
@@ -271,7 +296,7 @@
     document.querySelectorAll('[data-ai]').forEach(function (b) {
       b.onclick = async function () {
         kutish();
-        var res = await API.aiTushuntir(fan, slug, b.dataset.ai, sinf);
+        var res = await yol.ai(b.dataset.ai);
         if (!res.ok) { xato(res.error); return; }
         ko_rsat(res.reply, res.disclaimer || '');
       };
@@ -376,11 +401,14 @@
     var el = document.getElementById('panelQuiz');
     el.innerHTML = UI.yuklanmoqda('Javoblar tekshirilmoqda...');
 
-    var res = await API.quizYuborish(fan, slug, quizJavoblar, sinf);
+    var qayta = (M.progress.quiz_attempts || 0) > 0;
+    var res = await yol.quiz(quizJavoblar);
     if (!res.ok) {
       el.innerHTML = UI.xatoHolat(res.error, function () { quizIndeks = 0; savolChiz(); });
       return;
     }
+    M.progress.quiz_attempts = (M.progress.quiz_attempts || 0) + 1;
+    res.qayta = qayta;
     quizNatija(res);
   }
 
@@ -405,6 +433,9 @@
           '<h2>' + (res.passed ? 'Ajoyib natija!' : 'Hali yetarli emas') + '</h2>' +
           '<p>' + res.correct + ' / ' + res.total + ' ta to\'g\'ri javob. ' +
             'O\'tish uchun kamida ' + res.pass_percent + '% kerak.</p>' +
+          (res.chaqmoq > 0
+            ? '<p class="chaqmoq-olindi">' + UI.nishon('chaqmoq') + '<span>+' + res.chaqmoq + ' chaqmoq</span></p>'
+            : (res.qayta ? '<p class="izoh-kichik">Chaqmoq faqat birinchi urinishda beriladi.</p>' : '')) +
         '</div>' +
       '</div>' +
       '<div class="bo-lim"><h2>Javoblaringiz</h2></div>' + tafsilot +
@@ -484,7 +515,7 @@
 
       tugma.disabled = true;
       tugma.textContent = 'Tekshirilmoqda...';
-      var res = await API.uyIshiYuborish(fan, slug, javoblar, sinf);
+      var res = await yol.uy(javoblar);
       tugma.disabled = false;
       tugma.textContent = 'Vazifani topshirish';
 
@@ -498,10 +529,10 @@
         quti.classList.toggle('xato', !r.correct);
         var eski = quti.querySelector('.tushuntirish');
         if (eski) eski.remove();
-        if (!r.correct && r.checked && r.correct_answer) {
+        var berilgan = ((e.target.elements[r.id] || {}).value || '').trim();
+        if (!r.correct && r.checked && berilgan) {
           quti.insertAdjacentHTML('beforeend',
-            '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' +
-            UI.esc(r.correct_answer) + '</b></div>');
+            '<div class="tushuntirish xato">Javob noto\'g\'ri — qayta urinib ko\'ring.</div>');
         } else if (!r.correct) {
           quti.insertAdjacentHTML('beforeend',
             '<div class="tushuntirish xato">Bu savolga javob yozing.</div>');
@@ -511,7 +542,7 @@
       if (res.passed) {
         M.progress.homework_status = 'passed';
         belgila('uy');
-        UI.xabar(res.message, 'muvaffaqiyat');
+        UI.xabar(res.chaqmoq > 0 ? res.message + ' +' + res.chaqmoq + ' chaqmoq' : res.message, 'muvaffaqiyat');
         if (res.completion && res.completion.completed) yakunEkran(res.completion);
         else if (res.completion && res.completion.blocked_by_cooldown) {
           UI.xabar(res.completion.message, 'xato');
@@ -546,6 +577,20 @@
   // ── Yakunlash ekrani ───────────────────────────────────
   function yakunEkran(yakun) {
     konfettiPortlat();
+    if (shaxsiy) {
+      document.getElementById('tana').innerHTML =
+        '<div class="karta tugadi-ekran">' +
+          '<div class="nishon-katta" aria-hidden="true">' + UI.nishon('check') + '</div>' +
+          '<h1>Tabriklaymiz!</h1>' +
+          '<p class="izoh" style="margin:8px 0 4px">«' + UI.esc(M.title) + '» mavzusini muvaffaqiyatli yakunladingiz.</p>' +
+        '</div>' +
+        '<div class="tugmalar" style="margin-top:16px">' +
+          '<a class="tugma tugma-ikkilamchi" href="shaxsiy.html">Shaxsiy darslarim</a>' +
+          '<a class="tugma" href="dashboard.html">Bosh sahifa</a>' +
+        '</div>';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     var keyingi = M.next_topic;
     document.getElementById('tana').innerHTML =
       '<div class="karta tugadi-ekran">' +

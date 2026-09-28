@@ -126,6 +126,30 @@
     },
     buyurtmaBekor: function (id) { return so_rov('/api/pay/orders/' + id + '/cancel', { method: 'POST' }); },
     tolovlarim: function () { return so_rov('/api/pay/orders'); },
+
+    // — Bilim Premium —
+    premium: function () { return so_rov('/api/premium'); },
+    premiumBuyurtma: function (promo) { return so_rov('/api/premium/order', { method: 'POST', body: { promo: promo || null } }); },
+    premiumStars: function (promo) { return so_rov('/api/premium/stars', { method: 'POST', body: { promo: promo || null } }); },
+    emojiTanla: function (kalit) { return so_rov('/api/premium/emoji', { method: 'POST', body: { emoji: kalit || null } }); },
+
+    // — Shaxsiy darslar —
+    shaxsiy: function () { return so_rov('/api/personal'); },
+    shaxsiyVariant: function (fan, matn) {
+      return so_rov('/api/personal/suggest', { method: 'POST', body: { subject_key: fan, text: matn } });
+    },
+    shaxsiyYarat: function (fan, nom) {
+      return so_rov('/api/personal/generate', { method: 'POST', body: { subject_key: fan, title: nom } });
+    },
+    shaxsiyKorildi: function (idlar) { return so_rov('/api/personal/seen', { method: 'POST', body: { ids: idlar } }); },
+    shaxsiyDars: function (id) { return so_rov('/api/personal/' + id); },
+    shaxsiyOqildi: function (id) { return so_rov('/api/personal/' + id + '/read', { method: 'POST' }); },
+    shaxsiyQuiz: function (id, javoblar) {
+      return so_rov('/api/personal/' + id + '/quiz', { method: 'POST', body: { answers: javoblar } });
+    },
+    shaxsiyUy: function (id, javoblar) {
+      return so_rov('/api/personal/' + id + '/homework', { method: 'POST', body: { answers: javoblar } });
+    },
     mavzu: function (fan, slug, sinf) {
       return so_rov('/api/study/topic/' + encodeURIComponent(fan) + '/' + encodeURIComponent(slug)
         + '?grade=' + encodeURIComponent(sinf));
@@ -182,6 +206,11 @@
     aiTushuntir: function (fan, slug, rejim, sinf) {
       return so_rov('/api/ai/explain', {
         method: 'POST', body: { subject_key: fan, slug: slug, mode: rejim, grade: sinf, lang: window.I18N ? I18N.til : 'uz' },
+      });
+    },
+    aiShaxsiy: function (id, rejim) {
+      return so_rov('/api/ai/explain', {
+        method: 'POST', body: { personal_id: id, mode: rejim, lang: window.I18N ? I18N.til : 'uz' },
       });
     },
     aiSavol: function (matn, fan, slug, sinf) {

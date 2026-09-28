@@ -368,6 +368,67 @@
     'O\'yinchilar soni 2, 4, 8 yoki 16 bo\'lishi mumkin.': 'Количество игроков может быть 2, 4, 8 или 16.',
     'Sinfingiz ko\'rsatilmagan — bu reyting hozircha bo\'sh.': 'Ваш класс не указан — этот рейтинг пока пуст.',
     'O\'yinchi': 'Игрок', 'Kompyuter': 'Компьютер',
+    // Bilim Premium
+    'Bilim Premium': 'Bilim Premium', 'Bilim Premium (1 oy)': 'Bilim Premium (1 мес.)', 'Bilim Premium (1 oy) •': 'Bilim Premium (1 мес.) •',
+    'AI, shaxsiy darslar, emoji va oltin halqa': 'ИИ, личные уроки, эмодзи и золотое кольцо',
+    "O'qishni yanada qiziqarli va samarali qiladigan imkoniyatlar.": 'Возможности, которые делают учёбу интереснее и эффективнее.',
+    'Premium faol —': 'Premium активен — до', 'Premium faol': 'Premium активен',
+    'AI tushuntirish': 'Объяснение от ИИ',
+    "Har bir darsda AI mavzuni to'liqroq tushuntiradi va yangi misollar bilan qadam-baqadam yechib beradi.":
+      'На каждом уроке ИИ подробнее объяснит тему и разберёт новые примеры шаг за шагом.',
+    'Shaxsiy darslar': 'Личные уроки', 'Shaxsiy darslarim': 'Мои личные уроки', 'Shaxsiy dars': 'Личный урок', 'Shaxsiy': 'Личные',
+    "O'zingizda ochiq fanlardan istalgan mavzuni yozing — AI siz uchun dars, 3 savolli test va uy vazifasini tayyorlaydi. Har 24 soatda bitta yangi dars yaratiladi, o'qish esa cheksiz. Darslar faqat sizga ko'rinadi va Premium tugasa ham o'zingizda qoladi.":
+      'Напишите любую тему по вашим открытым предметам — ИИ подготовит для вас урок, тест из 3 вопросов и домашнее задание. Новый урок можно создавать раз в 24 часа, а заниматься — без ограничений. Уроки видите только вы, и они останутся у вас даже после окончания Premium.',
+    'Ism yonida emoji': 'Эмодзи рядом с именем', 'Ism yonidagi emoji': 'Эмодзи рядом с именем',
+    'Oltin halqa': 'Золотое кольцо',
+    "Avataringiz atrofida oltin halqa paydo bo'ladi — hamma sizni Premium o'quvchi ekaningizni ko'radi.":
+      'Вокруг аватара появится золотое кольцо — все увидят, что вы ученик с Premium.',
+    "Premium fanlarni ochmaydi — fanlar Do'konda alohida sotiladi. Muddat 1 oy; tugagach, qayta olish mumkin.":
+      'Premium не открывает предметы — они продаются отдельно в Магазине. Срок — 1 месяц; после окончания можно купить снова.',
+    "Odatda 5–30 daqiqa. Tasdiqlangach Premium faollashadi va botga xabar keladi.":
+      'Обычно 5–30 минут. После подтверждения Premium активируется, а бот пришлёт сообщение.',
+    'Emoji tanlash': 'Выбрать эмодзи',
+    "Muddati tugagach, shu yerdan yana 1 oyga olishingiz mumkin.": 'Когда срок закончится, здесь можно купить ещё на 1 месяц.',
+    "Premium olish uchun BilimSari'ni Telegram botdan oching — to'lov bot chatida amalga oshiriladi.":
+      'Чтобы купить Premium, откройте BilimSari через Telegram-бота — оплата проходит в чате бота.',
+    "Kartaga o'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach Premium faollashadi.":
+      'Переводите на карту, отправляете фото чека боту — после подтверждения админом Premium активируется.',
+    "Telegram ichida to'lanadi — Premium darhol faollashadi.": 'Оплата внутри Telegram — Premium активируется сразу.',
+    "Fan uchun ochiq buyurtmangiz bor — Premium olsangiz, u bekor qilinadi.": 'У вас есть открытый заказ на предмет — если купите Premium, он отменится.',
+    "Botda karta raqami bor: to'lovni qiling va chek rasmini botga yuboring. Admin tasdiqlagach Premium faollashadi.":
+      'В боте есть номер карты: оплатите и отправьте фото чека боту. После подтверждения админом Premium активируется.',
+    'Bilim Premium faollashmoqda...': 'Bilim Premium активируется...', 'Premium faollashdi! Omad!': 'Premium активирован! Удачи!',
+    "Premium hali faol — muddati tugagach qayta olish mumkin.": 'Premium ещё активен — купить снова можно после окончания срока.',
+    'AI tushuntirish faqat Bilim Premium bilan ishlaydi.': 'Объяснение от ИИ доступно только с Bilim Premium.',
+    'Emoji faqat Bilim Premium bilan ishlaydi.': 'Эмодзи доступны только с Bilim Premium.', "Bunday emoji yo'q.": 'Такого эмодзи нет.',
+    "Tanlaganingiz ismingiz yonida hamma joyda ko'rinadi.": 'Выбранное эмодзи будет видно рядом с вашим именем везде.',
+    "Emoji'ni olib tashlash": 'Убрать эмодзи', 'Emoji saqlandi': 'Эмодзи сохранено',
+    // Shaxsiy darslar
+    'AI siz uchun tayyorlagan darslar': 'Уроки, которые ИИ подготовил для вас',
+    'Shaxsiy darslar — Bilim Premium imkoniyati': 'Личные уроки — возможность Bilim Premium',
+    "O'zingizda ochiq fanlardan istalgan mavzuni yozing — AI siz uchun dars, test va uy vazifasini tayyorlaydi.":
+      'Напишите любую тему по вашим открытым предметам — ИИ подготовит для вас урок, тест и домашнее задание.',
+    "Odatda 1 daqiqagacha. Tayyor bo'lgach ilovada va botda xabar beramiz.": 'Обычно до 1 минуты. Когда будет готово, сообщим в приложении и в боте.',
+    'Yangi dars yaratish': 'Создать новый урок',
+    'Har 24 soatda bitta shaxsiy dars yaratiladi. Keyingisi:': 'Новый личный урок можно создавать раз в 24 часа. Следующий через:',
+    "Ochiq fan yo'q": 'Нет открытых предметов', 'Avval fan tanlang yoki sotib oling.': 'Сначала выберите или купите предмет.',
+    "Fanni tanlang va o'rganmoqchi bo'lgan mavzuingiz nomini yozing — AI siz uchun dars tayyorlaydi.":
+      'Выберите предмет и напишите тему, которую хотите изучить, — ИИ подготовит для вас урок.',
+    '1. Fan': '1. Предмет', '2. Mavzu nomi': '2. Название темы', '3. Qaysi birini nazarda tutdingiz?': '3. Что вы имели в виду?',
+    "Masalan: kasrlarni qo'shish": 'Например: сложение дробей', "Yo'q, bularning hech biri emas": 'Нет, ни один не подходит',
+    'Mavzu nomini qaytadan, aniqroq yozing.': 'Напишите название темы ещё раз, точнее.',
+    "Dars tayyorlanmoqda — tayyor bo'lgach xabar beramiz": 'Урок готовится — сообщим, когда будет готово',
+    "Hali shaxsiy dars yo'q. Birinchisini yuqorida yarating!": 'Личных уроков пока нет. Создайте первый выше!',
+    'Tayyorlanmoqda...': 'Готовится...', 'Dars tayyorlanmoqda': 'Урок готовится', 'Dars topilmadi': 'Урок не найден',
+    'Dars topilmadi.': 'Урок не найден.', "Dars hali tayyorlanmoqda. Tayyor bo'lgach xabar beramiz.": 'Урок ещё готовится. Сообщим, когда будет готово.',
+    'Chaqmoq faqat birinchi urinishda beriladi.': 'Молнии даются только за первую попытку.',
+    "Javob noto'g'ri — qayta urinib ko'ring.": 'Неверный ответ — попробуйте ещё раз.',
+    'Shaxsiy darslar faqat Bilim Premium bilan yaratiladi.': 'Личные уроки можно создавать только с Bilim Premium.',
+    "Faqat o'zingizda ochiq fanlar uchun dars yaratish mumkin.": 'Уроки можно создавать только по вашим открытым предметам.',
+    "AI hozir javob bermadi. Birozdan keyin qayta urinib ko'ring.": 'ИИ сейчас не ответил. Попробуйте чуть позже.',
+    'Mavzu nomini tanlang.': 'Выберите название темы.',
+    "Bitta dars allaqachon tayyorlanmoqda. Tayyor bo'lishini kuting.": 'Один урок уже готовится. Дождитесь, пока он будет готов.',
+    'Darslar': 'Уроки', "Testda har to'g'ri javob +5 (1-urinish), uy vazifasi +15": 'В тесте +5 за верный ответ (1-я попытка), домашка +15',
   };
 
   // Raqamli va tarkibli matnlar: [qolip, almashtirish]
@@ -474,6 +535,23 @@
     [/^Promo-kod qo'llandi: −(\d+)%$/, 'Промокод применён: −$1%'],
     [/^«(.+)» mavzusini muvaffaqiyatli yakunladingiz\.$/, 'Вы успешно завершили тему «$1».'],
     [/^host: (.+)$/, 'хост: $1'],
+    // Bilim Premium va shaxsiy darslar
+    [/^gacha \((\d+) kun qoldi\)$/, function (m, n) { return '(осталось ' + n + ' ' + ko(n, 'день', 'дня', 'дней') + ')'; }],
+    [/^1 oyga(?: • yoki (\d+) Stars)?$/, function (m, s) { return 'за 1 месяц' + (s ? ' • или ' + s + ' Stars' : ''); }],
+    [/^(\d+) ta maxsus emoji'dan birini tanlang — u reyting, o'yinlar va kun savolida ismingiz yonida ko'rinadi\.$/,
+      'Выберите одно из $1 особых эмодзи — оно будет видно рядом с вашим именем в рейтинге, играх и вопросе дня.'],
+    [/^Bilim Premium bilan (\d+) ta maxsus emoji'dan birini tanlaysiz — u reyting, o'yinlar va kun savolida ismingiz yonida ko'rinadi\.$/,
+      'С Bilim Premium вы выберете одно из $1 особых эмодзи — оно будет видно рядом с вашим именем в рейтинге, играх и вопросе дня.'],
+    [/^«(.+)» tayyorlanmoqda\.\.\.$/, '«$1» готовится...'],
+    [/^«(.+)» shaxsiy darslaringizga qo'shildi$/, '«$1» добавлен в ваши личные уроки'],
+    [/^«(.+)» darsini tayyorlab bo'lmadi\. Qayta urinib ko'ring\.$/, 'Не удалось подготовить урок «$1». Попробуйте ещё раз.'],
+    [/^Iltimos, (.+) fanidan mavzu nomini kiriting\.$/, function (m, f) { return 'Пожалуйста, введите название темы по предмету «' + fanRu(f) + '».'; }],
+    [/^Har 24 soatda bitta shaxsiy dars yaratiladi\. Keyingisi — (.+)dan so'ng\.$/,
+      function (m, v) { return 'Новый личный урок можно создавать раз в 24 часа. Следующий — через ' + vaqtRu(v) + '.'; }],
+    [/^(\d+) ta dars$/, function (m, n) { return n + ' ' + ko(n, 'урок', 'урока', 'уроков'); }],
+    [/^(\d+) \/ (\d+) chaqmoq$/, '$1 / $2 молний'],
+    [/^(\d+) \/ 3 bosqich$/, '$1 / 3 этапа'],
+    [/^(.+) \+(\d+) chaqmoq$/, function (m, a, n) { return t(a) + ' +' + n + ' ' + ko(n, 'молния', 'молнии', 'молний'); }],
     [/^(.+) aloqasi uzildi — qaytishini kutyapmiz\.\.\.$/, function (m, k) { return t(k) + ': связь потеряна — ждём возвращения...'; }],
     // Do'stlarga ulashiladigan matnlar
     [/^BilimSari kun savoliga ([\d,.]+) soniyada to'g'ri javob berdim(?: \((\d+)-o'rin\))?! Sen qancha vaqtda yecha olasan\?$/,

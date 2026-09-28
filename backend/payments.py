@@ -28,6 +28,7 @@ import requests
 
 import admin_auth
 import curriculum as cur_mod
+import premium
 import study
 import tgbot
 from db import TASHKENT_TZ, add_column_if_missing, get_connection
@@ -61,8 +62,12 @@ DEFAULT_SETTINGS = {
     'stars_single': 100,
     'stars_three': 250,
     'stars_all': 1000,
+    # Bilim Premium (1 oy)
+    'premium_price': 34900,
+    'premium_stars': 250,
 }
-_INT_SETTINGS = ('price_single', 'price_three', 'price_all', 'stars_single', 'stars_three', 'stars_all')
+_INT_SETTINGS = ('price_single', 'price_three', 'price_all', 'stars_single', 'stars_three', 'stars_all',
+                 'premium_price', 'premium_stars')
 
 
 class PayError(Exception):
@@ -159,8 +164,17 @@ def _items(order) -> list:
         return []
 
 
+def item_name(key) -> str:
+    return premium.NAME if key == premium.ITEM else cur_mod.subject_meta(key)['name']
+
+
+def is_premium(order_or_keys) -> bool:
+    keys = order_or_keys if isinstance(order_or_keys, list) else _items(order_or_keys)
+    return keys == [premium.ITEM]
+
+
 def subject_names(keys) -> str:
-    return ', '.join(cur_mod.subject_meta(k)['name'] for k in keys)
+    return ', '.join(item_name(k) for k in keys)
 
 
 def _tg_result(res):
@@ -200,9 +214,12 @@ def save_settings(cur, conn, body) -> dict:
             value = int(body.get(key, current[key]))
         except (TypeError, ValueError):
             raise PayError("Narx butun son bo'lishi kerak.")
-        if key.startswith('stars_'):
+        if key.startswith('stars_') or key == 'premium_stars':
             if value < 0 or value > 100_000:
                 raise PayError("Stars narxi 0 dan 100 000 gacha bo'lishi kerak (0 — o'chiq).")
+        elif key == 'premium_price':
+            if value < 1000 or value > 10_000_000:
+                raise PayError("Premium narxi kamida 1 000 so'm bo'lishi kerak.")
         elif value < 0 or value > 10_000_000 or (key == 'price_single' and value < 1000):
             raise PayError("Narx noto'g'ri (bitta fan kamida 1 000 so'm).")
         new[key] = value
@@ -257,8 +274,31 @@ def _promo_row(cur, code, user_id, now):
     return row
 
 
+def premium_quote(cur, user_id, promo_code=None, now=None) -> dict:
+    """Bilim Premium narxi. Faol bo'lsa — sotib olinmaydi (tugagach yana ochiladi)."""
+    now = now or clock.now_ms()
+    if premium.is_active(premium.until(cur, user_id), now):
+        raise PayError("Premium hali faol — muddati tugagach qayta olish mumkin.", 'premium_active', 409)
+    settings = get_settings(cur)
+    base = settings['premium_price']
+    promo = _promo_row(cur, promo_code, user_id, now)
+    percent = int(promo['percent']) if promo else 0
+    amount = int(round(base * (100 - percent) / 100 / 100.0)) * 100 if percent else base
+    stars = None
+    if settings['premium_stars'] > 0:
+        stars = max(1, int(round(settings['premium_stars'] * (100 - percent) / 100))) if percent else settings['premium_stars']
+    return {
+        'items': [{'key': premium.ITEM, 'name': premium.NAME}], 'keys': [premium.ITEM],
+        'base': base, 'bundle': None, 'bundled': base,
+        'promo': {'code': promo['code'], 'percent': percent} if promo else None,
+        'discount': base - amount, 'amount': amount, 'saving': base - amount, 'stars': stars,
+    }
+
+
 def quote(cur, user_id, keys, promo_code=None, now=None) -> dict:
     now = now or clock.now_ms()
+    if keys == [premium.ITEM]:
+        return premium_quote(cur, user_id, promo_code, now)
     if not isinstance(keys, list) or not keys or not all(isinstance(k, str) for k in keys):
         raise PayError("Kamida bitta fan tanlang.", 'no_items')
     locked = locked_subjects(cur, user_id)
@@ -307,7 +347,7 @@ def order_public(order) -> dict:
     return {
         'id': order['id'], 'code': order['code'], 'status': order['status'],
         'method': order['method'] or CARD,
-        'items': [{'key': k, 'name': cur_mod.subject_meta(k)['name']} for k in keys],
+        'items': [{'key': k, 'name': item_name(k)} for k in keys],
         'amount': int(order['amount']), 'base_amount': int(order['base_amount']),
         'promo_code': order['promo_code'], 'promo_percent': int(order['promo_percent'] or 0),
         'reject_reason': order['reject_reason'],
@@ -345,7 +385,8 @@ def instructions_text(order, settings) -> str:
         f"2. Imkon bo'lsa, to'lov izohiga <code>{order['code']}</code> deb yozing.",
         "3. To'lov chekining rasmini (skrinshot) shu chatga yuboring.",
         '',
-        "Admin chekni tekshirib, fanni ochib beradi. Buyurtma 24 soat amal qiladi.",
+        ("Admin chekni tekshirib, Premium'ni faollashtiradi. Buyurtma 24 soat amal qiladi." if is_premium(keys)
+         else "Admin chekni tekshirib, fanni ochib beradi. Buyurtma 24 soat amal qiladi."),
     ]
     return '\n'.join(lines)
 
@@ -571,19 +612,12 @@ def decide(cur, conn, order_id, approve, by, reason_key=None, now=None) -> tuple
         return False, "Bu to'lov allaqachon hal qilingan."
     keys = _items(order)
     if approve:
-        for k in keys:
-            cur.execute('INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '
-                        'ON CONFLICT (user_id, subject_key) DO NOTHING', (order['user_id'], k))
-        if order['promo_code']:
-            cur.execute('UPDATE promo_codes SET used = used + 1 WHERE code = %s', (order['promo_code'],))
+        _deliver_items(cur, order, keys, 'card', now)
     conn.commit()
     order = _order(cur, order_id)
 
     if approve:
-        tgbot.send(order['chat_id'],
-                   f"🎉 <b>To'lov tasdiqlandi!</b> ({order['code']})\n"
-                   f"{html.escape(subject_names(keys))} — ochildi. Omad!",
-                   'Darsni boshlash', f'topics.html?fan={keys[0]}' if keys else 'dashboard.html')
+        _notify_paid(cur, order['chat_id'], order, keys, "To'lov tasdiqlandi!")
     else:
         tgbot.tg_api('sendMessage', {
             'chat_id': order['chat_id'], 'parse_mode': 'HTML',
@@ -602,6 +636,40 @@ def decide(cur, conn, order_id, approve, by, reason_key=None, now=None) -> tuple
     return True, 'Tasdiqlandi' if approve else 'Rad etildi'
 
 
+def _deliver_items(cur, order, keys, method, now):
+    """To'lov tasdiqlandi: fanlar ochiladi yoki Premium beriladi (commit — chaqiruvchida)."""
+    if is_premium(keys):
+        premium.grant(cur, order['user_id'], premium.DAYS, method, now, note=order['code'])
+    else:
+        for k in keys:
+            cur.execute('INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '
+                        'ON CONFLICT (user_id, subject_key) DO NOTHING', (order['user_id'], k))
+    if order['promo_code']:
+        cur.execute('UPDATE promo_codes SET used = used + 1 WHERE code = %s', (order['promo_code'],))
+
+
+def _notify_paid(cur, chat_id, order, keys, head):
+    if is_premium(keys):
+        u = premium.until(cur, order['user_id'])
+        till = datetime.fromtimestamp(u / 1000, TASHKENT_TZ).strftime('%d.%m.%Y') if u else ''
+        tgbot.send(chat_id, f"🎉 <b>{head}</b> ({order['code']})\n"
+                            f"💎 <b>Bilim Premium</b> faollashdi — {till} gacha.\n"
+                            f"AI tushuntirish, shaxsiy darslar, emoji va oltin halqa endi sizniki!",
+                   'Shaxsiy darslarim', 'shaxsiy.html')
+    else:
+        tgbot.send(chat_id, f"🎉 <b>{head}</b> ({order['code']})\n"
+                            f"{html.escape(subject_names(keys))} — ochildi. Omad!",
+                   'Darsni boshlash', f'topics.html?fan={keys[0]}' if keys else 'dashboard.html')
+
+
+def still_available(cur, user_id, keys, now=None) -> bool:
+    """Buyurtma hali bajarilishi mumkinmi (fan yopiq / premium faol emas)."""
+    if is_premium(keys):
+        return not premium.is_active(premium.until(cur, user_id), now)
+    locked = locked_subjects(cur, user_id)
+    return bool(keys) and all(k in locked for k in keys)
+
+
 def retry_order(cur, conn, order_id, chat_id, now=None):
     """Rad etilgan buyurtma o'rniga xuddi shu fanlar bilan yangisi."""
     order = _order(cur, order_id)
@@ -609,7 +677,8 @@ def retry_order(cur, conn, order_id, chat_id, now=None):
         raise PayError("Bu buyurtmani qayta ochib bo'lmaydi.", 'bad_state')
     cur.execute('SELECT id, name, telegram_id FROM users WHERE id = %s', (order['user_id'],))
     user = cur.fetchone()
-    keys = [k for k in _items(order) if k in locked_subjects(cur, order['user_id'])]
+    keys = (_items(order) if is_premium(order)
+            else [k for k in _items(order) if k in locked_subjects(cur, order['user_id'])])
     promo = order['promo_code']
     try:
         return create_order(cur, conn, user, keys, promo, now)
@@ -643,9 +712,11 @@ def create_stars_order(cur, conn, user, keys, promo_code=None, now=None) -> tupl
     order_id = cur.fetchone()['id']
     conn.commit()
     title = ('BilimSari: ' + (names if len(q['keys']) == 1 else f"{len(q['keys'])} ta fan"))[:32]
+    description = (f"Bilim Premium, 1 oy: AI tushuntirish, shaxsiy darslar, emoji va oltin halqa. Buyurtma {code}."
+                   if is_premium(q['keys']) else f"{names} — fan(lar)ga to'liq kirish. Buyurtma {code}.")
     res = _tg_result(tgbot.tg_api('createInvoiceLink', {
         'title': title,
-        'description': (f"{names} — fan(lar)ga to'liq kirish. Buyurtma {code}.")[:255],
+        'description': description[:255],
         'payload': code,
         'currency': 'XTR',
         'prices': [{'label': title, 'amount': q['stars']}],
@@ -673,8 +744,8 @@ def answer_pre_checkout(pcq):
             error = "Buyurtma topilmadi yoki muddati tugagan. Do'kondan qaytadan urinib ko'ring."
         elif pcq.get('currency') != 'XTR' or int(pcq.get('total_amount') or 0) != int(order['amount']):
             error = "To'lov summasi mos kelmadi. Do'kondan qaytadan urinib ko'ring."
-        elif any(k not in locked_subjects(cur, order['user_id']) for k in _items(order)):
-            error = "Bu fan allaqachon ochilgan."
+        elif not still_available(cur, order['user_id'], _items(order)):
+            error = ("Premium hali faol." if is_premium(order) else "Bu fan allaqachon ochilgan.")
     finally:
         cur.close()
         conn.close()
@@ -702,22 +773,17 @@ def stars_paid(message, now=None):
             conn.rollback()
             return False                      # allaqachon ishlangan
         keys = _items(order)
-        for k in keys:
-            cur.execute('INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '
-                        'ON CONFLICT (user_id, subject_key) DO NOTHING', (order['user_id'], k))
-        if order['promo_code']:
-            cur.execute('UPDATE promo_codes SET used = used + 1 WHERE code = %s', (order['promo_code'],))
+        _deliver_items(cur, order, keys, 'stars', now)
         conn.commit()
         chat = (message.get('chat') or {}).get('id') or order['chat_id']
-        tgbot.send(chat, f"🎉 <b>To'lov qabul qilindi!</b> ({order['code']})\n"
-                         f"{html.escape(subject_names(keys))} — ochildi. Omad!",
-                   'Darsni boshlash', f'topics.html?fan={keys[0]}' if keys else 'dashboard.html')
+        _notify_paid(cur, chat, order, keys, "To'lov qabul qilindi!")
         cur.execute('SELECT name FROM users WHERE id = %s', (order['user_id'],))
         who = html.escape((cur.fetchone() or {}).get('name') or "O'quvchi")
         for admin in admin_ids():
             tgbot.tg_api('sendMessage', {'chat_id': admin, 'parse_mode': 'HTML', 'text': (
                 f"⭐ <b>Stars to'lovi</b> — {order['code']}\n👤 {who} (ID {order['user_id']})\n"
-                f"📚 {html.escape(subject_names(keys))}\n💰 {int(order['amount'])} Stars — fan avtomatik ochildi.")})
+                f"📚 {html.escape(subject_names(keys))}\n💰 {int(order['amount'])} Stars — "
+                f"{'Premium avtomatik faollashdi' if is_premium(keys) else 'fan avtomatik ochildi'}.")})
         return True
     finally:
         cur.close()

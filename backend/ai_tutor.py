@@ -7,7 +7,9 @@ turadi, AI uni almashtirmaydi. AI faqat o'quvchi hozir o'qiyotgan
 sinf + fan + mavzu doirasida tushuntiradi.
 """
 
+import json
 import os
+import re
 
 import requests
 from flask import Blueprint, jsonify, request
@@ -83,6 +85,32 @@ def _save_cached_explanation(topic_id, mode, lang, reply):
             (topic_id, mode, lang, reply),
         )
         conn.commit()
+    finally:
+        cur.close()
+        conn.close()
+
+
+PREMIUM_ERROR = {'ok': False, 'error': 'AI tushuntirish faqat Bilim Premium bilan ishlaydi.',
+                 'code': 'premium_required'}
+
+
+def _premium_ok(user_id) -> bool:
+    import premium
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return premium.is_active(premium.until(cur, user_id))
+    finally:
+        cur.close()
+        conn.close()
+
+
+def _personal_context(user_id, pid):
+    import personal
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return personal.ai_context(cur, user_id, pid)
     finally:
         cur.close()
         conn.close()
@@ -196,6 +224,36 @@ def _call_gemini(system, user_content, max_tokens=900):
         return None, str(exc)
 
 
+def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120):
+    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi."""
+    if not GOOGLE_AI_API_KEY:
+        return None, 'AI hozircha ulanmagan.'
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent'
+    payload = {
+        'contents': [{'role': 'user', 'parts': [{'text': prompt}]}],
+        'generationConfig': {'temperature': 0.5, 'maxOutputTokens': max_tokens,
+                             'responseMimeType': 'application/json'},
+    }
+    if system:
+        payload['system_instruction'] = {'parts': [{'text': system}]}
+    try:
+        r = requests.post(url, json=payload, headers={'x-goog-api-key': GOOGLE_AI_API_KEY}, timeout=timeout)
+        data = r.json() if r.content else {}
+        if r.status_code != 200:
+            return None, f'AI xatosi ({r.status_code})'
+        cands = data.get('candidates') or []
+        parts = ((cands[0] if cands else {}).get('content') or {}).get('parts') or []
+        text = ''.join(p.get('text', '') for p in parts if isinstance(p, dict)).strip()
+        text = re.sub(r'^```(?:json)?\s*|\s*```$', '', text)
+        return json.loads(text), None
+    except requests.Timeout:
+        return None, 'AI javob bermadi (vaqt tugadi).'
+    except (ValueError, TypeError):
+        return None, "AI javobi noto'g'ri formatda."
+    except Exception as exc:  # noqa: BLE001
+        return None, str(exc)
+
+
 @bp.route('/tutor', methods=['POST'])
 @auth_required
 def tutor():
@@ -204,6 +262,8 @@ def tutor():
     message = (body.get('message') or '').strip()
     lang = (body.get('lang') or 'uz')[:5]
 
+    if not _premium_ok(request.user['id']):
+        return jsonify(PREMIUM_ERROR), 403
     if not message:
         return jsonify({'ok': False, 'error': "Savolingizni yozing"}), 400
     if len(message) > 1500:
@@ -247,14 +307,30 @@ def explain():
     lang = (body.get('lang') or 'uz')[:5]
     mode = (body.get('mode') or 'simple')[:20]
 
+    if not _premium_ok(request.user['id']):
+        return jsonify(PREMIUM_ERROR), 403
+
     grade = body.get('grade') or request.user.get('grade')
     subject_key = body.get('subject_key')
     slug = body.get('slug')
+    personal_id = body.get('personal_id')
+    if personal_id:
+        # Shaxsiy dars — faqat egasi uchun; kesh kaliti "p<id>"
+        subject_name, topic_title, lesson_text = _personal_context(request.user['id'], int(personal_id))
+        if not topic_title:
+            return jsonify({'ok': False, 'error': 'Mavzu topilmadi'}), 404
+        grade, subject_key, slug = None, None, None
+        tid = f'p{int(personal_id)}'
+        cached = _get_cached_explanation(tid, mode, lang)
+        if cached:
+            return jsonify({'ok': True, 'reply': cached, 'mode': mode, 'subject': subject_name, 'cached': True,
+                            'disclaimer': "Bu — AI qo'shimcha tushuntirishi. Asosiy dars yuqorida."})
 
     # Kesh — Gemini'ga murojaat qilishdan OLDIN tekshiriladi, shuning uchun
     # keshdan qaytgan javob tezlik cheklovini (rate limit) ham sarflamaydi.
-    tid = cur_mod.topic_id(int(grade), subject_key, slug) if (grade and subject_key and slug) else None
-    if tid:
+    if not personal_id:
+        tid = cur_mod.topic_id(int(grade), subject_key, slug) if (grade and subject_key and slug) else None
+    if tid and not personal_id:
         cached = _get_cached_explanation(tid, mode, lang)
         if cached:
             meta = cur_mod.subject_meta(subject_key)
@@ -274,7 +350,8 @@ def explain():
             'code': 'rate_limit',
         }), 429
 
-    subject_name, topic_title, lesson_text = _topic_context(request.user['id'], grade, subject_key, slug)
+    if not personal_id:
+        subject_name, topic_title, lesson_text = _topic_context(request.user['id'], grade, subject_key, slug)
     if not topic_title:
         return jsonify({'ok': False, 'error': 'Mavzu topilmadi'}), 404
 

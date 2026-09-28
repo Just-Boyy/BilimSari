@@ -43,12 +43,13 @@
     var o_rin = u.rank <= 3
       ? '<span class="o-rin ' + (MEDAL_RANG[u.rank] || '') + '">' + UI.nishon('medal') + '</span>'
       : '<span class="o-rin">' + u.rank + '</span>';
+    var halqa = u.premium ? ' premium-halqa' : '';
     var avatar = u.photo_url
-      ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
-      : '<div class="avatar">' + UI.harfAvatar(u.name) + '</div>';
+      ? '<img class="avatar' + halqa + '" alt="" src="' + UI.esc(u.photo_url) + '">'
+      : '<div class="avatar' + halqa + '">' + UI.harfAvatar(u.name) + '</div>';
     return '<div class="reyting-qator' + (u.me ? ' men' : '') + '">' +
       o_rin + avatar +
-      '<span class="ism">' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' +
+      '<span class="ism"><span>' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' + UI.emoji(u.emoji) + '</span>' +
       '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + u.chaqmoq + '</span></span>' +
       '</div>';
   }
