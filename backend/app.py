@@ -27,7 +27,7 @@ import rate_limit
 import study
 import study_api
 from auth_core import SECRET, auth_required, create_token, token_from_request
-from db import add_column_if_missing, get_connection, utc_now
+from db import add_column_if_missing, database_url, get_connection, utc_now
 from games import api as games_api
 from games import rooms as game_rooms
 from games import schema as game_schema
@@ -68,7 +68,32 @@ def _security_headers(response):
 WEBHOOK_SECRET = hashlib.sha256(f'{SECRET}|telegram-webhook'.encode()).hexdigest()
 
 
+INIT_LOCK_ID = 740_512_001   # Postgres advisory lock kaliti (faqat init_db uchun)
+
+
 def init_db():
+    """Jadvallarni yaratadi/yangilaydi. Postgres'da gunicorn worker'lari buni
+    navbat bilan bajaradi (advisory lock): bir vaqtda "CREATE TABLE IF NOT
+    EXISTS" yangi jadvalda UniqueViolation (pg_type) beradi va o'sha
+    worker'da keyingi jadvallar yaratilmay qolardi."""
+    if not database_url():
+        return _init_db()
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT pg_advisory_lock(%s)', (INIT_LOCK_ID,))
+    conn.commit()
+    try:
+        _init_db()
+    finally:
+        try:
+            cur.execute('SELECT pg_advisory_unlock(%s)', (INIT_LOCK_ID,))
+            conn.commit()
+        finally:
+            cur.close()
+            conn.close()
+
+
+def _init_db():
     conn = get_connection()
     cur = conn.cursor()
 
