@@ -237,8 +237,9 @@ Talablar:
   Blok turlari: {{"type": "text", "title": "...", "body": "..."}}, {{"type": "example", "title": "...", "body": "..."}},
   {{"type": "steps", "title": "...", "items": ["...", "..."]}}, {{"type": "note", "body": "Esda tuting: ..."}},
   {{"type": "formula", "body": "..."}} (faqat kerak bo'lsa).
-- "quiz": AYNAN 3 ta savol. Turi "mc" (4 ta variant, "answer" — to'g'ri variant indeksi 0–3) yoki "tf"
-  ("answer": true/false). Har birida qisqa "explain".
+- "quiz": AYNAN 3 ta savol, aynan shu ko'rinishda:
+  {{"type": "mc", "q": "savol matni", "options": ["...", "...", "...", "..."], "answer": 1, "explain": "..."}}
+  ("answer" — to'g'ri variant indeksi 0–3) yoki {{"type": "tf", "q": "tasdiq", "answer": true, "explain": "..."}}.
 - "homework": {{"intro": "...", "tasks": [AYNAN 3 ta topshiriq]}}. Har bir topshiriq:
   {{"id": "t1", "type": "number" yoki "text", "prompt": "...", "answer": "aniq qisqa javob", "hint": "..."}}.
   Javob bitta son yoki 1–3 so'zdan iborat bo'lsin (tekshirib bo'ladigan).
@@ -252,26 +253,101 @@ def _clean_homework(hw) -> dict:
     if not isinstance(hw, dict):
         raise lesson_edit.EditError("Uy vazifasi yo'q.")
     tasks = []
-    for i, t in enumerate((hw.get('tasks') or [])[:HOMEWORK_SIZE], start=1):
-        if not isinstance(t, dict):
+    for t in hw.get('tasks') or []:
+        if not isinstance(t, dict) or len(tasks) == HOMEWORK_SIZE:
             continue
-        prompt = ' '.join(str(t.get('prompt') or '').split())
+        prompt = ' '.join(str(t.get('prompt') or t.get('question') or t.get('task') or '').split())[:1000]
         answer = ' '.join(str(t.get('answer') or '').split())
-        if not prompt or not answer or len(prompt) > 1000 or len(answer) > 100:
+        if not prompt or not answer or len(answer) > 200:
             continue
-        tasks.append({'id': f't{i}', 'type': 'number' if t.get('type') == 'number' else 'text',
+        tasks.append({'id': f't{len(tasks) + 1}', 'type': 'number' if t.get('type') == 'number' else 'text',
                       'prompt': prompt, 'answer': answer, 'hint': ' '.join(str(t.get('hint') or '').split())[:300]})
     if len(tasks) != HOMEWORK_SIZE:
         raise lesson_edit.EditError(f"Uy vazifasida {HOMEWORK_SIZE} ta topshiriq bo'lishi kerak.")
     return {'intro': ' '.join(str(hw.get('intro') or '').split())[:600], 'tasks': tasks}
 
 
+def _txt(value, limit):
+    return str(value if value is not None else '').strip()[:limit]
+
+
+def _fix_blocks(blocks) -> list:
+    """AI yozgan bloklardagi mayda kamchiliklarni tuzatadi (noma'lum tur, juda uzun matn,
+    bo'sh qadamlar) — lesson_edit.validate rad etmasligi uchun."""
+    out = []
+    for b in blocks if isinstance(blocks, list) else []:
+        if not isinstance(b, dict):
+            continue
+        kind = b.get('type') if b.get('type') in lesson_edit.BLOCK_TYPES else ('text' if b.get('body') else None)
+        if kind in (None, 'table'):
+            continue                        # jadval AI'da ko'pincha buziladi — tashlab ketiladi
+        item = {'type': kind}
+        if kind in ('text', 'example', 'steps', 'note', 'life') and _txt(b.get('title'), 150):
+            item['title'] = _txt(b.get('title'), 150)
+        if kind == 'steps':
+            steps = [_txt(i, 900) for i in (b.get('items') or []) if _txt(i, 900)][:20]
+            if not steps:
+                continue
+            item['items'] = steps
+        else:
+            body = _txt(b.get('body'), 290 if kind == 'formula' else lesson_edit.MAX_TEXT - 100)
+            if not body:
+                continue
+            item['body'] = body
+        out.append(item)
+    return out[:lesson_edit.MAX_BLOCKS]
+
+
+def _fix_question(q):
+    if not isinstance(q, dict):
+        return None
+    savol = _txt(q.get('q') or q.get('question') or q.get('text'), 900)   # AI ba'zan boshqa nom bilan yozadi
+    if not savol:
+        return None
+    out = {'type': q.get('type'), 'q': savol}
+    if _txt(q.get('explain'), 900):
+        out['explain'] = _txt(q.get('explain'), 900)
+    if q.get('type') == 'tf':
+        a = q.get('answer')
+        if isinstance(a, str):
+            a = a.strip().lower() in ('true', 'ha', "to'g'ri", '1')
+        out['answer'] = bool(a)
+        return out
+    if q.get('type') != 'mc':
+        return None
+    raw = [_txt(o, 290) for o in (q.get('options') or [])]
+    answer = q.get('answer')
+    if isinstance(answer, str) and not answer.strip().isdigit():
+        answer = next((i for i, o in enumerate(raw) if o.lower() == answer.strip().lower()), -1)
+    try:
+        answer = int(answer)
+    except (TypeError, ValueError):
+        return None
+    if not 0 <= answer < len(raw) or not raw[answer]:
+        return None
+    right = raw[answer]
+    options, seen = [], set()
+    for o in raw:
+        if o and o.lower() not in seen:
+            seen.add(o.lower())
+            options.append(o)
+    options = options[:6]
+    if right not in options:
+        options[-1] = right
+    if len(options) < 2:
+        return None
+    out['options'] = options
+    out['answer'] = options.index(right)
+    return out
+
+
 def _clean_lesson(data, title) -> dict:
     if not isinstance(data, dict):
         raise lesson_edit.EditError("Dars topilmadi.")
-    quiz = [q for q in (data.get('quiz') or []) if isinstance(q, dict) and q.get('type') in ('mc', 'tf')][:QUIZ_SIZE]
+    quiz = [q for q in (_fix_question(x) for x in (data.get('quiz') or [])) if q][:QUIZ_SIZE]
     if len(quiz) != QUIZ_SIZE:
         raise lesson_edit.EditError(f"Testda {QUIZ_SIZE} ta savol bo'lishi kerak.")
+    data = dict(data, lesson=_fix_blocks(data.get('lesson')), summary=_txt(data.get('summary'), 290))
     try:
         duration = min(60, max(5, int(data.get('duration') or 15)))
     except (TypeError, ValueError):
