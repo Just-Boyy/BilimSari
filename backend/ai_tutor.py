@@ -189,76 +189,104 @@ def _topic_context(user_id, grade, subject_key, slug):
             pass
 
 
-def _call_gemini(system, user_content, max_tokens=900):
+# ───────────────────────── Gemini chaqiruvi ─────────────────────────
+#
+# Bepul tarifda har bir modelga kuniga cheklangan so'rov beriladi (masalan, 20 ta) va
+# modellar ba'zan "band" (503) deydi. Shuning uchun bir nechta model navbat bilan
+# ishlatiladi: limiti tugagan (429) model 30 daqiqaga, band (5xx) model 1 daqiqaga
+# chetga olinadi va keyingisi sinaladi. Asosiy model — GEMINI_MODEL.
+GEMINI_FALLBACK_MODELS = [m.strip() for m in os.environ.get(
+    'GEMINI_FALLBACK_MODELS',
+    'gemini-3.5-flash,gemini-3.7-flash,gemini-3.8-flash,gemini-flash-latest,gemini-3.1-flash-lite',
+).split(',') if m.strip()]
+RETRY_STATUSES = (429, 500, 502, 503, 504)
+QUOTA_REST_S = 30 * 60
+BUSY_REST_S = 60
+_dam = {}          # model → shu vaqtgacha (time.time()) ishlatilmaydi
+
+
+def _navbat() -> list:
+    barcha = [GEMINI_MODEL] + [m for m in GEMINI_FALLBACK_MODELS if m != GEMINI_MODEL]
+    hozir = time.time()
+    tayyor = [m for m in barcha if _dam.get(m, 0) <= hozir]
+    return tayyor or barcha
+
+
+def _matn(data) -> str:
+    cands = data.get('candidates') or []
+    parts = ((cands[0] if cands else {}).get('content') or {}).get('parts') or []
+    return ''.join(p.get('text', '') for p in parts if isinstance(p, dict)).strip()
+
+
+def _gemini(payload, parse, timeout, attempts, waits, budget):
+    """Umumiy chaqiruv: (natija, xato). parse(matn) — natija yoki ValueError."""
     if not GOOGLE_AI_API_KEY:
         return None, ('AI hozircha ulanmagan. Administrator GOOGLE_AI_API_KEY ni '
                       'sozlashi kerak (aistudio.google.com).')
+    oxir = time.time() + budget
+    error = None
+    for i in range(max(1, attempts)):
+        qolgan = oxir - time.time()
+        if qolgan < 3:
+            break
+        navbat = _navbat()
+        model = navbat[i % len(navbat)]
+        retry = True
+        try:
+            r = requests.post(f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
+                              json=payload, headers={'x-goog-api-key': GOOGLE_AI_API_KEY},
+                              timeout=min(timeout, qolgan))
+        except requests.Timeout:
+            error = "AI javob bermadi (vaqt tugadi). Qayta urinib ko'ring."
+        except requests.RequestException as exc:
+            error = str(exc)
+        else:
+            if r.status_code == 200:
+                try:
+                    return parse(_matn(r.json())), None
+                except (ValueError, TypeError):
+                    error = "AI javobi noto'g'ri formatda."
+            else:
+                error = f'AI xatosi ({r.status_code}, {model})'
+                if r.status_code == 429:
+                    _dam[model] = time.time() + QUOTA_REST_S
+                elif r.status_code == 404:
+                    _dam[model] = time.time() + 24 * 3600      # bunday model yo'q
+                elif r.status_code in RETRY_STATUSES:
+                    _dam[model] = time.time() + BUSY_REST_S
+                else:
+                    retry = False
+                if r.status_code in (429, 404):
+                    continue                                    # kutmasdan boshqa modelga
+        if not retry:
+            break
+        if i + 1 < attempts:
+            time.sleep(min(waits[min(i, len(waits) - 1)], max(0, oxir - time.time() - 3)))
+    return None, error
 
-    url = (
-        f'https://generativelanguage.googleapis.com/v1beta/models/'
-        f'{GEMINI_MODEL}:generateContent'
-    )
+
+def _text_parse(text):
+    if not text:
+        raise ValueError("bo'sh javob")
+    return text
+
+
+def _json_parse(text):
+    return json.loads(re.sub(r'^```(?:json)?\s*|\s*```$', '', text))
+
+
+def _call_gemini(system, user_content, max_tokens=900):
+    """Matnli javob (AI tushuntirish). So'rov ichida — 55 soniyadan oshmaydi."""
     payload = {
         'system_instruction': {'parts': [{'text': system}]},
         'contents': [{'role': 'user', 'parts': [{'text': user_content}]}],
         'generationConfig': {'temperature': 0.6, 'maxOutputTokens': max_tokens},
     }
-    try:
-        r = requests.post(
-            url,
-            json=payload,
-            headers={'x-goog-api-key': GOOGLE_AI_API_KEY},
-            timeout=45,
-        )
-        data = r.json() if r.content else {}
-        if r.status_code != 200:
-            err = (data.get('error') or {}) if isinstance(data, dict) else {}
-            detail = err.get('message') if isinstance(err, dict) else str(err)
-            return None, f'AI xatosi ({r.status_code}): {detail or r.text[:200]}'
-        cands = data.get('candidates') or []
-        parts = ((cands[0] if cands else {}).get('content') or {}).get('parts') or []
-        reply = ''.join(p.get('text', '') for p in parts if isinstance(p, dict)).strip()
-        return (reply, None) if reply else (None, "AI bo'sh javob qaytardi")
-    except requests.Timeout:
-        return None, 'AI javob bermadi (vaqt tugadi). Qayta urinib ko\'ring.'
-    except Exception as exc:  # noqa: BLE001
-        return None, str(exc)
+    return _gemini(payload, _text_parse, timeout=45, attempts=4, waits=(1, 2), budget=55)
 
 
-# Gemini ba'zan "band" (503/429) deydi — shunda biroz kutib qayta urinamiz va navbat bilan
-# zaxira modellarni sinaymiz (asosiy model birinchi).
-GEMINI_FALLBACK_MODELS = [m.strip() for m in os.environ.get(
-    'GEMINI_FALLBACK_MODELS', 'gemini-3.5-flash,gemini-3.7-flash').split(',') if m.strip()]
-RETRY_STATUSES = (429, 500, 502, 503, 504)
-
-
-def _json_once(model, payload, timeout):
-    """(obyekt, xato, qayta_urinsa_bo'ladimi)."""
-    url = f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent'
-    try:
-        r = requests.post(url, json=payload, headers={'x-goog-api-key': GOOGLE_AI_API_KEY}, timeout=timeout)
-    except requests.Timeout:
-        return None, 'AI javob bermadi (vaqt tugadi).', True
-    except requests.RequestException as exc:
-        return None, str(exc), True
-    if r.status_code != 200:
-        return None, f'AI xatosi ({r.status_code}, {model})', r.status_code in RETRY_STATUSES
-    try:
-        data = r.json()
-        cands = data.get('candidates') or []
-        parts = ((cands[0] if cands else {}).get('content') or {}).get('parts') or []
-        text = ''.join(p.get('text', '') for p in parts if isinstance(p, dict)).strip()
-        text = re.sub(r'^```(?:json)?\s*|\s*```$', '', text)
-        return json.loads(text), None, False
-    except (ValueError, TypeError):
-        return None, "AI javobi noto'g'ri formatda.", True
-
-
-def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts=3, waits=(2, 5, 10, 20)):
-    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi.
-    Band bo'lsa (503/429/vaqt tugashi) — kutib qayta urinadi, modelni navbat bilan almashtiradi."""
-    if not GOOGLE_AI_API_KEY:
-        return None, 'AI hozircha ulanmagan.'
+def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts=3, waits=(2, 5, 10, 20), budget=600):
+    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi."""
     payload = {
         'contents': [{'role': 'user', 'parts': [{'text': prompt}]}],
         'generationConfig': {'temperature': 0.5, 'maxOutputTokens': max_tokens,
@@ -266,17 +294,7 @@ def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts
     }
     if system:
         payload['system_instruction'] = {'parts': [{'text': system}]}
-    zaxira = [m for m in GEMINI_FALLBACK_MODELS if m != GEMINI_MODEL] or [GEMINI_MODEL]
-    error = None
-    for i in range(max(1, attempts)):
-        # asosiy, zaxira-1, asosiy, zaxira-2, ... — asosiy model eng ishonchlisi
-        model = GEMINI_MODEL if i % 2 == 0 else zaxira[(i // 2) % len(zaxira)]
-        data, error, retry = _json_once(model, payload, timeout)
-        if data is not None or not retry:
-            return data, error
-        if i + 1 < attempts:
-            time.sleep(waits[min(i, len(waits) - 1)])
-    return None, error
+    return _gemini(payload, _json_parse, timeout, attempts, waits, budget)
 
 
 @bp.route('/tutor', methods=['POST'])
