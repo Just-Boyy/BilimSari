@@ -1,0 +1,174 @@
+# -*- coding: utf-8 -*-
+"""
+Ommaviy xabar (admin panel → "Xabar") — fonda yuboriladi.
+
+Oldin xabar bitta HTTP so'rov ichida hammaga ketma-ket yuborilardi: 60 soniyalik
+gunicorn chegarasidan oshsa uzilib qolardi va shu vaqt ichida ishchi jarayon
+band bo'lib, sayt sekinlashardi. Endi:
+
+  * so'rov darhol javob qaytaradi, yuborish alohida oqimda boradi;
+  * jarayon broadcasts jadvalida saqlanadi (yuborildi / xato / bloklagan) —
+    admin panel uni jonli ko'rsatadi;
+  * worker qayta ishga tushsa (gunicorn --max-requests), rejalashtiruvchi
+    "osilib qolgan" tarqatishni topib, qolgan joyidan davom ettiradi;
+  * eslatmalarni o'chirgan (users.notify = 0) o'quvchilarga yuborilmaydi;
+  * botni bloklagan (403) o'quvchilar belgilanadi — keyin ularga urinilmaydi;
+  * Telegram "juda tez" (429) desa, aytilgan vaqt kutiladi.
+"""
+
+import logging
+import threading
+import time
+
+import tgbot
+from db import get_connection
+from games import clock
+
+logger = logging.getLogger('bilimsari.broadcast')
+
+BATCH = 50
+PAUSE_S = 0.04            # Telegram: sekundiga ~30 xabardan oshmaslik
+STALE_MS = 2 * 60 * 1000  # shuncha vaqt yangilanmagan "running" — osilib qolgan
+
+
+def ensure_tables(cur, conn):
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS broadcasts (
+            id SERIAL PRIMARY KEY,
+            text TEXT NOT NULL,
+            status TEXT NOT NULL,
+            total INTEGER NOT NULL DEFAULT 0,
+            sent INTEGER NOT NULL DEFAULT 0,
+            failed INTEGER NOT NULL DEFAULT 0,
+            blocked INTEGER NOT NULL DEFAULT 0,
+            last_user_id INTEGER NOT NULL DEFAULT 0,
+            created_ms BIGINT NOT NULL,
+            heartbeat_ms BIGINT NOT NULL,
+            finished_ms BIGINT
+        )
+    ''')
+    conn.commit()
+
+
+class BroadcastError(Exception):
+    def __init__(self, message, http_status=400):
+        super().__init__(message)
+        self.message, self.http_status = message, http_status
+
+
+def _public(row) -> dict:
+    # "state" (status emas) — frontend so'rov yordamchilari javobdagi "status"ni HTTP kodi bilan almashtiradi
+    return {k: row[k] for k in ('id', 'total', 'sent', 'failed', 'blocked')} | {
+        'state': row['status'], 'done': int(row['sent']) + int(row['failed']) + int(row['blocked'])}
+
+
+def get(cur, bid):
+    cur.execute('SELECT * FROM broadcasts WHERE id = %s', (bid,))
+    row = cur.fetchone()
+    return _public(row) if row else None
+
+
+def start(cur, conn, text, now=None) -> dict:
+    """Tarqatishni yaratadi va fonda boshlaydi."""
+    now = now or clock.now_ms()
+    text = str(text or '').strip()
+    if not text:
+        raise BroadcastError("Xabar matni bo'sh")
+    if len(text) > 3500:
+        raise BroadcastError('Xabar juda uzun (3500 belgigacha)')
+    cur.execute("SELECT id FROM broadcasts WHERE status = 'running'")
+    if cur.fetchone():
+        raise BroadcastError("Oldingi xabar hali yuborilmoqda. U tugashini kuting.", 409)
+    cur.execute('SELECT COUNT(*) AS n FROM users WHERE telegram_id IS NOT NULL AND notify = 1')
+    total = int(cur.fetchone()['n'])
+    cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms)
+                   VALUES (%s, 'running', %s, %s, %s) RETURNING id''', (text, total, now, now))
+    bid = cur.fetchone()['id']
+    conn.commit()
+    _spawn(bid)
+    return get(cur, bid)
+
+
+def _spawn(bid):
+    threading.Thread(target=run, args=(bid,), name=f'bilimsari-broadcast-{bid}', daemon=True).start()
+
+
+def _send(chat_id, text):
+    """(natija, retry_after): 'ok' | 'blocked' | 'failed'."""
+    res = tgbot.tg_api('sendMessage', {'chat_id': chat_id, 'text': text})
+    if res and res.get('ok'):
+        return 'ok', 0
+    code = (res or {}).get('error_code')
+    if code == 403:
+        return 'blocked', 0
+    if code == 429:
+        return 'failed', int(((res or {}).get('parameters') or {}).get('retry_after') or 1)
+    return 'failed', 0
+
+
+def run(bid):
+    """Tarqatishni last_user_id dan davom ettiradi (bir necha marta chaqirish xavfsiz)."""
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('SELECT * FROM broadcasts WHERE id = %s', (bid,))
+        b = cur.fetchone()
+        if not b or b['status'] != 'running':
+            return
+        text, last = b['text'], int(b['last_user_id'])
+        sent, failed, blocked = int(b['sent']), int(b['failed']), int(b['blocked'])
+        while True:
+            cur.execute('''SELECT id, telegram_id FROM users
+                           WHERE telegram_id IS NOT NULL AND notify = 1 AND id > %s
+                           ORDER BY id LIMIT %s''', (last, BATCH))
+            batch = cur.fetchall()
+            if not batch:
+                break
+            for u in batch:
+                result, wait = _send(u['telegram_id'], text)
+                if wait:                                   # 429 — kutib, bir marta qayta urinamiz
+                    time.sleep(min(wait, 30))
+                    result, _ = _send(u['telegram_id'], text)
+                if result == 'ok':
+                    sent += 1
+                elif result == 'blocked':
+                    blocked += 1
+                    cur.execute('UPDATE users SET notify = 0 WHERE id = %s', (u['id'],))
+                else:
+                    failed += 1
+                last = u['id']
+                time.sleep(PAUSE_S)
+            cur.execute('''UPDATE broadcasts SET sent = %s, failed = %s, blocked = %s, last_user_id = %s,
+                                                 heartbeat_ms = %s WHERE id = %s''',
+                        (sent, failed, blocked, last, clock.now_ms(), bid))
+            conn.commit()
+        now = clock.now_ms()
+        cur.execute('''UPDATE broadcasts SET status = 'done', sent = %s, failed = %s, blocked = %s,
+                                             last_user_id = %s, heartbeat_ms = %s, finished_ms = %s
+                       WHERE id = %s''', (sent, failed, blocked, last, now, now, bid))
+        conn.commit()
+        logger.info('Ommaviy xabar #%s tugadi: %s ta yuborildi, %s xato, %s bloklagan', bid, sent, failed, blocked)
+    except Exception:  # noqa: BLE001
+        conn.rollback()
+        logger.exception('Ommaviy xabar #%s xatosi', bid)
+    finally:
+        cur.close()
+        conn.close()
+
+
+def resume_stale(cur, conn, now=None) -> list:
+    """Worker o'lib qolib, yangilanmay qolgan tarqatishlarni davom ettiradi
+    (rejalashtiruvchi chaqiradi). heartbeat CAS — faqat bitta worker oladi."""
+    now = now or clock.now_ms()
+    cur.execute("SELECT id, heartbeat_ms FROM broadcasts WHERE status = 'running' AND heartbeat_ms < %s",
+                (now - STALE_MS,))
+    resumed = []
+    for row in cur.fetchall():
+        cur.execute('UPDATE broadcasts SET heartbeat_ms = %s WHERE id = %s AND heartbeat_ms = %s',
+                    (now, row['id'], row['heartbeat_ms']))
+        if cur.rowcount == 1:
+            resumed.append(row['id'])
+    conn.commit()
+    for bid in resumed:
+        _spawn(bid)
+    return resumed

@@ -29,11 +29,46 @@ ADMIN_TELEGRAM_IDS = {
 }
 
 
-def is_admin_telegram(telegram_id) -> bool:
+_extra_cache = {'ids': set(), 'at': 0.0}
+EXTRA_CACHE_S = 20
+
+
+def extra_admin_ids(refresh=False) -> set:
+    """Admin panelda qo'shilgan adminlar (bot_admins jadvali). Har so'rovda
+    bazaga bormaslik uchun 20 soniya keshlanadi."""
+    if refresh or time.time() - _extra_cache['at'] > EXTRA_CACHE_S:
+        conn = get_connection()
+        cur = conn.cursor()
+        try:
+            cur.execute('SELECT telegram_id FROM bot_admins')
+            _extra_cache['ids'] = {int(r['telegram_id']) for r in cur.fetchall()}
+        except Exception:  # noqa: BLE001  (jadval hali yaratilmagan bo'lishi mumkin)
+            conn.rollback()
+        finally:
+            cur.close()
+            conn.close()
+        _extra_cache['at'] = time.time()
+    return _extra_cache['ids']
+
+
+def admin_ids() -> list:
+    """Barcha adminlar: egalar (ADMIN_TELEGRAM_IDS) + panelda qo'shilganlar."""
+    return sorted(ADMIN_TELEGRAM_IDS | extra_admin_ids())
+
+
+def is_owner(telegram_id) -> bool:
     try:
         return int(telegram_id) in ADMIN_TELEGRAM_IDS
     except (TypeError, ValueError):
         return False
+
+
+def is_admin_telegram(telegram_id) -> bool:
+    try:
+        tid = int(telegram_id)
+    except (TypeError, ValueError):
+        return False
+    return tid in ADMIN_TELEGRAM_IDS or tid in extra_admin_ids()
 
 _serializer = URLSafeTimedSerializer(SECRET, salt='bilimsari-admin-panel')
 
@@ -43,6 +78,14 @@ def ensure_table(cur, conn):
         CREATE TABLE IF NOT EXISTS admin_settings (
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL
+        )
+    ''')
+    # Qo'shimcha adminlar (egalar — ADMIN_TELEGRAM_IDS muhit o'zgaruvchisida)
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS bot_admins (
+            telegram_id BIGINT PRIMARY KEY,
+            name TEXT,
+            added_ms BIGINT NOT NULL
         )
     ''')
     conn.commit()

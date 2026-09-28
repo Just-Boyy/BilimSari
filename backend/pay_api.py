@@ -53,7 +53,9 @@ def shop():
         return jsonify({
             'ok': True,
             'subjects': [dict(cur_mod.subject_meta(k), key=k) for k in payments.locked_subjects(cur, uid)],
-            'prices': {k: settings[k] for k in ('price_single', 'price_three', 'price_all')},
+            'prices': {k: settings[k] for k in ('price_single', 'price_three', 'price_all',
+                                                 'stars_single', 'stars_three', 'stars_all')},
+            'stars_enabled': settings['stars_single'] > 0,
             'active_order': payments.order_public(active) if active else None,
             'telegram': bool(request.user.get('telegram_id')),
             'configured': bool(settings['card_number']),
@@ -88,6 +90,24 @@ def create_order():
         body = _body()
         order, sent = payments.create_order(cur, conn, request.user, body.get('keys'), body.get('promo'))
         return jsonify({'ok': True, 'order': payments.order_public(order), 'bot_sent': sent, 'bot': BOT_USERNAME})
+    except payments.PayError as exc:
+        return _fail(exc)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/stars', methods=['POST'])
+@auth_required
+def create_stars():
+    """Telegram Stars orqali to'lov: invoys havolasi qaytadi, ilova uni
+    Telegram.WebApp.openInvoice() bilan ochadi. To'lov webhook orqali tasdiqlanadi."""
+    if not rate_limit.hit(f'order:{request.user["id"]}', 10, 3600):
+        return jsonify({'ok': False, 'error': "Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring."}), 429
+    conn, cur = _conn()
+    try:
+        body = _body()
+        order, link = payments.create_stars_order(cur, conn, request.user, body.get('keys'), body.get('promo'))
+        return jsonify({'ok': True, 'order': payments.order_public(order), 'link': link})
     except payments.PayError as exc:
         return _fail(exc)
     finally:

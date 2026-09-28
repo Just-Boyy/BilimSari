@@ -25,16 +25,18 @@ from datetime import datetime
 
 import requests
 
+import admin_auth
 import curriculum as cur_mod
 import study
 import tgbot
-from admin_auth import ADMIN_TELEGRAM_IDS
-from db import TASHKENT_TZ
+from db import TASHKENT_TZ, add_column_if_missing, get_connection
 from games import clock
 
 AWAITING, PENDING, APPROVED, REJECTED = 'awaiting_receipt', 'pending', 'approved', 'rejected'
 CANCELLED, EXPIRED = 'cancelled', 'expired'
+AWAITING_STARS = 'awaiting_stars'        # Telegram Stars invoysi ochildi, to'lov kutilmoqda
 OPEN = (AWAITING, PENDING)
+CARD, STARS = 'card', 'stars'            # to'lov usuli
 
 ORDER_TTL_MS = 24 * 3600 * 1000          # chek shu vaqt ichida yuborilishi kerak
 REMIND_AFTER_MS = 30 * 60 * 1000         # tekshirilmagan chek haqida adminga eslatma
@@ -54,8 +56,12 @@ DEFAULT_SETTINGS = {
     'price_single': study.SUBJECT_PRICE,
     'price_three': 30000,
     'price_all': 80000,
+    # Telegram Stars narxlari (0 — Stars orqali to'lov o'chiq)
+    'stars_single': 100,
+    'stars_three': 250,
+    'stars_all': 1000,
 }
-_INT_SETTINGS = ('price_single', 'price_three', 'price_all')
+_INT_SETTINGS = ('price_single', 'price_three', 'price_all', 'stars_single', 'stars_three', 'stars_all')
 
 
 class PayError(Exception):
@@ -125,6 +131,10 @@ def ensure_tables(cur, conn):
     cur.execute('CREATE INDEX IF NOT EXISTS idx_pay_orders_status ON pay_orders (status, created_ms)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_pay_orders_receipt ON pay_orders (receipt_unique_id)')
     conn.commit()
+    # To'lov usuli: card (admin tasdiqlaydi) yoki stars (Telegram Stars — avtomatik).
+    # Stars buyurtmalarida amount — Stars soni, charge_id — Telegram to'lov identifikatori.
+    add_column_if_missing(cur, conn, 'pay_orders', 'method', "TEXT NOT NULL DEFAULT 'card'")
+    add_column_if_missing(cur, conn, 'pay_orders', 'charge_id', 'TEXT')
 
 
 # ───────────────────────── Yordamchilar ─────────────────────────
@@ -157,14 +167,11 @@ def _tg_result(res):
 
 
 def admin_ids() -> list:
-    return sorted(ADMIN_TELEGRAM_IDS)
+    return admin_auth.admin_ids()
 
 
 def is_admin(telegram_id) -> bool:
-    try:
-        return int(telegram_id) in ADMIN_TELEGRAM_IDS
-    except (TypeError, ValueError):
-        return False
+    return admin_auth.is_admin_telegram(telegram_id)
 
 
 # ───────────────────────── Sozlamalar ─────────────────────────
@@ -192,7 +199,10 @@ def save_settings(cur, conn, body) -> dict:
             value = int(body.get(key, current[key]))
         except (TypeError, ValueError):
             raise PayError("Narx butun son bo'lishi kerak.")
-        if value < 0 or value > 10_000_000 or (key == 'price_single' and value < 1000):
+        if key.startswith('stars_'):
+            if value < 0 or value > 100_000:
+                raise PayError("Stars narxi 0 dan 100 000 gacha bo'lishi kerak (0 — o'chiq).")
+        elif value < 0 or value > 10_000_000 or (key == 'price_single' and value < 1000):
             raise PayError("Narx noto'g'ri (bitta fan kamida 1 000 so'm).")
         new[key] = value
     for key, value in new.items():
@@ -214,9 +224,9 @@ def locked_subjects(cur, user_id) -> list:
     return [k for k in cur_mod.SUBJECT_CATALOG if k in present and k != chosen and k not in bought]
 
 
-def bundle_price(settings, n, locked_total):
-    """(eng arzon narx, paket nomi yoki None)."""
-    single, three, whole = settings['price_single'], settings['price_three'], settings['price_all']
+def bundle_price(settings, n, locked_total, prefix='price'):
+    """(eng arzon narx, paket nomi yoki None). prefix='stars' — Telegram Stars narxlari."""
+    single, three, whole = settings[f'{prefix}_single'], settings[f'{prefix}_three'], settings[f'{prefix}_all']
     best, label = n * single, None
     if three and n >= 3:
         price = (n // 3) * three + (n % 3) * single
@@ -261,6 +271,10 @@ def quote(cur, user_id, keys, promo_code=None, now=None) -> dict:
     promo = _promo_row(cur, promo_code, user_id, now)
     percent = int(promo['percent']) if promo else 0
     amount = int(round(bundled * (100 - percent) / 100 / 100.0)) * 100 if percent else bundled
+    stars = None
+    if settings['stars_single'] > 0:
+        stars_bundled, _ = bundle_price(settings, len(items), len(locked), 'stars')
+        stars = max(1, int(round(stars_bundled * (100 - percent) / 100))) if percent else stars_bundled
     return {
         'items': [{'key': k, 'name': cur_mod.subject_meta(k)['name']} for k in items],
         'keys': items,
@@ -271,6 +285,7 @@ def quote(cur, user_id, keys, promo_code=None, now=None) -> dict:
         'discount': bundled - amount,
         'amount': amount,
         'saving': base - amount,
+        'stars': stars,                  # Telegram Stars narxi (None — o'chiq)
     }
 
 
@@ -290,6 +305,7 @@ def order_public(order) -> dict:
     keys = _items(order)
     return {
         'id': order['id'], 'code': order['code'], 'status': order['status'],
+        'method': order['method'] or CARD,
         'items': [{'key': k, 'name': cur_mod.subject_meta(k)['name']} for k in keys],
         'amount': int(order['amount']), 'base_amount': int(order['base_amount']),
         'promo_code': order['promo_code'], 'promo_percent': int(order['promo_percent'] or 0),
@@ -398,8 +414,8 @@ def apply_promo(cur, conn, order, code, now=None):
 
 
 def user_orders(cur, user_id, limit=20) -> list:
-    cur.execute('SELECT * FROM pay_orders WHERE user_id = %s AND status != %s ORDER BY created_ms DESC LIMIT %s',
-                (user_id, CANCELLED, limit))
+    cur.execute('SELECT * FROM pay_orders WHERE user_id = %s AND status NOT IN (%s, %s) ORDER BY created_ms DESC LIMIT %s',
+                (user_id, CANCELLED, AWAITING_STARS, limit))
     return [order_public(o) for o in cur.fetchall()]
 
 
@@ -602,6 +618,111 @@ def retry_order(cur, conn, order_id, chat_id, now=None):
         return create_order(cur, conn, user, keys, None, now)
 
 
+# ───────────────────────── Telegram Stars ─────────────────────────
+# Raqamli mahsulot uchun Telegram tavsiya qiladigan yo'l: to'lov Telegram'ning
+# o'z oynasida bo'ladi (openInvoice), tasdiq webhook orqali keladi va fan
+# admin aralashuvisiz darhol ochiladi.
+
+def create_stars_order(cur, conn, user, keys, promo_code=None, now=None) -> tuple:
+    """(buyurtma, invoys havolasi)."""
+    now = now or clock.now_ms()
+    q = quote(cur, user['id'], keys, promo_code, now)
+    if not q['stars']:
+        raise PayError("Telegram Stars orqali to'lov hozircha o'chiq.", 'stars_off')
+    code = _new_code(cur)
+    names = subject_names(q['keys'])
+    cur.execute(
+        '''INSERT INTO pay_orders (code, user_id, chat_id, items, base_amount, amount, promo_code, promo_percent,
+                                   status, created_ms, method)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
+        (code, user['id'], int(user.get('telegram_id') or 0), json.dumps(q['keys']), q['stars'], q['stars'],
+         q['promo']['code'] if q['promo'] else None, q['promo']['percent'] if q['promo'] else 0,
+         AWAITING_STARS, now, STARS),
+    )
+    order_id = cur.fetchone()['id']
+    conn.commit()
+    title = ('BilimSari: ' + (names if len(q['keys']) == 1 else f"{len(q['keys'])} ta fan"))[:32]
+    res = _tg_result(tgbot.tg_api('createInvoiceLink', {
+        'title': title,
+        'description': (f"{names} — fan(lar)ga to'liq kirish. Buyurtma {code}.")[:255],
+        'payload': code,
+        'currency': 'XTR',
+        'prices': [{'label': title, 'amount': q['stars']}],
+    }))
+    if not res:
+        cur.execute('UPDATE pay_orders SET status = %s WHERE id = %s', (CANCELLED, order_id))
+        conn.commit()
+        raise PayError("Telegram to'lov oynasini ochib bo'lmadi. Birozdan keyin urinib ko'ring.", 'invoice_failed', 502)
+    return _order(cur, order_id), res
+
+
+def _stars_order(cur, payload):
+    cur.execute('SELECT * FROM pay_orders WHERE code = %s AND method = %s', (str(payload or ''), STARS))
+    return cur.fetchone()
+
+
+def answer_pre_checkout(pcq):
+    """Telegram to'lovdan oldin so'raydi: buyurtma hali amaldami? 10 soniyada javob kerak."""
+    conn = get_connection()
+    cur = conn.cursor()
+    error = None
+    try:
+        order = _stars_order(cur, pcq.get('invoice_payload'))
+        if not order or order['status'] != AWAITING_STARS:
+            error = "Buyurtma topilmadi yoki muddati tugagan. Do'kondan qaytadan urinib ko'ring."
+        elif pcq.get('currency') != 'XTR' or int(pcq.get('total_amount') or 0) != int(order['amount']):
+            error = "To'lov summasi mos kelmadi. Do'kondan qaytadan urinib ko'ring."
+        elif any(k not in locked_subjects(cur, order['user_id']) for k in _items(order)):
+            error = "Bu fan allaqachon ochilgan."
+    finally:
+        cur.close()
+        conn.close()
+    payload = {'pre_checkout_query_id': pcq.get('id'), 'ok': error is None}
+    if error:
+        payload['error_message'] = error
+    tgbot.tg_api('answerPreCheckoutQuery', payload)
+    return error is None
+
+
+def stars_paid(message, now=None):
+    """Muvaffaqiyatli Stars to'lovi: fanlar ochiladi, o'quvchi va adminlarga xabar."""
+    now = now or clock.now_ms()
+    sp = message.get('successful_payment') or {}
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        order = _stars_order(cur, sp.get('invoice_payload'))
+        if not order:
+            return False
+        cur.execute('''UPDATE pay_orders SET status = %s, decided_ms = %s, decided_by = %s, charge_id = %s
+                       WHERE id = %s AND status != %s''',
+                    (APPROVED, now, 'Telegram Stars', sp.get('telegram_payment_charge_id'), order['id'], APPROVED))
+        if cur.rowcount != 1:
+            conn.rollback()
+            return False                      # allaqachon ishlangan
+        keys = _items(order)
+        for k in keys:
+            cur.execute('INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '
+                        'ON CONFLICT (user_id, subject_key) DO NOTHING', (order['user_id'], k))
+        if order['promo_code']:
+            cur.execute('UPDATE promo_codes SET used = used + 1 WHERE code = %s', (order['promo_code'],))
+        conn.commit()
+        chat = (message.get('chat') or {}).get('id') or order['chat_id']
+        tgbot.send(chat, f"🎉 <b>To'lov qabul qilindi!</b> ({order['code']})\n"
+                         f"{html.escape(subject_names(keys))} — ochildi. Omad!",
+                   'Darsni boshlash', f'topics.html?fan={keys[0]}' if keys else 'dashboard.html')
+        cur.execute('SELECT name FROM users WHERE id = %s', (order['user_id'],))
+        who = html.escape((cur.fetchone() or {}).get('name') or "O'quvchi")
+        for admin in admin_ids():
+            tgbot.tg_api('sendMessage', {'chat_id': admin, 'parse_mode': 'HTML', 'text': (
+                f"⭐ <b>Stars to'lovi</b> — {order['code']}\n👤 {who} (ID {order['user_id']})\n"
+                f"📚 {html.escape(subject_names(keys))}\n💰 {int(order['amount'])} Stars — fan avtomatik ochildi.")})
+        return True
+    finally:
+        cur.close()
+        conn.close()
+
+
 # ───────────────────────── Promo-kodlar ─────────────────────────
 
 def list_promos(cur) -> list:
@@ -651,19 +772,22 @@ def overview(cur, now=None) -> dict:
     day = clock.period_start_ms('day', now)
     month = clock.period_start_ms('month', now)
 
-    def total(since):
+    def total(since, method=CARD):
         cur.execute('SELECT COUNT(*) AS n, COALESCE(SUM(amount), 0) AS s FROM pay_orders '
-                    'WHERE status = %s AND decided_ms >= %s', (APPROVED, since))
+                    'WHERE status = %s AND decided_ms >= %s AND method = %s', (APPROVED, since, method))
         r = cur.fetchone()
         return {'count': int(r['n']), 'sum': int(r['s'])}
 
     cur.execute('SELECT COUNT(*) AS n FROM pay_orders WHERE status = %s', (PENDING,))
     pending = int(cur.fetchone()['n'])
-    return {'today': total(day), 'month': total(month), 'all': total(0), 'pending': pending}
+    # so'mdagi tushum — faqat karta orqali; Stars alohida hisoblanadi
+    return {'today': total(day), 'month': total(month), 'all': total(0), 'pending': pending,
+            'stars_month': total(month, STARS), 'stars_all': total(0, STARS)}
 
 
 def admin_orders(cur, status=None, page=1, per_page=30) -> dict:
-    where, params = ("WHERE o.status = %s", [status]) if status else ("WHERE o.status != %s", [CANCELLED])
+    where, params = (("WHERE o.status = %s", [status]) if status
+                     else ("WHERE o.status NOT IN (%s, %s)", [CANCELLED, AWAITING_STARS]))
     cur.execute(f'SELECT COUNT(*) AS n FROM pay_orders o {where}', params)
     count = int(cur.fetchone()['n'])
     cur.execute(f'''SELECT o.*, u.name AS user_name, u.username FROM pay_orders o
@@ -717,6 +841,9 @@ def housekeeping(cur, conn, now=None) -> dict:
     cur.execute('UPDATE pay_orders SET status = %s WHERE status = %s AND created_ms < %s',
                 (EXPIRED, AWAITING, now - ORDER_TTL_MS))
     expired = cur.rowcount
+    # To'lanmay qolgan Stars invoyslari — tarixda ko'rinmasligi uchun bekor qilinadi
+    cur.execute('UPDATE pay_orders SET status = %s WHERE status = %s AND created_ms < %s',
+                (CANCELLED, AWAITING_STARS, now - ORDER_TTL_MS))
     conn.commit()
     cur.execute('SELECT id, code, amount FROM pay_orders WHERE status = %s AND receipt_ms < %s AND reminded_ms IS NULL '
                 'ORDER BY receipt_ms', (PENDING, now - REMIND_AFTER_MS))

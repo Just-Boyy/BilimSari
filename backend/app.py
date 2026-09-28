@@ -7,6 +7,7 @@ from flask_cors import CORS
 from flask_compress import Compress
 import hashlib
 import html
+import json
 import logging
 import os
 
@@ -16,6 +17,7 @@ import admin_audit
 import admin_auth
 import ai_tutor
 import botchat
+import broadcast
 import daily
 import notify
 import pay_api
@@ -25,7 +27,7 @@ import rate_limit
 import study
 import study_api
 from auth_core import SECRET, auth_required, create_token, token_from_request
-from db import add_column_if_missing, get_connection
+from db import add_column_if_missing, get_connection, utc_now
 from games import api as games_api
 from games import rooms as game_rooms
 from games import schema as game_schema
@@ -159,6 +161,8 @@ def init_db():
         achievements.ensure_tables(cur, conn)
         photos.ensure_tables(cur, conn)
         payments.ensure_tables(cur, conn)
+        botchat.ensure_tables(cur, conn)
+        broadcast.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
         conn.rollback()
@@ -529,6 +533,14 @@ def service_worker():
 
 # ───────────────────────────── Telegram bot (webhook) ─────────────────────────────
 
+BOT_DESCRIPTION = (
+    "BilimSari — maktab fanlarini o'rganish platformasi: har kuni yangi mavzu, test va uy vazifasi, "
+    "kun savoli, do'stlar va kompyuter bilan bilim o'yinlari, chaqmoq va nishonlar. "
+    "«Start» tugmasini bosing va o'rganishni boshlang!"
+)
+BOT_SHORT_DESCRIPTION = "Maktab fanlari: darslar, kun savoli, bilim o'yinlari va chaqmoq ⚡"
+
+
 def send_start_message(chat_id, first_name):
     # parse_mode=HTML — ismdagi <, & kabi belgilar xabarni buzmasligi uchun escape
     name = html.escape(first_name or 'do‘st')
@@ -536,19 +548,15 @@ def send_start_message(chat_id, first_name):
         'chat_id': chat_id,
         'text': (
             f'Salom, {name}!\n\n'
-            f'<b>BilimSari</b> — bilim olish platformasi.\n'
-            f'Kurslar, testlar, XP va streak — hammasi Telegram ichida.\n\n'
-            f'Pastdagi tugma orqali ilovani oching.'
+            f'<b>BilimSari</b> — maktab fanlarini o‘rganish platformasi.\n\n'
+            f'📚 Har kuni yangi mavzu, test va uy vazifasi\n'
+            f'❓ Kun savoli — har kuni bitta savol va kunlik reyting\n'
+            f'🎮 Do‘stlar va kompyuter bilan bilim bellashuvi\n'
+            f'⚡ Chaqmoq to‘plang, nishonlar yig‘ing\n\n'
+            f'Pastdagi menyudan tanlang 👇 Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'
         ),
         'parse_mode': 'HTML',
-        'reply_markup': {
-            'inline_keyboard': [[
-                {
-                    'text': 'Boshlash',
-                    'web_app': {'url': WEBAPP_URL},
-                }
-            ]]
-        },
+        'reply_markup': botchat.menu_keyboard(),
     })
 
 
@@ -602,38 +610,58 @@ def send_help_message(chat_id):
         'chat_id': chat_id,
         'text': (
             'Buyruqlar:\n'
-            '/start — ilovani ochish\n'
+            '/start — asosiy menyu\n'
             '/kun — kun savoli\n'
             '/sotib_olish — fan sotib olish\n'
             '/tolovlarim — to‘lovlarim\n'
             '/help — yordam\n\n'
+            'Pastdagi menyu tugmalaridan ham foydalanishingiz mumkin. '
             'Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'
         ),
+        'reply_markup': botchat.menu_keyboard(),
     })
 
 
+BOT_COMMANDS = [
+    {'command': 'start', 'description': 'Asosiy menyu'},
+    {'command': 'kun', 'description': 'Kun savoli'},
+    {'command': 'sotib_olish', 'description': 'Fan sotib olish'},
+    {'command': 'tolovlarim', 'description': "To'lovlarim"},
+    {'command': 'help', 'description': 'Yordam'},
+]
+WEBHOOK_UPDATES = ['message', 'callback_query', 'pre_checkout_query']
+
+
 def setup_telegram_bot():
-    """Webhook + menu tugmasi — polling kerak emas, 24/7 Flask orqali."""
+    """Webhook, buyruqlar, tavsif va menyu tugmasi. Har bir gunicorn worker
+    ishga tushganda chaqiriladi, lekin sozlama o'zgarmagan bo'lsa Telegram'ga
+    qayta yuborilmaydi (job_runs'da sozlama xeshi + sana bilan egallanadi) —
+    oldin ikkala worker bir vaqtda yuborib, 429 xatosi chiqardi."""
     if not BOT_TOKEN:
         logger.warning('BOT_TOKEN yo‘q — Telegram webhook o‘rnatilmadi')
         return
     webhook_url = WEBAPP_URL.rstrip('/') + '/telegram/webhook'
+    config = json.dumps([webhook_url, WEBHOOK_UPDATES, BOT_COMMANDS, BOT_DESCRIPTION, BOT_SHORT_DESCRIPTION,
+                         WEBAPP_URL, hashlib.sha256(WEBHOOK_SECRET.encode()).hexdigest()], sort_keys=True)
+    slot = hashlib.sha256(config.encode()).hexdigest()[:16] + ':' + utc_now().date().isoformat()
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        if not notify._claim(cur, conn, 'bot_setup', slot):
+            return                     # boshqa worker allaqachon sozlagan
+    finally:
+        cur.close()
+        conn.close()
     r = tg_api('setWebhook', {
         'url': webhook_url,
-        'allowed_updates': ['message', 'callback_query'],
+        'allowed_updates': WEBHOOK_UPDATES,
         'drop_pending_updates': False,
         'secret_token': WEBHOOK_SECRET,
     })
     logger.info('setWebhook: %s', r)
-    tg_api('setMyCommands', {
-        'commands': [
-            {'command': 'start', 'description': 'Ilovani ochish'},
-            {'command': 'kun', 'description': 'Kun savoli'},
-            {'command': 'sotib_olish', 'description': 'Fan sotib olish'},
-            {'command': 'tolovlarim', 'description': "To'lovlarim"},
-            {'command': 'help', 'description': 'Yordam'},
-        ]
-    })
+    tg_api('setMyCommands', {'commands': BOT_COMMANDS})
+    tg_api('setMyDescription', {'description': BOT_DESCRIPTION})
+    tg_api('setMyShortDescription', {'short_description': BOT_SHORT_DESCRIPTION})
     tg_api('setChatMenuButton', {
         'menu_button': {
             'type': 'web_app',
@@ -649,6 +677,13 @@ def telegram_webhook():
         return jsonify({'ok': False}), 403
 
     data = request.get_json(silent=True) or {}
+    # Telegram bir yangilanishni qayta yuborgan bo'lsa — ikkinchi marta ishlamaymiz
+    if not botchat.first_time(data.get('update_id')):
+        return jsonify({'ok': True})
+    # Telegram Stars: to'lovdan oldingi tekshiruv (10 soniya ichida javob kerak)
+    if data.get('pre_checkout_query'):
+        payments.answer_pre_checkout(data['pre_checkout_query'])
+        return jsonify({'ok': True})
     # Inline tugmalar: admin "Tasdiqlash / Rad etish", o'quvchi "Promo-kod / Bekor qilish"
     if data.get('callback_query'):
         botchat.handle_callback(data['callback_query'])
@@ -659,6 +694,14 @@ def telegram_webhook():
     chat = message.get('chat') or {}
     chat_id = chat.get('id')
     if not chat_id:
+        return jsonify({'ok': True})
+    # Telegram Stars bilan muvaffaqiyatli to'lov — fan darhol ochiladi
+    if message.get('successful_payment'):
+        payments.stars_paid(message)
+        return jsonify({'ok': True})
+    # Guruhlarda Mini App tugmasi ishlamaydi — shaxsiy chatga havola beriladi
+    if chat.get('type', 'private') != 'private':
+        botchat.handle_group(message)
         return jsonify({'ok': True})
 
     first_name = (message.get('from') or {}).get('first_name') or chat.get('first_name') or ''

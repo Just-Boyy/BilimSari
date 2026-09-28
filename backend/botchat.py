@@ -25,6 +25,77 @@ logger = logging.getLogger('bilimsari.botchat')
 STATE_TTL_MS = 10 * 60 * 1000
 SUPPORT_LIMIT = 30            # soatiga o'quvchidan adminga xabar
 ACK_EVERY_S = 30 * 60         # "adminga yuborildi" tasdig'i shu oraliqda bir marta
+UPDATES_KEEP_MS = 2 * 24 * 3600 * 1000
+
+# Bot chatining pastidagi doimiy menyu (reply keyboard)
+BTN_APP = '📚 Ilovani ochish'
+BTN_DAILY = '❓ Kun savoli'
+BTN_SHOP = "🛒 Do'kon"
+BTN_ORDERS = "🧾 To'lovlarim"
+BTN_SUPPORT = "💬 Admin bilan bog'lanish"
+
+
+def menu_keyboard():
+    return {
+        'keyboard': [
+            [{'text': BTN_APP, 'web_app': {'url': tgbot.app_url('dashboard.html')}}],
+            [{'text': BTN_DAILY, 'web_app': {'url': tgbot.app_url('daily.html')}},
+             {'text': BTN_SHOP, 'web_app': {'url': tgbot.app_url('shop.html')}}],
+            [{'text': BTN_ORDERS}, {'text': BTN_SUPPORT}],
+        ],
+        'resize_keyboard': True,
+        'is_persistent': True,
+    }
+
+
+def ensure_tables(cur, conn):
+    # Telegram bir yangilanishni qayta yuborsa (server sekin javob berganda) —
+    # ikkinchi marta ishlanmasligi uchun
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS bot_updates (
+            update_id BIGINT PRIMARY KEY,
+            received_ms BIGINT NOT NULL
+        )
+    ''')
+    conn.commit()
+
+
+def first_time(update_id) -> bool:
+    """Yangilanish birinchi marta kelganmi (update_id bo'yicha)."""
+    try:
+        update_id = int(update_id)
+    except (TypeError, ValueError):
+        return True
+    conn, cur = _db()
+    try:
+        cur.execute('INSERT INTO bot_updates (update_id, received_ms) VALUES (%s, %s) ON CONFLICT DO NOTHING',
+                    (update_id, clock.now_ms()))
+        fresh = cur.rowcount == 1
+        conn.commit()
+        return fresh
+    except Exception:  # noqa: BLE001
+        conn.rollback()
+        return True
+    finally:
+        _close(conn, cur)
+
+
+def cleanup_updates(cur, conn, now=None):
+    cur.execute('DELETE FROM bot_updates WHERE received_ms < %s', ((now or clock.now_ms()) - UPDATES_KEEP_MS,))
+    conn.commit()
+
+
+def handle_group(message):
+    """Guruhda buyruq yozilsa — Mini App tugmasi guruhda ishlamaydi, shuning
+    uchun botning shaxsiy chatiga havola beriladi. Oddiy xabarlar e'tiborsiz."""
+    text = (message.get('text') or '').strip()
+    if not text.startswith('/'):
+        return
+    tgbot.tg_api('sendMessage', {
+        'chat_id': (message.get('chat') or {}).get('id'),
+        'text': "📚 BilimSari'dan foydalanish uchun botga shaxsiy chatda yozing.",
+        'reply_markup': {'inline_keyboard': [[{'text': 'Botni ochish', 'url': f'https://t.me/{tgbot.BOT_USERNAME}'}]]},
+    })
 
 
 def _send(chat_id, text, markup=None):
@@ -161,6 +232,13 @@ def handle_message(message):
                 _admin_reply(cur, chat_id, message)
                 return
         text = (message.get('text') or '').strip()
+        # Pastki menyu tugmalari (matn yuboradi) — adminga savol sifatida ketmaydi
+        if text == BTN_ORDERS:
+            send_my_orders(chat_id)
+            return
+        if text == BTN_SUPPORT:
+            _send(chat_id, "💬 Savolingizni shu yerga yozing — admin javob beradi. Rasm yoki skrinshot ham yuborishingiz mumkin.")
+            return
         state = _get_state(cur, chat_id)
         if text and state and state.startswith('promo:'):
             _promo_input(cur, conn, chat_id, int(state.split(':')[1]), text)
@@ -303,7 +381,8 @@ def send_my_orders(chat_id):
     lines = ["🧾 <b>To'lovlarim</b>"]
     for o in orders:
         names = ', '.join(i['name'] for i in o['items'])
-        lines.append(f"\n<b>{o['code']}</b> — {payments.som(o['amount'])}\n{html.escape(names)}\n"
+        price = f"{o['amount']} Stars" if o.get('method') == payments.STARS else payments.som(o['amount'])
+        lines.append(f"\n<b>{o['code']}</b> — {price}\n{html.escape(names)}\n"
                      f"{STATUS_LABELS.get(o['status'], o['status'])} • {payments._date(o['created_ms'])}"
                      + (f"\nSabab: {html.escape(o['reject_reason'])}" if o['reject_reason'] else ''))
     _send(chat_id, '\n'.join(lines))

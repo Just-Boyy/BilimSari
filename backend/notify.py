@@ -28,6 +28,8 @@ import threading
 import time
 from datetime import datetime, timedelta, timezone
 
+import botchat
+import broadcast
 import curriculum as cur_mod
 import daily
 import payments
@@ -318,6 +320,8 @@ def tick(now_ms=None):
         if _claim(cur, conn, 'cooldown', str(now_ms // (5 * 60 * 1000))):
             cooldown_ready(cur, conn, now_ms)
             payments.housekeeping(cur, conn, now_ms)
+            broadcast.resume_stale(cur, conn, now_ms)      # worker o'lib qolgan tarqatishni davom ettirish
+            botchat.cleanup_updates(cur, conn, now_ms)
         local = datetime.fromtimestamp(now_ms / 1000, TASHKENT_TZ)
         if (QUESTION_HOUR <= local.hour < QUESTION_LAST_HOUR
                 and _claim(cur, conn, 'question', local.date().isoformat())):

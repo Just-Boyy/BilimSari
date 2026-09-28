@@ -13,7 +13,7 @@
 
 <div class="ustki">
   <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
-  <h1>Fan sotib olish<small>To'lov bot orqali, admin tasdiqlaydi</small></h1>
+  <h1>Fan sotib olish<small>Telegram Stars yoki karta orqali</small></h1>
 </div>
 
 <main class="sahifa" style="padding-top:18px">
@@ -38,6 +38,7 @@
   var promo = '';
   var hisobTimer = null;
   var oxirgiHisob = 0;
+  var oxirgiNarx = null;   // oxirgi hisoblangan narx (tugma matni uchun)
 
   var som = UI.pul;
 
@@ -96,7 +97,7 @@
       bogla();
       return;
     }
-    if (!d.configured) {
+    if (!d.configured && !starsMumkin()) {
       tana.innerHTML = tepa + (d.is_admin
         ? UI.holat({
             belgi: 'settings', sarlavha: 'Karta raqami kiritilmagan',
@@ -115,9 +116,14 @@
     if (p.price_three && d.subjects.length >= 3) paketlar.push('3 ta fan — ' + som(p.price_three));
     if (p.price_all && d.subjects.length >= 2) paketlar.push('Barcha fanlar (' + d.subjects.length + ' ta) — ' + som(p.price_all));
 
+    var qadamlar = starsMumkin() && d.configured
+      ? ['Fan tanlang', 'To\'lov usulini tanlang', 'Stars — fan darhol ochiladi', 'Karta — admin chekni tasdiqlaydi']
+      : starsMumkin()
+        ? ['Fan tanlang', 'Telegram Stars bilan to\'lang', 'Fan darhol ochiladi']
+        : ['Fan tanlang', 'Botga karta raqami keladi', 'To\'lab, chekni botga yuboring', 'Admin tasdiqlaydi'];
     tana.innerHTML = tepa +
-      '<ol class="dokon-qadamlar" aria-label="Qanday ishlaydi">' +
-        '<li>Fan tanlang</li><li>Botga karta raqami keladi</li><li>To\'lab, chekni botga yuboring</li><li>Admin tasdiqlaydi</li>' +
+      '<ol class="dokon-qadamlar" aria-label="Qanday ishlaydi" style="grid-template-columns:repeat(' + qadamlar.length + ',1fr)">' +
+        qadamlar.map(function (q) { return '<li>' + UI.esc(q) + '</li>'; }).join('') +
       '</ol>' +
       (paketlar.length
         ? '<div class="dokon-paket">' + UI.nishon('gem') + '<span>Paketlar arzonroq: ' + UI.esc(paketlar.join(' • ')) + '</span>' +
@@ -199,14 +205,70 @@
     var qator = function (nom, qiymat, cls) {
       return '<div class="qator-summa' + (cls ? ' ' + cls : '') + '"><span>' + UI.esc(nom) + '</span><span>' + UI.esc(qiymat) + '</span></div>';
     };
+    oxirgiNarx = q;
+    var stars = q.stars && starsMumkin();
+    var karta = dokon.configured;
     el.innerHTML =
       qator(q.items.length + ' ta fan', som(q.base)) +
       (q.bundle ? qator(q.bundle, '−' + som(q.base - q.bundled), 'chegirma') : '') +
       (q.promo ? qator('Promo-kod ' + q.promo.code + ' (−' + q.promo.percent + '%)', '−' + som(q.discount), 'chegirma') : '') +
-      qator('Jami', som(q.amount), 'jami') +
-      '<button class="tugma" type="button" id="tolashTugma">' + UI.nishon('send') + '<span>Botda to\'lash</span></button>' +
-      '<p class="izoh-kichik" style="text-align:center">Bot sizga karta raqami va buyurtma kodini yuboradi.</p>';
-    document.getElementById('tolashTugma').onclick = buyurtma;
+      (karta ? qator('Jami', som(q.amount), 'jami') : qator('Jami', q.stars + ' Stars', 'jami')) +
+      // Telegram Stars — to'lov Telegram oynasida, fan darhol ochiladi
+      (stars
+        ? '<button class="tugma" type="button" id="starsTugma">' + UI.nishon('star') +
+            '<span>Telegram Stars — ' + q.stars + ' Stars</span></button>' +
+          '<p class="izoh-kichik" style="text-align:center">Telegram ichida to\'lanadi, fan darhol ochiladi.</p>'
+        : '') +
+      (karta
+        ? '<button class="tugma' + (stars ? ' tugma-ikkilamchi' : '') + '" type="button" id="tolashTugma">' +
+            UI.nishon('send') + '<span>Karta orqali — ' + som(q.amount) + '</span></button>' +
+          '<p class="izoh-kichik" style="text-align:center">Bot karta raqamini yuboradi, chekni admin tasdiqlaydi.</p>'
+        : '');
+    if (karta) document.getElementById('tolashTugma').onclick = buyurtma;
+    if (stars) document.getElementById('starsTugma').onclick = starsTolov;
+  }
+
+  /** Telegram Stars faqat Telegram ichida (openInvoice, Bot API 6.1+) va admin yoqqan bo'lsa. */
+  function starsMumkin() {
+    var tg = window.Telegram && window.Telegram.WebApp;
+    return !!(dokon && dokon.stars_enabled && tg && tg.initData && tg.openInvoice &&
+      tg.isVersionAtLeast && tg.isVersionAtLeast('6.1'));
+  }
+
+  async function starsTolov() {
+    var btn = document.getElementById('starsTugma');
+    btn.disabled = true;
+    var r = await API.starsBuyurtma(tanlangan, promo);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; return; }
+    Telegram.WebApp.openInvoice(r.link, function (holat) {
+      if (holat === 'paid') { starsTolandi(r.order); return; }
+      btn.disabled = false;
+      if (holat === 'failed') UI.xabar("To'lov amalga oshmadi. Qayta urinib ko'ring.", 'xato');
+    });
+  }
+
+  // To'lov Telegram'da bo'ldi — webhook fanni ochguncha bir necha soniya kutamiz
+  function starsTolandi(o) {
+    tana.innerHTML =
+      '<div class="karta dokon-yuborildi">' +
+        '<span class="belgi">' + UI.nishon('checkCircle') + '</span>' +
+        '<h2>To\'lov qabul qilindi!</h2>' +
+        '<p id="starsHolat">' + UI.esc(o.items.map(function (i) { return i.name; }).join(', ')) + ' ochilmoqda...</p>' +
+        '<a class="tugma" href="subjects.html">Fanlarimga o\'tish</a>' +
+      '</div>';
+    var keys = o.items.map(function (i) { return i.key; });
+    var urinish = 0;
+    (function tekshir() {
+      API.do_kon().then(function (d) {
+        var hali = d.ok && d.subjects.some(function (s) { return keys.indexOf(s.key) >= 0; });
+        if (d.ok && !hali) {
+          document.getElementById('starsHolat').textContent = 'Fan(lar) ochildi. O\'qishda omad!';
+          try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
+        } else if (++urinish < 10) {
+          setTimeout(tekshir, 1500);
+        }
+      });
+    })();
   }
 
   function hisobla(promoTekshir) {
@@ -239,7 +301,7 @@
     if (!r.ok) {
       UI.xabar(r.error, 'xato');
       btn.disabled = false;
-      btn.lastChild.textContent = 'Botda to\'lash';
+      btn.lastChild.textContent = 'Karta orqali — ' + som(oxirgiNarx ? oxirgiNarx.amount : 0);
       if (r.code === 'pending_exists') yukla();
       return;
     }

@@ -8,19 +8,21 @@ o'z login yo'li (parol — ADMIN_PASSWORD muhit o'zgaruvchisi).
 
 import csv
 import hmac
+import html
 import io
 import os
-import time
 from datetime import timedelta
 
-import requests
 from flask import Blueprint, Response, jsonify, request
 
 import admin_audit
+import admin_auth
+import broadcast
 import curriculum as cur_mod
 import payments
 import rate_limit
 import study
+import tgbot
 from admin_auth import (
     ADMIN_PASSWORD, admin_required, is_admin_telegram, make_admin_token, revoke_all_sessions,
 )
@@ -628,44 +630,164 @@ def activity_feed():
 
 @bp.route('/broadcast', methods=['POST'])
 @admin_required
-def broadcast():
-    body = request.get_json(silent=True) or {}
-    message = (body.get('message') or '').strip()
-    if not message:
-        return jsonify({'ok': False, 'error': "Xabar matni bo'sh"}), 400
-    if len(message) > 3500:
-        return jsonify({'ok': False, 'error': 'Xabar juda uzun (3500 belgigacha)'}), 400
+def broadcast_start():
+    """Ommaviy xabarni fonda boshlaydi va darhol javob qaytaradi — jarayonni
+    GET /broadcast/<id> orqali kuzatiladi (broadcast.py)."""
     if not BOT_TOKEN:
         return jsonify({'ok': False, 'error': "BOT_TOKEN sozlanmagan — bot ulanmagan"}), 503
-
+    message = ((request.get_json(silent=True) or {}).get('message') or '').strip()
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('SELECT telegram_id FROM users WHERE telegram_id IS NOT NULL')
-        chat_ids = [row['telegram_id'] for row in cur.fetchall()]
+        info = broadcast.start(cur, conn, message)
+    except broadcast.BroadcastError as exc:
+        return jsonify({'ok': False, 'error': exc.message}), exc.http_status
+    finally:
+        cur.close()
+        conn.close()
+    admin_audit.log('broadcast', detail=f'id={info["id"]} total={info["total"]} message={message[:120]!r}',
+                    ip=_client_ip())
+    return jsonify(dict(info, ok=True))
+
+
+@bp.route('/broadcast/<int:bid>', methods=['GET'])
+@admin_required
+def broadcast_status(bid):
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        info = broadcast.get(cur, bid)
+    finally:
+        cur.close()
+        conn.close()
+    if not info:
+        return jsonify({'ok': False, 'error': 'Topilmadi'}), 404
+    return jsonify(dict(info, ok=True))
+
+
+# ───────────────────────── Adminlar ─────────────────────────
+
+def _admins_payload(cur):
+    extra = {}
+    cur.execute('SELECT telegram_id, name FROM bot_admins')
+    for r in cur.fetchall():
+        extra[int(r['telegram_id'])] = r['name']
+    ids = sorted(set(extra) | admin_auth.ADMIN_TELEGRAM_IDS)
+    names = {}
+    if ids:
+        marks = ', '.join(['%s'] * len(ids))
+        cur.execute(f'SELECT telegram_id, name, username FROM users WHERE telegram_id IN ({marks})', ids)
+        names = {int(r['telegram_id']): r for r in cur.fetchall()}
+    return [{
+        'telegram_id': tid,
+        'name': (names.get(tid) or {}).get('name') or extra.get(tid) or 'Admin',
+        'username': (names.get(tid) or {}).get('username'),
+        'owner': admin_auth.is_owner(tid),
+    } for tid in ids]
+
+
+@bp.route('/admins', methods=['GET'])
+@admin_required
+def admins_list():
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return jsonify({'ok': True, 'admins': _admins_payload(cur)})
     finally:
         cur.close()
         conn.close()
 
-    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
-    sent = failed = 0
-    for chat_id in chat_ids:
-        try:
-            r = requests.post(url, json={'chat_id': chat_id, 'text': message}, timeout=10)
-            if r.status_code == 200 and (r.json() or {}).get('ok'):
-                sent += 1
-            else:
-                failed += 1
-        except Exception:
-            failed += 1
-        time.sleep(0.05)
 
-    admin_audit.log(
-        'broadcast',
-        detail=f'sent={sent} failed={failed} total={len(chat_ids)} message={message[:120]!r}',
-        ip=_client_ip(),
-    )
-    return jsonify({'ok': True, 'sent': sent, 'failed': failed, 'total': len(chat_ids)})
+@bp.route('/admins', methods=['POST'])
+@admin_required
+def admins_add():
+    """Admin qo'shish: @username, Telegram ID yoki ilovadagi o'quvchi ID si.
+    Odam botda /start bosgan bo'lishi kerak — aks holda unga cheklar yetib bormaydi."""
+    who = str((request.get_json(silent=True) or {}).get('who') or '').strip()
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        row = None
+        if who.startswith('@') or (who and not who.isdigit()):
+            cur.execute('SELECT id, name, telegram_id FROM users WHERE LOWER(username) = %s AND telegram_id IS NOT NULL',
+                        (who.lstrip('@').lower(),))
+            row = cur.fetchone()
+        elif who.isdigit():
+            cur.execute('SELECT id, name, telegram_id FROM users WHERE telegram_id = %s', (int(who),))
+            row = cur.fetchone()
+            if not row:
+                cur.execute('SELECT id, name, telegram_id FROM users WHERE id = %s AND telegram_id IS NOT NULL',
+                            (int(who),))
+                row = cur.fetchone()
+        if not row:
+            return jsonify({'ok': False, 'error': "Bunday foydalanuvchi topilmadi. U BilimSari'ni Telegram orqali "
+                                                  "ochgan bo'lishi kerak (@username, Telegram ID yoki ilovadagi ID)."}), 404
+        tid = int(row['telegram_id'])
+        if admin_auth.is_admin_telegram(tid):
+            return jsonify({'ok': False, 'error': 'Bu odam allaqachon admin.'}), 409
+        cur.execute('INSERT INTO bot_admins (telegram_id, name, added_ms) VALUES (%s, %s, %s)',
+                    (tid, row['name'], clock.now_ms()))
+        conn.commit()
+        admin_auth.extra_admin_ids(refresh=True)
+        ok, _ = tgbot.send(tid, "👨‍💼 Siz <b>BilimSari</b> admini qilib tayinlandingiz.\n"
+                                "Endi to'lov cheklari va o'quvchilar savollari sizga ham keladi.",
+                           'Admin panel', 'admin.html')
+        admin_audit.log('admin_add', detail=f'telegram_id={tid} name={row["name"]}', ip=_client_ip())
+        return jsonify({'ok': True, 'admins': _admins_payload(cur), 'notified': ok})
+    finally:
+        cur.close()
+        conn.close()
+
+
+@bp.route('/admins/<int:tid>', methods=['DELETE'])
+@admin_required
+def admins_remove(tid):
+    if admin_auth.is_owner(tid):
+        return jsonify({'ok': False, 'error': "Asosiy adminni (ega) olib tashlab bo'lmaydi."}), 400
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('DELETE FROM bot_admins WHERE telegram_id = %s', (tid,))
+        removed = cur.rowcount
+        conn.commit()
+        admin_auth.extra_admin_ids(refresh=True)
+        if not removed:
+            return jsonify({'ok': False, 'error': 'Admin topilmadi'}), 404
+        admin_audit.log('admin_remove', detail=f'telegram_id={tid}', ip=_client_ip())
+        return jsonify({'ok': True, 'admins': _admins_payload(cur)})
+    finally:
+        cur.close()
+        conn.close()
+
+
+@bp.route('/users/<int:user_id>/message', methods=['POST'])
+@admin_required
+def message_user(user_id):
+    """Admin o'quvchiga birinchi bo'lib yozadi (bot orqali). O'quvchining
+    javobi odatdagidek jonli chat bo'lib adminlarga keladi."""
+    text = str((request.get_json(silent=True) or {}).get('text') or '').strip()
+    if not text:
+        return jsonify({'ok': False, 'error': "Xabar matni bo'sh"}), 400
+    if len(text) > 3500:
+        return jsonify({'ok': False, 'error': 'Xabar juda uzun (3500 belgigacha)'}), 400
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('SELECT name, telegram_id FROM users WHERE id = %s', (user_id,))
+        u = cur.fetchone()
+    finally:
+        cur.close()
+        conn.close()
+    if not u:
+        return jsonify({'ok': False, 'error': 'Foydalanuvchi topilmadi'}), 404
+    if not u['telegram_id']:
+        return jsonify({'ok': False, 'error': "Bu o'quvchi Telegram orqali kirmagan — unga yozib bo'lmaydi."}), 400
+    ok, code = tgbot.send(u['telegram_id'], "👨‍💼 <b>Admin:</b>\n" + html.escape(text))
+    if not ok:
+        return jsonify({'ok': False, 'error': "Yuborilmadi — o'quvchi botni bloklagan yoki ishga tushirmagan."
+                        if code == 403 else 'Telegram xatosi, qayta urinib ko\'ring.'}), 502
+    admin_audit.log('message_user', detail=f'user_id={user_id} text={text[:80]!r}', ip=_client_ip())
+    return jsonify({'ok': True})
 
 
 @bp.route('/users/export.csv', methods=['GET'])

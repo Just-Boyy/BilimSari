@@ -341,6 +341,7 @@
     <div class="adm-tab" data-bolim="fanlar"><span class="nishon" data-ikon="book"></span> Fanlar</div>
     <div class="adm-tab" data-bolim="faoliyat"><span class="nishon" data-ikon="clock"></span> Faoliyat</div>
     <div class="adm-tab" data-bolim="xabar"><span class="nishon" data-ikon="send"></span> Xabar</div>
+    <div class="adm-tab" data-bolim="adminlar"><span class="nishon" data-ikon="users"></span> Adminlar</div>
     <div class="adm-tab" data-bolim="jurnal"><span class="nishon" data-ikon="clock"></span> Jurnal</div>
   </nav>
 
@@ -397,6 +398,12 @@
               <label>3 ta fan<input id="sUchta" type="number" min="0" step="1000"></label>
               <label>Barcha fanlar<input id="sHammasi" type="number" min="0" step="1000"></label>
             </div>
+            <p class="izoh-kichik" style="margin-top:4px">Telegram Stars narxlari (0 — Stars o'chiq). Stars bilan to'langanda fan darhol ochiladi.</p>
+            <div class="qator3">
+              <label>1 fan, Stars<input id="stBitta" type="number" min="0" step="10"></label>
+              <label>3 ta fan, Stars<input id="stUchta" type="number" min="0" step="10"></label>
+              <label>Barchasi, Stars<input id="stHammasi" type="number" min="0" step="10"></label>
+            </div>
             <button class="tugma" type="submit">Saqlash</button>
             <p class="adm-forma-xabar" id="sXabar" role="status"></p>
           </form>
@@ -440,12 +447,30 @@
       <div class="adm-xabar-karta">
         <h2 style="margin-bottom:6px">Telegram orqali xabar yuborish</h2>
         <p class="izoh-kichik" style="margin-bottom:14px">
-          Telegram orqali kirgan barcha foydalanuvchilarga bir vaqtda xabar yuboriladi. Bu amalni ortga qaytarib bo'lmaydi.
+          Telegram orqali kirgan va eslatmalarni o'chirmagan barcha foydalanuvchilarga yuboriladi. Yuborish fonda
+          boradi — sahifani yopsangiz ham davom etadi. Bu amalni ortga qaytarib bo'lmaydi.
         </p>
         <textarea id="xabarMatn" rows="5" placeholder="Xabar matnini yozing..."
           style="width:100%;padding:12px 14px;border:2px solid var(--chiziq);border-radius:var(--r);font-family:var(--tana);font-size:14px;resize:vertical"></textarea>
         <button class="tugma" id="xabarYuborTugma" style="margin-top:12px">Yuborish</button>
         <p id="xabarNatija" style="margin-top:12px;font-size:13px"></p>
+      </div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-adminlar">
+      <div class="adm-xabar-karta">
+        <h2 style="margin-bottom:6px">Adminlar</h2>
+        <p class="izoh-kichik" style="margin-bottom:14px">
+          Adminlarga to'lov cheklari, o'quvchilar savollari va kunlik hisobot bot orqali keladi. Ular admin panelga
+          ham Telegram orqali parolsiz kira oladi. Yangi admin BilimSari'ni Telegram orqali ochgan bo'lishi kerak.
+        </p>
+        <div id="adminlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+        <form class="adm-forma" id="adminForma" style="margin-top:14px">
+          <label>@username, Telegram ID yoki ilovadagi ID
+            <input id="adminKim" placeholder="masalan, @ali_valiyev" maxlength="40" autocomplete="off"></label>
+          <button class="tugma" type="submit">Admin qo'shish</button>
+          <p class="adm-forma-xabar" id="adminXabar" role="status"></p>
+        </form>
       </div>
     </section>
 
@@ -494,6 +519,7 @@ var AUDIT_NOMLARI = {
   grant_unlock: 'Fan ochildi', revoke_unlock: 'Fan yopildi', delete_user: 'Foydalanuvchi o\'chirildi',
   broadcast: 'Ommaviy xabar yuborildi',
   payment_approve: "To'lov tasdiqlandi", payment_reject: "To'lov rad etildi",
+  admin_add: "Admin qo'shildi", admin_remove: 'Admin olib tashlandi', message_user: "O'quvchiga xabar yozildi",
   payment_settings: "Karta/narxlar o'zgardi", promo_create: 'Promo-kod yaratildi',
 };
 
@@ -629,6 +655,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'fanlar' && !yuklandi.fanlar) { yuklandi.fanlar = true; yuklaFanlar(); }
     if (nomi === 'faoliyat' && !yuklandi.faoliyat) { yuklandi.faoliyat = true; yuklaFaoliyat(); }
     if (nomi === 'jurnal' && !yuklandi.jurnal) { yuklandi.jurnal = true; yuklaJurnal(); }
+    if (nomi === 'adminlar') yuklaAdminlar();
   });
 });
 
@@ -807,9 +834,36 @@ async function foydalanuvchiModalniOch(id) {
         '</div>'
       : '') +
 
+    // Admin o'quvchiga bot orqali birinchi bo'lib yozadi
+    (u.telegram_id
+      ? '<div style="margin-top:18px">' +
+          '<h3 style="font-size:14px;margin-bottom:6px">Botda xabar yozish</h3>' +
+          '<textarea id="shaxsiyXabar" rows="3" maxlength="3500" placeholder="O\'quvchiga xabar..." ' +
+            'style="width:100%;padding:10px 12px;border:2px solid var(--chiziq);border-radius:10px;font-family:var(--tana);font-size:14px;resize:vertical"></textarea>' +
+          '<div style="display:flex;align-items:center;gap:10px;margin-top:6px">' +
+            '<button class="adm-mini-tugma yashil" id="shaxsiyYubor" type="button">Yuborish</button>' +
+            '<span class="adm-forma-xabar" id="shaxsiyNatija" role="status"></span>' +
+          '</div>' +
+        '</div>'
+      : '<p class="izoh-kichik" style="margin-top:14px">Bu o\'quvchi Telegram orqali kirmagan — unga botdan yozib bo\'lmaydi.</p>') +
+
     '<div style="margin-top:20px;display:flex;gap:8px">' +
       '<button class="adm-mini-tugma qizil" id="foydalanuvchiO_chir" style="flex:1">Foydalanuvchini o\'chirish</button>' +
     '</div>';
+
+  var shaxsiyTugma = document.getElementById('shaxsiyYubor');
+  if (shaxsiyTugma) {
+    shaxsiyTugma.addEventListener('click', async function () {
+      var matn = document.getElementById('shaxsiyXabar').value.trim();
+      if (!matn) { formaXabar('shaxsiyNatija', '❌ Xabar matnini yozing'); return; }
+      shaxsiyTugma.disabled = true;
+      var r = await AdminAPI.foydalanuvchigaYoz(id, matn);
+      shaxsiyTugma.disabled = false;
+      if (!r.ok) { formaXabar('shaxsiyNatija', '❌ ' + (r.error || 'Xatolik')); return; }
+      document.getElementById('shaxsiyXabar').value = '';
+      formaXabar('shaxsiyNatija', '✅ Yuborildi. Javobi botda sizga keladi.', true);
+    });
+  }
 
   document.getElementById('modalYop').addEventListener('click', function () { fon.classList.remove('ochiq'); });
 
@@ -954,6 +1008,7 @@ async function yuklaTolovUmumiy() {
     ['Shu oy', pul(s.month.sum), s.month.count + ' ta to\'lov'],
     ['Jami tushum', pul(s.all.sum), s.all.count + ' ta to\'lov'],
     ['Kutilmoqda', s.pending, 'tekshirilmagan chek'],
+    ['Telegram Stars', (s.stars_all ? s.stars_all.sum : 0) + ' Stars', (s.stars_all ? s.stars_all.count : 0) + " ta to'lov (avtomatik)"],
   ].map(function (k) {
     return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son">' + esc(k[1]) +
       '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
@@ -966,6 +1021,9 @@ async function yuklaTolovUmumiy() {
   document.getElementById('sBitta').value = st.price_single;
   document.getElementById('sUchta').value = st.price_three;
   document.getElementById('sHammasi').value = st.price_all;
+  document.getElementById('stBitta').value = st.stars_single;
+  document.getElementById('stUchta').value = st.stars_three;
+  document.getElementById('stHammasi').value = st.stars_all;
   if (!st.card_number) {
     quti.innerHTML += '<p class="izoh-kichik" style="color:var(--qizil);margin:-10px 0 16px">' +
       "Karta raqami kiritilmagan — o'quvchilar to'lov qila olmaydi. Pastdagi «Karta va narxlar» bo'limini to'ldiring.</p>";
@@ -1062,7 +1120,8 @@ async function yuklaBuyurtmalar() {
       return '<tr><td class="nomzod">' + esc(o.code) + '</td>' +
         '<td>' + esc(o.user_name || '?') + '<div class="kichik">ID ' + o.user_id + '</div></td>' +
         '<td style="white-space:normal;min-width:140px">' + esc(fanlarNomi(o)) + '</td>' +
-        '<td>' + pul(o.amount) + (o.promo_code ? '<div class="kichik">' + esc(o.promo_code) + '</div>' : '') + '</td>' +
+        '<td>' + (o.method === 'stars' ? o.amount + ' Stars' : pul(o.amount)) +
+          (o.promo_code ? '<div class="kichik">' + esc(o.promo_code) + '</div>' : '') + '</td>' +
         '<td><span class="adm-badge ' + h[1] + '">' + esc(h[0]) + '</span>' +
           (o.reject_reason ? '<div class="kichik">' + esc(o.reject_reason) + '</div>' : '') +
           (o.decided_by ? '<div class="kichik">' + esc(o.decided_by) + '</div>' : '') + '</td>' +
@@ -1099,6 +1158,9 @@ document.getElementById('tolovSozlamaForma').addEventListener('submit', async fu
     price_single: document.getElementById('sBitta').value,
     price_three: document.getElementById('sUchta').value,
     price_all: document.getElementById('sHammasi').value,
+    stars_single: document.getElementById('stBitta').value,
+    stars_three: document.getElementById('stUchta').value,
+    stars_all: document.getElementById('stHammasi').value,
   });
   if (!r.ok) { formaXabar('sXabar', '❌ ' + (r.error || 'Xatolik')); return; }
   formaXabar('sXabar', '✅ Saqlandi', true);
@@ -1264,6 +1326,49 @@ async function yuklaJurnal() {
 
 // ─────────────────────── Xabar (broadcast) ───────────────────────
 
+// ─────────────────────── Adminlar ───────────────────────
+
+function adminlarChiz(admins) {
+  var quti = document.getElementById('adminlarQuti');
+  quti.className = '';
+  quti.innerHTML = admins.map(function (a) {
+    return '<div class="adm-qator"><span><b>' + esc(a.name) + '</b>' +
+      '<span class="yorliq"> • ' + (a.username ? '@' + esc(a.username) + ' • ' : '') + 'tg ' + a.telegram_id + '</span></span>' +
+      (a.owner
+        ? '<span class="adm-badge yashil">Asosiy</span>'
+        : '<button class="adm-mini-tugma qizil" type="button" data-admin-ochir="' + a.telegram_id + '">Olib tashlash</button>') +
+      '</div>';
+  }).join('');
+  quti.querySelectorAll('[data-admin-ochir]').forEach(function (b) {
+    b.onclick = async function () {
+      if (!(await tasdiqSora('Bu admin olib tashlansinmi?'))) return;
+      var r = await AdminAPI.adminOchir(b.dataset.adminOchir);
+      if (r.ok) { adminlarChiz(r.admins); formaXabar('adminXabar', '✅ Olib tashlandi', true); }
+      else formaXabar('adminXabar', '❌ ' + (r.error || 'Xatolik'));
+    };
+  });
+}
+
+async function yuklaAdminlar() {
+  var r = await AdminAPI.adminlar();
+  if (!r.ok) { document.getElementById('adminlarQuti').textContent = r.error || 'Xatolik'; return; }
+  adminlarChiz(r.admins);
+}
+
+document.getElementById('adminForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var kim = document.getElementById('adminKim').value.trim();
+  if (!kim) { formaXabar('adminXabar', '❌ @username yoki ID ni yozing'); return; }
+  formaXabar('adminXabar', "Qo'shilmoqda...", true);
+  var r = await AdminAPI.adminQosh(kim);
+  if (!r.ok) { formaXabar('adminXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  document.getElementById('adminKim').value = '';
+  adminlarChiz(r.admins);
+  formaXabar('adminXabar', r.notified
+    ? "✅ Admin qo'shildi va unga botda xabar yuborildi"
+    : "✅ Admin qo'shildi, lekin bot unga yoza olmadi — u botda /start bosishi kerak", true);
+});
+
 document.getElementById('xabarYuborTugma').addEventListener('click', async function () {
   var matn = document.getElementById('xabarMatn').value.trim();
   var natija = document.getElementById('xabarNatija');
@@ -1273,16 +1378,33 @@ document.getElementById('xabarYuborTugma').addEventListener('click', async funct
   if (!matn) { natija.style.color = 'var(--qizil)'; natija.textContent = "Xabar matnini yozing."; return; }
   if (!(await tasdiqSora("Bu xabar Telegram orqali kirgan BARCHA foydalanuvchilarga yuboriladi. Davom etilsinmi?"))) return;
 
-  this.disabled = true;
-  natija.textContent = 'Yuborilmoqda...';
+  var tugma = this;
+  tugma.disabled = true;
+  natija.textContent = 'Boshlanmoqda...';
 
   var res = await AdminAPI.xabarYuborish(matn);
-  this.disabled = false;
-
-  if (!res.ok) { natija.style.color = 'var(--qizil)'; natija.textContent = res.error || 'Xatolik'; return; }
-  natija.style.color = 'var(--yashil-quyuq)';
-  natija.textContent = res.sent + ' ta foydalanuvchiga yuborildi' + (res.failed ? ', ' + res.failed + ' ta muvaffaqiyatsiz' : '') + '.';
-  if (res.sent > 0) document.getElementById('xabarMatn').value = '';
+  if (!res.ok) {
+    tugma.disabled = false;
+    natija.style.color = 'var(--qizil)';
+    natija.textContent = res.error || 'Xatolik';
+    return;
+  }
+  document.getElementById('xabarMatn').value = '';
+  // Xabar fonda yuboriladi — jarayonni kuzatamiz (sahifani yopsangiz ham yuborish davom etadi)
+  var chiz = function (b) {
+    natija.style.color = b.state === 'done' ? 'var(--yashil-quyuq)' : '';
+    natija.textContent = (b.state === 'done' ? 'Tugadi: ' : 'Yuborilmoqda: ' + b.done + ' / ' + b.total + ' — ') +
+      b.sent + ' ta yuborildi' +
+      (b.failed ? ', ' + b.failed + ' ta xato' : '') +
+      (b.blocked ? ', ' + b.blocked + ' ta botni bloklagan' : '') + '.';
+  };
+  chiz(res);
+  (async function kuzat() {
+    var b = await AdminAPI.xabarHolati(res.id);
+    if (b.ok) chiz(b);
+    if (b.ok && b.state === 'running') { setTimeout(kuzat, 1500); return; }
+    tugma.disabled = false;
+  })();
 });
 </script>
 </body>

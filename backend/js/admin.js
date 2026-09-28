@@ -152,6 +152,14 @@
     xabarYuborish: function (matn) {
       return so_rov('/api/admin/broadcast', { method: 'POST', body: { message: matn } });
     },
+    xabarHolati: function (id) { return so_rov('/api/admin/broadcast/' + id); },
+
+    adminlar: function () { return so_rov('/api/admin/admins'); },
+    adminQosh: function (kim) { return so_rov('/api/admin/admins', { method: 'POST', body: { who: kim } }); },
+    adminOchir: function (tgId) { return so_rov('/api/admin/admins/' + tgId, { method: 'DELETE' }); },
+    foydalanuvchigaYoz: function (id, matn) {
+      return so_rov('/api/admin/users/' + id + '/message', { method: 'POST', body: { text: matn } });
+    },
 
     auditJurnali: function (limit) { return so_rov('/api/admin/audit?limit=' + (limit || 100)); },
 
