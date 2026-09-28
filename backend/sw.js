@@ -7,7 +7,7 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v18';
+const CACHE = 'bilimsari-v19';
 
 const ASSETS = [
   '/',
@@ -28,6 +28,7 @@ const ASSETS = [
   '/manifest.json',
   '/css/app.css',
   '/css/games.css',
+  '/js/i18n.js',
   '/js/api.js',
   '/js/ui.js',
   '/js/telegram.js',

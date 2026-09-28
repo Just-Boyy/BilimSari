@@ -65,6 +65,8 @@
         }
         localStorage.setItem('bilimsari_token', data.token);
         localStorage.setItem('bilimsari_user', JSON.stringify(data.user));
+        // Boshqa qurilmada tanlangan interfeys tili
+        if (window.I18N && data.user.lang) I18N.moslash(data.user.lang);
       }
       return data;
     } catch (e) {

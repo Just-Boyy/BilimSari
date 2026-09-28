@@ -39,17 +39,22 @@
   button.fan { width: 100%; text-align: left; font: inherit; cursor: pointer; }
   button.fan:disabled { opacity: .6; cursor: wait; }
 </style>
+<script src="js/i18n.js"></script>
 </head>
 <body class="no-nav">
 
 <div class="ob">
+  <div class="til-kichik" role="radiogroup" aria-label="Interfeys tili" translate="no">
+    <button type="button" data-til="uz">O'zbekcha</button>
+    <button type="button" data-til="ru">Русский</button>
+  </div>
   <div class="nuqtalar" aria-hidden="true" id="nuqtalar"></div>
 
   <!-- Ism -->
   <section class="qadam" id="qadamIsm" aria-labelledby="ismSarlavha">
     <!-- Telegram'dan aniqlangan ism — tasdiqlash yoki o'zgartirish -->
     <div id="ismAniqlanganBlok" hidden>
-      <h1>Ismingiz <span id="aniqlanganIsm"></span>?</h1>
+      <h1><span data-ru="Вас зовут">Ismingiz</span> <span id="aniqlanganIsm"></span>?</h1>
       <p class="kirish-tavsif">Sizga shu ism bilan murojaat qilamiz.</p>
     </div>
 
@@ -89,6 +94,19 @@
 <script src="js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/telegram.js"></script>
+<script>
+document.querySelectorAll('.til-kichik [data-til]').forEach(function (b) {
+  var faol = b.dataset.til === I18N.til;
+  b.classList.toggle('faol', faol);
+  b.setAttribute('aria-checked', faol ? 'true' : 'false');
+  b.addEventListener('click', async function () {
+    if (b.dataset.til === I18N.til) return;
+    I18N.ornat(b.dataset.til);
+    if (API.token()) await API.tilSaqla(b.dataset.til);
+    location.reload();
+  });
+});
+</script>
 <script>
 (async function () {
   // Faqat Telegram Mini App ichida yoki mavjud sessiya bilan ochiladi.

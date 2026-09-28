@@ -157,30 +157,30 @@
         : '';
       switch (b.type) {
         case 'count':
-          return '<div class="blok blok-sanash">' + sarlavha +
+          return '<div translate="no" class="blok blok-sanash">' + sarlavha +
             (b.groups || []).map(function (g) {
               return '<div class="sanash-qator">' +
                 shakllar(g.shape, g.n) +
                 '<span class="sanash-yozuv">' + esc(g.label || '') + '</span></div>';
             }).join('') + '</div>';
         case 'example':
-          return '<div class="blok blok-misol">' + sarlavha +
+          return '<div translate="no" class="blok blok-misol">' + sarlavha +
             '<p>' + matnHtml(b.body) + '</p></div>';
         case 'note':
-          return '<div class="blok blok-eslatma">' + sarlavha +
+          return '<div translate="no" class="blok blok-eslatma">' + sarlavha +
             '<p>' + matnHtml(b.body) + '</p></div>';
         case 'life':
-          return '<div class="blok blok-hayot">' + sarlavha +
+          return '<div translate="no" class="blok blok-hayot">' + sarlavha +
             '<p>' + matnHtml(b.body) + '</p></div>';
         case 'formula':
-          return '<div class="blok blok-formula">' + esc(b.body) + '</div>';
+          return '<div translate="no" class="blok blok-formula">' + esc(b.body) + '</div>';
         case 'steps':
-          return '<div class="blok blok-qadamlar">' + sarlavha + '<ol>' +
+          return '<div translate="no" class="blok blok-qadamlar">' + sarlavha + '<ol>' +
             (b.items || []).map(function (i) {
               return '<li>' + matnHtml(i) + '</li>';
             }).join('') + '</ol></div>';
         case 'table':
-          return '<div class="blok"><div class="jadval-o-rov"><table>' +
+          return '<div translate="no" class="blok"><div class="jadval-o-rov"><table>' +
             '<thead><tr>' + (b.head || []).map(function (h) {
               return '<th>' + esc(h) + '</th>';
             }).join('') + '</tr></thead><tbody>' +
@@ -188,7 +188,7 @@
               return '<tr>' + r.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>';
             }).join('') + '</tbody></table></div></div>';
         default:
-          return '<div class="blok">' + sarlavha + '<p>' + matnHtml(b.body) + '</p></div>';
+          return '<div translate="no" class="blok">' + sarlavha + '<p>' + matnHtml(b.body) + '</p></div>';
       }
     }).join('');
   }

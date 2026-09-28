@@ -8,6 +8,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
 <link rel="stylesheet" href="css/app.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -41,6 +42,16 @@
         <p class="izoh-kichik" style="margin-top:6px">Reyting, o'yinlar va kun savolida shu ism ko'rinadi.</p>
       </div>
     </div>
+  </section>
+
+  <!-- Interfeys tili -->
+  <section class="bo-lim">
+    <h2 style="margin-bottom:12px">Interfeys tili</h2>
+    <div class="til-tanlov" role="radiogroup" aria-label="Interfeys tili">
+      <button type="button" class="til-tugma" role="radio" data-til="uz" translate="no">O'zbekcha</button>
+      <button type="button" class="til-tugma" role="radio" data-til="ru" translate="no">Русский</button>
+    </div>
+    <p class="izoh" style="margin-top:8px">Darslar o'zbek tilida qoladi</p>
   </section>
 
   <!-- Avatar atrofida ko'rinadigan nishonlar -->
@@ -112,6 +123,20 @@
   var men = await API.men();
   if (!men.ok) { UI.xabar(men.error, 'xato'); return; }
   var u = men.user;
+
+  // ── Interfeys tili ────────────────────────────────────
+  document.querySelectorAll('.til-tugma').forEach(function (b) {
+    var faol = b.dataset.til === I18N.til;
+    b.classList.toggle('faol', faol);
+    b.setAttribute('aria-checked', faol ? 'true' : 'false');
+    b.addEventListener('click', async function () {
+      if (b.dataset.til === I18N.til) return;
+      document.querySelectorAll('.til-tugma').forEach(function (x) { x.disabled = true; });
+      I18N.ornat(b.dataset.til);
+      await API.tilSaqla(b.dataset.til);      // boshqa qurilmada ham shu til
+      location.reload();
+    });
+  });
 
   // ── Rasm ──────────────────────────────────────────────
   var rasmTugma = document.getElementById('rasmTugma');
@@ -345,7 +370,7 @@
 
   document.getElementById('taklifTugma').onclick = function () {
     var link = 'https://t.me/' + (men.bot || 'bilimsaribot');
-    var matn = "BilimSari'da maktab fanlarini o'rganyapman: darslar, o'yinlar va kun savoli. Sen ham qo'shil!";
+    var matn = I18N.t("BilimSari'da maktab fanlarini o'rganyapman: darslar, o'yinlar va kun savoli. Sen ham qo'shil!");
     var url = 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(matn);
     var tg = window.Telegram && window.Telegram.WebApp;
     if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(url);

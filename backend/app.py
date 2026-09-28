@@ -151,6 +151,8 @@ def _init_db():
         ('custom_name', 'INTEGER NOT NULL DEFAULT 0'),
         ('custom_photo', 'INTEGER NOT NULL DEFAULT 0'),
         ('tg_photo_url', 'TEXT'),
+        # Interfeys tili: 'uz' (standart) yoki 'ru' — boshqa qurilmada ham shu til ochilsin
+        ('lang', 'TEXT'),
     ]:
         add_column_if_missing(cur, conn, 'users', column, ddl)
 
@@ -282,11 +284,12 @@ def me():
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('SELECT notify, custom_photo, remind_hour FROM users WHERE id = %s', (user['id'],))
+        cur.execute('SELECT notify, custom_photo, remind_hour, lang FROM users WHERE id = %s', (user['id'],))
         row = cur.fetchone() or {}
         user['notify'] = bool(row.get('notify', 1))
         user['custom_photo'] = bool(row.get('custom_photo'))
         user['remind_hour'] = notify.remind_hour(row.get('remind_hour'))
+        user['lang'] = row.get('lang') or 'uz'
     except Exception:
         conn.rollback()
         user['notify'] = True
@@ -325,6 +328,27 @@ def update_notify():
     finally:
         cur.close()
         conn.close()
+
+
+LANGS = ('uz', 'ru')
+
+
+@app.route('/api/profile/lang', methods=['POST'])
+@auth_required
+def update_lang():
+    """Sozlamalar: interfeys tili ({"lang": "uz" | "ru"}). Darslar o'zbekcha qoladi."""
+    lang = str((request.get_json(silent=True) or {}).get('lang') or '')
+    if lang not in LANGS:
+        return jsonify({'ok': False, 'error': "Til noto'g'ri tanlangan.", 'code': 'bad_lang'}), 400
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('UPDATE users SET lang = %s WHERE id = %s', (lang, request.user['id']))
+        conn.commit()
+    finally:
+        cur.close()
+        conn.close()
+    return jsonify({'ok': True, 'lang': lang})
 
 
 NAME_MAX = 40
@@ -457,7 +481,7 @@ def telegram_auth():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        'SELECT id, name, email, grade, telegram_id, photo_url FROM users WHERE telegram_id = %s',
+        'SELECT id, name, email, grade, telegram_id, photo_url, lang FROM users WHERE telegram_id = %s',
         (tg_id,)
     )
     row = cur.fetchone()
@@ -501,6 +525,7 @@ def telegram_auth():
             'username': username,
             'photo_url': photo,
             'grade': (row or {}).get('grade'),
+            'lang': (row or {}).get('lang') or None,
         }
     })
 

@@ -8,6 +8,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
 <link rel="stylesheet" href="css/app.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -194,6 +195,7 @@
         ? 'BilimSari kun savoliga ' + soniyada(n.seconds) + ' to\'g\'ri javob berdim' +
           (rt.me ? ' (' + rt.me.rank + '-o\'rin)' : '') + '! Sen qancha vaqtda yecha olasan?'
         : 'BilimSari kun savoli — bugun men adashdim. Sen yecha olasanmi?';
+      matn = I18N.t(matn);
       var url = 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(matn);
       var tg = window.Telegram && window.Telegram.WebApp;
       if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(url);

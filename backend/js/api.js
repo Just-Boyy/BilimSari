@@ -69,6 +69,7 @@
     if (typeof data.ok === 'undefined') data.ok = javob.ok;
     data.status = javob.status;
     if (!data.ok && !data.error) data.error = 'Xatolik yuz berdi (' + javob.status + ')';
+    if (data.error && window.I18N) data.error = I18N.t(data.error);   // ruscha interfeysda — xato ham ruscha
     return data;
   }
 
@@ -94,6 +95,8 @@
       sessiyaYopish();
     },
     men: function () { return so_rov('/api/me'); },
+    /** Interfeys tili ('uz' | 'ru') — serverda saqlanadi, boshqa qurilmada ham shu til ochiladi. */
+    tilSaqla: function (til) { return so_rov('/api/profile/lang', { method: 'POST', body: { lang: til } }); },
 
     // — O'qish —
     sinflar: function () { return so_rov('/api/study/grades'); },
@@ -178,12 +181,12 @@
     aiHolat: function () { return so_rov('/api/ai/status'); },
     aiTushuntir: function (fan, slug, rejim, sinf) {
       return so_rov('/api/ai/explain', {
-        method: 'POST', body: { subject_key: fan, slug: slug, mode: rejim, grade: sinf },
+        method: 'POST', body: { subject_key: fan, slug: slug, mode: rejim, grade: sinf, lang: window.I18N ? I18N.til : 'uz' },
       });
     },
     aiSavol: function (matn, fan, slug, sinf) {
       return so_rov('/api/ai/tutor', {
-        method: 'POST', body: { message: matn, subject_key: fan, slug: slug, grade: sinf },
+        method: 'POST', body: { message: matn, subject_key: fan, slug: slug, grade: sinf, lang: window.I18N ? I18N.til : 'uz' },
       });
     },
   };

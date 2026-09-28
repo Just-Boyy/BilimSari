@@ -411,6 +411,7 @@
         var bot = (cat && cat.bot) || 'bilimsaribot';
         var link = 'https://t.me/' + bot + '?start=room_' + code;
         var text = "BilimSari'da " + S.game.name + " o'yiniga taklif qilaman! Room kodi: " + code;
+        if (window.I18N) text = I18N.t(text);
         var m = G.modal(
           '<h2 id="oyModalSarlavha">Do\'stlarni taklif qilish</h2>' +
           '<p class="izoh">Do\'stingiz havolani ochsa, shu roomga kiradi. Yoki O\'yinlar bo\'limida ' +
