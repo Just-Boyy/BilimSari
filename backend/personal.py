@@ -214,7 +214,7 @@ def suggest(cur, user_id, subject_key, text, now=None) -> dict:
     if len(text) < 2 or len(text) > 120:
         raise PersonalError(f"Iltimos, {subject} fanidan mavzu nomini kiriting.", 'off_topic')
     data, error = ai_tutor.call_gemini_json(SUGGEST_PROMPT.format(subject=subject, text=text.replace('"', "'")),
-                                            max_tokens=1024, timeout=45)
+                                            max_tokens=1024, timeout=15, attempts=3, waits=(1, 2))
     if error:
         raise PersonalError("AI hozir javob bermadi. Birozdan keyin qayta urinib ko'ring.", 'ai_error', 502)
     options = []
@@ -314,7 +314,8 @@ def build(pid, attempts=2):
         prompt = LESSON_PROMPT.format(subject=subject, title=row['title'].replace('"', "'"))
         clean, last_error = None, None
         for _ in range(attempts):
-            data, error = ai_tutor.call_gemini_json(prompt, max_tokens=16384, timeout=180)
+            data, error = ai_tutor.call_gemini_json(prompt, max_tokens=16384, timeout=180, attempts=5,
+                                                    waits=(3, 8, 15, 30))
             if error:
                 last_error = error
                 continue

@@ -10,6 +10,7 @@ sinf + fan + mavzu doirasida tushuntiradi.
 import json
 import os
 import re
+import time
 
 import requests
 from flask import Blueprint, jsonify, request
@@ -224,11 +225,40 @@ def _call_gemini(system, user_content, max_tokens=900):
         return None, str(exc)
 
 
-def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120):
-    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi."""
+# Gemini ba'zan "band" (503/429) deydi — shunda biroz kutib qayta urinamiz va navbat bilan
+# zaxira modellarni sinaymiz (asosiy model birinchi).
+GEMINI_FALLBACK_MODELS = [m.strip() for m in os.environ.get(
+    'GEMINI_FALLBACK_MODELS', 'gemini-3.5-flash,gemini-3.7-flash').split(',') if m.strip()]
+RETRY_STATUSES = (429, 500, 502, 503, 504)
+
+
+def _json_once(model, payload, timeout):
+    """(obyekt, xato, qayta_urinsa_bo'ladimi)."""
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent'
+    try:
+        r = requests.post(url, json=payload, headers={'x-goog-api-key': GOOGLE_AI_API_KEY}, timeout=timeout)
+    except requests.Timeout:
+        return None, 'AI javob bermadi (vaqt tugadi).', True
+    except requests.RequestException as exc:
+        return None, str(exc), True
+    if r.status_code != 200:
+        return None, f'AI xatosi ({r.status_code}, {model})', r.status_code in RETRY_STATUSES
+    try:
+        data = r.json()
+        cands = data.get('candidates') or []
+        parts = ((cands[0] if cands else {}).get('content') or {}).get('parts') or []
+        text = ''.join(p.get('text', '') for p in parts if isinstance(p, dict)).strip()
+        text = re.sub(r'^```(?:json)?\s*|\s*```$', '', text)
+        return json.loads(text), None, False
+    except (ValueError, TypeError):
+        return None, "AI javobi noto'g'ri formatda.", True
+
+
+def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts=3, waits=(2, 5, 10, 20)):
+    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi.
+    Band bo'lsa (503/429/vaqt tugashi) — kutib qayta urinadi, modelni navbat bilan almashtiradi."""
     if not GOOGLE_AI_API_KEY:
         return None, 'AI hozircha ulanmagan.'
-    url = f'https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent'
     payload = {
         'contents': [{'role': 'user', 'parts': [{'text': prompt}]}],
         'generationConfig': {'temperature': 0.5, 'maxOutputTokens': max_tokens,
@@ -236,22 +266,17 @@ def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120):
     }
     if system:
         payload['system_instruction'] = {'parts': [{'text': system}]}
-    try:
-        r = requests.post(url, json=payload, headers={'x-goog-api-key': GOOGLE_AI_API_KEY}, timeout=timeout)
-        data = r.json() if r.content else {}
-        if r.status_code != 200:
-            return None, f'AI xatosi ({r.status_code})'
-        cands = data.get('candidates') or []
-        parts = ((cands[0] if cands else {}).get('content') or {}).get('parts') or []
-        text = ''.join(p.get('text', '') for p in parts if isinstance(p, dict)).strip()
-        text = re.sub(r'^```(?:json)?\s*|\s*```$', '', text)
-        return json.loads(text), None
-    except requests.Timeout:
-        return None, 'AI javob bermadi (vaqt tugadi).'
-    except (ValueError, TypeError):
-        return None, "AI javobi noto'g'ri formatda."
-    except Exception as exc:  # noqa: BLE001
-        return None, str(exc)
+    zaxira = [m for m in GEMINI_FALLBACK_MODELS if m != GEMINI_MODEL] or [GEMINI_MODEL]
+    error = None
+    for i in range(max(1, attempts)):
+        # asosiy, zaxira-1, asosiy, zaxira-2, ... — asosiy model eng ishonchlisi
+        model = GEMINI_MODEL if i % 2 == 0 else zaxira[(i // 2) % len(zaxira)]
+        data, error, retry = _json_once(model, payload, timeout)
+        if data is not None or not retry:
+            return data, error
+        if i + 1 < attempts:
+            time.sleep(waits[min(i, len(waits) - 1)])
+    return None, error
 
 
 @bp.route('/tutor', methods=['POST'])
