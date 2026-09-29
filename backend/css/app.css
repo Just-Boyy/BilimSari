@@ -1906,7 +1906,54 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .til-kichik button.faol { background: var(--yashil); border-color: var(--yashil); color: #fff; }
 
 /* Pastki menyuda 6 ta band — yozuvlar bir qatorda */
-.pastki-nav a > span:last-child { white-space: nowrap; font-size: 10.5px; letter-spacing: -.1px; }
+.pastki-nav a > span:last-child,
+.nav-menyu-tugma > span:last-child { white-space: nowrap; font-size: 10.5px; letter-spacing: -.1px; }
+
+/* "Menyu" tugmasi — boshqa bandlar bilan bir xil ko'rinishda */
+.nav-menyu-tugma {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 6px 2px; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 11px; font-weight: 700; color: var(--matn-3);
+}
+.nav-menyu-tugma.faol, .nav-menyu-tugma.ochiq { color: var(--yashil); }
+.nav-menyu-tugma.faol .nishon, .nav-menyu-tugma.ochiq .nishon { background: var(--yashil-fon); }
+
+/* Ochiladigan ro'yxat: telefonda menyudan yuqoriga, kompyuterda pastga */
+.nav-menyu {
+  position: absolute; right: 8px; bottom: calc(100% + 8px);
+  width: min(260px, calc(100vw - 16px));
+  background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r-katta);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, .18);
+  padding: 6px; display: grid; gap: 2px;
+  animation: navMenyuKir .16s ease-out;
+}
+.nav-menyu[hidden] { display: none; }
+.nav-menyu.pastga { top: calc(100% + 8px); bottom: auto; }
+@keyframes navMenyuKir { from { opacity: 0; transform: translateY(6px); } }
+.pastki-nav .nav-menyu a, .pastki-nav .nav-menyu button {
+  display: flex; flex: none; flex-direction: row; justify-content: flex-start; align-items: center; gap: 12px; width: 100%;
+  padding: 10px 12px; border: 0; border-radius: 12px; background: none; cursor: pointer; text-align: left;
+  font: inherit; font-size: 15px; font-weight: 700; color: var(--matn-quyuq);
+}
+.pastki-nav .nav-menyu a > span:last-child, .pastki-nav .nav-menyu button > span {
+  font-size: 15px; letter-spacing: 0; white-space: nowrap;
+}
+.pastki-nav .nav-menyu a:hover, .pastki-nav .nav-menyu button:hover,
+.pastki-nav .nav-menyu a:focus-visible, .pastki-nav .nav-menyu button:focus-visible { background: var(--fon); }
+.pastki-nav .nav-menyu a.faol { background: var(--yashil-fon); color: var(--yashil-quyuq); }
+.pastki-nav .nav-menyu .nishon {
+  width: 34px; height: 34px; padding: 0; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto;
+  background: var(--yashil-fon); color: var(--yashil-quyuq);
+}
+.pastki-nav .nav-menyu a.faol .nishon { background: #fff; }
+.pastki-nav .nav-menyu .nishon svg { width: 18px; height: 18px; }
+.pastki-nav .nav-menyu .tashqi { margin-left: auto; color: var(--matn-3); display: grid; }
+.pastki-nav .nav-menyu .tashqi svg { width: 16px; height: 16px; }
+@media (min-width: 900px) {
+  .nav-menyu-tugma { flex-direction: row; gap: 8px; padding: 14px 2px; font-size: 14px; }
+  .nav-menyu-tugma > span:last-child { font-size: 14px; }
+}
 
 /* ── Bilim Premium: ism yonidagi emoji va oltin halqa ── */
 .nik-emoji { width: 1.25em; height: 1.25em; vertical-align: -0.28em; margin-left: 4px; object-fit: contain; }

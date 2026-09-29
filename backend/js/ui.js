@@ -42,8 +42,17 @@
     { yo_l: 'games.html', nishon: 'gamepad', matn: "O'yinlar" },
     { yo_l: 'shaxsiy.html', nishon: 'sparkle', matn: 'Shaxsiy' },
     { yo_l: 'leaderboard.html', nishon: 'trophy', matn: 'Reyting' },
-    { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
   ];
+  // Oxirgi band — "Menyu": bosilganda ro'yxat ochiladi
+  var MENYU = [
+    { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
+    { yo_l: 'settings.html', nishon: 'settings', matn: 'Sozlamalar' },
+    { yo_l: 'shaxsiy.html', nishon: 'sparkle', matn: 'Shaxsiy darslar' },
+    { kanal: true, nishon: 'info', matn: 'Biz haqimizda' },
+    { yo_l: 'hamkor.html', nishon: 'users', matn: 'Hamkorlik', hamkor: true },
+  ];
+  var MENYU_SAHIFALAR = ['profile.html', 'settings.html', 'hamkor.html'];
+  var MENYU_KESH = 'bilimsari_menyu';
 
   /** Ikonka HTML si. icons.js yuklanmagan bo'lsa bo'sh qaytaradi. */
   function nishon(nom, cls, size) {
@@ -69,14 +78,92 @@
     var nav = document.createElement('nav');
     nav.className = 'pastki-nav';
     nav.setAttribute('aria-label', 'Asosiy menyu');
+    var menyuFaol = MENYU_SAHIFALAR.indexOf(joriy) >= 0;
     nav.innerHTML = NAV.map(function (n) {
       var faol = n.yo_l === joriy ? ' faol' : '';
       return '<a href="' + n.yo_l + '" class="' + faol.trim() + '"' +
         (faol ? ' aria-current="page"' : '') + '>' +
         '<span class="nishon">' + nishon(n.nishon) + '</span>' +
         '<span>' + n.matn + '</span></a>';
-    }).join('');
+    }).join('') +
+      '<button type="button" class="nav-menyu-tugma' + (menyuFaol ? ' faol' : '') + '" id="navMenyuTugma" ' +
+        'aria-haspopup="true" aria-expanded="false" aria-controls="navMenyu">' +
+        '<span class="nishon">' + nishon('menu') + '</span><span>Menyu</span></button>' +
+      '<div class="nav-menyu" id="navMenyu" role="menu" hidden></div>';
     document.body.appendChild(nav);
+    menyuUlash();
+  }
+
+  /** "Menyu" ro'yxati: Profil, Sozlamalar, Shaxsiy darslar, Biz haqimizda (kanal) va
+   * hamkorlarga — Hamkorlik. Hamkorlik va kanal havolasi serverdan (/api/menu) keladi;
+   * sahifa tez chizilishi uchun oxirgi javob localStorage'da saqlanadi. */
+  function menyuUlash() {
+    var tugma = document.getElementById('navMenyuTugma');
+    var quti = document.getElementById('navMenyu');
+    var holat = {};
+    try { holat = JSON.parse(localStorage.getItem(MENYU_KESH) || '{}') || {}; } catch (e) { holat = {}; }
+
+    var sahifa = location.pathname.split('/').pop() || 'dashboard.html';
+    function chiz() {
+      quti.innerHTML = MENYU.filter(function (m) { return !m.hamkor || holat.partner; }).map(function (m) {
+        var ichi = '<span class="nishon">' + nishon(m.nishon) + '</span><span>' + m.matn + '</span>';
+        if (m.kanal) {
+          return '<button type="button" role="menuitem" data-kanal>' + ichi +
+            '<span class="tashqi" aria-hidden="true">' + nishon('send') + '</span></button>';
+        }
+        var faol = m.yo_l === sahifa;
+        return '<a role="menuitem" href="' + m.yo_l + '"' + (faol ? ' class="faol" aria-current="page"' : '') + '>' + ichi + '</a>';
+      }).join('');
+      var kanal = quti.querySelector('[data-kanal]');
+      if (kanal) kanal.onclick = kanalniOch;
+    }
+
+    function kanalniOch() {
+      yop();
+      var url = holat.channel_url;
+      if (!url) { xabar('Kanal havolasi tez orada qo\'shiladi.'); return; }
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (tg && tg.initData && tg.openTelegramLink && /^https:\/\/t\.me\//.test(url)) tg.openTelegramLink(url);
+      else window.open(url, '_blank', 'noopener');
+    }
+
+    function och() {
+      quti.hidden = false;
+      // Odatda yuqoriga ochiladi (telefonda menyu pastda); tepada joy bo'lmasa — pastga
+      quti.classList.remove('pastga');
+      if (tugma.getBoundingClientRect().top < quti.offsetHeight + 16) quti.classList.add('pastga');
+      tugma.setAttribute('aria-expanded', 'true');
+      tugma.classList.add('ochiq');
+      var birinchi = quti.querySelector('a, button');
+      if (birinchi && document.activeElement === tugma && tugma.dataset.klaviatura) birinchi.focus();
+    }
+    function yop() {
+      quti.hidden = true;
+      tugma.setAttribute('aria-expanded', 'false');
+      tugma.classList.remove('ochiq');
+    }
+
+    tugma.onclick = function (e) {
+      e.stopPropagation();
+      if (quti.hidden) och(); else yop();
+    };
+    tugma.onkeydown = function (e) { if (e.key === 'Enter' || e.key === ' ') tugma.dataset.klaviatura = '1'; };
+    document.addEventListener('click', function (e) {
+      if (!quti.hidden && !quti.contains(e.target)) yop();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !quti.hidden) { yop(); tugma.focus(); }
+    });
+
+    chiz();
+    if (window.API && API.token && API.token()) {
+      API.get('/api/menu').then(function (r) {
+        if (!r || !r.ok) return;
+        holat = { partner: !!r.partner, channel_url: r.channel_url || null };
+        try { localStorage.setItem(MENYU_KESH, JSON.stringify(holat)); } catch (e) { /* */ }
+        chiz();
+      });
+    }
   }
 
   // ── Holatlar ─────────────────────────────────────────────

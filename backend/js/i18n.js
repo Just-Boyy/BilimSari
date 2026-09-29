@@ -392,7 +392,13 @@
       'В боте есть номер карты: оплатите и отправьте фото чека боту. После подтверждения админом Premium активируется.',
     'Bilim Premium faollashmoqda...': 'Bilim Premium активируется...', 'Premium faollashdi! Omad!': 'Premium активирован! Удачи!',
 
-    // Hamkorlik (profil)
+    // Pastki "Menyu"
+    'Menyu': 'Меню', 'Biz haqimizda': 'О нас', "Kanal havolasi tez orada qo'shiladi.":'Ссылка на канал скоро появится.',
+    // Hamkorlik (sahifa)
+    'Promo-kodingiz, sotuvlar va daromad': 'Ваш промокод, продажи и доход', 'Kod': 'Код',
+    'Siz hali hamkor emassiz': 'Вы пока не партнёр',
+    "Hamkorlik dasturi admin tanlagan o'quvchilar uchun: o'z promo-kodingiz orqali qilingan har bir xariddan foiz olasiz. Qiziqsangiz, botga yozing.":
+      'Партнёрская программа — для учеников, выбранных админом: вы получаете процент с каждой покупки по вашему промокоду. Если интересно, напишите боту.',
     'Hamkorlik': 'Партнёрство', 'Faol': 'Активен', 'To\'xtatilgan': 'Приостановлен', 'Promo-kodingiz': 'Ваш промокод',
     'Sizga:': 'Вам:', 'Do\'stingizga:': 'Другу:', 'Har bir xariddan': 'С каждой покупки',
     'Kodingiz vaqtincha to\'xtatilgan. Savolingiz bo\'lsa, botga yozing.': 'Ваш код временно приостановлен. Если есть вопросы, напишите боту.',

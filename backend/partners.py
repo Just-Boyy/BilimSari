@@ -329,7 +329,7 @@ def notify_sale(cur, earning):
     after = effective_percent(earning['base'], tot['sales'], t)
     if after > before:
         lines += ['', f"🚀 Tabriklaymiz! {tot['sales']} ta sotuvdan o'tdingiz — endi komissiyangiz <b>{after}%</b>."]
-    tgbot.send(u['telegram_id'], '\n'.join(lines), 'Hamkorlik', 'profile.html#hamkor')
+    tgbot.send(u['telegram_id'], '\n'.join(lines), 'Hamkorlik', 'hamkor.html')
 
 
 def record_payout(cur, conn, user_id, amount, note, by, now=None) -> dict:
@@ -352,7 +352,7 @@ def record_payout(cur, conn, user_id, amount, note, by, now=None) -> dict:
         tgbot.send(u['telegram_id'],
                    f"💸 <b>Hamkorlik mukofoti to'landi: {som(amount)}</b>\n"
                    + (f"Izoh: {html.escape(note)}\n" if note else '')
-                   + f"Qolgan hisob: {som(left)}. Rahmat!", 'Hamkorlik', 'profile.html#hamkor')
+                   + f"Qolgan hisob: {som(left)}. Rahmat!", 'Hamkorlik', 'hamkor.html')
     return {'amount': amount}
 
 
@@ -466,7 +466,7 @@ def start_link(cur, conn, chat_id, code_row):
     code = code_row['code']
     if me and int(me['id']) == int(code_row['partner_user_id']):
         tgbot.send(chat_id, f"🤝 <b>{code}</b> — bu sizning hamkorlik kodingiz. Uni do'stlaringizga yuboring: "
-                            f"ular xarid qilganda sizga foiz tushadi.", 'Hamkorlik', 'profile.html#hamkor')
+                            f"ular xarid qilganda sizga foiz tushadi.", 'Hamkorlik', 'hamkor.html')
         return
     remember(cur, conn, chat_id, code)
     percent = int(code_row['percent'])

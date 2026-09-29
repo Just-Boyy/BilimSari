@@ -667,6 +667,16 @@
           <p class="adm-forma-xabar" id="xatoXabar" role="status" style="margin-top:8px"></p>
         </div>
       </div>
+      <div class="adm-xabar-karta" style="margin-top:16px">
+        <h2 style="margin-bottom:6px">«Biz haqimizda» — Telegram kanal</h2>
+        <p class="izoh-kichik" style="margin-bottom:12px">O'quvchi pastki «Menyu» → «Biz haqimizda»ni bossa, shu kanal
+          ochiladi. Masalan: <b>@bilimsari</b> yoki <b>https://t.me/bilimsari</b>. Bo'sh qoldirsangiz — «tez orada» deb chiqadi.</p>
+        <form class="adm-forma" id="kanalForma">
+          <label>Kanal havolasi<input id="kanalUrl" maxlength="100" autocomplete="off" placeholder="@kanal_nomi"></label>
+          <button class="tugma" type="submit">Saqlash</button>
+          <p class="adm-forma-xabar" id="kanalXabar" role="status"></p>
+        </form>
+      </div>
       <h2 class="adm-sarlavha">So'nggi xatolar</h2>
       <div id="xatolarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
     </section>
@@ -732,6 +742,7 @@ var AUDIT_NOMLARI = {
   partner_create: 'Hamkor qo\'shildi', partner_update: 'Hamkor foizi o\'zgardi', partner_toggle: 'Hamkor to\'xtatildi/yoqildi',
   partner_delete: 'Hamkor o\'chirildi', partner_payout: 'Hamkorga to\'lov yozildi',
   partner_payout_delete: 'Hamkor to\'lovi o\'chirildi', partner_tiers: 'Pog\'onali komissiya o\'zgardi',
+  channel_set: 'Kanal havolasi o\'zgardi',
 };
 
 var SUBJECT_NAMES = {
@@ -2194,6 +2205,15 @@ document.getElementById('pogonaForma').addEventListener('submit', async function
 
 // ─────────────────────── Tizim: zaxira nusxa va xatolar ───────────────────────
 
+document.getElementById('kanalForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  formaXabar('kanalXabar', 'Saqlanmoqda...', true);
+  var r = await AdminAPI.kanalSaqla(document.getElementById('kanalUrl').value.trim());
+  if (!r.ok) { formaXabar('kanalXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  document.getElementById('kanalUrl').value = r.channel_url || '';
+  formaXabar('kanalXabar', r.channel_url ? '✅ Saqlandi: ' + r.channel_url : "✅ Kanal havolasi o'chirildi", true);
+});
+
 function hajm(n) { return n >= 1048576 ? (n / 1048576).toFixed(2) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
 
 async function yuklaTizim() {
@@ -2203,6 +2223,8 @@ async function yuklaTizim() {
 
   var soat = String(r.backup_hour).padStart(2, '0') + ':00';
   document.getElementById('zaxiraSoat').textContent = soat;
+  var kanal = document.getElementById('kanalUrl');
+  if (document.activeElement !== kanal) kanal.value = r.channel_url || '';
   var zq = document.getElementById('zaxiraQuti');
   zq.innerHTML = r.backups.length
     ? r.backups.slice(0, 5).map(function (b) {

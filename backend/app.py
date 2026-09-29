@@ -32,6 +32,7 @@ import photos
 import premium
 import premium_api
 import rate_limit
+import site_settings
 import study
 import study_api
 from auth_core import SECRET, auth_required, create_token, token_from_request
@@ -318,6 +319,20 @@ def me():
     return jsonify({'ok': True, 'user': user, 'bot': BOT_USERNAME})
 
 
+@app.route('/api/menu', methods=['GET'])
+@auth_required
+def menu_info():
+    """Pastki "Menyu" uchun: hamkorlik bandi ko'rinadimi va "Biz haqimizda" kanal havolasi."""
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        return jsonify({'ok': True, 'partner': bool(partners.partner_code(cur, request.user['id'])),
+                        'channel_url': site_settings.channel_url(cur) or None})
+    finally:
+        cur.close()
+        conn.close()
+
+
 @app.route('/api/profile/notify', methods=['POST'])
 @auth_required
 def update_notify():
@@ -557,7 +572,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
+    'profile.html', 'hamkor.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
     'premium.html', 'shaxsiy.html',
     'admin.html',
 }

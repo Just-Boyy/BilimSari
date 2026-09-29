@@ -25,6 +25,7 @@ import curriculum as cur_mod
 import lesson_edit
 import payments
 import rate_limit
+import site_settings
 import study
 import tgbot
 from admin_auth import (
@@ -757,10 +758,30 @@ def system_info():
             'backups': backup.history(cur),
             'errors': alerts.recent(cur),
             'error_counts': alerts.counts(cur),
+            'channel_url': site_settings.channel_url(cur),
         })
     finally:
         cur.close()
         conn.close()
+
+
+@bp.route('/channel', methods=['POST'])
+@admin_required
+def set_channel():
+    """"Biz haqimizda" bosilganda ochiladigan Telegram kanal (bo'sh — o'chiriladi)."""
+    try:
+        url = site_settings.normalize_channel((request.get_json(silent=True) or {}).get('url'))
+    except ValueError as exc:
+        return jsonify({'ok': False, 'error': str(exc)}), 400
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        site_settings.put(cur, conn, site_settings.CHANNEL_KEY, url)
+    finally:
+        cur.close()
+        conn.close()
+    admin_audit.log('channel_set', detail=url or "o'chirildi", ip=_client_ip())
+    return jsonify({'ok': True, 'channel_url': url})
 
 
 @bp.route('/backup', methods=['POST'])

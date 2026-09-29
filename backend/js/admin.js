@@ -171,6 +171,7 @@
 
     // — Tizim: zaxira nusxa va xatolar —
     tizim: function () { return so_rov('/api/admin/system'); },
+    kanalSaqla: function (url) { return so_rov('/api/admin/channel', { method: 'POST', body: { url: url } }); },
     zaxiraOl: function () { return so_rov('/api/admin/backup', { method: 'POST' }); },
     xatoSinov: function () { return so_rov('/api/admin/errors/test', { method: 'POST' }); },
     xatolarTozala: function () { return so_rov('/api/admin/errors/clear', { method: 'POST' }); },
