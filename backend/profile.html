@@ -46,6 +46,37 @@
   }
   .sozlama-tugma:active { transform: scale(.94); }
   .sozlama-tugma svg { width: 22px; height: 22px; }
+
+  /* Hamkorlik (faqat admin hamkor qilib belgilagan o'quvchida ko'rinadi) */
+  .hk-kod {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px; border-radius: var(--r-katta); color: #fff;
+    background: linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%);
+    box-shadow: 0 10px 24px rgba(20, 83, 45, .22);
+  }
+  .hk-kod small { display: block; font-size: 12px; color: rgba(255, 255, 255, .8); }
+  .hk-kod b { display: block; font-family: var(--sarlavha); font-size: 26px; letter-spacing: 1px; color: #fde68a; }
+  .hk-kod .hk-foiz { text-align: right; font-size: 12px; color: rgba(255, 255, 255, .85); line-height: 1.5; }
+  .hk-kod .hk-foiz strong { font-size: 18px; color: #fff; }
+  .hk-stat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+  .hk-stat .stat b { font-size: 17px; }
+  .hk-stat .stat.asosiy { border-color: #f5b301; background: #fffbeb; }
+  .hk-stat .stat.asosiy b { color: #b45309; }
+  .hk-pogona { margin-top: 12px; font-size: 13px; color: var(--matn-2); }
+  .hk-pogona .progress { margin-top: 6px; }
+  .hk-toxtatilgan { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: #fef2f2; color: #b91c1c; font-size: 13px; }
+  .hk-matn {
+    margin-top: 12px; padding: 12px; border-radius: 12px; background: var(--fon); border: 1px dashed var(--chiziq);
+    font-size: 13px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: var(--matn);
+  }
+  #hamkor .tugma svg { width: 20px; height: 20px; flex: 0 0 auto; }
+  .hk-royxat { margin-top: 14px; }
+  .hk-royxat h3 { font-size: 14px; margin-bottom: 6px; }
+  .hk-qator { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid var(--chiziq); font-size: 13px; }
+  .hk-qator:first-of-type { border-top: 0; }
+  .hk-qator small { display: block; color: var(--matn-2); font-size: 11px; }
+  .hk-qator .plus { font-weight: 800; color: var(--yashil-quyuq); white-space: nowrap; }
+  .hk-qator .minus { font-weight: 800; color: #0369a1; white-space: nowrap; }
 </style>
 <script src="js/i18n.js"></script>
 </head>
@@ -63,6 +94,12 @@
 </header>
 
 <main class="sahifa">
+  <!-- Hamkorlik: promo-kod, sotuvlar, komissiya va ulashish (faqat hamkorlarda) -->
+  <section class="bo-lim" id="hamkor" hidden>
+    <div class="bo-lim-bosh"><h2>Hamkorlik</h2><span class="izoh" id="hamkorHolat"></span></div>
+    <div id="hamkorTana"></div>
+  </section>
+
   <!-- Yutuqlar: ochilgan va yopiq nishonlar -->
   <section class="bo-lim" id="yutuqlar" hidden>
     <div class="bo-lim-bosh"><h2>Yutuqlar</h2><span class="izoh" id="yutuqSoni"></span></div>
@@ -193,6 +230,92 @@
       orbita.appendChild(b);
     });
   }
+
+  // ── Hamkorlik ──
+  function sanaQisqa(ms) {
+    var d = new Date(ms);
+    return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
+  }
+  function nusxaOl(matn) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(matn).then(function () { return true; }, function () { return eskiNusxa(matn); });
+    }
+    return Promise.resolve(eskiNusxa(matn));
+  }
+  function eskiNusxa(matn) {
+    var t = document.createElement('textarea');
+    t.value = matn;
+    t.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(t);
+    t.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { /* */ }
+    t.remove();
+    return ok;
+  }
+
+  API.hamkor().then(function (r) {
+    if (!r.ok || !r.partner) return;
+    var h = r.partner;
+    var matn = (window.I18N && I18N.til === 'ru') ? h.share.ru : h.share.uz;
+    var stat = function (b, s, cls) {
+      return '<div class="stat' + (cls ? ' ' + cls : '') + '"><b>' + UI.esc(b) + '</b><span>' + UI.esc(s) + '</span></div>';
+    };
+    var pogona = '';
+    if (h.next_tier) {
+      var oldingi = h.next_tier.at - h.next_tier.sales_left;
+      pogona = '<div class="hk-pogona"><span>Yana ' + h.next_tier.sales_left + ' ta sotuv — komissiyangiz ' +
+        h.next_tier.percent + '% bo\'ladi.</span>' +
+        '<div class="progress" role="img" aria-label="' + oldingi + ' / ' + h.next_tier.at + '"><i style="width:' +
+        Math.round(100 * oldingi / h.next_tier.at) + '%"></i></div></div>';
+    }
+    var sotuvlar = h.sales_list.length
+      ? '<div class="hk-royxat"><h3>Oxirgi sotuvlar</h3>' + h.sales_list.map(function (x) {
+          return '<div class="hk-qator"><span>' + UI.esc(x.item) + '<small>' + sanaQisqa(x.created_ms) + ' • ' +
+            UI.pul(x.paid) + '</small></span><span class="plus">+' + UI.pul(x.amount) + '</span></div>';
+        }).join('') + '</div>'
+      : '<p class="izoh-kichik" style="margin-top:12px">Hali sotuv yo\'q. Kodingizni do\'stlaringiz va sinfdoshlaringizga ulashing!</p>';
+    var tolovlar = h.payouts.length
+      ? '<div class="hk-royxat"><h3>Sizga to\'langan</h3>' + h.payouts.map(function (x) {
+          return '<div class="hk-qator"><span>' + sanaQisqa(x.created_ms) +
+            (x.note ? '<small translate="no">' + UI.esc(x.note) + '</small>' : '') + '</span><span class="minus">' +
+            UI.pul(x.amount) + '</span></div>';
+        }).join('') + '</div>'
+      : '';
+    document.getElementById('hamkorHolat').textContent = h.active ? 'Faol' : 'To\'xtatilgan';
+    document.getElementById('hamkorTana').innerHTML =
+      '<div class="hk-kod"><div><small>Promo-kodingiz</small><b translate="no">' + UI.esc(h.code) + '</b></div>' +
+        '<div class="hk-foiz">Sizga: <strong>' + h.percent_now + '%</strong><br>' +
+        (h.discount ? 'Do\'stingizga: −' + h.discount + '%' : 'Har bir xariddan') + '</div></div>' +
+      (h.active ? '' : '<div class="hk-toxtatilgan">Kodingiz vaqtincha to\'xtatilgan. Savolingiz bo\'lsa, botga yozing.</div>') +
+      '<div class="hk-stat">' +
+        stat(String(h.sales), 'Sotuvlar') + stat(UI.pul(h.earned), 'Jami ishlangan') +
+        stat(UI.pul(h.paid), 'To\'langan') + stat(UI.pul(h.due), 'To\'lanishi kerak', 'asosiy') +
+      '</div>' + pogona +
+      '<div class="hk-matn" translate="no" id="hamkorMatn"></div>' +
+      '<div class="tugmalar" style="margin-top:10px">' +
+        '<button class="tugma" type="button" id="hamkorUlash">' + UI.nishon('send') + '<span>Ulashish</span></button>' +
+        '<button class="tugma tugma-ikkilamchi" type="button" id="hamkorNusxa">Nusxa olish</button>' +
+      '</div>' +
+      sotuvlar + tolovlar +
+      '<p class="izoh-kichik" style="margin-top:12px">Komissiya do\'stingiz kodingiz bilan xarid qilib, admin to\'lovni ' +
+        'tasdiqlaganda yoziladi. Pulni admin o\'zi o\'tkazib beradi — har bir sotuv va to\'lov haqida botga xabar keladi.</p>';
+    document.getElementById('hamkorMatn').textContent = matn;
+    document.getElementById('hamkorUlash').onclick = function () {
+      var url = 'https://t.me/share/url?url=' + encodeURIComponent(h.link) + '&text=' +
+        encodeURIComponent(matn.replace('\n👉 ' + h.link, '').replace('👉 ' + h.link, ''));
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(url);
+      else if (navigator.share) navigator.share({ title: 'BilimSari', text: matn }).catch(function () {});
+      else window.open(url, '_blank', 'noopener');
+    };
+    document.getElementById('hamkorNusxa').onclick = function () {
+      nusxaOl(matn).then(function (ok) { UI.xabar(ok ? 'Nusxa olindi' : 'Nusxa olib bo\'lmadi', ok ? 'muvaffaqiyat' : 'xato'); });
+    };
+    var bolim = document.getElementById('hamkor');
+    bolim.hidden = false;
+    if (location.hash === '#hamkor') bolim.scrollIntoView();
+  });
 
   API.get('/api/games/me').then(function (g) {
     if (!g.ok) return;

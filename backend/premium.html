@@ -78,8 +78,8 @@
 
   var tana = document.getElementById('tana');
   var P = null;
-  var usul = null;
   var promo = '';
+  var avtoPromo = false;   // hamkor havolasidan saqlangan kod
   var som = UI.pul;
 
   function sana(ms) {
@@ -87,17 +87,11 @@
     return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
   }
 
-  /** Telegram Stars faqat Telegram ilovasi ichida (openInvoice, Bot API 6.1+). */
-  function starsMumkin() {
-    var tg = window.Telegram && window.Telegram.WebApp;
-    return !!(tg && tg.openInvoice && tg.platform && tg.platform !== 'unknown' &&
-      tg.isVersionAtLeast && tg.isVersionAtLeast('6.1'));
-  }
-
   async function yukla() {
     var r = await API.premium();
     if (!r.ok) { tana.innerHTML = UI.xatoHolat(r.error, yukla); return; }
     P = r;
+    if (!promo && r.saved_promo) { promo = r.saved_promo.code; avtoPromo = true; }
     chiz();
   }
 
@@ -110,8 +104,7 @@
       (st.active
         ? '<div class="pr-faol">' + UI.nishon('checkCircle') + '<span>Premium faol — <b>' + sana(st.until_ms) +
             '</b> gacha (' + st.days_left + ' kun qoldi)</span></div>'
-        : '<div class="narx"><b>' + som(P.price) + '</b><span>1 oyga' +
-            (P.stars ? ' • yoki ' + P.stars + ' Stars' : '') + '</span></div>') +
+        : '<div class="narx"><b>' + som(P.price) + '</b><span>1 oyga</span></div>') +
     '</section>';
   }
 
@@ -164,6 +157,13 @@
       '</div></div>';
   }
 
+  /** Havoladan kelgan chegirmali kod qo'yilgan bo'lsa — chegirmali narx (server bilan bir xil yaxlitlash). */
+  function narx() {
+    var s = P.saved_promo;
+    if (!avtoPromo || !s || !s.percent || promo !== s.code) return P.price;
+    return Math.round(P.price * (100 - s.percent) / 100 / 100) * 100;
+  }
+
   function tolovHtml() {
     var st = P.premium;
     if (st.active) {
@@ -179,40 +179,24 @@
         matn: "Premium olish uchun BilimSari'ni Telegram botdan oching — to'lov bot chatida amalga oshiriladi.",
       }) + '<button class="tugma" type="button" style="margin-top:12px" data-bot>Botni ochish</button></div>';
     }
-    var karta = !!P.configured;
-    var stars = !!P.stars && starsMumkin();
-    if (usul === 'card' && !karta) usul = null;
-    if (usul === 'stars' && !stars) usul = null;
-    if (!usul) usul = karta ? 'card' : (stars ? 'stars' : null);
-    var usulHtml = function (kalit, raqam, nom, izoh, narx, mumkin, sabab) {
-      var tanlangan = usul === kalit;
-      return '<label class="tolov-usul' + (tanlangan ? ' tanlangan' : '') + (mumkin ? '' : ' mavjud-emas') + '">' +
-        '<input type="radio" name="usul" value="' + kalit + '"' + (tanlangan ? ' checked' : '') + (mumkin ? '' : ' disabled') + '>' +
-        '<span class="usul-raqam" aria-hidden="true">' + raqam + '</span>' +
-        '<span class="usul-matn"><b>' + nom + '</b><small>' + (mumkin ? izoh : sabab) + '</small></span>' +
-        '<span class="usul-narx">' + narx + '</span></label>';
-    };
-    var tugmaMatn = usul === 'stars'
-      ? UI.nishon('star') + '<span>Stars bilan to\'lash — ' + P.stars + ' Stars</span>'
-      : UI.nishon('send') + '<span>Karta orqali to\'lash — ' + som(P.price) + '</span>';
+    if (!P.configured) {
+      return '<div class="pr-tolov">' + UI.holat({
+        belgi: 'clock', sarlavha: "To'lov vaqtincha ishlamayapti",
+        matn: "Birozdan keyin qayta urinib ko'ring yoki savolingizni botga yozing.",
+      }) + '</div>';
+    }
     return '<section class="pr-tolov karta">' +
       '<h2>Premium olish</h2>' +
-      '<div class="tolov-usullari" role="radiogroup" aria-labelledby="usulSarlavha">' +
-        '<p class="usul-sarlavha" id="usulSarlavha">To\'lov usuli</p>' +
-        usulHtml('card', 1, 'Karta orqali (admin bilan)',
-          'Kartaga o\'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach Premium faollashadi.',
-          som(P.price), karta, 'Hozircha mavjud emas') +
-        (P.stars
-          ? usulHtml('stars', 2, 'Telegram Stars', 'Telegram ichida to\'lanadi — Premium darhol faollashadi.',
-              P.stars + ' Stars', stars, 'Faqat Telegram ilovasi ichida ishlaydi')
-          : '') +
-      '</div>' +
+      '<p class="izoh-kichik">Kartaga o\'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach Premium faollashadi.</p>' +
       '<div class="pr-promo">' +
         '<input class="kiritish" id="promoInput" placeholder="Promo-kod (ixtiyoriy)" maxlength="20" autocomplete="off" value="' + UI.esc(promo) + '">' +
       '</div>' +
-      (usul
-        ? '<button class="tugma" type="button" id="tolashTugma">' + tugmaMatn + '</button>'
-        : '<p class="izoh" style="text-align:center">Hozircha to\'lov usuli mavjud emas.</p>') +
+      (promo && avtoPromo
+        ? '<p class="izoh-kichik" id="avtoIzoh" style="margin:-4px 0 10px">Havola orqali kelgan promo-kod avtomatik qo\'yildi' +
+            (P.saved_promo && P.saved_promo.percent ? ' (−' + P.saved_promo.percent + '%)' : '') + '.</p>'
+        : '') +
+      '<button class="tugma" type="button" id="tolashTugma">' + UI.nishon('send') +
+        '<span>Karta orqali to\'lash — ' + som(narx()) + '</span></button>' +
       (P.other_order ? '<p class="izoh-kichik" style="margin-top:8px">Fan uchun ochiq buyurtmangiz bor — Premium olsangiz, u bekor qilinadi.</p>' : '') +
     '</section>';
   }
@@ -220,13 +204,16 @@
   function chiz() {
     tana.innerHTML = heroHtml() + tolovHtml() + afzalliklarHtml();
     tana.querySelectorAll('[data-bot]').forEach(function (b) { b.onclick = function () { UI.botniOch(); }; });
-    tana.querySelectorAll('input[name="usul"]').forEach(function (inp) {
-      inp.onchange = function () { usul = inp.value; chiz(); };
-    });
     var promoInput = document.getElementById('promoInput');
-    if (promoInput) promoInput.oninput = function () { promo = promoInput.value.trim().toUpperCase(); };
     var tugma = document.getElementById('tolashTugma');
-    if (tugma) tugma.onclick = function () { if (usul === 'stars') starsTolov(); else kartaTolov(); };
+    if (promoInput) promoInput.oninput = function () {
+      promo = promoInput.value.trim().toUpperCase();
+      avtoPromo = false;
+      var izoh = document.getElementById('avtoIzoh');
+      if (izoh) izoh.remove();
+      if (tugma) tugma.lastChild.textContent = 'Karta orqali to\'lash — ' + som(narx());
+    };
+    if (tugma) tugma.onclick = kartaTolov;
     var bekor = document.getElementById('bekorTugma');
     if (bekor) bekor.onclick = async function () {
       if (!(await UI.tasdiq('Buyurtma bekor qilinsinmi?'))) return;
@@ -255,40 +242,6 @@
       '</div>';
     document.getElementById('botTugma').onclick = function () { UI.botniOch(r.bot, r.bot_sent ? '' : 'pay'); };
     if (r.bot_sent) setTimeout(function () { UI.botniOch(r.bot); }, 900);
-  }
-
-  async function starsTolov() {
-    var btn = document.getElementById('tolashTugma');
-    btn.disabled = true;
-    var r = await API.premiumStars(promo);
-    if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; return; }
-    Telegram.WebApp.openInvoice(r.link, function (holat) {
-      if (holat === 'paid') { starsTolandi(); return; }
-      btn.disabled = false;
-      if (holat === 'failed') UI.xabar("To'lov amalga oshmadi. Qayta urinib ko'ring.", 'xato');
-    });
-  }
-
-  // To'lov Telegram'da bo'ldi — webhook Premium'ni faollashtirguncha kutamiz
-  function starsTolandi() {
-    tana.innerHTML =
-      '<div class="karta dokon-yuborildi">' +
-        '<span class="belgi">' + UI.nishon('checkCircle') + '</span>' +
-        '<h2>To\'lov qabul qilindi!</h2>' +
-        '<p id="starsHolat">Bilim Premium faollashmoqda...</p>' +
-        '<a class="tugma" href="shaxsiy.html">Shaxsiy darslarim</a>' +
-      '</div>';
-    var urinish = 0;
-    (function tekshir() {
-      API.premium().then(function (r) {
-        if (r.ok && r.premium.active) {
-          document.getElementById('starsHolat').textContent = 'Premium faollashdi! Omad!';
-          try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
-        } else if (++urinish < 10) {
-          setTimeout(tekshir, 1500);
-        }
-      });
-    })();
   }
 
   yukla();

@@ -23,6 +23,8 @@ import botchat
 import broadcast
 import daily
 import notify
+import partners
+import partners_api
 import pay_api
 import payments
 import personal
@@ -58,6 +60,8 @@ app.register_blueprint(pay_api.bp)
 app.register_blueprint(pay_api.admin_bp)
 app.register_blueprint(premium_api.bp)
 app.register_blueprint(premium_api.admin_bp)
+app.register_blueprint(partners_api.bp)
+app.register_blueprint(partners_api.admin_bp)
 
 
 @app.after_request
@@ -205,6 +209,7 @@ def _init_db():
         achievements.ensure_tables(cur, conn)
         photos.ensure_tables(cur, conn)
         payments.ensure_tables(cur, conn)
+        partners.ensure_tables(cur, conn)
         botchat.ensure_tables(cur, conn)
         broadcast.ensure_tables(cur, conn)
         alerts.ensure_tables(cur, conn)
@@ -701,7 +706,7 @@ BOT_COMMANDS = [
     {'command': 'tolovlarim', 'description': "To'lovlarim"},
     {'command': 'help', 'description': 'Yordam'},
 ]
-WEBHOOK_UPDATES = ['message', 'callback_query', 'pre_checkout_query']
+WEBHOOK_UPDATES = ['message', 'callback_query']
 
 
 def setup_telegram_bot():
@@ -752,10 +757,6 @@ def telegram_webhook():
     # Telegram bir yangilanishni qayta yuborgan bo'lsa — ikkinchi marta ishlamaymiz
     if not botchat.first_time(data.get('update_id')):
         return jsonify({'ok': True})
-    # Telegram Stars: to'lovdan oldingi tekshiruv (10 soniya ichida javob kerak)
-    if data.get('pre_checkout_query'):
-        payments.answer_pre_checkout(data['pre_checkout_query'])
-        return jsonify({'ok': True})
     # Inline tugmalar: admin "Tasdiqlash / Rad etish", o'quvchi "Promo-kod / Bekor qilish"
     if data.get('callback_query'):
         botchat.handle_callback(data['callback_query'])
@@ -766,10 +767,6 @@ def telegram_webhook():
     chat = message.get('chat') or {}
     chat_id = chat.get('id')
     if not chat_id:
-        return jsonify({'ok': True})
-    # Telegram Stars bilan muvaffaqiyatli to'lov — fan darhol ochiladi
-    if message.get('successful_payment'):
-        payments.stars_paid(message)
         return jsonify({'ok': True})
     # Guruhlarda Mini App tugmasi ishlamaydi — shaxsiy chatga havola beriladi
     if chat.get('type', 'private') != 'private':
@@ -791,6 +788,8 @@ def telegram_webhook():
             botchat.send_shop(chat_id)
         else:
             send_start_message(chat_id, first_name)
+            if payload:
+                botchat.partner_start(chat_id, payload)   # t.me/<bot>?start=<hamkor kodi>
     elif cmd == '/kun':
         send_daily_invite(chat_id, first_name)
     elif cmd in ('/sotib_olish', '/tolov'):

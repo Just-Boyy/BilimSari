@@ -404,7 +404,7 @@
     document.getElementById('tolovlar').innerHTML = r.orders.map(function (o) {
       var sana = new Date(o.created_ms).toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
       return '<div class="tolov-qator">' +
-        '<div class="yuqori"><span>' + UI.esc(o.code) + '</span><span>' + (o.method === 'stars' ? o.amount + ' Stars' : UI.pul(o.amount)) + '</span></div>' +
+        '<div class="yuqori"><span>' + UI.esc(o.code) + '</span><span>' + UI.pul(o.amount) + '</span></div>' +
         '<div class="fanlar-nomi">' + UI.esc(o.items.map(function (i) { return i.name; }).join(', ')) + ' • ' + sana + '</div>' +
         '<span class="tolov-chip ' + UI.esc(o.status) + '">' + UI.esc(HOLAT[o.status] || o.status) + '</span>' +
         (o.reject_reason ? '<span class="izoh-kichik"> ' + UI.esc(o.reject_reason) + '</span>' : '') +

@@ -2,7 +2,7 @@
 """
 Bilim Premium va shaxsiy darslar API.
 
-  /api/premium            — holat, narx, sotib olish (karta / Stars), emoji tanlash
+  /api/premium            — holat, narx, sotib olish (karta), emoji tanlash
   /api/personal           — shaxsiy darslar: ro'yxat, mavzu variantlari, yaratish, o'qish
   /api/admin/premium      — admin panel: faol premiumlar, qo'lda berish/olib qo'yish
 """
@@ -12,6 +12,7 @@ import html
 from flask import Blueprint, jsonify, request
 
 import admin_audit
+import partners
 import payments
 import personal
 import premium
@@ -61,10 +62,10 @@ def premium_info():
             'ok': True,
             'premium': premium.status(cur, uid),   # 'status' emas — api.js uni HTTP kodi bilan almashtiradi
             'price': settings['premium_price'],
-            'stars': settings['premium_stars'],
             'days': premium.DAYS,
             'active_order': payments.order_public(active) if active and payments.is_premium(active) else None,
             'other_order': bool(active) and not payments.is_premium(active),
+            'saved_promo': partners.saved_promo(cur, request.user),
             'last': payments.subject_statuses(cur, uid).get(premium.ITEM),
             'emoji': premium.emoji_catalog(),
             'telegram': bool(request.user.get('telegram_id')),
@@ -83,21 +84,6 @@ def premium_order():
     try:
         order, sent = payments.create_order(cur, conn, request.user, [premium.ITEM], _body().get('promo'))
         return jsonify({'ok': True, 'order': payments.order_public(order), 'bot_sent': sent, 'bot': tgbot.BOT_USERNAME})
-    except payments.PayError as exc:
-        return _fail(exc)
-    finally:
-        _close(conn, cur)
-
-
-@bp.route('/premium/stars', methods=['POST'])
-@auth_required
-def premium_stars():
-    if not rate_limit.hit(f'order:{request.user["id"]}', 10, 3600):
-        return jsonify({'ok': False, 'error': "Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring."}), 429
-    conn, cur = _conn()
-    try:
-        order, link = payments.create_stars_order(cur, conn, request.user, [premium.ITEM], _body().get('promo'))
-        return jsonify({'ok': True, 'order': payments.order_public(order), 'link': link})
     except payments.PayError as exc:
         return _fail(exc)
     finally:
@@ -239,7 +225,7 @@ def _find_user(cur, who):
 def _overview(cur, **extra):
     settings = payments.get_settings(cur)
     return jsonify(dict(premium.admin_overview(cur), ok=True, **extra,
-                        settings={k: settings[k] for k in ('premium_price', 'premium_stars')}))
+                        settings={'premium_price': settings['premium_price']}))
 
 
 @admin_bp.route('', methods=['GET'])

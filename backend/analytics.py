@@ -138,7 +138,7 @@ def report(cur, days=30, now_ms=None) -> dict:
     for r in cur.fetchall():
         mark(r['user_id'], int(r['opened_ms']))
 
-    cur.execute('SELECT user_id, created_ms, status, method FROM pay_orders WHERE created_ms >= %s', (since_ms,))
+    cur.execute('SELECT user_id, created_ms, status FROM pay_orders WHERE created_ms >= %s', (since_ms,))
     orders = cur.fetchall()
     for r in orders:
         mark(r['user_id'], int(r['created_ms']), count_hour=False)
@@ -197,7 +197,7 @@ def report(cur, days=30, now_ms=None) -> dict:
     first_iso = first.isoformat()
     cur.execute('SELECT DISTINCT user_id FROM activity_days WHERE kind = %s AND day >= %s', (SHOP, first_iso))
     visitors = {int(r['user_id']) for r in cur.fetchall()}
-    ordered, paid, paid_card, paid_stars = set(), set(), set(), set()
+    ordered, paid = set(), set()
     for r in orders:
         if _local(int(r['created_ms'])).date() < first:
             continue
@@ -205,7 +205,6 @@ def report(cur, days=30, now_ms=None) -> dict:
         ordered.add(uid)
         if r['status'] == 'approved':
             paid.add(uid)
-            (paid_stars if r['method'] == 'stars' else paid_card).add(uid)
     visitors |= ordered                 # buyurtma berganlar do'konni ham ochgan
     cur.execute('SELECT MIN(day) AS d FROM activity_days WHERE kind = %s', (SHOP,))
     shop_since = (cur.fetchone() or {}).get('d')
@@ -224,7 +223,6 @@ def report(cur, days=30, now_ms=None) -> dict:
         'cohorts': cohorts[-14:],
         'subjects': subjects,
         'funnel': {'visitors': len(visitors), 'ordered': len(ordered), 'paid': len(paid),
-                   'paid_card': len(paid_card), 'paid_stars': len(paid_stars),
                    'conversion': _pct(len(paid), len(visitors)), 'shop_tracked_since': shop_since},
         'hours': hours,
     }

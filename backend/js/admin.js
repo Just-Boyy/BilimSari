@@ -159,7 +159,15 @@
     premiumBer: function (kim, kun) { return so_rov('/api/admin/premium/grant', { method: 'POST', body: { who: kim, days: kun } }); },
     premiumOlib: function (id) { return so_rov('/api/admin/premium/revoke', { method: 'POST', body: { user_id: Number(id) } }); },
 
-    starsBalans: function (yangila) { return so_rov('/api/admin/pay/stars' + (yangila ? '?refresh=1' : '')); },
+    // — Hamkorlar —
+    hamkorlar: function () { return so_rov('/api/admin/partners'); },
+    hamkorQosh: function (d) { return so_rov('/api/admin/partners', { method: 'POST', body: d }); },
+    hamkorBatafsil: function (id) { return so_rov('/api/admin/partners/' + id); },
+    hamkorAmal: function (id, amal, d) {
+      return so_rov('/api/admin/partners/' + id + '/' + amal, { method: 'POST', body: d || {} });
+    },
+    hamkorTolovOchir: function (id) { return so_rov('/api/admin/partners/payouts/' + id + '/delete', { method: 'POST' }); },
+    hamkorPogona: function (d) { return so_rov('/api/admin/partners/tiers', { method: 'POST', body: d }); },
 
     // — Tizim: zaxira nusxa va xatolar —
     tizim: function () { return so_rov('/api/admin/system'); },

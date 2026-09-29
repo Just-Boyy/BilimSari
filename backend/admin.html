@@ -241,6 +241,23 @@
   .adm-qator { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--chiziq); font-size: 13px; }
   .adm-qator:last-child { border-bottom: none; }
   .adm-qator .yorliq { color: var(--matn-2); }
+  /* Hamkorlar */
+  .adm-hamkor { max-width: none; margin-bottom: 12px; }
+  .adm-hamkor-bosh { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .adm-hamkor-bosh h3 { font-size: 16px; margin: 0; }
+  .adm-hamkor-bosh .kod { font-family: monospace; font-weight: 800; font-size: 15px; background: #ecfdf5; color: var(--yashil-quyuq); padding: 2px 8px; border-radius: 8px; }
+  .adm-hamkor .izoh-kichik { margin-top: 4px; }
+  .adm-hamkor-son { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); gap: 8px; margin: 12px 0; }
+  .adm-hamkor-son > div { background: #f8fafc; border: 1px solid var(--chiziq); border-radius: 12px; padding: 8px 10px; font-size: 12px; color: var(--matn-2); }
+  .adm-hamkor-son b { display: block; font-size: 15px; color: var(--matn-quyuq); margin-top: 2px; }
+  .adm-hamkor-son .qarz { background: #fffbeb; border-color: #f5b301; }
+  .adm-hamkor-son .qarz b { color: #b45309; }
+  .adm-hamkor-amallar { display: flex; flex-wrap: wrap; gap: 6px; }
+  .adm-hamkor-panel { margin-top: 12px; padding: 12px; border-radius: 12px; background: #f8fafc; border: 1px solid var(--chiziq); }
+  .adm-hamkor-panel .adm-forma { max-width: 520px; }
+  .adm-hamkor-panel h4 { font-size: 13px; margin: 10px 0 6px; }
+  .adm-hamkor-panel h4:first-child { margin-top: 0; }
+  .adm-hamkor .havola { font-size: 12px; color: var(--matn-2); word-break: break-all; }
 
   .adm-badge { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11px; font-weight: 700; }
   .adm-badge.yashil { background: var(--yashil-fon); color: var(--yashil-quyuq); }
@@ -374,22 +391,6 @@
   .adm-fan-tahlil td .yol > i { display: block; height: 100%; border-radius: inherit; }
   @media (max-width: 480px) { .adm-fan-tahlil .yol-ustun { display: none; } }
 
-  /* Telegram Stars hamyoni */
-  .adm-stars { max-width: none; margin-bottom: 22px; }
-  .adm-stars-bosh { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-  .adm-stars-bosh .son { font-family: var(--sarlavha); font-size: 28px; font-weight: 800; color: var(--matn-quyuq); }
-  .adm-stars-bosh .izoh { font-size: 12px; color: var(--matn-2); }
-  .adm-stars-qatorlar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: 8px; margin: 14px 0 10px; }
-  .adm-stars-qatorlar > div { background: #f8fafc; border: 1px solid var(--chiziq); border-radius: 12px; padding: 10px 12px; font-size: 12px; color: var(--matn-2); }
-  .adm-stars-qatorlar b { display: block; font-size: 17px; color: var(--matn-quyuq); margin-top: 2px; }
-  .adm-stars-bosh .adm-mini-tugma { display: grid; place-items: center; padding: 6px; }
-  .adm-stars-bosh .adm-mini-tugma svg { width: 16px; height: 16px; }
-  .adm-yol { height: 8px; border-radius: 99px; background: #eef2f7; overflow: hidden; margin: 6px 0 4px; }
-  .adm-yol > i { display: block; height: 100%; background: linear-gradient(90deg, #f5b301, #f59e0b); border-radius: inherit; }
-  .adm-stars details { margin-top: 12px; font-size: 13px; }
-  .adm-stars summary { cursor: pointer; font-weight: 700; color: var(--yashil-quyuq); }
-  .adm-stars ol { margin: 8px 0 0 18px; display: grid; gap: 4px; color: var(--matn); }
-  .adm-stars .ochilish { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 
   /* Tizim: zaxira nusxa va xatolar */
   .adm-zaxira { display: grid; gap: 6px; margin: 10px 0 14px; }
@@ -439,6 +440,7 @@
     <div class="adm-tab" data-bolim="adminlar"><span class="nishon" data-ikon="users"></span> Adminlar</div>
     <div class="adm-tab" data-bolim="jurnal"><span class="nishon" data-ikon="clock"></span> Jurnal</div>
     <div class="adm-tab" data-bolim="premium"><span class="nishon" data-ikon="crown"></span> Premium</div>
+    <div class="adm-tab" data-bolim="hamkorlar"><span class="nishon" data-ikon="users"></span> Hamkorlar</div>
     <div class="adm-tab" data-bolim="tizim"><span class="nishon" data-ikon="tools"></span> Tizim</div>
   </nav>
 
@@ -466,7 +468,6 @@
     <section class="adm-bolim" id="bolim-tolovlar">
       <!-- Bot orqali to'lovlar: tushum, kutilayotgan cheklar, tarix -->
       <div id="tolovStatQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
-      <div class="adm-xabar-karta adm-stars" id="starsQuti"><p class="izoh-kichik">Stars hamyoni yuklanmoqda...</p></div>
 
       <h2 class="adm-sarlavha" style="margin-top:0">Kutilayotgan cheklar <span class="adm-badge sariq" id="cheklarSoni">0</span></h2>
       <div id="cheklarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
@@ -496,16 +497,8 @@
               <label>3 ta fan<input id="sUchta" type="number" min="0" step="1000"></label>
               <label>Barcha fanlar<input id="sHammasi" type="number" min="0" step="1000"></label>
             </div>
-            <p class="izoh-kichik" style="margin-top:4px">Telegram Stars narxlari (0 — Stars o'chiq). Stars bilan to'langanda fan darhol ochiladi.</p>
             <div class="qator3">
-              <label>1 fan, Stars<input id="stBitta" type="number" min="0" step="10"></label>
-              <label>3 ta fan, Stars<input id="stUchta" type="number" min="0" step="10"></label>
-              <label>Barchasi, Stars<input id="stHammasi" type="number" min="0" step="10"></label>
-            </div>
-            <p class="izoh-kichik" style="margin-top:4px">Bilim Premium (1 oy): so'mda va Telegram Stars'da (0 — Stars o'chiq).</p>
-            <div class="qator3">
-              <label>Premium, so'm<input id="sPremium" type="number" min="1000" step="100"></label>
-              <label>Premium, Stars<input id="stPremium" type="number" min="0" step="10"></label>
+              <label>Bilim Premium (1 oy), so'm<input id="sPremium" type="number" min="1000" step="100"></label>
             </div>
             <button class="tugma" type="submit">Saqlash</button>
             <p class="adm-forma-xabar" id="sXabar" role="status"></p>
@@ -605,6 +598,48 @@
       <div id="premiumJurnal"></div>
     </section>
 
+    <section class="adm-bolim" id="bolim-hamkorlar">
+      <div id="hamkorStat" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      <div class="adm-ikki" style="margin-top:0">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Yangi hamkor</h2>
+          <p class="izoh-kichik" style="margin-bottom:12px">Hamkorga promo-kod beriladi. Kimdir shu kod bilan fan yoki Premium
+            sotib olsa va siz chekni tasdiqlasangiz — to'langan summaning belgilangan foizi hamkor hisobiga yoziladi.
+            Hamkor o'z kodini ishlata olmaydi, har bir o'quvchi kodni bir marta ishlatadi.</p>
+          <form class="adm-forma" id="hamkorForma">
+            <label>Ilovadagi ID, Telegram ID yoki @username<input id="hkKim" maxlength="40" autocomplete="off" placeholder="masalan, @ali_valiyev"></label>
+            <div class="qator3">
+              <label>Promo-kod<input id="hkKod" maxlength="20" autocomplete="off" placeholder="masalan, ALI20" style="text-transform:uppercase"></label>
+              <label>Hamkorga, %<input id="hkFoiz" type="number" min="1" max="90" value="20"></label>
+              <label>Xaridorga chegirma, %<input id="hkChegirma" type="number" min="0" max="90" value="10"></label>
+            </div>
+            <button class="tugma" type="submit">Hamkor qo'shish</button>
+            <p class="adm-forma-xabar" id="hkXabar" role="status"></p>
+          </form>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Pog'onali komissiya</h2>
+          <p class="izoh-kichik" style="margin-bottom:12px">Ko'p sotgan hamkorga ko'proq foiz: shuncha sotuvdan keyin hamkorning
+            o'z foiziga qo'shiladi. 0 — pog'ona o'chiq.</p>
+          <form class="adm-forma" id="pogonaForma">
+            <div class="qator3">
+              <label>1-pog'ona: sotuvdan keyin<input id="pg1s" type="number" min="0"></label>
+              <label>Qo'shimcha, %<input id="pg1b" type="number" min="0" max="50"></label>
+            </div>
+            <div class="qator3">
+              <label>2-pog'ona: sotuvdan keyin<input id="pg2s" type="number" min="0"></label>
+              <label>Qo'shimcha, %<input id="pg2b" type="number" min="0" max="50"></label>
+            </div>
+            <p class="izoh-kichik" id="pogonaMisol"></p>
+            <button class="tugma" type="submit">Saqlash</button>
+            <p class="adm-forma-xabar" id="pgXabar" role="status"></p>
+          </form>
+        </div>
+      </div>
+      <h2 class="adm-sarlavha">Hamkorlar</h2>
+      <div id="hamkorlarQuti"></div>
+    </section>
+
     <section class="adm-bolim" id="bolim-tizim">
       <div class="adm-ikki" style="margin-top:0">
         <div class="adm-xabar-karta">
@@ -694,6 +729,9 @@ var AUDIT_NOMLARI = {
   backup_now: 'Zaxira nusxa olindi', errors_clear: 'Xatolar jurnali tozalandi',
   topic_edit: 'Mavzu tahrirlandi', topic_reset: 'Mavzu asl holiga qaytarildi',
   premium_grant: 'Premium berildi', premium_revoke: 'Premium olib qo\'yildi',
+  partner_create: 'Hamkor qo\'shildi', partner_update: 'Hamkor foizi o\'zgardi', partner_toggle: 'Hamkor to\'xtatildi/yoqildi',
+  partner_delete: 'Hamkor o\'chirildi', partner_payout: 'Hamkorga to\'lov yozildi',
+  partner_payout_delete: 'Hamkor to\'lovi o\'chirildi', partner_tiers: 'Pog\'onali komissiya o\'zgardi',
 };
 
 var SUBJECT_NAMES = {
@@ -831,6 +869,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'adminlar') yuklaAdminlar();
     if (nomi === 'tizim') yuklaTizim();
     if (nomi === 'premium') yuklaPremium();
+    if (nomi === 'hamkorlar') yuklaHamkorlar();
   });
 });
 
@@ -939,7 +978,7 @@ async function yuklaTahlil(kun) {
   var qadamlar = [["Do'konni ochgan", f.visitors], ['Buyurtma bergan', f.ordered],
     ["To'lagan", f.paid]];
   html += '<div class="adm-tahlil-karta"><h3>Do\'kon: ochgan → buyurtma bergan → to\'lagan</h3>' +
-    '<p class="izoh-kichik">Oxirgi ' + kun + ' kun. To\'laganlar: karta — ' + f.paid_card + ', Telegram Stars — ' + f.paid_stars + '.' +
+    '<p class="izoh-kichik">Oxirgi ' + kun + ' kun.' +
     (f.shop_tracked_since ? ' Do\'konga kirishlar ' + kunOy(f.shop_tracked_since) + ' dan beri hisoblanadi.' : '') + '</p>' +
     '<div class="adm-voronka">' + qadamlar.map(function (q) {
       var foiz = f.visitors ? Math.round((q[1] / f.visitors) * 100) : 0;
@@ -1558,7 +1597,6 @@ async function yuklaTolovUmumiy() {
     ['Shu oy', pul(s.month.sum), s.month.count + ' ta to\'lov'],
     ['Jami tushum', pul(s.all.sum), s.all.count + ' ta to\'lov'],
     ['Kutilmoqda', s.pending, 'tekshirilmagan chek'],
-    ['Telegram Stars', (s.stars_all ? s.stars_all.sum : 0) + ' Stars', (s.stars_all ? s.stars_all.count : 0) + " ta to'lov (avtomatik)"],
   ].map(function (k) {
     return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son">' + esc(k[1]) +
       '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
@@ -1571,64 +1609,16 @@ async function yuklaTolovUmumiy() {
   document.getElementById('sBitta').value = st.price_single;
   document.getElementById('sUchta').value = st.price_three;
   document.getElementById('sHammasi').value = st.price_all;
-  document.getElementById('stBitta').value = st.stars_single;
-  document.getElementById('stUchta').value = st.stars_three;
-  document.getElementById('stHammasi').value = st.stars_all;
   document.getElementById('sPremium').value = st.premium_price;
-  document.getElementById('stPremium').value = st.premium_stars;
   if (!st.card_number) {
     quti.innerHTML += '<p class="izoh-kichik" style="color:var(--qizil);margin:-10px 0 16px">' +
       "Karta raqami kiritilmagan — o'quvchilar to'lov qila olmaydi. Pastdagi «Karta va narxlar» bo'limini to'ldiring.</p>";
   }
   promolarChiz(r.promos);
-  yuklaStars();
 }
 
 function son(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 function kunOy(iso) { var p = String(iso).split('-'); return p[2] + '.' + p[1]; }
-
-/** Botning Telegram Stars hamyoni: balans, qachon va qancha yechib olish mumkin. */
-async function yuklaStars(yangila) {
-  var quti = document.getElementById('starsQuti');
-  var r = await AdminAPI.starsBalans(yangila);
-  if (!r.ok) {
-    quti.innerHTML = '<p class="izoh-kichik">Stars hamyoni: ' + esc(r.error || 'Xatolik') + '</p>';
-    return;
-  }
-  var yetadi = r.ready >= r.min_withdraw;
-  var foiz = Math.min(100, Math.round((r.ready / r.min_withdraw) * 100));
-  var holat = yetadi
-    ? '<b style="color:var(--yashil-quyuq)">✅ Yechib olsa bo\'ladi!</b> Pastdagi yo\'riqnomaga qarang.'
-    : 'Yechib olish uchun kamida ' + son(r.min_withdraw) + ' Stars kerak — yana <b>' + son(r.min_withdraw - r.ready) + '</b> Stars.';
-  quti.innerHTML =
-    '<div class="adm-stars-bosh"><div>' +
-      '<div class="izoh">Telegram Stars hamyoni (botdagi balans)</div>' +
-      '<div class="son">⭐ ' + son(r.balance) + '</div>' +
-      '<div class="izoh">≈ ' + r.usd.toFixed(2) + ' $ ≈ ' + pul(r.uzs) + ' (taxminan, yechib olinganda)</div>' +
-    '</div><button class="adm-mini-tugma" type="button" id="starsYangila" title="Yangilash">' + BSIcons.icon('refresh') + '</button></div>' +
-    '<div class="adm-stars-qatorlar">' +
-      '<div>Yechib olish mumkin<b>' + son(r.ready) + ' Stars</b></div>' +
-      '<div>Kutilmoqda (' + r.hold_days + ' kun)<b>' + son(r.held) + ' Stars</b></div>' +
-      '<div>Jami tushgan<b>' + son(r.received) + ' Stars</b></div>' +
-      '<div>Yechib olingan<b>' + son(r.withdrawn) + ' Stars</b></div>' +
-    '</div>' +
-    '<div class="adm-yol"><i style="width:' + foiz + '%"></i></div>' +
-    '<p class="izoh-kichik">' + holat + '</p>' +
-    (r.releases.length
-      ? '<p class="izoh-kichik" style="margin-top:8px">Kutilayotgan Stars ochiladigan kunlar:</p><div class="ochilish">' +
-        r.releases.map(function (x) {
-          return '<span class="adm-badge sariq">' + kunOy(x.date) + ' — ' + son(x.amount) + ' Stars</span>';
-        }).join('') + '</div>'
-      : '') +
-    '<details><summary>Qanday yechib olinadi?</summary><ol>' +
-      '<li>Telegram qoidasi: o\'quvchi to\'lagan Stars ' + r.hold_days + ' kundan keyin yechib olinadi, bir martada kamida ' + son(r.min_withdraw) + ' Stars.</li>' +
-      '<li>Telegram\'da <b>@BotFather</b> → botingiz → <b>Balance</b> (yoki bot profili → Tahrirlash → Balans) bo\'limini oching.</li>' +
-      '<li><b>Withdraw</b> tugmasini bosing — Fragment sayti ochiladi.</li>' +
-      '<li>Fragment\'ga TON hamyon (masalan, Tonkeeper) ulang — Stars TON ko\'rinishida tushadi. Keyin TON\'ni so\'mga almashtirish mumkin (buni ota-onangiz bilan qiling).</li>' +
-      '<li>Kurs: 1 Star ≈ ' + r.usd_rate + ' $.</li>' +
-    '</ol></details>';
-  document.getElementById('starsYangila').onclick = function () { yuklaStars(true); };
-}
 
 async function yuklaCheklar() {
   var quti = document.getElementById('cheklarQuti');
@@ -1647,7 +1637,7 @@ async function yuklaCheklar() {
         '<div class="summa">' + pul(o.amount) + '</div>' +
         '<div><b>' + esc(o.code) + '</b> • ' + esc(fanlarNomi(o)) + '</div>' +
         '<div>' + esc(o.user_name || '?') + ' (ID ' + o.user_id + (o.username ? ', @' + esc(o.username) : '') + ')</div>' +
-        (o.promo_code ? '<div>Promo: ' + esc(o.promo_code) + ' −' + o.promo_percent + '%</div>' : '') +
+        (o.promo_code ? '<div>Promo: ' + esc(o.promo_code) + (o.promo_percent ? ' −' + o.promo_percent + '%' : '') + '</div>' : '') +
         '<div class="kichik" style="color:var(--matn-2)">Chek: ' + msVaqt(o.receipt_ms) + '</div>' +
         (o.duplicate_of && o.duplicate_of.length
           ? '<div class="ogoh">⚠️ Bu chek avval yuborilgan: ' + esc(o.duplicate_of.join(', ')) + '</div>' : '') +
@@ -1719,7 +1709,7 @@ async function yuklaBuyurtmalar() {
       return '<tr><td class="nomzod">' + esc(o.code) + '</td>' +
         '<td>' + esc(o.user_name || '?') + '<div class="kichik">ID ' + o.user_id + '</div></td>' +
         '<td style="white-space:normal;min-width:140px">' + esc(fanlarNomi(o)) + '</td>' +
-        '<td>' + (o.method === 'stars' ? o.amount + ' Stars' : pul(o.amount)) +
+        '<td>' + pul(o.amount) +
           (o.promo_code ? '<div class="kichik">' + esc(o.promo_code) + '</div>' : '') + '</td>' +
         '<td><span class="adm-badge ' + h[1] + '">' + esc(h[0]) + '</span>' +
           (o.reject_reason ? '<div class="kichik">' + esc(o.reject_reason) + '</div>' : '') +
@@ -1757,11 +1747,7 @@ document.getElementById('tolovSozlamaForma').addEventListener('submit', async fu
     price_single: document.getElementById('sBitta').value,
     price_three: document.getElementById('sUchta').value,
     price_all: document.getElementById('sHammasi').value,
-    stars_single: document.getElementById('stBitta').value,
-    stars_three: document.getElementById('stUchta').value,
-    stars_all: document.getElementById('stHammasi').value,
     premium_price: document.getElementById('sPremium').value,
-    premium_stars: document.getElementById('stPremium').value,
   });
   if (!r.ok) { formaXabar('sXabar', '❌ ' + (r.error || 'Xatolik')); return; }
   formaXabar('sXabar', '✅ Saqlandi', true);
@@ -1927,17 +1913,16 @@ async function yuklaJurnal() {
 
 // ─────────────────────── Bilim Premium ───────────────────────
 
-var PREMIUM_MANBA = { card: 'karta', stars: 'Stars', admin: 'admin', revoke: 'olib qo\'yildi' };
+var PREMIUM_MANBA = { card: 'karta', stars: 'Stars (eski)', admin: 'admin', revoke: 'olib qo\'yildi' };
 
 function premiumChiz(r) {
   var m = r.month;
   document.getElementById('premiumStat').className = '';
   document.getElementById('premiumStat').innerHTML = '<div class="adm-statlar">' + [
     ['Faol premiumlar', r.active_count, 'hozir'],
-    ['Shu oy — karta', m.card.count + ' ta', pul(m.card.sum)],
-    ['Shu oy — Stars', m.stars.count + ' ta', m.stars.sum + ' Stars'],
+    ['Shu oy sotildi', m.count + ' ta', pul(m.sum)],
     ['Shaxsiy darslar', r.lessons, 'jami yaratilgan'],
-    ['Narx', pul(r.settings.premium_price), r.settings.premium_stars + ' Stars'],
+    ['Narx', pul(r.settings.premium_price), '1 oy'],
   ].map(function (k) {
     return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son">' + esc(k[1]) +
       '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
@@ -1982,6 +1967,229 @@ document.getElementById('premiumForma').addEventListener('submit', async functio
   document.getElementById('prKim').value = '';
   formaXabar('prXabar', '✅ Premium berildi — ' + msVaqt(r.until_ms) + ' gacha', true);
   premiumChiz(r);
+});
+
+// ─────────────────────── Hamkorlar (promo-kod egalari) ───────────────────────
+
+var HK = { ochiq: {}, tarix: {} };   // qaysi hamkor kartasida qaysi panel ochiq
+
+function pogonaMisol(t) {
+  var q = [];
+  var b = 20;
+  if (t.tier1_sales && t.tier1_bonus) q.push((t.tier1_sales + 1) + '-sotuvdan ' + (b + t.tier1_bonus) + '%');
+  if (t.tier2_sales && t.tier2_bonus) q.push((t.tier2_sales + 1) + '-sotuvdan ' + (b + t.tier2_bonus) + '%');
+  return q.length ? 'Masalan, 20% li hamkor: boshida 20%, ' + q.join(', ') + '.' : 'Pog\'onalar o\'chiq — hamkor doim o\'z foizini oladi.';
+}
+
+function hamkorlarChiz(r) {
+  var t = r.totals;
+  var st = document.getElementById('hamkorStat');
+  st.className = '';
+  st.innerHTML = '<div class="adm-statlar">' + [
+    ['Hamkorlar', t.active + ' / ' + t.count, 'faol / jami'],
+    ['Sotuvlar', t.sales + ' ta', pul(t.revenue) + ' tushum'],
+    ['Hamkorlar ishlagan', pul(t.earned), 'jami komissiya'],
+    ['To\'langan', pul(t.paid), 'hamkorlarga'],
+    ['To\'lanishi kerak', pul(t.due), 'hozirgi qarz'],
+  ].map(function (k) {
+    return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son">' + esc(k[1]) +
+      '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
+  }).join('') + '</div>';
+
+  var tr = r.tiers;
+  if (!HK.pogonaYozildi) {
+    HK.pogonaYozildi = true;
+    document.getElementById('pg1s').value = tr.tier1_sales;
+    document.getElementById('pg1b').value = tr.tier1_bonus;
+    document.getElementById('pg2s').value = tr.tier2_sales;
+    document.getElementById('pg2b').value = tr.tier2_bonus;
+  }
+  document.getElementById('pogonaMisol').textContent = pogonaMisol(tr);
+
+  var quti = document.getElementById('hamkorlarQuti');
+  if (!r.partners.length) {
+    quti.innerHTML = '<p class="adm-bosh">Hali hamkor yo\'q. Yuqoridagi forma orqali birinchi hamkorni qo\'shing.</p>';
+    return;
+  }
+  quti.innerHTML = r.partners.map(function (h) {
+    var id = h.user_id;
+    var panel = HK.ochiq[id];
+    var foiz = h.commission + '%' + (h.percent_now !== h.commission ? ' (hozir ' + h.percent_now + '%)' : '');
+    var keyingi = h.next_tier ? ' • yana ' + h.next_tier.sales_left + ' ta sotuvdan keyin ' + h.next_tier.percent + '%' : '';
+    var html = '<div class="adm-xabar-karta adm-hamkor" data-hamkor="' + id + '">' +
+      '<div class="adm-hamkor-bosh"><h3>' + esc(h.name || 'O\'chirilgan foydalanuvchi') + '</h3>' +
+        '<span class="kod">' + esc(h.code) + '</span>' +
+        '<span class="adm-badge ' + (h.active ? 'yashil' : 'qizil') + '">' + (h.active ? 'Faol' : 'To\'xtatilgan') + '</span>' +
+        (h.has_telegram ? '' : '<span class="adm-badge sariq">Telegram yo\'q — xabar bormaydi</span>') + '</div>' +
+      '<p class="izoh-kichik">ID ' + id + (h.username ? ' • @' + esc(h.username) : '') + ' • Hamkorga ' + esc(foiz) +
+        ' • Xaridorga ' + (h.discount ? '−' + h.discount + '%' : 'chegirmasiz') + esc(keyingi) + '</p>' +
+      '<p class="havola">' + esc(h.link) + '</p>' +
+      '<div class="adm-hamkor-son">' +
+        '<div>Sotuvlar<b>' + h.sales + ' ta</b></div>' +
+        '<div>Tushum<b>' + pul(h.revenue) + '</b></div>' +
+        '<div>Ishlagan<b>' + pul(h.earned) + '</b></div>' +
+        '<div>To\'langan<b>' + pul(h.paid) + '</b></div>' +
+        '<div class="qarz">To\'lanishi kerak<b>' + pul(h.due) + '</b></div>' +
+      '</div>' +
+      '<div class="adm-hamkor-amallar">' +
+        (h.due > 0 ? '<button class="adm-mini-tugma yashil" type="button" data-hk-panel="tolov">💸 To\'landi</button>' : '') +
+        '<button class="adm-mini-tugma" type="button" data-hk-panel="tahrir">Foizlarni o\'zgartirish</button>' +
+        '<button class="adm-mini-tugma" type="button" data-hk-panel="tarix">Tarix</button>' +
+        '<button class="adm-mini-tugma" type="button" data-hk-amal="toggle">' + (h.active ? 'To\'xtatish' : 'Yoqish') + '</button>' +
+        (h.sales ? '' : '<button class="adm-mini-tugma qizil" type="button" data-hk-amal="delete">O\'chirish</button>') +
+      '</div>';
+    if (panel === 'tolov' && h.due > 0) {
+      html += '<div class="adm-hamkor-panel"><form class="adm-forma" data-hk-forma="tolov">' +
+        '<p class="izoh-kichik" style="margin-bottom:8px">Hamkorga pulni o\'zingiz o\'tkazing (karta, naqd), keyin shu yerda yozib qo\'ying — ' +
+          'hamkorga botda xabar boradi.</p>' +
+        '<div class="qator3">' +
+          '<label>Summa, so\'m<input name="amount" type="number" min="1" max="' + h.due + '" value="' + h.due + '"></label>' +
+          '<label>Izoh (ixtiyoriy)<input name="note" maxlength="120" placeholder="masalan, Click orqali"></label>' +
+        '</div>' +
+        '<button class="tugma" type="submit">To\'landi deb yozish</button>' +
+        '<p class="adm-forma-xabar" role="status"></p></form></div>';
+    } else if (panel === 'tahrir') {
+      html += '<div class="adm-hamkor-panel"><form class="adm-forma" data-hk-forma="tahrir">' +
+        '<div class="qator3">' +
+          '<label>Hamkorga, %<input name="commission" type="number" min="1" max="90" value="' + h.commission + '"></label>' +
+          '<label>Xaridorga chegirma, %<input name="discount" type="number" min="0" max="90" value="' + h.discount + '"></label>' +
+        '</div>' +
+        '<p class="izoh-kichik" style="margin-bottom:8px">Yangi foiz faqat bundan keyingi sotuvlarga ta\'sir qiladi.</p>' +
+        '<button class="tugma" type="submit">Saqlash</button>' +
+        '<p class="adm-forma-xabar" role="status"></p></form></div>';
+    } else if (panel === 'tarix') {
+      html += '<div class="adm-hamkor-panel" data-hk-tarix>' + hamkorTarixHtml(HK.tarix[id]) + '</div>';
+    }
+    return html + '</div>';
+  }).join('');
+
+  quti.querySelectorAll('[data-hamkor]').forEach(function (karta) {
+    var id = Number(karta.dataset.hamkor);
+    karta.querySelectorAll('[data-hk-panel]').forEach(function (b) {
+      b.onclick = function () {
+        var p = b.dataset.hkPanel;
+        HK.ochiq[id] = HK.ochiq[id] === p ? null : p;
+        if (HK.ochiq[id] === 'tarix') hamkorTarixYukla(id, r);
+        hamkorlarChiz(r);
+      };
+    });
+    karta.querySelectorAll('[data-hk-amal]').forEach(function (b) {
+      b.onclick = async function () {
+        var amal = b.dataset.hkAmal;
+        if (amal === 'delete' && !(await tasdiqSora('Hamkor va uning promo-kodi o\'chirilsinmi?'))) return;
+        if (amal === 'toggle' && b.textContent === 'To\'xtatish' &&
+            !(await tasdiqSora('Hamkor to\'xtatilsinmi? Uning promo-kodi ishlamay qoladi.'))) return;
+        b.disabled = true;
+        var x = await AdminAPI.hamkorAmal(id, amal);
+        if (!x.ok) { b.disabled = false; ogohlantir(x.error || 'Xatolik'); return; }
+        hamkorlarChiz(x);
+      };
+    });
+    var forma = karta.querySelector('[data-hk-forma]');
+    if (forma) forma.onsubmit = async function (e) {
+      e.preventDefault();
+      var xabar = forma.querySelector('.adm-forma-xabar');
+      var tur = forma.dataset.hkForma;
+      var d = {};
+      Array.prototype.forEach.call(forma.querySelectorAll('input'), function (i) { d[i.name] = i.value; });
+      forma.querySelector('button').disabled = true;
+      xabar.textContent = 'Saqlanmoqda...';
+      var x = await AdminAPI.hamkorAmal(id, tur === 'tolov' ? 'payout' : 'update', d);
+      forma.querySelector('button').disabled = false;
+      if (!x.ok) { xabar.textContent = '❌ ' + (x.error || 'Xatolik'); return; }
+      HK.ochiq[id] = null;
+      delete HK.tarix[id];
+      hamkorlarChiz(x);
+    };
+    if (HK.ochiq[id] === 'tarix' && HK.tarix[id]) hamkorTarixBogla(id);
+  });
+}
+
+function hamkorTarixHtml(t) {
+  if (!t) return '<p class="izoh-kichik">Yuklanmoqda...</p>';
+  if (t.error) return '<p class="izoh-kichik">' + esc(t.error) + '</p>';
+  var sotuv = t.sales.length
+    ? '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr><th>Sana</th><th>Buyurtma</th><th>Xaridor</th>' +
+      '<th>Nima</th><th>To\'ladi</th><th>Hamkorga</th></tr></thead><tbody>' +
+      t.sales.map(function (x) {
+        return '<tr><td>' + msVaqt(x.created_ms) + '</td><td>' + esc(x.order_code) + '</td><td>' +
+          esc(x.buyer || ('ID ' + x.buyer_id)) + '</td><td>' + esc(x.item) + '</td><td>' + pul(x.paid) + '</td><td><b>' +
+          pul(x.amount) + '</b> (' + x.percent + '%)</td></tr>';
+      }).join('') + '</tbody></table></div>'
+    : '<p class="izoh-kichik">Hali sotuv yo\'q.</p>';
+  var tolov = t.payouts.length
+    ? '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr><th>Sana</th><th>Summa</th><th>Izoh</th><th></th></tr></thead><tbody>' +
+      t.payouts.map(function (x) {
+        return '<tr><td>' + msVaqt(x.created_ms) + '</td><td><b>' + pul(x.amount) + '</b></td><td>' + esc(x.note || '—') +
+          '</td><td><button class="adm-mini-tugma qizil" type="button" data-hk-tolov-ochir="' + x.id + '">O\'chirish</button></td></tr>';
+      }).join('') + '</tbody></table></div>'
+    : '<p class="izoh-kichik">Hali to\'lov qilinmagan.</p>';
+  return '<h4>Sotuvlar</h4>' + sotuv + '<h4>To\'lovlar (hamkorga o\'tkazilgan)</h4>' + tolov;
+}
+
+async function hamkorTarixYukla(id, r) {
+  var x = await AdminAPI.hamkorBatafsil(id);
+  HK.tarix[id] = x.ok ? x : { error: x.error || 'Xatolik' };
+  if (HK.ochiq[id] !== 'tarix') return;
+  var joy = document.querySelector('[data-hamkor="' + id + '"] [data-hk-tarix]');
+  if (!joy) return;
+  joy.innerHTML = hamkorTarixHtml(HK.tarix[id]);
+  hamkorTarixBogla(id);
+}
+
+/** Tarixdagi "O'chirish" tugmalari (xato yozilgan to'lov). */
+function hamkorTarixBogla(id) {
+  var joy = document.querySelector('[data-hamkor="' + id + '"] [data-hk-tarix]');
+  if (!joy) return;
+  joy.querySelectorAll('[data-hk-tolov-ochir]').forEach(function (b) {
+    b.onclick = async function () {
+      if (!(await tasdiqSora('Bu to\'lov yozuvi o\'chirilsinmi? (Xato yozilgan bo\'lsa)'))) return;
+      var y = await AdminAPI.hamkorTolovOchir(b.dataset.hkTolovOchir);
+      if (!y.ok) { ogohlantir(y.error || 'Xatolik'); return; }
+      delete HK.tarix[id];
+      hamkorlarChiz(y);
+      hamkorTarixYukla(id, y);
+    };
+  });
+}
+
+async function yuklaHamkorlar() {
+  var r = await AdminAPI.hamkorlar();
+  if (!r.ok) { document.getElementById('hamkorStat').textContent = r.error || 'Xatolik'; return; }
+  HK.tarix = {};
+  hamkorlarChiz(r);
+  Object.keys(HK.ochiq).forEach(function (id) { if (HK.ochiq[id] === 'tarix') hamkorTarixYukla(Number(id), r); });
+}
+
+document.getElementById('hamkorForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var kim = document.getElementById('hkKim').value.trim();
+  var kod = document.getElementById('hkKod').value.trim().toUpperCase();
+  if (!kim) { formaXabar('hkXabar', '❌ ID yoki @username ni yozing'); return; }
+  if (!kod) { formaXabar('hkXabar', '❌ Promo-kodni yozing (masalan, ALI20)'); return; }
+  formaXabar('hkXabar', 'Qo\'shilmoqda...', true);
+  var r = await AdminAPI.hamkorQosh({
+    who: kim, code: kod,
+    commission: document.getElementById('hkFoiz').value,
+    discount: document.getElementById('hkChegirma').value,
+  });
+  if (!r.ok) { formaXabar('hkXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  document.getElementById('hkKim').value = '';
+  document.getElementById('hkKod').value = '';
+  formaXabar('hkXabar', '✅ ' + r.code + ' — hamkor qo\'shildi. Kod va havola uning profilida ko\'rinadi.', true);
+  hamkorlarChiz(r);
+});
+
+document.getElementById('pogonaForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  formaXabar('pgXabar', 'Saqlanmoqda...', true);
+  var r = await AdminAPI.hamkorPogona({
+    tier1_sales: document.getElementById('pg1s').value, tier1_bonus: document.getElementById('pg1b').value,
+    tier2_sales: document.getElementById('pg2s').value, tier2_bonus: document.getElementById('pg2b').value,
+  });
+  if (!r.ok) { formaXabar('pgXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  formaXabar('pgXabar', '✅ Saqlandi', true);
+  hamkorlarChiz(r);
 });
 
 // ─────────────────────── Tizim: zaxira nusxa va xatolar ───────────────────────

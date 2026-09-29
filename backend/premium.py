@@ -6,8 +6,8 @@ Imkoniyatlar: AI tushuntirish, shaxsiy darslar yaratish (personal.py), ism
 yonida emoji va avatar atrofida oltin halqa. Premium fanlarni ochmaydi — fanlar
 alohida sotiladi.
 
-Sotib olish fanlar kabi (payments.py): karta orqali (admin chekni tasdiqlaydi)
-yoki Telegram Stars. Buyurtmada items = ["premium"]. Muddat tugamaguncha qayta
+Sotib olish fanlar kabi (payments.py): karta orqali, admin chekni tasdiqlaydi.
+Buyurtmada items = ["premium"]. Muddat tugamaguncha qayta
 sotib olib bo'lmaydi; tugagach — yana 30 kun. Admin paneldan qo'lda berish yoki
 olib qo'yish mumkin (premium_log'da qayd etiladi).
 
@@ -161,11 +161,10 @@ def admin_overview(cur, now=None) -> dict:
     log = [{'user_id': r['user_id'], 'name': r['name'], 'until_ms': int(r['until_ms']), 'days': int(r['days']),
             'source': r['source'], 'note': r['note'], 'created_ms': int(r['created_ms'])} for r in cur.fetchall()]
     month = clock.period_start_ms('month', now)
-    cur.execute("SELECT method, COUNT(*) AS n, COALESCE(SUM(amount), 0) AS s FROM pay_orders "
-                "WHERE status = 'approved' AND items = %s AND decided_ms >= %s GROUP BY method",
-                ('["premium"]', month))
-    sold = {r['method'] or 'card': {'count': int(r['n']), 'sum': int(r['s'])} for r in cur.fetchall()}
+    cur.execute("SELECT COUNT(*) AS n, COALESCE(SUM(amount), 0) AS s FROM pay_orders "
+                "WHERE status = 'approved' AND items = %s AND decided_ms >= %s", ('["premium"]', month))
+    r = cur.fetchone()
     cur.execute("SELECT COUNT(*) AS n FROM personal_topics WHERE status = 'ready'")
     lessons = int(cur.fetchone()['n'])
     return {'active': active, 'active_count': len(active), 'log': log, 'lessons': lessons,
-            'month': {'card': sold.get('card', {'count': 0, 'sum': 0}), 'stars': sold.get('stars', {'count': 0, 'sum': 0})}}
+            'month': {'count': int(r['n']), 'sum': int(r['s'])}}

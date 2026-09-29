@@ -14,6 +14,7 @@ Buyruqlar (/start, /kun, ...) app.py'da; bu yerga faqat qolgan xabarlar keladi.
 import html
 import logging
 
+import partners
 import payments
 import rate_limit
 import tgbot
@@ -38,7 +39,7 @@ BTN_SUPPORT = "💬 Admin bilan bog'lanish"
 def menu_keyboard():
     """Tugmalar matn yuboradi, bot esa inline "Ochish" tugmasi bilan javob beradi.
     Pastki menyudagi web_app tugmasidan ochilgan Mini App'ga Telegram initData
-    bermaydi — yangi o'quvchi kira olmasdi, Telegram Stars ham ishlamasdi."""
+    bermaydi — yangi o'quvchi kira olmasdi."""
     return {
         'keyboard': [
             [{'text': BTN_APP}],
@@ -297,7 +298,9 @@ def _promo_input(cur, conn, chat_id, order_id, text):
     except payments.PayError as exc:
         _send(chat_id, f"❌ {html.escape(exc.message)}\nQayta urinish uchun «🎟 Promo-kod» tugmasini bosing.")
         return
-    _send(chat_id, f"✅ Promo-kod qo'llandi: −{order['promo_percent']}%. Yangi summa: <b>{payments.som(order['amount'])}</b>")
+    percent = int(order['promo_percent'] or 0)
+    _send(chat_id, f"✅ Promo-kod qo'llandi" + (f": −{percent}%" if percent else '') +
+          f". Summa: <b>{payments.som(order['amount'])}</b>")
     payments.send_instructions(cur, order)
 
 
@@ -354,6 +357,20 @@ def _admin_reply(cur, chat_id, message):
 
 # ───────────────────────── Buyruqlar ─────────────────────────
 
+def partner_start(chat_id, payload):
+    """/start <KOD> — hamkor havolasi: kod saqlanadi va do'konda avtomatik qo'llanadi."""
+    conn, cur = _db()
+    try:
+        row = partners.active_code(cur, payload)
+        if row:
+            partners.start_link(cur, conn, chat_id, row)
+    except Exception:  # noqa: BLE001
+        conn.rollback()
+        logger.exception('Hamkor havolasi xatosi')
+    finally:
+        _close(conn, cur)
+
+
 def send_shop(chat_id):
     """/sotib_olish va /start pay — faol buyurtma bo'lsa uni, aks holda do'konni ko'rsatadi."""
     conn, cur = _db()
@@ -370,8 +387,8 @@ def send_shop(chat_id):
     finally:
         _close(conn, cur)
     tgbot.send(chat_id, "🛒 <b>Fan sotib olish</b>\nFanlarni tanlang — 3 ta fan va barcha fanlar paketlari arzonroq.\n\n"
-                        "To'lov usullari:\n1️⃣ Karta orqali — admin chekni tasdiqlaydi\n"
-                        "2️⃣ Telegram Stars ⭐ — fan darhol ochiladi", "Do'konni ochish", 'shop.html')
+                        "To'lov karta orqali: kartaga o'tkazasiz, chek rasmini shu chatga yuborasiz — "
+                        "admin tasdiqlagach fan ochiladi.", "Do'konni ochish", 'shop.html')
 
 
 STATUS_LABELS = {
@@ -394,8 +411,7 @@ def send_my_orders(chat_id):
     lines = ["🧾 <b>To'lovlarim</b>"]
     for o in orders:
         names = ', '.join(i['name'] for i in o['items'])
-        price = f"{o['amount']} Stars" if o.get('method') == payments.STARS else payments.som(o['amount'])
-        lines.append(f"\n<b>{o['code']}</b> — {price}\n{html.escape(names)}\n"
+        lines.append(f"\n<b>{o['code']}</b> — {payments.som(o['amount'])}\n{html.escape(names)}\n"
                      f"{STATUS_LABELS.get(o['status'], o['status'])} • {payments._date(o['created_ms'])}"
                      + (f"\nSabab: {html.escape(o['reject_reason'])}" if o['reject_reason'] else ''))
     _send(chat_id, '\n'.join(lines))

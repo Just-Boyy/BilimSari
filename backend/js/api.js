@@ -121,17 +121,16 @@
     buyurtmaBer: function (fanlar, promo) {
       return so_rov('/api/pay/orders', { method: 'POST', body: { keys: fanlar, promo: promo || null } });
     },
-    starsBuyurtma: function (fanlar, promo) {
-      return so_rov('/api/pay/stars', { method: 'POST', body: { keys: fanlar, promo: promo || null } });
-    },
     buyurtmaBekor: function (id) { return so_rov('/api/pay/orders/' + id + '/cancel', { method: 'POST' }); },
     tolovlarim: function () { return so_rov('/api/pay/orders'); },
 
     // — Bilim Premium —
     premium: function () { return so_rov('/api/premium'); },
     premiumBuyurtma: function (promo) { return so_rov('/api/premium/order', { method: 'POST', body: { promo: promo || null } }); },
-    premiumStars: function (promo) { return so_rov('/api/premium/stars', { method: 'POST', body: { promo: promo || null } }); },
     emojiTanla: function (kalit) { return so_rov('/api/premium/emoji', { method: 'POST', body: { emoji: kalit || null } }); },
+
+    // — Hamkorlik (promo-kod egasi) —
+    hamkor: function () { return so_rov('/api/partner'); },
 
     // — Shaxsiy darslar —
     shaxsiy: function () { return so_rov('/api/personal'); },

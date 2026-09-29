@@ -234,21 +234,15 @@
 
     // Do'kon va to'lov
     'Fan sotib olish ›': 'Купить предмет ›', 'Sotib olish': 'Купить', 'Sotib olmoqchi bo\'lgan fanlarni tanlang.': 'Выберите предметы, которые хотите купить.',
-    'Hammasini tanlash': 'Выбрать все', 'Telegram Stars yoki karta orqali': 'Через Telegram Stars или картой',
-    'To\'lov usuli': 'Способ оплаты', 'To\'lov usulini tanlang': 'Выберите способ оплаты', 'Karta orqali (admin bilan)': 'Картой (через админа)',
-    'Karta — admin chekni tasdiqlaydi': 'Карта — админ подтверждает чек', 'Telegram Stars': 'Telegram Stars', 'Stars': 'Stars',
-    'Stars — fan darhol ochiladi': 'Stars — предмет открывается сразу',
-    'Telegram ichida to\'lanadi — fan darhol, admin kutmasdan ochiladi.': 'Оплата внутри Telegram — предмет откроется сразу, без ожидания админа.',
+    'Hammasini tanlash': 'Выбрать все', 'Karta orqali to\'lov': 'Оплата картой',
     'Kartaga o\'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach fan ochiladi.':
       'Переводите на карту, отправляете фото чека боту — после подтверждения админом предмет откроется.',
-    'Karta orqali to\'lash': 'Оплатить картой', 'Stars bilan to\'lash': 'Оплатить Stars', 'Telegram Stars bilan to\'lang': 'Оплатите через Telegram Stars',
-    'Telegram Stars nima va qanday olinadi?': 'Что такое Telegram Stars и как их получить?',
-    'Stars — Telegram\'ning ichki to\'lov birligi. Ularni Telegram\'ning o\'zida sotib olasiz: Sozlamalar → «Mening Stars\'larim» yoki to\'lov oynasidagi «Stars sotib olish» tugmasi orqali — bank kartasi, Apple Pay yoki Google Pay bilan. To\'lov tugagach fan shu zahoti ochiladi.':
-      'Stars — внутренняя валюта Telegram. Их покупают прямо в Telegram: Настройки → «Мои Stars» или кнопка «Купить Stars» в окне оплаты — банковской картой, Apple Pay или Google Pay. После оплаты предмет откроется сразу.',
-    'Faqat Telegram ilovasi ichida ishlaydi': 'Работает только внутри приложения Telegram',
+    'Karta orqali to\'lash': 'Оплатить картой',
+    'qo\'llandi': 'применён', 'Promo-kod qo\'llandi': 'Промокод применён',
+    'Havola orqali kelgan promo-kod avtomatik qo\'llandi.': 'Промокод из ссылки применён автоматически.',
     'Promo-kod': 'Промокод', 'Promo-kod (ixtiyoriy)': 'Промокод', 'Paketlar arzonroq:': 'Пакеты дешевле:',
     'Botga karta raqami keladi': 'Бот пришлёт номер карты', 'To\'lab, chekni botga yuboring': 'Оплатите и отправьте чек боту',
-    'Admin tasdiqlaydi': 'Админ подтверждает', 'Fan darhol ochiladi': 'Предмет откроется сразу', 'Qanday ishlaydi': 'Как это работает',
+    'Admin tasdiqlaydi': 'Админ подтверждает', 'Qanday ishlaydi': 'Как это работает',
     'Buyurtma': 'Заказ', 'Buyurtma yaratildi': 'Заказ создан', 'Buyurtma bekor qilindi': 'Заказ отменён',
     'Buyurtma bekor qilinsinmi?': 'Отменить заказ?', 'Chek kutilmoqda': 'Ожидается чек', 'Chekingiz tekshirilmoqda ⏳': 'Ваш чек проверяется ⏳',
     'Tasdiqlangan': 'Подтверждён', 'Rad etilgan': 'Отклонён', 'Muddati tugagan': 'Срок истёк', 'To\'lov rad etildi': 'Платёж отклонён',
@@ -272,8 +266,8 @@
     'Bunday promo-kod yo\'q.': 'Такого промокода нет.', 'Promo-kod muddati tugagan.': 'Срок промокода истёк.',
     'Promo-kod limiti tugagan.': 'Лимит промокода исчерпан.', 'Siz bu promo-koddan allaqachon foydalangansiz.': 'Вы уже использовали этот промокод.',
     'Bu buyurtmani bekor qilib bo\'lmaydi.': 'Этот заказ нельзя отменить.', 'Promo-kod topilmadi': 'Промокод не найден',
-    'Telegram Stars orqali to\'lov hozircha o\'chiq.': 'Оплата через Telegram Stars пока отключена.',
-    'Telegram to\'lov oynasini ochib bo\'lmadi. Birozdan keyin urinib ko\'ring.': 'Не удалось открыть окно оплаты Telegram. Попробуйте чуть позже.',
+    "O'zingizning hamkorlik kodingizdan foydalana olmaysiz — uni do'stlaringizga ulashing.":
+      'Нельзя использовать собственный партнёрский промокод — поделитесь им с друзьями.',
     'Juda ko\'p urinish. Birozdan keyin qayta urinib ko\'ring.': 'Слишком много попыток. Попробуйте чуть позже.',
     'Juda ko\'p urinish. Birozdan so\'ng qayta urinib ko\'ring.': 'Слишком много попыток. Попробуйте чуть позже.',
     'Avtorizatsiya talab qilinadi': 'Требуется авторизация',
@@ -393,11 +387,21 @@
       'Чтобы купить Premium, откройте BilimSari через Telegram-бота — оплата проходит в чате бота.',
     "Kartaga o'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach Premium faollashadi.":
       'Переводите на карту, отправляете фото чека боту — после подтверждения админом Premium активируется.',
-    "Telegram ichida to'lanadi — Premium darhol faollashadi.": 'Оплата внутри Telegram — Premium активируется сразу.',
     "Fan uchun ochiq buyurtmangiz bor — Premium olsangiz, u bekor qilinadi.": 'У вас есть открытый заказ на предмет — если купите Premium, он отменится.',
     "Botda karta raqami bor: to'lovni qiling va chek rasmini botga yuboring. Admin tasdiqlagach Premium faollashadi.":
       'В боте есть номер карты: оплатите и отправьте фото чека боту. После подтверждения админом Premium активируется.',
     'Bilim Premium faollashmoqda...': 'Bilim Premium активируется...', 'Premium faollashdi! Omad!': 'Premium активирован! Удачи!',
+
+    // Hamkorlik (profil)
+    'Hamkorlik': 'Партнёрство', 'Faol': 'Активен', 'To\'xtatilgan': 'Приостановлен', 'Promo-kodingiz': 'Ваш промокод',
+    'Sizga:': 'Вам:', 'Do\'stingizga:': 'Другу:', 'Har bir xariddan': 'С каждой покупки',
+    'Kodingiz vaqtincha to\'xtatilgan. Savolingiz bo\'lsa, botga yozing.': 'Ваш код временно приостановлен. Если есть вопросы, напишите боту.',
+    'Sotuvlar': 'Продажи', 'Jami ishlangan': 'Всего заработано', 'To\'langan': 'Выплачено', 'To\'lanishi kerak': 'К выплате',
+    'Ulashish': 'Поделиться', 'Nusxa olish': 'Копировать', 'Nusxa olindi': 'Скопировано', 'Nusxa olib bo\'lmadi': 'Не удалось скопировать',
+    'Oxirgi sotuvlar': 'Последние продажи', 'Sizga to\'langan': 'Выплачено вам',
+    'Hali sotuv yo\'q. Kodingizni do\'stlaringiz va sinfdoshlaringizga ulashing!': 'Продаж пока нет. Поделитесь кодом с друзьями и одноклассниками!',
+    'Komissiya do\'stingiz kodingiz bilan xarid qilib, admin to\'lovni tasdiqlaganda yoziladi. Pulni admin o\'zi o\'tkazib beradi — har bir sotuv va to\'lov haqida botga xabar keladi.':
+      'Комиссия начисляется, когда друг покупает с вашим кодом и админ подтверждает оплату. Деньги переводит админ — о каждой продаже и выплате бот пришлёт сообщение.',
     "Premium hali faol — muddati tugagach qayta olish mumkin.": 'Premium ещё активен — купить снова можно после окончания срока.',
     'AI tushuntirish faqat Bilim Premium bilan ishlaydi.': 'Объяснение от ИИ доступно только с Bilim Premium.',
     'Emoji faqat Bilim Premium bilan ishlaydi.': 'Эмодзи доступны только с Bilim Premium.', "Bunday emoji yo'q.": 'Такого эмодзи нет.',
@@ -466,7 +470,7 @@
     [/^(.+)\. (\d+)-savolga juftlangan$/, '$1. В паре с вопросом $2'],
     [/^(\d+) savol$/, function (m, n) { return n + ' ' + ko(n, 'вопрос', 'вопроса', 'вопросов'); }],
     [/^(\d+) raund$/, function (m, n) { return n + ' ' + ko(n, 'раунд', 'раунда', 'раундов'); }],
-    [/^([\d\s]+) so'm$/, '$1 сум'],
+    [/^([+−-]?[\d\s]+) so'm$/, '$1 сум'],
     [/^(\d+) chaqmoq$/, function (m, n) { return n + ' ' + ko(n, 'молния', 'молнии', 'молний'); }],
     [/^\+(\d+) chaqmoq$/, function (m, n) { return '+' + n + ' ' + ko(n, 'молния', 'молнии', 'молний'); }],
     [/^(\d+) ball$/, function (m, n) { return n + ' ' + ko(n, 'очко', 'очка', 'очков'); }],
@@ -537,7 +541,14 @@
     [/^host: (.+)$/, 'хост: $1'],
     // Bilim Premium va shaxsiy darslar
     [/^gacha \((\d+) kun qoldi\)$/, function (m, n) { return '(осталось ' + n + ' ' + ko(n, 'день', 'дня', 'дней') + ')'; }],
-    [/^1 oyga(?: • yoki (\d+) Stars)?$/, function (m, s) { return 'за 1 месяц' + (s ? ' • или ' + s + ' Stars' : ''); }],
+    [/^1 oyga$/, 'за 1 месяц'],
+    [/^Havola orqali kelgan promo-kod avtomatik qo'yildi(?: \(−(\d+)%\))?\.$/,
+      function (m, p) { return 'Промокод из ссылки подставлен автоматически' + (p ? ' (−' + p + '%)' : '') + '.'; }],
+    // Hamkorlik (profil)
+    [/^Promo-kod ([A-Z0-9]+)$/, 'Промокод $1'],
+    [/^Promo-kod ([A-Z0-9]+) \(−(\d+)%\)$/, 'Промокод $1 (−$2%)'],
+    [/^Yana (\d+) ta sotuv — komissiyangiz (\d+)% bo'ladi\.$/,
+      function (m, n, p) { return 'Ещё ' + n + ' ' + ko(n, 'продажа', 'продажи', 'продаж') + ' — и ваша комиссия станет ' + p + '%.'; }],
     [/^(\d+) ta maxsus emoji'dan birini tanlang — u reyting, o'yinlar va kun savolida ismingiz yonida ko'rinadi\.$/,
       'Выберите одно из $1 особых эмодзи — оно будет видно рядом с вашим именем в рейтинге, играх и вопросе дня.'],
     [/^Bilim Premium bilan (\d+) ta maxsus emoji'dan birini tanlaysiz — u reyting, o'yinlar va kun savolida ismingiz yonida ko'rinadi\.$/,
