@@ -32,8 +32,19 @@ GOOGLE_AI_API_KEY = (
 )
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash')
 
-# DeepSeek — asosiy AI (kalit bo'lsa). Kunlik so'rov limiti yo'q, pul hisobdagi balansdan
-# yechiladi. Ishlamasa (balans tugagan, band) — avtomatik Gemini'ga o'tiladi.
+# AI xizmatlari navbati: Gemini (o'zbek tilini eng yaxshi biladi) → OpenRouter'ning bepul
+# modellari → DeepSeek (pullik, balans bo'lsa). Birida limit tugasa yoki band bo'lsa — keyingisiga.
+#
+# OpenRouter: bepul modellarga kuniga 50 so'rov (Toshkent 05:00 da yangilanadi), daqiqasiga 20.
+OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY', '')
+OPENROUTER_MODELS = [m.strip() for m in os.environ.get(
+    'OPENROUTER_MODELS',
+    'google/gemma-4-31b-it:free,qwen/qwen3.8-27b:free,nvidia/nemotron-3-super-120b-a12b:free,openrouter/free',
+).split(',') if m.strip()]
+OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+OPENROUTER_MAX_TOKENS = 16384
+
+# DeepSeek — kunlik limiti yo'q, pul hisobdagi balansdan yechiladi (balans bo'lmasa — 402).
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-flash')
 DEEPSEEK_URL = os.environ.get('DEEPSEEK_BASE_URL', 'https://api.deepseek.com').rstrip('/') + '/chat/completions'
@@ -213,11 +224,11 @@ BUSY_REST_S = 60
 _dam = {}          # model → shu vaqtgacha (time.time()) ishlatilmaydi
 
 
-def _navbat() -> list:
+def _navbat(faqat_tayyor=False) -> list:
     barcha = [GEMINI_MODEL] + [m for m in GEMINI_FALLBACK_MODELS if m != GEMINI_MODEL]
     hozir = time.time()
     tayyor = [m for m in barcha if _dam.get(m, 0) <= hozir]
-    return tayyor or barcha
+    return tayyor if faqat_tayyor else (tayyor or barcha)
 
 
 def _matn(data) -> str:
@@ -237,7 +248,9 @@ def _gemini(payload, parse, timeout, attempts, waits, budget):
         qolgan = oxir - time.time()
         if qolgan < 3:
             break
-        navbat = _navbat()
+        navbat = _navbat(faqat_tayyor=True)
+        if not navbat:
+            break                                   # hamma model limitda yoki band — keyingi xizmatga
         model = navbat[i % len(navbat)]
         retry = True
         try:
@@ -283,9 +296,9 @@ def _kvota_ogohlantir():
     if _dam.get(GEMINI_MODEL, 0) - time.time() > BUSY_REST_S and _ogohlantirildi['kun'] != kun:
         _ogohlantirildi['kun'] = kun
         logging.getLogger('bilimsari.ai').error(
-            "Gemini: %s modelining bepul kunlik limiti tugadi — AI tushuntirish va shaxsiy darslar "
-            "zaxira modellarda ishlayapti (ular ham band bo'lishi mumkin). Barqaror ishlashi uchun "
-            "aistudio.google.com'da to'lovni (billing) yoqing.", GEMINI_MODEL)
+            "Gemini: %s modelining bepul kunlik limiti tugadi (Toshkent vaqti bilan soat 12:00 da "
+            "yangilanadi) — AI tushuntirish va shaxsiy darslar zaxira modellar va OpenRouter orqali "
+            "ishlayapti.", GEMINI_MODEL)
 
 
 def _text_parse(text):
@@ -295,33 +308,56 @@ def _text_parse(text):
 
 
 def _json_parse(text):
-    return json.loads(re.sub(r'^```(?:json)?\s*|\s*```$', '', text))
+    t = re.sub(r'^```(?:json)?\s*|\s*```$', '', (text or '').strip())
+    try:
+        return json.loads(t)
+    except ValueError:
+        a, b = t.find('{'), t.rfind('}')             # ba'zi modellar JSON atrofiga izoh yozadi
+        if a >= 0 and b > a:
+            return json.loads(t[a:b + 1])
+        raise
 
 
-# ───────────────────────── DeepSeek chaqiruvi ─────────────────────────
+# ───────────────────────── OpenRouter va DeepSeek (OpenAI formati) ─────────────────────────
 
-_ds_ogohlantirildi = {'kun': None}
+_ogohlantirildi_xizmat = {}
 
 
-def _deepseek(system, user_content, max_tokens, json_mode, parse, timeout, attempts, waits, budget):
-    """DeepSeek (OpenAI bilan bir xil format): (natija, xato). Kalit bo'lmasa — (None, None)."""
-    if not DEEPSEEK_API_KEY:
+def _xizmat_ogohlantir(nom, code):
+    """Kalit noto'g'ri (401) yoki balans tugagan (402) — egaga kuniga bir marta xabar."""
+    kun = time.strftime('%Y-%m-%d')
+    if _ogohlantirildi_xizmat.get(nom) != kun:
+        _ogohlantirildi_xizmat[nom] = kun
+        logging.getLogger('bilimsari.ai').error(
+            '%s: %s — AI boshqa xizmatlar orqali ishlayapti.', nom,
+            "balans tugadi (402), hisobni to'ldiring" if code == 402 else f"API kalit noto'g'ri ({code})")
+
+
+def _chat(nom, url, kalit, modellar, system, user_content, max_tokens, max_out, json_mode, parse,
+          timeout, attempts, waits, budget):
+    """OpenAI formatidagi xizmat: modellar navbat bilan. (natija, xato). Kalit bo'lmasa — (None, None)."""
+    if not kalit or not modellar:
         return None, None
     messages = ([{'role': 'system', 'content': system}] if system else []) + \
         [{'role': 'user', 'content': user_content}]
-    body = {'model': DEEPSEEK_MODEL, 'messages': messages, 'stream': False,
-            'max_tokens': min(int(max_tokens), DEEPSEEK_MAX_TOKENS), 'temperature': 0.5 if json_mode else 0.6}
-    if json_mode:
-        body['response_format'] = {'type': 'json_object'}
+    headers = {'Authorization': f'Bearer {kalit}'}
+    if 'openrouter' in url:
+        headers.update({'HTTP-Referer': 'https://bilimsari.uz', 'X-Title': 'BilimSari'})
     oxir = time.time() + budget
     error = None
     for i in range(max(1, attempts)):
         qolgan = oxir - time.time()
         if qolgan < 3:
             break
+        hozir = time.time()
+        tayyor = [m for m in modellar if _dam.get(f'{nom}:{m}', 0) <= hozir] or modellar
+        model = tayyor[i % len(tayyor)]
+        body = {'model': model, 'messages': messages, 'stream': False,
+                'max_tokens': min(int(max_tokens), max_out), 'temperature': 0.5 if json_mode else 0.6}
+        if json_mode:
+            body['response_format'] = {'type': 'json_object'}
         try:
-            r = requests.post(DEEPSEEK_URL, json=body, timeout=min(timeout, qolgan),
-                              headers={'Authorization': f'Bearer {DEEPSEEK_API_KEY}'})
+            r = requests.post(url, json=body, headers=headers, timeout=min(timeout, qolgan))
         except requests.Timeout:
             error = "AI javob bermadi (vaqt tugadi). Qayta urinib ko'ring."
         except requests.RequestException as exc:
@@ -329,60 +365,75 @@ def _deepseek(system, user_content, max_tokens, json_mode, parse, timeout, attem
         else:
             if r.status_code == 200:
                 try:
-                    text = (((r.json().get('choices') or [{}])[0].get('message') or {}).get('content') or '').strip()
+                    data = r.json()
+                    text = (((data.get('choices') or [{}])[0].get('message') or {}).get('content') or '').strip()
                     return parse(text), None
                 except (ValueError, TypeError, AttributeError):
                     error = "AI javobi noto'g'ri formatda."
+                    _dam[f'{nom}:{model}'] = time.time() + BUSY_REST_S
+                    continue                                   # boshqa model yaxshiroq yozishi mumkin
+            error = f'{nom} xatosi ({r.status_code}, {model})'
+            if r.status_code in (401, 402):
+                _xizmat_ogohlantir(nom, r.status_code)
+                return None, error                          # kalit/balans — qayta urinish foydasiz
+            if r.status_code == 429:
+                _dam[f'{nom}:{model}'] = time.time() + QUOTA_REST_S
+                continue
+            if r.status_code in (400, 404):
+                _dam[f'{nom}:{model}'] = time.time() + 10 * 60   # bu modelga mos kelmadi — boshqasi
+                if len(modellar) > 1:
+                    continue
+                return None, error
+            if r.status_code in RETRY_STATUSES:
+                _dam[f'{nom}:{model}'] = time.time() + BUSY_REST_S
             else:
-                error = f'DeepSeek xatosi ({r.status_code})'
-                if r.status_code in (401, 402):
-                    _deepseek_ogohlantir(r.status_code)
-                    return None, error                  # kalit/balans muammosi — qayta urinish foydasiz
-                if r.status_code not in RETRY_STATUSES:
-                    return None, error
+                return None, error
         if i + 1 < attempts:
             time.sleep(min(waits[min(i, len(waits) - 1)], max(0, oxir - time.time() - 3)))
     return None, error
 
 
-def _deepseek_ogohlantir(code):
-    """Balans tugagan (402) yoki kalit noto'g'ri (401) — egaga kuniga bir marta xabar."""
-    kun = time.strftime('%Y-%m-%d')
-    if _ds_ogohlantirildi['kun'] != kun:
-        _ds_ogohlantirildi['kun'] = kun
-        logging.getLogger('bilimsari.ai').error(
-            'DeepSeek: %s — AI hozircha Gemini orqali ishlayapti. platform.deepseek.com\'da %s.',
-            'balans tugadi (402)' if code == 402 else "API kalit noto'g'ri (401)",
-            "hisobni to'ldiring" if code == 402 else 'DEEPSEEK_API_KEY ni tekshiring')
+def _ai(system, user_content, max_tokens, json_mode, parse, gemini_payload, timeout, attempts, waits, budget):
+    """Xizmatlar navbati: Gemini → OpenRouter → DeepSeek. (natija, xato)."""
+    if not (GOOGLE_AI_API_KEY or OPENROUTER_API_KEY or DEEPSEEK_API_KEY):
+        return None, ('AI hozircha ulanmagan. Administrator GOOGLE_AI_API_KEY yoki OPENROUTER_API_KEY ni '
+                      'sozlashi kerak.')
+    oxir = time.time() + budget
+    xato = None
+    if GOOGLE_AI_API_KEY:
+        res, xato = _gemini(gemini_payload, parse, timeout, attempts, waits, budget * 0.5)
+        if res is not None:
+            return res, None
+    if OPENROUTER_API_KEY:
+        res, err = _chat('OpenRouter', OPENROUTER_URL, OPENROUTER_API_KEY, OPENROUTER_MODELS, system, user_content,
+                         max_tokens, OPENROUTER_MAX_TOKENS, json_mode, parse, timeout, max(4, attempts), waits,
+                         max(5, (oxir - time.time()) * 0.8))
+        if res is not None:
+            return res, None
+        xato = err or xato
+    if DEEPSEEK_API_KEY:
+        res, err = _chat('DeepSeek', DEEPSEEK_URL, DEEPSEEK_API_KEY, [DEEPSEEK_MODEL], system, user_content,
+                         max_tokens, DEEPSEEK_MAX_TOKENS, json_mode, parse, timeout, 2, waits,
+                         max(5, oxir - time.time()))
+        if res is not None:
+            return res, None
+        xato = err or xato
+    return None, xato
 
 
 def _call_gemini(system, user_content, max_tokens=900):
-    """Matnli javob (AI tushuntirish): avval DeepSeek, bo'lmasa Gemini. So'rov ichida — 55 soniyagacha."""
-    oxir = time.time() + 55
-    reply, error = _deepseek(system, user_content, max_tokens, False, _text_parse,
-                             timeout=40, attempts=2, waits=(1,), budget=42)
-    if reply is not None:
-        return reply, None
+    """Matnli javob (AI tushuntirish). So'rov ichida — 55 soniyagacha."""
     payload = {
         'system_instruction': {'parts': [{'text': system}]},
         'contents': [{'role': 'user', 'parts': [{'text': user_content}]}],
         'generationConfig': {'temperature': 0.6, 'maxOutputTokens': max_tokens},
     }
-    if DEEPSEEK_API_KEY and not GOOGLE_AI_API_KEY:
-        return None, error
-    return _gemini(payload, _text_parse, timeout=45, attempts=4, waits=(1, 2), budget=max(5, oxir - time.time()))
+    return _ai(system, user_content, max_tokens, False, _text_parse, payload,
+               timeout=40, attempts=4, waits=(1, 2), budget=55)
 
 
 def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts=3, waits=(2, 5, 10, 20), budget=600):
-    """JSON javob kutiladigan so'rov (shaxsiy darslar): avval DeepSeek, bo'lmasa Gemini.
-    (obyekt, xato) qaytaradi."""
-    oxir = time.time() + budget
-    data, error = _deepseek(system, prompt, max_tokens, True, _json_parse, timeout,
-                            attempts=max(2, attempts // 2), waits=waits, budget=budget * 0.6)
-    if data is not None:
-        return data, None
-    if DEEPSEEK_API_KEY and not GOOGLE_AI_API_KEY:
-        return None, error
+    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi."""
     payload = {
         'contents': [{'role': 'user', 'parts': [{'text': prompt}]}],
         'generationConfig': {'temperature': 0.5, 'maxOutputTokens': max_tokens,
@@ -390,7 +441,7 @@ def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts
     }
     if system:
         payload['system_instruction'] = {'parts': [{'text': system}]}
-    return _gemini(payload, _json_parse, timeout, attempts, waits, max(5, oxir - time.time()))
+    return _ai(system, prompt, max_tokens, True, _json_parse, payload, timeout, attempts, waits, budget)
 
 
 @bp.route('/tutor', methods=['POST'])
@@ -528,5 +579,6 @@ def explain():
 
 @bp.route('/status', methods=['GET'])
 def status():
-    return jsonify({'ok': True, 'enabled': bool(GOOGLE_AI_API_KEY or DEEPSEEK_API_KEY),
-                    'model': DEEPSEEK_MODEL if DEEPSEEK_API_KEY else GEMINI_MODEL})
+    navbat = [n for n, k in (('gemini', GOOGLE_AI_API_KEY), ('openrouter', OPENROUTER_API_KEY),
+                             ('deepseek', DEEPSEEK_API_KEY)) if k]
+    return jsonify({'ok': True, 'enabled': bool(navbat), 'providers': navbat, 'model': GEMINI_MODEL})
