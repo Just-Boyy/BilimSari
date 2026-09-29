@@ -8,6 +8,7 @@ sinf + fan + mavzu doirasida tushuntiradi.
 """
 
 import json
+import logging
 import os
 import re
 import time
@@ -30,6 +31,13 @@ GOOGLE_AI_API_KEY = (
     or ''
 )
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash')
+
+# DeepSeek — asosiy AI (kalit bo'lsa). Kunlik so'rov limiti yo'q, pul hisobdagi balansdan
+# yechiladi. Ishlamasa (balans tugagan, band) — avtomatik Gemini'ga o'tiladi.
+DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
+DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-flash')
+DEEPSEEK_URL = os.environ.get('DEEPSEEK_BASE_URL', 'https://api.deepseek.com').rstrip('/') + '/chat/completions'
+DEEPSEEK_MAX_TOKENS = 8192
 
 # Oddiy tezlik cheklovi: bitta foydalanuvchi daqiqada N ta so'rov. Bazada
 # saqlanadi (rate_limit.py) — gunicorn bir necha worker bilan ishlaganda ham
@@ -262,7 +270,22 @@ def _gemini(payload, parse, timeout, attempts, waits, budget):
             break
         if i + 1 < attempts:
             time.sleep(min(waits[min(i, len(waits) - 1)], max(0, oxir - time.time() - 3)))
+    _kvota_ogohlantir()
     return None, error
+
+
+_ogohlantirildi = {'kun': None}
+
+
+def _kvota_ogohlantir():
+    """Asosiy modelning kunlik limiti tugagan bo'lsa — egaga kuniga bir marta xabar (alerts.py)."""
+    kun = time.strftime('%Y-%m-%d')
+    if _dam.get(GEMINI_MODEL, 0) - time.time() > BUSY_REST_S and _ogohlantirildi['kun'] != kun:
+        _ogohlantirildi['kun'] = kun
+        logging.getLogger('bilimsari.ai').error(
+            "Gemini: %s modelining bepul kunlik limiti tugadi — AI tushuntirish va shaxsiy darslar "
+            "zaxira modellarda ishlayapti (ular ham band bo'lishi mumkin). Barqaror ishlashi uchun "
+            "aistudio.google.com'da to'lovni (billing) yoqing.", GEMINI_MODEL)
 
 
 def _text_parse(text):
@@ -275,18 +298,91 @@ def _json_parse(text):
     return json.loads(re.sub(r'^```(?:json)?\s*|\s*```$', '', text))
 
 
+# ───────────────────────── DeepSeek chaqiruvi ─────────────────────────
+
+_ds_ogohlantirildi = {'kun': None}
+
+
+def _deepseek(system, user_content, max_tokens, json_mode, parse, timeout, attempts, waits, budget):
+    """DeepSeek (OpenAI bilan bir xil format): (natija, xato). Kalit bo'lmasa — (None, None)."""
+    if not DEEPSEEK_API_KEY:
+        return None, None
+    messages = ([{'role': 'system', 'content': system}] if system else []) + \
+        [{'role': 'user', 'content': user_content}]
+    body = {'model': DEEPSEEK_MODEL, 'messages': messages, 'stream': False,
+            'max_tokens': min(int(max_tokens), DEEPSEEK_MAX_TOKENS), 'temperature': 0.5 if json_mode else 0.6}
+    if json_mode:
+        body['response_format'] = {'type': 'json_object'}
+    oxir = time.time() + budget
+    error = None
+    for i in range(max(1, attempts)):
+        qolgan = oxir - time.time()
+        if qolgan < 3:
+            break
+        try:
+            r = requests.post(DEEPSEEK_URL, json=body, timeout=min(timeout, qolgan),
+                              headers={'Authorization': f'Bearer {DEEPSEEK_API_KEY}'})
+        except requests.Timeout:
+            error = "AI javob bermadi (vaqt tugadi). Qayta urinib ko'ring."
+        except requests.RequestException as exc:
+            error = str(exc)
+        else:
+            if r.status_code == 200:
+                try:
+                    text = (((r.json().get('choices') or [{}])[0].get('message') or {}).get('content') or '').strip()
+                    return parse(text), None
+                except (ValueError, TypeError, AttributeError):
+                    error = "AI javobi noto'g'ri formatda."
+            else:
+                error = f'DeepSeek xatosi ({r.status_code})'
+                if r.status_code in (401, 402):
+                    _deepseek_ogohlantir(r.status_code)
+                    return None, error                  # kalit/balans muammosi — qayta urinish foydasiz
+                if r.status_code not in RETRY_STATUSES:
+                    return None, error
+        if i + 1 < attempts:
+            time.sleep(min(waits[min(i, len(waits) - 1)], max(0, oxir - time.time() - 3)))
+    return None, error
+
+
+def _deepseek_ogohlantir(code):
+    """Balans tugagan (402) yoki kalit noto'g'ri (401) — egaga kuniga bir marta xabar."""
+    kun = time.strftime('%Y-%m-%d')
+    if _ds_ogohlantirildi['kun'] != kun:
+        _ds_ogohlantirildi['kun'] = kun
+        logging.getLogger('bilimsari.ai').error(
+            'DeepSeek: %s — AI hozircha Gemini orqali ishlayapti. platform.deepseek.com\'da %s.',
+            'balans tugadi (402)' if code == 402 else "API kalit noto'g'ri (401)",
+            "hisobni to'ldiring" if code == 402 else 'DEEPSEEK_API_KEY ni tekshiring')
+
+
 def _call_gemini(system, user_content, max_tokens=900):
-    """Matnli javob (AI tushuntirish). So'rov ichida — 55 soniyadan oshmaydi."""
+    """Matnli javob (AI tushuntirish): avval DeepSeek, bo'lmasa Gemini. So'rov ichida — 55 soniyagacha."""
+    oxir = time.time() + 55
+    reply, error = _deepseek(system, user_content, max_tokens, False, _text_parse,
+                             timeout=40, attempts=2, waits=(1,), budget=42)
+    if reply is not None:
+        return reply, None
     payload = {
         'system_instruction': {'parts': [{'text': system}]},
         'contents': [{'role': 'user', 'parts': [{'text': user_content}]}],
         'generationConfig': {'temperature': 0.6, 'maxOutputTokens': max_tokens},
     }
-    return _gemini(payload, _text_parse, timeout=45, attempts=4, waits=(1, 2), budget=55)
+    if DEEPSEEK_API_KEY and not GOOGLE_AI_API_KEY:
+        return None, error
+    return _gemini(payload, _text_parse, timeout=45, attempts=4, waits=(1, 2), budget=max(5, oxir - time.time()))
 
 
 def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts=3, waits=(2, 5, 10, 20), budget=600):
-    """JSON javob kutiladigan so'rov (shaxsiy darslar). (obyekt, xato) qaytaradi."""
+    """JSON javob kutiladigan so'rov (shaxsiy darslar): avval DeepSeek, bo'lmasa Gemini.
+    (obyekt, xato) qaytaradi."""
+    oxir = time.time() + budget
+    data, error = _deepseek(system, prompt, max_tokens, True, _json_parse, timeout,
+                            attempts=max(2, attempts // 2), waits=waits, budget=budget * 0.6)
+    if data is not None:
+        return data, None
+    if DEEPSEEK_API_KEY and not GOOGLE_AI_API_KEY:
+        return None, error
     payload = {
         'contents': [{'role': 'user', 'parts': [{'text': prompt}]}],
         'generationConfig': {'temperature': 0.5, 'maxOutputTokens': max_tokens,
@@ -294,7 +390,7 @@ def call_gemini_json(prompt, system=None, max_tokens=8192, timeout=120, attempts
     }
     if system:
         payload['system_instruction'] = {'parts': [{'text': system}]}
-    return _gemini(payload, _json_parse, timeout, attempts, waits, budget)
+    return _gemini(payload, _json_parse, timeout, attempts, waits, max(5, oxir - time.time()))
 
 
 @bp.route('/tutor', methods=['POST'])
@@ -432,4 +528,5 @@ def explain():
 
 @bp.route('/status', methods=['GET'])
 def status():
-    return jsonify({'ok': True, 'enabled': bool(GOOGLE_AI_API_KEY), 'model': GEMINI_MODEL})
+    return jsonify({'ok': True, 'enabled': bool(GOOGLE_AI_API_KEY or DEEPSEEK_API_KEY),
+                    'model': DEEPSEEK_MODEL if DEEPSEEK_API_KEY else GEMINI_MODEL})
