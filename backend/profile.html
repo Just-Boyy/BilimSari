@@ -64,7 +64,6 @@
       <div class="avatar" id="avatar" aria-hidden="true">?</div>
     </div>
     <h1 id="ism">Yuklanmoqda...</h1>
-    <span class="sinf" id="sinfYorliq" hidden></span>
   </div>
 </header>
 
@@ -227,7 +226,7 @@
     }).join('');
     html += r.friends.length
       ? r.friends.slice(0, 5).map(function (c) { return UI.dostQator(c); }).join('')
-      : (r.incoming.length ? '' : '<p class="izoh" style="margin-bottom:10px">Hali do\'stingiz yo\'q. Sinfdoshlaringizni toping!</p>');
+      : (r.incoming.length ? '' : '<p class="izoh" style="margin-bottom:10px">Hali do\'stingiz yo\'q. Tanishlaringizni toping!</p>');
     html += '<div class="tugmalar" style="margin-top:6px">' +
       '<a class="tugma tugma-mayda" href="dostlar.html#qidirish">' + UI.nishon('plus') + '<span>Do\'st qo\'shish</span></a>' +
       '<a class="tugma tugma-ikkilamchi tugma-mayda" href="dostlar.html#reyting">' + UI.nishon('trophy') + '<span>Reyting</span></a>' +

@@ -16,7 +16,7 @@ from games.rooms import level_for_xp
 
 GAME_XP_PER_CHAQMOQ = 10
 PERIODS = ('day', 'week', 'month', 'all')
-SCOPES = ('global', 'subject', 'grade')
+SCOPES = ('global', 'subject')
 
 
 def xp_by_user(cur) -> dict:
@@ -45,16 +45,6 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
             subject = 'math'
         where.append('r.subject = %s')
         params.append(subject)
-    grade = None
-    if scope == 'grade':
-        cur.execute('SELECT grade FROM users WHERE id = %s', (user_id,))
-        grade = (cur.fetchone() or {}).get('grade')
-        if not grade:
-            return {'top': [], 'me': None, 'total_players': 0, 'period': period, 'scope': scope,
-                    'notice': "Sinfingiz ko'rsatilmagan — bu reyting hozircha bo'sh."}
-        join = 'JOIN users u ON u.id = r.user_id'
-        where.append('u.grade = %s')
-        params.append(grade)
 
     cur.execute(
         f'''SELECT r.user_id, SUM(r.xp) AS xp, COUNT(*) AS games, SUM(r.won) AS wins,
@@ -92,7 +82,7 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
         if r['user_id'] == user_id:
             me = entry(rank, r)
     return {'top': top, 'me': me, 'total_players': len(rows), 'period': period, 'scope': scope,
-            'subject': subject if scope == 'subject' else None, 'grade': grade,
+            'subject': subject if scope == 'subject' else None,
             'tournament': tournament(cur, now) if period == 'week' else None}
 
 

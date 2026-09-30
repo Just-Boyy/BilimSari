@@ -11,7 +11,7 @@
   'use strict';
 
   var G = window.Games = window.Games || {};
-  G.V = '14';                       // dangasa yuklanadigan fayllar keshini yangilash uchun
+  G.V = '15';                       // dangasa yuklanadigan fayllar keshini yangilash uchun
   G.renderers = G.renderers || {};
 
   function enc(s) { return encodeURIComponent(s == null ? '' : s); }

@@ -118,7 +118,7 @@
           return '<div class="hk-qator"><span>' + UI.esc(x.item) + '<small>' + sanaQisqa(x.created_ms) + ' • ' +
             UI.pul(x.paid) + '</small></span><span class="plus">+' + UI.pul(x.amount) + '</span></div>';
         }).join('') + '</div>'
-      : '<p class="izoh-kichik" style="margin-top:12px">Hali sotuv yo\'q. Kodingizni do\'stlaringiz va sinfdoshlaringizga ulashing!</p>';
+      : '<p class="izoh-kichik" style="margin-top:12px">Hali sotuv yo\'q. Kodingizni do\'stlaringiz va tanishlaringizga ulashing!</p>';
     var tolovlar = h.payouts.length
       ? '<div class="hk-royxat"><h3>Sizga to\'langan</h3>' + h.payouts.map(function (x) {
           return '<div class="hk-qator"><span>' + sanaQisqa(x.created_ms) +

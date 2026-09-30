@@ -301,7 +301,7 @@
   G.route('reyting', function (arg, scope) {
     G.header({ title: "O'yinlar", sub: 'Reyting', back: 'dashboard.html' });
     var saved = G.remember('reyting') || {};
-    var f = { period: saved.period || 'week', scope: saved.scope || 'global', subject: saved.subject || 'math' };
+    var f = { period: saved.period || 'week', scope: saved.scope === 'subject' ? 'subject' : 'global', subject: saved.subject || 'math' };
     var el = G.el();
     el.innerHTML =
       tabs('reyting') +
@@ -311,7 +311,7 @@
         { value: 'month', label: 'Oy' }, { value: 'all', label: 'Umumiy' }], f.period) +
       '<div class="oy-filtr">' +
         '<select class="kiritish" id="doiraTanlov" aria-label="Reyting doirasi">' +
-          '<option value="global">Global</option><option value="subject">Fan bo\'yicha</option><option value="grade">Sinfim bo\'yicha</option>' +
+          '<option value="global">Global</option><option value="subject">Fan bo\'yicha</option>' +
         '</select>' +
         '<select class="kiritish" id="fanTanlov" aria-label="Fan" hidden></select>' +
       '</div>' +
@@ -354,8 +354,8 @@
         if (!res.top.length) {
           box.innerHTML = UI.holat({
             belgi: 'trophy',
-            sarlavha: res.notice ? 'Sinf ko\'rsatilmagan' : 'Hali natija yo\'q',
-            matn: res.notice || "Bu davrda hali hech kim o'ynamagan. Birinchi bo'ling — o'yin tanlang!",
+            sarlavha: 'Hali natija yo\'q',
+            matn: "Bu davrda hali hech kim o'ynamagan. Birinchi bo'ling — o'yin tanlang!",
           });
           return;
         }

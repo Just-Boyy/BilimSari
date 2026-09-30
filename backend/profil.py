@@ -29,7 +29,7 @@ def _badges(cur, user_id) -> dict:
 def public(cur, user_id, now=None, viewer_id=None):
     """Ochiq profil yoki None (bunday o'quvchi yo'q)."""
     now = now or clock.now_ms()
-    cur.execute('SELECT id, name, photo_url, grade FROM users WHERE id = %s', (user_id,))
+    cur.execute('SELECT id, name, photo_url FROM users WHERE id = %s', (user_id,))
     u = cur.fetchone()
     if not u:
         return None
@@ -44,7 +44,6 @@ def public(cur, user_id, now=None, viewer_id=None):
         'id': int(u['id']),
         'name': u['name'] or "O'quvchi",
         'photo_url': u['photo_url'],
-        'grade': u['grade'],
         'premium': {'active': st['active'], 'emoji': st['emoji'], 'frame': st['frame']},
         'chaqmoq': int(me.get('chaqmoq') or 0),
         'rank': me.get('rank'),

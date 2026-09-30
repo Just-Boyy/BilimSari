@@ -465,9 +465,6 @@
     <section class="adm-bolim" id="bolim-foydalanuvchilar">
       <div class="adm-filtrlar">
         <input class="adm-qidir" id="foydalanuvchiQidir" placeholder="Ism yoki email bo'yicha qidirish...">
-        <select class="adm-select" id="sinfFiltr">
-          <option value="">Barcha sinflar</option>
-        </select>
         <label class="adm-checkbox"><input type="checkbox" id="xaridorFiltr"> Faqat xaridorlar</label>
         <button class="adm-mini-tugma" id="foydalanuvchilarCsvTugma" type="button">
           <span class="nishon" data-ikon="inbox"></span> CSV yuklab olish
@@ -772,16 +769,6 @@ var SUBJECT_NAMES = {
   chemistry: 'Kimyo', biology: 'Biologiya', law: 'Huquq', informatics: 'Informatika',
 };
 
-(function () {
-  var sel = document.getElementById('sinfFiltr');
-  for (var g = 1; g <= 11; g++) {
-    var opt = document.createElement('option');
-    opt.value = g;
-    opt.textContent = g + '-sinf';
-    sel.appendChild(opt);
-  }
-})();
-
 // ─────────────────────── Kirish ───────────────────────
 
 function panelniKorsat() {
@@ -1076,7 +1063,6 @@ async function yuklaFoydalanuvchilar() {
 
   var res = await AdminAPI.foydalanuvchilar({
     q: fQuery, page: fPage,
-    grade: document.getElementById('sinfFiltr').value,
     purchasedOnly: document.getElementById('xaridorFiltr').checked,
   });
   if (!res.ok) { quti.className = 'adm-bosh'; quti.textContent = res.error || 'Xatolik'; return; }
@@ -1090,13 +1076,12 @@ async function yuklaFoydalanuvchilar() {
 
   quti.className = '';
   quti.innerHTML = '<div class="adm-jadval-o-rash"><table class="adm-jadval"><thead><tr>' +
-    '<th>Ism</th><th>Sinf</th><th>Tanlagan fan</th><th>Tugallagan</th><th>Xarid</th><th>Sana</th>' +
+    '<th>Ism</th><th>Tanlagan fan</th><th>Tugallagan</th><th>Xarid</th><th>Sana</th>' +
     '</tr></thead><tbody>' +
     res.users.map(function (u) {
       return '<tr data-id="' + u.id + '">' +
         '<td><div class="nomzod">' + esc(u.name) + '</div><div class="kichik">' +
           esc(u.email || (u.telegram_id ? 'Telegram #' + u.telegram_id : "Mehmon")) + '</div></td>' +
-        '<td>' + (u.grade ? u.grade + '-sinf' : '—') + '</td>' +
         '<td>' + (u.chosen_subject_key ? esc(SUBJECT_NAMES[u.chosen_subject_key] || u.chosen_subject_key) : '—') + '</td>' +
         '<td>' + u.completed_topics + '</td>' +
         '<td>' + u.purchases + '</td>' +
@@ -1133,7 +1118,6 @@ document.getElementById('foydalanuvchiQidir').addEventListener('input', function
     yuklaFoydalanuvchilar();
   }, 350);
 });
-document.getElementById('sinfFiltr').addEventListener('change', function () { fPage = 1; yuklaFoydalanuvchilar(); });
 document.getElementById('xaridorFiltr').addEventListener('change', function () { fPage = 1; yuklaFoydalanuvchilar(); });
 
 async function foydalanuvchiModalniOch(id) {
@@ -1157,13 +1141,6 @@ async function foydalanuvchiModalniOch(id) {
     '<div class="adm-qator"><span class="yorliq">Email / Telegram</span><span>' +
       esc(u.email || (u.telegram_id ? '#' + u.telegram_id : '—')) + '</span></div>' +
     '<div class="adm-qator"><span class="yorliq">Ro\'yxatdan o\'tgan</span><span>' + sana(u.created_at) + '</span></div>' +
-    '<div class="adm-qator"><span class="yorliq">Sinf</span><span>' +
-      '<select class="adm-select" id="sinfTanlov">' +
-        '<option value="">—</option>' +
-        Array.from({ length: 11 }, function (_, i) { return i + 1; }).map(function (g) {
-          return '<option value="' + g + '"' + (u.grade === g ? ' selected' : '') + '>' + g + '-sinf</option>';
-        }).join('') +
-      '</select></span></div>' +
 
     '<h3 style="margin:16px 0 4px">Fanlar</h3>' +
     (res.progress || []).map(function (p) {
@@ -1223,11 +1200,6 @@ async function foydalanuvchiModalniOch(id) {
 
   modal.querySelectorAll('[data-topics]').forEach(function (el) {
     el.addEventListener('click', function () { foydalanuvchiMavzulariniKorsat(id, el.dataset.topics); });
-  });
-
-  document.getElementById('sinfTanlov').addEventListener('change', async function (e) {
-    var res2 = await AdminAPI.sinfYangilash(id, e.target.value || null);
-    if (res2.ok) yuklaFoydalanuvchilar();
   });
 
   modal.querySelectorAll('[data-och]').forEach(function (btn) {
@@ -1426,7 +1398,7 @@ function tahrirChiz() {
     '<div class="adm-tahrir-bosh">' +
       '<button type="button" class="t-ikon" id="tahrirYop" title="Orqaga">' + BSIcons.icon('arrowLeft') + '</button>' +
       '<div class="yol-matn"><h2>' + esc(m.title || 'Mavzu') + '</h2>' +
-        '<p class="izoh-kichik">' + esc(t.subject_name) + ' • ' + t.grade + '-sinf • ' + t.seq + '-mavzu' +
+        '<p class="izoh-kichik">' + esc(t.subject_name) + ' • ' + t.seq + '-mavzu' +
         (t.edited ? ' • <span class="adm-badge kok">Tahrirlangan ' + msVaqt(t.edited_ms) + '</span>' : '') + '</p></div>' +
     '</div>' +
     '<div class="adm-forma">' +

@@ -202,9 +202,6 @@ def stats():
         )
         chosen_by_subject = {row['chosen_subject_key']: row['n'] for row in cur.fetchall()}
 
-        cur.execute('SELECT grade, COUNT(*) AS n FROM users WHERE grade IS NOT NULL GROUP BY grade')
-        by_grade = {str(row['grade']): row['n'] for row in cur.fetchall()}
-
         subjects = []
         for key, meta in cur_mod.SUBJECT_CATALOG.items():
             subjects.append({
@@ -229,7 +226,6 @@ def stats():
             # Haqiqiy tushum — admin tasdiqlagan to'lovlar (paket va promo-kod chegirmalari bilan)
             'revenue': payments.overview(cur)['all']['sum'],
             'subject_price': study.SUBJECT_PRICE,
-            'by_grade': by_grade,
             'subjects': subjects,
             'signups_14d': [{'date': d.isoformat(), 'n': signup_buckets[d.isoformat()]} for d in days_range],
             'completions_14d': [{'date': d.isoformat(), 'n': completion_buckets[d.isoformat()]} for d in days_range],
@@ -261,7 +257,6 @@ def stats_detail():
 @admin_required
 def users_list():
     q = (request.args.get('q') or '').strip().lower()
-    grade_filter = request.args.get('grade')
     purchased_only = request.args.get('purchased_only') == '1'
     try:
         page = max(1, int(request.args.get('page', 1)))
@@ -279,14 +274,6 @@ def users_list():
             where_parts.append("(LOWER(name) LIKE %s OR LOWER(COALESCE(email, '')) LIKE %s)")
             like = f'%{q}%'
             params += [like, like]
-        if grade_filter:
-            try:
-                grade_int = int(grade_filter)
-            except ValueError:
-                grade_int = None
-            if grade_int is not None:
-                where_parts.append('grade = %s')
-                params.append(grade_int)
         if purchased_only:
             where_parts.append('EXISTS (SELECT 1 FROM subject_purchases sp WHERE sp.user_id = users.id)')
         where = ('WHERE ' + ' AND '.join(where_parts)) if where_parts else ''
@@ -295,7 +282,7 @@ def users_list():
         total = cur.fetchone()['n']
 
         cur.execute(
-            f'''SELECT id, name, email, telegram_id, grade, chosen_subject_key, onboarded, created_at
+            f'''SELECT id, name, email, telegram_id, chosen_subject_key, onboarded, created_at
                 FROM users {where}
                 ORDER BY id DESC
                 LIMIT %s OFFSET %s''',
@@ -327,7 +314,6 @@ def users_list():
             'name': row['name'],
             'email': row['email'],
             'telegram_id': row['telegram_id'],
-            'grade': row['grade'],
             'chosen_subject_key': row['chosen_subject_key'],
             'onboarded': bool(row['onboarded']),
             'created_at': iso_utc(as_utc(row['created_at'])),
@@ -397,7 +383,6 @@ def user_detail(user_id):
                 'email': user['email'],
                 'telegram_id': user['telegram_id'],
                 'username': user['username'],
-                'grade': user['grade'],
                 'chosen_subject_key': user['chosen_subject_key'],
                 'onboarded': bool(user['onboarded']),
                 'created_at': iso_utc(as_utc(user['created_at'])),
@@ -416,59 +401,29 @@ def user_subject_topics(user_id, subject_key):
     conn = get_connection()
     cur = conn.cursor()
     try:
-        cur.execute('SELECT grade FROM users WHERE id = %s', (user_id,))
-        row = cur.fetchone()
-        if not row:
+        cur.execute('SELECT id FROM users WHERE id = %s', (user_id,))
+        if not cur.fetchone():
             return jsonify({'ok': False, 'error': 'Foydalanuvchi topilmadi'}), 404
-        grade = row['grade'] or 7
 
         cur.execute(
-            '''SELECT t.id, t.seq, t.title, t.duration, p.status, p.quiz_score, p.completed_at
+            '''SELECT t.id, t.title, t.duration, p.status, p.quiz_score, p.completed_at
                FROM topics t
                LEFT JOIN user_progress p ON p.topic_id = t.id AND p.user_id = %s
-               WHERE t.subject_key = %s AND t.grade = %s
-               ORDER BY t.seq''',
-            (user_id, subject_key, grade)
+               WHERE t.subject_key = %s
+               ORDER BY t.grade, t.seq''',
+            (user_id, subject_key)
         )
         topics = [{
             'id': r['id'],
-            'seq': r['seq'],
+            'seq': i,
             'title': r['title'],
             'duration': r['duration'],
             'status': r['status'] or 'locked',
             'quiz_score': r['quiz_score'],
             'completed_at': iso_utc(as_utc(r['completed_at'])),
-        } for r in cur.fetchall()]
+        } for i, r in enumerate(cur.fetchall(), start=1)]
 
         return jsonify({'ok': True, 'topics': topics, 'subject_name': cur_mod.subject_meta(subject_key)['name']})
-    finally:
-        cur.close()
-        conn.close()
-
-
-@bp.route('/users/<int:user_id>/grade', methods=['POST'])
-@admin_required
-def set_grade(user_id):
-    body = request.get_json(silent=True) or {}
-    grade = body.get('grade')
-    if grade is not None:
-        try:
-            grade = int(grade)
-        except (TypeError, ValueError):
-            return jsonify({'ok': False, 'error': "Sinf raqam bo'lishi kerak"}), 400
-        if grade not in cur_mod.GRADES:
-            return jsonify({'ok': False, 'error': "Noto'g'ri sinf"}), 400
-
-    conn = get_connection()
-    cur = conn.cursor()
-    try:
-        cur.execute('SELECT id FROM users WHERE id = %s', (user_id,))
-        if not cur.fetchone():
-            return jsonify({'ok': False, 'error': 'Foydalanuvchi topilmadi'}), 404
-        cur.execute('UPDATE users SET grade = %s WHERE id = %s', (grade, user_id))
-        conn.commit()
-        admin_audit.log('set_grade', detail=f'user_id={user_id} grade={grade}', ip=_client_ip())
-        return jsonify({'ok': True})
     finally:
         cur.close()
         conn.close()
@@ -605,15 +560,15 @@ def subject_topics(subject_key):
     cur = conn.cursor()
     try:
         cur.execute(
-            'SELECT id, grade, seq, title, duration FROM topics WHERE subject_key = %s ORDER BY grade, seq',
+            'SELECT id, title, duration FROM topics WHERE subject_key = %s ORDER BY grade, seq',
             (subject_key,)
         )
         rows = cur.fetchall()
         edited = lesson_edit.overrides(cur)
         topics = [{
-            'id': r['id'], 'grade': r['grade'], 'seq': r['seq'],
+            'id': r['id'], 'seq': i,          # fan bo'yicha ketma-ket raqam (o'quvchi ko'radigandek)
             'title': r['title'], 'duration': r['duration'], 'edited': r['id'] in edited,
-        } for r in rows]
+        } for i, r in enumerate(rows, start=1)]
         return jsonify({'ok': True, 'topics': topics, 'subject_name': cur_mod.subject_meta(subject_key)['name']})
     finally:
         cur.close()
@@ -987,7 +942,7 @@ def export_users_csv():
     cur = conn.cursor()
     try:
         cur.execute(
-            '''SELECT id, name, email, telegram_id, grade, chosen_subject_key, onboarded, created_at
+            '''SELECT id, name, email, telegram_id, chosen_subject_key, onboarded, created_at
                FROM users ORDER BY id'''
         )
         rows = cur.fetchall()
@@ -997,11 +952,11 @@ def export_users_csv():
 
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow(['ID', 'Ism', 'Email', 'Telegram ID', 'Sinf', 'Tanlagan fan', 'Onboarded', "Ro'yxatdan o'tgan"])
+    writer.writerow(['ID', 'Ism', 'Email', 'Telegram ID', 'Tanlagan fan', 'Onboarded', "Ro'yxatdan o'tgan"])
     for row in rows:
         writer.writerow([
             row['id'], row['name'], row['email'] or '', row['telegram_id'] or '',
-            row['grade'] or '', row['chosen_subject_key'] or '',
+            row['chosen_subject_key'] or '',
             'ha' if row['onboarded'] else "yo'q", iso_utc(as_utc(row['created_at'])) or '',
         ])
     return Response(buf.getvalue(), mimetype='text/csv', headers={

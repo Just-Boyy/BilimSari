@@ -187,6 +187,13 @@ def _clear_ai_cache(cur, topic_id):
         pass
 
 
+def _position(cur, row) -> int:
+    """Mavzuning fandagi ketma-ket raqami (o'quvchi ko'radigan tartib: osondan qiyinga)."""
+    cur.execute('SELECT COUNT(*) AS n FROM topics WHERE subject_key = %s AND (grade < %s OR (grade = %s AND seq <= %s))',
+                (row['subject_key'], row['grade'], row['grade'], row['seq']))
+    return int(cur.fetchone()['n'])
+
+
 def get(cur, topic_id):
     cur.execute('SELECT * FROM topics WHERE id = %s', (topic_id,))
     row = cur.fetchone()
@@ -197,7 +204,7 @@ def get(cur, topic_id):
     return {
         'id': row['id'], 'subject_key': row['subject_key'],
         'subject_name': cur_mod.subject_meta(row['subject_key'])['name'],
-        'grade': row['grade'], 'seq': row['seq'], 'title': row['title'], 'summary': row['summary'] or '',
+        'seq': _position(cur, row), 'title': row['title'], 'summary': row['summary'] or '',
         'duration': int(row['duration'] or 15),
         'lesson': _load(row['lesson'], []), 'quiz': _load(row['quiz'], []),
         'edited': bool(o), 'edited_ms': int(o['updated_ms']) if o else None,

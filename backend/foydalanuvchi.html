@@ -12,7 +12,6 @@
   .fp-bosh { text-align: center; padding: 8px 0 4px; }
   .fp-bosh .avatar { width: 84px; height: 84px; font-size: 2rem; margin: 0 auto; }
   .fp-bosh h1 { display: flex; justify-content: center; align-items: center; gap: 2px; font-size: 22px; margin-top: 12px; }
-  .fp-bosh .sinf { display: inline-block; margin-top: 6px; }
   .fp-avatar { display: grid; place-items: center; margin: 14px auto 0; }
   .fp-avatar .ramkali { margin: 6px 0; }
   .fp-stat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -113,7 +112,6 @@
         '<div class="fp-avatar">' + UI.ramkali(av, pr.active && pr.frame) + '</div>' +
         '<h1><span>' + UI.esc(p.name) + '</span>' + UI.emoji(pr.active && pr.emoji) + '</h1>' +
         (pr.active ? '<p style="margin:6px 0 2px"><span class="premium-pill">' + UI.nishon('crown') + '<span>Bilim Premium</span></span></p>' : '') +
-        (p.grade ? '<span class="sinf">' + p.grade + '-sinf</span>' : '') +
         '<span class="fp-dostlar-soni">' + p.friends_count + ' ' + I18N.t("do'st") + '</span>' +
         '<div class="fp-dost" id="fpDost"></div>' +
       '</section>' +

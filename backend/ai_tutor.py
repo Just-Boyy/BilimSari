@@ -77,6 +77,11 @@ def ensure_cache_table(cur, conn):
             PRIMARY KEY (topic_id, mode, lang)
         )
     ''')
+    # Sinf tushunchasi olib tashlangach (2026-09-30): eski prompt "7-sinf o'quvchisi" degan edi —
+    # o'shanda saqlangan va sinf tilga olingan javoblar o'chiriladi (so'ralganda qayta yoziladi).
+    # Faqat sanadan oldingilar — yangi javoblarga tegilmaydi.
+    cur.execute("DELETE FROM ai_explanations WHERE created_at < '2026-09-30 18:30:00' "
+                "AND (reply LIKE '%%-sinf%%' OR reply LIKE '%%класс%%' OR LOWER(reply) LIKE '%%grade%%')")
     conn.commit()
 
 
@@ -140,19 +145,18 @@ def _rate_ok(user_id) -> bool:
     return rate_limit.hit(f'ai:{user_id}', RATE_LIMIT, RATE_WINDOW)
 
 
-def _system_prompt(lang, grade=None, subject=None, topic=None, qisqa=True):
-    level = f"{grade}-sinf o'quvchisi" if grade else "maktab o'quvchisi"
+def _system_prompt(lang, subject=None, topic=None, qisqa=True):
     if lang == 'ru':
         uzunlik = 'Отвечай кратко (до 200 слов).' if qisqa else 'Javob to\'liq va batafsil bo\'lishi mumkin.'
         base = (
             'Ты — дружелюбный помощник учителя платформы BilimSari. '
-            f'Твой собеседник — {level}. Отвечай простыми словами, по-русски. {uzunlik}'
+            f'Твой собеседник — школьник. Отвечай простыми словами, по-русски. {uzunlik}'
         )
     elif lang == 'en':
         uzunlik = 'Keep it under 200 words.' if qisqa else 'A fuller, more detailed answer is fine here.'
         base = (
             'You are a friendly teaching assistant on the BilimSari platform. '
-            f'You are talking to a {level}. Answer simply in English. {uzunlik}'
+            f'You are talking to a school student. Answer simply in English. {uzunlik}'
         )
     else:
         uzunlik = "Javob 200 so'zdan oshmasin." if qisqa else (
@@ -161,7 +165,7 @@ def _system_prompt(lang, grade=None, subject=None, topic=None, qisqa=True):
         )
         base = (
             "Sen BilimSari platformasidagi do'stona o'qituvchi yordamchisisan. "
-            f"Suhbatdoshing — {level}. Javobni ODDIY o'zbek tilida yoz. "
+            f"Suhbatdoshing — maktab o'quvchisi. Javobni ODDIY o'zbek tilida yoz. "
             f"Murakkab atamalardan qoch, hayotiy misollar keltir. {uzunlik}"
         )
 
@@ -470,7 +474,7 @@ def tutor():
         request.user['id'], grade, body.get('subject_key'), body.get('slug')
     )
 
-    system = _system_prompt(lang, grade, subject_name, topic_title)
+    system = _system_prompt(lang, subject_name, topic_title)
     user_content = message
     if lesson_text:
         user_content = (
@@ -557,7 +561,7 @@ def explain():
     }
     ask = asks.get(mode, asks['simple'])
 
-    system = _system_prompt(lang, grade, subject_name, topic_title, qisqa=(mode != 'full'))
+    system = _system_prompt(lang, subject_name, topic_title, qisqa=(mode != 'full'))
     user_content = f"Rasmiy dars matni:\n{lesson_text}\n\nVazifa: {ask}"
 
     reply, error = _call_gemini(system, user_content, max_tokens=8192)

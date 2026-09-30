@@ -94,7 +94,7 @@
   // ── Do'stlar ro'yxati ──
   function dostlarChiz() {
     if (!D.friends.length) {
-      tana.innerHTML = bosh("Hali do'stingiz yo'q", "Sinfdoshlaringizni ismi, @username yoki ID raqami bilan toping va so'rov yuboring.",
+      tana.innerHTML = bosh("Hali do'stingiz yo'q", "Tanishlaringizni ismi, @username yoki ID raqami bilan toping va so'rov yuboring.",
         "Do'st qo'shish", 'dostlar.html#qidirish');
       tana.querySelector('.holat-karta a').onclick = function (e) { e.preventDefault(); tab = 'qidirish'; chiz(); };
       return;
@@ -181,7 +181,7 @@
     if (q !== qidiruvMatn) return;               // eskirgan javob
     if (!r.ok) { quti.innerHTML = '<p class="izoh">' + UI.esc(r.error) + '</p>'; return; }
     quti.innerHTML = r.results.length
-      ? r.results.map(function (c) { return UI.dostQator(c, amalHtml(c), c.grade ? c.grade + '-sinf' : ''); }).join('')
+      ? r.results.map(function (c) { return UI.dostQator(c, amalHtml(c)); }).join('')
       : '<p class="izoh">Hech kim topilmadi.</p>';
     quti.querySelectorAll('[data-sorov]').forEach(function (b) {
       b.onclick = async function () {

@@ -143,14 +143,14 @@ def relation(cur, me, other) -> dict:
 
 
 def _cards(cur, ids, now=None) -> dict:
-    """{id: kartochka} — ism, rasm, sinf, Premium emoji/ramka, onlayn holati."""
+    """{id: kartochka} — ism, rasm, Premium emoji/ramka, onlayn holati."""
     ids = sorted({int(i) for i in ids if i})
     if not ids:
         return {}
     now = now or clock.now_ms()
-    cur.execute(f"SELECT id, name, photo_url, grade, last_seen_ms FROM users WHERE id IN ({', '.join(['%s'] * len(ids))})", ids)
+    cur.execute(f"SELECT id, name, photo_url, last_seen_ms FROM users WHERE id IN ({', '.join(['%s'] * len(ids))})", ids)
     rows = [{'id': int(r['id']), 'user_id': int(r['id']), 'name': r['name'] or "O'quvchi", 'photo_url': r['photo_url'],
-             'grade': r['grade'], 'last_seen_ms': int(r['last_seen_ms']) if r['last_seen_ms'] else None,
+             'last_seen_ms': int(r['last_seen_ms']) if r['last_seen_ms'] else None,
              'online': bool(r['last_seen_ms'] and now - int(r['last_seen_ms']) < ONLINE_MS)} for r in cur.fetchall()]
     premium.decorate(cur, rows, now=now)
     for r in rows:

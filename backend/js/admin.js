@@ -85,7 +85,6 @@
       opts = opts || {};
       var params = new URLSearchParams();
       if (opts.q) params.set('q', opts.q);
-      if (opts.grade) params.set('grade', opts.grade);
       if (opts.purchasedOnly) params.set('purchased_only', '1');
       params.set('page', opts.page || 1);
       return so_rov('/api/admin/users?' + params.toString());
@@ -93,9 +92,6 @@
     foydalanuvchi: function (id) { return so_rov('/api/admin/users/' + id); },
     foydalanuvchiMavzulari: function (id, subjectKey) {
       return so_rov('/api/admin/users/' + id + '/topics/' + subjectKey);
-    },
-    sinfYangilash: function (id, grade) {
-      return so_rov('/api/admin/users/' + id + '/grade', { method: 'POST', body: { grade: grade } });
     },
     fanOchish: function (id, subjectKey) {
       return so_rov('/api/admin/users/' + id + '/unlock', { method: 'POST', body: { subject_key: subjectKey } });

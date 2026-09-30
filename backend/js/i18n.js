@@ -422,7 +422,7 @@
     'Sotuvlar': 'Продажи', 'Jami ishlangan': 'Всего заработано', 'To\'langan': 'Выплачено', 'To\'lanishi kerak': 'К выплате',
     'Ulashish': 'Поделиться', 'Nusxa olish': 'Копировать', 'Nusxa olindi': 'Скопировано', 'Nusxa olib bo\'lmadi': 'Не удалось скопировать',
     'Oxirgi sotuvlar': 'Последние продажи', 'Sizga to\'langan': 'Выплачено вам',
-    'Hali sotuv yo\'q. Kodingizni do\'stlaringiz va sinfdoshlaringizga ulashing!': 'Продаж пока нет. Поделитесь кодом с друзьями и одноклассниками!',
+    'Hali sotuv yo\'q. Kodingizni do\'stlaringiz va tanishlaringizga ulashing!': 'Продаж пока нет. Поделитесь кодом с друзьями и знакомыми!',
     'Komissiya do\'stingiz kodingiz bilan xarid qilib, admin to\'lovni tasdiqlaganda yoziladi. Pulni admin o\'zi o\'tkazib beradi — har bir sotuv va to\'lov haqida botga xabar keladi.':
       'Комиссия начисляется, когда друг покупает с вашим кодом и админ подтверждает оплату. Деньги переводит админ — о каждой продаже и выплате бот пришлёт сообщение.',
     "Premium hali faol — muddati tugagach qayta olish mumkin.": 'Premium ещё активен — купить снова можно после окончания срока.',
@@ -461,8 +461,8 @@
     "Do'stlar": 'Друзья', "Do'stlar, so'rovlar va qidiruv": 'Друзья, заявки и поиск', "So'rovlar": 'Заявки',
     "Do'st qo'shish": 'Добавить друга', 'Faollik': 'Активность', "Do'stlar bo'limlari": 'Разделы «Друзья»',
     "Hali do'stingiz yo'q": 'У вас пока нет друзей',
-    "Sinfdoshlaringizni ismi, @username yoki ID raqami bilan toping va so'rov yuboring.":
-      'Найдите одноклассников по имени, @username или ID и отправьте заявку.',
+    "Tanishlaringizni ismi, @username yoki ID raqami bilan toping va so'rov yuboring.":
+      'Найдите знакомых по имени, @username или ID и отправьте заявку.',
     "Do'stlikdan chiqarish": 'Удалить из друзей', "Do'stlikdan chiqarilsinmi?": 'Удалить из друзей?',
     "Do'stlikdan chiqarildi": 'Удалён из друзей', "Kelgan so'rovlar": 'Входящие заявки', 'Qabul': 'Принять', 'Rad': 'Отклонить',
     "Yangi so'rov yo'q.": 'Новых заявок нет.', 'Siz yuborgan': 'Отправленные', 'javob kutilmoqda': 'ожидает ответа',
@@ -479,7 +479,7 @@
       'Когда друзья завершат тему, получат значок или победят в игре — это появится здесь.',
     "bilim bellashuvida g'olib bo'ldi": 'победил(а) в игре знаний', "kun savoliga to'g'ri javob berdi": 'верно ответил(а) на вопрос дня',
     "Qo'shilish": 'Присоединиться', 'hozirgina': 'только что', 'kecha': 'вчера',
-    "do'stlik so'rovi": 'заявка в друзья', "Hali do'stingiz yo'q. Sinfdoshlaringizni toping!": 'У вас пока нет друзей. Найдите одноклассников!',
+    "do'stlik so'rovi": 'заявка в друзья', "Hali do'stingiz yo'q. Tanishlaringizni toping!": 'У вас пока нет друзей. Найдите знакомых!',
     "Do'stlar reytingi": 'Рейтинг друзей', "Yangi so'rovlar": 'Новые заявки',
     "Sizga do'stlik so'rovi yubordi": 'Отправил(а) вам заявку в друзья', "do'stlikdan chiqarilsinmi?": 'удалить из друзей?',
     'Shikoyat qilish': 'Пожаловаться', "sababni tanlang. Admin ko'rib chiqadi.": 'выберите причину. Администратор рассмотрит жалобу.',
