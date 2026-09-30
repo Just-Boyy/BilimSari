@@ -331,7 +331,7 @@
     tanlovEl.innerHTML = olingan.map(function (a) {
       return '<button class="nishon-tanla" type="button" data-kalit="' + UI.esc(a.key) + '" aria-pressed="false">' +
         '<span class="nishon-tartib" aria-hidden="true"></span>' +
-        '<span class="yutuq-belgi">' + UI.nishon(a.icon) + '</span>' +
+        '<span class="yutuq-belgi d-' + UI.daraja(a.tier) + '">' + UI.nishon(a.icon) + '</span>' +
         '<b>' + UI.esc(a.title) + '</b></button>';
     }).join('');
     tanlovEl.querySelectorAll('.nishon-tanla').forEach(function (b) {

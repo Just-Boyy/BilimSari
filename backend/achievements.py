@@ -36,7 +36,18 @@ ACHIEVEMENTS = [
     ('kun_1', 'Kun savoli', 'Birinchi kun savoliga javob berdingiz', 'sparkle', 'daily', 1),
     ('kun_7', 'Har kuni savol', '7 kun ketma-ket kun savoliga javob', 'target', 'daily_streak', 7),
     ('chaqmoq_500', '500 chaqmoq', "Jami 500 chaqmoq to'pladingiz", 'chaqmoq', 'chaqmoq', 500),
+    ('premium', 'Bilim Premium', "Bilim Premium a'zolari uchun maxsus nishon", 'crown', 'premium', 1),
 ]
+
+# Daraja — nishonni olish qanchalik qiyin bo'lsa, shunchalik yuqori:
+# bronza → kumush → oltin → brilyant. Premium nishoni — alohida, yaltiroq "premium" darajasi.
+TIERS = {
+    'mavzu_1': 'bronza', 'oyin_1': 'bronza', 'kun_1': 'bronza', 'streak_3': 'bronza',
+    'mavzu_10': 'kumush', 'streak_7': 'kumush', 'galaba_1': 'kumush', 'kun_7': 'kumush', 'chaqmoq_500': 'kumush',
+    'mavzu_50': 'oltin', 'galaba_10': 'oltin', 'bot_qiyin': 'oltin', 'turnir_3': 'oltin',
+    'mavzu_100': 'brilyant', 'streak_30': 'brilyant', 'turnir_1': 'brilyant',
+    'premium': 'premium',
+}
 
 
 def ensure_tables(cur, conn):
@@ -98,6 +109,13 @@ def _metrics(cur, user_id, now_ms) -> dict:
     cur.execute('SELECT COUNT(*) AS n FROM daily_answers WHERE user_id = %s AND answered_ms IS NOT NULL',
                 (user_id,))
     answered = int(cur.fetchone()['n'] or 0)
+    # Premium: hozir faol yoki qachondir olingan (karta yoki admin orqali)
+    cur.execute('SELECT premium_until FROM users WHERE id = %s', (user_id,))
+    until = (cur.fetchone() or {}).get('premium_until')
+    had_premium = bool(until and int(until) > now_ms)
+    if not had_premium:
+        cur.execute("SELECT 1 FROM premium_log WHERE user_id = %s AND source != 'revoke' LIMIT 1", (user_id,))
+        had_premium = cur.fetchone() is not None
     return {
         'topics': topics,
         'streak': study.compute_streak(cur, user_id),
@@ -109,6 +127,7 @@ def _metrics(cur, user_id, now_ms) -> dict:
         'daily': answered,
         'daily_streak': daily.streak(cur, user_id, now_ms),
         'chaqmoq': study.compute_chaqmoq(cur, user_id),
+        'premium': 1 if had_premium else 0,
     }
 
 
@@ -130,7 +149,7 @@ def evaluate(cur, conn, user_id, now_ms=None, mark_seen=True) -> dict:
     for key, title, desc, icon, metric, goal in ACHIEVEMENTS:
         row = have.get(key)
         item = {
-            'key': key, 'title': title, 'desc': desc, 'icon': icon,
+            'key': key, 'title': title, 'desc': desc, 'icon': icon, 'tier': TIERS.get(key, 'oltin'),
             'unlocked': row is not None, 'unlocked_ms': int(row['unlocked_ms']) if row else None,
             'progress': min(metrics[metric], goal), 'goal': goal,
         }

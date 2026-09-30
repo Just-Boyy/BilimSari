@@ -22,7 +22,7 @@
     margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
     padding: 0;
     border: 2px solid #fff;
-    box-shadow: 0 2px 0 #b45309, 0 6px 14px rgba(180, 83, 9, .22);
+    box-shadow: 0 2px 0 var(--d-soya, #b45309), 0 6px 14px rgba(15, 23, 42, .18);
     cursor: pointer;
     transform: translate(var(--x), var(--y));
     animation: orbitaKir .45s cubic-bezier(.2, 1.4, .4, 1) var(--d) backwards,
@@ -143,8 +143,9 @@
       var foiz = Math.round(100 * a.progress / a.goal);
       return '<div class="yutuq' + (a.unlocked ? '' : ' yopiq') + '"' + (i >= KO_RINADI ? ' hidden' : '') +
         ' aria-label="' + UI.esc(a.title + ' — ' + (a.unlocked ? 'olingan' : 'hali olinmagan')) + '">' +
-        '<span class="yutuq-belgi">' + UI.nishon(a.unlocked ? a.icon : 'lock') + '</span>' +
+        '<span class="yutuq-belgi d-' + UI.daraja(a.tier) + '">' + UI.nishon(a.unlocked ? a.icon : 'lock') + '</span>' +
         '<b>' + UI.esc(a.title) + '</b>' +
+        '<span class="daraja-yorliq d-' + UI.daraja(a.tier) + '">' + UI.darajaNomi(a.tier) + '</span>' +
         '<small>' + UI.esc(a.desc) + '</small>' +
         (!a.unlocked && a.goal > 1
           ? '<span class="yutuq-progress" role="img" aria-label="' + a.progress + ' / ' + a.goal + '"><i style="width:' + foiz + '%"></i></span>' +
@@ -186,7 +187,7 @@
       var j = ORBITA[i];
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'yutuq-belgi orbita-nishon';
+      b.className = 'yutuq-belgi orbita-nishon d-' + UI.daraja(a.tier);
       b.style.cssText = '--x:' + j[0] + 'px;--y:' + j[1] + 'px;--s:' + j[2] + 'px;--d:' + (i * 0.12).toFixed(2) + 's';
       b.setAttribute('aria-label', 'Nishon: ' + a.title);
       b.innerHTML = UI.nishon(a.icon);

@@ -183,7 +183,8 @@
     // Profil va yutuqlar
     'Yangi nishon': 'Новый значок', 'Yangi nishonlar': 'Новые значки', 'Barcha nishonlar': 'Все значки',
     'hali olinmagan': 'ещё не получен', 'olingan': 'получен', 'Turnir medallari:': 'Медали турниров:',
-    'Oltin': 'Золото', 'Kumush': 'Серебро', 'Bronza': 'Бронза', 'Sevimli fanlar:': 'Любимые предметы:',
+    'Oltin': 'Золото', 'Kumush': 'Серебро', 'Bronza': 'Бронза', 'Brilyant': 'Бриллиант',
+    "Bilim Premium a'zolari uchun maxsus nishon": 'Особый значок для участников Bilim Premium', 'Sevimli fanlar:': 'Любимые предметы:',
     'Sinf ko\'rsatilmagan': 'Класс не указан', 'Hali natija yo\'q': 'Пока нет результатов',
     'Kuchli mavzularingiz': 'Ваши сильные темы', 'Hali yetarli emas': 'Пока недостаточно',
     'Hali nishon yo\'q. Dars o\'qing, o\'yin o\'ynang va': 'Пока нет значков. Читайте уроки, играйте и',

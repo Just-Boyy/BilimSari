@@ -1353,21 +1353,86 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .yutuq[hidden], #yutuqHammasi[hidden] { display: none; }
 .yutuq b { font-size: 12.5px; line-height: 1.25; color: var(--matn-quyuq); }
 .yutuq small { font-size: 11px; line-height: 1.3; color: var(--matn-2); }
-.yutuq.yopiq .yutuq-belgi { background: var(--fon); color: var(--matn-3); box-shadow: none; }
+.yutuq.yopiq .yutuq-belgi { background: var(--fon); color: var(--matn-3); box-shadow: none; animation: none; }
+.yutuq.yopiq .yutuq-belgi::before, .yutuq.yopiq .yutuq-belgi::after { display: none; }
 .yutuq.yopiq b { color: var(--matn-2); }
 .yutuq .yutuq-progress { width: 100%; height: 5px; border-radius: 99px; background: var(--chiziq); overflow: hidden; }
 .yutuq .yutuq-progress i { display: block; height: 100%; background: var(--zarg); border-radius: 99px; }
 
 .yutuq-belgi {
   flex: 0 0 auto;
+  position: relative; isolation: isolate; overflow: hidden;
   width: 44px; height: 44px;
   border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, #fde68a, var(--zarg));
   color: #fff;
-  box-shadow: 0 3px 0 #b45309;
+  --d-soya: #b45309;
+  box-shadow: 0 3px 0 var(--d-soya);
 }
-.yutuq-belgi svg { width: 24px; height: 24px; }
+.yutuq-belgi svg { position: relative; z-index: 2; width: 24px; height: 24px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .25)); }
+
+/* Nishon darajalari: olish qanchalik qiyin bo'lsa — shunchalik yuqori */
+.yutuq-belgi.d-bronza {
+  background: linear-gradient(135deg, #f6d2ae 0%, #d08a4f 38%, #a4592a 72%, #e3a77a 100%);
+  --d-soya: #6e3614;
+}
+.yutuq-belgi.d-kumush {
+  background: linear-gradient(135deg, #ffffff 0%, #dfe5ec 30%, #a9b4c2 62%, #eef2f6 100%);
+  color: #475569; --d-soya: #64748b;
+}
+.yutuq-belgi.d-kumush svg { filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .8)); }
+.yutuq-belgi.d-oltin {
+  background: linear-gradient(135deg, #fff4b8 0%, #fcd34d 30%, #f59e0b 62%, #fde68a 100%);
+  --d-soya: #92400e;
+  box-shadow: 0 3px 0 var(--d-soya), 0 0 10px rgba(245, 179, 1, .45);
+}
+.yutuq-belgi.d-brilyant {
+  background: linear-gradient(135deg, #e0f7ff 0%, #7dd3fc 28%, #818cf8 55%, #e879f9 80%, #cffafe 100%);
+  --d-soya: #4338ca;
+  box-shadow: 0 3px 0 var(--d-soya), 0 0 14px rgba(125, 211, 252, .7);
+}
+/* Premium — alohida: rangi to'xtovsiz jilvalanadi, ustidan nur o'tadi, atrofi porlaydi */
+.yutuq-belgi.d-premium {
+  background: #7c3aed;
+  --d-soya: #3b0764;
+  box-shadow: 0 3px 0 var(--d-soya), 0 0 16px rgba(236, 72, 153, .75), 0 0 28px rgba(250, 204, 21, .45);
+  animation: premiumNishonNur 2.6s ease-in-out infinite;
+}
+.yutuq-belgi.d-premium::before {
+  content: ''; position: absolute; inset: -40%; z-index: 0;
+  background: conic-gradient(from 0deg, #f472b6, #facc15, #34d399, #38bdf8, #a78bfa, #f472b6);
+  animation: premiumNishonAylan 4s linear infinite;
+}
+/* Brilyant va Premium ustidan yaltiroq nur o'tib turadi */
+.yutuq-belgi.d-brilyant::after, .yutuq-belgi.d-premium::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .85) 48%, transparent 62%);
+  background-size: 250% 100%;
+  animation: nishonYaltira 2.8s ease-in-out infinite;
+}
+.yutuq-belgi.d-premium::after { animation-duration: 2s; }
+@keyframes nishonYaltira { 0% { background-position: 130% 0; } 60%, 100% { background-position: -60% 0; } }
+@keyframes premiumNishonAylan { to { transform: rotate(360deg); } }
+@keyframes premiumNishonNur {
+  0%, 100% { box-shadow: 0 3px 0 var(--d-soya), 0 0 12px rgba(236, 72, 153, .6), 0 0 22px rgba(250, 204, 21, .3); }
+  50% { box-shadow: 0 3px 0 var(--d-soya), 0 0 20px rgba(236, 72, 153, .95), 0 0 36px rgba(250, 204, 21, .6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .yutuq-belgi.d-premium, .yutuq-belgi.d-premium::before, .yutuq-belgi::after { animation: none; }
+}
+
+/* Daraja yorlig'i (profil javonida) */
+.daraja-yorliq {
+  display: inline-block; padding: 1px 8px; border-radius: 99px;
+  font-size: 10px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
+}
+.daraja-yorliq.d-bronza { background: #fbe7d6; color: #8a4513; }
+.daraja-yorliq.d-kumush { background: #eef2f6; color: #475569; }
+.daraja-yorliq.d-oltin { background: #fef3c7; color: #b45309; }
+.daraja-yorliq.d-brilyant { background: linear-gradient(90deg, #e0f2fe, #ede9fe, #fae8ff); color: #4338ca; }
+.daraja-yorliq.d-premium { background: linear-gradient(90deg, #fce7f3, #fef9c3, #dcfce7, #e0f2fe, #ede9fe); color: #7c3aed; }
+.yutuq.yopiq .daraja-yorliq { opacity: .55; }
 
 .yutuq-tabrik {
   position: fixed; inset: 0; z-index: 90;

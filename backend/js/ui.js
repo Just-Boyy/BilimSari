@@ -344,6 +344,11 @@
   }
 
   /** Premium o'quvchi tanlagan emoji (ism yonida). Kalit bo'lmasa — bo'sh. */
+  var DARAJALAR = { bronza: 'Bronza', kumush: 'Kumush', oltin: 'Oltin', brilyant: 'Brilyant', premium: 'Premium' };
+  /** Nishon darajasi (CSS klassi uchun xavfsiz): bronza | kumush | oltin | brilyant | premium. */
+  function daraja(t) { return DARAJALAR[t] ? t : 'oltin'; }
+  function darajaNomi(t) { return DARAJALAR[daraja(t)]; }
+
   function emoji(kalit) {
     return kalit
       ? '<img class="nik-emoji" src="assets/emoji/' + esc(kalit) + '.png" alt="" aria-hidden="true" loading="lazy">'
@@ -371,7 +376,7 @@
         '<h2 id="yutuqTabrikSarlavha">' + (yangilar.length > 1 ? 'Yangi nishonlar' : 'Yangi nishon') + '</h2>' +
         yangilar.map(function (y) {
           return '<div class="yutuq-tabrik-qator">' +
-            '<span class="yutuq-belgi">' + nishon(y.icon) + '</span>' +
+            '<span class="yutuq-belgi d-' + daraja(y.tier) + '">' + nishon(y.icon) + '</span>' +
             '<span><b>' + esc(y.title) + '</b><small>' + esc(y.desc) + '</small></span></div>';
         }).join('') +
         '<button class="tugma" type="button">Zo\'r!</button>' +
@@ -413,6 +418,8 @@
     qulfHolat: qulfHolat,
     pul: pul,
     botniOch: botniOch,
+    daraja: daraja,
+    darajaNomi: darajaNomi,
     tasdiq: tasdiq,
     emoji: emoji,
   };
