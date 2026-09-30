@@ -1329,8 +1329,9 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .kun-natija p { color: var(--matn-2); font-size: 14px; font-weight: 600; }
 .kun-natija .kun-chaqmoq { color: var(--zarg); font-weight: 800; }
 
-.kun-reyting .reyting-qator { padding: 10px 14px; }
-.kun-reyting .soniya { font-weight: 800; color: var(--matn-2); font-variant-numeric: tabular-nums; }
+/* Kun savoli sahifasidagi "Bugungi reyting" (bosh sahifa kartasidagi .kun-reyting dan alohida) */
+.kun-savol-reyting .reyting-qator { padding: 10px 14px; }
+.kun-savol-reyting .soniya { font-weight: 800; color: var(--matn-2); font-variant-numeric: tabular-nums; }
 .kun-tugmalar { display: grid; gap: 10px; margin-top: 16px; }
 .kun-tugmalar .tugma svg { width: 20px; height: 20px; flex: 0 0 auto; }
 
