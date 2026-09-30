@@ -128,8 +128,11 @@ def _get_pg_pool():
         from psycopg2.extras import RealDictCursor
         from psycopg2.pool import ThreadedConnectionPool
         max_conn = int(os.environ.get('DB_POOL_MAX', '5'))
+        # connect_timeout — baza javob bermasa so'rov cheksiz osilib qolmasin (sync worker'lar
+        # band bo'lib, butun sayt qotib qolardi); 10 soniyada xato qaytadi va keyingi so'rov qayta uradi
         _pg_pool = ThreadedConnectionPool(
             1, max_conn, database_url(), cursor_factory=RealDictCursor,
+            connect_timeout=int(os.environ.get('DB_CONNECT_TIMEOUT', '10')),
         )
     return _pg_pool
 
