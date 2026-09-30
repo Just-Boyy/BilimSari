@@ -2053,9 +2053,10 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
   background: center / contain no-repeat;
   animation: ramkaNur 3.2s ease-in-out infinite;
 }
-.ramka.r-oltin-chaqmoq { background-image: url(../assets/ramka/oltin-chaqmoq.webp); }
-.ramka.r-kok-chaqmoq { background-image: url(../assets/ramka/kok-chaqmoq.webp); }
-.ramka.r-yashil-chaqmoq { background-image: url(../assets/ramka/yashil-chaqmoq.webp); }
+/* ?v= — rasm o'zgarsa raqamni oshiring: /assets 1 kun keshlanadi, aks holda eski rasm ko'rinib qoladi */
+.ramka.r-oltin-chaqmoq { background-image: url(../assets/ramka/oltin-chaqmoq.webp?v=2); }
+.ramka.r-kok-chaqmoq { background-image: url(../assets/ramka/kok-chaqmoq.webp?v=2); }
+.ramka.r-yashil-chaqmoq { background-image: url(../assets/ramka/yashil-chaqmoq.webp?v=2); }
 @keyframes ramkaNur { 0%, 100% { filter: brightness(1) saturate(1); } 50% { filter: brightness(1.16) saturate(1.12); } }
 @media (prefers-reduced-motion: reduce) { .ramkali > .ramka { animation: none; } }
 .reyting-qator .ramkali { --rk: 1.24; margin: 0 2px; }
