@@ -38,7 +38,6 @@
   // ── Navigatsiya ──────────────────────────────────────────
   var NAV = [
     { yo_l: 'dashboard.html', nishon: 'home', matn: 'Bosh sahifa' },
-    { yo_l: 'shop.html', nishon: 'shop', matn: "Do'kon" },
     { yo_l: 'games.html', nishon: 'gamepad', matn: "O'yinlar" },
     { yo_l: 'shaxsiy.html', nishon: 'sparkle', matn: 'Shaxsiy' },
     { yo_l: 'leaderboard.html', nishon: 'trophy', matn: 'Reyting' },
@@ -52,7 +51,7 @@
     { kanal: true, nishon: 'info', matn: 'Biz haqimizda' },
     { yo_l: 'hamkor.html', nishon: 'users', matn: 'Hamkorlik', hamkor: true },
   ];
-  var MENYU_SAHIFALAR = ['profile.html', 'settings.html', 'hamkor.html'];
+  var MENYU_SAHIFALAR = ['profile.html', 'settings.html', 'hamkor.html', 'shop.html'];
   var MENYU_KESH = 'bilimsari_menyu';
 
   /** Ikonka HTML si. icons.js yuklanmagan bo'lsa bo'sh qaytaradi. */
