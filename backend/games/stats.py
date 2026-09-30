@@ -3,9 +3,13 @@
 O'yin reytingi, profil statistikasi va chaqmoq bilan bog'lanish.
 
 "Ball" — o'yin XP'si: har bir natijada hisobga o'tgan qismi game_results.xp
-(faqat kamida 2 ishtirokchili o'yinlar, kunlik limit bilan). Platformaning
-umumiy valyutasi chaqmoq: har GAME_XP_PER_CHAQMOQ ball = 1 chaqmoq, u
-dashboard va umumiy reytingdagi chaqmoqqa qo'shiladi (study.compute_chaqmoq).
+(faqat kamida 2 ishtirokchili o'yinlar, kunlik limit bilan) — o'yin darajasi va
+o'yin reytingi shundan.
+
+Chaqmoq (platformaning umumiy valyutasi) o'yinlardan: 24 soatda 3 ta chaqmoqli
+o'yin, 1-o'rin +30, qolganlar +20 (games/chances.py) — game_results.chaqmoq.
+Eski natijalarda (chaqmoq IS NULL) avvalgidek har GAME_XP_PER_CHAQMOQ ball = 1
+chaqmoq — o'quvchilar oldin olgan chaqmoqni yo'qotmaydi.
 """
 
 from datetime import timedelta
@@ -19,19 +23,27 @@ PERIODS = ('day', 'week', 'month', 'all')
 SCOPES = ('global', 'subject')
 
 
-def xp_by_user(cur) -> dict:
-    """Umumiy chaqmoq reytingi uchun: user_id → hisobga o'tgan ball."""
+_CHAQMOQ_SQL = ('COALESCE(SUM(CASE WHEN chaqmoq IS NULL THEN xp ELSE 0 END), 0) AS old_xp, '
+                'COALESCE(SUM(chaqmoq), 0) AS ch')
+
+
+def _chaqmoq(row) -> int:
+    return int(row['old_xp'] or 0) // GAME_XP_PER_CHAQMOQ + int(row['ch'] or 0)
+
+
+def chaqmoq_by_user(cur) -> dict:
+    """Umumiy chaqmoq reytingi uchun: user_id → o'yinlardan olingan chaqmoq."""
     if not schema.READY:
         return {}
-    cur.execute('SELECT user_id, SUM(xp) AS xp FROM game_results WHERE user_id > 0 GROUP BY user_id')
-    return {r['user_id']: int(r['xp'] or 0) for r in cur.fetchall()}
+    cur.execute(f'SELECT user_id, {_CHAQMOQ_SQL} FROM game_results WHERE user_id > 0 GROUP BY user_id')
+    return {r['user_id']: _chaqmoq(r) for r in cur.fetchall()}
 
 
 def chaqmoq_from_games(cur, user_id) -> int:
     if not schema.READY:
         return 0
-    cur.execute('SELECT COALESCE(SUM(xp), 0) AS xp FROM game_results WHERE user_id = %s', (user_id,))
-    return int(cur.fetchone()['xp'] or 0) // GAME_XP_PER_CHAQMOQ
+    cur.execute(f'SELECT {_CHAQMOQ_SQL} FROM game_results WHERE user_id = %s', (user_id,))
+    return _chaqmoq(cur.fetchone())
 
 
 def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit=20) -> dict:
@@ -145,7 +157,7 @@ def my_stats(cur, user_id) -> dict:
         'games': games,
         'wins': int(t['wins'] or 0),
         'xp': xp,
-        'chaqmoq': xp // GAME_XP_PER_CHAQMOQ,
+        'chaqmoq': chaqmoq_from_games(cur, user_id),
         'level': level_for_xp(xp),
         'accuracy': round(100 * int(t['correct'] or 0) / total) if total else 0,
         'streak': _streak(days, clock.tashkent_date(now)),

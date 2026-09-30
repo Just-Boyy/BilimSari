@@ -19,6 +19,7 @@
     room_full: "Room to'liq",
     room_started: "O'yin allaqachon boshlangan",
     invalid_code: "Room kodi noto'g'ri",
+    left_game: "Siz o'yindan chiqdingiz",
   };
 
   function chip(icon, text) {
@@ -166,21 +167,75 @@
       G.focusMain();
     }
 
-    function leave() {
-      if (!S || view === 'terminal') { G.go('lobby'); return; }
-      var msg = null;
-      if (S.status === 'playing') {
-        msg = "O'yinni tark etasizmi? Hozirgi natijangiz saqlanadi, lekin bonuslar berilmaydi.";
-      } else if (S.status === 'waiting') {
-        msg = 'Roomdan chiqasizmi?';
-      }
-      (msg ? G.confirm(msg) : Promise.resolve(true)).then(function (ok) {
-        if (!ok) return;
-        poller.stop();
-        chiqildi = true;
-        G.api.leave(code).then(function () { G.go('lobby'); });
+    function oyinda() { return !!(S && S.status === 'playing' && view !== 'terminal'); }
+
+    /** O'yin paytida chiqish: ogohlantirish oynasi. true — baribir chiqadi. */
+    function chiqishniSora() {
+      return new Promise(function (resolve) {
+        var done = false;
+        function javob(v) { if (done) return; done = true; resolve(v); }
+        var chaqmoqli = S.chaqmoq && S.chaqmoq.kind === 'yes';
+        var m = G.modal(
+          '<h2 id="oyModalSarlavha">O\'yindan chiqasizmi?</h2>' +
+          '<p>Siz hozir o\'yindan chiqib ketasiz va chaqmoq olmaysiz. Natijalar jadvalida ham ko\'rinmaysiz.</p>' +
+          (chaqmoqli ? '<p class="izoh">Bu chaqmoqli o\'yin imkoniyati baribir ishlatilgan hisoblanadi.</p>' : '') +
+          '<div class="oy-taklif-tugmalar" style="margin-top:14px">' +
+            '<button class="tugma" type="button" id="qolishTugma" data-avto-fokus>' + ic('play') + '<span>O\'yinda qolish</span></button>' +
+            '<button class="tugma tugma-ikkilamchi oy-chiqish-tugma" type="button" id="chiqishTugma">' + ic('logout') + '<span>Baribir chiqaman</span></button>' +
+          '</div>', { onClose: function () { javob(false); } });
+        m.querySelector('#qolishTugma').onclick = function () { javob(false); G.closeModal(); };
+        m.querySelector('#chiqishTugma').onclick = function () { javob(true); G.closeModal(); };
       });
     }
+
+    function chiqibKet(keyin) {
+      poller.stop();
+      chiqildi = true;
+      G.leaveGuard = null;
+      G.api.leave(code).then(keyin);
+    }
+
+    function leave() {
+      if (!S || view === 'terminal') { G.go('lobby'); return; }
+      if (oyinda()) {
+        chiqishniSora().then(function (ok) { if (ok) chiqibKet(function () { G.go('lobby'); }); });
+        return;
+      }
+      (S.status === 'waiting' ? G.confirm('Roomdan chiqasizmi?') : Promise.resolve(true)).then(function (ok) {
+        if (!ok) return;
+        chiqibKet(function () { G.go('lobby'); });
+      });
+    }
+
+    // O'yin paytida: pastki menyu va boshqa havolalar, Telegram'ni yopish ham so'raladi
+    function himoya() {
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (oyinda()) {
+        G.leaveGuard = function () {
+          return chiqishniSora().then(function (ok) {
+            if (ok) { chiqildi = true; poller.stop(); G.api.leave(code); }
+            return ok;
+          });
+        };
+        if (tg && tg.enableClosingConfirmation) try { tg.enableClosingConfirmation(); } catch (e) { /* eski versiya */ }
+      } else {
+        G.leaveGuard = null;
+        if (tg && tg.disableClosingConfirmation) try { tg.disableClosingConfirmation(); } catch (e) { /* eski versiya */ }
+      }
+    }
+    scope.add(function () {
+      G.leaveGuard = null;
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (tg && tg.disableClosingConfirmation) try { tg.disableClosingConfirmation(); } catch (e) { /* eski versiya */ }
+    });
+    scope.on(document, 'click', function (e) {
+      if (!oyinda()) return;
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || a.target === '_blank' || a.getAttribute('href').charAt(0) === '#') return;
+      e.preventDefault();
+      var href = a.href;
+      chiqishniSora().then(function (ok) { if (ok) chiqibKet(function () { location.href = href; }); });
+    }, true);
 
     // ── Holatni qo'llash ────────────────────────────────
     function apply(st) {
@@ -212,6 +267,7 @@
         }
         else el.innerHTML = UI.yuklanmoqda("O'yin tayyorlanmoqda...");
       }
+      himoya();
       if (view === 'lobby') updateLobby();
       else if (view.indexOf('q:') === 0) updateQuestion();
       else if (view.indexOf('res:') === 0) put('natijaPanel', resultsPanel()) && bindResultsPanel();
@@ -220,10 +276,13 @@
 
     function notices() {
       if (!S || S.status !== 'playing') return;
-      var gone = S.players.filter(function (p) { return !p.me && !p.online; });
+      var gone = S.players.filter(function (p) { return !p.me && !p.online && !p.bot; });
+      var left = S.left_players || [];
       if (gone.length) {
         G.banner((gone.length === 1 ? gone[0].name : gone.length + " ta o'yinchi") +
-          ' aloqasi uzildi — qaytishini kutyapmiz...');
+          ' aloqasi uzildi. 30 soniyada qaytmasa, o\'yindan chiqib ketgan hisoblanadi.');
+      } else if (left.length) {
+        G.banner(left.join(', ') + ' o\'yindan chiqib ketdi', 'xato');
       }
     }
 
@@ -247,6 +306,7 @@
           '<button class="tugma oy-dost-qosh" type="button" id="dostQosh">' + ic('users') + "<span>Do'st qo'shish</span></button>" +
         '</section>' +
         '<section class="karta oy-info" id="roomInfo"></section>' +
+        '<p class="oy-chaqmoq-info" id="chaqmoqInfo"></p>' +
         '<section class="bo-lim">' +
           '<div class="bo-lim-bosh"><h2 data-fokus>O\'yinchilar</h2><span class="izoh" id="oyinchiSon"></span></div>' +
           '<ul class="oy-oyinchilar" id="oyinchilar" aria-live="polite"></ul>' +
@@ -343,6 +403,24 @@
         });
       }
       if (put('lobbyPanel', lobbyPanel())) bindLobbyPanel();
+      var info = chaqmoqInfo(S.chaqmoq, true);
+      var infoEl = document.getElementById('chaqmoqInfo');
+      if (infoEl) { infoEl.className = 'oy-chaqmoq-info ' + ((S.chaqmoq || {}).kind || ''); put('chaqmoqInfo', info); }
+    }
+
+    /** Bu o'yin chaqmoq beradimi — lobbida, countdownda va natijada bir xil matn. */
+    function chaqmoqInfo(ch, lobbida) {
+      if (!ch) return '';
+      if (ch.kind === 'yes') {
+        return ic('chaqmoq') + '<span>Bu o\'yin chaqmoq beradi: 1-o\'rin +' + ch.win + ', qolganlar +' + ch.play + '.' +
+          (lobbida ? ' Qolgan imkoniyat: ' + ch.left + ' / ' + ch.max + '.' : '') + '</span>';
+      }
+      if (ch.kind === 'no_chance') {
+        return ic('clock') + '<span>Chaqmoqli o\'yin imkoniyatingiz tugagan — bu o\'yin chaqmoq bermaydi.' +
+          (ch.reset_at_ms ? ' Yangilanishiga: ' + UI.vaqtMatn((ch.reset_at_ms - G.clock.now()) / 1000) + '.' : '') + '</span>';
+      }
+      return ic('bot') + '<span>' + (lobbida ? 'Chaqmoq uchun kamida 2 kishi o\'ynashi kerak. ' : '') +
+        'Kompyuter bilan o\'yin chaqmoq bermaydi.</span>';
     }
 
     function act(promise, btn) {
@@ -515,6 +593,7 @@
             return '<li>' + avatarHtml(p) + esc(p.name) + '</li>';
           }).join('') + '</ul>' +
           '<p class="oy-sr" aria-live="assertive" id="cdSr"></p>' +
+          '<p class="oy-chaqmoq-info ' + ((S.chaqmoq || {}).kind || '') + '">' + chaqmoqInfo(S.chaqmoq, false) + '</p>' +
         '</section>';
       ensureRenderer().catch(function () {});
       var last = null;
@@ -707,10 +786,10 @@
     }
 
     function xpNote(me) {
-      if (!me.multiplayer) return "Chaqmoq kamida 2 o'yinchi qatnashgan o'yinlarda beriladi.";
-      var text = "Hisobga o'tdi: +" + me.xp + ' ball' + (me.bonus ? ' (bonus +' + me.bonus + ')' : '');
-      if (me.capped) text += " — bugungi o'yin limiti to'ldi";
-      return text + '. Har 10 ball = 1 chaqmoq.';
+      if (!me.multiplayer) return '';
+      var text = "O'yin baliga qo'shildi: +" + me.xp + (me.bonus ? ' (bonus +' + me.bonus + ')' : '');
+      if (me.capped) text += " — bugungi ball limiti to'ldi";
+      return text + '.';
     }
 
     function reviewItem(it) {
@@ -783,7 +862,7 @@
             '<small>' + x.correct + " to'g'ri • " + x.accuracy + '%</small></span>' +
           '<span class="oy-ball">' + x.score + '<small>ball</small></span></li>';
       }).join('');
-      var title = !me ? "O'yin natijasi" : (me.won ? "G'alaba! Siz 1-o'rindasiz" : me.rank + "-o'rin");
+      var title = !me ? "O'yin natijasi" : (me.rank === 1 ? "G'alaba! Siz 1-o'rindasiz" : me.rank + "-o'rin");
       var mins = me ? Math.floor(me.duration_ms / 60000) : 0;
       var secs = me ? Math.round(me.duration_ms / 1000) % 60 : 0;
       el.innerHTML =
@@ -793,18 +872,21 @@
           '<p class="izoh">' + esc(S.game.name) + ' • ' + esc(S.settings.subject_name) +
             (S.settings.topic_title ? ' • ' + esc(S.settings.topic_title) : '') + '</p>' +
           (sess.end_reason === 'players_left'
-            ? '<p class="oy-ogoh">' + ic('alert') + "<span>Raqiblar chiqib ketgani uchun o'yin muddatidan oldin yakunlandi.</span></p>" : '') +
+            ? '<p class="oy-ogoh">' + ic('alert') + "<span>Raqiblar o'yindan chiqib ketgani uchun o'yin tugadi.</span></p>" : '') +
+          ((S.left_players || []).length
+            ? '<p class="izoh">' + esc(S.left_players.join(', ')) + " o'yindan chiqib ketdi — natijada ko'rinmaydi.</p>" : '') +
         '</section>' +
         '<ol class="oy-podium" aria-label="Natijalar jadvali">' + rows + '</ol>' +
         (me
           ? '<div class="stat-setka oy-natija-stat">' +
               stat(me.correct, "To'g'ri") + stat(me.wrong, "Noto'g'ri") + stat(me.accuracy + '%', 'Aniqlik') +
               stat(mins + ':' + String(secs).padStart(2, '0'), 'Vaqt') + stat(me.score, 'Ball') + stat('+' + me.chaqmoq, 'Chaqmoq') +
-            '</div><p class="izoh oy-xp-izoh">' + esc(xpNote(me)) + '</p>' + learning(r.learning || {})
+            '</div><p class="oy-chaqmoq-info ' + ((S.chaqmoq || {}).kind || '') + '">' + chaqmoqInfo(S.chaqmoq, true) + '</p>' +
+            (xpNote(me) ? '<p class="izoh oy-xp-izoh">' + esc(xpNote(me)) + '</p>' : '') + learning(r.learning || {})
           : '<p class="oy-ogoh">' + ic('users') + "<span>Siz bu o'yinda qatnashmadingiz. Host yangi o'yin boshlashini kuting.</span></p>") +
         '<div class="oy-panel" id="natijaPanel"></div>';
       G.focusMain();
-      if (me && me.won) celebrate();
+      if (me && me.rank === 1) celebrate();
     }
   };
 })();

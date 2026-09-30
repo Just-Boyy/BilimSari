@@ -39,6 +39,7 @@
           '<span class="oy-pill"><b id="roomSon">…</b>&nbsp;faol room</span>' +
         '</div>' +
       '</section>' +
+      '<section class="oy-imkon" id="imkonKarta" hidden></section>' +
       '<button class="tugma oy-yaratish" type="button" id="yaratishTugma">' + ic('plus') + "<span>O'yin yaratish</span></button>" +
       '<div class="oy-amallar">' +
         '<button class="tugma tugma-ikkilamchi tugma-mayda" type="button" id="qoshilishTugma">' + ic('logIn') + "<span>Roomga qo'shilish</span></button>" +
@@ -55,6 +56,16 @@
     G.catalog();   // yaratish ekrani tez ochilishi uchun katalog oldindan yuklanadi
 
     var lastList = null;
+    var lastImkon = null;
+    var imkon = null;
+    function imkonTaymer() {
+      var t = document.getElementById('imkonTaymer');
+      if (!t || !imkon || !imkon.reset_at_ms) return;
+      var left = Math.max(0, Math.floor((imkon.reset_at_ms - G.clock.now()) / 1000));
+      t.textContent = UI.vaqtRaqam(left);
+      if (left === 0) poller.now();
+    }
+    scope.interval(imkonTaymer, 1000);
     var poller = new G.Poller({
       fetch: G.api.lobby,
       interval: function () { return 3000; },   // "jonli" ro'yxat — yangilash tugmasisiz
@@ -64,6 +75,14 @@
         if (!res.ok) return;
         G.banner(null);
         document.getElementById('onlaynSon').textContent = res.online;
+        if (res.chances && JSON.stringify(res.chances) !== lastImkon) {
+          lastImkon = JSON.stringify(res.chances);
+          imkon = res.chances;
+          var karta = document.getElementById('imkonKarta');
+          karta.innerHTML = G.imkonHtml(imkon);
+          karta.hidden = false;
+          imkonTaymer();
+        }
         document.getElementById('roomSon').textContent = res.rooms.length;
         var html = res.rooms.map(roomRow).join('');
         if (!html) {
@@ -84,6 +103,23 @@
     scope.add(function () { poller.stop(); });
     scope.on(document, 'visibilitychange', function () { if (!document.hidden) poller.now(); });
   });
+
+  /** Chaqmoqli o'yinlar kartasi: nechta imkoniyat qoldi, qachon yangilanadi. */
+  G.imkonHtml = function (ch) {
+    var dots = '';
+    for (var i = 0; i < ch.max; i++) dots += '<i class="' + (i < ch.left ? 'bor' : '') + '"></i>';
+    var matn;
+    if (ch.left > 0) {
+      matn = '<p>Odamlar bilan o\'yin: 1-o\'rin +' + ch.win + ', qolganlar +' + ch.play + ' chaqmoq.</p>';
+    } else if (ch.pending) {
+      matn = '<p>Oxirgi chaqmoqli o\'yin tugagach 24 soatlik taymer boshlanadi.</p>';
+    } else {
+      matn = '<p>Yangilanishiga qoldi: <b class="oy-imkon-taymer" id="imkonTaymer"></b></p>';
+    }
+    return '<div class="oy-imkon-bosh">' + ic('chaqmoq') + '<b>Chaqmoqli o\'yinlar: ' + ch.left + ' / ' + ch.max + '</b>' +
+      '<span class="oy-imkon-nuqtalar" aria-hidden="true">' + dots + '</span></div>' + matn +
+      '<small>O\'ynash cheksiz. Kompyuter bilan o\'yin chaqmoq bermaydi.</small>';
+  };
 
   // ───────────────────────── Kod orqali qo'shilish ─────────────────────────
 
@@ -315,7 +351,7 @@
         '</select>' +
         '<select class="kiritish" id="fanTanlov" aria-label="Fan" hidden></select>' +
       '</div>' +
-      '<p class="izoh" style="margin:10px 0">O\'yinlarda hisobga o\'tgan ball bo\'yicha. Har 10 ball — 1 chaqmoq.</p>' +
+      '<p class="izoh" style="margin:10px 0">O\'yinlarda to\'plangan ball bo\'yicha.</p>' +
       '<div id="turnir"></div>' +
       '<div id="reytingRoyxat"></div><div id="reytingMen"></div>';
     G.focusMain();

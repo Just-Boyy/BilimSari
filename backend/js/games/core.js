@@ -11,7 +11,7 @@
   'use strict';
 
   var G = window.Games = window.Games || {};
-  G.V = '15';                       // dangasa yuklanadigan fayllar keshini yangilash uchun
+  G.V = '16';                       // dangasa yuklanadigan fayllar keshini yangilash uchun
   G.renderers = G.renderers || {};
 
   function enc(s) { return encodeURIComponent(s == null ? '' : s); }
@@ -190,7 +190,25 @@
     }
   };
 
-  window.addEventListener('hashchange', function () { G.render(); });
+  // O'yin paytida (G.leaveGuard o'rnatilgan) boshqa ekranga o'tishdan oldin so'raladi:
+  // hash eski holiga qaytariladi, tasdiqlansa — yangi manzilga o'tiladi.
+  var lastHash = location.hash;
+  G.leaveGuard = null;
+  window.addEventListener('hashchange', function () {
+    if (G.leaveGuard && location.hash !== lastHash) {
+      var target = location.hash;
+      var guard = G.leaveGuard;
+      history.replaceState(null, '', lastHash || location.pathname + location.search);
+      guard().then(function (ok) {
+        if (!ok) return;
+        G.leaveGuard = null;
+        location.hash = target;
+      });
+      return;
+    }
+    lastHash = location.hash;
+    G.render();
+  });
 
   // ── Sarlavha qatori ───────────────────────────────────
   G.header = function (o) {

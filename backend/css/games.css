@@ -568,3 +568,24 @@
   .oy-nuqta, .oy-countdown-son.pop, .oy-modal, .oy-modal-fon { animation: none !important; }
   .oy-taymer-chiziq i { transition: none; }
 }
+
+/* ── Chaqmoqli o'yin imkoniyatlari ─────────────────────── */
+.oy-imkon { margin: 12px 0; padding: 12px 14px; border-radius: var(--r); background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1px solid #fcd34d; display: grid; gap: 4px; }
+.oy-imkon-bosh { display: flex; align-items: center; gap: 8px; }
+.oy-imkon-bosh svg { width: 22px; height: 22px; color: #d97706; flex: 0 0 auto; }
+.oy-imkon-bosh b { font-size: 15px; color: #92400e; }
+.oy-imkon-nuqtalar { margin-left: auto; display: inline-flex; gap: 5px; }
+.oy-imkon-nuqtalar i { width: 12px; height: 12px; border-radius: 50%; background: #fde68a; border: 2px solid #f59e0b; }
+.oy-imkon-nuqtalar i.bor { background: #f59e0b; }
+.oy-imkon p { font-size: 14px; color: #78350f; margin: 0; }
+.oy-imkon small { font-size: 12px; color: #a16207; }
+.oy-imkon-taymer { font-variant-numeric: tabular-nums; }
+.oy-chaqmoq-info { display: flex; align-items: flex-start; gap: 8px; margin: 10px 0; padding: 10px 12px; border-radius: var(--r-kichik);
+  font-size: 14px; line-height: 1.45; background: var(--fon); color: var(--matn-2); text-align: left; }
+.oy-chaqmoq-info:empty { display: none; }
+.oy-chaqmoq-info svg { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; }
+.oy-chaqmoq-info.yes { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+.oy-chaqmoq-info.yes svg { color: #d97706; }
+.oy-chaqmoq-info.no_chance { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.oy-chiqish-tugma { color: var(--qizil-quyuq); border-color: var(--qizil-och); }

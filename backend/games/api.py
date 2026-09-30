@@ -17,7 +17,7 @@ import notify
 import rate_limit
 from auth_core import auth_required
 from db import get_connection
-from games import catalog, clock, matchmaking, rooms, stats
+from games import catalog, chances, clock, matchmaking, rooms, stats
 from games.errors import GameError
 from tgbot import BOT_USERNAME
 
@@ -109,6 +109,7 @@ def lobby_view(cur, conn):
         'online': rooms.online_count(cur, now),
         'rooms': rooms.public_rooms(cur, now),
         'my_room': rooms.my_room(cur, _uid()),
+        'chances': chances.status(cur, _uid(), now),     # chaqmoqli o'yinlar: nechta qoldi, qachon yangilanadi
     }
 
 

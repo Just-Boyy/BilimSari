@@ -20,7 +20,7 @@ Adolatli o'yin:
 import json
 import random
 
-from games import catalog, clock, questions
+from games import catalog, chances, clock, questions
 from games.errors import GameError
 
 POINTS_CORRECT = 10
@@ -34,9 +34,10 @@ REVEAL_MS = catalog.REVEAL_SECONDS * 1000
 GRACE_MS = 800            # tarmoq kechikishi uchun kichik zaxira
 OFFLINE_MS = 15 * 1000    # shuncha vaqt so'rov kelmasa — "oflayn"
 GONE_MS = 45 * 1000       # shuncha vaqt yo'q bo'lsa — o'yinni tark etgan
+DISCONNECT_MS = 30 * 1000  # o'yin paytida aloqa shuncha uzilsa — o'yindan chiqib ketgan hisoblanadi
 
 SESSION_COLS = ('id, room_id, game_type, subject, topic, difficulty, mode, total, phase, q_index, '
-                'phase_started_ms, phase_ends_ms, version, started_ms, finished_ms, end_reason')
+                'phase_started_ms, phase_ends_ms, version, started_ms, finished_ms, end_reason, humans')
 
 # Savollar sessiya davomida o'zgarmaydi — har bir poll'da bazadan katta JSON
 # o'qimaslik uchun worker xotirasida saqlanadi.
@@ -212,16 +213,40 @@ def _reveal(cur, session, now) -> bool:
     return True
 
 
+def _drop_disconnected(cur, conn, room, session, players, now) -> bool:
+    """O'yin paytida aloqasi DISCONNECT_MS dan ko'p uzilgan odam — o'yindan chiqib ketgan
+    hisoblanadi (chaqmoq va natija yo'q, imkoniyati ishlatilgan bo'ladi)."""
+    if session['phase'] in ('finished', 'cancelled'):
+        return False
+    gone = [p for p in players if p['state'] == 'active' and not p.get('is_bot')
+            and now - int(p['seen_ms']) > DISCONNECT_MS]
+    if not gone:
+        return False
+    from games import rooms      # rooms engine'ni import qiladi — aylana importdan qochish
+    for p in gone:
+        rooms.remove_player(cur, room, p['user_id'], now, 'left')
+        p['state'], p['left_ms'] = 'left', now
+    conn.commit()
+    return True
+
+
+def _should_end(session, players, now) -> bool:
+    alive = _alive(players, now, GONE_MS)
+    humans = [p for p in alive if not p.get('is_bot')]
+    if session.get('humans') and int(session['humans']) >= 2:
+        return len(humans) < 2          # odamlar o'yini: bitta odam qolsa — tugaydi, u 1-o'rin
+    return len(alive) < 2 or not humans
+
+
 def tick(cur, conn, room, session, players, now=None):
     """Vaqt o'tgan bo'lsa, fazani oldinga suradi. (sessiya, o'zgardimi)."""
     now = now or clock.now_ms()
-    moved = False
+    moved = _drop_disconnected(cur, conn, room, session, players, now)
     for _ in range(64):
         phase = session['phase']
         if phase in ('finished', 'cancelled'):
             break
-        alive = _alive(players, now, GONE_MS)
-        if len(alive) < 2 or all(p.get('is_bot') for p in alive):
+        if _should_end(session, players, now):
             ok = _finish(cur, room, session, players, now, 'players_left')
         elif phase == 'question' and now < int(session['phase_ends_ms']):
             # Kompyuter javoblari: hamma javob bergan bo'lsa (yoki Quick Answer'da
@@ -299,11 +324,10 @@ def _today_xp(cur, user_id, now) -> int:
     return int(cur.fetchone()['xp'] or 0)
 
 
-def session_members(players, session):
-    """Shu o'yinda qatnashganlar: hozir roomda yoki o'yin boshlangandan keyin chiqib ketgan."""
+def left_during(players, session) -> list:
+    """O'yin boshlangandan keyin chiqib ketgan odamlar (natijada ko'rinmaydi)."""
     started = int(session['started_ms'])
-    return [p for p in players
-            if p['state'] == 'active' or (p['state'] == 'left' and int(p['left_ms'] or 0) >= started)]
+    return [p for p in players if not p.get('is_bot') and p['state'] == 'left' and int(p['left_ms'] or 0) >= started]
 
 
 def _finish(cur, room, session, players, now, reason) -> bool:
@@ -316,46 +340,57 @@ def _finish(cur, room, session, players, now, reason) -> bool:
     played = prev_index + 1 if prev_phase in ('question', 'reveal') else 0
 
     cur.execute(
-        '''SELECT user_id, COUNT(*) AS answered, SUM(correct) AS correct, SUM(points) AS points
+        '''SELECT user_id, COUNT(*) AS answered, SUM(correct) AS correct, SUM(points) AS points,
+                  SUM(elapsed_ms) AS elapsed
            FROM game_answers WHERE session_id = %s AND q_index < %s GROUP BY user_id''',
         (session['id'], played),
     )
     agg = {r['user_id']: r for r in cur.fetchall()}
+    limit = time_limit_ms(session)
     rows = []
-    for p in session_members(players, session):
+    # Natijada faqat oxirigacha qolganlar: o'yindan chiqib ketgan (yoki aloqasi uzilgan)
+    # o'yinchi na ball, na chaqmoq, na reyting oladi va jadvalda ko'rinmaydi
+    for p in players:
+        if p['state'] != 'active':
+            continue
         a = agg.get(p['user_id']) or {}
-        rows.append({'p': p, 'answered': int(a.get('answered') or 0),
-                     'correct': int(a.get('correct') or 0), 'points': int(a.get('points') or 0)})
+        answered = int(a.get('answered') or 0)
+        rows.append({'p': p, 'answered': answered, 'correct': int(a.get('correct') or 0),
+                     'points': int(a.get('points') or 0),
+                     # Teng ballda tezroq javob bergan yuqorida: javobsiz savol — to'liq vaqt
+                     'time': int(a.get('elapsed') or 0) + max(0, played - answered) * limit})
 
     multiplayer = sum(1 for r in rows if r['answered'] > 0) >= 2
     bot_level = max((int(r['p']['level']) for r in rows if r['p'].get('is_bot')), default=0)
-    rows.sort(key=lambda r: -r['points'])
-    rank, prev = 0, None
+    rows.sort(key=lambda r: (-r['points'], r['time'], r['p']['user_id']))
     for i, r in enumerate(rows):
-        if r['points'] != prev:
-            rank, prev = i + 1, r['points']
-        r['rank'] = rank
+        r['rank'] = i + 1
 
+    with_chance = chances.open_users(cur, session['id'])
     for r in rows:
         p = r['p']
-        stayed = p['state'] == 'active'
-        won = multiplayer and r['rank'] == 1 and r['points'] > 0 and stayed
-        bonus = (BONUS_COMPLETE if played and stayed and r['answered'] * 2 >= played else 0) + (BONUS_WIN if won else 0)
+        won = multiplayer and r['rank'] == 1 and r['points'] > 0
+        bonus = (BONUS_COMPLETE if played and r['answered'] * 2 >= played else 0) + (BONUS_WIN if won else 0)
         earned = r['points'] + bonus
         xp = 0
         if not p.get('is_bot') and multiplayer and earned > 0 and r['answered'] > 0:
             xp = max(0, min(earned, DAILY_XP_CAP - _today_xp(cur, p['user_id'], now)))
+        chaqmoq = 0
+        if not p.get('is_bot') and int(p['user_id']) in with_chance:
+            chaqmoq = chances.WIN if r['rank'] == 1 else chances.PLAY
+            chances.close(cur, p['user_id'], session['id'], now, chaqmoq)
         cur.execute(
             '''INSERT INTO game_results (session_id, room_id, user_id, game_type, subject, topic, difficulty,
                                          score, earned, xp, correct, wrong, total, accuracy, rank, players, won,
-                                         duration_ms, created_ms, bot_level)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                         duration_ms, created_ms, bot_level, chaqmoq)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                ON CONFLICT (session_id, user_id) DO NOTHING''',
             (session['id'], room['id'], p['user_id'], session['game_type'], session['subject'], session['topic'],
              session['difficulty'], r['points'], earned, xp, r['correct'], r['answered'] - r['correct'],
              played, round(100 * r['correct'] / played) if played else 0, r['rank'], len(rows), int(won),
-             now - int(session['started_ms']), now, bot_level),
+             now - int(session['started_ms']), now, bot_level, chaqmoq),
         )
+    chances.close_all(cur, session['id'], now)
 
     _save_topic_stats(cur, session, [r['p'] for r in rows if not r['p'].get('is_bot')], played, now)
 
@@ -461,7 +496,7 @@ def session_payload(cur, session, players, me, now, names) -> dict:
 
 def results_payload(cur, session, user_id, names) -> dict:
     cur.execute(
-        '''SELECT user_id, score, earned, xp, correct, wrong, total, accuracy, rank, won, duration_ms
+        '''SELECT user_id, score, earned, xp, correct, wrong, total, accuracy, rank, won, duration_ms, chaqmoq
            FROM game_results WHERE session_id = %s ORDER BY rank, score DESC, user_id''',
         (session['id'],),
     )
@@ -478,7 +513,8 @@ def results_payload(cur, session, user_id, names) -> dict:
         me = {
             'rank': int(mine['rank']), 'score': int(mine['score']), 'earned': int(mine['earned']),
             'bonus': int(mine['earned']) - int(mine['score']), 'xp': int(mine['xp']),
-            'chaqmoq': int(mine['xp']) // 10, 'correct': int(mine['correct']), 'wrong': int(mine['wrong']),
+            'chaqmoq': int(mine['chaqmoq']) if mine['chaqmoq'] is not None else int(mine['xp']) // 10,
+            'correct': int(mine['correct']), 'wrong': int(mine['wrong']),
             'unanswered': max(0, total - int(mine['correct']) - int(mine['wrong'])), 'total': total,
             'accuracy': int(mine['accuracy']), 'won': bool(mine['won']), 'duration_ms': int(mine['duration_ms']),
             'multiplayer': sum(1 for r in rows if int(r['correct']) + int(r['wrong']) > 0) >= 2,

@@ -17,7 +17,7 @@ import re
 import secrets
 
 import premium
-from games import catalog, clock, engine
+from games import catalog, chances, clock, engine
 from games.errors import GameError
 
 ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'   # 0/O, 1/I/L yo'q — adashtirmaydi
@@ -113,9 +113,15 @@ def presence_touch(cur, user_id, now):
     )
 
 
-def _remove_player(cur, room, user_id, now, new_state):
-    cur.execute('UPDATE game_room_players SET state = %s, ready = 0, left_ms = %s WHERE room_id = %s AND user_id = %s',
+def remove_player(cur, room, user_id, now, new_state):
+    cur.execute("UPDATE game_room_players SET state = %s, ready = 0, left_ms = %s "
+                "WHERE room_id = %s AND user_id = %s AND state = 'active'",
                 (new_state, now, room['id'], user_id))
+    if cur.rowcount != 1:
+        return                              # allaqachon chiqqan
+    if room['status'] == 'playing' and room['session_id']:
+        # O'yin paytida chiqdi — chaqmoq yo'q, imkoniyat esa ishlatilgan bo'lib qoladi
+        chances.close(cur, user_id, room['session_id'], now, 0)
     extra = {}
     # Hostlik va "room bo'sh qoldi" faqat odamlar bo'yicha — kompyuter host bo'lmaydi
     cur.execute(
@@ -131,6 +137,7 @@ def _remove_player(cur, room, user_id, now, new_state):
     if not remaining and room['status'] in ('waiting', 'finished'):
         extra['status'] = 'cancelled'
     _bump(cur, room['id'], now, **extra)
+    room.update(extra)
 
 
 def leave_all(cur, user_id, now, keep_room_id=None):
@@ -143,7 +150,7 @@ def leave_all(cur, user_id, now, keep_room_id=None):
     )
     for room in cur.fetchall():
         if room['id'] != keep_room_id:
-            _remove_player(cur, room, user_id, now, 'left')
+            remove_player(cur, room, user_id, now, 'left')
 
 
 def _upsert_player(cur, room_id, user, now, ready):
@@ -188,6 +195,7 @@ def create_random_room(cur, code, host, guest, settings, now) -> int:
     _upsert_player(cur, room_id, guest, now, ready=True)
     room = load_room(cur, code)
     session_id = engine.create_session(cur, room, 6 * 1000)
+    chances.begin_session(cur, session_id, [host['id'], guest['id']], now)
     _bump(cur, room_id, now, status='playing', session_id=session_id)
     return room_id
 
@@ -237,6 +245,9 @@ def join_room(cur, conn, user, raw_code) -> str:
         raise GameError('kicked', "Host sizni bu roomdan chiqargan.", 403)
     if mine and mine['state'] == 'active':
         return room['code']
+    if room['status'] == 'playing' and mine and mine['state'] == 'left':
+        raise GameError('left_game', "Siz bu o'yindan chiqib ketgansiz (chiqish bosilgan yoki aloqa uzilgan). "
+                                     "Bu o'yin sizga chaqmoq bermaydi.", 409)
     if room['status'] == 'playing':
         raise GameError('room_started', "Bu roomda o'yin allaqachon boshlangan.", 409)
     if len(_active(players)) >= int(room['max_players']):
@@ -280,7 +291,7 @@ def _waiting_only(room):
 def leave_room(cur, conn, user, code):
     room = _room_or_404(cur, code)
     _, mine = _member(cur, room, user['id'])
-    _remove_player(cur, room, user['id'], clock.now_ms(), 'left')
+    remove_player(cur, room, user['id'], clock.now_ms(), 'left')
     conn.commit()
 
 
@@ -357,7 +368,7 @@ def kick(cur, conn, user, code, pid):
         raise GameError('not_found', "O'yinchi topilmadi.", 404)
     if target['user_id'] == user['id']:
         raise GameError('bad_request', "O'zingizni chiqara olmaysiz.")
-    _remove_player(cur, room, target['user_id'], clock.now_ms(), 'kicked')
+    remove_player(cur, room, target['user_id'], clock.now_ms(), 'kicked')
     conn.commit()
 
 
@@ -373,8 +384,10 @@ def start(cur, conn, user, code):
     # Oflayn (ilovani yopib qo'ygan) o'yinchilar o'yinga kiritilmaydi
     for p in _active(players):
         if not _is_online(p, now):
-            _remove_player(cur, room, p['user_id'], now, 'left')
+            remove_player(cur, room, p['user_id'], now, 'left')
     session_id = engine.create_session(cur, room, COUNTDOWN_MS)
+    humans = [p['user_id'] for p in _active(players) if not p['is_bot'] and _is_online(p, now)]
+    chances.begin_session(cur, session_id, humans, now)
     _bump(cur, room['id'], now, status='playing', session_id=session_id)
     conn.commit()
 
@@ -471,6 +484,8 @@ def state(cur, conn, user, code, since=None) -> dict:
     host_id = room['host_user_id']
     ok, hint = _start_check(room, players, now)
     badges = premium.badges(cur, [p['user_id'] for p in active], now)   # ism yonidagi emoji, avatar ramkasi
+    humans_now = sum(1 for p in active if not p['is_bot'] and _is_online(p, now))
+    left = [names[p['user_id']] for p in engine.left_during(everyone, session)] if live else []
     photos = _photos(cur, [p['user_id'] for p in active if not p['is_bot']])
     return {
         'etag': etag,
@@ -502,6 +517,10 @@ def state(cur, conn, user, code, since=None) -> dict:
                'ready': bool(mine['ready']) or user['id'] == host_id},
         'can_start': ok,
         'start_hint': hint,
+        'left_players': left,
+        # Bu o'yin chaqmoq beradimi va imkoniyatlar holati
+        'chaqmoq': chances.game_info(cur, user['id'], now, session if live and room['status'] != 'waiting' else None,
+                                     humans_now),
         'session': engine.session_payload(cur, session, players, mine, now, names) if live else None,
     }
 

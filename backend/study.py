@@ -474,7 +474,7 @@ def compute_streak(cur, user_id):
 # Har bir dars (oddiy va shaxsiy) uchun ko'pi bilan 30 chaqmoq:
 #   test — BIRINCHI urinishda har to'g'ri javobga 5 (ko'pi bilan 15), qayta topshirish chaqmoq bermaydi;
 #   uy vazifasi — to'liq bajarilganda 15.
-# O'yinlarda (Game Hub) hisobga o'tgan har 10 ball = 1 chaqmoq — games/stats.py
+# O'yinlar (Game Hub): 24 soatda 3 ta chaqmoqli o'yin, 1-o'rin +30, qolganlar +20 — games/chances.py
 # Kun savoliga to'g'ri javob — +5 chaqmoq (daily.py)
 QUIZ_CHAQMOQ_PER_CORRECT = 5
 QUIZ_CHAQMOQ_MAX = 15
@@ -532,8 +532,7 @@ def today_plan(cur, user_id, daily_answered, now_ms) -> dict:
 def leaderboard(cur, user_id, limit=20):
     """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar + kun savoli)."""
     chaqmoq_by_user = {uid: c for uid, c in lesson_chaqmoq_by_user(cur).items() if c}
-    for uid, xp in game_stats.xp_by_user(cur).items():
-        bonus = xp // game_stats.GAME_XP_PER_CHAQMOQ
+    for uid, bonus in game_stats.chaqmoq_by_user(cur).items():
         if bonus:
             chaqmoq_by_user[uid] = chaqmoq_by_user.get(uid, 0) + bonus
     for uid, bonus in daily.chaqmoq_by_user(cur).items():

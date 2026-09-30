@@ -512,6 +512,25 @@
     "So'rov allaqachon yuborilgan.": 'Заявка уже отправлена.',
     "So'rov topilmadi yoki allaqachon javob berilgan.": 'Заявка не найдена или на неё уже ответили.',
     "So'rov topilmadi.": 'Заявка не найдена.',
+
+    // Chaqmoqli o'yinlar
+    "Oxirgi chaqmoqli o'yin tugagach 24 soatlik taymer boshlanadi.": 'После последней игры с молниями запустится 24-часовой таймер.',
+    'Yangilanishiga qoldi:': 'До обновления:',
+    "O'ynash cheksiz. Kompyuter bilan o'yin chaqmoq bermaydi.": 'Играть можно без ограничений. Игра с компьютером молний не даёт.',
+    "O'yinlarda to'plangan ball bo'yicha.": 'По очкам, набранным в играх.',
+    "Siz o'yindan chiqdingiz": 'Вы вышли из игры',
+    "Chaqmoqli o'yin imkoniyatingiz tugagan — bu o'yin chaqmoq bermaydi.": 'Попытки игр с молниями закончились — эта игра молний не даст.',
+    "Chaqmoq uchun kamida 2 kishi o'ynashi kerak. Kompyuter bilan o'yin chaqmoq bermaydi.":
+      'Для молний нужно минимум 2 игрока. Игра с компьютером молний не даёт.',
+    "Kompyuter bilan o'yin chaqmoq bermaydi.": 'Игра с компьютером молний не даёт.',
+    "O'yindan chiqasizmi?": 'Выйти из игры?',
+    "Siz hozir o'yindan chiqib ketasiz va chaqmoq olmaysiz. Natijalar jadvalida ham ko'rinmaysiz.":
+      'Вы выйдете из игры и не получите молнии. В таблице результатов вас тоже не будет.',
+    "Bu chaqmoqli o'yin imkoniyati baribir ishlatilgan hisoblanadi.": 'Попытка игры с молниями всё равно будет засчитана как использованная.',
+    "O'yinda qolish": 'Остаться в игре', 'Baribir chiqaman': 'Всё равно выйти',
+    "Raqiblar o'yindan chiqib ketgani uchun o'yin tugadi.": 'Игра завершилась, потому что соперники вышли.',
+    "Siz bu o'yindan chiqib ketgansiz (chiqish bosilgan yoki aloqa uzilgan). Bu o'yin sizga chaqmoq bermaydi.":
+      'Вы вышли из этой игры (нажали «выйти» или пропала связь). Эта игра не даст вам молний.',
   };
 
   // Raqamli va tarkibli matnlar: [qolip, almashtirish]
@@ -521,6 +540,19 @@
       .replace(/(\d+)\s*daqiqa/g, '$1 мин').replace(/(\d+)\s*soniya/g, '$1 с');
   };
   var RE = [
+    // Chaqmoqli o'yinlar
+    [/^Chaqmoqli o'yinlar: (\d+) \/ (\d+)$/, 'Игры с молниями: $1 / $2'],
+    [/^Odamlar bilan o'yin: 1-o'rin \+(\d+), qolganlar \+(\d+) chaqmoq\.$/, 'Игра с людьми: 1-е место +$1, остальные +$2 молний.'],
+    [/^Bu o'yin chaqmoq beradi: 1-o'rin \+(\d+), qolganlar \+(\d+)\.(?: Qolgan imkoniyat: (\d+) \/ (\d+)\.)?$/,
+      function (m, a, b, c, d) { return 'Эта игра даёт молнии: 1-е место +' + a + ', остальные +' + b + '.' + (c ? ' Осталось попыток: ' + c + ' / ' + d + '.' : ''); }],
+    [/^Chaqmoqli o'yin imkoniyatingiz tugagan — bu o'yin chaqmoq bermaydi\. Yangilanishiga: (.+)\.$/,
+      function (m, t) { return 'Попытки игр с молниями закончились — эта игра молний не даст. До обновления: ' + vaqtRu(t) + '.'; }],
+    [/^(.+) aloqasi uzildi\. 30 soniyada qaytmasa, o'yindan chiqib ketgan hisoblanadi\.$/,
+      function (m, k) { return (/^\d+ ta o'yinchi$/.test(k) ? 'У ' + k.replace(" ta o'yinchi", ' игроков') : 'У игрока ' + k) + ' пропала связь. Если не вернётся за 30 секунд, считается, что вышел из игры.'; }],
+    [/^(.+) o'yindan chiqib ketdi — natijada ko'rinmaydi\.$/, '$1 — вышли из игры, в результатах их нет.'],
+    [/^(.+) o'yindan chiqib ketdi$/, '$1 — вышел(а) из игры'],
+    [/^O'yin baliga qo'shildi: \+(\d+)(?: \(bonus \+(\d+)\))?( — bugungi ball limiti to'ldi)?\.$/,
+      function (m, a, b, c) { return 'Добавлено к игровым очкам: +' + a + (b ? ' (бонус +' + b + ')' : '') + (c ? ' — дневной лимит очков исчерпан' : '') + '.'; }],
     // Do'stlar
     [/^«(.+)» mavzusini tugatdi$/, 'завершил(а) тему «$1»'],
     [/^«(.+)» nishonini oldi$/, function (m, a) { return 'получил(а) значок «' + (RU[a] || a) + '»'; }],
