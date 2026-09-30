@@ -352,6 +352,31 @@
       '<span class="ramka r-' + ramka + '" aria-hidden="true"></span></span>';
   }
 
+  /** "hozir", "5 daqiqa oldin", "3 soat oldin", "kecha", "4 kun oldin". */
+  function oldin(ms) {
+    if (!ms) return '';
+    var s = Math.max(0, (Date.now() - ms) / 1000);
+    if (s < 90) return 'hozirgina';
+    if (s < 3600) return Math.round(s / 60) + ' daqiqa oldin';
+    if (s < 86400) return Math.round(s / 3600) + ' soat oldin';
+    if (s < 2 * 86400) return 'kecha';
+    return Math.round(s / 86400) + ' kun oldin';
+  }
+
+  /** Do'st (yoki qidiruv natijasi) qatori: rasm+ramka, ism+emoji, holat; o'ngda — amallar. */
+  function dostQator(c, amallar, izoh, havolasiz) {
+    var av = c.photo_url
+      ? '<img class="avatar" alt="" src="' + esc(c.photo_url) + '">'
+      : '<span class="avatar" aria-hidden="true">' + esc(harfAvatar(c.name)) + '</span>';
+    var holat = izoh != null ? izoh : (c.online ? 'onlayn' : (c.last_seen_ms ? oldin(c.last_seen_ms) : ''));
+    return '<div class="dost-qator' + (c.online ? ' onlayn' : '') + '">' +
+      (havolasiz ? '<span class="dost-kim">' : '<a class="dost-kim" href="' + profilYoli(c.id) + '">') +
+        '<span class="dost-avatar">' + ramkali(av, c.premium && c.frame) + '</span>' +
+        '<span class="dost-matn"><b><span>' + esc(c.name) + '</span>' + emoji(c.emoji) + '</b>' +
+          (holat ? '<small>' + esc(holat) + '</small>' : '') + '</span>' +
+      (havolasiz ? '</span>' : '</a>') + (amallar ? '<span class="dost-amal">' + amallar + '</span>' : '') + '</div>';
+  }
+
   /** Boshqa o'quvchi profili sahifasi (o'ziniki — profile.html). */
   function profilYoli(uid, men) {
     return men ? 'profile.html' : 'foydalanuvchi.html?id=' + encodeURIComponent(uid);
@@ -489,6 +514,8 @@
     daraja: daraja,
     ramkali: ramkali,
     profilYoli: profilYoli,
+    oldin: oldin,
+    dostQator: dostQator,
     qatorTeg: qatorTeg,
     qatorYop: qatorYop,
     profilOyna: profilOyna,

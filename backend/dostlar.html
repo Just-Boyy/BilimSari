@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#58A700">
+<title>Do'stlar — BilimSari</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo-icon-64.png">
+<link rel="stylesheet" href="css/app.css">
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<div class="ustki">
+  <a class="orqaga" href="profile.html" aria-label="Orqaga">←</a>
+  <h1>Do'stlar<small id="dostSoni">Do'stlar, so'rovlar va qidiruv</small></h1>
+</div>
+
+<main class="sahifa" style="padding-top:12px">
+  <div id="chaqiruvlar"></div>
+  <nav class="dost-tablar" role="tablist" aria-label="Do'stlar bo'limlari">
+    <button class="dost-tab" type="button" role="tab" data-tab="dostlar">Do'stlar</button>
+    <button class="dost-tab" type="button" role="tab" data-tab="sorovlar">So'rovlar</button>
+    <button class="dost-tab" type="button" role="tab" data-tab="qidirish">Do'st qo'shish</button>
+    <button class="dost-tab" type="button" role="tab" data-tab="reyting">Reyting</button>
+    <button class="dost-tab" type="button" role="tab" data-tab="lenta">Faollik</button>
+  </nav>
+  <div id="tana"><div class="skelet" style="height:220px"></div></div>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/telegram.js"></script>
+<script>
+(async function () {
+  if (!(await UI.sessiyaKerak())) return;
+  UI.navChiz('dostlar.html');
+  var tana = document.getElementById('tana');
+  var D = null;                               // /api/friends javobi
+  // Tab: ?tab= (bot tugmalari — Telegram hash'ni o'ziga ishlatadi) yoki #tab (ilova ichidagi havolalar)
+  var TABLAR = ['dostlar', 'sorovlar', 'qidirish', 'reyting', 'lenta'];
+  var tab = new URLSearchParams(location.search).get('tab') || location.hash.slice(1);
+  if (TABLAR.indexOf(tab) < 0) tab = 'dostlar';
+  var qidiruvMatn = '';
+
+  function tabChiz() {
+    document.querySelectorAll('.dost-tab').forEach(function (b) {
+      var faol = b.dataset.tab === tab;
+      b.classList.toggle('faol', faol);
+      b.setAttribute('aria-selected', faol ? 'true' : 'false');
+      if (b.dataset.tab === 'sorovlar') {
+        var n = D ? D.incoming.length : 0;
+        b.innerHTML = UI.esc(I18N.t("So'rovlar")) + (n ? '<span class="son">' + n + '</span>' : '');
+      }
+    });
+  }
+  document.querySelectorAll('.dost-tab').forEach(function (b) {
+    b.onclick = function () { tab = b.dataset.tab; history.replaceState(null, '', location.pathname + '#' + tab); chiz(); };
+  });
+
+  async function yukla() {
+    var r = await API.dostlar();
+    if (!r.ok) { tana.innerHTML = UI.xatoHolat(r.error, yukla); return; }
+    D = r;
+    document.getElementById('dostSoni').textContent = r.count + ' / ' + r.max + " do'st";
+    chaqiruvChiz(r.invites || []);
+    chiz();
+  }
+
+  function chaqiruvChiz(list) {
+    document.getElementById('chaqiruvlar').innerHTML = list.map(function (i) {
+      return '<div class="dost-chaqiruv"><p>🎮 ' + UI.esc(i.from.name) + ' sizni «' + UI.esc(i.game) + '» o\'yiniga chaqirdi</p>' +
+        '<a class="tugma" href="games.html?kod=' + encodeURIComponent(i.code) + '">Qo\'shilish</a></div>';
+    }).join('');
+  }
+
+  function chiz() {
+    tabChiz();
+    if (!D) return;
+    if (tab === 'sorovlar') return sorovlarChiz();
+    if (tab === 'qidirish') return qidirishChiz();
+    if (tab === 'reyting') return reytingChiz();
+    if (tab === 'lenta') return lentaChiz();
+    dostlarChiz();
+  }
+
+  function bosh(sarlavha, matn, tugma, yol) {
+    return UI.holat({ belgi: 'users', sarlavha: sarlavha, matn: matn, tugma: tugma, tugmaYo_l: yol });
+  }
+
+  // ── Do'stlar ro'yxati ──
+  function dostlarChiz() {
+    if (!D.friends.length) {
+      tana.innerHTML = bosh("Hali do'stingiz yo'q", "Sinfdoshlaringizni ismi, @username yoki ID raqami bilan toping va so'rov yuboring.",
+        "Do'st qo'shish", 'dostlar.html#qidirish');
+      tana.querySelector('.holat-karta a').onclick = function (e) { e.preventDefault(); tab = 'qidirish'; chiz(); };
+      return;
+    }
+    tana.innerHTML = D.friends.map(function (c) {
+      return UI.dostQator(c, '<button class="matn-tugma" type="button" data-ochir="' + c.id + '" aria-label="Do\'stlikdan chiqarish">' +
+        UI.nishon('x') + '</button>');
+    }).join('');
+    tana.querySelectorAll('[data-ochir]').forEach(function (b) {
+      b.onclick = async function () {
+        if (!(await UI.tasdiq("Do'stlikdan chiqarilsinmi?"))) return;
+        var r = await API.dostOchir(Number(b.dataset.ochir));
+        if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+        UI.xabar("Do'stlikdan chiqarildi");
+        yukla();
+      };
+    });
+  }
+
+  // ── So'rovlar: kelgan va yuborilgan ──
+  function sorovlarChiz() {
+    var html = '';
+    html += '<div class="bo-lim-bosh"><h2>Kelgan so\'rovlar</h2></div>';
+    html += D.incoming.length ? D.incoming.map(function (c) {
+      return UI.dostQator(c,
+        '<button class="tugma" type="button" data-qabul="' + c.request_id + '">Qabul</button>' +
+        '<button class="tugma tugma-ikkilamchi" type="button" data-rad="' + c.request_id + '">Rad</button>', UI.oldin(c.at_ms));
+    }).join('') : '<p class="izoh" style="margin-bottom:16px">Yangi so\'rov yo\'q.</p>';
+    html += '<div class="bo-lim-bosh" style="margin-top:18px"><h2>Siz yuborgan</h2></div>';
+    html += D.outgoing.length ? D.outgoing.map(function (c) {
+      return UI.dostQator(c, '<button class="tugma tugma-ikkilamchi" type="button" data-bekor="' + c.request_id + '">Bekor qilish</button>',
+        'javob kutilmoqda');
+    }).join('') : '<p class="izoh">Javob kutilayotgan so\'rov yo\'q.</p>';
+    tana.innerHTML = html;
+    tana.querySelectorAll('[data-qabul], [data-rad]').forEach(function (b) {
+      b.onclick = async function () {
+        b.disabled = true;
+        var qabul = b.hasAttribute('data-qabul');
+        var r = await API.dostJavob(Number(b.dataset.qabul || b.dataset.rad), qabul);
+        if (!r.ok) { UI.xabar(r.error, 'xato'); b.disabled = false; return; }
+        UI.xabar(qabul ? "Endi do'stsiz!" : "So'rov rad etildi", qabul ? 'muvaffaqiyat' : '');
+        yukla();
+      };
+    });
+    tana.querySelectorAll('[data-bekor]').forEach(function (b) {
+      b.onclick = async function () {
+        var r = await API.dostBekor(Number(b.dataset.bekor));
+        if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+        yukla();
+      };
+    });
+  }
+
+  // ── Do'st qo'shish: qidiruv ──
+  function amalHtml(c) {
+    var st = (c.relation || {}).state;
+    if (st === 'friend') return '<span class="izoh">Do\'stingiz</span>';
+    if (st === 'outgoing') return '<button class="tugma tugma-ikkilamchi" type="button" data-bekor="' + c.relation.request_id + '">Bekor qilish</button>';
+    if (st === 'incoming') return '<button class="tugma" type="button" data-qabul="' + c.relation.request_id + '">Qabul qilish</button>';
+    return '<button class="tugma" type="button" data-sorov="' + c.id + '">Qo\'shish</button>';
+  }
+  function qidirishChiz() {
+    tana.innerHTML =
+      '<form class="dost-qidiruv" id="qForma">' +
+        '<input class="kiritish" id="qMatn" maxlength="40" autocomplete="off" placeholder="Ism, @username yoki ID">' +
+        '<button class="tugma" type="submit" aria-label="Qidirish">' + UI.nishon('search') + '</button>' +
+      '</form>' +
+      '<p class="izoh" id="qIzoh">Masalan: <b>Aziza</b>, <b>@aziza_k</b> yoki <b>15</b> (ID raqami profil havolasida bo\'ladi).</p>' +
+      '<div id="qNatija"></div>';
+    var inp = document.getElementById('qMatn');
+    inp.value = qidiruvMatn;
+    document.getElementById('qForma').onsubmit = function (e) { e.preventDefault(); qidir(inp.value); };
+    var timer = null;
+    inp.oninput = function () { clearTimeout(timer); timer = setTimeout(function () { qidir(inp.value); }, 400); };
+    if (qidiruvMatn) qidir(qidiruvMatn); else inp.focus();
+  }
+  async function qidir(q) {
+    qidiruvMatn = q = String(q || '').trim();
+    var quti = document.getElementById('qNatija');
+    if (!quti) return;
+    if (q.replace(/^[@#]/, '').length < 2 && !/^#?\d+$/.test(q)) { quti.innerHTML = ''; return; }
+    quti.innerHTML = UI.yuklanmoqda();
+    var r = await API.dostQidir(q);
+    if (q !== qidiruvMatn) return;               // eskirgan javob
+    if (!r.ok) { quti.innerHTML = '<p class="izoh">' + UI.esc(r.error) + '</p>'; return; }
+    quti.innerHTML = r.results.length
+      ? r.results.map(function (c) { return UI.dostQator(c, amalHtml(c), c.grade ? c.grade + '-sinf' : ''); }).join('')
+      : '<p class="izoh">Hech kim topilmadi.</p>';
+    quti.querySelectorAll('[data-sorov]').forEach(function (b) {
+      b.onclick = async function () {
+        b.disabled = true;
+        var r = await API.dostSorov(Number(b.dataset.sorov));
+        if (!r.ok) { UI.xabar(r.error, 'xato'); b.disabled = false; return; }
+        UI.xabar(r.state === 'friend' ? "Endi do'stsiz!" : "So'rov yuborildi", 'muvaffaqiyat');
+        var y = await API.dostlar(); if (y.ok) { D = y; tabChiz(); }
+        qidir(qidiruvMatn);
+      };
+    });
+    quti.querySelectorAll('[data-bekor]').forEach(function (b) {
+      b.onclick = async function () { await API.dostBekor(Number(b.dataset.bekor)); qidir(qidiruvMatn); };
+    });
+    quti.querySelectorAll('[data-qabul]').forEach(function (b) {
+      b.onclick = async function () {
+        var r = await API.dostJavob(Number(b.dataset.qabul), true);
+        if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+        UI.xabar("Endi do'stsiz!", 'muvaffaqiyat');
+        var y = await API.dostlar(); if (y.ok) { D = y; tabChiz(); }
+        qidir(qidiruvMatn);
+      };
+    });
+  }
+
+  // ── Do'stlar reytingi ──
+  async function reytingChiz() {
+    tana.innerHTML = UI.yuklanmoqda();
+    var r = await API.dostReyting();
+    if (tab !== 'reyting') return;
+    if (!r.ok) { tana.innerHTML = UI.xatoHolat(r.error, reytingChiz); return; }
+    if (r.rows.length < 2) {
+      tana.innerHTML = bosh("Reyting uchun do'st kerak", "Do'st qo'shing — kim ko'proq chaqmoq to'plashini birga kuzatasiz.",
+        "Do'st qo'shish", 'dostlar.html#qidirish');
+      tana.querySelector('.holat-karta a').onclick = function (e) { e.preventDefault(); tab = 'qidirish'; chiz(); };
+      return;
+    }
+    tana.innerHTML = '<p class="izoh" style="margin-bottom:10px">Siz va do\'stlaringiz — chaqmoq bo\'yicha</p>' + r.rows.map(function (u) {
+      var o = u.rank <= 3 ? '<span class="o-rin medal-' + u.rank + '">' + UI.nishon('medal') + '</span>' : '<span class="o-rin">' + u.rank + '</span>';
+      var av = UI.ramkali(u.photo_url ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
+        : '<div class="avatar">' + UI.esc(UI.harfAvatar(u.name)) + '</div>', u.premium && u.frame);
+      return UI.qatorTeg('reyting-qator' + (u.me ? ' men' : ''), u.id, u.me) + o + av +
+        '<span class="ism"><span>' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' + UI.emoji(u.emoji) + '</span>' +
+        '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + u.chaqmoq + '</span></span>' +
+        UI.qatorYop(u.id);
+    }).join('');
+  }
+
+  // ── Faollik lentasi ──
+  async function lentaChiz() {
+    tana.innerHTML = UI.yuklanmoqda();
+    var r = await API.dostLenta();
+    if (tab !== 'lenta') return;
+    if (!r.ok) { tana.innerHTML = UI.xatoHolat(r.error, lentaChiz); return; }
+    if (!r.events.length) {
+      tana.innerHTML = bosh("Hozircha yangilik yo'q", "Do'stlaringiz mavzu tugatsa, nishon olsa yoki o'yinda g'olib bo'lsa — shu yerda ko'rinadi.");
+      return;
+    }
+    tana.innerHTML = '<div class="karta" style="padding:4px 14px">' + r.events.map(function (e) {
+      var u = e.user;
+      var av = u.photo_url ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
+        : '<span class="avatar" aria-hidden="true">' + UI.esc(UI.harfAvatar(u.name)) + '</span>';
+      var belgi = { mavzu: '📘', nishon: '🏅', oyin: '🏆', kun: '❓' }[e.kind] || '⭐';
+      return '<div class="dost-lenta-qator"><a href="' + UI.profilYoli(u.id) + '">' + av + '</a>' +
+        '<div><p>' + belgi + ' <b>' + UI.esc(u.name) + '</b> <span>' + UI.esc(e.text) + '</span></p>' +
+        '<small>' + UI.esc(UI.oldin(e.ms)) + '</small></div></div>';
+    }).join('') + '</div>';
+  }
+
+  tabChiz();
+  yukla();
+})();
+</script>
+</body>
+</html>

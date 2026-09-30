@@ -8,6 +8,7 @@ berilmaydi.
 """
 
 import achievements
+import dostlar
 import premium
 import study
 from games import clock
@@ -25,7 +26,7 @@ def _badges(cur, user_id) -> dict:
     return {'items': items, 'unlocked': len(items), 'total': len(achievements.ACHIEVEMENTS), 'pinned': pinned}
 
 
-def public(cur, user_id, now=None):
+def public(cur, user_id, now=None, viewer_id=None):
     """Ochiq profil yoki None (bunday o'quvchi yo'q)."""
     now = now or clock.now_ms()
     cur.execute('SELECT id, name, photo_url, grade FROM users WHERE id = %s', (user_id,))
@@ -52,4 +53,6 @@ def public(cur, user_id, now=None):
         'topics': topics,
         'games': {k: g.get(k) for k in ('games', 'wins', 'accuracy', 'xp', 'level', 'medals')},
         'badges': _badges(cur, user_id),
+        'friends_count': dostlar.count(cur, user_id),
+        'friend': dostlar.relation(cur, viewer_id, user_id) if viewer_id else None,
     }

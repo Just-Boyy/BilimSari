@@ -242,8 +242,9 @@
           '<div class="oy-kod" aria-label="Room kodi: ' + esc(spelled(code)) + '">' + esc(code) + '</div>' +
           '<div class="oy-kod-tugmalar">' +
             '<button class="tugma tugma-mayda tugma-ikkilamchi" type="button" id="kodNusxa">' + ic('copy') + '<span>Nusxalash</span></button>' +
-            '<button class="tugma tugma-mayda" type="button" id="taklifTugma">' + ic('share') + "<span>Do'st taklif qilish</span></button>" +
+            '<button class="tugma tugma-mayda tugma-ikkilamchi" type="button" id="taklifTugma">' + ic('share') + "<span>Havola yuborish</span></button>" +
           '</div>' +
+          '<button class="tugma oy-dost-qosh" type="button" id="dostQosh">' + ic('users') + "<span>Do'st qo'shish</span></button>" +
         '</section>' +
         '<section class="karta oy-info" id="roomInfo"></section>' +
         '<section class="bo-lim">' +
@@ -253,6 +254,17 @@
         '<div class="oy-panel" id="lobbyPanel"></div>';
       v.on(document.getElementById('kodNusxa'), 'click', function () { G.copy(code); });
       v.on(document.getElementById('taklifTugma'), 'click', openInvite);
+      v.on(document.getElementById('dostQosh'), 'click', openFriends);
+      // Bo'sh joyni bosganda ham — do'stlar ro'yxati
+      v.on(document.getElementById('oyinchilar'), 'click', function (e) {
+        if (e.target.closest && e.target.closest('[data-dost-qosh]')) openFriends();
+      });
+      v.on(document.getElementById('oyinchilar'), 'keydown', function (e) {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.hasAttribute && e.target.hasAttribute('data-dost-qosh')) {
+          e.preventDefault();
+          openFriends();
+        }
+      });
       G.focusMain();
       ensureRenderer().catch(function () { /* o'yin boshlanganda qayta urinamiz */ });
     }
@@ -287,8 +299,8 @@
       if (free <= 0) return '';
       var out = '';
       for (var i = 0; i < Math.min(free, 2); i++) {
-        out += '<li class="oy-oyinchi bosh"><span class="avatar" aria-hidden="true">+</span>' +
-          '<span class="oy-oyinchi-matn"><b>Bo\'sh joy</b><small>Do\'stingizni taklif qiling</small></span></li>';
+        out += '<li class="oy-oyinchi bosh" data-dost-qosh role="button" tabindex="0"><span class="avatar" aria-hidden="true">+</span>' +
+          '<span class="oy-oyinchi-matn"><b>Bo\'sh joy</b><small>Do\'st qo\'shish uchun bosing</small></span></li>';
       }
       if (free > 2) out += '<li class="oy-joy-qoldi">yana ' + (free - 2) + ' ta bo\'sh joy</li>';
       return out;
@@ -444,6 +456,48 @@
         };
         m.querySelector('#havolaNusxa').onclick = function () { G.copy(text + '\n' + link); };
         m.querySelector('#kodNusxa2').onclick = function () { G.copy(code); };
+      });
+    }
+
+    /** "Do'st qo'shish": do'stlar ro'yxati (onlaynlar birinchi), har biriga "Chaqirish" —
+     * do'stga bot orqali xabar va ilovada "sizni o'yinga chaqirdi" bannerini yuboradi. */
+    function openFriends() {
+      if (scope.dead || !S) return;
+      var m = G.modal('<h2 id="oyModalSarlavha">Do\'st qo\'shish</h2>' +
+        '<p class="izoh">Do\'stingizni chaqiring — unga xabar boradi va bir bosishda shu roomga kiradi.</p>' +
+        '<div class="oy-dostlar" id="oyDostlar">' + UI.yuklanmoqda() + '</div>');
+      var box = m.querySelector('#oyDostlar');
+      API.dostlar().then(function (r) {
+        if (!box.isConnected) return;
+        if (!r.ok) { box.innerHTML = '<p class="izoh">' + esc(r.error) + '</p>'; return; }
+        var inside = {};
+        (S.players || []).forEach(function (p) { if (p.uid) inside[p.uid] = true; });
+        if (!r.friends.length) {
+          box.innerHTML = '<p class="izoh" style="margin:6px 0 12px">Hali do\'stingiz yo\'q. Do\'st qo\'shing yoki havola yuboring.</p>' +
+            '<div class="oy-taklif-tugmalar">' +
+              '<a class="tugma" href="dostlar.html#qidirish">' + ic('search') + '<span>Do\'st qidirish</span></a>' +
+              '<button class="tugma tugma-ikkilamchi" type="button" id="oyHavola">' + ic('share') + '<span>Havola yuborish</span></button>' +
+            '</div>';
+          box.querySelector('#oyHavola').onclick = openInvite;
+          return;
+        }
+        box.innerHTML = r.friends.map(function (c) {
+          var amal = inside[c.id]
+            ? '<span class="oy-dost-holat">' + ic('check') + 'Roomda</span>'
+            : '<button class="tugma tugma-mayda" type="button" data-chaqir="' + c.id + '">Chaqirish</button>';
+          return UI.dostQator(c, amal, null, true);
+        }).join('');
+        box.querySelectorAll('[data-chaqir]').forEach(function (b) {
+          b.onclick = function () {
+            b.disabled = true;
+            API.dostChaqir(Number(b.dataset.chaqir), code).then(function (x) {
+              if (!x.ok) { UI.xabar(x.error, 'xato'); b.disabled = false; return; }
+              b.textContent = 'Chaqirildi ✓';
+              b.classList.add('tugma-ikkilamchi');
+              UI.xabar(x.sent ? 'Chaqiruv yuborildi' : 'Chaqiruv yuborildi — do\'stingiz ilovani ochganda ko\'radi', 'muvaffaqiyat');
+            });
+          };
+        });
       });
     }
 

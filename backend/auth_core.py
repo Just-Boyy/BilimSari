@@ -16,6 +16,7 @@ from functools import wraps
 from flask import jsonify, request
 
 import analytics
+import onlayn
 from db import get_connection, utc_now
 
 SECRET = os.environ.get('SECRET_KEY', 'bilimsari-dev-secret-change-me')
@@ -107,5 +108,6 @@ def auth_required(fn):
             }), 401
         request.user = user
         analytics.touch(user['id'])     # "bugun faol" — kuniga bir marta yoziladi
+        onlayn.touch(user['id'])        # do'stlar ro'yxatidagi "onlayn" — daqiqasiga bir marta
         return fn(*args, **kwargs)
     return wrapper

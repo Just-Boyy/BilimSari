@@ -22,6 +22,8 @@ import backup
 import botchat
 import broadcast
 import daily
+import dostlar
+import dostlar_api
 import notify
 import partners
 import partners_api
@@ -62,6 +64,8 @@ app.register_blueprint(pay_api.admin_bp)
 app.register_blueprint(premium_api.bp)
 app.register_blueprint(premium_api.admin_bp)
 app.register_blueprint(partners_api.bp)
+app.register_blueprint(dostlar_api.bp)
+app.register_blueprint(dostlar_api.admin_bp)
 app.register_blueprint(partners_api.admin_bp)
 
 
@@ -211,6 +215,7 @@ def _init_db():
         photos.ensure_tables(cur, conn)
         payments.ensure_tables(cur, conn)
         partners.ensure_tables(cur, conn)
+        dostlar.ensure_tables(cur, conn)
         botchat.ensure_tables(cur, conn)
         broadcast.ensure_tables(cur, conn)
         alerts.ensure_tables(cur, conn)
@@ -572,7 +577,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'hamkor.html', 'foydalanuvchi.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
+    'profile.html', 'hamkor.html', 'foydalanuvchi.html', 'dostlar.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
     'premium.html', 'shaxsiy.html',
     'admin.html',
 }

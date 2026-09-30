@@ -26,6 +26,9 @@
 </header>
 
 <main class="sahifa sahifa-keng bosh-sahifa">
+  <!-- Do'stlarning o'yinga chaqiruvlari -->
+  <div id="dostChaqiruv"></div>
+
   <!-- Tezkor tugmalar -->
   <section class="bo-lim">
     <nav class="tezkor" aria-label="Tezkor o'tish" id="tezkor"></nav>
@@ -60,6 +63,15 @@
 (async function () {
   if (!(await UI.sessiyaKerak())) return;
   UI.navChiz('dashboard.html');
+
+  // Do'st o'yinga chaqirgan bo'lsa — yuqorida banner
+  API.dostChaqiruvlar().then(function (r) {
+    if (!r.ok || !r.invites.length) return;
+    document.getElementById('dostChaqiruv').innerHTML = r.invites.slice(0, 2).map(function (i) {
+      return '<div class="dost-chaqiruv"><p>🎮 ' + UI.esc(i.from.name) + ' sizni «' + UI.esc(i.game) + '» o\'yiniga chaqirdi</p>' +
+        '<a class="tugma" href="games.html?kod=' + encodeURIComponent(i.code) + '">Qo\'shilish</a></div>';
+    }).join('');
+  });
 
   function salomlashuv() {
     var soat = new Date().getHours();

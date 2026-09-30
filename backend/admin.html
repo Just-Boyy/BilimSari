@@ -258,6 +258,17 @@
   .adm-hamkor-panel h4 { font-size: 13px; margin: 10px 0 6px; }
   .adm-hamkor-panel h4:first-child { margin-top: 0; }
   .adm-hamkor .havola { font-size: 12px; color: var(--matn-2); word-break: break-all; }
+  .adm-shikoyat { max-width: none; margin-bottom: 10px; display: grid; gap: 8px; }
+  .adm-shikoyat.hal { opacity: .7; }
+  .adm-shikoyat-bosh { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .adm-shikoyat-bosh h3 { font-size: 16px; margin: 0; cursor: pointer; text-decoration: underline dotted; }
+  .adm-shikoyat .sabab { font-weight: 800; color: #b91c1c; background: #fef2f2; border-radius: 8px; padding: 2px 8px; font-size: 13px; }
+  .adm-shikoyat .holat { font-size: 12px; font-weight: 800; border-radius: 8px; padding: 2px 8px; background: #f1f5f9; color: var(--matn-2); }
+  .adm-shikoyat .holat.ochiq { background: #fffbeb; color: #b45309; }
+  .adm-shikoyat .holat.yopiq { background: #fef2f2; color: #b91c1c; }
+  .adm-shikoyat .izoh-matn { background: #f8fafc; border: 1px solid var(--chiziq); border-radius: 10px; padding: 8px 10px; font-size: 14px; white-space: pre-wrap; }
+  .adm-shikoyat .kim { font-size: 13px; color: var(--matn-2); }
+  .adm-shikoyat .kim a { cursor: pointer; text-decoration: underline dotted; }
 
   .adm-badge { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11px; font-weight: 700; }
   .adm-badge.yashil { background: var(--yashil-fon); color: var(--yashil-quyuq); }
@@ -441,6 +452,7 @@
     <div class="adm-tab" data-bolim="jurnal"><span class="nishon" data-ikon="clock"></span> Jurnal</div>
     <div class="adm-tab" data-bolim="premium"><span class="nishon" data-ikon="crown"></span> Premium</div>
     <div class="adm-tab" data-bolim="hamkorlar"><span class="nishon" data-ikon="users"></span> Hamkorlar</div>
+    <div class="adm-tab" data-bolim="shikoyatlar"><span class="nishon" data-ikon="alert"></span> Shikoyatlar</div>
     <div class="adm-tab" data-bolim="tizim"><span class="nishon" data-ikon="tools"></span> Tizim</div>
   </nav>
 
@@ -640,6 +652,13 @@
       <div id="hamkorlarQuti"></div>
     </section>
 
+    <section class="adm-bolim" id="bolim-shikoyatlar">
+      <p class="izoh-kichik" style="margin-bottom:12px">O'quvchilar bir-birining profilidan yuborgan shikoyatlar (nomaqbul ism, rasm,
+        haqorat). "Do'stlikni yopish" — o'quvchi do'stlik so'rovi yubora olmaydi va qidiruvda chiqmaydi (ilovaning qolgan qismi ishlayveradi).</p>
+      <div id="shikoyatlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      <div id="yopilganlarQuti"></div>
+    </section>
+
     <section class="adm-bolim" id="bolim-tizim">
       <div class="adm-ikki" style="margin-top:0">
         <div class="adm-xabar-karta">
@@ -743,6 +762,8 @@ var AUDIT_NOMLARI = {
   partner_delete: 'Hamkor o\'chirildi', partner_payout: 'Hamkorga to\'lov yozildi',
   partner_payout_delete: 'Hamkor to\'lovi o\'chirildi', partner_tiers: 'Pog\'onali komissiya o\'zgardi',
   channel_set: 'Kanal havolasi o\'zgardi', backup_download: 'To\'liq zaxira nusxa yuklab olindi',
+  report_dismiss: 'Shikoyat ko\'rib chiqildi', report_block: 'Do\'stlik imkoni yopildi (shikoyat)',
+  friends_unblock: 'Do\'stlik imkoni qayta ochildi',
 };
 
 var SUBJECT_NAMES = {
@@ -768,6 +789,7 @@ function panelniKorsat() {
   document.getElementById('admPanel').classList.add('faol');
   yuklaStatistika();
   tolovBelgisi();
+  AdminAPI.shikoyatlar().then(function (r) { if (r.ok) shikoyatBelgisi(r.open); });
   // admin.html#tolovlar — do'kondagi "Kartani kiritish" tugmasidan kelinganda
   if (location.hash === '#tolovlar') {
     setTimeout(function () { document.querySelector('.adm-tab[data-bolim="tolovlar"]').click(); }, 0);
@@ -881,6 +903,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'tizim') yuklaTizim();
     if (nomi === 'premium') yuklaPremium();
     if (nomi === 'hamkorlar') yuklaHamkorlar();
+    if (nomi === 'shikoyatlar') yuklaShikoyatlar();
   });
 });
 
@@ -2162,6 +2185,91 @@ function hamkorTarixBogla(id) {
       hamkorTarixYukla(id, y);
     };
   });
+}
+
+// ─────────────────────── Shikoyatlar ───────────────────────
+
+function shikoyatBelgisi(son) {
+  var tab = document.querySelector('.adm-tab[data-bolim="shikoyatlar"]');
+  var b = tab.querySelector('.tab-son');
+  if (!son) { if (b) b.remove(); return; }
+  if (!b) { b = document.createElement('span'); b.className = 'tab-son'; tab.appendChild(b); }
+  b.textContent = son;
+}
+
+function vaqtMs(ms) { return ms ? sanaVaqt(new Date(ms).toISOString()) : '—'; }
+
+function shikoyatlarChiz(r) {
+  shikoyatBelgisi(r.open);
+  var quti = document.getElementById('shikoyatlarQuti');
+  quti.className = '';
+  if (!r.reports.length) {
+    quti.innerHTML = '<p class="adm-bosh">Hali shikoyat yo\'q.</p>';
+  } else {
+    quti.innerHTML = r.reports.map(function (s) {
+      var holat = s.status === 'open'
+        ? '<span class="holat ochiq">Ko\'rib chiqilmagan</span>'
+        : (s.action === 'block' ? '<span class="holat yopiq">Do\'stlik yopildi</span>' : '<span class="holat">Ko\'rib chiqildi</span>');
+      return '<div class="adm-xabar-karta adm-shikoyat' + (s.status === 'open' ? '' : ' hal') + '">' +
+        '<div class="adm-shikoyat-bosh">' +
+          '<h3 data-foyd="' + s.target_id + '" title="Batafsil">' + esc(s.target_name || 'O\'chirilgan foydalanuvchi') + '</h3>' +
+          '<span class="izoh-kichik">ID ' + s.target_id + '</span>' +
+          '<span class="sabab">' + esc(s.reason) + '</span>' + holat +
+          (s.blocked && s.status === 'open' ? '<span class="holat yopiq">Do\'stlik yopiq</span>' : '') +
+        '</div>' +
+        (s.note ? '<div class="izoh-matn">' + esc(s.note) + '</div>' : '') +
+        '<div class="kim">Kimdan: <a data-foyd="' + s.reporter_id + '">' + esc(s.reporter_name || '—') + '</a> (ID ' + s.reporter_id + ') • ' +
+          vaqtMs(s.created_ms) + (s.resolved_ms ? ' • hal qilindi: ' + vaqtMs(s.resolved_ms) : '') + '</div>' +
+        (s.status === 'open'
+          ? '<div class="adm-hamkor-amallar">' +
+              '<button class="adm-mini-tugma yashil" type="button" data-sh="' + s.id + '" data-amal="dismiss">Ko\'rib chiqildi</button>' +
+              '<button class="adm-mini-tugma qizil" type="button" data-sh="' + s.id + '" data-amal="block">Do\'stlik imkonini yopish</button>' +
+            '</div>'
+          : '') +
+      '</div>';
+    }).join('');
+  }
+  var yq = document.getElementById('yopilganlarQuti');
+  yq.innerHTML = r.blocked.length
+    ? '<div class="adm-xabar-karta adm-shikoyat"><h3 style="font-size:16px;margin:0">Do\'stlik imkoni yopilganlar (' + r.blocked.length + ')</h3>' +
+        r.blocked.map(function (u) {
+          return '<div class="adm-shikoyat-bosh"><span data-foyd="' + u.id + '" style="cursor:pointer;text-decoration:underline dotted">' +
+            esc(u.name || '—') + '</span><span class="izoh-kichik">ID ' + u.id + '</span>' +
+            '<button class="adm-mini-tugma" type="button" data-och="' + u.id + '">Qayta ochish</button></div>';
+        }).join('') + '</div>'
+    : '';
+  document.querySelectorAll('#bolim-shikoyatlar [data-foyd]').forEach(function (el) {
+    el.onclick = function () { foydalanuvchiModalniOch(el.dataset.foyd); };
+  });
+  document.querySelectorAll('#bolim-shikoyatlar [data-sh]').forEach(function (b) {
+    b.onclick = async function () {
+      if (b.dataset.amal === 'block' &&
+          !(await tasdiqSora('Bu o\'quvchining do\'stlik imkoni yopilsinmi? U so\'rov yubora olmaydi va qidiruvda chiqmaydi.'))) return;
+      b.disabled = true;
+      var x = await AdminAPI.shikoyatHal(b.dataset.sh, b.dataset.amal);
+      if (!x.ok) { b.disabled = false; ogohlantir(x.error || 'Xatolik'); return; }
+      shikoyatlarChiz(x);
+    };
+  });
+  document.querySelectorAll('#bolim-shikoyatlar [data-och]').forEach(function (b) {
+    b.onclick = async function () {
+      b.disabled = true;
+      var x = await AdminAPI.dostlikOch(b.dataset.och);
+      if (!x.ok) { b.disabled = false; ogohlantir(x.error || 'Xatolik'); return; }
+      shikoyatlarChiz(x);
+    };
+  });
+}
+
+async function yuklaShikoyatlar() {
+  var r = await AdminAPI.shikoyatlar();
+  if (!r.ok) {
+    var q = document.getElementById('shikoyatlarQuti');
+    q.className = 'adm-bosh';
+    q.textContent = r.error || 'Xatolik';
+    return;
+  }
+  shikoyatlarChiz(r);
 }
 
 async function yuklaHamkorlar() {

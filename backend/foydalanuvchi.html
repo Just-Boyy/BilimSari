@@ -18,6 +18,20 @@
   .fp-stat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .fp-stat .stat b { font-size: 19px; }
   .fp-nishonlar { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+  .fp-dostlar-soni { display: block; margin-top: 6px; color: var(--matn-2); font-size: 14px; font-weight: 700; }
+  .fp-dost { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 14px; }
+  .fp-dost .tugma { width: auto; min-width: 150px; }
+  .fp-dost .izoh { flex-basis: 100%; margin: 0; }
+  .fp-dost-belgi { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px;
+    background: var(--yashil-fon); color: var(--yashil-quyuq); font-weight: 800; }
+  .fp-dost-belgi svg { width: 18px; height: 18px; }
+  .fp-shikoyat { display: block; margin: 18px auto 4px; }
+  .shikoyat-sabablar { display: grid; gap: 8px; margin: 12px 0; }
+  .shikoyat-sabablar label { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid var(--chiziq);
+    border-radius: 14px; font-weight: 700; cursor: pointer; }
+  .shikoyat-sabablar input { accent-color: var(--yashil); width: 18px; height: 18px; }
+  .shikoyat-sabablar label:has(input:checked) { border-color: var(--yashil); background: var(--yashil-fon); }
+  #shikoyatIzoh { width: 100%; min-height: 70px; resize: vertical; }
 </style>
 <script src="js/i18n.js"></script>
 </head>
@@ -99,6 +113,8 @@
         '<h1><span>' + UI.esc(p.name) + '</span>' + UI.emoji(pr.active && pr.emoji) + '</h1>' +
         (pr.active ? '<p style="margin:6px 0 2px"><span class="premium-pill">' + UI.nishon('crown') + '<span>Bilim Premium</span></span></p>' : '') +
         (p.grade ? '<span class="sinf">' + p.grade + '-sinf</span>' : '') +
+        '<span class="fp-dostlar-soni">' + p.friends_count + ' ' + I18N.t("do'st") + '</span>' +
+        '<div class="fp-dost" id="fpDost"></div>' +
       '</section>' +
       '<section class="bo-lim">' +
         '<div class="fp-stat">' +
@@ -127,7 +143,85 @@
                 '<small>' + UI.esc(a.desc) + '</small></div>';
             }).join('') + '</div>'
           : '<p class="izoh">Hali nishon olmagan.</p>') +
-      '</section>';
+      '</section>' +
+      '<button class="matn-tugma fp-shikoyat" type="button" id="shikoyatBtn">Shikoyat qilish</button>';
+    dostChiz(p);
+    document.getElementById('shikoyatBtn').onclick = function () { shikoyatOyna(p); };
+  }
+
+  // ── Do'stlik tugmasi: holatga qarab ──
+  var XABARLAR = { sorov: "So'rov yuborildi", bekor: "So'rov bekor qilindi", qabul: "Endi do'stsiz!",
+                   rad: "So'rov rad etildi", ochir: "Do'stlikdan chiqarildi" };
+  function dostChiz(p) {
+    var el = document.getElementById('fpDost');
+    var f = p.friend || { state: 'none' };
+    if (f.state === 'friend') {
+      el.innerHTML = '<span class="fp-dost-belgi">' + UI.nishon('check') + '<span>Do\'stingiz</span></span>' +
+        '<button class="matn-tugma" type="button" data-d="ochir">Do\'stlikdan chiqarish</button>';
+    } else if (f.state === 'outgoing') {
+      el.innerHTML = '<button class="tugma tugma-ikkilamchi" type="button" disabled>So\'rov yuborildi</button>' +
+        '<button class="matn-tugma" type="button" data-d="bekor">Bekor qilish</button>';
+    } else if (f.state === 'incoming') {
+      el.innerHTML = '<p class="izoh">' + UI.esc(I18N.t("Sizga do'stlik so'rovi yubordi")) + '</p>' +
+        '<button class="tugma" type="button" data-d="qabul">Qabul qilish</button>' +
+        '<button class="tugma tugma-ikkilamchi" type="button" data-d="rad">Rad etish</button>';
+    } else {
+      el.innerHTML = '<button class="tugma" type="button" data-d="sorov">' + UI.nishon('plus') + '<span>Do\'st qo\'shish</span></button>';
+    }
+    el.querySelectorAll('[data-d]').forEach(function (b) {
+      b.onclick = async function () {
+        var d = b.dataset.d, r;
+        if (d === 'ochir' && !(await UI.tasdiq(p.name + ' — ' + I18N.t("do'stlikdan chiqarilsinmi?")))) return;
+        b.disabled = true;
+        if (d === 'sorov') r = await API.dostSorov(p.id);
+        else if (d === 'bekor') r = await API.dostBekor(f.request_id);
+        else if (d === 'qabul' || d === 'rad') r = await API.dostJavob(f.request_id, d === 'qabul');
+        else r = await API.dostOchir(p.id);
+        if (!r.ok) { UI.xabar(r.error, 'xato'); b.disabled = false; return; }
+        var oldin = f.state;
+        p.friend = { state: r.state, request_id: r.request_id };
+        if (r.state === 'friend' && oldin !== 'friend') p.friends_count++;
+        if (r.state !== 'friend' && oldin === 'friend') p.friends_count = Math.max(0, p.friends_count - 1);
+        document.querySelector('.fp-dostlar-soni').textContent = p.friends_count + ' ' + I18N.t("do'st");
+        // O'sha o'quvchi ham so'rov yuborgan bo'lsa — darhol do'st bo'lamiz
+        UI.xabar(d === 'sorov' && r.state === 'friend' ? XABARLAR.qabul : XABARLAR[d],
+                 r.state === 'friend' ? 'muvaffaqiyat' : '');
+        dostChiz(p);
+      };
+    });
+  }
+
+  // ── Shikoyat oynasi ──
+  var SABABLAR = [['ism', 'Nomaqbul ism'], ['rasm', 'Nomaqbul rasm'], ['haqorat', 'Haqorat yoki bezorilik'], ['boshqa', 'Boshqa']];
+  function shikoyatOyna(p) {
+    if (document.getElementById('shikoyatOyna')) return;
+    var oyna = document.createElement('div');
+    oyna.id = 'shikoyatOyna';
+    oyna.className = 'pastki-oyna';
+    oyna.innerHTML = '<div class="pastki-oyna-karta" role="dialog" aria-modal="true" aria-labelledby="shikoyatSarlavha">' +
+      '<h2 id="shikoyatSarlavha" style="font-size:19px">' + UI.esc(I18N.t('Shikoyat qilish')) + '</h2>' +
+      '<p class="izoh">' + UI.esc(p.name) + ' — ' + UI.esc(I18N.t("sababni tanlang. Admin ko'rib chiqadi.")) + '</p>' +
+      '<div class="shikoyat-sabablar">' + SABABLAR.map(function (s) {
+        return '<label><input type="radio" name="sabab" value="' + s[0] + '"><span>' + UI.esc(I18N.t(s[1])) + '</span></label>';
+      }).join('') + '</div>' +
+      '<textarea class="kiritish" id="shikoyatIzoh" maxlength="300" placeholder="' + UI.esc(I18N.t('Izoh (ixtiyoriy)')) + '"></textarea>' +
+      '<div class="tugmalar" style="margin-top:12px">' +
+        '<button class="tugma tugma-ikkilamchi" type="button" data-yop>' + UI.esc(I18N.t('Bekor qilish')) + '</button>' +
+        '<button class="tugma" type="button" id="shikoyatYubor">' + UI.esc(I18N.t('Yuborish')) + '</button>' +
+      '</div></div>';
+    document.body.appendChild(oyna);
+    function yop() { oyna.remove(); }
+    oyna.addEventListener('click', function (e) { if (e.target === oyna || e.target.closest('[data-yop]')) yop(); });
+    document.getElementById('shikoyatYubor').onclick = async function () {
+      var t = oyna.querySelector('input[name=sabab]:checked');
+      if (!t) { UI.xabar('Sababni tanlang.', 'xato'); return; }
+      var btn = this;
+      btn.disabled = true;
+      var r = await API.shikoyat(p.id, t.value, document.getElementById('shikoyatIzoh').value);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; return; }
+      yop();
+      UI.xabar('Shikoyatingiz yuborildi. Rahmat!', 'muvaffaqiyat');
+    };
   }
 
   yukla();

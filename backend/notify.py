@@ -36,6 +36,7 @@ import botchat
 import broadcast
 import curriculum as cur_mod
 import daily
+import dostlar
 import payments
 import personal
 import premium
@@ -358,6 +359,7 @@ def tick(now_ms=None):
             botchat.cleanup_updates(cur, conn, now_ms)
             alerts.cleanup(cur, conn, now_ms)
             personal.housekeeping(cur, conn, now_ms)      # yarim qolgan shaxsiy dars yaratishlari
+            dostlar.housekeeping(cur, conn, now_ms)       # eski chaqiruvlar va javob berilgan so'rovlar
             cur.execute('DELETE FROM job_runs WHERE ran_ms < %s', (now_ms - JOB_KEEP_MS,))
             conn.commit()
         local = datetime.fromtimestamp(now_ms / 1000, TASHKENT_TZ)

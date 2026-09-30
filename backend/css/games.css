@@ -296,7 +296,13 @@
 }
 .oy-oyinchi.men { border-color: var(--yashil); background: var(--yashil-fon); }
 .oy-oyinchi.oflayn { opacity: .6; }
-.oy-oyinchi.bosh { border-style: dashed; background: transparent; }
+.oy-oyinchi.bosh { border-style: dashed; background: transparent; cursor: pointer; }
+.oy-oyinchi.bosh:hover { border-color: var(--yashil); background: var(--yashil-fon); }
+.oy-dost-qosh { width: 100%; margin-top: 10px; }
+.oy-dostlar { display: grid; gap: 8px; max-height: 60vh; overflow-y: auto; margin-top: 10px; }
+.oy-dostlar .dost-qator { margin: 0; }
+.oy-dost-holat { display: inline-flex; align-items: center; gap: 4px; color: var(--yashil-quyuq); font-weight: 800; font-size: 13px; }
+.oy-dost-holat svg { width: 16px; height: 16px; }
 .oy-oyinchi.bosh .avatar { background: var(--fon); border-color: var(--chiziq); color: var(--matn-3); }
 .oy-oyinchi .avatar { width: 38px; height: 38px; font-size: 15px; }
 .oy-oyinchi .ramkali { --rk: 1.24; margin: 0 2px; }

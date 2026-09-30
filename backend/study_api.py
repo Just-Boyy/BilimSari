@@ -278,7 +278,7 @@ def public_profile(user_id):
     """Boshqa o'quvchining ochiq profili (reyting, kun savoli va o'yinlarda ismini bosganda)."""
     conn, cur = _conn()
     try:
-        data = profil.public(cur, user_id)
+        data = profil.public(cur, user_id, viewer_id=request.user['id'])
         if not data:
             return jsonify({'ok': False, 'error': "Bunday o'quvchi topilmadi.", 'code': 'not_found'}), 404
         data['me'] = user_id == request.user['id']

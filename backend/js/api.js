@@ -133,6 +133,21 @@
     // — Hamkorlik (promo-kod egasi) —
     hamkor: function () { return so_rov('/api/partner'); },
 
+    // — Do'stlar —
+    dostlar: function () { return so_rov('/api/friends'); },
+    dostChaqiruvlar: function () { return so_rov('/api/friends/invites'); },
+    dostQidir: function (q) { return so_rov('/api/friends/search?q=' + encodeURIComponent(q)); },
+    dostSorov: function (uid) { return so_rov('/api/friends/request', { method: 'POST', body: { user_id: uid } }); },
+    dostJavob: function (id, qabul) { return so_rov('/api/friends/respond', { method: 'POST', body: { request_id: id, accept: !!qabul } }); },
+    dostBekor: function (id) { return so_rov('/api/friends/cancel', { method: 'POST', body: { request_id: id } }); },
+    dostOchir: function (uid) { return so_rov('/api/friends/remove', { method: 'POST', body: { user_id: uid } }); },
+    dostChaqir: function (uid, kod) { return so_rov('/api/friends/invite', { method: 'POST', body: { user_id: uid, code: kod } }); },
+    dostReyting: function () { return so_rov('/api/friends/leaderboard'); },
+    dostLenta: function () { return so_rov('/api/friends/feed'); },
+    shikoyat: function (uid, sabab, izoh) {
+      return so_rov('/api/friends/report', { method: 'POST', body: { user_id: uid, reason: sabab, note: izoh || null } });
+    },
+
     // — Shaxsiy darslar —
     shaxsiy: function () { return so_rov('/api/personal'); },
     shaxsiyVariant: function (fan, matn) {
