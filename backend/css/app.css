@@ -1956,7 +1956,24 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 }
 
 /* ── Bilim Premium: ism yonidagi emoji va oltin halqa ── */
-.nik-emoji { width: 1.25em; height: 1.25em; vertical-align: -0.28em; margin-left: 4px; object-fit: contain; }
+/* Emoji oltin nur bilan sekin "nafas olib" porlab turadi — ism yonida darhol ko'zga tashlanadi */
+.nik-emoji {
+  width: 1.4em; height: 1.4em; vertical-align: -0.34em; margin-left: 5px; object-fit: contain;
+  filter: drop-shadow(0 0 2px rgba(255, 214, 90, .95)) drop-shadow(0 0 6px rgba(245, 179, 1, .55));
+  animation: nikPorla 2.4s ease-in-out infinite;
+  will-change: transform, filter;
+}
+@keyframes nikPorla {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(255, 214, 90, .95)) drop-shadow(0 0 5px rgba(245, 179, 1, .45));
+  }
+  50% {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 4px rgba(255, 226, 120, 1)) drop-shadow(0 0 12px rgba(245, 179, 1, .9));
+  }
+}
+@media (prefers-reduced-motion: reduce) { .nik-emoji { animation: none; } }
 .premium-halqa { border-radius: 50%; box-shadow: 0 0 0 2.5px #fff, 0 0 0 5px #f5b301, 0 0 14px 4px rgba(245, 179, 1, .45); }
 .premium-pill {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px;
@@ -1974,4 +1991,9 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .emoji-katak.tanlangan { border-color: #f5b301; background: #fff7d6; box-shadow: 0 0 0 3px rgba(245, 179, 1, .25); }
 .emoji-tanlov.qulf { opacity: .55; filter: grayscale(.3); }
 .emoji-tanlov.qulf .emoji-katak { cursor: default; }
+/* Uzun ism qisqartiriladi ("..."), emoji esa doim to'liq ko'rinadi va nuri qirqilmaydi */
+.reyting-qator .ism, .bosh-matn .salom { display: flex; align-items: center; overflow: visible; }
+.reyting-qator .ism > span:first-child, .bosh-matn .salom > span:first-child {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .reyting-qator .ism .nik-emoji, .salom .nik-emoji { flex: 0 0 auto; }
