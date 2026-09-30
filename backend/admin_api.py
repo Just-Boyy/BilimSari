@@ -798,6 +798,36 @@ def backup_now():
     return jsonify(dict(info, ok=True))
 
 
+@bp.route('/backup/download', methods=['POST'])
+@admin_required
+def backup_download():
+    """To'liq zaxira nusxani (barcha jadvallar, sessiyalar va darslar ham) fayl sifatida
+    yuklab berish — bazani boshqa serverga ko'chirish uchun. Faqat egasi: admin paroli
+    qayta so'raladi (Telegram orqali kirgan qo'shimcha adminlar ham ololmaydi)."""
+    password = str((request.get_json(silent=True) or {}).get('password') or '')
+    if not ADMIN_PASSWORD or not hmac.compare_digest(password, ADMIN_PASSWORD):
+        return jsonify({'ok': False, 'error': "Parol noto'g'ri"}), 403
+    if not rate_limit.hit('backup_download', 10, 3600):
+        return jsonify({'ok': False, 'error': "Soatiga 10 martadan ko'p emas."}), 429
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        data = backup.dump(cur, full=True)
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+    blob = backup.pack(data)
+    rows = sum(len(t['rows']) for t in data['tables'].values())
+    admin_audit.log('backup_download', detail=f'size={len(blob)} tables={len(data["tables"])} rows={rows}',
+                    ip=_client_ip())
+    stamp = data['created'][:16].replace(':', '').replace('T', '-')
+    return Response(blob, mimetype='application/gzip', headers={
+        'Content-Disposition': f'attachment; filename="bilimsari-toliq-{stamp}.json.gz"',
+        'Cache-Control': 'no-store', 'X-Tables': str(len(data['tables'])), 'X-Rows': str(rows),
+    })
+
+
 @bp.route('/errors/test', methods=['POST'])
 @admin_required
 def errors_test():

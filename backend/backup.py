@@ -81,9 +81,10 @@ def _value(v):
     return v
 
 
-def dump(cur, skip_bulky=False) -> dict:
-    """{'format', 'version', 'created', 'tables': {nom: {'columns', 'rows'}}}"""
-    skip = SKIP_TABLES | (set(BULKY_TABLES) if skip_bulky else set())
+def dump(cur, skip_bulky=False, full=False) -> dict:
+    """{'format', 'version', 'created', 'tables': {nom: {'columns', 'rows'}}}
+    full=True — hech narsa tashlab ketilmaydi (bazani boshqa serverga ko'chirish uchun)."""
+    skip = set() if full else SKIP_TABLES | (set(BULKY_TABLES) if skip_bulky else set())
     tables = {}
     for name in table_names(cur):
         if name in skip:
