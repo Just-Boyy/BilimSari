@@ -407,7 +407,12 @@ def start():
     def loop():
         time.sleep(15)
         while True:
-            tick()
+            # Bitta xato (masalan, baza vaqtincha ulanmasa) oqimni o'ldirmasin — aks holda
+            # eslatmalar va zaxira nusxa keyingi qayta ishga tushirishgacha to'xtab qoladi
+            try:
+                tick()
+            except Exception:  # noqa: BLE001
+                logger.exception('Rejalashtiruvchi: tick xatosi — keyingi daqiqada qayta uriniladi')
             time.sleep(TICK_SECONDS)
 
     threading.Thread(target=loop, name='bilimsari-scheduler', daemon=True).start()
