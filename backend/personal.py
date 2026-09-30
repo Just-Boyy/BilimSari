@@ -541,7 +541,8 @@ def submit_homework(cur, conn, user_id, pid, answers, now=None) -> dict:
     for t in tasks:
         ok = study.answers_match(answers.get(t['id'], ''), t.get('answer'), t.get('accept'))
         ok_count += ok
-        results.append({'id': t['id'], 'correct': ok, 'checked': True, 'correct_answer': None})
+        results.append({'id': t['id'], 'correct': ok, 'checked': True,
+                        'correct_answer': t.get('answer') if not ok else None})
     passed = bool(tasks) and ok_count == len(tasks)
     earned = study.HOMEWORK_CHAQMOQ if passed and r['homework_status'] != 'passed' else 0
     cur.execute('''UPDATE personal_topics SET homework_status = CASE WHEN homework_status = 'passed' THEN 'passed' ELSE %s END,

@@ -530,9 +530,9 @@
         var eski = quti.querySelector('.tushuntirish');
         if (eski) eski.remove();
         var berilgan = ((e.target.elements[r.id] || {}).value || '').trim();
-        if (!r.correct && r.checked && berilgan) {
+        if (!r.correct && r.checked && berilgan && r.correct_answer) {
           quti.insertAdjacentHTML('beforeend',
-            '<div class="tushuntirish xato">Javob noto\'g\'ri — qayta urinib ko\'ring.</div>');
+            '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' + UI.esc(r.correct_answer) + '</b></div>');
         } else if (!r.correct) {
           quti.insertAdjacentHTML('beforeend',
             '<div class="tushuntirish xato">Bu savolga javob yozing.</div>');

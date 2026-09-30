@@ -1035,8 +1035,9 @@ def submit_homework(cur, conn, user_id, topic_id, answers):
         expected = task.get('answer')
         if expected:
             ok = answers_match(given, expected, task.get('accept'))
-            # To'g'ri javob o'quvchiga ko'rsatilmaydi — o'zi topishi kerak
-            results.append({'id': tid, 'correct': ok, 'checked': True, 'correct_answer': None})
+            # Javob noto'g'ri bo'lsa — to'g'ri javob ko'rsatiladi (o'quvchi xatosidan o'rganadi)
+            results.append({'id': tid, 'correct': ok, 'checked': True,
+                            'correct_answer': expected if not ok else None})
         else:
             # ochiq savol — javob yozilgan bo'lsa qabul qilinadi
             ok = len(normalize(given)) >= 2
