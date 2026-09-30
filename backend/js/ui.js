@@ -48,6 +48,7 @@
     { yo_l: 'profile.html', nishon: 'user', matn: 'Profil' },
     { yo_l: 'settings.html', nishon: 'settings', matn: 'Sozlamalar' },
     { yo_l: 'shaxsiy.html', nishon: 'sparkle', matn: 'Shaxsiy darslar' },
+    { yo_l: 'shop.html', nishon: 'shop', matn: "Do'kon" },
     { kanal: true, nishon: 'info', matn: 'Biz haqimizda' },
     { yo_l: 'hamkor.html', nishon: 'users', matn: 'Hamkorlik', hamkor: true },
   ];
