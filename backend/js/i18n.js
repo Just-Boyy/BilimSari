@@ -532,6 +532,7 @@
     [/^Sizda (\d+) ta do'st bor — bu eng ko'pi\.$/, 'У вас $1 друзей — это максимум.'],
     [/^Hammasi \((\d+)\)$/, 'Все ($1)'],
     [/^(\d+)-sinf$/, '$1 класс'],
+    [/^(\d+)-o'rin reytingda$/, '$1-е место в рейтинге'],
     [/^(\d+) ta mavzu$/, function (m, n) { return n + ' ' + ko(n, 'тема', 'темы', 'тем'); }],
     [/^(\d+) \/ (\d+) mavzu$/, function (m, a, b) { return a + ' / ' + b + ' ' + ko(b, 'темы', 'тем', 'тем'); }],
     [/^(\d+) \/ (\d+) bajarildi$/, '$1 / $2 выполнено'],
