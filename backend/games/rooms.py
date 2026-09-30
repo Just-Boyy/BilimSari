@@ -410,6 +410,15 @@ def _start_check(room, players, now):
     return True, ''
 
 
+def _photos(cur, user_ids) -> dict:
+    """user_id → profil rasmi manzili (Telegram yoki o'zi yuklagan); rasmsizlar kiritilmaydi."""
+    ids = sorted({int(i) for i in user_ids if i and int(i) > 0})
+    if not ids:
+        return {}
+    cur.execute(f"SELECT id, photo_url FROM users WHERE id IN ({', '.join(['%s'] * len(ids))})", ids)
+    return {int(r['id']): r['photo_url'] for r in cur.fetchall() if r['photo_url']}
+
+
 def _display_names(players) -> dict:
     """user_id → ism. Bir xil ismlar farqlanadi: "Ali", "Ali (2)"."""
     names, used = {}, {}
@@ -462,6 +471,7 @@ def state(cur, conn, user, code, since=None) -> dict:
     host_id = room['host_user_id']
     ok, hint = _start_check(room, players, now)
     badges = premium.badges(cur, [p['user_id'] for p in active], now)   # ism yonidagi emoji, avatar ramkasi
+    photos = _photos(cur, [p['user_id'] for p in active if not p['is_bot']])
     return {
         'etag': etag,
         'now': now,
@@ -477,6 +487,7 @@ def state(cur, conn, user, code, since=None) -> dict:
             'premium': p['user_id'] in badges,
             'emoji': (badges.get(p['user_id']) or {}).get('emoji'),
             'frame': (badges.get(p['user_id']) or {}).get('frame'),
+            'photo_url': photos.get(p['user_id']),
             'level': int(p['level']),
             'ready': bool(p['ready']) or p['user_id'] == host_id,
             'host': p['user_id'] == host_id,

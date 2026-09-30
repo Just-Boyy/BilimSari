@@ -257,11 +257,20 @@
       ensureRenderer().catch(function () { /* o'yin boshlanganda qayta urinamiz */ });
     }
 
+    /** O'yinchi avatari: profil rasmi bo'lsa — rasm, kompyuter — robot belgisi, aks holda bosh harf. */
+    function avatarHtml(p) {
+      if (p.bot) return '<span class="avatar" aria-hidden="true">' + ic('bot') + '</span>';
+      if (p.photo_url) return '<img class="avatar" alt="" aria-hidden="true" src="' + esc(p.photo_url) + '">';
+      return '<span class="avatar" aria-hidden="true">' + esc(G.initial(p.name)) + '</span>';
+    }
+    // Natija jadvalida faqat ism bor — rasmni xonadagi o'yinchilar ro'yxatidan olamiz
+    function oyinchi(name) {
+      return (S.players || []).filter(function (p) { return p.name === name; })[0] || null;
+    }
+
     function playerRow(p) {
       return '<li class="oy-oyinchi' + (p.me ? ' men' : '') + (p.online ? '' : ' oflayn') + (p.bot ? ' bot' : '') + '">' +
-        (window.UI && UI.ramkali ? UI.ramkali : function (h) { return h; })(
-          '<span class="avatar" aria-hidden="true">' + (p.bot ? ic('bot') : esc(G.initial(p.name))) + '</span>',
-          p.premium && p.frame, 'oy-ramka') +
+        (window.UI && UI.ramkali ? UI.ramkali : function (h) { return h; })(avatarHtml(p), p.premium && p.frame, 'oy-ramka') +
         '<span class="oy-oyinchi-matn"><b><span>' + esc(p.name) + (p.me ? ' (siz)' : '') + '</span>' +
           (p.emoji ? '<img class="nik-emoji" src="assets/emoji/' + esc(p.emoji) + '.png" alt="" aria-hidden="true">' : '') + '</b>' +
           '<small>' + (p.bot ? 'Kompyuter raqib' : 'Daraja ' + p.level) + (p.online ? '' : ' • oflayn') + '</small></span>' +
@@ -448,7 +457,7 @@
           '<p class="izoh">' + esc(S.game.name) + ' • ' + esc(S.settings.subject_name) + ' • ' + sess.total +
             (S.game.renderer === 'match' ? ' raund' : ' savol') + '</p>' +
           '<ul class="oy-countdown-oyinchilar">' + S.players.map(function (p) {
-            return '<li><span class="avatar" aria-hidden="true">' + esc(G.initial(p.name)) + '</span>' + esc(p.name) + '</li>';
+            return '<li>' + avatarHtml(p) + esc(p.name) + '</li>';
           }).join('') + '</ul>' +
           '<p class="oy-sr" aria-live="assertive" id="cdSr"></p>' +
         '</section>';
@@ -713,7 +722,7 @@
         return '<li class="reyting-qator' + (x.me ? ' men' : '') + '">' +
           '<span class="o-rin' + (x.rank <= 3 ? ' medal-' + x.rank : '') + '" aria-label="' + x.rank + '-o\'rin">' +
             (x.rank <= 3 ? ic('medal') : x.rank) + '</span>' +
-          '<span class="avatar" aria-hidden="true">' + esc(G.initial(x.name)) + '</span>' +
+          avatarHtml(oyinchi(x.name) || x) +
           '<span class="ism">' + esc(x.name) + (x.me ? ' (siz)' : '') +
             '<small>' + x.correct + " to'g'ri • " + x.accuracy + '%</small></span>' +
           '<span class="oy-ball">' + x.score + '<small>ball</small></span></li>';
