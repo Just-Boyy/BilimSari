@@ -24,6 +24,9 @@ import broadcast
 import daily
 import dostlar
 import dostlar_api
+import jurnal
+import marafon
+import marafon_api
 import notify
 import partners
 import partners_api
@@ -66,6 +69,8 @@ app.register_blueprint(premium_api.admin_bp)
 app.register_blueprint(partners_api.bp)
 app.register_blueprint(dostlar_api.bp)
 app.register_blueprint(dostlar_api.admin_bp)
+app.register_blueprint(marafon_api.bp)
+app.register_blueprint(marafon_api.admin_bp)
 app.register_blueprint(partners_api.admin_bp)
 
 
@@ -223,6 +228,14 @@ def _init_db():
         analytics.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Kun savoli/yutuqlar jadvallari xatosi')
+        conn.rollback()
+
+    # Chaqmoq jurnali (qachon, nima uchun) va yutuqli marafon
+    try:
+        jurnal.ensure_tables(cur, conn)
+        marafon.ensure_tables(cur, conn)
+    except Exception:
+        logger.exception('Chaqmoq jurnali/marafon jadvallari xatosi')
         conn.rollback()
 
     # Telegram eslatmalari (jurnal, rejalashtiruvchi, users.notify)

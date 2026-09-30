@@ -165,6 +165,13 @@
     hamkorTolovOchir: function (id) { return so_rov('/api/admin/partners/payouts/' + id + '/delete', { method: 'POST' }); },
     hamkorPogona: function (d) { return so_rov('/api/admin/partners/tiers', { method: 'POST', body: d }); },
 
+    // — Yutuqli marafon —
+    marafon: function () { return so_rov('/api/admin/marathon'); },
+    marafonYarat: function (d) { return so_rov('/api/admin/marathon', { method: 'POST', body: d }); },
+    marafonAmal: function (id, amal, d) {
+      return so_rov('/api/admin/marathon/' + Number(id) + '/' + amal, { method: 'POST', body: d || {} });
+    },
+
     // — Shikoyatlar (do'stlar) —
     shikoyatlar: function () { return so_rov('/api/admin/reports'); },
     shikoyatHal: function (id, amal) { return so_rov('/api/admin/reports/' + Number(id) + '/' + amal, { method: 'POST' }); },

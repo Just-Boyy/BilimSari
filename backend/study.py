@@ -26,6 +26,7 @@ import lesson_edit
 import premium
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
 import daily
+import jurnal
 from games import clock
 from games import stats as game_stats
 
@@ -988,6 +989,8 @@ def grade_quiz(cur, conn, user_id, topic_id, answers):
             (percent, 1 if passed else 0, correct, user_id, topic_id),
         )
         conn.commit()
+        if earned:
+            jurnal.record(cur, conn, user_id, earned, 'dars', f'dars:{topic_id}:quiz')
 
     completion = _try_complete(cur, conn, user_id, topic_id) if passed else None
 
@@ -1060,6 +1063,8 @@ def submit_homework(cur, conn, user_id, topic_id, answers):
             (status, json.dumps(answers, ensure_ascii=False), user_id, topic_id),
         )
         conn.commit()
+        if earned:
+            jurnal.record(cur, conn, user_id, earned, 'dars', f'dars:{topic_id}:uy')
 
     completion = _try_complete(cur, conn, user_id, topic_id) if passed else None
 

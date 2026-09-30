@@ -37,6 +37,8 @@ ACHIEVEMENTS = [
     ('kun_7', 'Har kuni savol', '7 kun ketma-ket kun savoliga javob', 'target', 'daily_streak', 7),
     ('chaqmoq_500', '500 chaqmoq', "Jami 500 chaqmoq to'pladingiz", 'chaqmoq', 'chaqmoq', 500),
     ('premium', 'Bilim Premium', "Bilim Premium a'zolari uchun maxsus nishon", 'crown', 'premium', 1),
+    ('marafon_sovrin', 'Marafon sovrindori', "Yutuqli marafonda sovrinli o'ringa kirdingiz", 'medal', 'marathon_prize', 1),
+    ('marafon_1', "Marafon g'olibi", "Yutuqli marafonda 1-o'rinni oldingiz", 'trophy', 'marathon_champion', 1),
 ]
 
 # Daraja — nishonni olish qanchalik qiyin bo'lsa, shunchalik yuqori:
@@ -46,6 +48,7 @@ TIERS = {
     'mavzu_10': 'kumush', 'streak_7': 'kumush', 'galaba_1': 'kumush', 'kun_7': 'kumush', 'chaqmoq_500': 'kumush',
     'mavzu_50': 'oltin', 'galaba_10': 'oltin', 'bot_qiyin': 'oltin', 'turnir_3': 'oltin',
     'mavzu_100': 'brilyant', 'streak_30': 'brilyant', 'turnir_1': 'brilyant',
+    'marafon_sovrin': 'oltin', 'marafon_1': 'brilyant',
     'premium': 'premium',
 }
 
@@ -116,7 +119,14 @@ def _metrics(cur, user_id, now_ms) -> dict:
     if not had_premium:
         cur.execute("SELECT 1 FROM premium_log WHERE user_id = %s AND source != 'revoke' LIMIT 1", (user_id,))
         had_premium = cur.fetchone() is not None
+    try:
+        cur.execute('SELECT MIN(place) AS best FROM marathon_winners WHERE user_id = %s', (user_id,))
+        marathon_best = cur.fetchone()['best']
+    except Exception:  # noqa: BLE001  (jadval hali yo'q)
+        marathon_best = None
     return {
+        'marathon_prize': 1 if marathon_best is not None else 0,
+        'marathon_champion': 1 if marathon_best == 1 else 0,
         'topics': topics,
         'streak': study.compute_streak(cur, user_id),
         'games': int(g['n'] or 0),

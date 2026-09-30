@@ -23,6 +23,8 @@ import backup
 import broadcast
 import curriculum as cur_mod
 import dostlar
+import jurnal
+import marafon
 import lesson_edit
 import payments
 import rate_limit
@@ -497,6 +499,10 @@ def delete_user(user_id):
         # Hamkor bo'lsa — kodi o'chiriladi (sotuv va to'lov tarixi pul hisobi sifatida qoladi)
         cur.execute('UPDATE promo_codes SET active = 0 WHERE partner_user_id = %s', (user_id,))
         dostlar.cleanup_user(cur, user_id)
+        jurnal.cleanup_user(cur, user_id)
+        marafon.cleanup_user(cur, user_id)
+        cur.execute('DELETE FROM game_chances WHERE user_id = %s', (user_id,))
+        cur.execute('DELETE FROM game_chance_state WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM users WHERE id = %s', (user_id,))
         conn.commit()
         admin_audit.log('delete_user', detail=f'user_id={user_id} name={user["name"]}', ip=_client_ip())

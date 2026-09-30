@@ -134,6 +134,9 @@
     hamkor: function () { return so_rov('/api/partner'); },
 
     // — Do'stlar —
+    marafon: function () { return so_rov('/api/marathon'); },
+    marafonBanner: function () { return so_rov('/api/marathon/banner'); },
+    marafonQatnash: function (id) { return so_rov('/api/marathon/join', { method: 'POST', body: { id: id, agree: true } }); },
     dostlar: function () { return so_rov('/api/friends'); },
     dostChaqiruvlar: function () { return so_rov('/api/friends/invites'); },
     dostQidir: function (q) { return so_rov('/api/friends/search?q=' + encodeURIComponent(q)); },

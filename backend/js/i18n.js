@@ -513,6 +513,44 @@
     "So'rov topilmadi yoki allaqachon javob berilgan.": 'Заявка не найдена или на неё уже ответили.',
     "So'rov topilmadi.": 'Заявка не найдена.',
 
+    // Yutuqli marafon
+    "Reyting bo'limlari": 'Разделы рейтинга', 'Marafon': 'Марафон', "Hozircha marafon yo'q": 'Пока марафона нет',
+    'Yangi yutuqli marafon boshlanganda bot orqali xabar beramiz.': 'Когда начнётся новый призовой марафон, мы сообщим через бота.',
+    "Sovrin jamg'armasi": 'Призовой фонд', 'Marafon yakunlandi': 'Марафон завершён', 'Boshlanishiga:': 'До начала:',
+    'Tugashiga:': 'До конца:', 'Faqat Premium': 'Только Premium', "G'oliblar": 'Победители',
+    "Bu safar g'olib bo'lmadi.": 'В этот раз победителей нет.', "Siz sovrinli o'rindasiz!": 'Вы на призовом месте!',
+    'Siz qatnashyapsiz': 'Вы участвуете', 'Siz bu marafondan chiqarilgansiz.': 'Вы исключены из этого марафона.',
+    'Sovrinlar': 'Призы', 'Marafon qoidalari': 'Правила марафона',
+    "Marafon boshlangandan (yoki siz qo'shilgan paytdan) keyin olingan chaqmoqlar sanaladi: darslar, o'yinlar va kun savoli.":
+      'Засчитываются молнии, полученные после начала марафона (или после вашего присоединения): уроки, игры и вопрос дня.',
+    "Shaxsiy darslardan 24 soatda faqat 1 ta darsning chaqmoqi sanaladi.": 'Из личных уроков за 24 часа засчитываются молнии только одного урока.',
+    "O'yinlarda 24 soatda 3 ta chaqmoqli o'yin: 1-o'rin +30, qolganlar +20. Kompyuter bilan o'yin chaqmoq bermaydi.":
+      'В играх за 24 часа 3 игры с молниями: 1-е место +30, остальные +20. Игра с компьютером молний не даёт.',
+    "Chaqmoq teng bo'lsa, shu songa birinchi yetgan yuqorida turadi.": 'При равенстве молний выше тот, кто набрал их первым.',
+    '"Faqat Premium" marafonda Premium faol bo\'lgan paytda olingan chaqmoqlar sanaladi.':
+      'В марафоне «Только Premium» засчитываются молнии, полученные при активном Premium.',
+    "Aldash (bir necha akkaunt, nohalol o'yin) aniqlansa — marafondan chiqariladi. Admin qarori yakuniy.":
+      'При обмане (несколько аккаунтов, нечестная игра) участник исключается. Решение администратора окончательное.',
+    "G'oliblarga bot orqali xabar keladi. Sovrin g'olibning yoki ota-onasining kartasiga o'tkaziladi.":
+      'Победители получат сообщение от бота. Приз переводится на карту победителя или его родителей.',
+    'Qatnashchilar': 'Участники', "Chaqmoq bo'yicha": 'По молниям', "Sovrinli o'rinlar chegarasi": 'Граница призовых мест',
+    "Hali hech kim qo'shilmagan. Birinchi bo'ling!": 'Пока никто не присоединился. Будьте первым!',
+    "do'st": 'друг', 'Qatnashish': 'Участвовать', 'Premium olib qatnashing': 'Оформите Premium и участвуйте',
+    'Qatnashishdan oldin qoidalar bilan tanishing:': 'Перед участием ознакомьтесь с правилами:',
+    'Qoidalarga roziman': 'Согласен с правилами', 'Qatnashaman': 'Участвую',
+    "Siz marafonga qo'shildingiz. Omad!": 'Вы присоединились к марафону. Удачи!', "o'rin": 'место',
+    'Qatnashyapsiz': 'Участвуете',
+    "Chaqmoq to'plang — sovrin kamida 1 chaqmoq to'plaganlarga beriladi": 'Собирайте молнии — приз получают набравшие хотя бы 1 молнию',
+    "Marafonda shaxsiy darslardan 24 soatda faqat 1 ta darsning chaqmoqi sanaladi — bu dars chaqmoqi umumiy hisobingizga qo'shildi, marafonga esa qo'shilmadi.":
+      'В марафоне из личных уроков за 24 часа засчитывается только один урок — молнии этого урока добавлены в общий счёт, но не в марафон.',
+    'Marafon topilmadi.': 'Марафон не найден.',
+    'Qatnashish uchun marafon qoidalariga rozilik bering.': 'Чтобы участвовать, согласитесь с правилами марафона.',
+    "Bu marafonga qo'shilib bo'lmaydi.": 'К этому марафону нельзя присоединиться.',
+    "Bu marafonda faqat Bilim Premium a'zolari qatnasha oladi.": 'В этом марафоне могут участвовать только участники Bilim Premium.',
+    "Juda ko'p urinish. Birozdan keyin urinib ko'ring.": 'Слишком много попыток. Попробуйте чуть позже.',
+    'Marafon sovrindori': 'Призёр марафона', "Yutuqli marafonda sovrinli o'ringa kirdingiz": 'Вы заняли призовое место в марафоне',
+    "Marafon g'olibi": 'Победитель марафона', "Yutuqli marafonda 1-o'rinni oldingiz": 'Вы заняли 1-е место в марафоне',
+
     // Chaqmoqli o'yinlar
     "Oxirgi chaqmoqli o'yin tugagach 24 soatlik taymer boshlanadi.": 'После последней игры с молниями запустится 24-часовой таймер.',
     'Yangilanishiga qoldi:': 'До обновления:',
@@ -540,6 +578,19 @@
       .replace(/(\d+)\s*daqiqa/g, '$1 мин').replace(/(\d+)\s*soniya/g, '$1 с');
   };
   var RE = [
+    // Yutuqli marafon
+    [/^Top-(\d+) sovrin oladi$/, 'Призы получат топ-$1'],
+    [/^(\d+) qatnashchi$/, function (m, n) { return n + ' ' + ko(n, 'участник', 'участника', 'участников'); }],
+    [/^Boshlanadi: (.+)\. Hozirdan qo'shilib qo'yishingiz mumkin\.$/, 'Начало: $1. Присоединиться можно уже сейчас.'],
+    [/^Tabriklaymiz! Siz (\d+)-o'rinni egalladingiz\. Sovrin haqida botga xabar yuborildi\.$/,
+      'Поздравляем! Вы заняли $1-е место. Сообщение о призе отправлено в бота.'],
+    [/^Keyingi o'ringa: (\d+) chaqmoq$/, 'До следующего места: $1 молний'],
+    [/^Top-(\d+) ga: (\d+) chaqmoq$/, 'До топ-$1: $2 молний'],
+    [/^Sizning o'rningiz: (\d+)$/, 'Ваше место: $1'],
+    [/^Siz bu marafondan chiqarilgansiz\. Sabab: (.+)$/, 'Вы исключены из этого марафона. Причина: $1'],
+    [/^([\d ]+) so'm \+ (.+)$/, '$1 сум + $2'],
+    [/^Sovrin jamg'armasi: ([\d ]+) so'm$/, 'Призовой фонд: $1 сум'],
+
     // Chaqmoqli o'yinlar
     [/^Chaqmoqli o'yinlar: (\d+) \/ (\d+)$/, 'Игры с молниями: $1 / $2'],
     [/^Odamlar bilan o'yin: 1-o'rin \+(\d+), qolganlar \+(\d+) chaqmoq\.$/, 'Игра с людьми: 1-е место +$1, остальные +$2 молний.'],

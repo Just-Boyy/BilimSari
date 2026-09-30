@@ -258,6 +258,25 @@
   .adm-hamkor-panel h4 { font-size: 13px; margin: 10px 0 6px; }
   .adm-hamkor-panel h4:first-child { margin-top: 0; }
   .adm-hamkor .havola { font-size: 12px; color: var(--matn-2); word-break: break-all; }
+  .adm-mr-karta { max-width: none; margin-bottom: 12px; display: grid; gap: 10px; }
+  .adm-mr-bosh { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .adm-mr-bosh h2 { font-size: 18px; margin: 0; }
+  .adm-mr-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 8px; }
+  .adm-mr-info > div { background: #f8fafc; border: 1px solid var(--chiziq); border-radius: 12px; padding: 8px 10px; font-size: 12px; color: var(--matn-2); }
+  .adm-mr-info b { display: block; font-size: 15px; color: var(--matn-quyuq); margin-top: 2px; }
+  .adm-forma select, .adm-forma textarea { width: 100%; min-width: 0; padding: 9px 12px; border: 2px solid var(--chiziq);
+    border-radius: 10px; font-family: var(--tana); font-size: 14px; color: var(--matn); background: #fff; }
+  .adm-forma textarea { min-height: 64px; resize: vertical; }
+  .adm-mr-sovrin { display: grid; grid-template-columns: 54px minmax(0, 1fr) minmax(0, 1.2fr) auto; gap: 8px; align-items: center; }
+  .adm-mr-sovrin b { font-size: 13px; }
+  .adm-mr-rasm { display: inline-flex; align-items: center; gap: 6px; }
+  .adm-mr-rasm img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; border: 1px solid var(--chiziq); }
+  .adm-mr-jadval td, .adm-mr-jadval th { white-space: nowrap; }
+  .adm-mr-jadval .qismlar { font-size: 11px; color: var(--matn-2); }
+  .adm-mr-panel { background: #f8fafc; border: 1px solid var(--chiziq); border-radius: 12px; padding: 12px; }
+  .adm-mr-panel td { font-size: 12px; }
+  .adm-mr-bayroq { display: block; color: #b91c1c; font-size: 11px; font-weight: 700; white-space: normal; }
+  @media (max-width: 640px) { .adm-mr-sovrin { grid-template-columns: 44px 1fr; } }
   .adm-shikoyat { max-width: none; margin-bottom: 10px; display: grid; gap: 8px; }
   .adm-shikoyat.hal { opacity: .7; }
   .adm-shikoyat-bosh { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -453,6 +472,7 @@
     <div class="adm-tab" data-bolim="premium"><span class="nishon" data-ikon="crown"></span> Premium</div>
     <div class="adm-tab" data-bolim="hamkorlar"><span class="nishon" data-ikon="users"></span> Hamkorlar</div>
     <div class="adm-tab" data-bolim="shikoyatlar"><span class="nishon" data-ikon="alert"></span> Shikoyatlar</div>
+    <div class="adm-tab" data-bolim="marafon"><span class="nishon" data-ikon="flame"></span> Marafon</div>
     <div class="adm-tab" data-bolim="tizim"><span class="nishon" data-ikon="tools"></span> Tizim</div>
   </nav>
 
@@ -649,6 +669,10 @@
       <div id="hamkorlarQuti"></div>
     </section>
 
+    <section class="adm-bolim" id="bolim-marafon">
+      <div id="marafonQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
     <section class="adm-bolim" id="bolim-shikoyatlar">
       <p class="izoh-kichik" style="margin-bottom:12px">O'quvchilar bir-birining profilidan yuborgan shikoyatlar (nomaqbul ism, rasm,
         haqorat). "Do'stlikni yopish" — o'quvchi do'stlik so'rovi yubora olmaydi va qidiruvda chiqmaydi (ilovaning qolgan qismi ishlayveradi).</p>
@@ -759,6 +783,11 @@ var AUDIT_NOMLARI = {
   partner_delete: 'Hamkor o\'chirildi', partner_payout: 'Hamkorga to\'lov yozildi',
   partner_payout_delete: 'Hamkor to\'lovi o\'chirildi', partner_tiers: 'Pog\'onali komissiya o\'zgardi',
   channel_set: 'Kanal havolasi o\'zgardi', backup_download: 'To\'liq zaxira nusxa yuklab olindi',
+  marathon_create: 'Marafon yaratildi', marathon_update: 'Marafon tahrirlandi', marathon_schedule: 'Marafon rejalashtirildi',
+  marathon_start: 'Marafon boshlandi', marathon_finish: 'Marafon yakunlandi', marathon_cancel: 'Marafon bekor qilindi',
+  marathon_delete: 'Marafon qoralamasi o\'chirildi', marathon_image: 'Sovrin rasmi o\'zgardi',
+  marathon_add: 'Marafonga qo\'shildi', marathon_remove: 'Marafondan chiqarildi', marathon_adjust: 'Marafon chaqmoqi o\'zgartirildi',
+  marathon_paid: 'Marafon sovrini to\'landi',
   report_dismiss: 'Shikoyat ko\'rib chiqildi', report_block: 'Do\'stlik imkoni yopildi (shikoyat)',
   friends_unblock: 'Do\'stlik imkoni qayta ochildi',
 };
@@ -891,6 +920,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'premium') yuklaPremium();
     if (nomi === 'hamkorlar') yuklaHamkorlar();
     if (nomi === 'shikoyatlar') yuklaShikoyatlar();
+    if (nomi === 'marafon') yuklaMarafon();
   });
 });
 
@@ -2157,6 +2187,357 @@ function hamkorTarixBogla(id) {
       hamkorTarixYukla(id, y);
     };
   });
+}
+
+// ─────────────────────── Yutuqli marafon ───────────────────────
+
+var MR = { d: null, panel: null, tarix: {} };       // javob, ochiq panel {uid, tur}, tugaganlar natijasi
+
+function mrToshkent(ms) {
+  // datetime-local uchun Toshkent vaqti: 2026-10-05T09:00
+  var p = {};
+  new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Tashkent', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date(ms)).forEach(function (x) { p[x.type] = x.value; });
+  return p.year + '-' + p.month + '-' + p.day + 'T' + (p.hour === '24' ? '00' : p.hour) + ':' + p.minute;
+}
+function mrSovrin(p) {
+  var q = [];
+  if (p.amount) q.push(pul(p.amount));
+  if (p.note) q.push(p.note);
+  return q.join(' + ') || '—';
+}
+var MR_HOLAT = { draft: ['Qoralama', 'kulrang'], scheduled: ['Rejalashtirilgan', 'kok'], active: ['Davom etmoqda', 'yashil'],
+                 finished: ['Yakunlangan', 'sariq'], cancelled: ['Bekor qilingan', 'qizil'] };
+
+function mrForma(m) {
+  var now = Date.now();
+  var start = m ? m.start_ms : Math.ceil((now + 3600000) / 3600000) * 3600000;
+  var days = m ? Math.max(1, Math.round((m.end_ms - m.start_ms) / 86400000)) : 7;
+  var faol = m && m.status === 'active';
+  var sovrinlar = {};
+  ((m && m.prizes_full) || []).forEach(function (p) { sovrinlar[p.place] = p; });
+  var topN = m ? m.top_n : 3;
+  return mrFormaHtml(m, start, days, faol, topN, mrSovrinQatorlar(m, topN, sovrinlar));
+}
+
+/** Sovrin qatorlari (top soni o'zgarganda qayta chiziladi, kiritilgan qiymatlar saqlanadi). */
+function mrSovrinQatorlar(m, topN, sovrinlar) {
+  var qatorlar = '';
+  for (var i = 1; i <= topN; i++) {
+    var p = sovrinlar[i] || {};
+    qatorlar += '<div class="adm-mr-sovrin" data-joy="' + i + '"><b>' + i + '-o\'rin</b>' +
+      '<input type="number" min="0" step="1000" data-f="amount" placeholder="Summa, so\'m" value="' + (p.amount || '') + '">' +
+      '<input data-f="note" maxlength="120" placeholder="Qo\'shimcha (ixtiyoriy)" value="' + esc(p.note || '') + '">' +
+      (m ? '<span class="adm-mr-rasm">' + (p.image_url ? '<img src="' + esc(p.image_url) + '" alt="">' : '') +
+        '<label class="adm-mini-tugma" style="cursor:pointer">' + (p.image_url ? 'Almashtirish' : 'Rasm') +
+        '<input type="file" accept="image/*" data-rasm="' + i + '" hidden></label>' +
+        (p.image_url ? '<button class="adm-mini-tugma qizil" type="button" data-rasm-och="' + i + '">×</button>' : '') + '</span>'
+        : '<span class="izoh-kichik">rasm — saqlagach</span>') + '</div>';
+  }
+  return qatorlar;
+}
+
+function mrFormaHtml(m, start, days, faol, topN, qatorlar) {
+  return '<form class="adm-forma" id="mrForma">' +
+    '<label>Marafon nomi<input id="mrNom" maxlength="80" required value="' + esc(m ? m.title : '') + '" placeholder="masalan, Oktabr marafoni"></label>' +
+    '<label>Tavsif (ixtiyoriy)<textarea id="mrTavsif" maxlength="1000" placeholder="O\'quvchilarga qisqa izoh">' + esc(m ? m.description : '') + '</textarea></label>' +
+    '<div class="qator3">' +
+      '<label>Boshlanishi (Toshkent vaqti)<input id="mrBosh" type="datetime-local" value="' + mrToshkent(start) + '"' + (faol ? ' disabled' : '') + '></label>' +
+      '<label>Necha kun<input id="mrKun" type="number" min="1" max="90" value="' + days + '"></label>' +
+      '<label>Sovrinli o\'rinlar (top)<input id="mrTop" type="number" min="1" max="100" value="' + topN + '"></label>' +
+    '</div>' +
+    '<div class="qator3">' +
+      '<label>Kim qatnashadi<select id="mrKim"><option value="all">Hamma</option><option value="premium"' +
+        (m && m.audience === 'premium' ? ' selected' : '') + '>Faqat Premium</option></select></label>' +
+      '<label style="grid-column: span 2">G\'olib yozadigan Telegram @username<input id="mrKontakt" maxlength="40" value="' +
+        esc(m ? '@' + m.contact : '') + '" placeholder="@bilimsari_admin"></label>' +
+    '</div>' +
+    '<h3 style="font-size:14px;margin:6px 0 0">Sovrinlar</h3>' +
+    '<p class="izoh-kichik">Har bir sovrinli o\'rin uchun summa (so\'m) va xohlasangiz qo\'shimcha (masalan, "Premium 1 oy"). ' +
+      'Rasmni saqlangandan keyin qo\'shish mumkin.</p>' +
+    '<div id="mrSovrinlar" style="display:grid;gap:8px">' + qatorlar + '</div>' +
+    '<button class="tugma" type="submit">' + (m ? 'O\'zgarishlarni saqlash' : 'Qoralama sifatida saqlash') + '</button>' +
+    '<p class="adm-forma-xabar" id="mrXabar" role="status"></p>' +
+  '</form>';
+}
+
+function mrFormaQiymat() {
+  var prizes = [];
+  document.querySelectorAll('#mrSovrinlar [data-joy]').forEach(function (r) {
+    var amount = Number(r.querySelector('[data-f="amount"]').value || 0);
+    var note = r.querySelector('[data-f="note"]').value.trim();
+    if (amount || note) prizes.push({ place: Number(r.dataset.joy), amount: amount, note: note });
+  });
+  var bosh = document.getElementById('mrBosh');
+  return {
+    title: document.getElementById('mrNom').value, description: document.getElementById('mrTavsif').value,
+    start: bosh.disabled ? undefined : bosh.value, days: Number(document.getElementById('mrKun').value),
+    top_n: Number(document.getElementById('mrTop').value), audience: document.getElementById('mrKim').value,
+    contact: document.getElementById('mrKontakt').value, prizes: prizes,
+  };
+}
+
+function mrRasmKichrayt(fayl) {
+  return new Promise(function (resolve, reject) {
+    var o = new FileReader();
+    o.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var max = 640, w = img.width, h = img.height, k = Math.min(1, max / Math.max(w, h));
+        var cv = document.createElement('canvas');
+        cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        resolve(cv.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = reject;
+      img.src = o.result;
+    };
+    o.onerror = reject;
+    o.readAsDataURL(fayl);
+  });
+}
+
+function mrJadval(d) {
+  var m = d.marathon;
+  var rows = d.standings || [];
+  if (!rows.length) return '<p class="adm-bosh">Hali qatnashchi yo\'q.</p>';
+  return '<div class="adm-jadval-o-rash"><table class="adm-jadval adm-mr-jadval"><thead><tr>' +
+    '<th>#</th><th>O\'quvchi</th><th>Chaqmoq</th><th>Manbalar</th><th>Qo\'shilgan</th><th></th></tr></thead><tbody>' +
+    rows.map(function (r) {
+      var q = r.parts;
+      var ochiq = MR.panel && MR.panel.uid === r.user_id;
+      return '<tr' + (r.rank <= m.top_n ? ' style="background:#fffbeb"' : '') + '><td>' + r.rank + '</td>' +
+        '<td><div class="nomzod">' + esc(r.name) + '</div><div class="kichik">ID ' + r.user_id + (r.username ? ' • @' + esc(r.username) : '') +
+          (r.added_by === 'admin' ? ' • admin qo\'shgan' : '') + '</div>' +
+          r.flags.map(function (f) { return '<span class="adm-mr-bayroq">⚠ ' + esc(f) + '</span>'; }).join('') + '</td>' +
+        '<td><b>' + r.score + '</b></td>' +
+        '<td class="qismlar">dars ' + q.dars + ' • shaxsiy ' + q.shaxsiy + ' • o\'yin ' + q.oyin + ' • kun ' + q.kun +
+          (q.admin ? ' • admin ' + (q.admin > 0 ? '+' : '') + q.admin : '') + '</td>' +
+        '<td class="kichik">' + msVaqt(r.joined_ms) + '</td>' +
+        '<td><button class="adm-mini-tugma" type="button" data-mr-panel="' + r.user_id + '">' + (ochiq ? 'Yopish' : 'Boshqarish') + '</button></td></tr>' +
+        (ochiq ? '<tr><td colspan="6"><div class="adm-mr-panel" id="mrPanel">Yuklanmoqda...</div></td></tr>' : '');
+    }).join('') + '</tbody></table></div>';
+}
+
+function mrPanelHtml(u) {
+  var kunlar = u.days.length ? '<table class="adm-jadval"><thead><tr><th>Kun</th><th>Dars</th><th>Shaxsiy</th><th>O\'yin</th>' +
+    '<th>Kun savoli</th><th>Sanalmagan</th></tr></thead><tbody>' + u.days.map(function (x) {
+      return '<tr><td>' + x.day + '</td><td>' + x.dars + '</td><td>' + x.shaxsiy + '</td><td>' + x.oyin + '</td><td>' + x.kun +
+        '</td><td>' + (x.rad || '') + '</td></tr>';
+    }).join('') + '</tbody></table>' : '<p class="izoh-kichik">Marafon davomida hali chaqmoq olmagan.</p>';
+  var adj = u.adjust.length ? '<p class="izoh-kichik">Admin o\'zgartirishlari: ' + u.adjust.map(function (a) {
+    return (a.amount > 0 ? '+' : '') + a.amount + (a.note ? ' (' + esc(a.note) + ')' : '');
+  }).join(', ') + '</p>' : '';
+  return '<b>' + esc(u.name || '') + '</b> — kunma-kun chaqmoq' + kunlar + adj +
+    (u.flags.length ? '<p class="adm-mr-bayroq">⚠ ' + u.flags.map(esc).join('<br>⚠ ') + '</p>' : '') +
+    '<form class="adm-forma" id="mrTuzat" style="margin-top:10px"><div class="qator3">' +
+      '<label>Chaqmoq (+ qo\'shish, − ayirish)<input id="mrTuzatSon" type="number" placeholder="masalan, 50 yoki -20"></label>' +
+      '<label style="grid-column: span 2">Izoh<input id="mrTuzatIzoh" maxlength="200" placeholder="sababi"></label></div>' +
+      '<button class="adm-mini-tugma yashil" type="submit">Chaqmoqni o\'zgartirish</button></form>' +
+    '<form class="adm-forma" id="mrChiqar" style="margin-top:10px"><label>Chiqarish sababi (o\'quvchiga yuboriladi)' +
+      '<input id="mrChiqarSabab" maxlength="200" placeholder="masalan, bir necha akkaunt"></label>' +
+      '<button class="adm-mini-tugma qizil" type="submit">Marafondan chiqarish</button></form>';
+}
+
+function marafonChiz(d) {
+  MR.d = d;
+  var quti = document.getElementById('marafonQuti');
+  quti.className = '';
+  var m = d.marathon;
+  var html = '';
+  if (!m) {
+    html += '<div class="adm-xabar-karta adm-mr-karta"><h2 style="margin:0">Yangi yutuqli marafon</h2>' +
+      '<p class="izoh-kichik">Qoralama sifatida saqlanadi — tekshirib, keyin "Rejalashtirish" (vaqti kelganda o\'zi boshlanadi) yoki ' +
+      '"Hozir boshlash"ni bosasiz. Boshlanganda hammaga bot va kanal orqali e\'lon boradi.</p>' + mrForma(null) + '</div>';
+  } else {
+    var h = MR_HOLAT[m.status] || [m.status, 'kulrang'];
+    var tugmalar = '';
+    if (m.status === 'draft') tugmalar = '<button class="adm-mini-tugma yashil" data-mr="schedule">Rejalashtirish</button>' +
+      '<button class="adm-mini-tugma" data-mr="start">Hozir boshlash</button><button class="adm-mini-tugma qizil" data-mr="delete">O\'chirish</button>';
+    if (m.status === 'scheduled') tugmalar = '<button class="adm-mini-tugma" data-mr="start">Hozir boshlash</button>' +
+      '<button class="adm-mini-tugma qizil" data-mr="cancel">Bekor qilish</button>';
+    if (m.status === 'active') tugmalar = '<button class="adm-mini-tugma yashil" data-mr="finish">Hozir yakunlash</button>' +
+      '<button class="adm-mini-tugma qizil" data-mr="cancel">Bekor qilish</button>';
+    html += '<div class="adm-xabar-karta adm-mr-karta">' +
+      '<div class="adm-mr-bosh"><h2>' + esc(m.title) + '</h2><span class="adm-badge ' + h[1] + '">' + h[0] + '</span></div>' +
+      '<div class="adm-mr-info">' +
+        '<div>Boshlanishi<b>' + msVaqt(m.start_ms) + '</b></div><div>Tugashi<b>' + msVaqt(m.end_ms) + '</b></div>' +
+        '<div>Sovrin jamg\'armasi<b>' + pul(m.prize_fund) + '</b></div><div>Top<b>' + m.top_n + ' o\'rin</b></div>' +
+        '<div>Qatnashadi<b>' + (m.audience === 'premium' ? 'Faqat Premium' : 'Hamma') + '</b></div>' +
+        '<div>G\'olib yozadi<b>@' + esc(m.contact) + '</b></div>' +
+        '<div>Qatnashchilar<b>' + (d.standings || []).length + '</b></div>' +
+      '</div>' +
+      '<div class="adm-hamkor-amallar">' + tugmalar + '</div>' +
+      (m.channel_note ? '<p class="izoh-kichik">Kanal: ' + esc(m.channel_note) + '</p>'
+        : '<p class="izoh-kichik">Kanal: ' + (d.channel ? d.channel + ' — botni kanalga admin qilib qo\'shganingizga ishonch hosil qiling.'
+          : 'Tizim bo\'limida kanal havolasi kiritilmagan — e\'lon kanalga yuborilmaydi.') + '</p>') +
+    '</div>';
+    html += '<div class="adm-xabar-karta adm-mr-karta"><h2 style="margin:0;font-size:16px">Sozlamalar va sovrinlar</h2>' + mrForma(m) + '</div>';
+    if (m.status !== 'draft') {
+      html += '<div class="adm-xabar-karta adm-mr-karta"><div class="adm-mr-bosh"><h2 style="font-size:16px">Qatnashchilar reytingi</h2>' +
+        '<span class="izoh-kichik">sariq — sovrinli o\'rinlar</span></div>' +
+        '<form class="adm-forma" id="mrQosh"><div class="qator3 kod-qator"><input id="mrQoshKim" maxlength="40" placeholder="ID yoki @username">' +
+        '<button class="adm-mini-tugma yashil" type="submit" style="grid-column: span 2">Talablarsiz qo\'shish</button></div></form>' +
+        mrJadval(d) +
+        ((d.removed || []).length ? '<p class="izoh-kichik">Chiqarilganlar: ' + d.removed.map(function (r) {
+          return esc(r.name) + ' (ID ' + r.user_id + (r.reason ? ', ' + esc(r.reason) : '') + ')';
+        }).join('; ') + ' — qayta qo\'shish uchun yuqoridagi "Talablarsiz qo\'shish".</p>' : '') +
+      '</div>';
+    }
+  }
+  if (d.history.length) {
+    html += '<div class="adm-xabar-karta adm-mr-karta"><h2 style="margin:0;font-size:16px">O\'tgan marafonlar</h2>' +
+      d.history.map(function (x) {
+        var h2 = MR_HOLAT[x.status] || [x.status, 'kulrang'];
+        return '<div><div class="adm-mr-bosh"><b>' + esc(x.title) + '</b><span class="adm-badge ' + h2[1] + '">' + h2[0] + '</span>' +
+          '<span class="izoh-kichik">' + msVaqt(x.start_ms) + ' — ' + msVaqt(x.end_ms) + '</span>' +
+          (x.status === 'finished' ? '<button class="adm-mini-tugma" data-mr-tarix="' + x.id + '">' + (MR.tarix[x.id] ? 'Yopish' : 'G\'oliblar') + '</button>' : '') +
+          '</div>' + (MR.tarix[x.id] ? mrNatija(x.id, MR.tarix[x.id]) : '') + '</div>';
+      }).join('') + '</div>';
+  }
+  quti.innerHTML = html;
+  mrBogla();
+}
+
+function mrNatija(mid, res) {
+  if (!res.length) return '<p class="izoh-kichik">G\'olib bo\'lmagan.</p>';
+  return '<table class="adm-jadval" style="margin-top:8px"><thead><tr><th>O\'rin</th><th>O\'quvchi</th><th>Chaqmoq</th><th>Sovrin</th>' +
+    '<th>Xabar</th><th>To\'lov</th></tr></thead><tbody>' + res.map(function (w) {
+      return '<tr><td>' + w.place + '</td><td>' + esc(w.name || '—') + ' <span class="kichik">ID ' + w.user_id + '</span></td><td>' + w.score +
+        '</td><td>' + esc(mrSovrin(w)) + '</td><td>' + (w.notified ? '<span class="adm-badge yashil">yuborildi</span>' : '<span class="adm-badge qizil">bormadi</span>') +
+        '</td><td>' + (w.paid_ms ? '<span class="adm-badge yashil">' + msVaqt(w.paid_ms) + '</span>' + (w.paid_note ? ' ' + esc(w.paid_note) : '')
+          : '<button class="adm-mini-tugma yashil" data-mr-tolov="' + mid + ':' + w.user_id + '">To\'landi</button>') + '</td></tr>';
+    }).join('') + '</tbody></table>';
+}
+
+async function mrAmal(id, amal, body) {
+  var x = await AdminAPI.marafonAmal(id, amal, body);
+  if (!x.ok) { ogohlantir(x.error || 'Xatolik'); return null; }
+  marafonChiz(x);
+  return x;
+}
+
+function mrRasmBogla() {
+  var m = MR.d && MR.d.marathon;
+  if (!m) return;
+  document.querySelectorAll('#marafonQuti [data-rasm]').forEach(function (inp) {
+    inp.onchange = async function () {
+      var f = inp.files && inp.files[0];
+      if (!f) return;
+      try {
+        var data = await mrRasmKichrayt(f);
+        await mrAmal(m.id, 'image', { place: Number(inp.dataset.rasm), image: data });
+      } catch (err) { ogohlantir('Rasmni o\'qib bo\'lmadi'); }
+    };
+  });
+  document.querySelectorAll('#marafonQuti [data-rasm-och]').forEach(function (b) {
+    b.onclick = function () { mrAmal(m.id, 'image', { place: Number(b.dataset.rasmOch), image: null }); };
+  });
+}
+
+function mrBogla() {
+  var d = MR.d, m = d.marathon;
+  var topInp = document.getElementById('mrTop');
+  if (topInp) topInp.oninput = function () {
+    var n = Math.max(1, Math.min(100, Number(topInp.value) || 1));
+    var bor = {};
+    ((m && m.prizes_full) || []).forEach(function (p) { bor[p.place] = p; });
+    mrFormaQiymat().prizes.forEach(function (p) { bor[p.place] = Object.assign({}, bor[p.place] || {}, p); });
+    document.getElementById('mrSovrinlar').innerHTML = mrSovrinQatorlar(m, n, bor);
+    mrRasmBogla();
+  };
+  mrRasmBogla();
+  var forma = document.getElementById('mrForma');
+  if (forma) forma.onsubmit = async function (e) {
+    e.preventDefault();
+    var xabar = document.getElementById('mrXabar');
+    var qiymat = mrFormaQiymat();
+    var x = m ? await AdminAPI.marafonAmal(m.id, 'update', qiymat) : await AdminAPI.marafonYarat(qiymat);
+    if (!x.ok) { xabar.className = 'adm-forma-xabar xato'; xabar.textContent = x.error || 'Xatolik'; return; }
+    marafonChiz(x);
+    var y = document.getElementById('mrXabar');
+    if (y) { y.className = 'adm-forma-xabar ok'; y.textContent = 'Saqlandi'; }
+  };
+  document.querySelectorAll('#marafonQuti [data-mr]').forEach(function (b) {
+    b.onclick = async function () {
+      var amal = b.dataset.mr;
+      var savol = { schedule: 'Marafon rejalashtirilsinmi? Boshlanish vaqti kelganda o\'zi boshlanadi va hammaga e\'lon boradi.',
+        start: 'Marafon HOZIR boshlansinmi? Hammaga bot va kanal orqali e\'lon boradi.',
+        finish: 'Marafon HOZIR yakunlansinmi? G\'oliblar aniqlanib, ularga va hammaga xabar boradi.',
+        cancel: 'Marafon bekor qilinsinmi? G\'oliblar aniqlanmaydi.', delete: 'Qoralama o\'chirilsinmi?' }[amal];
+      if (savol && !(await tasdiqSora(savol))) return;
+      b.disabled = true;
+      if (!(await mrAmal(m.id, amal))) b.disabled = false;
+    };
+  });
+  var qosh = document.getElementById('mrQosh');
+  if (qosh) qosh.onsubmit = async function (e) {
+    e.preventDefault();
+    var kim = document.getElementById('mrQoshKim').value.trim();
+    if (!kim) return;
+    if (!(await tasdiqSora(kim + ' talablarsiz (Premium shartisiz) marafonga qo\'shilsinmi?'))) return;
+    mrAmal(m.id, 'add', { who: kim });
+  };
+  document.querySelectorAll('#marafonQuti [data-mr-panel]').forEach(function (b) {
+    b.onclick = async function () {
+      var uid = Number(b.dataset.mrPanel);
+      MR.panel = MR.panel && MR.panel.uid === uid ? null : { uid: uid };
+      marafonChiz(MR.d);
+      if (!MR.panel) return;
+      var x = await AdminAPI.marafonAmal(m.id, 'user', { user_id: uid });
+      var joy = document.getElementById('mrPanel');
+      if (!joy) return;
+      if (!x.ok) { joy.textContent = x.error || 'Xatolik'; return; }
+      joy.innerHTML = mrPanelHtml(x.user);
+      document.getElementById('mrTuzat').onsubmit = async function (e) {
+        e.preventDefault();
+        var son = Number(document.getElementById('mrTuzatSon').value);
+        if (!son) return;
+        if (!(await tasdiqSora((son > 0 ? '+' : '') + son + ' chaqmoq (faqat shu marafonda) o\'zgartirilsinmi?'))) return;
+        MR.panel = null;
+        mrAmal(m.id, 'adjust', { user_id: uid, amount: son, note: document.getElementById('mrTuzatIzoh').value });
+      };
+      document.getElementById('mrChiqar').onsubmit = async function (e) {
+        e.preventDefault();
+        if (!(await tasdiqSora('O\'quvchi marafondan chiqarilsinmi? Unga bot orqali xabar boradi.'))) return;
+        MR.panel = null;
+        mrAmal(m.id, 'remove', { user_id: uid, reason: document.getElementById('mrChiqarSabab').value });
+      };
+    };
+  });
+  document.querySelectorAll('#marafonQuti [data-mr-tarix]').forEach(function (b) {
+    b.onclick = async function () {
+      var id = Number(b.dataset.mrTarix);
+      if (MR.tarix[id]) { delete MR.tarix[id]; marafonChiz(MR.d); return; }
+      var x = await AdminAPI.marafonAmal(id, 'results');
+      if (!x.ok) { ogohlantir(x.error || 'Xatolik'); return; }
+      MR.tarix[id] = x.results;
+      marafonChiz(MR.d);
+    };
+  });
+  document.querySelectorAll('#marafonQuti [data-mr-tolov]').forEach(function (b) {
+    b.onclick = async function () {
+      var p = b.dataset.mrTolov.split(':');
+      if (!(await tasdiqSora('Sovrin puli o\'tkazildi deb belgilansinmi? G\'olibga bot orqali xabar boradi.'))) return;
+      b.disabled = true;
+      var x = await AdminAPI.marafonAmal(Number(p[0]), 'paid', { user_id: Number(p[1]) });
+      if (!x.ok) { b.disabled = false; ogohlantir(x.error || 'Xatolik'); return; }
+      var r = await AdminAPI.marafonAmal(Number(p[0]), 'results');
+      if (r.ok) MR.tarix[Number(p[0])] = r.results;
+      marafonChiz(x);
+    };
+  });
+}
+
+async function yuklaMarafon() {
+  var r = await AdminAPI.marafon();
+  if (!r.ok) {
+    var q = document.getElementById('marafonQuti');
+    q.className = 'adm-bosh';
+    q.textContent = r.error || 'Xatolik';
+    return;
+  }
+  marafonChiz(r);
 }
 
 // ─────────────────────── Shikoyatlar ───────────────────────

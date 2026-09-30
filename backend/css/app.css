@@ -2168,3 +2168,76 @@ a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
   min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .reyting-qator .ism .nik-emoji, .salom .nik-emoji { flex: 0 0 auto; }
+
+/* ── Reyting: tablar va yutuqli marafon ─────────────────── */
+.reyting-tablar { display: flex; gap: 4px; padding: 4px; background: var(--oq); border: 1px solid var(--chiziq);
+  border-radius: 14px; margin-bottom: 16px; }
+.reyting-tablar button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 42px;
+  border: 0; border-radius: 10px; background: transparent; font: inherit; font-weight: 800; font-size: 14px; color: var(--matn-2); cursor: pointer; }
+.reyting-tablar button svg { width: 18px; height: 18px; }
+.reyting-tablar button[aria-selected="true"] { background: var(--yashil-fon); color: var(--yashil-quyuq); box-shadow: inset 0 0 0 1px var(--yashil-chegara); }
+.marafon-hero { padding: 16px; border-radius: var(--r-katta); color: #fff;
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 55%, #b91c1c 100%); box-shadow: 0 8px 24px rgba(234, 88, 12, .25); }
+.marafon-hero-bosh { display: flex; align-items: center; gap: 8px; }
+.marafon-hero-bosh svg { width: 26px; height: 26px; flex: 0 0 auto; }
+.marafon-hero h2 { font-size: 20px; margin: 0; color: #fff; }
+.marafon-fond { margin: 12px 0 8px; display: grid; }
+.marafon-fond small { font-size: 12px; opacity: .9; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; }
+.marafon-fond b { font-size: 28px; line-height: 1.15; font-family: var(--sarlavha); }
+.marafon-chiplar { display: flex; flex-wrap: wrap; gap: 6px; }
+.marafon-chiplar span { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px;
+  background: rgba(255, 255, 255, .2); font-size: 13px; font-weight: 700; }
+.marafon-chiplar span b { font-variant-numeric: tabular-nums; }
+.marafon-chiplar .premium svg { width: 14px; height: 14px; }
+.izoh-oq { margin: 10px 0 0; font-size: 13px; opacity: .95; }
+.marafon-tavsif { margin: 12px 2px 0; color: var(--matn-2); font-size: 14px; white-space: pre-line; }
+.marafon-men { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 12px 14px; border-radius: var(--r);
+  background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
+.marafon-men svg { width: 22px; height: 22px; flex: 0 0 auto; color: #d97706; }
+.marafon-men div { display: grid; gap: 2px; }
+.marafon-men small { font-size: 13px; }
+.marafon-men.xato { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+.marafon-men.golib { background: var(--yashil-fon); border-color: var(--yashil-chegara); color: var(--yashil-quyuq); margin: 0 0 14px; }
+.marafon-sovrinlar { display: grid; gap: 8px; }
+.marafon-sovrin { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r); background: var(--oq);
+  border: 1px solid var(--chiziq); }
+.marafon-sovrin img { width: 56px; height: 56px; border-radius: 12px; object-fit: cover; flex: 0 0 auto; }
+.marafon-sovrin-belgi { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--fon);
+  flex: 0 0 auto; color: var(--matn-2); }
+.marafon-sovrin-belgi svg { width: 24px; height: 24px; }
+.marafon-sovrin.p1 { border-color: #fcd34d; background: #fffbeb; } .marafon-sovrin.p1 .marafon-sovrin-belgi { color: #d97706; background: #fef3c7; }
+.marafon-sovrin.p2 .marafon-sovrin-belgi { color: #64748b; background: #f1f5f9; }
+.marafon-sovrin.p3 .marafon-sovrin-belgi { color: #b45309; background: #ffedd5; }
+.marafon-sovrin div { display: grid; gap: 2px; min-width: 0; }
+.marafon-sovrin b { font-size: 14px; }
+.marafon-sovrin span { font-size: 15px; font-weight: 800; color: var(--matn-quyuq); }
+.marafon-sovrin-kichik { display: block; font-size: 12px; color: #b45309; font-weight: 700; }
+.marafon-qoida-blok { margin-top: 14px; padding: 10px 14px; border-radius: var(--r); background: var(--oq); border: 1px solid var(--chiziq); }
+.marafon-qoida-blok summary { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 800; }
+.marafon-qoida-blok summary svg { width: 18px; height: 18px; }
+.marafon-qoidalar { margin: 10px 0 4px 18px; display: grid; gap: 6px; font-size: 14px; color: var(--matn-2); }
+.reyting-qator.sovrinli { border-color: #fcd34d; }
+.dost-yorliq { margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--kok-och); color: #0369a1; font-size: 11px; font-weight: 800; }
+.marafon-chegara { display: flex; align-items: center; gap: 8px; margin: 10px 0; color: #b45309; font-size: 12px; font-weight: 800; }
+.marafon-chegara::before, .marafon-chegara::after { content: ''; flex: 1; border-top: 2px dashed #fcd34d; }
+.marafon-pastki { position: fixed; left: 0; right: 0; bottom: calc(var(--nav-balandlik) + env(safe-area-inset-bottom)); z-index: 45;
+  padding: 10px 16px; background: linear-gradient(180deg, rgba(243, 244, 246, 0), var(--fon) 35%); }
+.marafon-pastki .tugma { max-width: 480px; margin: 0 auto; display: flex; }
+.marafon-pastki .tugma svg { width: 22px; height: 22px; flex: 0 0 auto; }
+#bolimMarafon { padding-bottom: 80px; }
+.marafon-rozilik { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-weight: 800; }
+.marafon-rozilik input { width: 20px; height: 20px; accent-color: var(--yashil); }
+.pastki-oyna .marafon-qoidalar { max-height: 40vh; overflow-y: auto; }
+.marafon-izoh { color: #b45309 !important; }
+.marafon-banner { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; padding: 12px 14px; border-radius: var(--r-katta);
+  color: #fff; background: linear-gradient(135deg, #f59e0b, #ea580c); box-shadow: 0 6px 18px rgba(234, 88, 12, .25); }
+.marafon-banner-belgi { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: rgba(255, 255, 255, .2); flex: 0 0 auto; }
+.marafon-banner-belgi svg { width: 24px; height: 24px; }
+.marafon-banner-matn { display: grid; gap: 1px; min-width: 0; flex: 1; }
+.marafon-banner-matn b { font-size: 15px; }
+.marafon-banner-matn small { font-size: 12px; opacity: .95; }
+.marafon-banner-matn span { font-variant-numeric: tabular-nums; font-weight: 800; }
+.marafon-banner-ong { display: grid; justify-items: center; flex: 0 0 auto; }
+.marafon-banner-ong b { font-size: 24px; line-height: 1; font-family: var(--sarlavha); }
+.marafon-banner-ong small { font-size: 11px; }
+.marafon-banner-ong em { font-style: normal; font-weight: 800; font-size: 13px; background: rgba(255, 255, 255, .22); padding: 6px 10px; border-radius: 999px; }

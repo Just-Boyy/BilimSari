@@ -24,6 +24,7 @@ import logging
 import threading
 
 import ai_tutor
+import jurnal
 import curriculum as cur_mod
 import lesson_edit
 import premium
@@ -519,6 +520,8 @@ def grade_quiz(cur, conn, user_id, pid, answers, now=None) -> dict:
                                               quiz_first_correct = COALESCE(quiz_first_correct, %s), lesson_read = 1
                    WHERE id = %s''', (percent, int(passed), correct, pid))
     conn.commit()
+    if first and study.quiz_chaqmoq(correct):
+        jurnal.record(cur, conn, user_id, study.quiz_chaqmoq(correct), 'shaxsiy', f'shaxsiy:{pid}:quiz', now)
     return {
         'correct': correct, 'total': total, 'percent': percent, 'passed': passed,
         'pass_percent': study.QUIZ_PASS_PERCENT, 'results': results,
@@ -549,6 +552,8 @@ def submit_homework(cur, conn, user_id, pid, answers, now=None) -> dict:
                                               homework_answers = %s, homework_attempts = homework_attempts + 1
                    WHERE id = %s''', ('passed' if passed else 'submitted', json.dumps(answers, ensure_ascii=False), pid))
     conn.commit()
+    if earned:
+        jurnal.record(cur, conn, user_id, earned, 'shaxsiy', f'shaxsiy:{pid}:uy', now)
     missing = len(tasks) - ok_count
     return {
         'passed': passed, 'correct': ok_count, 'total': len(tasks), 'results': results,

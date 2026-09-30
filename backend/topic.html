@@ -436,6 +436,7 @@
           (res.chaqmoq > 0
             ? '<p class="chaqmoq-olindi">' + UI.nishon('chaqmoq') + '<span>+' + res.chaqmoq + ' chaqmoq</span></p>'
             : (res.qayta ? '<p class="izoh-kichik">Chaqmoq faqat birinchi urinishda beriladi.</p>' : '')) +
+          (res.marafon && !res.marafon.counted ? '<p class="izoh-kichik marafon-izoh">' + UI.esc(res.marafon.text) + '</p>' : '') +
         '</div>' +
       '</div>' +
       '<div class="bo-lim"><h2>Javoblaringiz</h2></div>' + tafsilot +
@@ -543,6 +544,7 @@
         M.progress.homework_status = 'passed';
         belgila('uy');
         UI.xabar(res.chaqmoq > 0 ? res.message + ' +' + res.chaqmoq + ' chaqmoq' : res.message, 'muvaffaqiyat');
+        if (res.marafon && !res.marafon.counted) setTimeout(function () { UI.xabar(res.marafon.text); }, 2600);
         if (res.completion && res.completion.completed) yakunEkran(res.completion);
         else if (res.completion && res.completion.blocked_by_cooldown) {
           UI.xabar(res.completion.message, 'xato');

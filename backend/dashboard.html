@@ -28,6 +28,8 @@
 <main class="sahifa sahifa-keng bosh-sahifa">
   <!-- Do'stlarning o'yinga chaqiruvlari -->
   <div id="dostChaqiruv"></div>
+  <!-- Yutuqli marafon (bo'lsa) -->
+  <div id="marafonBanner"></div>
 
   <!-- Tezkor tugmalar -->
   <section class="bo-lim">
@@ -63,6 +65,31 @@
 (async function () {
   if (!(await UI.sessiyaKerak())) return;
   UI.navChiz('dashboard.html');
+
+  // Yutuqli marafon banneri: sovrin jamg'armasi, taymer, o'rnim
+  API.marafonBanner().then(function (r) {
+    var b = r.ok && r.banner;
+    if (!b) return;
+    var farq = b.now - Date.now();
+    var pul = function (n) { return String(Math.round(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + " so'm"; };
+    var joy = document.getElementById('marafonBanner');
+    joy.innerHTML = '<a class="marafon-banner" href="leaderboard.html?tab=marafon">' +
+      '<span class="marafon-banner-belgi">' + UI.nishon('flame') + '</span>' +
+      '<span class="marafon-banner-matn"><b>' + UI.esc(b.title) + '</b>' +
+        (b.prize_fund ? '<small>Sovrin jamg\'armasi: ' + pul(b.prize_fund) + '</small>' : '') +
+        '<small>' + (b.status === 'scheduled' ? 'Boshlanishiga:' : 'Tugashiga:') + ' <span id="marafonBannerTaymer"></span></small></span>' +
+      '<span class="marafon-banner-ong">' + (b.joined && b.rank
+        ? '<b>' + b.rank + '</b><small>o\'rin</small>' : '<em>' + (b.joined ? 'Qatnashyapsiz' : 'Qatnashish') + ' ›</em>') + '</span></a>';
+    function taymer() {
+      var el = document.getElementById('marafonBannerTaymer');
+      if (!el) return;
+      var s = Math.max(0, Math.floor(((b.status === 'scheduled' ? b.start_ms : b.end_ms) - Date.now() - farq) / 1000));
+      var kun = Math.floor(s / 86400);
+      el.textContent = (kun ? kun + ' kun ' : '') + UI.vaqtRaqam(s % 86400);
+    }
+    taymer();
+    setInterval(taymer, 1000);
+  });
 
   // Do'st o'yinga chaqirgan bo'lsa — yuqorida banner
   API.dostChaqiruvlar().then(function (r) {

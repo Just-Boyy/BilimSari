@@ -20,6 +20,7 @@ Adolatli o'yin:
 import json
 import random
 
+import jurnal
 from games import catalog, chances, clock, questions
 from games.errors import GameError
 
@@ -379,6 +380,7 @@ def _finish(cur, room, session, players, now, reason) -> bool:
         if not p.get('is_bot') and int(p['user_id']) in with_chance:
             chaqmoq = chances.WIN if r['rank'] == 1 else chances.PLAY
             chances.close(cur, p['user_id'], session['id'], now, chaqmoq)
+            jurnal.add(cur, p['user_id'], chaqmoq, 'oyin', f"oyin:{session['id']}", now)
         cur.execute(
             '''INSERT INTO game_results (session_id, room_id, user_id, game_type, subject, topic, difficulty,
                                          score, earned, xp, correct, wrong, total, accuracy, rank, players, won,

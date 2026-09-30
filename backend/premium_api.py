@@ -14,6 +14,7 @@ from flask import Blueprint, jsonify, request
 import admin_audit
 import partners
 import payments
+import marafon
 import personal
 import premium
 import rate_limit
@@ -201,7 +202,10 @@ def personal_read(pid):
 def personal_quiz(pid):
     conn, cur = _conn()
     try:
-        return jsonify(dict(personal.grade_quiz(cur, conn, request.user['id'], pid, _body().get('answers')), ok=True))
+        res = personal.grade_quiz(cur, conn, request.user['id'], pid, _body().get('answers'))
+        if res.get('chaqmoq'):
+            res['marafon'] = marafon.personal_note(cur, request.user['id'], pid)
+        return jsonify(dict(res, ok=True))
     except personal.PersonalError as exc:
         return _fail(exc)
     finally:
@@ -213,7 +217,10 @@ def personal_quiz(pid):
 def personal_homework(pid):
     conn, cur = _conn()
     try:
-        return jsonify(dict(personal.submit_homework(cur, conn, request.user['id'], pid, _body().get('answers')), ok=True))
+        res = personal.submit_homework(cur, conn, request.user['id'], pid, _body().get('answers'))
+        if res.get('chaqmoq'):
+            res['marafon'] = marafon.personal_note(cur, request.user['id'], pid)
+        return jsonify(dict(res, ok=True))
     except personal.PersonalError as exc:
         return _fail(exc)
     finally:

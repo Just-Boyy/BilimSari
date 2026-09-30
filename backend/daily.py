@@ -16,6 +16,7 @@ import json
 from datetime import date, timedelta
 
 import curriculum as cur_mod
+import jurnal
 import premium
 from games import clock
 from games.errors import GameError
@@ -209,6 +210,8 @@ def answer(cur, conn, user_id, raw, now_ms) -> dict:
             raise GameError('already_answered', "Bugungi savolga javob bergansiz. Ertaga yangi savol!", 409)
         raise GameError('not_opened', "Avval savolni oching.", 409)
     conn.commit()
+    if correct:
+        jurnal.record(cur, conn, user_id, CHAQMOQ_CORRECT, 'kun', f'kun:{day}', now_ms)
     return state(cur, conn, user_id, now_ms)
 
 

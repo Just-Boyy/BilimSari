@@ -14,6 +14,10 @@ band bo'lib, sayt sekinlashardi. Endi:
   * eslatmalarni o'chirgan (users.notify = 0) o'quvchilarga yuborilmaydi;
   * botni bloklagan (403) o'quvchilar belgilanadi — keyin ularga urinilmaydi;
   * Telegram "juda tez" (429) desa, aytilgan vaqt kutiladi.
+
+Tizim xabarlari (masalan, yutuqli marafon e'loni) HTML matn va ilovani ochadigan
+tugma bilan, "hammaga" (everyone — eslatmani o'chirganlarga ham) yuborilishi mumkin.
+Bir tarqatish ketayotganda yangisi navbatga (queued) qo'yiladi va keyin boshlanadi.
 """
 
 import logging
@@ -21,7 +25,7 @@ import threading
 import time
 
 import tgbot
-from db import get_connection
+from db import add_column_if_missing, get_connection
 from games import clock
 
 logger = logging.getLogger('bilimsari.broadcast')
@@ -48,6 +52,10 @@ def ensure_tables(cur, conn):
         )
     ''')
     conn.commit()
+    add_column_if_missing(cur, conn, 'broadcasts', 'html', 'INTEGER NOT NULL DEFAULT 0')
+    add_column_if_missing(cur, conn, 'broadcasts', 'button_text', 'TEXT')
+    add_column_if_missing(cur, conn, 'broadcasts', 'button_path', 'TEXT')
+    add_column_if_missing(cur, conn, 'broadcasts', 'everyone', 'INTEGER NOT NULL DEFAULT 0')
 
 
 class BroadcastError(Exception):
@@ -68,24 +76,32 @@ def get(cur, bid):
     return _public(row) if row else None
 
 
-def start(cur, conn, text, now=None) -> dict:
-    """Tarqatishni yaratadi va fonda boshlaydi."""
+def _recipients_sql(everyone) -> str:
+    return 'telegram_id IS NOT NULL' + ('' if everyone else ' AND notify = 1')
+
+
+def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=False, queue=False) -> dict:
+    """Tarqatishni yaratadi va fonda boshlaydi. queue=True — boshqasi ketayotgan bo'lsa navbatga qo'yiladi."""
     now = now or clock.now_ms()
     text = str(text or '').strip()
     if not text:
         raise BroadcastError("Xabar matni bo'sh")
     if len(text) > 3500:
         raise BroadcastError('Xabar juda uzun (3500 belgigacha)')
-    cur.execute("SELECT id FROM broadcasts WHERE status = 'running'")
-    if cur.fetchone():
+    cur.execute("SELECT id FROM broadcasts WHERE status IN ('running', 'queued')")
+    busy = cur.fetchone() is not None
+    if busy and not queue:
         raise BroadcastError("Oldingi xabar hali yuborilmoqda. U tugashini kuting.", 409)
-    cur.execute('SELECT COUNT(*) AS n FROM users WHERE telegram_id IS NOT NULL AND notify = 1')
+    cur.execute(f'SELECT COUNT(*) AS n FROM users WHERE {_recipients_sql(everyone)}')
     total = int(cur.fetchone()['n'])
-    cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms)
-                   VALUES (%s, 'running', %s, %s, %s) RETURNING id''', (text, total, now, now))
+    cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms, html, button_text, button_path, everyone)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
+                (text, 'queued' if busy else 'running', total, now, now, int(bool(html)), button, path or None,
+                 int(bool(everyone))))
     bid = cur.fetchone()['id']
     conn.commit()
-    _spawn(bid)
+    if not busy:
+        _spawn(bid)
     return get(cur, bid)
 
 
@@ -93,9 +109,15 @@ def _spawn(bid):
     threading.Thread(target=run, args=(bid,), name=f'bilimsari-broadcast-{bid}', daemon=True).start()
 
 
-def _send(chat_id, text):
+def _send(chat_id, text, b=None):
     """(natija, retry_after): 'ok' | 'blocked' | 'failed'."""
-    res = tgbot.tg_api('sendMessage', {'chat_id': chat_id, 'text': text})
+    payload = {'chat_id': chat_id, 'text': text}
+    if b and b['html']:
+        payload['parse_mode'] = 'HTML'
+    if b and b['button_text']:
+        payload['reply_markup'] = {'inline_keyboard': [[
+            {'text': b['button_text'], 'web_app': {'url': tgbot.app_url(b['button_path'] or '')}}]]}
+    res = tgbot.tg_api('sendMessage', payload)
     if res and res.get('ok'):
         return 'ok', 0
     code = (res or {}).get('error_code')
@@ -118,17 +140,17 @@ def run(bid):
         text, last = b['text'], int(b['last_user_id'])
         sent, failed, blocked = int(b['sent']), int(b['failed']), int(b['blocked'])
         while True:
-            cur.execute('''SELECT id, telegram_id FROM users
-                           WHERE telegram_id IS NOT NULL AND notify = 1 AND id > %s
-                           ORDER BY id LIMIT %s''', (last, BATCH))
+            cur.execute(f'''SELECT id, telegram_id FROM users
+                            WHERE {_recipients_sql(b['everyone'])} AND id > %s
+                            ORDER BY id LIMIT %s''', (last, BATCH))
             batch = cur.fetchall()
             if not batch:
                 break
             for u in batch:
-                result, wait = _send(u['telegram_id'], text)
+                result, wait = _send(u['telegram_id'], text, b)
                 if wait:                                   # 429 — kutib, bir marta qayta urinamiz
                     time.sleep(min(wait, 30))
-                    result, _ = _send(u['telegram_id'], text)
+                    result, _ = _send(u['telegram_id'], text, b)
                 if result == 'ok':
                     sent += 1
                 elif result == 'blocked':
@@ -148,12 +170,33 @@ def run(bid):
                        WHERE id = %s''', (sent, failed, blocked, last, now, now, bid))
         conn.commit()
         logger.info('Ommaviy xabar #%s tugadi: %s ta yuborildi, %s xato, %s bloklagan', bid, sent, failed, blocked)
+        _next_queued(cur, conn)
     except Exception:  # noqa: BLE001
         conn.rollback()
         logger.exception('Ommaviy xabar #%s xatosi', bid)
     finally:
         cur.close()
         conn.close()
+
+
+def _next_queued(cur, conn, now=None):
+    """Navbatdagi tarqatishni boshlaydi (hech biri ketmayotgan bo'lsa). CAS — bitta worker oladi."""
+    now = now or clock.now_ms()
+    cur.execute("SELECT id FROM broadcasts WHERE status = 'running'")
+    if cur.fetchone():
+        return None
+    cur.execute("SELECT id FROM broadcasts WHERE status = 'queued' ORDER BY id LIMIT 1")
+    row = cur.fetchone()
+    if not row:
+        return None
+    cur.execute("UPDATE broadcasts SET status = 'running', heartbeat_ms = %s WHERE id = %s AND status = 'queued'",
+                (now, row['id']))
+    took = cur.rowcount == 1
+    conn.commit()
+    if took:
+        _spawn(row['id'])
+        return row['id']
+    return None
 
 
 def resume_stale(cur, conn, now=None) -> list:
@@ -171,4 +214,8 @@ def resume_stale(cur, conn, now=None) -> list:
     conn.commit()
     for bid in resumed:
         _spawn(bid)
+    if not resumed:
+        nxt = _next_queued(cur, conn, now)
+        if nxt:
+            resumed.append(nxt)
     return resumed

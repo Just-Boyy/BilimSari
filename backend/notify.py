@@ -37,6 +37,7 @@ import broadcast
 import curriculum as cur_mod
 import daily
 import dostlar
+import marafon
 import payments
 import personal
 import premium
@@ -384,6 +385,8 @@ def tick(now_ms=None):
             except Exception:  # noqa: BLE001
                 conn.rollback()
                 logger.exception('Zaxira nusxa olinmadi')
+        # Yutuqli marafon: boshlash, eslatmalar, yakunlash (ichida CAS — bir marta bajariladi)
+        marafon.tick(cur, conn, now_ms)
         week_start = clock.period_start_ms('week', now_ms) - game_stats.WEEK_MS
         if _claim(cur, conn, 'weekly', str(week_start)):
             logger.info('Haftalik turnir g\'oliblari: %s', weekly_awards(cur, conn, now_ms))

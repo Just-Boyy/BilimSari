@@ -17,15 +17,27 @@
   <h1>Reyting</h1>
 </div>
 
-<main class="sahifa" style="padding-top:18px">
-  <p class="izoh" style="margin-bottom:14px">Chaqmoq bo'yicha eng faol o'quvchilar</p>
-  <div id="royxat">
-    <div class="skelet" style="height:56px;margin-bottom:8px"></div>
-    <div class="skelet" style="height:56px;margin-bottom:8px"></div>
-    <div class="skelet" style="height:56px"></div>
-  </div>
-  <div id="menUchun"></div>
+<main class="sahifa" style="padding-top:14px">
+  <nav class="reyting-tablar" role="tablist" aria-label="Reyting bo'limlari">
+    <button type="button" role="tab" data-tab="reyting" id="tabReyting"></button>
+    <button type="button" role="tab" data-tab="marafon" id="tabMarafon"></button>
+  </nav>
+
+  <section id="bolimReyting">
+    <p class="izoh" style="margin-bottom:14px">Chaqmoq bo'yicha eng faol o'quvchilar</p>
+    <div id="royxat">
+      <div class="skelet" style="height:56px;margin-bottom:8px"></div>
+      <div class="skelet" style="height:56px;margin-bottom:8px"></div>
+      <div class="skelet" style="height:56px"></div>
+    </div>
+    <div id="menUchun"></div>
+  </section>
+
+  <section id="bolimMarafon" hidden>
+    <div id="marafonTana"><div class="skelet" style="height:180px;margin-bottom:10px"></div><div class="skelet" style="height:120px"></div></div>
+  </section>
 </main>
+<div class="marafon-pastki" id="marafonPastki" hidden></div>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="js/icons.js"></script>
@@ -39,15 +51,20 @@
 
   var MEDAL_RANG = { 1: 'medal-1', 2: 'medal-2', 3: 'medal-3' };
 
-  function qatorHtml(u) {
-    var o_rin = u.rank <= 3
-      ? '<span class="o-rin ' + (MEDAL_RANG[u.rank] || '') + '">' + UI.nishon('medal') + '</span>'
-      : '<span class="o-rin">' + u.rank + '</span>';
-    var avatar = UI.ramkali(u.photo_url
+  function avatarHtml(u) {
+    return UI.ramkali(u.photo_url
       ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
-      : '<div class="avatar">' + UI.harfAvatar(u.name) + '</div>', u.premium && u.frame);
+      : '<div class="avatar">' + UI.esc(UI.harfAvatar(u.name)) + '</div>', u.premium && u.frame);
+  }
+  function orinHtml(rank) {
+    return rank <= 3
+      ? '<span class="o-rin ' + (MEDAL_RANG[rank] || '') + '">' + UI.nishon('medal') + '</span>'
+      : '<span class="o-rin">' + rank + '</span>';
+  }
+
+  function qatorHtml(u) {
     return UI.qatorTeg('reyting-qator' + (u.me ? ' men' : ''), u.user_id, u.me) +
-      o_rin + avatar +
+      orinHtml(u.rank) + avatarHtml(u) +
       '<span class="ism"><span>' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' + UI.emoji(u.emoji) + '</span>' +
       '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + u.chaqmoq + '</span></span>' +
       UI.qatorYop(u.user_id);
@@ -79,6 +96,216 @@
     }
   }
 
+  // ───────────────────────── Tablar ─────────────────────────
+  document.getElementById('tabReyting').innerHTML = UI.nishon('trophy') + '<span>Reyting</span>';
+  document.getElementById('tabMarafon').innerHTML = UI.nishon('flame') + '<span>Marafon</span>';
+  var tab = new URLSearchParams(location.search).get('tab') === 'marafon' || location.hash === '#marafon' ? 'marafon' : 'reyting';
+  var marafonYuklandi = false;
+  function tabChiz() {
+    document.querySelectorAll('.reyting-tablar [data-tab]').forEach(function (b) {
+      b.setAttribute('aria-selected', b.dataset.tab === tab ? 'true' : 'false');
+    });
+    document.getElementById('bolimReyting').hidden = tab !== 'reyting';
+    document.getElementById('bolimMarafon').hidden = tab !== 'marafon';
+    document.getElementById('marafonPastki').hidden = tab !== 'marafon' || !pastkiHtml;
+    if (tab === 'marafon' && !marafonYuklandi) { marafonYuklandi = true; marafonYukla(); }
+  }
+  document.querySelectorAll('.reyting-tablar [data-tab]').forEach(function (b) {
+    b.onclick = function () {
+      tab = b.dataset.tab;
+      history.replaceState(null, '', location.pathname + (tab === 'marafon' ? '#marafon' : ''));
+      tabChiz();
+    };
+  });
+
+  // ───────────────────────── Marafon ─────────────────────────
+  var M = null;            // /api/marathon javobi
+  var farq = 0;            // server soati − brauzer soati
+  var pastkiHtml = '';
+
+  function pul(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + " so'm"; }
+  function sovrinMatn(p) {
+    var qism = [];
+    if (p.amount) qism.push(pul(p.amount));
+    if (p.note) qism.push(p.note);
+    return qism.join(' + ') || 'Sovrin';
+  }
+  function sana(ms) {
+    var d = new Date(ms);
+    var ikki = function (n) { return String(n).padStart(2, '0'); };
+    return ikki(d.getDate()) + '.' + ikki(d.getMonth() + 1) + ' ' + ikki(d.getHours()) + ':' + ikki(d.getMinutes());
+  }
+  function qolgan(ms) {
+    var s = Math.max(0, Math.floor(ms / 1000));
+    var kun = Math.floor(s / 86400);
+    return (kun ? kun + ' kun ' : '') + UI.vaqtRaqam(s % 86400);
+  }
+
+  var QOIDALAR = [
+    "Marafon boshlangandan (yoki siz qo'shilgan paytdan) keyin olingan chaqmoqlar sanaladi: darslar, o'yinlar va kun savoli.",
+    "Shaxsiy darslardan 24 soatda faqat 1 ta darsning chaqmoqi sanaladi.",
+    "O'yinlarda 24 soatda 3 ta chaqmoqli o'yin: 1-o'rin +30, qolganlar +20. Kompyuter bilan o'yin chaqmoq bermaydi.",
+    "Chaqmoq teng bo'lsa, shu songa birinchi yetgan yuqorida turadi.",
+    "\"Faqat Premium\" marafonda Premium faol bo'lgan paytda olingan chaqmoqlar sanaladi.",
+    "Aldash (bir necha akkaunt, nohalol o'yin) aniqlansa — marafondan chiqariladi. Admin qarori yakuniy.",
+    "G'oliblarga bot orqali xabar keladi. Sovrin g'olibning yoki ota-onasining kartasiga o'tkaziladi.",
+  ];
+  function qoidalarHtml() {
+    return '<ol class="marafon-qoidalar">' + QOIDALAR.map(function (q) { return '<li>' + UI.esc(q) + '</li>'; }).join('') + '</ol>';
+  }
+
+  function sovrinlarHtml(prizes) {
+    return '<div class="marafon-sovrinlar">' + prizes.map(function (p) {
+      return '<div class="marafon-sovrin' + (p.place <= 3 ? ' p' + p.place : '') + '">' +
+        (p.image_url ? '<img src="' + UI.esc(p.image_url) + '" alt="" loading="lazy">' : '<span class="marafon-sovrin-belgi">' + UI.nishon(p.place <= 3 ? 'medal' : 'gem') + '</span>') +
+        '<div><b>' + p.place + '-o\'rin</b><span>' + UI.esc(sovrinMatn(p)) + '</span></div></div>';
+    }).join('') + '</div>';
+  }
+
+  function marafonQator(u, topN) {
+    return UI.qatorTeg('reyting-qator' + (u.me ? ' men' : '') + (u.rank <= topN ? ' sovrinli' : ''), u.user_id, u.me) +
+      orinHtml(u.rank) + avatarHtml(u) +
+      '<span class="ism"><span>' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' + UI.emoji(u.emoji) +
+        (u.friend ? '<small class="dost-yorliq">do\'st</small>' : '') + '</span>' +
+      '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + u.score + '</span></span>' +
+      UI.qatorYop(u.user_id);
+  }
+
+  function taymerChiz() {
+    var el = document.getElementById('marafonTaymer');
+    if (!el || !M || !M.marathon) return;
+    var m = M.marathon, hozir = Date.now() + farq;
+    if (m.status === 'scheduled') el.textContent = qolgan(m.start_ms - hozir);
+    else el.textContent = qolgan(m.end_ms - hozir);
+    if ((m.status === 'scheduled' && hozir >= m.start_ms) || (m.status === 'active' && hozir >= m.end_ms)) {
+      setTimeout(marafonYukla, 3000);
+      M = null;
+    }
+  }
+  setInterval(taymerChiz, 1000);
+
+  function marafonChiz() {
+    var tana = document.getElementById('marafonTana');
+    pastkiHtml = '';
+    if (!M.marathon) {
+      tana.innerHTML = UI.holat({ belgi: 'flame', sarlavha: 'Hozircha marafon yo\'q',
+        matn: 'Yangi yutuqli marafon boshlanganda bot orqali xabar beramiz.' });
+      tabChiz();
+      return;
+    }
+    var m = M.marathon;
+    var hero = '<section class="marafon-hero">' +
+      '<div class="marafon-hero-bosh">' + UI.nishon('flame') + '<h2>' + UI.esc(m.title) + '</h2></div>' +
+      (m.prize_fund ? '<p class="marafon-fond"><small>Sovrin jamg\'armasi</small><b>' + pul(m.prize_fund) + '</b></p>' : '') +
+      '<div class="marafon-chiplar">' +
+        (m.status === 'finished' ? '<span>Marafon yakunlandi</span>'
+          : '<span>' + (m.status === 'scheduled' ? 'Boshlanishiga:' : 'Tugashiga:') + ' <b id="marafonTaymer"></b></span>') +
+        '<span>Top-' + m.top_n + ' sovrin oladi</span>' +
+        (m.audience === 'premium' ? '<span class="premium">' + UI.nishon('crown') + 'Faqat Premium</span>' : '') +
+        (M.participants != null ? '<span>' + M.participants + ' qatnashchi</span>' : '') +
+      '</div>' +
+      (m.status === 'scheduled' ? '<p class="izoh-oq">Boshlanadi: ' + sana(m.start_ms) + '. Hozirdan qo\'shilib qo\'yishingiz mumkin.</p>' : '') +
+    '</section>';
+    var html = hero + (m.description ? '<p class="marafon-tavsif">' + UI.esc(m.description) + '</p>' : '');
+
+    if (m.status === 'finished') {
+      var w = M.winners || [];
+      html += '<section class="bo-lim"><div class="bo-lim-bosh"><h2>G\'oliblar</h2></div>' +
+        (w.length ? w.map(function (x) {
+          return UI.qatorTeg('reyting-qator' + (x.me ? ' men' : '') + ' sovrinli', x.user_id, x.me) + orinHtml(x.place) + avatarHtml(x) +
+            '<span class="ism"><span>' + UI.esc(x.name) + (x.me ? ' (siz)' : '') + '</span><small class="marafon-sovrin-kichik">' +
+            UI.esc(sovrinMatn(x)) + '</small></span>' +
+            '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + x.score + '</span></span>' + UI.qatorYop(x.user_id);
+        }).join('') : '<p class="izoh">Bu safar g\'olib bo\'lmadi.</p>') + '</section>';
+      if (M.me && M.me.place) html = '<div class="marafon-men golib">' + UI.nishon('trophy') + '<span>Tabriklaymiz! Siz ' + M.me.place + '-o\'rinni egalladingiz. Sovrin haqida botga xabar yuborildi.</span></div>' + html;
+      tana.innerHTML = html;
+      tabChiz();
+      return;
+    }
+
+    var me = M.me || {};
+    if (me.joined) {
+      var qism = [];
+      if (me.to_next) qism.push('Keyingi o\'ringa: ' + me.to_next + ' chaqmoq');
+      if (me.to_top) qism.push('Top-' + m.top_n + ' ga: ' + me.to_top + ' chaqmoq');
+      if (me.rank && me.rank <= m.top_n && me.score > 0) qism.push('Siz sovrinli o\'rindasiz!');
+      if (!me.score) qism.push('Chaqmoq to\'plang — sovrin kamida 1 chaqmoq to\'plaganlarga beriladi');
+      html += '<div class="marafon-men">' + UI.nishon('chaqmoq') + '<div><b>' +
+        (me.rank ? 'Sizning o\'rningiz: ' + me.rank + ' • ' + me.score + ' chaqmoq' : 'Siz qatnashyapsiz') + '</b>' +
+        (qism.length ? '<small>' + UI.esc(qism.join(' • ')) + '</small>' : '') + '</div></div>';
+    } else if (me.removed) {
+      html += '<div class="marafon-men xato">' + UI.nishon('alert') + '<span>Siz bu marafondan chiqarilgansiz.' +
+        (me.removed_reason ? ' Sabab: ' + UI.esc(me.removed_reason) : '') + '</span></div>';
+    }
+    html += '<section class="bo-lim"><div class="bo-lim-bosh"><h2>Sovrinlar</h2></div>' + sovrinlarHtml(m.prizes) + '</section>';
+    html += '<details class="marafon-qoida-blok"><summary>' + UI.nishon('info') + '<span>Marafon qoidalari</span></summary>' + qoidalarHtml() + '</details>';
+    var top = M.top || [];
+    html += '<section class="bo-lim"><div class="bo-lim-bosh"><h2>Qatnashchilar</h2><span class="izoh">Chaqmoq bo\'yicha</span></div>' +
+      (top.length ? top.map(function (u, i) {
+        var chiziq = (i > 0 && top[i - 1].rank === m.top_n && u.rank === m.top_n + 1)
+          ? '<div class="marafon-chegara"><span>Sovrinli o\'rinlar chegarasi</span></div>' : '';
+        return chiziq + marafonQator(u, m.top_n);
+      }).join('') : '<p class="izoh">Hali hech kim qo\'shilmagan. Birinchi bo\'ling!</p>') + '</section>';
+    tana.innerHTML = html;
+
+    if (me.can_join) {
+      pastkiHtml = '<button class="tugma" type="button" id="qatnashTugma">' + UI.nishon('flame') + '<span>Qatnashish</span></button>';
+    } else if (me.reason === 'premium') {
+      pastkiHtml = '<a class="tugma" href="premium.html">' + UI.nishon('crown') + '<span>Premium olib qatnashing</span></a>';
+    }
+    var pastki = document.getElementById('marafonPastki');
+    pastki.innerHTML = pastkiHtml;
+    var q = document.getElementById('qatnashTugma');
+    if (q) q.onclick = qatnashOyna;
+    taymerChiz();
+    tabChiz();
+  }
+
+  function qatnashOyna() {
+    if (document.getElementById('qatnashOyna')) return;
+    var oyna = document.createElement('div');
+    oyna.id = 'qatnashOyna';
+    oyna.className = 'pastki-oyna';
+    oyna.innerHTML = '<div class="pastki-oyna-karta" role="dialog" aria-modal="true" aria-labelledby="qatnashSarlavha">' +
+      '<h2 id="qatnashSarlavha" style="font-size:19px">' + UI.esc(M.marathon.title) + '</h2>' +
+      '<p class="izoh">Qatnashishdan oldin qoidalar bilan tanishing:</p>' + qoidalarHtml() +
+      '<label class="marafon-rozilik"><input type="checkbox" id="rozilik"><span>Qoidalarga roziman</span></label>' +
+      '<div class="tugmalar" style="margin-top:12px">' +
+        '<button class="tugma tugma-ikkilamchi" type="button" data-yop>Bekor qilish</button>' +
+        '<button class="tugma" type="button" id="qatnashYubor" disabled>Qatnashaman</button>' +
+      '</div></div>';
+    document.body.appendChild(oyna);
+    function yop() { oyna.remove(); }
+    oyna.addEventListener('click', function (e) { if (e.target === oyna || e.target.closest('[data-yop]')) yop(); });
+    var rozi = oyna.querySelector('#rozilik');
+    var yubor = oyna.querySelector('#qatnashYubor');
+    rozi.onchange = function () { yubor.disabled = !rozi.checked; };
+    yubor.onclick = async function () {
+      yubor.disabled = true;
+      var r = await API.marafonQatnash(M.marathon.id);
+      if (!r.ok) { UI.xabar(r.error, 'xato'); yubor.disabled = false; return; }
+      yop();
+      UI.xabar('Siz marafonga qo\'shildingiz. Omad!', 'muvaffaqiyat');
+      qabul(r);
+    };
+  }
+
+  function qabul(r) {
+    M = r;
+    farq = (r.marathon ? r.marathon.now : Date.now()) - Date.now();
+    marafonChiz();
+  }
+
+  async function marafonYukla() {
+    var r = await API.marafon();
+    if (!r.ok) {
+      document.getElementById('marafonTana').innerHTML = UI.xatoHolat(r.error, marafonYukla);
+      return;
+    }
+    qabul(r);
+  }
+
+  tabChiz();
   yukla();
 })();
 </script>
