@@ -3,7 +3,7 @@
 Bilim Premium — 1 oylik obuna.
 
 Imkoniyatlar: AI tushuntirish, shaxsiy darslar yaratish (personal.py), ism
-yonida emoji va avatar atrofida oltin halqa. Premium fanlarni ochmaydi — fanlar
+yonida emoji va avatar atrofida chaqmoqli ramka. Premium fanlarni ochmaydi — fanlar
 alohida sotiladi.
 
 Sotib olish fanlar kabi (payments.py): karta orqali, admin chekni tasdiqlaydi.
@@ -27,6 +27,20 @@ DAYS = 30
 DAY_MS = 24 * 3600 * 1000
 EMOJI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'emoji')
 _KEY_RE = re.compile(r'^[a-z0-9_-]{1,40}$')
+
+# Avatar ramkalari (assets/ramka/<kalit>.webp). Premium o'quvchi bittasini tanlaydi;
+# tanlamagan bo'lsa — birinchisi. Premium tugasa ramka yashiriladi, tanlov saqlanadi.
+FRAMES = [
+    ('oltin-chaqmoq', 'Oltin chaqmoq'),
+    ('brilyant-boron', "Brilyant bo'ron"),
+    ('kamalak-plazma', 'Kamalak plazma'),
+]
+FRAME_KEYS = [k for k, _ in FRAMES]
+DEFAULT_FRAME = FRAME_KEYS[0]
+
+
+def frame_of(saved):
+    return saved if saved in FRAME_KEYS else DEFAULT_FRAME
 _emoji_cache = {'mtime': None, 'keys': []}
 
 
@@ -45,6 +59,7 @@ def ensure_tables(cur, conn):
     conn.commit()
     add_column_if_missing(cur, conn, 'users', 'premium_until', 'BIGINT')
     add_column_if_missing(cur, conn, 'users', 'emoji_status', 'TEXT')
+    add_column_if_missing(cur, conn, 'users', 'avatar_frame', 'TEXT')
 
 
 # ───────────────────────── Holat ─────────────────────────
@@ -65,7 +80,7 @@ def until(cur, user_id) -> int:
 
 def status(cur, user_id, now=None) -> dict:
     now = now or clock.now_ms()
-    cur.execute('SELECT premium_until, emoji_status FROM users WHERE id = %s', (user_id,))
+    cur.execute('SELECT premium_until, emoji_status, avatar_frame FROM users WHERE id = %s', (user_id,))
     row = cur.fetchone() or {}
     u = int(row.get('premium_until') or 0)
     active = is_active(u, now)
@@ -75,6 +90,8 @@ def status(cur, user_id, now=None) -> dict:
         'days_left': max(0, -(-(u - now) // DAY_MS)) if active else 0,
         'emoji': row.get('emoji_status') if active and row.get('emoji_status') in emoji_catalog() else None,
         'emoji_saved': row.get('emoji_status'),
+        'frame': frame_of(row.get('avatar_frame')) if active else None,
+        'frame_saved': frame_of(row.get('avatar_frame')),
     }
 
 
@@ -123,17 +140,27 @@ def set_emoji(cur, conn, user_id, key, now=None):
     conn.commit()
 
 
+def set_frame(cur, conn, user_id, key, now=None):
+    if not is_active(until(cur, user_id), now):
+        raise ValueError("Ramka faqat Bilim Premium bilan ishlaydi.")
+    if key not in FRAME_KEYS:
+        raise ValueError("Bunday ramka yo'q.")
+    cur.execute('UPDATE users SET avatar_frame = %s WHERE id = %s', (key, user_id))
+    conn.commit()
+
+
 def badges(cur, user_ids, now=None) -> dict:
-    """{user_id: {'premium': True, 'emoji': kalit|None}} — faqat premium'i faol bo'lganlar."""
+    """{user_id: {'premium': True, 'emoji': kalit|None, 'frame': kalit}} — faqat premium'i faol bo'lganlar."""
     ids = sorted({int(i) for i in user_ids if i and int(i) > 0})
     if not ids:
         return {}
     now = now or clock.now_ms()
     catalog = set(emoji_catalog())
     marks = ', '.join(['%s'] * len(ids))
-    cur.execute(f'SELECT id, premium_until, emoji_status FROM users WHERE id IN ({marks}) AND premium_until > %s',
-                ids + [now])
-    return {int(r['id']): {'premium': True, 'emoji': r['emoji_status'] if r['emoji_status'] in catalog else None}
+    cur.execute(f'SELECT id, premium_until, emoji_status, avatar_frame FROM users '
+                f'WHERE id IN ({marks}) AND premium_until > %s', ids + [now])
+    return {int(r['id']): {'premium': True, 'emoji': r['emoji_status'] if r['emoji_status'] in catalog else None,
+                           'frame': frame_of(r['avatar_frame'])}
             for r in cur.fetchall()}
 
 
@@ -145,6 +172,7 @@ def decorate(cur, rows, id_key='user_id', now=None):
         info = b.get(int(r.get(id_key) or 0)) if isinstance(r, dict) else None
         r['premium'] = bool(info)
         r['emoji'] = info['emoji'] if info else None
+        r['frame'] = info['frame'] if info else None
     return rows
 
 

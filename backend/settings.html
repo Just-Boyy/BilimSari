@@ -60,6 +60,12 @@
     <div id="emojiQuti"></div>
   </section>
 
+  <!-- Bilim Premium: avatar ramkasi -->
+  <section class="bo-lim" id="ramka">
+    <div class="bo-lim-bosh"><h2>Avatar ramkasi</h2></div>
+    <div id="ramkaQuti"></div>
+  </section>
+
   <!-- Avatar atrofida ko'rinadigan nishonlar -->
   <section class="bo-lim" id="nishonBolim" hidden>
     <div class="bo-lim-bosh"><h2>Avatar nishonlari</h2><span class="izoh" id="nishonSoni"></span></div>
@@ -136,7 +142,38 @@
     if (!p.ok) return;
     emojiKatalog = p.emoji || [];
     emojiChiz(p.premium);
+    ramkaChiz(p.premium, p.frames || []);
   });
+
+  // ── Avatar ramkasi (Bilim Premium) ─────────────────────
+  function ramkaChiz(st, ramkalar) {
+    var quti = document.getElementById('ramkaQuti');
+    var av = u.photo_url
+      ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
+      : '<span class="avatar">' + UI.esc(UI.harfAvatar(u.name || '')) + '</span>';
+    var tanlangan = st.active ? (st.frame_saved || (ramkalar[0] || {}).key) : null;
+    quti.innerHTML = '<p class="izoh">' + (st.active
+        ? 'Tanlagan ramkangiz profil, reyting va o\'yinlarda avataringiz atrofida ko\'rinadi.'
+        : 'Bilim Premium bilan avataringiz atrofida chaqmoqli ramka paydo bo\'ladi — 3 xildan birini tanlaysiz.') + '</p>' +
+      '<div class="ramka-tanlov' + (st.active ? '' : ' qulf') + '" role="radiogroup" aria-label="Avatar ramkasi">' +
+      ramkalar.map(function (f) {
+        var tag = st.active ? 'button type="button"' : 'span';
+        return '<' + tag + ' class="ramka-katak' + (f.key === tanlangan ? ' tanlangan' : '') + '" role="radio" aria-checked="' +
+          (f.key === tanlangan) + '" data-ramka="' + UI.esc(f.key) + '">' + UI.ramkali(av, f.key) +
+          '<span>' + UI.esc(f.name) + '</span></' + (st.active ? 'button' : 'span') + '>';
+      }).join('') + '</div>' +
+      (st.active ? '' : '<a class="tugma tugma-ikkilamchi tugma-mayda" href="premium.html" style="margin-top:12px">' +
+        UI.nishon('crown') + '<span>Premium olish</span></a>');
+    if (!st.active) return;
+    quti.querySelectorAll('button[data-ramka]').forEach(function (b) {
+      b.onclick = async function () {
+        var r = await API.ramkaTanla(b.dataset.ramka);
+        if (!r.ok) { UI.xabar(r.error, 'xato'); return; }
+        UI.xabar('Ramka saqlandi', 'muvaffaqiyat');
+        ramkaChiz({ active: true, frame_saved: b.dataset.ramka }, ramkalar);
+      };
+    });
+  }
   function emojiChiz(st) {
     var quti = document.getElementById('emojiQuti');
     document.getElementById('premiumBelgi').innerHTML = UI.nishon('crown') +

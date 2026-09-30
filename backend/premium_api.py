@@ -68,6 +68,7 @@ def premium_info():
             'saved_promo': partners.saved_promo(cur, request.user),
             'last': payments.subject_statuses(cur, uid).get(premium.ITEM),
             'emoji': premium.emoji_catalog(),
+            'frames': [{'key': k, 'name': n} for k, n in premium.FRAMES],
             'telegram': bool(request.user.get('telegram_id')),
             'configured': bool(settings['card_number']),
         })
@@ -98,6 +99,20 @@ def premium_emoji():
     try:
         premium.set_emoji(cur, conn, request.user['id'], key)
         return jsonify({'ok': True, 'emoji': key})
+    except ValueError as exc:
+        return jsonify({'ok': False, 'error': str(exc), 'code': 'premium_required'}), 403
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/premium/frame', methods=['POST'])
+@auth_required
+def premium_frame():
+    key = _body().get('frame')
+    conn, cur = _conn()
+    try:
+        premium.set_frame(cur, conn, request.user['id'], key)
+        return jsonify({'ok': True, 'frame': key})
     except ValueError as exc:
         return jsonify({'ok': False, 'error': str(exc), 'code': 'premium_required'}), 403
     finally:
@@ -257,7 +272,7 @@ def admin_grant():
         conn.commit()
         if row['telegram_id']:
             tgbot.send(row['telegram_id'], f"🎁 Sizga <b>Bilim Premium</b> {days} kunga berildi!\n"
-                                           "AI tushuntirish, shaxsiy darslar, emoji va oltin halqa ochildi.",
+                                           "AI tushuntirish, shaxsiy darslar, emoji va avatar ramkasi ochildi.",
                        'Shaxsiy darslarim', 'shaxsiy.html')
         admin_audit.log('premium_grant', detail=f'user_id={row["id"]} days={days} name={html.escape(row["name"])}')
         return _overview(cur, until_ms=until)

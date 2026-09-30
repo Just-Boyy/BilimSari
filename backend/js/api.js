@@ -127,6 +127,7 @@
     // — Bilim Premium —
     premium: function () { return so_rov('/api/premium'); },
     premiumBuyurtma: function (promo) { return so_rov('/api/premium/order', { method: 'POST', body: { promo: promo || null } }); },
+    ramkaTanla: function (kalit) { return so_rov('/api/premium/frame', { method: 'POST', body: { frame: kalit } }); },
     emojiTanla: function (kalit) { return so_rov('/api/premium/emoji', { method: 'POST', body: { emoji: kalit || null } }); },
 
     // — Hamkorlik (promo-kod egasi) —

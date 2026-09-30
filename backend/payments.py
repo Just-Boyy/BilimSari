@@ -648,7 +648,7 @@ def _notify_paid(cur, chat_id, order, keys, head):
         till = datetime.fromtimestamp(u / 1000, TASHKENT_TZ).strftime('%d.%m.%Y') if u else ''
         tgbot.send(chat_id, f"🎉 <b>{head}</b> ({order['code']})\n"
                             f"💎 <b>Bilim Premium</b> faollashdi — {till} gacha.\n"
-                            f"AI tushuntirish, shaxsiy darslar, emoji va oltin halqa endi sizniki!",
+                            f"AI tushuntirish, shaxsiy darslar, emoji va chaqmoqli avatar ramkasi endi sizniki!",
                    'Shaxsiy darslarim', 'shaxsiy.html')
     else:
         tgbot.send(chat_id, f"🎉 <b>{head}</b> ({order['code']})\n"

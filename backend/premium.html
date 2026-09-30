@@ -42,8 +42,8 @@
   .pr-band p { font-size: 13px; color: var(--matn-2); line-height: 1.5; }
   .pr-emojilar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .pr-emojilar img { width: 28px; height: 28px; object-fit: contain; }
-  .pr-halqa-namuna { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-  .pr-halqa-namuna .avatar { width: 44px; height: 44px; }
+  .pr-halqa-namuna { display: flex; align-items: center; gap: 34px; margin: 22px 0 16px 20px; }
+  .pr-halqa-namuna .avatar { width: 40px; height: 40px; font-size: 15px; }
   .pr-eslatma { margin-top: 14px; font-size: 12px; color: var(--matn-2); text-align: center; }
   .pr-tolov { margin-top: 18px; }
   .pr-tolov h2 { font-size: 17px; margin-bottom: 10px; }
@@ -56,7 +56,7 @@
 
 <div class="ustki">
   <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
-  <h1>Bilim Premium<small>AI, shaxsiy darslar, emoji va oltin halqa</small></h1>
+  <h1>Bilim Premium<small>AI, shaxsiy darslar, emoji va avatar ramkasi</small></h1>
 </div>
 
 <main class="sahifa" style="padding-top:18px">
@@ -113,9 +113,12 @@
       return '<img src="assets/emoji/' + UI.esc(k) + '.png" alt="" loading="lazy">';
     }).join('');
     var u = API.user() || {};
-    var avatar = u.photo_url
-      ? '<img class="avatar premium-halqa" alt="" src="' + UI.esc(u.photo_url) + '">'
-      : '<span class="avatar premium-halqa">' + UI.esc(UI.harfAvatar(u.name || '')) + '</span>';
+    var avatar = function (ramka) {
+      return UI.ramkali(u.photo_url
+        ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
+        : '<span class="avatar">' + UI.esc(UI.harfAvatar(u.name || '')) + '</span>', ramka);
+    };
+    var ramkalar = (P.frames || []).map(function (f) { return avatar(f.key); }).join('');
     var band = function (ikon, sarlavha, matn, qoshimcha) {
       return '<div class="karta pr-band"><span class="belgi" aria-hidden="true">' + UI.nishon(ikon) + '</span>' +
         '<div><h3>' + sarlavha + '</h3><p>' + matn + '</p>' + (qoshimcha || '') + '</div></div>';
@@ -130,9 +133,10 @@
       band('star', 'Ism yonida emoji',
         (P.emoji || []).length + ' ta maxsus emoji\'dan birini tanlang — u reyting, o\'yinlar va kun savolida ismingiz ' +
         'yonida ko\'rinadi.', emojilar ? '<div class="pr-emojilar" aria-hidden="true">' + emojilar + '</div>' : '') +
-      band('medal', 'Oltin halqa',
-        'Avataringiz atrofida oltin halqa paydo bo\'ladi — hamma sizni Premium o\'quvchi ekaningizni ko\'radi.',
-        '<div class="pr-halqa-namuna" aria-hidden="true">' + avatar + '</div>') +
+      band('medal', 'Avatar ramkasi',
+        'Avataringiz atrofida chaqmoqli ramka paydo bo\'ladi — 3 xil ramkadan birini tanlaysiz. Hamma sizni ' +
+        'Premium o\'quvchi ekaningizni ko\'radi.',
+        '<div class="pr-halqa-namuna" aria-hidden="true">' + ramkalar + '</div>') +
     '</div>' +
     '<p class="pr-eslatma">Premium fanlarni ochmaydi — fanlar Do\'konda alohida sotiladi. ' +
       'Muddat 1 oy; tugagach, qayta olish mumkin.</p>';

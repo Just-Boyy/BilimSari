@@ -24,13 +24,16 @@
     border: 2px solid #fff;
     box-shadow: 0 2px 0 var(--d-soya, #b45309), 0 6px 14px rgba(15, 23, 42, .18);
     cursor: pointer;
-    transform: translate(var(--x), var(--y));
+    transform: translate(calc(var(--x) * var(--om, 1)), calc(var(--y) * var(--om, 1)));
     animation: orbitaKir .45s cubic-bezier(.2, 1.4, .4, 1) var(--d) backwards,
                orbitaSuz 3.4s ease-in-out calc(var(--d) + .45s) infinite alternate;
   }
   .yutuq-belgi.orbita-nishon svg { width: 56%; height: 56%; }
   @keyframes orbitaKir { from { opacity: 0; scale: .3; } }
-  @keyframes orbitaSuz { to { transform: translate(var(--x), calc(var(--y) - 6px)); } }
+  @keyframes orbitaSuz { to { transform: translate(calc(var(--x) * var(--om, 1)), calc(var(--y) * var(--om, 1) - 6px)); } }
+  /* Ramka bo'lsa — nishonlar tikanlardan tashqariroqqa suriladi */
+  .avatar-orbita.ramkali-orbita { --om: 1.32; margin-top: 26px; margin-bottom: 26px; }
+  .avatar-orbita .ramkali { display: grid; }
 
   /* Yuqori o'ng burchakdagi Sozlamalar tugmasi */
   .profil-shapka { position: relative; }
@@ -114,12 +117,11 @@
   var pr = u.premium || {};
   document.getElementById('ism').innerHTML = '<span>' + UI.esc(ism) + '</span>' + UI.emoji(pr.active && pr.emoji);
   var av = document.getElementById('avatar');
-  if (u.photo_url) {
-    av.outerHTML = '<img class="avatar' + (pr.active ? ' premium-halqa' : '') + '" alt="" src="' + UI.esc(u.photo_url) + '">';
-  } else {
-    av.textContent = UI.harfAvatar(ism);
-    av.classList.toggle('premium-halqa', !!pr.active);
-  }
+  var avHtml = u.photo_url
+    ? '<img class="avatar" id="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
+    : '<div class="avatar" id="avatar" aria-hidden="true">' + UI.esc(UI.harfAvatar(ism)) + '</div>';
+  av.outerHTML = UI.ramkali(avHtml, pr.active && pr.frame);
+  document.getElementById('avatarOrbita').classList.toggle('ramkali-orbita', !!(pr.active && pr.frame));
   if (pr.active) {
     document.getElementById('ism').insertAdjacentHTML('afterend',
       '<p style="text-align:center;margin:6px 0 2px"><a class="premium-pill" href="premium.html">' +

@@ -7,7 +7,7 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v29';
+const CACHE = 'bilimsari-v30';
 
 const ASSETS = [
   '/',

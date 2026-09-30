@@ -366,6 +366,16 @@
     // Bilim Premium
     'Bilim Premium': 'Bilim Premium', 'Bilim Premium (1 oy)': 'Bilim Premium (1 мес.)', 'Bilim Premium (1 oy) •': 'Bilim Premium (1 мес.) •',
     'AI, shaxsiy darslar, emoji va oltin halqa': 'ИИ, личные уроки, эмодзи и золотое кольцо',
+    'AI, shaxsiy darslar, emoji va avatar ramkasi': 'ИИ, личные уроки, эмодзи и рамка аватара',
+    'Avatar ramkasi': 'Рамка аватара', 'Oltin chaqmoq': 'Золотая молния', "Brilyant bo'ron": 'Бриллиантовая буря',
+    'Kamalak plazma': 'Радужная плазма', 'Ramka saqlandi': 'Рамка сохранена',
+    "Avataringiz atrofida chaqmoqli ramka paydo bo'ladi — 3 xil ramkadan birini tanlaysiz. Hamma sizni Premium o'quvchi ekaningizni ko'radi.":
+      'Вокруг аватара появится рамка с молниями — выберите одну из 3. Все увидят, что вы ученик с Premium.',
+    "Tanlagan ramkangiz profil, reyting va o'yinlarda avataringiz atrofida ko'rinadi.":
+      'Выбранная рамка видна вокруг аватара в профиле, рейтинге и играх.',
+    "Bilim Premium bilan avataringiz atrofida chaqmoqli ramka paydo bo'ladi — 3 xildan birini tanlaysiz.":
+      'С Bilim Premium вокруг аватара появится рамка с молниями — выберите одну из 3.',
+    "Ramka faqat Bilim Premium bilan ishlaydi.": 'Рамка доступна только с Bilim Premium.',
     "O'qishni yanada qiziqarli va samarali qiladigan imkoniyatlar.": 'Возможности, которые делают учёбу интереснее и эффективнее.',
     'Premium faol —': 'Premium активен — до', 'Premium faol': 'Premium активен',
     'AI tushuntirish': 'Объяснение от ИИ',

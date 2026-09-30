@@ -344,6 +344,14 @@
   }
 
   /** Premium o'quvchi tanlagan emoji (ism yonida). Kalit bo'lmasa — bo'sh. */
+  var RAMKALAR = { 'oltin-chaqmoq': 1, 'brilyant-boron': 1, 'kamalak-plazma': 1 };
+  /** Avatar HTML'ini Premium ramkasi bilan o'raydi (ramka bo'lmasa — o'zgarishsiz). */
+  function ramkali(avatarHtml, ramka, cls) {
+    if (!ramka || !RAMKALAR[ramka]) return avatarHtml;
+    return '<span class="ramkali ramka-ichida' + (cls ? ' ' + cls : '') + '">' + avatarHtml +
+      '<span class="ramka r-' + ramka + '" aria-hidden="true"></span></span>';
+  }
+
   var DARAJALAR = { bronza: 'Bronza', kumush: 'Kumush', oltin: 'Oltin', brilyant: 'Brilyant', premium: 'Premium' };
   /** Nishon darajasi (CSS klassi uchun xavfsiz): bronza | kumush | oltin | brilyant | premium. */
   function daraja(t) { return DARAJALAR[t] ? t : 'oltin'; }
@@ -419,6 +427,7 @@
     pul: pul,
     botniOch: botniOch,
     daraja: daraja,
+    ramkali: ramkali,
     darajaNomi: darajaNomi,
     tasdiq: tasdiq,
     emoji: emoji,
