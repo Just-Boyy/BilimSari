@@ -11,6 +11,7 @@ import curriculum as cur_mod
 import daily
 import payments
 import premium
+import profil
 import study
 from auth_core import auth_required
 from db import get_connection
@@ -267,6 +268,21 @@ def cooldown():
     try:
         subject = request.args.get('subject') or None   # kutish har fanga alohida
         return jsonify({'ok': True, 'cooldown': study.cooldown_state(cur, request.user['id'], subject)})
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/profile/<int:user_id>', methods=['GET'])
+@auth_required
+def public_profile(user_id):
+    """Boshqa o'quvchining ochiq profili (reyting, kun savoli va o'yinlarda ismini bosganda)."""
+    conn, cur = _conn()
+    try:
+        data = profil.public(cur, user_id)
+        if not data:
+            return jsonify({'ok': False, 'error': "Bunday o'quvchi topilmadi.", 'code': 'not_found'}), 404
+        data['me'] = user_id == request.user['id']
+        return jsonify({'ok': True, 'profile': data})
     finally:
         _close(conn, cur)
 

@@ -488,6 +488,7 @@ def state(cur, conn, user, code, since=None) -> dict:
             'emoji': (badges.get(p['user_id']) or {}).get('emoji'),
             'frame': (badges.get(p['user_id']) or {}).get('frame'),
             'photo_url': photos.get(p['user_id']),
+            'uid': None if p['is_bot'] else p['user_id'],       # profilini ko'rish uchun
             'level': int(p['level']),
             'ready': bool(p['ready']) or p['user_id'] == host_id,
             'host': p['user_id'] == host_id,

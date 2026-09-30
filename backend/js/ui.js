@@ -352,6 +352,66 @@
       '<span class="ramka r-' + ramka + '" aria-hidden="true"></span></span>';
   }
 
+  /** Boshqa o'quvchi profili sahifasi (o'ziniki — profile.html). */
+  function profilYoli(uid, men) {
+    return men ? 'profile.html' : 'foydalanuvchi.html?id=' + encodeURIComponent(uid);
+  }
+  /** Ro'yxat qatori uchun ochuvchi teg: foydalanuvchi ID bo'lsa — profilga havola, aks holda div. */
+  function qatorTeg(cls, uid, men) {
+    return uid
+      ? '<a class="' + cls + '" href="' + profilYoli(uid, men) + '">'
+      : '<div class="' + cls + '">';
+  }
+  function qatorYop(uid) { return uid ? '</a>' : '</div>'; }
+
+  /** Sahifadan chiqmasdan kichik profil oynasi (o'yin xonasida — room tashlab ketilmasin).
+   * Har qanday [data-profil="ID"] elementni bosganda ochiladi. */
+  async function profilOyna(uid) {
+    if (!uid || document.getElementById('profilOyna')) return;
+    var oyna = document.createElement('div');
+    oyna.id = 'profilOyna';
+    oyna.className = 'yutuq-tabrik profil-oyna';
+    oyna.innerHTML = '<div class="yutuq-tabrik-karta" role="dialog" aria-modal="true" aria-label="Profil">' + yuklanmoqda() + '</div>';
+    document.body.appendChild(oyna);
+    function yop() { oyna.remove(); document.removeEventListener('keydown', tugma); }
+    function tugma(e) { if (e.key === 'Escape') yop(); }
+    document.addEventListener('keydown', tugma);
+    oyna.addEventListener('click', function (e) { if (e.target === oyna || e.target.closest('[data-yop]')) yop(); });
+    var r = await API.get('/api/study/profile/' + encodeURIComponent(uid));
+    var karta = oyna.querySelector('.yutuq-tabrik-karta');
+    if (!r.ok) {
+      karta.innerHTML = '<p class="izoh">' + esc(r.error || 'Xatolik') + '</p>' +
+        '<button class="tugma" type="button" data-yop>Yopish</button>';
+      return;
+    }
+    var p = r.profile, pr = p.premium || {};
+    var av = p.photo_url
+      ? '<img class="avatar" alt="" src="' + esc(p.photo_url) + '">'
+      : '<span class="avatar" aria-hidden="true">' + esc(harfAvatar(p.name)) + '</span>';
+    var nish = ((p.badges && p.badges.items) || []).slice().sort(function (a, b) { return b.unlocked_ms - a.unlocked_ms; }).slice(0, 7);
+    var s = function (b, t) { return '<div><b>' + b + '</b>' + esc(t) + '</div>'; };
+    karta.innerHTML =
+      '<div class="po-bosh">' + ramkali(av, pr.active && pr.frame) +
+        '<h2><span>' + esc(p.name) + '</span>' + emoji(pr.active && pr.emoji) + '</h2>' +
+        (pr.active ? '<span class="premium-pill">' + nishon('crown') + '<span>Bilim Premium</span></span>' : '') +
+      '</div>' +
+      '<div class="po-stat">' + s(String(p.chaqmoq), 'Chaqmoq') + s(p.rank ? String(p.rank) : '—', "O'rin") +
+        s(String(p.streak), 'Streak') + s(String(p.topics), 'Mavzu') + '</div>' +
+      (nish.length ? '<div class="po-nishonlar">' + nish.map(function (a) {
+        return '<span class="yutuq-belgi d-' + daraja(a.tier) + '" title="' + esc(a.title) + '">' + nishon(a.icon) + '</span>';
+      }).join('') + '</div>' : '') +
+      '<a class="tugma" href="' + profilYoli(p.id, p.me) + '">To\'liq profil</a>' +
+      '<button class="matn-tugma" type="button" data-yop style="margin-top:8px">Yopish</button>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-profil]');
+    if (!t) return;
+    var ichki = e.target.closest('button, a');            // qator ichidagi tugmalar (masalan, "chiqarish")
+    if (ichki && ichki !== t && t.contains(ichki)) return;
+    e.preventDefault();
+    profilOyna(t.getAttribute('data-profil'));
+  });
+
   var DARAJALAR = { bronza: 'Bronza', kumush: 'Kumush', oltin: 'Oltin', brilyant: 'Brilyant', premium: 'Premium' };
   /** Nishon darajasi (CSS klassi uchun xavfsiz): bronza | kumush | oltin | brilyant | premium. */
   function daraja(t) { return DARAJALAR[t] ? t : 'oltin'; }
@@ -428,6 +488,10 @@
     botniOch: botniOch,
     daraja: daraja,
     ramkali: ramkali,
+    profilYoli: profilYoli,
+    qatorTeg: qatorTeg,
+    qatorYop: qatorYop,
+    profilOyna: profilOyna,
     darajaNomi: darajaNomi,
     tasdiq: tasdiq,
     emoji: emoji,

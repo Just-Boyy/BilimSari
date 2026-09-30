@@ -274,10 +274,10 @@
     var avatar = u.photo_url
       ? '<img class="avatar" alt="" src="' + esc(u.photo_url) + '">'
       : '<div class="avatar" aria-hidden="true">' + esc(G.initial(u.name)) + '</div>';
-    return '<div class="reyting-qator' + (u.me ? ' men' : '') + '">' + place + avatar +
+    return UI.qatorTeg('reyting-qator' + (u.me ? ' men' : ''), u.user_id, u.me) + place + avatar +
       '<span class="ism">' + esc(u.name) + (u.me ? ' (siz)' : '') +
         '<small>' + u.games + " o'yin • " + u.wins + " g'alaba • " + u.accuracy + '%</small></span>' +
-      '<span class="oy-ball">' + u.xp + '<small>ball</small></span></div>';
+      '<span class="oy-ball">' + u.xp + '<small>ball</small></span>' + UI.qatorYop(u.user_id);
   }
 
   /** Haftalik turnir: qachon tugashi, sovrin va o'tgan hafta g'oliblari. */

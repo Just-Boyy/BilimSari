@@ -2070,6 +2070,24 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .bosh-ramka > .avatar-halqa { margin: 0; }
 .ramkali.ramka-ichida > .avatar { box-shadow: none; }
 
+/* Boshqa o'quvchi profiliga havola bo'lgan ro'yxat qatorlari */
+a.reyting-qator { color: inherit; text-decoration: none; }
+a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
+[data-profil] { cursor: pointer; }
+
+/* Kichik profil oynasi (o'yin xonasida) */
+.profil-oyna .yutuq-tabrik-karta { padding-top: 26px; }
+.profil-oyna .po-bosh { display: grid; justify-items: center; gap: 6px; }
+.profil-oyna .po-bosh .avatar { width: 72px; height: 72px; font-size: 1.6rem; }
+.profil-oyna .po-bosh .ramkali { margin: 8px 0 4px; }
+.profil-oyna .po-bosh h2 { display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 4px 0 0; }
+.po-stat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 14px 0 12px; }
+.po-stat > div { background: var(--fon); border-radius: 12px; padding: 8px 2px; font-size: 11px; font-weight: 700; color: var(--matn-2); }
+.po-stat b { display: block; font-size: 16px; color: var(--matn-quyuq); }
+.po-nishonlar { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.po-nishonlar .yutuq-belgi { width: 32px; height: 32px; box-shadow: 0 2px 0 var(--d-soya); }
+.po-nishonlar .yutuq-belgi svg { width: 17px; height: 17px; }
+
 /* Sozlamalar: ramka tanlash */
 .ramka-tanlov { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
 .ramka-katak {

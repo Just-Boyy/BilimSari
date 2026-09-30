@@ -79,7 +79,7 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
         meta = info.get(r['user_id']) or {}
         total = int(r['total'] or 0)
         return {
-            'rank': rank, 'name': meta.get('name') or "O'yinchi", 'photo_url': meta.get('photo_url'),
+            'rank': rank, 'user_id': r['user_id'], 'name': meta.get('name') or "O'yinchi", 'photo_url': meta.get('photo_url'),
             'xp': int(r['xp'] or 0), 'games': int(r['games'] or 0), 'wins': int(r['wins'] or 0),
             'accuracy': round(100 * int(r['correct'] or 0) / total) if total else 0,
             'me': r['user_id'] == user_id,

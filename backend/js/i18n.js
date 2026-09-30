@@ -403,6 +403,12 @@
       'В боте есть номер карты: оплатите и отправьте фото чека боту. После подтверждения админом Premium активируется.',
     'Bilim Premium faollashmoqda...': 'Bilim Premium активируется...', 'Premium faollashdi! Omad!': 'Premium активирован! Удачи!',
 
+    // Boshqa o'quvchi profili
+    "O'quvchi profili": 'Профиль ученика', "Reytingdagi o'rin": 'Место в рейтинге', 'Kunlik streak': 'Серия дней',
+    'Tugatilgan mavzular': 'Пройдено тем', "Hali o'yin o'ynamagan.": 'Пока не играл.', 'Hali nishon olmagan.': 'Пока нет значков.',
+    "O'quvchi topilmadi": 'Ученик не найден', "Bu o'quvchi ilovadan o'chirilgan bo'lishi mumkin.": 'Возможно, ученик удалён из приложения.',
+    "Bunday o'quvchi topilmadi.": 'Такой ученик не найден.', "To'liq profil": 'Полный профиль', "O'rin": 'Место', 'Mavzu': 'Тем',
+    'Streak': 'Серия',
     // Pastki "Menyu"
     'Menyu': 'Меню', 'Biz haqimizda': 'О нас', "Kanal havolasi tez orada qo'shiladi.":'Ссылка на канал скоро появится.',
     // Hamkorlik (sahifa)

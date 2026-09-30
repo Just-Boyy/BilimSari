@@ -46,11 +46,11 @@
     var avatar = UI.ramkali(u.photo_url
       ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
       : '<div class="avatar">' + UI.harfAvatar(u.name) + '</div>', u.premium && u.frame);
-    return '<div class="reyting-qator' + (u.me ? ' men' : '') + '">' +
+    return UI.qatorTeg('reyting-qator' + (u.me ? ' men' : ''), u.user_id, u.me) +
       o_rin + avatar +
       '<span class="ism"><span>' + UI.esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' + UI.emoji(u.emoji) + '</span>' +
       '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + u.chaqmoq + '</span></span>' +
-      '</div>';
+      UI.qatorYop(u.user_id);
   }
 
   async function yukla() {

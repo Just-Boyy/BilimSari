@@ -572,7 +572,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PAGES = {
     'index.html', 'telegram-kerak.html', 'onboarding.html',
     'dashboard.html', 'subjects.html', 'topics.html', 'topic.html',
-    'profile.html', 'hamkor.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
+    'profile.html', 'hamkor.html', 'foydalanuvchi.html', 'leaderboard.html', 'game.html', 'games.html', 'daily.html', 'settings.html', 'shop.html',
     'premium.html', 'shaxsiy.html',
     'admin.html',
 }

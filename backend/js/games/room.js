@@ -269,7 +269,8 @@
     }
 
     function playerRow(p) {
-      return '<li class="oy-oyinchi' + (p.me ? ' men' : '') + (p.online ? '' : ' oflayn') + (p.bot ? ' bot' : '') + '">' +
+      return '<li class="oy-oyinchi' + (p.me ? ' men' : '') + (p.online ? '' : ' oflayn') + (p.bot ? ' bot' : '') + '"' +
+        (p.uid ? ' data-profil="' + p.uid + '"' : '') + '>' +
         (window.UI && UI.ramkali ? UI.ramkali : function (h) { return h; })(avatarHtml(p), p.premium && p.frame, 'oy-ramka') +
         '<span class="oy-oyinchi-matn"><b><span>' + esc(p.name) + (p.me ? ' (siz)' : '') + '</span>' +
           (p.emoji ? '<img class="nik-emoji" src="assets/emoji/' + esc(p.emoji) + '.png" alt="" aria-hidden="true">' : '') + '</b>' +
@@ -719,7 +720,8 @@
       var r = sess.results || {};
       var me = r.me;
       var rows = (r.rows || []).map(function (x) {
-        return '<li class="reyting-qator' + (x.me ? ' men' : '') + '">' +
+        var uid = (oyinchi(x.name) || {}).uid;
+        return '<li class="reyting-qator' + (x.me ? ' men' : '') + '"' + (uid ? ' data-profil="' + uid + '"' : '') + '>' +
           '<span class="o-rin' + (x.rank <= 3 ? ' medal-' + x.rank : '') + '" aria-label="' + x.rank + '-o\'rin">' +
             (x.rank <= 3 ? ic('medal') : x.rank) + '</span>' +
           avatarHtml(oyinchi(x.name) || x) +

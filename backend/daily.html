@@ -149,9 +149,9 @@
       var o_rin = e.rank <= 3
         ? '<span class="o-rin medal-' + e.rank + '">' + UI.nishon('medal') + '</span>'
         : '<span class="o-rin">' + e.rank + '</span>';
-      return '<div class="reyting-qator' + (e.me ? ' men' : '') + '">' + o_rin +
+      return UI.qatorTeg('reyting-qator' + (e.me ? ' men' : ''), e.user_id, e.me) + o_rin +
         '<span class="ism"><span>' + UI.esc(e.me ? e.name + ' (siz)' : e.name) + '</span>' + UI.emoji(e.emoji) + '</span>' +
-        '<span class="soniya">' + soniya(e.seconds) + '</span></div>';
+        '<span class="soniya">' + soniya(e.seconds) + '</span>' + UI.qatorYop(e.user_id);
     };
     var html = rt.top.map(qator).join('');
     var menTopda = rt.top.some(function (e) { return e.me; });
