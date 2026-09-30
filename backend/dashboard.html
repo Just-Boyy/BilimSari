@@ -116,7 +116,7 @@
     var halqa = document.getElementById('maqsadHalqa');
     halqa.innerHTML = avatarHtml(u.name, u.photo_url);
     // Premium ramkasi reja halqasining tashqarisidan o'raladi (halqa ko'rinib turadi)
-    var ramka = pr.active && ['oltin-chaqmoq', 'brilyant-boron', 'kamalak-plazma'].indexOf(pr.frame) >= 0 ? pr.frame : null;
+    var ramka = pr.active && ['oltin-chaqmoq', 'kok-chaqmoq', 'yashil-chaqmoq'].indexOf(pr.frame) >= 0 ? pr.frame : null;
     var eski = halqa.parentElement.classList.contains('ramkali') ? halqa.parentElement : null;
     if (ramka && !eski) {
       var w = document.createElement('span');

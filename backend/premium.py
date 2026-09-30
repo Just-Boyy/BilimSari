@@ -32,8 +32,8 @@ _KEY_RE = re.compile(r'^[a-z0-9_-]{1,40}$')
 # tanlamagan bo'lsa — birinchisi. Premium tugasa ramka yashiriladi, tanlov saqlanadi.
 FRAMES = [
     ('oltin-chaqmoq', 'Oltin chaqmoq'),
-    ('brilyant-boron', "Brilyant bo'ron"),
-    ('kamalak-plazma', 'Kamalak plazma'),
+    ('kok-chaqmoq', "Ko'k chaqmoq"),
+    ('yashil-chaqmoq', 'Yashil chaqmoq'),
 ]
 FRAME_KEYS = [k for k, _ in FRAMES]
 DEFAULT_FRAME = FRAME_KEYS[0]

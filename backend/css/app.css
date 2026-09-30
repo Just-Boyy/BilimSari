@@ -2042,10 +2042,10 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 @media (prefers-reduced-motion: reduce) { .nik-emoji { animation: none; } }
 .premium-halqa { border-radius: 50%; box-shadow: 0 0 0 2.5px #fff, 0 0 0 5px #f5b301, 0 0 14px 4px rgba(245, 179, 1, .45); }
 
-/* Premium avatar ramkasi (assets/ramka/*.webp): rasm markazidagi teshik radiusi — rasm o'lchamining 24%.
-   --rk — ramka o'lchami avatarga nisbatan: 1.96 da teshik avatar chetiga tegadi, kichikroq
-   qiymatda ramka avatar chetini biroz yopadi (ro'yxatlarda tikanlar qo'shni qatorga chiqmasin). */
-.ramkali { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; --rk: 1.96; }
+/* Premium avatar ramkasi (assets/ramka/*.webp): ingichka chaqmoqli halqa, rasm markazidagi teshik
+   radiusi — rasm o'lchamining 38%. --rk — ramka o'lchami avatarga nisbatan: 1.3 da halqa avatar
+   chetiga zich yopishadi, kichikroq qiymatda avatar chetini biroz yopadi (ro'yxatlarda). */
+.ramkali { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; --rk: 1.3; }
 .ramkali > .ramka {
   position: absolute; left: 50%; top: 50%; z-index: 2; pointer-events: none;
   width: calc(var(--rk) * 100%); height: calc(var(--rk) * 100%);
@@ -2054,23 +2054,23 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
   animation: ramkaNur 3.2s ease-in-out infinite;
 }
 .ramka.r-oltin-chaqmoq { background-image: url(../assets/ramka/oltin-chaqmoq.webp); }
-.ramka.r-brilyant-boron { background-image: url(../assets/ramka/brilyant-boron.webp); }
-.ramka.r-kamalak-plazma { background-image: url(../assets/ramka/kamalak-plazma.webp); }
+.ramka.r-kok-chaqmoq { background-image: url(../assets/ramka/kok-chaqmoq.webp); }
+.ramka.r-yashil-chaqmoq { background-image: url(../assets/ramka/yashil-chaqmoq.webp); }
 @keyframes ramkaNur { 0%, 100% { filter: brightness(1) saturate(1); } 50% { filter: brightness(1.16) saturate(1.12); } }
 @media (prefers-reduced-motion: reduce) { .ramkali > .ramka { animation: none; } }
-.reyting-qator .ramkali { --rk: 1.72; margin: 0 4px; }
-.bosh-ramka { --rk: 2.02; margin: 12px 16px 12px 12px; }
+.reyting-qator .ramkali { --rk: 1.24; margin: 0 2px; }
+.bosh-ramka { --rk: 1.3; margin: 0 6px 0 4px; }
 .bosh-ramka > .avatar-halqa { margin: 0; }
 .ramkali.ramka-ichida > .avatar { box-shadow: none; }
 
 /* Sozlamalar: ramka tanlash */
 .ramka-tanlov { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
 .ramka-katak {
-  display: grid; justify-items: center; gap: 10px; padding: 22px 6px 12px;
+  display: grid; justify-items: center; gap: 10px; padding: 16px 6px 12px;
   border-radius: 16px; border: 2px solid var(--chiziq); background: var(--oq); cursor: pointer;
   font: inherit; font-size: 12.5px; font-weight: 800; color: var(--matn-quyuq); overflow: hidden;
 }
-.ramka-katak .ramkali { margin: 8px 0; }
+.ramka-katak .ramkali { margin: 4px 0; }
 .ramka-katak .avatar { width: 46px; height: 46px; font-size: 18px; }
 .ramka-katak.tanlangan { border-color: #f5b301; background: #fff7d6; box-shadow: 0 0 0 3px rgba(245, 179, 1, .25); }
 .ramka-tanlov.qulf { opacity: .6; filter: grayscale(.2); }

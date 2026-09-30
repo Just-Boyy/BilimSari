@@ -367,8 +367,8 @@
     'Bilim Premium': 'Bilim Premium', 'Bilim Premium (1 oy)': 'Bilim Premium (1 мес.)', 'Bilim Premium (1 oy) •': 'Bilim Premium (1 мес.) •',
     'AI, shaxsiy darslar, emoji va oltin halqa': 'ИИ, личные уроки, эмодзи и золотое кольцо',
     'AI, shaxsiy darslar, emoji va avatar ramkasi': 'ИИ, личные уроки, эмодзи и рамка аватара',
-    'Avatar ramkasi': 'Рамка аватара', 'Oltin chaqmoq': 'Золотая молния', "Brilyant bo'ron": 'Бриллиантовая буря',
-    'Kamalak plazma': 'Радужная плазма', 'Ramka saqlandi': 'Рамка сохранена',
+    'Avatar ramkasi': 'Рамка аватара', 'Oltin chaqmoq': 'Золотая молния', "Ko'k chaqmoq": 'Синяя молния',
+    'Yashil chaqmoq': 'Зелёная молния', 'Ramka saqlandi': 'Рамка сохранена',
     "Avataringiz atrofida chaqmoqli ramka paydo bo'ladi — 3 xil ramkadan birini tanlaysiz. Hamma sizni Premium o'quvchi ekaningizni ko'radi.":
       'Вокруг аватара появится рамка с молниями — выберите одну из 3. Все увидят, что вы ученик с Premium.',
     "Tanlagan ramkangiz profil, reyting va o'yinlarda avataringiz atrofida ko'rinadi.":
