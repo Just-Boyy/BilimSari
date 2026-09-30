@@ -12,6 +12,7 @@ SQLite uchun quyidagi shim so'rovni tarjima qiladi.
 import os
 import re
 import sqlite3
+import time
 from datetime import datetime, timezone, timedelta
 
 # O'zbekiston vaqti — UTC+5, yozgi/qishki o'zgarish yo'q
@@ -130,11 +131,39 @@ def _get_pg_pool():
         max_conn = int(os.environ.get('DB_POOL_MAX', '5'))
         # connect_timeout — baza javob bermasa so'rov cheksiz osilib qolmasin (sync worker'lar
         # band bo'lib, butun sayt qotib qolardi); 10 soniyada xato qaytadi va keyingi so'rov qayta uradi
+        # keepalives — baza internet orqali (tashqi xizmatda) bo'lganda, jim turgan ulanish
+        # tarmoq yoki pooler tomonidan sezdirmasdan uzilib qolmasligi uchun
         _pg_pool = ThreadedConnectionPool(
             1, max_conn, database_url(), cursor_factory=RealDictCursor,
             connect_timeout=int(os.environ.get('DB_CONNECT_TIMEOUT', '10')),
+            keepalives=1, keepalives_idle=30, keepalives_interval=10, keepalives_count=3,
         )
     return _pg_pool
+
+
+# Ulanish oxirgi marta qachon ishlatilgan (id(raw) → soniya). Uzoq jim turgan ulanish
+# berishdan oldin "SELECT 1" bilan tekshiriladi — o'lik bo'lsa tashlanib, yangisi olinadi.
+PING_AFTER_S = 30
+_last_used = {}
+
+
+def _pg_getconn(pool):
+    for _ in range(3):
+        raw = pool.getconn()
+        if raw.closed:
+            pool.putconn(raw, close=True)
+            continue
+        if time.time() - _last_used.get(id(raw), 0) > PING_AFTER_S:
+            try:
+                with raw.cursor() as c:
+                    c.execute('SELECT 1')
+                raw.rollback()
+            except Exception:  # noqa: BLE001
+                _last_used.pop(id(raw), None)
+                pool.putconn(raw, close=True)
+                continue
+        return raw
+    return pool.getconn()
 
 
 class _PooledPgConnection:
@@ -163,6 +192,10 @@ class _PooledPgConnection:
         except Exception:
             pass
         broken = bool(getattr(self._raw, 'closed', 0))
+        if broken:
+            _last_used.pop(id(self._raw), None)
+        else:
+            _last_used[id(self._raw)] = time.time()
         self._pool.putconn(self._raw, close=broken)
 
 
@@ -173,8 +206,7 @@ def get_connection():
     url = database_url()
     if url:
         pool = _get_pg_pool()
-        raw = pool.getconn()
-        return _PooledPgConnection(pool, raw)
+        return _PooledPgConnection(pool, _pg_getconn(pool))
 
     raw = sqlite3.connect(sqlite_path(), timeout=15)
     raw.row_factory = sqlite3.Row
