@@ -25700,7 +25700,7 @@ SUBJECTS = [
             {
                 'slug': 'hujayra-tuzilishi-va-organoidlari',
                 'title': 'Hujayra tuzilishi va uning organoidlari',
-                'summary': "Tirik organizmlarning elemental birligi bo'lmish hujayraning tuzilishi, membranasi va asosiy organoidlarining vazifalari.",
+                'summary': "Tirik organizmlarning elementar birligi bo'lmish hujayraning tuzilishi, membranasi va asosiy organoidlarining vazifalari.",
                 'duration': 15,
                 'lesson': [
                     {
@@ -25719,7 +25719,7 @@ SUBJECTS = [
                         'items': [
                             'Ribosoma — oqsil sintez qiladi.',
                             "Endoplazmatik tarmoq — moddalar transportini ta'minlaydi.",
-                            'Golji majmuasi — moddalarni toplaydi va qadoqlaydi.',
+                            "Golji majmuasi — moddalarni to'playdi va qadoqlaydi.",
                             'Lizosoma — hujayra ichki hazmini amalga oshiradi.'
                         ]
                     },
@@ -25798,8 +25798,8 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Hayvon to'qimalarining 4 guruhi",
                         'items': [
-                            'Epiteliy to me: Himoya va ajratish funksiyasi.',
-                            "Biriktiruvchi to'qima: Suyak, kıkırdak, qon va yog' to'qimalari.",
+                            "Epiteliy to'qima: Himoya va ajratish funksiyasi.",
+                            "Biriktiruvchi to'qima: Suyak, tog'ay, qon va yog' to'qimalari.",
                             "Mushak to'qimasi: Qisqaruvchanlik va harakat.",
                             "Nerv to'qimasi: Ta'sirotni o'tkazish va impuls hosil qilish."
                         ]
@@ -25826,7 +25826,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Suyak to'qimasi biriktiruvchi to'qima turiga kiradi.",
                         'answer': True,
-                        'explain': "Suyak, kıkırdak va qon biriktiruvchi to'qimaning turlaridir."
+                        'explain': "Suyak, tog'ay va qon biriktiruvchi to'qimaning turlaridir."
                     },
                     {
                         'type': 'mc',
@@ -25854,7 +25854,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Mushak to me turlari (silliq, ko'ndalang-tola, yurak) o'rtasidagi farqlarni tahlil qiling."
+                            'prompt': "Mushak to'qimasi turlari (silliq, ko'ndalang-tola, yurak) o'rtasidagi farqlarni tahlil qiling."
                         }
                     ]
                 }
@@ -25910,7 +25910,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Sabzi va sholg'omdagi servat qism nima?",
+                        'q': "Sabzi va sholg'omdagi etli qism nima?",
                         'options': [
                             'Tugunak',
                             'Ildizmeva',
@@ -25928,7 +25928,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Ildizpoya, tugunak va piyozboshning umumiy belgisi nima?',
-                            'answer': "Ular shakli o'zgargan podzemniy (yer osti) novdalardir.",
+                            'answer': "Ular shakli o'zgargan yer osti novdalardir.",
                             'hint': 'Ularning kurtak va barg qoldiqlari borligini eslang.'
                         },
                         {
@@ -25953,7 +25953,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Yorug'lik va qorong'ulik fazalari",
-                        'body': "Fotosintez ikki bosqichda o'tadi: Yorug'lik fazasi (tilakoidlarda, ATF va NADF·H2 hosil bo meva O2 ajraladi) va Qorong'ulik fazasi (stromada Kalvin sikli bo'yicha shakarlar hosil bo'ladi)."
+                        'body': "Fotosintez ikki bosqichda o'tadi: Yorug'lik fazasi (tilakoidlarda, ATF va NADF·H2 hosil bo'ladi va O2 ajraladi) va Qorong'ulik fazasi (stromada Kalvin sikli bo'yicha shakarlar hosil bo'ladi)."
                     },
                     {
                         'type': 'steps',
@@ -25996,7 +25996,7 @@ SUBJECTS = [
                             "Yorug'lik fazasi",
                             "Qorong'ulik fazasi",
                             'Glikoliz',
-                            'Krebss sikli'
+                            'Krebs sikli'
                         ],
                         'answer': 1,
                         'explain': "Kalvin sikli qorong'ulik fazasida stromada kechadi va CO2 dan uglevod hosil qiladi."
@@ -26040,7 +26040,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Transport turlari',
                         'items': [
-                            "Ksilema (naylar) — o'lik hujayralar, yukoriga harakat.",
+                            "Ksilema (naylar) — o'lik hujayralar, yuqoriga harakat.",
                             'Floema (elaksimon naylar) — tirik hujayralar, ikkala tomonga harakat.',
                             "Apoplast yo'li — hujayra devorlari bo'ylab transport.",
                             "Simplast yo'li — sitoplazma va plazmodesmalar orqali transport."
@@ -26054,7 +26054,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Suv va mineral tuzlar o'simlikda qaysi to'qima orqali yukoriga ko'tariladi?",
+                        'q': "Suv va mineral tuzlar o'simlikda qaysi to'qima orqali yuqoriga ko'tariladi?",
                         'options': [
                             'Floema',
                             'Ksilema',
@@ -26090,7 +26090,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Kasperi belbog'i qaysi qatlamda joylashgan va vazifasi nima?",
-                            'answer': "Kasperi belbog'i endodermada joylashgan bo'lib, suvning apoplast yo'li bilan o'tishini to'saydi va simplast yo'liga majbur qiladi.",
+                            'answer': "Kasperi belbog'i endodermada joylashgan bo'lib, suvning apoplast yo'li bilan o'tishini to'sadi va simplast yo'liga majbur qiladi.",
                             'hint': "Ildizning ko'ndalang kesimini eslang."
                         },
                         {
@@ -26128,13 +26128,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Evglena miksotrof organizm bo meva yorug'likda avtotrof, qorong'ida geterotrof oziqlanadi."
+                        'body': "Esda tuting: Evglena miksotrof organizm bo'lib, yorug'likda avtotrof, qorong'ida geterotrof oziqlanadi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Noxush kimyoviy reaksiyalar energiyasidan foydalanuvchi organizmlar nima deyiladi?',
+                        'q': 'Kimyoviy reaksiyalar energiyasidan foydalanuvchi organizmlar nima deyiladi?',
                         'options': [
                             'Fotoavtotrof',
                             'Xemoavtotrof',
@@ -26154,7 +26154,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': 'Miksotrof oziqlanish qaysi organizmga xos?',
                         'options': [
-                            'Amyoeba',
+                            'Infuzoriya-tufelka',
                             'Yashil evglena',
                             'Askarida',
                             'Ameba'
@@ -26241,7 +26241,7 @@ SUBJECTS = [
                             'Jigar'
                         ],
                         'answer': 1,
-                        'explain': "Jig'ildadon (зоб) oziqni g'amlash va yumshatish funksiyasini bajaradi."
+                        'explain': "Jig'ildadon oziqni g'amlash va yumshatish funksiyasini bajaradi."
                     }
                 ],
                 'homework': {
@@ -26257,7 +26257,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Harakatchan bo'g'imoyoqlilar (masalan, xarakterli qisqichbaqa va quruqlik xashoratlari) hazm tizimi tuzilishidagi farqlarni yozing."
+                            'prompt': "Harakatchan bo'g'imoyoqlilar (masalan, daryo qisqichbaqasi va quruqlik hasharotlari) hazm tizimi tuzilishidagi farqlarni yozing."
                         }
                     ]
                 }
@@ -26276,7 +26276,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Fermentlar ta'siri",
-                        'body': "Slyukadagi ptyalin (amilaza) uglevodlarni, oshqozon shirasidagi pepsin oqsillarni, o't suyuqligi va lipaza esa yog'larni parchalaydi."
+                        'body': "So'lakdagi ptialin (amilaza) uglevodlarni, oshqozon shirasidagi pepsin oqsillarni, o't suyuqligi va lipaza esa yog'larni parchalaydi."
                     },
                     {
                         'type': 'steps',
@@ -26301,7 +26301,7 @@ SUBJECTS = [
                             'Amilaza',
                             'Pepsin',
                             'Lipaza',
-                            'Trypsin'
+                            'Tripsin'
                         ],
                         'answer': 1,
                         'explain': 'Pepsin kislotali muhitda (HCl) oqsillarni peptid zanjirlariga parchalaydi.'
@@ -26332,7 +26332,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Oshqozon osti bezi shirasidagi 3 ta asosiy fermentni va ularning substratlarini yozing.',
-                            'answer': "Trypsin (oqsillar), Lipaza (yog'lar), Amilaza (uglevodlar).",
+                            'answer': "Tripsin (oqsillar), Lipaza (yog'lar), Amilaza (uglevodlar).",
                             'hint': 'Ushbu bez barcha turdagi oziq moddalarni parchalaydi.'
                         },
                         {
@@ -26427,7 +26427,7 @@ SUBJECTS = [
             {
                 'slug': 'yurak-va-qon-aylanish-sistemasi',
                 'title': 'Yurak va qon aylanish sistemasi',
-                'summary': 'Yurak anatomiyasi, yurak sikli hamda katta va kichik qon aylanish doiralari gipotezasi.',
+                'summary': 'Yurak anatomiyasi, yurak sikli hamda katta va kichik qon aylanish doiralari.',
                 'duration': 15,
                 'lesson': [
                     {
@@ -26438,7 +26438,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Qon aylanish doiralari',
-                        'body': "Kichik doira: O'ng qorinchadan boshlanib, o'pkada gaz almashib, chap bo'lmachada tugaydi. Katta doira: Chap qorinchadan (Aorta) boshlanib, butun tana bo'ylab kislorod tarqatib, o'ng bo mevachada tugaydi."
+                        'body': "Kichik doira: O'ng qorinchadan boshlanib, o'pkada gaz almashib, chap bo'lmachada tugaydi. Katta doira: Chap qorinchadan (Aorta) boshlanib, butun tana bo'ylab kislorod tarqatib, o'ng bo'lmachada tugaydi."
                     },
                     {
                         'type': 'steps',
@@ -26499,7 +26499,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Yurak avtomatizmi va uning o'tkazuvchi sistemasini (sinus tuguni va Hiss tutami) tushuntiring."
+                            'prompt': "Yurak avtomatizmi va uning o'tkazuvchi sistemasini (sinus tuguni va Gis tutami) tushuntiring."
                         }
                     ]
                 }
@@ -26507,13 +26507,13 @@ SUBJECTS = [
             {
                 'slug': 'nafas-olish-va-gazlar-almashinuvi',
                 'title': "Nafas olish a'zolari va gazlar almashinuvi",
-                'summary': "Nafas yollari, o'pka alveolalari va qondagi gazlar diffuziyasi mexanizmi.",
+                'summary': "Nafas yo'llari, o'pka alveolalari va qondagi gazlar diffuziyasi mexanizmi.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Nafas olish sistemasi',
-                        'body': "Nafas olish yo'llari (burun bo'shlig meva, halqum, kekirdak, bronxlar) va o'pkalardan iborat. Asosiy gazlar almashinuvi o'pka alveolalarida kechadi."
+                        'body': "Nafas olish yo'llari (burun bo'shlig'i, halqum, kekirdak, bronxlar) va o'pkalardan iborat. Asosiy gazlar almashinuvi o'pka alveolalarida kechadi."
                     },
                     {
                         'type': 'example',
@@ -26524,9 +26524,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Nafas olish harakati',
                         'items': [
-                            "Qovurg'alaralar mushak va diafragmaning qisqarishi.",
+                            "Qovurg'alararo mushaklar va diafragmaning qisqarishi.",
                             "Ko'krak qafasi hajmining ortishi va bosimning tushishi.",
-                            "Havonining o'pkaga kirishi (nafas olish).",
+                            "Havoning o'pkaga kirishi (nafas olish).",
                             "Mushaklarning bo'shashishi va havo chiqishi (nafas chiqarish)."
                         ]
                     },
@@ -26538,7 +26538,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "O'pkaning elemental mikroskopik tuzilish birligi nima?",
+                        'q': "O'pkaning elementar mikroskopik tuzilish birligi nima?",
                         'options': [
                             'Nefron',
                             'Alveola',
@@ -26558,7 +26558,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "Nafas olish markazi miyaning qaysi bo'limida joylashgan?",
                         'options': [
-                            'O oraliq miya',
+                            'Oraliq miya',
                             'Uzunchoq miya',
                             "O'rta miya",
                             'Miyacha'
@@ -26574,7 +26574,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Karbogemoglobin va karboksigemoglobin o'rtasidagi farq nimada?",
-                            'answer': "Karbogemoglobin — CO2 bilan birikkan gemoglobin (normal). Karboksigemoglobin — CO (ism gazi) bilan birikkan o'ta mustahkam va xavfli birikma.",
+                            'answer': "Karbogemoglobin — CO2 bilan birikkan gemoglobin (normal). Karboksigemoglobin — CO (is gazi) bilan birikkan o'ta mustahkam va xavfli birikma.",
                             'hint': 'Is gazi bilan zaharlanishni eslang.'
                         },
                         {
@@ -26588,7 +26588,7 @@ SUBJECTS = [
             {
                 'slug': 'ayirish-sistemasi-va-nefron-tuzilishi',
                 'title': 'Ayirish sistemasi va nefron tuzilishi',
-                'summary': "Buyraklar, nefron apparati hamda birlemchi va ikkilamchi siydik hosil bo'lish bosqichlari.",
+                'summary': "Buyraklar, nefron apparati hamda birlamchi va ikkilamchi siydik hosil bo'lish bosqichlari.",
                 'duration': 15,
                 'lesson': [
                     {
@@ -26599,7 +26599,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Siydik shakllanishi',
-                        'body': "Filtratsiya natijasida Shumlyanskiy-Boumen kapsulasida birlemchi siydik hosil bo'ladi. Reabsorbsiya (qayta so'rilish) natijasida ilmoqlarda ikkilamchi siydik hosil bo'ladi."
+                        'body': "Filtratsiya natijasida Shumlyanskiy-Boumen kapsulasida birlamchi siydik hosil bo'ladi. Reabsorbsiya (qayta so'rilish) natijasida ilmoqlarda ikkilamchi siydik hosil bo'ladi."
                     },
                     {
                         'type': 'steps',
@@ -26613,7 +26613,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Birlemchi siydikda oqsil va shaklli elementlardan tashqari barcha plazma moddalari bo'ladi; ikkilamchi siydikda esa glyukoza va aminokislotalar bo'lmasligi kerak."
+                        'body': "Esda tuting: Birlamchi siydikda oqsil va shaklli elementlardan tashqari barcha plazma moddalari bo'ladi; ikkilamchi siydikda esa glyukoza va aminokislotalar bo'lmasligi kerak."
                     }
                 ],
                 'quiz': [
@@ -26633,11 +26633,11 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Sog'lom odamning ikkilamchi siydigida glyukoza bo'lishi normal holat.",
                         'answer': False,
-                        'explain': "Glyukoza birlemchi siydikdan butunlay qayta so'riladi (reabsorbsiya)."
+                        'explain': "Glyukoza birlamchi siydikdan butunlay qayta so'riladi (reabsorbsiya)."
                     },
                     {
                         'type': 'mc',
-                        'q': "Birlemchi siydik hosil bo'lish jarayoni nima deyiladi?",
+                        'q': "Birlamchi siydik hosil bo'lish jarayoni nima deyiladi?",
                         'options': [
                             'Reabsorbsiya',
                             'Filtratsiya',
@@ -26654,8 +26654,8 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Bir sutkada nechta birlemchi va ikkilamchi siydik hosil bo'ladi?",
-                            'answer': 'Taxminan 150-180 litr birlemchi siydik va 1.5 litr ikkilamchi siydik.',
+                            'prompt': "Bir sutkada nechta birlamchi va ikkilamchi siydik hosil bo'ladi?",
+                            'answer': 'Taxminan 150-180 litr birlamchi siydik va 1.5 litr ikkilamchi siydik.',
                             'hint': "Reabsorbsiya hajmini o'ylang."
                         },
                         {
@@ -26712,13 +26712,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Somatik nerv tizimi ichki organlar faoliyatini bo'ysunmagan holda boshqaradi.",
+                        'q': 'Somatik nerv tizimi ichki organlar faoliyatini ixtiyorsiz ravishda boshqaradi.',
                         'answer': False,
-                        'explain': "Ichki organlarni vegetativ nerv tizimi boshqaradi, somatik esa ko'ndalang-tola mushaklarni."
+                        'explain': "Ichki organlarni vegetativ nerv tizimi boshqaradi, somatik esa ko'ndalang-targ'il mushaklarni."
                     },
                     {
                         'type': 'mc',
-                        'q': "Neyronlar o'rtasidagi kontat (tutashuv) joyi nima deyiladi?",
+                        'q': "Neyronlar o'rtasidagi kontakt (tutashuv) joyi nima deyiladi?",
                         'options': [
                             'Akson',
                             'Dendrit',
@@ -26795,7 +26795,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Eshitish analizatorining markaziy qismi bosh miyaning chakka bo'lagida joylashgan.",
                         'answer': True,
-                        'explain': "Eshitish po'stloq sohasi chakka bo'lagida bo mevadi."
+                        'explain': "Eshitish po'stloq sohasi chakka bo'lagida bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -26897,7 +26897,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Gipofizning orqa bo'lagidan qaysi gormonlar ajraladi va saqlanadi?",
-                            'answer': 'Vasopressin (ADH) va Oksitatsin (ular gipotalamusda sintezlanadi).',
+                            'answer': 'Vasopressin (ADH) va Oksitotsin (ular gipotalamusda sintezlanadi).',
                             'hint': "Gipotalamus bilan bog'liqlikni eslang."
                         },
                         {
@@ -26929,7 +26929,7 @@ SUBJECTS = [
                         'title': 'Suyaklar tutashuvi turlari',
                         'items': [
                             'Harakatsiz (choklar orqali, masalan kalla suyagida).',
-                            'Yarim harakatlanuvchi (kıkırdak orqali, umurtqalar).',
+                            "Yarim harakatlanuvchi (tog'ay orqali, umurtqalar).",
                             "Harakatlanuvchi yoki bo'g'imlar (chanoq-son, tirsak bo'g'imi)."
                         ]
                     },
@@ -26962,7 +26962,7 @@ SUBJECTS = [
                         'q': "Bo'g'im yuzalarini qoplab turuvchi to'qima qaysi?",
                         'options': [
                             "Suyak to'qimasi",
-                            "Tog'ay (kıkırdak) to'qimasi",
+                            "Tog'ay to'qimasi",
                             'Epiteliy',
                             'Muskul'
                         ],
@@ -26997,12 +26997,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Mitoz mohiyati',
-                        'body': "Mitoz — somatik hujayralarning bo'linish usuli bo'lib, natijada bitta diploidal (2n) ona hujayradan aynan o'xshash genotipga ega 2 ta diploidal (2n) qiz hujayra hosil bo'ladi."
+                        'body': "Mitoz — somatik hujayralarning bo'linish usuli bo'lib, natijada bitta diploid (2n) ona hujayradan aynan o'xshash genotipga ega 2 ta diploid (2n) qiz hujayra hosil bo'ladi."
                     },
                     {
                         'type': 'example',
                         'title': 'Mitoz fazalari',
-                        'body': "Mitoz 4 bosqichdan iborat: Profaza -> Metafaza -> Anafaza -> Telofaza. Profazada xromosomalar spirallashadi, telofazada esa siklokinez sodir bo'ladi."
+                        'body': "Mitoz 4 bosqichdan iborat: Profaza -> Metafaza -> Anafaza -> Telofaza. Profazada xromosomalar spirallashadi, telofazada esa sitokinez sodir bo'ladi."
                     },
                     {
                         'type': 'steps',
@@ -27030,7 +27030,7 @@ SUBJECTS = [
                             'Telofaza'
                         ],
                         'answer': 1,
-                        'explain': "Interfazaning Sintetik (S) davrida DNK matrisasi bo'yicha retsiplikatsiya bo'ladi."
+                        'explain': "Interfazaning Sintetik (S) davrida DNK matrisasi bo'yicha replikatsiya bo'ladi."
                     },
                     {
                         'type': 'tf',
@@ -27058,13 +27058,13 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Metafaza va Anafaza bosqichlaridagi genetik formula (c va n ko'rsatkichlari) qanday bo'ladi?",
-                            'answer': "Metafazada 2n 4c, Anafazada (qutblarga ajralganda) temporary 4n 4c bo'ladi.",
+                            'answer': "Metafazada 2n 4c, Anafazada (qutblarga ajralganda) vaqtincha 4n 4c bo'ladi.",
                             'hint': "Xromatida va DNK miqdorini o'ylang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Mitoz bo'linishining biologik ahamiyati va regulyatsiya buzilishida osimta hosil bo'lish jarayonini tahlil qiling."
+                            'prompt': "Mitoz bo'linishining biologik ahamiyati va regulyatsiya buzilishida o'simta hosil bo'lish jarayonini tahlil qiling."
                         }
                     ]
                 }
@@ -27097,7 +27097,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Oogenezda 1 ta diploidal hujayradan 1 ta bitta tuxumhujayra va 3 ta yo'naltiruvchi tanacha hosil bo'ladi."
+                        'body': "Esda tuting: Oogenezda 1 ta diploid hujayradan 1 ta tuxum hujayra va 3 ta yo'naltiruvchi tanacha hosil bo'ladi."
                     }
                 ],
                 'quiz': [
@@ -27115,7 +27115,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Meyoz II bo'linishi ketidan DNK replikatsiyasi sodir bo'ladi.",
+                        'q': "Meyoz I bo'linishidan keyin DNK replikatsiyasi sodir bo'ladi.",
                         'answer': False,
                         'explain': "Meyoz I va Meyoz II o'rtasidagi interkinezda DNK replikatsiya bo'lmaydi."
                     },
@@ -27170,7 +27170,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'RNK turlari va vazifalari',
                         'items': [
-                            'iRNK (informatsion) — genetik axborotni ribosomaga tasiydi.',
+                            'iRNK (informatsion) — genetik axborotni ribosomaga tashiydi.',
                             'tRNK (transport) — aminokislotalarni ribosomaga yetkazadi.',
                             'rRNK (ribosomal) — ribosoma strukturasini hosil qiladi.'
                         ]
@@ -27225,7 +27225,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'DNK replikatsiyasining yarimkonservativ mexanizmini va Bunda Helicase, Polymerase fermentlarining rolini yozing.'
+                            'prompt': 'DNK replikatsiyasining yarimkonservativ mexanizmini va bunda helikaza, polimeraza fermentlarining rolini yozing.'
                         }
                     ]
                 }
@@ -27233,7 +27233,7 @@ SUBJECTS = [
             {
                 'slug': 'matritsali-sintez-transkripsiya-va-translyatsiya',
                 'title': 'Matritsali sintez: Transkripsiya va translyatsiya',
-                'summary': 'Oqsil biosintezi bosqichlari: RNK-polimeraza faoliyati, iRNK sintezi va ribosomada oqsil zanjirining yig mevaishi.',
+                'summary': "Oqsil biosintezi bosqichlari: RNK-polimeraza faoliyati, iRNK sintezi va ribosomada oqsil zanjirining yig'ilishi.",
                 'duration': 15,
                 'lesson': [
                     {
@@ -27257,7 +27257,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: tRNK tuzi strukturasi 'yonshida bargi' ko'rinishida bo'lib, uning tepa qismida antikodon joylashgan."
+                        'body': "Esda tuting: tRNK ikkilamchi strukturasi 'beda bargi' ko'rinishida bo'lib, uning tepa qismida antikodon joylashgan."
                     }
                 ],
                 'quiz': [
@@ -27333,7 +27333,7 @@ SUBJECTS = [
                             'Tripletligi: 1 aminokislota = 3 nukleotid.',
                             'Ayniganligi (ortiqchaligi): 1 aminokislotani bir nechta kodon kodlashi mumkin.',
                             'Bir qiymatliligi: 1 kodon faqat 1 xil aminokislotani kodlaydi.',
-                            "Uzluksizligi va yopishmasligi: Kodonlar ketma-ket o'qiladi.",
+                            "Uzluksizligi va bir-birini qoplamasligi: Kodonlar ketma-ket o'qiladi.",
                             'Universalligi: Barcha tirik organizmlar uchun yagona.'
                         ]
                     },
@@ -27387,7 +27387,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Mitochondrial genetik kod va standart genetik kod o'rtasidagi ayrim kichik istisnolarni tushuntiring."
+                            'prompt': "Mitoxondrial genetik kod va standart genetik kod o'rtasidagi ayrim kichik istisnolarni tushuntiring."
                         }
                     ]
                 }
@@ -27406,7 +27406,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': '1- va 2-qonunlar',
-                        'body': "1-qonun (Bir xillik qonuni): Gomozigotali (AA x aa) ota-onadan hosil bo'lgan F1 avlod bir xil gomozigotali yoki geterozigotali (Aa) dominant fenotipga ega. 2-qonun (Ajralish qonuni): F1 geterozigotalar o'zaro chatishtirilganda (Aa x Aa), F2 da fenotip bo'yicha 3:1, genotip bo'yicha 1:2:1 nisbatda ajralish bo'ladi."
+                        'body': "1-qonun (Bir xillik qonuni): Gomozigotali (AA x aa) ota-onadan hosil bo'lgan F1 avlod bir xil — geterozigotali (Aa) va dominant fenotipga ega. 2-qonun (Ajralish qonuni): F1 geterozigotalar o'zaro chatishtirilganda (Aa x Aa), F2 da fenotip bo'yicha 3:1, genotip bo'yicha 1:2:1 nisbatda ajralish bo'ladi."
                     },
                     {
                         'type': 'steps',
@@ -27420,7 +27420,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: To'liqsiz dominantlikda (masalan, turgaygulda) F2 da fenotip ham, genotip ham 1:2:1 nisbatda ajraladi."
+                        'body': "Esda tuting: To'liqsiz dominantlikda (masalan, nomozshomgulda) F2 da fenotip ham, genotip ham 1:2:1 nisbatda ajraladi."
                     }
                 ],
                 'quiz': [
@@ -27468,7 +27468,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Tahliliy (analiziruyushey) chatishtirish nima va u qanday maqsadda qo'llaniladi?"
+                            'prompt': "Tahliliy chatishtirish nima va u qanday maqsadda qo'llaniladi?"
                         }
                     ]
                 }
@@ -27493,7 +27493,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Gameta hosil bo'lishi",
                         'items': [
-                            'AaBb geni 4 xil gameta beradi: AB, Ab, aB, ab.',
+                            'AaBb genotipli organizm 4 xil gameta beradi: AB, Ab, aB, ab.',
                             "Punnet to'ri 16 ta kombinatsiyadan iborat bo'ladi.",
                             "Genotipik sinflar soni 9 xil bo'ladi."
                         ]
@@ -27536,7 +27536,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Digibrid va polagibrid chatishtirish masalalari.',
+                    'intro': 'Digibrid va poligibrid chatishtirish masalalari.',
                     'tasks': [
                         {
                             'id': 't1',
@@ -27571,7 +27571,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Getarogametali va Gomogametali jinslar',
+                        'title': 'Geterogametali va gomogametali jinslar',
                         'items': [
                             'Odam va sutemizuvchilar: Ayol XX (gomogametali), Erkak XY (geterogametali).',
                             "Parrandalar va kapalaklar: Urg'ochi ZW (geterogametali), Erkak ZZ (gomogametali)."
@@ -27579,7 +27579,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Otadagi X xromosoma faqat qizlariga, Y xromosoma esa faqat o'g meva xariga o'tadi."
+                        'body': "Esda tuting: Otadagi X xromosoma faqat qizlariga, Y xromosoma esa faqat o'g'illariga o'tadi."
                     }
                 ],
                 'quiz': [
@@ -27603,7 +27603,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Sog'lom (tashuvchi) ayol (X^H X^h) va sog'lom erkak (X^H Y) oilasida gemofil o meva bo'lish ehtimoli qancha?",
+                        'q': "Sog'lom (tashuvchi) ayol (X^H X^h) va sog'lom erkak (X^H Y) oilasida gemofil o'g'il bola tug'ilish ehtimoli qancha?",
                         'options': [
                             '0%',
                             '25% (barcha farzandlarga nisbatan)',
@@ -27611,7 +27611,7 @@ SUBJECTS = [
                             '100%'
                         ],
                         'answer': 1,
-                        'explain': "O'g meva bolalarning 50% i (jami farzandlarning 25% i) gemofiliya bilan tug'ilishi mumkin."
+                        'explain': "O'g'il bolalarning 50% i (jami farzandlarning 25% i) gemofiliya bilan tug'ilishi mumkin."
                     }
                 ],
                 'homework': {
@@ -27627,7 +27627,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Gendro-genetik xaritalar va Krossingover foizi asosida genlar orasidagi masofani (Morfanida) aniqlashni tushuntiring.'
+                            'prompt': 'Genetik xaritalar va krossingover foizi asosida genlar orasidagi masofani (morganidalarda) aniqlashni tushuntiring.'
                         }
                     ]
                 }
@@ -27646,13 +27646,13 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Modifikatsion o'zgaruvchanlik",
-                        'body': "Tashqi muhit ta'sirida fenotipning o'zgarishi (masalan, kishi terisining quyoshda qoralayishi). Bunda genotip o'zgarmaydi va bu belgi nasldan naslga o'tmaydi."
+                        'body': "Tashqi muhit ta'sirida fenotipning o'zgarishi (masalan, kishi terisining quyoshda qorayishi). Bunda genotip o'zgarmaydi va bu belgi nasldan naslga o'tmaydi."
                     },
                     {
                         'type': 'steps',
                         'title': "Genotipik o'zgaruvchanlik turlari",
                         'items': [
-                            "Kombinativ o me zgaruvchanlik — genlarning yangicha birikishi (meyoz va urug'lanishda).",
+                            "Kombinativ o'zgaruvchanlik — genlarning yangicha birikishi (meyoz va urug'lanishda).",
                             "Mutatsion o'zgaruvchanlik — DNK yoki xromosoma tuzilishining kutilmagan o'zgarishi."
                         ]
                     },
@@ -27676,7 +27676,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Modifikatsion o me zgarishlar nasldan-naslga o'tadi.",
+                        'q': "Modifikatsion o'zgarishlar nasldan-naslga o'tadi.",
                         'answer': False,
                         'explain': "Modifikatsiyalar faqat jismoniy tanada (fenotipda) ro'y beradi, genotip o'zgarmaydi."
                     },
@@ -27700,8 +27700,8 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Keng va tor reaksiya normasiga 1 tadan misol keltiring.',
-                            'answer': "Keng: Suti miqdori, sigir vazni, barg yuzasi. Tor: Qon guruhi, ko'z rangi, yurak kamerasi soni.",
-                            'hint': "Qaysi belgilar muhitga juda bog me liqligini o'ylang."
+                            'answer': "Keng: Sut miqdori, sigir vazni, barg yuzasi. Tor: Qon guruhi, ko'z rangi, yurak kamerasi soni.",
+                            'hint': "Qaysi belgilar muhitga juda bog'liqligini o'ylang."
                         },
                         {
                             'id': 't2',
@@ -27733,7 +27733,7 @@ SUBJECTS = [
                         'items': [
                             'Gen (nuqtali) mutatsiyalar — nukleotidlar almashinuvi yoki tushib qolishi.',
                             'Xromosoma mutatsiyalari — xromosoma qismlarining qayta joylashishi (defishensiya, duplikatsiya, inversiya, translokatsiya).',
-                            "Genom mutatsiyalari — xromosomalar sonining o'zgarishi (anöploidiya, poliploidiya)."
+                            "Genom mutatsiyalari — xromosomalar sonining o'zgarishi (aneuploidiya, poliploidiya)."
                         ]
                     },
                     {
@@ -27752,13 +27752,13 @@ SUBJECTS = [
                             'Modifikatsiya'
                         ],
                         'answer': 2,
-                        'explain': 'Daun sindromi 21-juftda ortiqcha xromosoma bo me gani uchun genom mutatsiyasidir.'
+                        'explain': "Daun sindromi 21-juftda ortiqcha xromosoma bo'lgani uchun genom mutatsiyasidir."
                     },
                     {
                         'type': 'tf',
                         'q': 'Poliploidiya hayvonlar va odamlarda keng tarqalgan ijobiy hodisadir.',
                         'answer': False,
-                        'explain': "Poliploidiya asosan o'simliklarda uchraydi va undorlikni oshiradi; sutemizuvchilarda esa halokatlidir."
+                        'explain': "Poliploidiya asosan o'simliklarda uchraydi va hosildorlikni oshiradi; sutemizuvchilarda esa halokatlidir."
                     },
                     {
                         'type': 'mc',
@@ -27819,7 +27819,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Tabiatda ideal populatsiyalar bo'lmaydi, lekin Xardi-Vaynberg qonuni hisoblashlar uchun standart bo me lib xizmat qiladi."
+                        'body': "Esda tuting: Tabiatda ideal populatsiyalar bo'lmaydi, lekin Xardi-Vaynberg qonuni hisoblashlar uchun standart bo'lib xizmat qiladi."
                     }
                 ],
                 'quiz': [
@@ -27867,7 +27867,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Genlar dreyfi (Ffounder effekti va Shisha bo'g'zi effekti) populatsiya genofondiga qanday ta'sir qilishini tushuntiring."
+                            'prompt': "Genlar dreyfi (asoschi effekti va «shisha bo'g'zi» effekti) populatsiya genofondiga qanday ta'sir qilishini tushuntiring."
                         }
                     ]
                 }
@@ -27881,7 +27881,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Evolutsiya tushunchasi',
-                        'body': "Tirik tabiatning tarixiy rivojlanishi evolutsiya deyiladi. Charlz Darvin evolutsiyaning asosiy omillari sifatida irsiy o'zgaruvchanlik, yashash uchun kashfiyot va tabiiy tanlanishni ko'rsatgan."
+                        'body': "Tirik tabiatning tarixiy rivojlanishi evolutsiya deyiladi. Charlz Darvin evolutsiyaning asosiy omillari sifatida irsiy o'zgaruvchanlik, yashash uchun kurash va tabiiy tanlanishni ko'rsatgan."
                     },
                     {
                         'type': 'example',
@@ -27890,23 +27890,23 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': "Turlar hosil bo'lish yo me llari",
+                        'title': "Turlar hosil bo'lish yo'llari",
                         'items': [
-                            "Allopatrik (geografik) — arealning to'siqlar bilan bo me linishi.",
+                            "Allopatrik (geografik) — arealning to'siqlar bilan bo'linishi.",
                             'Simpatrik (ekologik) — bir xil hudud ichida ekologik va genetik ajralish.'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Evolutsiyaning elemental birligi tur emas, balki POPULATSIYA hisoblanadi.'
+                        'body': 'Esda tuting: Evolutsiyaning elementar birligi tur emas, balki POPULATSIYA hisoblanadi.'
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Evolutsiyaning boshlang'ich va elemental birligi nima?",
+                        'q': "Evolutsiyaning boshlang'ich va elementar birligi nima?",
                         'options': [
-                            'Aloxida alohida organizm',
+                            'Alohida organizm',
                             'Populatsiya',
                             'Tur',
                             'Oila'
@@ -27941,7 +27941,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': 'Homologik va Analogik organlarga 2 tadan misol keltiring.',
                             'answer': "Homologik: Odam qo'li va qush qanoti (kelib chiqishi bir). Analogik: Kapalak qanoti va qush qanoti (funksiyasi bir, kelib chiqishi har xil).",
-                            'hint': "Kelib chiqish organogenezini e'tiborga oling."
+                            'hint': "Organlarning kelib chiqishini e'tiborga oling."
                         },
                         {
                             'id': 't2',
@@ -27971,7 +27971,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Ekologik piramidalar turlari',
                         'items': [
-                            "Sonnar piramidasi — organizmlar sonini ko'rsatadi.",
+                            "Sonlar piramidasi — organizmlar sonini ko'rsatadi.",
                             "Biomassa piramidasi — umumiy quruq og'irlikni ko'rsatadi.",
                             "Energiya piramidasi — energiya oqimini ko'rsatadi (hech qachon to'ntarilgan bo'lmaydi)."
                         ]
@@ -28020,13 +28020,13 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Birlamchi va ikkilamchi suktsessiya o'rtasidagi farqni yozing.",
-                            'answer': "Birlamchi suktsessiya — ilgari tuproq va hayot bo'lmagan joyda (yalang'och qoyalar); Ikkilamchi suktsessiya — tuprog'i saqlangan, lekin hayot yo'qolgan joyda (yon g'in) boshlanadi.",
+                            'answer': "Birlamchi suktsessiya — ilgari tuproq va hayot bo'lmagan joyda (yalang'och qoyalar); Ikkilamchi suktsessiya — tuprog'i saqlangan, lekin hayot yo'qolgan joyda (yong'in) boshlanadi.",
                             'hint': "Tuproq qatlamining mavjudligiga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Ekotizimlarning turg'unligi va biogeotsenozdagi turlar xilma-xilligi (biologik pluralizm) o'rtasidagi bog'liqlikni asoslang."
+                            'prompt': "Ekotizimlarning turg'unligi va biogeotsenozdagi turlar xilma-xilligi (biologik xilma-xillik) o'rtasidagi bog'liqlikni asoslang."
                         }
                     ]
                 }
@@ -28052,7 +28052,7 @@ SUBJECTS = [
                         'title': 'Tirik moddaning biosferadagi funksiyalari',
                         'items': [
                             'Gaz funksiyasi — O2 va CO2 ajratish/yutish.',
-                            'Konsentratsion funksiya — kimyoviy elementlarni (Ca, P, C) toplash.',
+                            "Konsentratsion funksiya — kimyoviy elementlarni (Ca, P, C) to'plash.",
                             'Oksidlanish-qaytarilish funksiyasi — moddalar almashinuv reaksiyalari.'
                         ]
                     },
@@ -28082,7 +28082,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Atmsoferada ultravinafsha nurlarni tutib qoluvchi va biosferaning yuqori chegarasini belgilovchi qatlam qaysi?',
+                        'q': 'Atmosferada ultrabinafsha nurlarni tutib qoluvchi va biosferaning yuqori chegarasini belgilovchi qatlam qaysi?',
                         'options': [
                             'Troposfera',
                             'Ozon qatlami',
@@ -28125,14 +28125,14 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'ATF-sintaza rotorining ishlashi',
-                        'body': "Protonlar o'z gradienti bo'ylab membranalararo bo'shliqdan matriksga faqat ATF-sintaza kompleksi (F0 va F1 subbirliklari) orqali qaytishi mumkin. Protonlar o'tganda F0 subbirligi aylanadi va F1 subbirligida ADF va vaqtinchalik fosfatdan ATF sintezlanadi."
+                        'body': "Protonlar o'z gradienti bo'ylab membranalararo bo'shliqdan matriksga faqat ATF-sintaza kompleksi (F0 va F1 subbirliklari) orqali qaytishi mumkin. Protonlar o'tganda F0 subbirligi aylanadi va F1 subbirligida ADF va noorganik fosfatdan ATF sintezlanadi."
                     },
                     {
                         'type': 'steps',
                         'title': 'Oksidlanishli fosforillanish bosqichlari',
                         'items': [
                             'NADH va FADH2 molekulalarining ETZ komplekslarida oksidlanishi va elektronlarni berishi.',
-                            "Elektronlar energiyasi hisobiga protonlarning membranalararo bo'shliqqa nosimmetrik nasoslanishi.",
+                            "Elektronlar energiyasi hisobiga protonlarning membranalararo bo'shliqqa haydalishi.",
                             "Membrana ikkala tomonida pH va zaryadlar farqi (gradient) hosil bo'lishi.",
                             "Protonlarning ATF-sintaza kanali orqali oqib o'tishi va ATF sintezlanishi."
                         ]
@@ -28150,7 +28150,7 @@ SUBJECTS = [
                             'Glyukoza parchalanishi',
                             'Protonlar (H+) ning elektrokimyoviy gradienti',
                             "Kislorodning to'g'ridan-to'g'ri birikishi",
-                            'Katriy-kaliy nasosining ishlashi'
+                            'Natriy-kaliy nasosining ishlashi'
                         ],
                         'answer': 1,
                         'explain': "Membrananing ikki tomonida hosil bo'lgan proton gradienti ATF-sintaza orqali ATF sintezini harakatlantiradi."
@@ -28182,12 +28182,12 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "Mitoxondriya ichki membranasi teshilsa (o'tkazuvchan bo'lib qolsa), ATF sintezi va issiqlik ajralishiga qanday ta'sir qiladi?",
                             'answer': "Proton gradienti yo'qoladi, ATF sintezi to'xtaydi va energiya issiqlik shaklida tarqaladi.",
-                            'hint': "Gipoksiya va unkoplervchi moddalar (dinitrofenol) ta'sirini eslang."
+                            'hint': "Ajratuvchi moddalar (masalan, dinitrofenol) ta'sirini eslang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Xloroplastlardagi tiilakoid va mitoxondriyadagi krishtalarda kechuvchi xemiosmoz jarayonlarini o'zaro solishtiring va farqlarini yozing."
+                            'prompt': "Xloroplastlardagi tilakoid va mitoxondriyadagi kristalarda kechuvchi xemiosmoz jarayonlarini o'zaro solishtiring va farqlarini yozing."
                         }
                     ]
                 }
@@ -28195,7 +28195,7 @@ SUBJECTS = [
             {
                 'slug': 'gen-ekspressiyasining-boshqarilishi-operon-nazariyasi',
                 'title': 'Gen ekspressiyasining boshqarilishi: Operon nazariyasi',
-                'summary': 'Prokariotlarda genlar faoliyatining repressor va induktorlar orqali boshqarilish mexanizmi (Jatob va Monodning Lak-operon modeli).',
+                'summary': 'Prokariotlarda genlar faoliyatining repressor va induktorlar orqali boshqarilish mexanizmi (Jakob va Mononing Lak-operon modeli).',
                 'duration': 15,
                 'lesson': [
                     {
@@ -28210,7 +28210,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Operon represiyasi va induksiyasi',
+                        'title': 'Operon repressiyasi va induksiyasi',
                         'items': [
                             'Regulyator gen repressor oqsilini sintezlaydi.',
                             "Induktor bo'lmaganda repressor operator ketma-ketligi bilan bog'lanadi.",
@@ -28249,7 +28249,7 @@ SUBJECTS = [
                             'Operator',
                             'Promotor',
                             'Terminator',
-                            'Exon'
+                            'Ekzon'
                         ],
                         'answer': 1,
                         'explain': 'RNK-polimeraza mRNK sintezini boshlash uchun aynan promotor sohasini tanib birikadi.'
@@ -28263,7 +28263,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "E. coli o'sadigan muhitda glyukoza ham, laktoza ham bo'lsa, bakteriya birinchi bo'lib qaysi uglevodni o'zlashtiradi va nega?",
                             'answer': "Glyukozani o'zlashtiradi. Chunki katabolit repressiya mexanizmi orqali cAMF darajasi past bo'ladi va lak-operon aktivlashmaydi.",
-                            'hint': "Katabolit activator oqsil (CAP) va cAMF rolini o'ylang."
+                            'hint': "Katabolit aktivator oqsil (CAP) va cAMF rolini o'ylang."
                         },
                         {
                             'id': 't2',
@@ -28296,7 +28296,7 @@ SUBJECTS = [
                             'DNK-metiltransferaza (DNMT) fermenti sitozinga metil guruhini biriktiradi.',
                             "Giston atsetiltransferaza (HAT) gistonlar dumi bilan bog'lanib, musbat zaryadni kamaytiradi va DNK-giston bog'lanishini bo'shashtiradi.",
                             'Giston deatsetilaza (HDAC) atsetil guruhini olib tashlaydi va xromatinni zichlashtiradi (geteroxromatin).',
-                            'Nokodlovchi rRNK va miRNKlar transkripsiyadan keyingi gen susaytirilishida (silencing) qatnashadi.'
+                            'Nokodlovchi RNK va miRNKlar transkripsiyadan keyingi gen susaytirilishida (silencing) qatnashadi.'
                         ]
                     },
                     {
@@ -28312,7 +28312,7 @@ SUBJECTS = [
                             'Gen transkripsiyasini har doim tezlashtiradi',
                             "Gen transkripsiyasini susaytiradi yoki to'xtatadi",
                             'DNK strukturasini butunlay buzadi',
-                            'Mutoziyaga olib keladi'
+                            'Mutatsiyaga olib keladi'
                         ],
                         'answer': 1,
                         'explain': "DNK metillanishi transkripsiya omillarining birikishiga to'sqinlik qilib, genlarni faolsizlantiradi."
@@ -28357,7 +28357,7 @@ SUBJECTS = [
             {
                 'slug': 'genetik-muhandislik-va-rekombinant-dnk',
                 'title': 'Genetik muhandislik va rekombinant DNK',
-                'summary': 'Restriktaza fermentlari, vektori plasmidlar va maqsadli genlarni klonlash orqali rekombinant DNK molekulalarini olish texnologiyasi.',
+                'summary': 'Restriktaza fermentlari, vektor plazmidlar va maqsadli genlarni klonlash orqali rekombinant DNK molekulalarini olish texnologiyasi.',
                 'duration': 15,
                 'lesson': [
                     {
@@ -28368,7 +28368,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Insulin genini bakteriyada klonlash',
-                        'body': 'Odamning insulin geni restriksion endonukleazalar (restriktaza) yordamida kesib olinadi va xuddi shu ferment bilan kesilgan bakteriya plazmidiga DNK-ligaza fermenti yordamida ulanadi. Natijada insulinn hosil qiluvchi rekombinant plazmida olinadi.'
+                        'body': 'Odamning insulin geni restriksion endonukleazalar (restriktaza) yordamida kesib olinadi va xuddi shu ferment bilan kesilgan bakteriya plazmidiga DNK-ligaza fermenti yordamida ulanadi. Natijada insulin hosil qiluvchi rekombinant plazmida olinadi.'
                     },
                     {
                         'type': 'steps',
@@ -28382,13 +28382,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Restriktazalar DNKdagi pallindrom ketma-ketliklarni tanib kesadi (masalan, GAATTC ketma-ketligini kesuvchi EcoRI).'
+                        'body': 'Esda tuting: Restriktazalar DNKdagi palindrom ketma-ketliklarni tanib kesadi (masalan, GAATTC ketma-ketligini kesuvchi EcoRI).'
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "DNK zanjiridagi yopishqoq uchlarni kovalent bog'lar orqali qayta ulagich ferment qaysi?",
+                        'q': "DNK zanjiridagi yopishqoq uchlarni kovalent bog'lar orqali qayta ulovchi ferment qaysi?",
                         'options': [
                             'DNK-polimeraza',
                             'DNK-ligaza',
@@ -28396,20 +28396,20 @@ SUBJECTS = [
                             'RNK-primaza'
                         ],
                         'answer': 1,
-                        'explain': "DNK-ligaza fermenti DNK parchalarining fosfodiefer bog'larini qayta tiklaydi."
+                        'explain': "DNK-ligaza fermenti DNK parchalarining fosfodiefir bog'larini qayta tiklaydi."
                     },
                     {
                         'type': 'tf',
                         'q': 'Plazmidlar — bu bakteriyalarda asosiy xromosomadan tashqari joylashgan halqasimon DNK molekulalaridir.',
                         'answer': True,
-                        'explain': "Plazmidlar avtonom replikatsiyalanuvchi halqasimon DNK bo'lib, vektori sifatida keng qo'llaniladi."
+                        'explain': "Plazmidlar avtonom replikatsiyalanuvchi halqasimon DNK bo'lib, vektor sifatida keng qo'llaniladi."
                     },
                     {
                         'type': 'mc',
                         'q': 'Restriktaza fermentlarining biologik kelib chiqishi va asosiy vazifasi nimadan iborat?',
                         'options': [
                             'Bakteriyalarning viruslar (bakteriofag)dan himoyalanish fermentlari',
-                            'Osimliklarda fotosintezni boshqaruvchi fermentlar',
+                            "O'simliklarda fotosintezni boshqaruvchi fermentlar",
                             'Odamda ovqat hazm qilish fermentlari',
                             "DNK replikatsiyasini to'xtatuvchi inaktivatorlar"
                         ],
@@ -28423,7 +28423,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Eukariot genida intronlar bo'lganligi sababli, inson genini bakteriyaga to'g'ridan-to me'yorda klonlab bo'lmaydi. Bu muammo qanday hal etiladi?",
+                            'prompt': "Eukariot genida intronlar bo'lganligi sababli, inson genini bakteriyaga to'g'ridan-to'g'ri klonlab bo'lmaydi. Bu muammo qanday hal etiladi?",
                             'answer': 'Yetuk mRNK molekulasidan qaytar transkriptaza (revertaza) fermenti yordamida intronlarsiz cDNK (komplementar DNK) sintez qilinadi.',
                             'hint': 'Qaytar transkriptaza (revertaza) fermentini eslang.'
                         },
@@ -28456,7 +28456,7 @@ SUBJECTS = [
                         'title': 'Keyingi avlod sekvenirlashi (NGS) va bioinformatika',
                         'items': [
                             "Genomik DNKni tasodifiy kichik bo'laklarga ajratish (fragmentatsiya).",
-                            "Fragmentlarga maxsus adapterlarni ulash va millonlab reaksiya o'choqlarida parallel sekvenirlash.",
+                            "Fragmentlarga maxsus adapterlarni ulash va millionlab reaksiya o'choqlarida parallel sekvenirlash.",
                             "Bioinformatik dasturlar (BLAST, BWA) yordamida olingan qisqa o'qishlarni (reads) moslashtirib tekislash.",
                             'Genom annotatsiyasi va variantlarni aniqlash.'
                         ]
@@ -28473,11 +28473,11 @@ SUBJECTS = [
                         'options': [
                             'Deoksinukleotid tri-fosfat (dNTP)',
                             'Dideoksinukleotid tri-fosfat (ddNTP)',
-                            'RNK-pramer',
+                            'RNK-praymer',
                             'DNK-ligaza'
                         ],
                         'answer': 1,
-                        'explain': "ddNTP molekulasida 3'-OH guruhi yo'q, shuning uchun keyingi nukleotid fosfodiefer bog' orqali birika olmaydi."
+                        'explain': "ddNTP molekulasida 3'-OH guruhi yo'q, shuning uchun keyingi nukleotid fosfodiefir bog' orqali birika olmaydi."
                     },
                     {
                         'type': 'tf',
@@ -28519,13 +28519,13 @@ SUBJECTS = [
             {
                 'slug': 'hujayraviy-signalizatsiya-va-signal-transduksiyasi',
                 'title': 'Hujayraviy signalizatsiya va signal transduksiyasi',
-                'summary': 'Hujayralararo kimyoviy signallarni qabul qilish, G-oqsil retseptorlari va ikkinchi marta vositachilar (cAMF, IP3) orqali kaskadli uzatish.',
+                'summary': 'Hujayralararo kimyoviy signallarni qabul qilish, G-oqsil retseptorlari va ikkilamchi vositachilar (cAMF, IP3) orqali kaskadli uzatish.',
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Signal transduksiyasi tushunchasi',
-                        'body': "Hujayra tashqarisidagi signal molekulalari (gormonlar, neyromediatorlar) hujayra yuzasidagi retseptorlar bilan bog'lanadi. Bu signal hujayra ichiga ikkinchi marta vositachilar va proteinkinaza fermentlari kaskadi orqali uzatiladi."
+                        'body': "Hujayra tashqarisidagi signal molekulalari (gormonlar, neyromediatorlar) hujayra yuzasidagi retseptorlar bilan bog'lanadi. Bu signal hujayra ichiga ikkilamchi vositachilar va proteinkinaza fermentlari kaskadi orqali uzatiladi."
                     },
                     {
                         'type': 'example',
@@ -28538,7 +28538,7 @@ SUBJECTS = [
                         'items': [
                             'Birinchi vositachi (ligand) retseptorga birikadi.',
                             "Retseptor konformatsiyasi o'zgarib, membranadagi effektorni faollashtiradi.",
-                            'Ikkinchi marta vositachi (cAMF, Ca2+, IP3, DAG) konsentratsiyasi keskin oshadi.',
+                            'Ikkilamchi vositachi (cAMF, Ca2+, IP3, DAG) konsentratsiyasi keskin oshadi.',
                             'Proteinkinazalar maqsadli oqsillarni fosforillaydi va fiziologik javob (masalan, glikogen parchalanishi) yuzaga keladi.'
                         ]
                     },
@@ -28568,7 +28568,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Qaysi molekula signal uzatilishida ikkinchi marta vositachi (second messenger) hisoblanmaydi?',
+                        'q': 'Qaysi molekula signal uzatilishida ikkilamchi vositachi (second messenger) hisoblanmaydi?',
                         'options': [
                             'tsiklik AMF (cAMF)',
                             'Inozitol trifosfat (IP3)',
@@ -28576,7 +28576,7 @@ SUBJECTS = [
                             'Adrenalin'
                         ],
                         'answer': 3,
-                        'explain': 'Adrenalin birinchi marta vositachi (ligand) hisoblanadi.'
+                        'explain': 'Adrenalin birlamchi vositachi (ligand) hisoblanadi.'
                     }
                 ],
                 'homework': {
@@ -28586,7 +28586,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Signal transduksiyasidagi 'fermentativ amplifikatsiya' (kuchayish) hodisasi nima va u hujayraga qanday afzallik beradi?",
-                            'answer': "Bir dona gormon molekulasi retseptor bilan bog'lanib, minglab ikkinchi vositachilar va millionlab yakuniy mahsulotlar hosil bo'lishiga olib kelishi. Bu juda kichik signalga ham tez va kuchli javob berishni ta'minlaydi.",
+                            'answer': "Bir dona gormon molekulasi retseptor bilan bog'lanib, minglab ikkilamchi vositachilar va millionlab yakuniy mahsulotlar hosil bo'lishiga olib kelishi. Bu juda kichik signalga ham tez va kuchli javob berishni ta'minlaydi.",
                             'hint': "Bir dona signal molekulasining ko'p bosqichli ko'payishini ko'z oldingizga keltiring."
                         },
                         {
@@ -28615,7 +28615,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Apoptoz kaskadining kechiishi',
+                        'title': 'Apoptoz kaskadining kechishi',
                         'items': [
                             'Ichki (mitoxondrial) yoki tashqi signal tufayli apoptoz faollashadi.',
                             'Mitoxondriyadan sitoxrom C sitoplazmaga chiqadi.',
@@ -28625,7 +28625,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Nekroz va Apoptoz bir-biridan farq qiladi. Nekroz — shikastlanish natijasidagi tartibsiz va yallig'lanishli o'lim, apoptoz esa energiya sarflovchi toza rejalashtirilgan jarayon."
+                        'body': "Esda tuting: Nekroz va Apoptoz bir-biridan farq qiladi. Nekroz — shikastlanish natijasidagi tartibsiz va yallig'lanishli o'lim, apoptoz esa energiya sarflovchi tartibli, rejalashtirilgan jarayon."
                     }
                 ],
                 'quiz': [
@@ -28639,7 +28639,7 @@ SUBJECTS = [
                             'Onkosuppressor'
                         ],
                         'answer': 0,
-                        'explain': 'Proto-onkogen funksiya ortishi (gain-of-function) mutatsiyasi natijasida onkogen deyiladi va saratonni keltirib chiqaradi.'
+                        'explain': 'Proto-onkogen funksiya ortishi (gain-of-function) mutatsiyasi natijasida onkogenga aylanadi va saratonni keltirib chiqaradi.'
                     },
                     {
                         'type': 'tf',
@@ -28667,7 +28667,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Ras oqsili va p53 genidagi mutatsiyalarning saraton rivojlanishidagi farqini tushuntiring (funksiya ortishi vs yo'qolishi).",
-                            'answer': "Ras - proto-onkogen bo'lib, funksiya ortishi (gain-of-function) mutatsiyasida uzluksiz bo'linish signalini beradi. p53 - suppressor bo'lib, funksiya yo'qolishi (loss-of-function) mutatsiyasida shikastlangan bo'linish to'xtamaydi.",
+                            'answer': "Ras - proto-onkogen bo'lib, funksiya ortishi (gain-of-function) mutatsiyasida uzluksiz bo'linish signalini beradi. p53 - suppressor bo'lib, funksiya yo'qolishi (loss-of-function) mutatsiyasida shikastlangan hujayraning bo'linishi to'xtamaydi.",
                             'hint': "Onkogenlar akselerator, suppressorlar esa tormoz pedaliga o'xshatiladi."
                         },
                         {
@@ -28700,8 +28700,8 @@ SUBJECTS = [
                         'items': [
                             'V, D, J segmentlarining tasodifiy rekombinatsiyasi.',
                             "Segmentlar birikish joyida nukleotidlarning tasodifiy qo'shilishi yoki o'chirilishi (junctional diversity).",
-                            "Og'ir va engil zanjirlarning tasodifiy juftlashuvi.",
-                            "Antigen bilan to'qnashgandan sohn B-hujayralardagi Somatik gipermutatsiya (SHM)."
+                            "Og'ir va yengil zanjirlarning tasodifiy juftlashuvi.",
+                            "Antigen bilan to'qnashgandan so'ng B-hujayralardagi Somatik gipermutatsiya (SHM)."
                         ]
                     },
                     {
@@ -28726,7 +28726,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "MHC (To'qima moslashuvchanligi bosh kompleksi) oqsillari polimorfizmi a'zolar ko'chirilganda (transplantatsiya) ko'chirilgan a'zoning bitib ketishiga ta'sir qilmaydi.",
                         'answer': False,
-                        'explain': 'MHC genlari juda yuqori polimorfizmga ega va transplantatning retsepsiya qilinishi yoki rad etilishida asosiy omildir.'
+                        'explain': 'MHC genlari juda yuqori polimorfizmga ega va transplantatning qabul qilinishi yoki rad etilishida asosiy omildir.'
                     },
                     {
                         'type': 'mc',
@@ -28738,7 +28738,7 @@ SUBJECTS = [
                             'Metillanish'
                         ],
                         'answer': 1,
-                        'explain': "Somatik gipermutatsiya (SHM) antitelolarning antigenga afilligini (bog'lanish kuchini) oshirishga xizmat qiladi."
+                        'explain': "Somatik gipermutatsiya (SHM) antitelolarning antigenga affinligini (bog'lanish kuchini) oshirishga xizmat qiladi."
                     }
                 ],
                 'homework': {
@@ -28748,7 +28748,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'MHC I va MHC II oqsillari orasidagi asosiy genetik va funksional farqlarni ayting.',
-                            'answer': "MHC I barcha yadroga ega hujayralarda bo'lib Cytotoxic T (CD8+) hujayralarga antigen ko'rsatadi; MHC II esa antigen taqdim etuvchi professional hujayralarda (makrofag, B-hujayra) bo'lib Helper T (CD4+) hujayralarga antigen ko'rsatadi.",
+                            'answer': "MHC I barcha yadroga ega hujayralarda bo'lib sitotoksik T (CD8+) hujayralarga antigen ko'rsatadi; MHC II esa antigen taqdim etuvchi professional hujayralarda (makrofag, B-hujayra) bo'lib T-xelper (CD4+) hujayralarga antigen ko'rsatadi.",
                             'hint': "Qaysi hujayra turlarida ekspressiya bo'lishiga e'tibor bering."
                         },
                         {
@@ -28762,7 +28762,7 @@ SUBJECTS = [
             {
                 'slug': 'molekulyar-filogenetika-va-molekulyar-soatlar',
                 'title': 'Molekulyar filogenetika va molekulyar soatlar',
-                'summary': 'Nuklein kislotalar va oqsillar ketma-ketligi asosida turlarning evolyutsion qarindoshligini, filogenetik daraxatlarni hamda ajralish vaqtini aniqlash.',
+                'summary': 'Nuklein kislotalar va oqsillar ketma-ketligi asosida turlarning evolyutsion qarindoshligini, filogenetik daraxtlarni hamda ajralish vaqtini aniqlash.',
                 'duration': 15,
                 'lesson': [
                     {
@@ -28773,7 +28773,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': '16S rRNK va hayotning uchta domeni',
-                        'body': 'Karl Veze 16S rRNK geni ketma-ketligini tahlil qilish orqali barcha tirik organizmlarni 3 ta domenga: Bakteriyalar, Arxeyalar va Eukariotlarga ajratgan.'
+                        'body': 'Karl Vouz 16S rRNK geni ketma-ketligini tahlil qilish orqali barcha tirik organizmlarni 3 ta domenga: Bakteriyalar, Arxeyalar va Eukariotlarga ajratgan.'
                     },
                     {
                         'type': 'steps',
@@ -28806,7 +28806,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Molekulyar soat gipotezasiga ko'ra, neytral mutatsiyalarning to'planish tezligi doimiy va evolyutsion vaqtga proporsionaldir.",
                         'answer': True,
-                        'explain': "Neytral evolyutsiya nazariyasi mutatsiyalar ma'lum o'rtacha tezlikda to'planishini ta'minlaydi."
+                        'explain': "Neytral evolyutsiya nazariyasi mutatsiyalar ma'lum o'rtacha tezlikda to'planishini tushuntiradi."
                     },
                     {
                         'type': 'mc',
@@ -28834,7 +28834,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Filogenetik darratlarni qurishda 'Maximum Parsimony' (eng kam bosqichlilik) prinsipi qanday qo'llaniladi?"
+                            'prompt': "Filogenetik daraxtlarni qurishda 'Maximum Parsimony' (eng kam bosqichlilik) prinsipi qanday qo'llaniladi?"
                         }
                     ]
                 }
@@ -28862,7 +28862,7 @@ SUBJECTS = [
                             'gRNK va Cas9 majmuasining hujayraga kiritilishi va PAM (Protospacer Adjacent Motif) ketma-ketligini tanishi.',
                             'Cas9 fermentining nishon DNKda ikkita zanjirli uzilish (DSB) hosil qilishi.',
                             'NHEJ (Nogomologik uchlarni biriktirish) orqali gen faoliyatini buzish (knockout).',
-                            "HDR (Gomologik rekonstruksiya) orqali donor DNK kiritib, genni to'g'rilash yoki yangi gen kiritish (knock-in)."
+                            "HDR (gomologiyaga yo'naltirilgan reparatsiya) orqali donor DNK kiritib, genni to'g'rilash yoki yangi gen kiritish (knock-in)."
                         ]
                     },
                     {
@@ -28899,7 +28899,7 @@ SUBJECTS = [
                             'Transkripsiya'
                         ],
                         'answer': 1,
-                        'explain': "HDR (Gomologik yo'naltirilgan репарация) donor DNK yordamida aniq genetik tuzatishni ta'minlaydi."
+                        'explain': "HDR (gomologiyaga yo'naltirilgan reparatsiya) donor DNK yordamida aniq genetik tuzatishni ta'minlaydi."
                     }
                 ],
                 'homework': {
@@ -28908,8 +28908,8 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "CRISPR-Cas9 yordamida inson muloqot va somatik hujayralarini tahrirlash o'rtasidagi bioetik farqlarni tushuntiring.",
-                            'answer': "Somatik hujayralar tahrirlanganda o'zgarishlar faqat o'sha bemorning o'zida qoladi va nasldan-naslga o'tmaydi. Muloqot (jinsiy/murtak) hujayralari tahriri esa barcha kelajak avlodlarga o'tadi va kutilmagan evolyutsion xavflar tug'diradi.",
+                            'prompt': "CRISPR-Cas9 yordamida inson jinsiy (germinal) va somatik hujayralarini tahrirlash o'rtasidagi bioetik farqlarni tushuntiring.",
+                            'answer': "Somatik hujayralar tahrirlanganda o'zgarishlar faqat o'sha bemorning o'zida qoladi va nasldan-naslga o'tmaydi. Jinsiy (murtak) hujayralar tahriri esa barcha kelajak avlodlarga o'tadi va kutilmagan evolyutsion xavflar tug'diradi.",
                             'hint': "Kelajak avlodlarga nasldan-naslga o'tish imkoniyatini o'ylang."
                         },
                         {
