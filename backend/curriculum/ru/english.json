@@ -1,0 +1,3127 @@
+{
+ "present-perfect-vs-past-simple": {
+  "title": "Различия Present Perfect и Past Simple",
+  "summary": "Правильное сравнение и употребление действий, связанных с прошедшим и настоящим временем.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Present Perfect (have/has + V3) используется для прошлых действий, результат которых связан с настоящим. Past Simple (V2/ed) выражает действия, завершившиеся в определённое время в прошлом."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Present Perfect: I have lost my keys (Я потерял ключи — их до сих пор нет). Past Simple: I lost my keys yesterday (Вчера я потерял ключи)."
+   },
+   {
+    "type": "steps",
+    "title": "Шаги для различения",
+    "items": [
+     "Проверьте, есть ли в предложении точное прошедшее время (yesterday, in 2010, 2 days ago).",
+     "Если точное время есть, используйте Past Simple.",
+     "Если результат виден сейчас и время не указано, используйте Present Perfect."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: ключевые слова 'ever', 'never', 'already', 'yet', 'just' чаще всего употребляются с Present Perfect."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "I ___ to London twice this year.",
+    "options": [
+     "have been",
+     "went",
+     "was",
+     "go"
+    ],
+    "answer": 0,
+    "explain": "В этом году я был там дважды (результат/опыт), и этот год ещё не закончился."
+   },
+   {
+    "type": "tf",
+    "q": "Слово 'Yesterday' употребляется с временем Present Perfect.",
+    "answer": false,
+    "explain": "'Yesterday' — показатель точного времени для Past Simple."
+   },
+   {
+    "type": "mc",
+    "q": "She ___ her homework an hour ago.",
+    "options": [
+     "has finished",
+     "finished",
+     "finishes",
+     "had finished"
+    ],
+    "answer": 1,
+    "explain": "'an hour ago' указывает точное время в прошлом, поэтому используется Past Simple."
+   }
+  ],
+  "homework": {
+   "intro": "Выполните следующие задания для закрепления темы.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Напишите глагол в скобках в правильном времени: He (not/call) me yet.",
+     "answer": "has not called",
+     "hint": "Обратите внимание на ключевое слово 'yet'."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 3 предложения о своём прошлом опыте, используя Present Perfect и Past Simple."
+    }
+   ]
+  }
+ },
+ "comparative-and-superlative-adjectives": {
+  "title": "Сравнительная и превосходная степени прилагательных",
+  "summary": "Правила сравнения прилагательных (-er/-est, more/most и исключения).",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "К коротким (односложным) прилагательным добавляются суффиксы -er/-est. Перед многосложными прилагательными используются more/most. Некоторые прилагательные меняются в корне."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Tall -> Taller -> The tallest. Beautiful -> More beautiful -> The most beautiful. Good -> Better -> The best."
+   },
+   {
+    "type": "steps",
+    "title": "Порядок образования степеней",
+    "items": [
+     "Определите число слогов прилагательного.",
+     "Если оно односложное: +er (сравнительная), +est (превосходная).",
+     "Если в нём 2 слога и более: добавьте more / most.",
+     "Запомните прилагательные-исключения (good, bad, far)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: перед прилагательными в превосходной степени всегда используется артикль 'the'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "This book is ___ than the one I read last week.",
+    "options": [
+     "interesting",
+     "more interesting",
+     "most interesting",
+     "as interesting"
+    ],
+    "answer": 1,
+    "explain": "Сравниваются два предмета (есть 'than'), а 'interesting' — многосложное прилагательное."
+   },
+   {
+    "type": "tf",
+    "q": "Превосходная степень прилагательного 'Good' — 'the goodest'.",
+    "answer": false,
+    "explain": "'Good' — прилагательное-исключение, его превосходная степень — 'the best'."
+   },
+   {
+    "type": "mc",
+    "q": "Mount Everest is ___ mountain in the world.",
+    "options": [
+     "the highest",
+     "higher",
+     "the most high",
+     "high"
+    ],
+    "answer": 0,
+    "explain": "Речь идёт о самой высокой горе в мире, поэтому используется превосходная степень 'the highest'."
+   }
+  ],
+  "homework": {
+   "intro": "Выполните упражнения на степени сравнения прилагательных.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Напишите сравнительную степень прилагательного Bad.",
+     "answer": "worse",
+     "hint": "Это прилагательное-исключение."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 3 предложения, сравнивая свой город и свою деревню."
+    }
+   ]
+  }
+ },
+ "first-and-second-conditionals": {
+  "title": "Условные предложения первого и второго типа",
+  "summary": "Конструкции для построения реальных и предположительных (условных) предложений.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "First Conditional выражает реальные возможности в будущем: If + Present Simple, Will + V1. Second Conditional выражает нереальные/предположительные ситуации в настоящем или будущем: If + Past Simple, Would + V1."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "1st: If it rains, I will stay at home. 2nd: If I won the lottery, I would buy a huge house."
+   },
+   {
+    "type": "steps",
+    "title": "Правило различения",
+    "items": [
+     "Определите степень реальности ситуации.",
+     "Если ситуация может осуществиться (real): If + Present, Will.",
+     "Если ситуация воображаемая (unreal): If + Past, Would."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в Second Conditional в официальном стиле для 'I/He/She/It' вместо 'was' используется 'were' (e.g. If I were you...)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "If I ___ enough money, I would travel around the world.",
+    "options": [
+     "have",
+     "had",
+     "will have",
+     "would have"
+    ],
+    "answer": 1,
+    "explain": "Так как в предложении есть 'would travel' (Second Conditional), в части с 'if' стоит Past Simple (had)."
+   },
+   {
+    "type": "tf",
+    "q": "В предложениях First Conditional в части с 'if' используется 'will'.",
+    "answer": false,
+    "explain": "В придаточном с 'if' 'will' не используется, там применяется Present Simple."
+   },
+   {
+    "type": "mc",
+    "q": "If she passes the exam, she ___ very happy.",
+    "options": [
+     "would be",
+     "will be",
+     "was",
+     "is"
+    ],
+    "answer": 1,
+    "explain": "'If she passes' (Present Simple) — реальная ситуация, в части результата будет 'will be'."
+   }
+  ],
+  "homework": {
+   "intro": "Проверьте свои знания условных предложений.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "If I (be) you, I wouldn't do that. Исправьте глагол в скобках.",
+     "answer": "were",
+     "hint": "Официальная форма Second Conditional."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Что бы вы сделали, если бы были президентом страны? (Напишите с помощью Second Conditional)."
+    }
+   ]
+  }
+ },
+ "modal-verbs-must-have-to-should": {
+  "title": "Модальные глаголы: Must, Have to, Should",
+  "summary": "Употребление модальных глаголов в значении обязанности, необходимости и совета.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "'Must' выражает личную обязанность по мнению говорящего, 'Have to' — обязанность из-за внешнего правила/закона, а 'Should' — совет или рекомендацию."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "You must study hard (я так считаю). You have to wear a uniform at school (правило). You should see a doctor (совет)."
+   },
+   {
+    "type": "steps",
+    "title": "Правильный выбор",
+    "items": [
+     "Если даётся совет -> Should.",
+     "Если это официальный закон, правило или обязанность -> Have to.",
+     "Если это личное решение/приказ говорящего -> Must."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: 'Don't have to' (не обязательно) и 'Mustn't' (запрещено) имеют совершенно разное значение!"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "You ___ smoke in the hospital. It's strictly forbidden.",
+    "options": [
+     "don't have to",
+     "mustn't",
+     "shouldn't",
+     "needn't"
+    ],
+    "answer": 1,
+    "explain": "Для строгого запрета используется 'mustn't'."
+   },
+   {
+    "type": "tf",
+    "q": "Фраза 'You don't have to go' означает «Тебе нельзя идти, это запрещено».",
+    "answer": false,
+    "explain": "'Don't have to' означает, что идти не обязательно, но если хочешь, можешь пойти."
+   },
+   {
+    "type": "mc",
+    "q": "You look tired. You ___ go to bed early.",
+    "options": [
+     "must to",
+     "should",
+     "have",
+     "ought"
+    ],
+    "answer": 1,
+    "explain": "При совете уставшему человеку используется 'should'."
+   }
+  ],
+  "homework": {
+   "intro": "Упражнения на модальные глаголы.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Students ___ wear school uniforms. (обязанность по правилу)",
+     "answer": "have to",
+     "hint": "Внешнее правило или порядок."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 3 совета для здорового образа жизни (используя should/shouldn't)."
+    }
+   ]
+  }
+ },
+ "relative-clauses-defining-non-defining": {
+  "title": "Относительные придаточные предложения (Relative Clauses)",
+  "summary": "Соединение и уточнение предложений с помощью who, which, that, whose и where.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Relative clauses дают дополнительную информацию о существительных. Они делятся на Defining (важная информация) и Non-defining (дополнительная информация, выделяемая запятыми)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Defining: The man who lives next door is a doctor. Non-defining: My brother, who lives in London, is a doctor."
+   },
+   {
+    "type": "steps",
+    "title": "Выбор относительных местоимений",
+    "items": [
+     "Для людей: who / that",
+     "Для предметов/животных: which / that",
+     "Для принадлежности: whose",
+     "Для мест: where"
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в Non-defining relative clauses (предложениях с запятыми) нельзя использовать 'that'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "The book ___ I bought yesterday is very interesting.",
+    "options": [
+     "who",
+     "which",
+     "whose",
+     "where"
+    ],
+    "answer": 1,
+    "explain": "Когда речь идёт о книге (предмете), используется 'which' или 'that'."
+   },
+   {
+    "type": "tf",
+    "q": "В предложениях Non-defining relative clause можно использовать слово 'that'.",
+    "answer": false,
+    "explain": "В предложениях, выделенных запятыми (non-defining), 'that' использовать нельзя."
+   },
+   {
+    "type": "mc",
+    "q": "This is the student ___ car was stolen.",
+    "options": [
+     "who",
+     "whom",
+     "whose",
+     "which"
+    ],
+    "answer": 2,
+    "explain": "Речь идёт о машине студента (принадлежность), поэтому используется 'whose'."
+   }
+  ],
+  "homework": {
+   "intro": "Освойте упражнения по relative clauses.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "The place ___ we met was very romantic.",
+     "answer": "where",
+     "hint": "Относительное местоимение, указывающее место."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Опишите свою любимую книгу или фильм в 2 предложениях с relative clause."
+    }
+   ]
+  }
+ },
+ "passive-voice-present-and-past-simple": {
+  "title": "Страдательный залог (Passive Voice): Present и Past Simple",
+  "summary": "Способ перенести внимание с исполнителя действия на само действие.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Passive Voice используется, когда неизвестно или неважно, кто выполнил действие. Формула: Subject + be (am/is/are/was/were) + V3 (Past Participle)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Active: Shakespeare wrote 'Hamlet'. -> Passive: 'Hamlet' was written by Shakespeare."
+   },
+   {
+    "type": "steps",
+    "title": "Перевод в страдательный залог",
+    "items": [
+     "Превратите дополнение (object) активного предложения в подлежащее пассивного.",
+     "Выберите глагол 'be', соответствующий времени (am/is/are или was/were).",
+     "Поставьте основной глагол в 3-ю форму (V3/ed).",
+     "Если исполнитель важен, добавьте 'by + исполнитель'."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: непереходные глаголы (например: arrive, die, sleep) нельзя употреблять в страдательном залоге."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "English ___ all over the world.",
+    "options": [
+     "speaks",
+     "is spoken",
+     "is speaking",
+     "was spoken"
+    ],
+    "answer": 1,
+    "explain": "На английском языке сейчас говорят (Present Simple Passive) -> is spoken."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'The house built in 1990' — грамматически полностью правильный пассив.",
+    "answer": false,
+    "explain": "Пропущен глагол 'be': должно быть 'The house WAS built in 1990'."
+   },
+   {
+    "type": "mc",
+    "q": "___ these letters sent yesterday?",
+    "options": [
+     "Did",
+     "Were",
+     "Are",
+     "Have"
+    ],
+    "answer": 1,
+    "explain": "Вопросительное пассивное предложение во множественном числе в прошедшем времени: Were + subject + V3."
+   }
+  ],
+  "homework": {
+   "intro": "Переведите предложения в страдательный залог.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Active: They clean the room every day. Passive: The room ___ every day.",
+     "answer": "is cleaned",
+     "hint": "Форма Present Simple Passive."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 3 предложения в Passive Voice о городе или доме, где вы живёте."
+    }
+   ]
+  }
+ },
+ "reported-speech-statements-and-questions": {
+  "title": "Косвенная речь (Reported Speech)",
+  "summary": "Передача чужих слов или вопроса со сдвигом в прошедшее время.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "При передаче чужих слов время глагола обычно сдвигается на шаг в прошлое (Backshift). Например: Present Simple -> Past Simple, Present Perfect -> Past Perfect."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Direct: 'I am tired,' he said. -> Reported: He said that he was tired. Direct: 'Where do you live?' she asked. -> Reported: She asked me where I lived."
+   },
+   {
+    "type": "steps",
+    "title": "Правила косвенной речи",
+    "items": [
+     "Логично измените личные и притяжательные местоимения.",
+     "Сдвиньте время назад (Present -> Past, Past -> Past Perfect).",
+     "Измените указатели времени (now -> then, today -> that day).",
+     "Если это вопрос, приведите его к прямому порядку слов и используйте 'if/whether' или wh-слово."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в Reported questions (косвенных вопросах) вопросительный порядок слов (Do/Did) исчезает, используется прямой порядок повествовательного предложения."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "He said: 'I have finished my work.' -> He said that he ___ his work.",
+    "options": [
+     "finished",
+     "has finished",
+     "had finished",
+     "finishes"
+    ],
+    "answer": 2,
+    "explain": "Present Perfect (have finished) в косвенной речи становится Past Perfect (had finished)."
+   },
+   {
+    "type": "tf",
+    "q": "В косвенных вопросах вспомогательные глаголы do/does сохраняются.",
+    "answer": false,
+    "explain": "В косвенных вопросах вопросительные вспомогательные глаголы опускаются и используется порядок слов повествовательного предложения."
+   },
+   {
+    "type": "mc",
+    "q": "'Where are you going?' she asked me. -> She asked me where ___ going.",
+    "options": [
+     "was I",
+     "I was",
+     "am I",
+     "I am"
+    ],
+    "answer": 1,
+    "explain": "Обязателен порядок «подлежащее + глагол» (I was)."
+   }
+  ],
+  "homework": {
+   "intro": "Переведите прямую речь в косвенную.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Direct: 'I will call you tomorrow,' Tom said. -> Tom said that he ___ call me the next day.",
+     "answer": "would",
+     "hint": "Во что превращается 'Will' в косвенной речи?"
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Запишите в форме косвенной речи 2 фразы, которые вам сегодня сказал друг."
+    }
+   ]
+  }
+ },
+ "verb-patterns-gerunds-vs-infinitives": {
+  "title": "Формы глагола: Gerund (V-ing) и Infinitive (To + V)",
+  "summary": "Изучение того, после каких глаголов идёт Gerund, а после каких — Infinitive.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В английском языке, когда после одного глагола идёт второй, он стоит либо в форме gerund (-ing), либо to-infinitive. Некоторые глаголы допускают обе формы, но смысл может меняться."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Gerund: I enjoy reading. Infinitive: I decide to study. Изменение смысла: I stopped smoking (я бросил курить) vs I stopped to smoke (я остановился, чтобы покурить)."
+   },
+   {
+    "type": "steps",
+    "title": "Шаги для различения",
+    "items": [
+     "Enjoy, avoid, mind, suggest -> принимают V-ing.",
+     "Decide, hope, plan, promise -> принимают To + V1.",
+     "Глаголы Stop, remember, forget выбирайте по смыслу."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: после предлогов (in, on, at, about, of, forward to) всегда используется Gerund (-ing)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "She promised ___ me with my homework.",
+    "options": [
+     "help",
+     "helping",
+     "to help",
+     "helped"
+    ],
+    "answer": 2,
+    "explain": "После глагола 'Promise' используется To + Infinitive."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'I am looking forward to meet you' построено правильно.",
+    "answer": false,
+    "explain": "'to' в выражении 'Look forward to' — предлог, поэтому должно быть '-ing' (to meeting)."
+   },
+   {
+    "type": "mc",
+    "q": "He gave up ___ two years ago.",
+    "options": [
+     "smoking",
+     "to smoke",
+     "smoke",
+     "smoked"
+    ],
+    "answer": 0,
+    "explain": "'Give up' — фразовый глагол, оканчивающийся предлогом, поэтому требует Gerund (smoking)."
+   }
+  ],
+  "homework": {
+   "intro": "Правильно выберите формы глагола.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "I don't mind (wait) for a few minutes.",
+     "answer": "waiting",
+     "hint": "Какая форма идёт после глагола 'Mind'?"
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите, что вы любите делать в свободное время и что собираетесь делать в будущем, используя gerund и infinitive."
+    }
+   ]
+  }
+ },
+ "past-continuous-and-past-perfect-simple": {
+  "title": "Past Continuous и Past Perfect Simple",
+  "summary": "Процесс в прошлом и действия, произошедшие ещё раньше другого прошлого действия.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Past Continuous (was/were + V-ing) обозначает процесс, длившийся в определённый момент в прошлом. Past Perfect (had + V3) выражает действие, завершившееся до другого события в прошлом."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Past Continuous: At 8 PM last night, I was watching TV. Past Perfect: When I arrived at the station, the train had already left."
+   },
+   {
+    "type": "steps",
+    "title": "Определение последовательности",
+    "items": [
+     "Если действие длилось в определённое время в прошлом -> Past Continuous.",
+     "Если из двух прошлых действий одно произошло первым -> Past Perfect.",
+     "Обращайте внимание на союзы When, while, before, after."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: 'While' обычно употребляется с Past Continuous, а 'By the time' — с Past Perfect."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "While I ___ my homework, the lights went out.",
+    "options": [
+     "was doing",
+     "had done",
+     "did",
+     "have done"
+    ],
+    "answer": 0,
+    "explain": "'While' выражает длительность: я делал уроки (Past Continuous), и свет погас."
+   },
+   {
+    "type": "tf",
+    "q": "Past Perfect используется для более позднего из двух действий в прошлом.",
+    "answer": false,
+    "explain": "Past Perfect используется для действия, которое произошло ПЕРВЫМ из двух действий в прошлом."
+   },
+   {
+    "type": "mc",
+    "q": "By the time we arrived, the film ___ .",
+    "options": [
+     "started",
+     "was starting",
+     "had started",
+     "has started"
+    ],
+    "answer": 2,
+    "explain": "Фильм уже начался ещё до того, как мы пришли (Past Perfect)."
+   }
+  ],
+  "homework": {
+   "intro": "Задания на времена Past Continuous и Past Perfect.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "She realized she (forget) her passport when she got to the airport.",
+     "answer": "had forgotten",
+     "hint": "Действие, произошедшее до прибытия в аэропорт."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 предложения о том, что вы делали вчера в момент неожиданного события."
+    }
+   ]
+  }
+ },
+ "future-forms-will-be-going-to-present-continuous": {
+  "title": "Формы будущего времени: Will, Be going to, Present Continuous",
+  "summary": "Правильное выражение намерений, планов и мгновенных решений в будущем.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Will: неожиданные решения, предсказания. Be going to: заранее принятое намерение, предсказание на основе видимых признаков. Present Continuous: заранее точно согласованный план (time and place fixed)."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Will: The phone is ringing. I'll get it! Going to: Look at those dark clouds, it is going to rain. Present Continuous: I am meeting the doctor tomorrow at 10 AM."
+   },
+   {
+    "type": "steps",
+    "title": "Правило различения",
+    "items": [
+     "Решение принято прямо сейчас, в момент речи? -> Will.",
+     "Намерение есть заранее, но точное время не назначено? -> Be going to.",
+     "План с точно согласованными временем и местом? -> Present Continuous."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: для официальных расписаний (поезда, самолёты, уроки) используется Present Simple."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Look at those dark clouds! It ___ rain.",
+    "options": [
+     "will",
+     "is going to",
+     "is raining",
+     "rains"
+    ],
+    "answer": 1,
+    "explain": "Есть явный видимый признак (тёмные тучи), поэтому используется 'is going to'."
+   },
+   {
+    "type": "tf",
+    "q": "Для спонтанных (принятых тут же) решений используется 'be going to'.",
+    "answer": false,
+    "explain": "Для неожиданных/спонтанных решений используется 'will'."
+   },
+   {
+    "type": "mc",
+    "q": "I ___ to Madrid next Monday. I have already bought my tickets.",
+    "options": [
+     "fly",
+     "will fly",
+     "am flying",
+     "flew"
+    ],
+    "answer": 2,
+    "explain": "Билеты куплены, и время точно согласовано, поэтому используется Present Continuous (am flying)."
+   }
+  ],
+  "homework": {
+   "intro": "Заполните пропуски, используя подходящие формы будущего времени.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "A: I am cold. B: I (close) the window.",
+     "answer": "will close",
+     "hint": "Решение, принятое тут же."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите о своих планах на завтра и на следующую неделю, используя 3 разные формы."
+    }
+   ]
+  }
+ },
+ "third-and-mixed-conditionals": {
+  "title": "Условные предложения третьего и смешанного типа",
+  "summary": "Сожаления о прошлом и влияние условия в прошлом на настоящее.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Third Conditional выражает неосуществлённые условия и сожаления о событиях прошлого: If + Past Perfect, Would have + V3. Mixed Conditionals связывают действие в прошлом с его результатом в настоящем: If + Past Perfect, Would + V1."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "3rd: If I had studied harder, I would have passed the exam (в прошлом я не учился и не сдал). Mixed: If I had taken the map, I wouldn't be lost now (в прошлом я ушёл без карты и сейчас заблудился)."
+   },
+   {
+    "type": "steps",
+    "title": "Анализ",
+    "items": [
+     "Обе части относятся к прошлому? -> Third Conditional.",
+     "Условие в прошлом, а результат относится к НАСТОЯЩЕМУ? -> Mixed Conditional.",
+     "Обратите особое внимание на слово 'now' в части результата."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: Mixed Conditional всегда используется при столкновении времён (Past + Present)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "If you ___ me earlier, I would have helped you.",
+    "options": [
+     "told",
+     "had told",
+     "have told",
+     "would tell"
+    ],
+    "answer": 1,
+    "explain": "В части с 'if' в Third Conditional стоит Past Perfect (had told)."
+   },
+   {
+    "type": "tf",
+    "q": "Mixed Conditional используется только для результатов в прошлом.",
+    "answer": false,
+    "explain": "Mixed Conditional показывает влияние условия в прошлом на НАСТОЯЩЕЕ."
+   },
+   {
+    "type": "mc",
+    "q": "If I had slept well last night, I ___ tired now.",
+    "options": [
+     "wouldn't be",
+     "wouldn't have been",
+     "won't be",
+     "am not"
+    ],
+    "answer": 0,
+    "explain": "Условие в прошлом (had slept) и результат в настоящем (now), поэтому Mixed Conditional: wouldn't be."
+   }
+  ],
+  "homework": {
+   "intro": "Постройте сложные условные предложения.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "If she had saved money, she (buy) a house last year.",
+     "answer": "would have bought",
+     "hint": "Структура результата в Third Conditional."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите предложение Mixed Conditional о своей ошибке в прошлом и её нынешних последствиях."
+    }
+   ]
+  }
+ },
+ "passive-voice-advanced-continuous-and-perfect": {
+  "title": "Сложные временные формы страдательного залога",
+  "summary": "Образование Passive Voice во временах Continuous и Perfect.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Во временах Continuous Passive добавляется 'being' (am/is/are/was/were + being + V3). Во временах Perfect Passive добавляется 'been' (have/has/had + been + V3)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Present Continuous Passive: The car is being repaired right now. Present Perfect Passive: The project has been completed successfully."
+   },
+   {
+    "type": "steps",
+    "title": "Применение формул",
+    "items": [
+     "Если процесс выполняется прямо сейчас -> is/are + being + V3.",
+     "Если результат достигнут или действие завершено -> have/has + been + V3.",
+     "Если выполнено раньше другого прошлого момента -> had + been + V3."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: пассивные формы времён Future Continuous и Perfect Continuous почти не используются."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "A new bridge ___ in our city at the moment.",
+    "options": [
+     "is built",
+     "is being built",
+     "has been built",
+     "was built"
+    ],
+    "answer": 1,
+    "explain": "'at the moment' указывает на процесс, поэтому Present Continuous Passive: is being built."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'The work has completed' — грамматически правильный страдательный залог.",
+    "answer": false,
+    "explain": "Неверно. Для страдательного залога не хватает 'been': 'has BEEN completed'."
+   },
+   {
+    "type": "mc",
+    "q": "All the tickets ___ before we got to the cinema.",
+    "options": [
+     "had been sold",
+     "were being sold",
+     "have been sold",
+     "are sold"
+    ],
+    "answer": 0,
+    "explain": "Билеты были распроданы ещё до нашего прихода (Past Perfect Passive)."
+   }
+  ],
+  "homework": {
+   "intro": "Задания на страдательный залог в сложных временах.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "The dinner (prepare) when the guests arrived. (Past Continuous Passive)",
+     "answer": "was being prepared",
+     "hint": "was/were + being + V3."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 предложения в Present Perfect Passive о недавних изменениях в вашей школе или махалле."
+    }
+   ]
+  }
+ },
+ "modal-verbs-of-deduction-present-and-past": {
+  "title": "Модальные глаголы логического вывода (Deduction)",
+  "summary": "Предположения о настоящем и прошлом с помощью must, can't, might/may.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Предположение делается в зависимости от степени уверенности. Must = 99% правда. Can't = 99% невозможно. Might/May/Could = 50% вероятность. Для настоящего: Modal + V1. Для прошлого: Modal + have + V3."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Present: He has 5 sports cars. He must be rich! Past: She didn't answer the phone. She might have been sleeping."
+   },
+   {
+    "type": "steps",
+    "title": "Различение времени и уверенности",
+    "items": [
+     "Предположение о настоящем или о прошлом? Уточните.",
+     "Если о прошлом, обязательно используется 'have + V3'.",
+     "Положительная уверенность -> Must, отрицательная уверенность -> Can't, сомнение -> Might/May."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: для невозможного предположения всегда используется 'can't', а не 'mustn't'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "He has been working for 12 hours. He ___ be exhausted.",
+    "options": [
+     "must",
+     "can't",
+     "might not",
+     "should"
+    ],
+    "answer": 0,
+    "explain": "После 12 часов работы есть почти 100% уверенность, что он устал (must)."
+   },
+   {
+    "type": "tf",
+    "q": "Для выражения невозможного предположения о прошлом используется 'can't have + V3'.",
+    "answer": true,
+    "explain": "Верно. Например: He can't have done it (не может быть, что он это сделал)."
+   },
+   {
+    "type": "mc",
+    "q": "She isn't at home. She ___ gone to the supermarket.",
+    "options": [
+     "must",
+     "might have",
+     "can't",
+     "should"
+    ],
+    "answer": 1,
+    "explain": "Вероятное предположение о прошлом: might have + V3."
+   }
+  ],
+  "homework": {
+   "intro": "Освойте упражнения на модальные глаголы предположения.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "It is impossible that he saw you. -> He can't (see) you.",
+     "answer": "have seen",
+     "hint": "Невозможность в прошлом."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 2 разных предположения о друге, который вчера не пришёл на урок (might have / must have)."
+    }
+   ]
+  }
+ },
+ "indirect-questions-and-polite-requests": {
+  "title": "Косвенные вопросы и вежливые обращения",
+  "summary": "Как задавать вопросы мягче и официальнее, и правильный порядок слов.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Indirect questions (косвенные вопросы) используются для вежливой просьбы: 'Could you tell me...?', 'Do you know...?'. Главное правило: вопрос внутри вопроса имеет порядок слов повествовательного предложения!"
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Direct: Where is the bank? -> Indirect: Could you tell me where the bank is? (NOT: where is the bank)."
+   },
+   {
+    "type": "steps",
+    "title": "Правило построения косвенного вопроса",
+    "items": [
+     "Начните с вежливой фразы (Could you tell me / Do you know...).",
+     "Поставьте wh-слово (или 'if / whether', если это вопрос Yes/No).",
+     "Перейдите к порядку «подлежащее + глагол» и уберите do/does/did."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: вопросительный знак в конце косвенного вопроса ставится в зависимости от вводной фразы."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Do you know what time ___ ?",
+    "options": [
+     "does the train leave",
+     "the train leaves",
+     "leaves the train",
+     "is the train leaving"
+    ],
+    "answer": 1,
+    "explain": "В косвенном вопросе сохраняется прямой порядок слов «подлежащее + глагол» (the train leaves)."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'Could you tell me where do you live?' грамматически правильное.",
+    "answer": false,
+    "explain": "Неверно. В косвенных вопросах вспомогательный глагол 'do' не используется: должно быть 'where you live'."
+   },
+   {
+    "type": "mc",
+    "q": "I wonder if she ___ coming to the party.",
+    "options": [
+     "is",
+     "does",
+     "will be",
+     "was"
+    ],
+    "answer": 0,
+    "explain": "В вопросах Yes/No используется 'if', и далее идёт прямой порядок 'she is'."
+   }
+  ],
+  "homework": {
+   "intro": "Превратите прямые вопросы в косвенные.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Direct: Where is the museum? -> Indirect: Could you tell me where the museum (be)?",
+     "answer": "is",
+     "hint": "Глагол должен идти после подлежащего."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 косвенных вопроса, чтобы спросить у незнакомого человека название улицы и время."
+    }
+   ]
+  }
+ },
+ "advanced-article-usage-a-an-the-zero-article": {
+  "title": "Углублённое употребление артиклей",
+  "summary": "Артикли с географическими названиями, абстрактными существительными и в особых случаях.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В английском языке артикли употребляются по очень тонким правилам. 'The' используется с океанами, реками, горными цепями, группами стран. Перед отдельными горами, озёрами, континентами и большинством городов/стран артикль не используется (Zero article)."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "The Pacific Ocean, The Alps, The USA. НО: Mount Everest, Lake Superior, Uzbekistan, Asia."
+   },
+   {
+    "type": "steps",
+    "title": "Географические правила",
+    "items": [
+     "Названия во множественном числе и групповые (цепи, группы островов, штаты) -> The.",
+     "Одиночные названия (одна гора, одно озеро, один остров) -> без артикля.",
+     "Учреждения (hospital, school, prison): по назначению — без артикля, только как здание -> The."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в выражениях 'Go to bed', 'go to school' имеется в виду основное назначение учреждения, поэтому артикль не ставится."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "We went on a vacation to ___ United Kingdom.",
+    "options": [
+     "a",
+     "an",
+     "the",
+     "-"
+    ],
+    "answer": 2,
+    "explain": "В названиях стран со словами 'Kingdom', 'States', 'Republic' используется артикль 'the'."
+   },
+   {
+    "type": "tf",
+    "q": "Говорить 'The Mount Everest' грамматически правильно.",
+    "answer": false,
+    "explain": "Неверно. Перед отдельными горными вершинами 'the' не используется."
+   },
+   {
+    "type": "mc",
+    "q": "He was taken to ___ hospital because he was badly injured.",
+    "options": [
+     "a",
+     "the",
+     "-",
+     "an"
+    ],
+    "answer": 2,
+    "explain": "Когда человека кладут в больницу как пациента с целью лечения, артикль не ставится (zero article)."
+   }
+  ],
+  "homework": {
+   "intro": "Правильно расставьте артикли.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "___ Nile is the longest river in Africa. (Put 'the' or '-')",
+     "answer": "The",
+     "hint": "Ставится ли артикль перед названиями рек?"
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 3 предложения об Узбекистане и его географическом положении, правильно используя артикли."
+    }
+   ]
+  }
+ },
+ "causative-form-have-get-something-done": {
+  "title": "Каузативная форма (Causative Form): Have/Get Something Done",
+  "summary": "Конструкция для пользования услугами или поручения работы другому человеку.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Causative form (каузативная форма) используется, когда мы делаем что-то не сами, а поручаем другому человеку (мастеру, парикмахеру, врачу). Формула: Have/Get + Object + V3 (Past Participle)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "I cut my hair (я сам подстриг волосы). I HAD my hair cut (я подстригся у парикмахера)."
+   },
+   {
+    "type": "steps",
+    "title": "Построение конструкции",
+    "items": [
+     "Выберите глагол 'have' или 'get' в соответствии со временем.",
+     "Поставьте предмет/объект.",
+     "Добавьте 3-ю форму основного глагола (V3)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: 'Get something done' чаще используется в устной и неофициальной речи."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "I need to ___ my car repaired.",
+    "options": [
+     "have",
+     "do",
+     "make",
+     "let"
+    ],
+    "answer": 0,
+    "explain": "Структура Have + object + V3 означает, что машину отдают в ремонт мастеру."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'She had her phone stolen' означает, что она сама подстроила кражу своего телефона.",
+    "answer": false,
+    "explain": "Causative form иногда используется и для негативного события (потери), случившегося по неосторожности человека."
+   },
+   {
+    "type": "mc",
+    "q": "We ___ our house painted last week.",
+    "options": [
+     "had",
+     "have",
+     "are having",
+     "will have"
+    ],
+    "answer": 0,
+    "explain": "'last week' — прошедшее время, поэтому используется 'had'."
+   }
+  ],
+  "homework": {
+   "intro": "Переведите предложения в каузативную форму.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "The mechanic is fixing my car. -> I am having my car (fix).",
+     "answer": "fixed",
+     "hint": "Нужна 3-я форма глагола."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Какими услугами вы пользовались в течение последнего месяца? (Напишите 2 предложения с помощью Causative form.)"
+    }
+   ]
+  }
+ },
+ "quantifiers-and-determiners-advanced": {
+  "title": "Слова, обозначающие количество (Quantifiers Advanced)",
+  "summary": "Few/a few, little/a little, all, every, each и другие показатели количества.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "'A few' (исчисляемые) и 'a little' (неисчисляемые) означают, что чего-то достаточно (положительно). 'Few' и 'Little' означают «почти нет, недостаточно» (отрицательно). 'Each' подразумевает каждого по отдельности, а 'Every' — группу в целом."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "I have a few friends (у меня есть несколько друзей, достаточно). I have few friends (друзей у меня очень мало, я одинок). Each student got a prize (каждый студент по отдельности)."
+   },
+   {
+    "type": "steps",
+    "title": "Различение по исчисляемости и смыслу",
+    "items": [
+     "Существительное исчисляемое или неисчисляемое?",
+     "Смысл положительный (хоть немного, но есть) или отрицательный (почти нет)?",
+     "Проверьте, есть ли артикль 'a'."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: 'Each' используется по отношению к 2 и более предметам, а 'Every' — к 3 и более."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Hurry up! We have ___ time left.",
+    "options": [
+     "a little",
+     "little",
+     "few",
+     "a few"
+    ],
+    "answer": 1,
+    "explain": "Время неисчисляемо, и раз сказано «Поторопитесь», значит, времени почти нет (little)."
+   },
+   {
+    "type": "tf",
+    "q": "После слова 'Every' всегда идёт существительное во множественном числе.",
+    "answer": false,
+    "explain": "Неверно. После 'Every' всегда идёт существительное в единственном числе (e.g. Every student)."
+   },
+   {
+    "type": "mc",
+    "q": "There are only ___ apples left in the basket, but enough to make a pie.",
+    "options": [
+     "few",
+     "a few",
+     "little",
+     "a little"
+    ],
+    "answer": 1,
+    "explain": "Яблоки исчисляемы, и сказано, что на пирог хватит, поэтому 'a few' (немного, но есть)."
+   }
+  ],
+  "homework": {
+   "intro": "Правильно выберите слова-квантификаторы.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "He spoke very ___ words and left the room quietly.",
+     "answer": "few",
+     "hint": "Исчисляемое, в значении «очень мало»."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите предложения о том, что есть или чего нет в вашем холодильнике, используя a few/a little/few/little."
+    }
+   ]
+  }
+ },
+ "complex-object-and-complex-subject": {
+  "title": "Сложное дополнение и сложное подлежащее",
+  "summary": "Конструкции Complex Object (want him to do) и Complex Subject (He is said to be).",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Complex Object: Subject + Verb + Object + Infinitive/V1 (I want you to learn English). Complex Subject: Subject + Passive Verb + Infinitive (He is expected to win the race)."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Complex Object: My mother made me clean my room (после глаголов make/let 'to' не используется!). Complex Subject: She seems to know everything."
+   },
+   {
+    "type": "steps",
+    "title": "Построение конструкции",
+    "items": [
+     "Complex Object: Want, expect, ask, order + person + TO + V1.",
+     "Проверьте, что после глаголов Make и Let 'TO' НЕ ИСПОЛЬЗУЕТСЯ.",
+     "Complex Subject: подлежащее + глагол в пассиве (is said/believed) + TO + V1."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в активном предложении 'make someone do' (без to), а в пассиве — 'be made TO do' (с to)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "My teacher made me ___ the exercise again.",
+    "options": [
+     "to do",
+     "do",
+     "doing",
+     "done"
+    ],
+    "answer": 1,
+    "explain": "Глагол 'Make' в активном залоге требует инфинитива без 'to'."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'He is believed to be living in Paris' является Complex Subject.",
+    "answer": true,
+    "explain": "Верно. Подлежащее (He) + пассив (is believed) + инфинитив (to be living)."
+   },
+   {
+    "type": "mc",
+    "q": "I want you ___ the truth.",
+    "options": [
+     "tell",
+     "telling",
+     "to tell",
+     "told"
+    ],
+    "answer": 2,
+    "explain": "Глагол 'Want' в Complex Object требует 'to-infinitive'."
+   }
+  ],
+  "homework": {
+   "intro": "Потренируйтесь в формулах Complex Object и Subject.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "She let her brother (use) her laptop.",
+     "answer": "use",
+     "hint": "Используется ли глагол 'Let' с to?"
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите, что ваши родители просят вас сделать (2 предложения с помощью Complex Object)."
+    }
+   ]
+  }
+ },
+ "subjunctive-mood-and-wish-if-only": {
+  "title": "Формы желания и сожаления: Wish и If only",
+  "summary": "Выражение несбыточных или неосуществлённых желаний в настоящем и прошлом.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Конструкции 'Wish / If only' выражают мечты и сожаления. Для сожалений о настоящем: Wish + Past Simple. Для сожалений о прошлом: Wish + Past Perfect. Для раздражения поведением других: Wish + Would."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Present regret: I wish I had more time now (времени нет). Past regret: I wish I had studied for the exam (я не готовился). Annoyance: I wish it would stop raining!"
+   },
+   {
+    "type": "steps",
+    "title": "Выбор времени сожаления",
+    "items": [
+     "Сожаление относится к настоящему? -> используем Past Simple.",
+     "Сожаление относится к прошлому? -> используем Past Perfect.",
+     "Это привычка/действие, которое хочется изменить? -> Would + V1."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: говоря о себе (I wish I...), 'would' не используется."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "I wish I ___ more free time these days.",
+    "options": [
+     "have",
+     "had",
+     "had had",
+     "would have"
+    ],
+    "answer": 1,
+    "explain": "Для желания/сожаления о настоящем применяется Past Simple (had)."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'I wish I didn't fail the test yesterday' грамматически правильное.",
+    "answer": false,
+    "explain": "Неверно. Для сожаления о прошлом (yesterday) должно быть Past Perfect (hadn't failed)."
+   },
+   {
+    "type": "mc",
+    "q": "If only I ___ that expensive car last year!",
+    "options": [
+     "didn't buy",
+     "hadn't bought",
+     "wouldn't buy",
+     "don't buy"
+    ],
+    "answer": 1,
+    "explain": "Для сожаления о прошлом (last year) применяется Past Perfect."
+   }
+  ],
+  "homework": {
+   "intro": "Правильно употребляйте выражения Wish / If only.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "I wish I (can) speak French fluently.",
+     "answer": "could",
+     "hint": "Форма Past Simple глагола Can."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите предложения с 'Wish' об одном своём сожалении о прошлом и одном — о настоящем."
+    }
+   ]
+  }
+ },
+ "inversion-in-english-negative-adverbs": {
+  "title": "Инверсия в английском языке (Negative Inversion)",
+  "summary": "Изменение порядка слов, когда для усиления в начале предложения стоят отрицательные наречия.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Когда в начале предложения стоят отрицательные или ограничительные наречия (Never, Seldom, Rarely, Hardly, No sooner), подлежащее и вспомогательный глагол меняются местами (образуется вопросительный порядок слов)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Обычное предложение: I have never seen such a beauty. Инверсия: Never have I seen such a beauty. Обычное: She rarely goes out. Инверсия: Rarely does she go out."
+   },
+   {
+    "type": "steps",
+    "title": "Построение инверсии",
+    "items": [
+     "Вынесите отрицательное наречие в начало предложения (Never, Seldom, Hardly и т. д.).",
+     "Поставьте подходящий вспомогательный глагол (do/does/did/have/had/is) перед подлежащим.",
+     "Напишите подлежащее и основной глагол."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в парах 'Hardly... when' и 'No sooner... than' инверсия образуется в основном во времени Past Perfect."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Never ___ such an incredible performance.",
+    "options": [
+     "I have seen",
+     "have I seen",
+     "I saw",
+     "did I saw"
+    ],
+    "answer": 1,
+    "explain": "В инверсии, начинающейся с 'Never', вспомогательный глагол (have) выносится перед подлежащим."
+   },
+   {
+    "type": "tf",
+    "q": "При использовании инверсии предложение по смыслу становится вопросительным.",
+    "answer": false,
+    "explain": "Нет, предложение остаётся эмоциональным/усилительным повествовательным, только его форма имеет вопросительный порядок."
+   },
+   {
+    "type": "mc",
+    "q": "Seldom ___ to the cinema nowadays.",
+    "options": [
+     "she goes",
+     "does she go",
+     "is she go",
+     "she does go"
+    ],
+    "answer": 1,
+    "explain": "Так как это Present Simple, вперёд выносится вспомогательный глагол 'does'."
+   }
+  ],
+  "homework": {
+   "intro": "Переведите предложения в форму инверсии.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Rarely we see such dedication. -> Rarely (do/we/see) such dedication. Напишите в правильном порядке.",
+     "answer": "do we see",
+     "hint": "Вспомогательный глагол + подлежащее + глагол."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите о себе выразительное предложение, используя выражение 'Never have I...'."
+    }
+   ]
+  }
+ },
+ "participle-clauses-present-and-past-participles": {
+  "title": "Причастные обороты (Participle Clauses)",
+  "summary": "Сокращение и усложнение предложений с помощью Present (-ing) и Past Participle (-ed).",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Participle Clauses служат для сокращения придаточных предложений причины, времени или последовательности. Present Participle (-ing) применяется для активного действия, а Past Participle (-ed/V3) — для пассивного."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Активный: Feeling tired, she went to sleep early (Because she felt tired). Пассивный: Built in 1920, the house needed repair (Because it was built in 1920)."
+   },
+   {
+    "type": "steps",
+    "title": "Условие сокращения",
+    "items": [
+     "ПОДЛЕЖАЩЕЕ главного и придаточного предложений обязательно должно быть ОДНИМ И ТЕМ ЖЕ!",
+     "Если действие активное -> используйте V-ing.",
+     "Если состояние пассивное -> используйте V3 (-ed).",
+     "Для активного действия, завершившегося раньше -> используйте Having + V3."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: сокращение предложений с разными подлежащими причастным оборотом приводит к ошибке 'Dangling participle'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "___ his homework, he went out to play football.",
+    "options": [
+     "Having finished",
+     "Finished",
+     "Finishing",
+     "Have finished"
+    ],
+    "answer": 0,
+    "explain": "Действие полностью завершилось до основного действия, поэтому 'Having finished' (Perfect Participle)."
+   },
+   {
+    "type": "tf",
+    "q": "При использовании participle clause подлежащие обеих частей должны быть разными.",
+    "answer": false,
+    "explain": "Неверно. Подлежащее обеих частей обязательно должно быть ОДНИМ И ТЕМ ЖЕ."
+   },
+   {
+    "type": "mc",
+    "q": "___ by the news, she burst into tears.",
+    "options": [
+     "Shocking",
+     "Shocked",
+     "Having shocked",
+     "To shock"
+    ],
+    "answer": 1,
+    "explain": "Она была потрясена новостью (пассивное состояние), поэтому Past Participle: Shocked."
+   }
+  ],
+  "homework": {
+   "intro": "Сократите предложения с помощью participle clauses.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Because I didn't know what to do, I called the doctor. -> Not (know) what to do, I called the doctor.",
+     "answer": "knowing",
+     "hint": "Форма Present Participle."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите предложение с Present Participle clause о том, как вы одновременно выполняли два действия."
+    }
+   ]
+  }
+ },
+ "phrasal-verbs-transitive-intransitive-separable": {
+  "title": "Фразовые глаголы: переходные, непереходные и разделяемые формы",
+  "summary": "Типы phrasal verbs и порядок их употребления с местоимениями.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Phrasal verbs (глагол + предлог) — выражения, значение которых меняется. Они бывают разделяемыми (Separable) и неразделяемыми (Inseparable). Если глагол разделяемый, а дополнение — МЕСТОИМЕНИЕ (it/them/me), оно обязательно должно стоять между глаголом и предлогом!"
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Turn off the TV / Turn the TV off (правильно). Turn IT off (правильно). TURN OFF IT (ОШИБКА!). Look after the baby (неразделяемый)."
+   },
+   {
+    "type": "steps",
+    "title": "Определение правильного места",
+    "items": [
+     "Выясните, разделяемый phrasal verb или нет.",
+     "Если дополнение — существительное: оно может стоять в середине или в конце.",
+     "Если дополнение — местоимение (him, her, it): оно ОБЯЗАТЕЛЬНО стоит в середине."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: фразовые глаголы из трёх слов (look forward to, run out of) никогда не разделяются."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Which of the following sentences is INCORRECT?",
+    "options": [
+     "Please turn off the light.",
+     "Please turn the light off.",
+     "Please turn it off.",
+     "Please turn off it."
+    ],
+    "answer": 3,
+    "explain": "'Turn off' — разделяемый глагол, местоимение 'it' обязательно должно стоять не после глагола с предлогом, а МЕЖДУ ними."
+   },
+   {
+    "type": "tf",
+    "q": "Фразовый глагол 'Look after' — разделяемый (e.g. look him after).",
+    "answer": false,
+    "explain": "Неверно. 'Look after' не разделяется: будет look after him."
+   },
+   {
+    "type": "mc",
+    "q": "We have run out ___ milk. Can you buy some?",
+    "options": [
+     "of",
+     "with",
+     "off",
+     "from"
+    ],
+    "answer": 0,
+    "explain": "'Run out of' — выражение со значением «закончиться (о чём-то)»."
+   }
+  ],
+  "homework": {
+   "intro": "Упражнения на phrasal verbs.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Put on your coat. -> Put it ___ .",
+     "answer": "on",
+     "hint": "Местоимение стоит в середине."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите небольшой текст о своём распорядке дня, использовав 3 phrasal verbs."
+    }
+   ]
+  }
+ },
+ "advanced-linking-words-and-discourse-markers": {
+  "title": "Сложные союзы и связующие слова",
+  "summary": "In spite of, despite, whereas, furthermore, nevertheless и другие связки.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Для академической речи и эссе важны связующие слова. Противопоставление: Although, In spite of, Despite, Whereas, However. Дополнительная информация: Furthermore, Moreover. Следствие: Consequently, Therefore."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Although + Subject + Verb (Although it rained, we went out). In spite of / Despite + Noun/V-ing (In spite of the rain, we went out)."
+   },
+   {
+    "type": "steps",
+    "title": "Определение грамматической структуры",
+    "items": [
+     "После связки идёт подлежащее + глагол? -> Although, Even though, Whereas.",
+     "После связки идёт существительное или V-ing? -> In spite of, Despite, Due to.",
+     "Стоит в начале нового предложения и отделяется запятой? -> However, Furthermore, Consequently."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: после слова 'Despite' никогда не используется 'of' (а в 'In spite of' — обязательно)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "___ the heavy rain, they won the match.",
+    "options": [
+     "Although",
+     "Despite",
+     "Even though",
+     "Whereas"
+    ],
+    "answer": 1,
+    "explain": "'the heavy rain' — словосочетание (существительное), поэтому ставится 'Despite'. Для Although нужны подлежащее и глагол."
+   },
+   {
+    "type": "tf",
+    "q": "Говорить 'Despite of the cold weather' грамматически правильно.",
+    "answer": false,
+    "explain": "Неверно. 'Despite' не используется с предлогом 'of'. Правильно: In spite OF."
+   },
+   {
+    "type": "mc",
+    "q": "He worked hard; ___, he failed the exam.",
+    "options": [
+     "however",
+     "because",
+     "in spite of",
+     "although"
+    ],
+    "answer": 0,
+    "explain": "Для противопоставления двух самостоятельных предложений используется 'however' (тем не менее)."
+   }
+  ],
+  "homework": {
+   "intro": "Выберите правильную связку.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "She passed the test ___ she was ill. (Although / In spite of)",
+     "answer": "Although",
+     "hint": "Дальше идёт 'she was ill' (подлежащее + глагол)."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 академических предложения, используя связки In spite of и However."
+    }
+   ]
+  }
+ },
+ "cleft-sentences-for-emphasis": {
+  "title": "Расщеплённые (эмфатические) предложения (Cleft Sentences)",
+  "summary": "Особое выделение информации с помощью It is/was... that и What... is/was.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Cleft sentences используются, чтобы обратить особое внимание на определённый член предложения (подлежащее, дополнение, обстоятельство). 'It-cleft': It is/was [выделяемая часть] that... 'Wh-cleft': What [subject] [verb] is/was..."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Обычное: John broke the window yesterday. It-cleft: It was John who broke the window. Wh-cleft: What John broke was the window."
+   },
+   {
+    "type": "steps",
+    "title": "Этапы выделения",
+    "items": [
+     "Определите, какой член предложения вы хотите выделить.",
+     "Для It-cleft: It + be + [выделяемая часть] + that/who + остальное предложение.",
+     "Для Wh-cleft: What + подлежащее + глагол + be + [выделяемая часть]."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: cleft sentences применяются в основном для возражений в устных спорах и для логического выделения в эссе."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "___ I need right now is a hot cup of coffee.",
+    "options": [
+     "It is",
+     "What",
+     "That",
+     "Which"
+    ],
+    "answer": 1,
+    "explain": "Структура Wh-cleft: What I need right now is..."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'It was yesterday that I met him' — cleft sentence, выделяющее время.",
+    "answer": true,
+    "explain": "Верно. Между 'It was' и 'that' в качестве выделения поставлен показатель времени (yesterday)."
+   },
+   {
+    "type": "mc",
+    "q": "It was Mary ___ called you, not Sarah.",
+    "options": [
+     "which",
+     "who",
+     "what",
+     "where"
+    ],
+    "answer": 1,
+    "explain": "Выделяется человек (Mary), поэтому используется 'who' или 'that'."
+   }
+  ],
+  "homework": {
+   "intro": "Преобразуйте предложения в Cleft Sentences.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "I love the peace and quiet here. -> What I love here (be) the peace and quiet.",
+     "answer": "is",
+     "hint": "Форма Wh-cleft в настоящем времени."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите предложение, выделив самое важное в вашей жизни в форме 'What I value most is...'."
+    }
+   ]
+  }
+ },
+ "subject-verb-agreement-in-complex-structures": {
+  "title": "Сложное согласование подлежащего и сказуемого",
+  "summary": "Правильный выбор единственного и множественного числа глагола в предложениях со сложным подлежащим.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Subject-Verb Agreement означает выбор формы глагола в зависимости от подлежащего. При 'Neither... nor', 'either... or' глагол согласуется с ближайшим подлежащим. Собирательные существительные (team, family, government) как единое целое берут глагол в единственном числе, а если члены рассматриваются по отдельности — во множественном."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Neither the teacher nor the students WERE present. Neither the students nor the teacher WAS present. The team IS winning (единое целое)."
+   },
+   {
+    "type": "steps",
+    "title": "Порядок согласования",
+    "items": [
+     "Если Neither/Either: смотрите на существительное, БЛИЖАЙШЕЕ к глаголу.",
+     "Если together with, as well as, along with: выбирайте глагол по первому существительному.",
+     "Неисчисляемые существительные и величины (money, time, distance) всегда берут глагол в ЕДИНСТВЕННОМ числе."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: 'A number of + сущ. во мн. ч.' -> глагол во МНОЖЕСТВЕННОМ числе, 'The number of + сущ. во мн. ч.' -> глагол в ЕДИНСТВЕННОМ числе."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Neither my parents nor my brother ___ at home.",
+    "options": [
+     "are",
+     "is",
+     "were",
+     "have been"
+    ],
+    "answer": 1,
+    "explain": "Ближайшее к глаголу существительное — 'my brother' (ед. ч.), поэтому выбирается 'is'."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'Ten miles are a long distance to walk' построено правильно.",
+    "answer": false,
+    "explain": "Неверно. Расстояние (Ten miles) рассматривается как единая мера и берёт глагол в ЕДИНСТВЕННОМ числе (is)."
+   },
+   {
+    "type": "mc",
+    "q": "The number of students in the class ___ increasing.",
+    "options": [
+     "are",
+     "is",
+     "were",
+     "have"
+    ],
+    "answer": 1,
+    "explain": "Выражение 'THE number of' всегда требует глагола в единственном числе (is)."
+   }
+  ],
+  "homework": {
+   "intro": "Правильно согласуйте глаголы с подлежащим.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "The teacher, along with her students, (be) attending the conference.",
+     "answer": "is",
+     "hint": "При 'along with' смотрят на первое подлежащее (The teacher)."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 2 предложения, употребив слова Family и Team соответственно с глаголами в единственном и множественном числе."
+    }
+   ]
+  }
+ },
+ "ellipsis-and-substitution-in-english": {
+  "title": "Эллипсис и замещение (Ellipsis and Substitution)",
+  "summary": "Пропуск слов или их замена другими словами, чтобы избежать повторов.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Чтобы не повторять одни и те же слова в речи и на письме, используются приёмы Ellipsis (пропуск слова) и Substitution (замена словами do so, so, one/ones, neither и т. п.)."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Ellipsis: She came to the party, but he didn't [come to the party]. Substitution: Do you think it will rain? I hope so (NOT: I hope it will rain)."
+   },
+   {
+    "type": "steps",
+    "title": "Способы замещения",
+    "items": [
+     "Если повторяется исчисляемое существительное -> one / ones.",
+     "Вместо целого предложения/мысли -> so / not (I think so, I hope not).",
+     "Чтобы не повторять действие -> do so / do the same."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: 'I don't think so' — правильное выражение, но с 'hope' отрицание строится как 'I hope not' ('I don't hope so' — ошибка)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Will it rain tomorrow? - I hope ___ .",
+    "options": [
+     "so",
+     "it",
+     "not",
+     "that"
+    ],
+    "answer": 2,
+    "explain": "Отрицательное замещение с 'Hope' имеет форму 'I hope not'."
+   },
+   {
+    "type": "tf",
+    "q": "'Which cup do you want? - The red one.' — пример Substitution.",
+    "answer": true,
+    "explain": "Верно. 'one' использовано, чтобы избежать повторения существительного 'Cup'."
+   },
+   {
+    "type": "mc",
+    "q": "He asked me to clean the garage and I did ___ .",
+    "options": [
+     "it",
+     "so",
+     "that",
+     "such"
+    ],
+    "answer": 1,
+    "explain": "Чтобы не повторять действие полностью, используется 'did so'."
+   }
+  ],
+  "homework": {
+   "intro": "Сократите или замените повторяющиеся слова.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "I don't like these green apples, I prefer the red (apple/apples/ones).",
+     "answer": "ones",
+     "hint": "Выберите замену для существительного во множественном числе."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте диалог с выражениями 'I think so' и 'I hope not'."
+    }
+   ]
+  }
+ },
+ "advanced-nominal-clauses-and-that-clauses": {
+  "title": "Придаточные-существительные и That-Clauses",
+  "summary": "Сложные придаточные предложения в роли подлежащего или дополнения.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Nominal Clauses (придаточные-существительные) выполняют в предложении роль существительного (подлежащего или дополнения). Они начинаются с 'that', 'wh- words' или 'whether/if'."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "В роли подлежащего: That he passed the exam surprised everyone. В роли дополнения: I believe that education is the key to success."
+   },
+   {
+    "type": "steps",
+    "title": "Построение структуры",
+    "items": [
+     "Когда выражается мнение или факт -> 'that clause'.",
+     "Неизвестный факт или вопрос -> 'wh- word' или 'whether'.",
+     "Когда придаточное стоит на месте подлежащего, глагол всегда в ЕДИНСТВЕННОМ числе."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в официальном и академическом письме 'That clause' в начале предложения — очень распространённый стиль."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "___ she managed to solve the problem amazed the teacher.",
+    "options": [
+     "That",
+     "What",
+     "Which",
+     "Whether"
+    ],
+    "answer": 0,
+    "explain": "«То, что она смогла решить задачу (факт)» — подлежащее предложения: That she managed..."
+   },
+   {
+    "type": "tf",
+    "q": "Если nominal clause стоит в начале предложения как подлежащее, глагол стоит во множественном числе.",
+    "answer": false,
+    "explain": "Неверно. Весь nominal clause считается подлежащим в единственном числе и берёт глагол в единственном числе."
+   },
+   {
+    "type": "mc",
+    "q": "I am not sure ___ he will accept the proposal or not.",
+    "options": [
+     "that",
+     "whether",
+     "what",
+     "which"
+    ],
+    "answer": 1,
+    "explain": "Так как есть '...or not', для выражения сомнения используется 'whether'."
+   }
+  ],
+  "homework": {
+   "intro": "Правильно расставьте придаточные-существительные.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "What he said (be) completely wrong.",
+     "answer": "was",
+     "hint": "Придаточное-существительное требует глагола в единственном числе."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 1 академическое предложение, начинающееся с 'That...'."
+    }
+   ]
+  }
+ },
+ "academic-punctuation-and-sentence-structure": {
+  "title": "Академическая пунктуация и построение предложений",
+  "summary": "Точка с запятой (;), двоеточие (:), тире и сложные академические конструкции.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В эссе и академическом письме знаки препинания показывают логическую связь. Точка с запятой (;) разделяет два близких самостоятельных предложения, соединённых без грамматического союза. Двоеточие (:) ставится перед пояснением, списком или цитатой."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Semicolon: The test was difficult; however, most students passed. Colon: There are two main reasons for this issue: poverty and lack of education."
+   },
+   {
+    "type": "steps",
+    "title": "Соблюдение правил",
+    "items": [
+     "После точки с запятой продолжают со строчной буквы (если это не имя собственное).",
+     "Наречные связки вроде However, Therefore могут стоять между точкой с запятой и запятой (; however,).",
+     "После двоеточия приводится полное пояснение или список."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: соединение двух самостоятельных предложений запятой приводит к ошибке 'Comma splice'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Which sentence uses correct academic punctuation?",
+    "options": [
+     "The results were clear, however more tests are needed.",
+     "The results were clear; however, more tests are needed.",
+     "The results were clear, however, more tests are needed.",
+     "The results were clear; however more tests are needed."
+    ],
+    "answer": 1,
+    "explain": "Правильно написано в формате «точка с запятой + связка + запятая»."
+   },
+   {
+    "type": "tf",
+    "q": "После точки с запятой (;) всегда пишут с заглавной буквы.",
+    "answer": false,
+    "explain": "Неверно. Точка с запятой не заканчивает предложение, поэтому продолжают со строчной буквы."
+   },
+   {
+    "type": "mc",
+    "q": "Please bring the following items ___ a pen, a notebook, and a dictionary.",
+    "options": [
+     ";",
+     ":",
+     ",",
+     "-"
+    ],
+    "answer": 1,
+    "explain": "Перед перечислением ставится двоеточие (:)."
+   }
+  ],
+  "homework": {
+   "intro": "Исправьте знаки препинания.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Choose the correct symbol between independent clauses without conjunction: ( comma / semicolon )",
+     "answer": "semicolon",
+     "hint": "Знак, разделяющий предложения без союза."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте одно академическое предложение, используя точку с запятой (;) и 'therefore'."
+    }
+   ]
+  }
+ },
+ "hedging-and-stance-in-academic-writing": {
+  "title": "Осторожность и позиция в академическом письме (Hedging)",
+  "summary": "Изложение мысли не категорично и агрессивно, а научно и осторожно (Hedging).",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Hedging — способ подавать мысль в научных и академических текстах не как 100% абсолютную истину, а с вероятностью и осторожностью. Для этого используются слова 'seem, appear, tend to, it is likely that, possibly'."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Категорично (не академично): Internet causes mental health problems. Hedged (академично): Internet usage MAY tend to contribute to mental health issues."
+   },
+   {
+    "type": "steps",
+    "title": "Способы hedging",
+    "items": [
+     "Используйте модальные глаголы (may, might, could).",
+     "Используйте осторожные глаголы (seem, appear, suggest, tend to).",
+     "Добавляйте прилагательные и наречия (likely, possible, usually, relatively)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: в академических научных работах следует избегать резких слов вроде 'always', 'never', 'definitely'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Which sentence is properly hedged for academic writing?",
+    "options": [
+     "Smoking causes instant death.",
+     "Smoking is known to be bad.",
+     "Evidence suggests that smoking may lead to serious health problems.",
+     "Smoking definitely destroys health."
+    ],
+    "answer": 2,
+    "explain": "'suggests' и 'may lead to' выражают мысль осторожно и академично."
+   },
+   {
+    "type": "tf",
+    "q": "В академическом письме рекомендуется часто использовать слова 'definitely' и 'always'.",
+    "answer": false,
+    "explain": "Неверно. В академических текстах следует избегать абсолютизирующих слов."
+   },
+   {
+    "type": "mc",
+    "q": "The research results ___ to indicate a connection between diet and sleep.",
+    "options": [
+     "tend",
+     "must",
+     "definitely",
+     "are"
+    ],
+    "answer": 0,
+    "explain": "'tend to indicate' — осторожный академический способ выражения."
+   }
+  ],
+  "homework": {
+   "intro": "Переведите данные предложения в академический стиль 'hedging'.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Direct: Fast food makes people fat. -> Hedged: Fast food (may/tend) to lead to weight gain.",
+     "answer": "tends",
+     "hint": "Форма единственного числа глагола Tend."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 2 академических предложения об изменении климата, используя стиль hedging."
+    }
+   ]
+  }
+ },
+ "stylistic-inversion-fronting-and-rhetorical-devices": {
+  "title": "Стилистическая инверсия, Fronting и риторические приёмы (C1/C2)",
+  "summary": "Стилистические средства высокого уровня (Fronting, Prepositional Inversion, Emphasis).",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В письме и речи высокого уровня (C1/C2) вынос определённого члена в начало предложения (Fronting) и инверсия с предлогами места (Locative Inversion) считаются очень выразительным стилем."
+   },
+   {
+    "type": "example",
+    "title": "Примеры",
+    "body": "Fronting: Exhausted, he collapsed onto the bed. Prepositional Inversion: On the top of the hill stood an ancient castle (NOT: an ancient castle stood)."
+   },
+   {
+    "type": "steps",
+    "title": "Этапы Locative Inversion",
+    "items": [
+     "Вынесите предложное выражение места в начало предложения (e.g. On the table...).",
+     "Поставьте основной глагол (stand, lie, sit, come) перед подлежащим.",
+     "Напишите подлежащее после глагола (вспомогательный глагол НЕ НУЖЕН)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Помните: если подлежащее — МЕСТОИМЕНИЕ (he, she, it), инверсия не происходит! (e.g. Up went the rocket / Up it went)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Into the room ___ a mysterious stranger.",
+    "options": [
+     "walked",
+     "did walk",
+     "walking",
+     "walks he"
+    ],
+    "answer": 0,
+    "explain": "В Locative inversion основной глагол (walked) напрямую выносится перед подлежащим."
+   },
+   {
+    "type": "tf",
+    "q": "Предложение 'Here comes he!' — стилистически правильная инверсия.",
+    "answer": false,
+    "explain": "Неверно. Когда подлежащее — местоимение (he), инверсии нет: будет 'Here he comes!'."
+   },
+   {
+    "type": "mc",
+    "q": "At the corner of the street ___ a small coffee shop.",
+    "options": [
+     "stood",
+     "did stand",
+     "standing",
+     "does stand"
+    ],
+    "answer": 0,
+    "explain": "Когда предложное выражение места стоит в начале предложения, происходит инверсия места."
+   }
+  ],
+  "homework": {
+   "intro": "Задания для завершения темы на высоком уровне.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "An old man sat under the tree. -> Under the tree (sit) an old man. Past tense inversion.",
+     "answer": "sat",
+     "hint": "Вынесите глагол вперёд в прошедшем времени, не меняя его."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 выразительных предложения в художественном или научном стиле с Locative Inversion."
+    }
+   ]
+  }
+ },
+ "matn-koheziyasi-va-diskurs-markyorlari": {
+  "title": "Когезия текста и дискурсивные маркеры (Academic Cohesion)",
+  "summary": "На этом уроке изучаются дискурсивные маркеры и цепочки грамматической когезии, обеспечивающие логическую связность академических текстов.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В академических и научных текстах для логического связывания идей недостаточно простых союзов. Дискурсивные маркеры (Discourse Markers) и анафорические/катафорические отсылки обеспечивают плавность и логическую когезию текста."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "The primary cause was economic instability; notwithstanding this fact, policy makers refused to intervene. ('notwithstanding this fact' — научный дискурсивный маркер)"
+   },
+   {
+    "type": "steps",
+    "title": "Способы когезии",
+    "items": [
+     "Анафорическая отсылка: возврат к ранее упомянутому понятию (e.g., 'this trend').",
+     "Lexical Reiterative: замена слов синонимами и гипонимами.",
+     "Textual Connectors: академические маркеры, выражающие противопоставление, причину и следствие."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Дискурсивные маркеры в начале предложения, отделённые после себя запятой, повышают академичность стиля текста."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Какой дискурсивный маркер используется в научном тексте, чтобы показать неожиданное противопоставление?",
+    "options": [
+     "Consequently",
+     "Notwithstanding this",
+     "Furthermore",
+     "In other words"
+    ],
+    "answer": 1,
+    "explain": "'Notwithstanding this' означает «несмотря на это»."
+   },
+   {
+    "type": "tf",
+    "q": "Анафорическая отсылка указывает на информацию, которая будет упомянута в тексте позже.",
+    "answer": false,
+    "explain": "Анафорическая отсылка указывает на информацию, предшествующую ей, а катафорическая — на последующую."
+   },
+   {
+    "type": "mc",
+    "q": "'The research failed. ______, valuable data was gathered.' Заполните пропуск.",
+    "options": [
+     "Be that as it may",
+     "As a result",
+     "Namely",
+     "In short"
+    ],
+    "answer": 0,
+    "explain": "'Be that as it may' означает «как бы то ни было / тем не менее»."
+   }
+  ],
+  "homework": {
+   "intro": "Выполните задания по когезии текста.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Напишите 2 альтернативных дискурсивных маркера, которые можно использовать в академическом тексте вместо 'Furthermore'.",
+     "answer": "Moreover, Additionally, In addition",
+     "hint": "Вспомните официальные маркеры, вводящие дополнительную информацию."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Превратите данные идеи в небольшой академический текст из 3 предложений с хорошей когезией: (1. Global warming is accelerating. 2. Carbon emissions remain high. 3. Immediate policy intervention is crucial.)"
+    }
+   ]
+  }
+ },
+ "epistemik-va-deontik-modallik": {
+  "title": "Углублённый анализ эпистемической и деонтической модальности",
+  "summary": "Анализируется роль функций вероятности (эпистемической) и обязательства/приказа (деонтической) модальных глаголов в академическом дискурсе.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В лингвистике модальность делится на два основных типа: Deontic (обязывание к действию, разрешение) и Epistemic (вероятность и степень, основанные на знании говорящего о реальности)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "1. You must submit the thesis tomorrow. (Deontic — обязанность)\n2. The conclusion must be correct given the evidence. (Epistemic — высокая логическая вероятность)"
+   },
+   {
+    "type": "steps",
+    "title": "Различение типов модальности",
+    "items": [
+     "Деонтическая модальность выражает контроль и волю над субъектом (must, should, may).",
+     "Эпистемическая модальность выражает вероятность и степень истинности на основе доказательств (might, must, could).",
+     "В академических текстах эпистемическая модальность — важное средство осторожного изложения выводов (hedging)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Если эпистемическая модальность относится к прошлому, применяется структура 'Modal + have + V3'."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "'The artifacts may belong to the Bronze Age.' Какой тип модальности выражает 'may' в этом предложении?",
+    "options": [
+     "Deontic (разрешение)",
+     "Epistemic (вероятность)",
+     "Deontic (обязанность)",
+     "Dynamic (способность)"
+    ],
+    "answer": 1,
+    "explain": "Здесь 'may' выражает предположение и вероятность, поэтому это эпистемическая модальность."
+   },
+   {
+    "type": "tf",
+    "q": "Деонтическая модальность оценивает степень уверенности говорящего в истинности информации.",
+    "answer": false,
+    "explain": "Оценка истинности информации относится к эпистемической модальности."
+   },
+   {
+    "type": "mc",
+    "q": "В каком предложении употреблено эпистемическое 'must'?",
+    "options": [
+     "Students must wear uniforms.",
+     "You must not enter this room.",
+     "The theory must have been developed in the 19th century.",
+     "Candidates must complete the task in 10 minutes."
+    ],
+    "answer": 2,
+    "explain": "Логический вывод о прошлом, основанный на доказательствах, — это эпистемическая модальность."
+   }
+  ],
+  "homework": {
+   "intro": "Упражнения на различение и правильное употребление эпистемической и деонтической модальности.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Перепишите это предложение с деонтическим смыслом 'It is mandatory that all variables be controlled.' с помощью модального глагола.",
+     "answer": "All variables must be controlled.",
+     "hint": "Можно использовать 'Must' или 'should'."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 предложения, выражающие научную гипотезу, с эпистемическими глаголами 'could' и 'should'."
+    }
+   ]
+  }
+ },
+ "nominalizatsiya-va-grammatik-zichlik": {
+  "title": "Номинализация и грамматическая плотность (Nominalization)",
+  "summary": "Способы повышения информационной плотности академического текста и формирования официального стиля путём превращения глаголов и прилагательных в существительные.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Номинализация (Nominalization) — процесс превращения глаголов или прилагательных в существительные, основная черта академического английского. Этот приём придаёт тексту высокую грамматическую плотность (grammatical density)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Неофициально: The climate reacted quickly because the temperature rose rapidly.\nАкадемично/с номинализацией: The rapid rise in temperature caused a swift climatic reaction."
+   },
+   {
+    "type": "steps",
+    "title": "Процесс номинализации",
+    "items": [
+     "Определите глаголы, выражающие действие (e.g., analyze -> analysis).",
+     "Переведите прилагательные в форму существительного (e.g., stable -> stability).",
+     "Соедините именные словосочетания в сложную цепочку с помощью предлогов 'of', 'in', 'by'."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Чрезмерная номинализация может затруднить понимание текста, поэтому соблюдайте баланс."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Какая форма предложения 'They analyzed the data thoroughly.' является номинализированной?",
+    "options": [
+     "They made a analysis of data.",
+     "A thorough analysis of the data was conducted.",
+     "Data was analyzed thoroughly by them.",
+     "Analyzing data was thorough."
+    ],
+    "answer": 1,
+    "explain": "Глагол (analyzed) превращён в существительное (analysis), а наречие (thoroughly) — в прилагательное (thorough)."
+   },
+   {
+    "type": "tf",
+    "q": "Номинализация уменьшает грамматическую плотность текста.",
+    "answer": false,
+    "explain": "Наоборот, номинализация собирает больше именных словосочетаний в одном предложении и повышает грамматическую плотность."
+   },
+   {
+    "type": "mc",
+    "q": "Какое слово является номинализированной формой глагола 'implement'?",
+    "options": [
+     "Implementable",
+     "Implementation",
+     "Implementing",
+     "Implemented"
+    ],
+    "answer": 1,
+    "explain": "'Implementation' — форма существительного."
+   }
+  ],
+  "homework": {
+   "intro": "Переведите неофициальные и простые предложения в академический стиль с помощью номинализации.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Номинализируйте предложение 'Because the economy grew steadily, poverty declined.'.",
+     "answer": "The steady growth of the economy led to a decline in poverty.",
+     "hint": "Превратите глаголы 'grew' и 'declined' в существительные."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 сложных академических предложения с номинализацией в выбранном вами научном направлении."
+    }
+   ]
+  }
+ },
+ "axborot-strukturasi-va-end-weight-tamoyili": {
+  "title": "Информационная структура и принцип End-Weight",
+  "summary": "Распределение известной (Given) и новой (New) информации в предложении и принцип утяжеления конца предложения (End-Weight).",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Чтобы информация в синтаксисе английского языка легко воспринималась, применяются принцип 'Given-to-New' и принцип 'End-Weight'. Известная информация должна стоять в начале предложения, а новая и самая важная информация и сложные словосочетания — в конце."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Плохая структура: That the government will increase taxes on luxury goods without consulting the public is unexpected.\nС применением End-Weight: It is unexpected that the government will increase taxes on luxury goods without consulting the public."
+   },
+   {
+    "type": "steps",
+    "title": "Способы применения End-Weight",
+    "items": [
+     "Использование вводного 'It' (Dummy/Preparatory It).",
+     "Перенос тяжёлого именного словосочетания в конец с помощью пассивных конструкций.",
+     "Использование синтаксиса с экзистенциальным 'There'."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Очень длинное подлежащее (heavy subject) в начале предложения считается в стилистике английского языка неудобным и неуместным."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Какова основная цель принципа End-Weight?",
+    "options": [
+     "Максимально сократить предложение",
+     "Размещать длинные и сложные синтаксические единицы в конце предложения",
+     "Перевести все глаголы в past tense",
+     "Всегда ставить подлежащее в конец предложения"
+    ],
+    "answer": 1,
+    "explain": "Принцип End-Weight облегчает чтение, перенося тяжёлые и сложные выражения в конец предложения."
+   },
+   {
+    "type": "tf",
+    "q": "По принципу Given-to-New уже известная читателю информация даётся в конце предложения.",
+    "answer": false,
+    "explain": "Известная (Given) информация стоит в начале предложения, а новая (New) — в конце."
+   },
+   {
+    "type": "mc",
+    "q": "Какое предложение полностью следует принципу End-Weight?",
+    "options": [
+     "To accept the offer without any hesitation was difficult.",
+     "It was difficult to accept the offer without any hesitation.",
+     "Accepting the offer without hesitation difficult was.",
+     "Without hesitation to accept the offer was difficult."
+    ],
+    "answer": 1,
+    "explain": "С помощью вводного 'It' длинное инфинитивное словосочетание перенесено в конец предложения."
+   }
+  ],
+  "homework": {
+   "intro": "Упражнения на перестройку информационной структуры предложения.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Перепишите предложение 'That we need to reform the educational system from scratch is obvious.' с помощью вводного 'It'.",
+     "answer": "It is obvious that we need to reform the educational system from scratch.",
+     "hint": "Начните со структуры 'It is obvious that...'."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Приведите один пример, где длинное подлежащее в начале предложения затрудняет чтение, и исправьте его по принципу End-Weight."
+    }
+   ]
+  }
+ },
+ "subyunkativ-mayl-va-arxaik-konstruksiyalar": {
+  "title": "Сослагательное наклонение и архаичные грамматические конструкции",
+  "summary": "Subjunctive Mood (Be-subjunctive, Were-subjunctive) и синтаксические архаизмы в официальном, юридическом и академическом английском.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Subjunctive Mood (наклонение желания и гипотезы), хотя и редеет в современной разговорной речи, сохранилось в официальных юридических документах и академических текстах. Оно встречается в формах Be-subjunctive (голая основа глагола) и Were-subjunctive (were для всех лиц)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "1. The board demanded that the CEO resign immediately. (resign — а не 'resigns')\n2. Be that as it may, the contract remains valid. (архаичное сочетание)"
+   },
+   {
+    "type": "steps",
+    "title": "Формулы Subjunctive",
+    "items": [
+     "Mandative Subjunctive: Verb of demand/proposal + THAT + subject + Bare Verb (e.g., recommend that he be present).",
+     "Formulaic Subjunctive: застывшие выражения (e.g., Suffice it to say, God save the King, Come what may).",
+     "Were-subjunctive: в нереальных гипотезах (e.g., If I were to accept...)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Mandative subjunctive в английском языке может передаваться и формой 'should + verb' (особенно в British English)."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "'The committee insisted that the report ______ published without delay.' Заполните пропуск.",
+    "options": [
+     "is",
+     "was",
+     "be",
+     "been"
+    ],
+    "answer": 2,
+    "explain": "После глагола 'Insist that...' используется Be-subjunctive (голый глагол)."
+   },
+   {
+    "type": "tf",
+    "q": "В subjunctive mood к глаголу в третьем лице единственного числа добавляется окончание '-s'.",
+    "answer": false,
+    "explain": "В subjunctive глагол в любом лице стоит в начальной голой форме (infinitive without to)."
+   },
+   {
+    "type": "mc",
+    "q": "Что означает выражение 'Suffice it to say'?",
+    "options": [
+     "Достаточно сказать, что",
+     "В заключение — нет",
+     "Говорить запрещено",
+     "Трудно понять, что"
+    ],
+    "answer": 0,
+    "explain": "'Suffice it to say' — архаичное выражение в subjunctive со значением «достаточно сказать, что»."
+   }
+  ],
+  "homework": {
+   "intro": "Задания на употребление subjunctive mood и официальных выражений.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "'It is imperative that every citizen (to follow) the new legislation.' Напишите глагол в скобках в форме subjunctive.",
+     "answer": "follow",
+     "hint": "Используйте форму bare infinitive, не добавляйте '-s'."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте 2 предложения в юридическом или академическом стиле с Mandative Subjunctive (propose, demand, recommend)."
+    }
+   ]
+  }
+ },
+ "grammatik-metafora-va-funksional-grammatika": {
+  "title": "Грамматическая метафора и функциональная грамматика",
+  "summary": "Взаимная замена значения и грамматической формы по теории М. А. К. Халлидея и идеационная метафора.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "В системно-функциональной грамматике (Systemic Functional Linguistics) грамматическая метафора — это выражение определённого семантического значения в нетипичной (incongruent) грамматической форме. В лексической метафоре меняется слово, а в грамматической — синтаксическая категория."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Congruent (обычно/явно): We walked for hours, which exhausted us.\nIncongruent (грамматическая метафора): Our multi-hour walk resulted in utter exhaustion. (действие и результат перенесены в сочетание существительного и прилагательного)"
+   },
+   {
+    "type": "steps",
+    "title": "Формирование грамматической метафоры",
+    "items": [
+     "Перевод процесса (глагола) в имя (существительное) (Ideational metaphor).",
+     "Перевод модальности (модального глагола) в прилагательное или существительное (Interpersonal metaphor, e.g., 'It is probable that...' instead of 'probably').",
+     "Перевод логических связей в глагол (e.g., 'cause', 'lead to', 'result in')."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Грамматическая метафора считается признаком научного и академического письма самого высокого уровня."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Чем грамматическая метафора отличается от лексической?",
+    "options": [
+     "Без изменения значения слов меняется их грамматическая категория (синтаксис)",
+     "Используются только слова в переносном значении",
+     "Применяется только в поэзии",
+     "Состоит из грамматических ошибок"
+    ],
+    "answer": 0,
+    "explain": "В грамматической метафоре при сохранении семантического содержания меняется грамматический класс (глагол -> существительное и др.)."
+   },
+   {
+    "type": "tf",
+    "q": "Выражение 'It is obvious that...' может быть примером Interpersonal Grammatical Metaphor.",
+    "answer": true,
+    "explain": "Потому что модальное наречие (obviously) приведено к форме объективированного сочетания с прилагательным/существительным."
+   },
+   {
+    "type": "mc",
+    "q": "Найдите вариант предложения 'Because it rained heavily, the river flooded.', соответствующий грамматической метафоре.",
+    "options": [
+     "Heavy rain caused the river to flood.",
+     "The heavy rainfall resulted in a river flood.",
+     "It rained heavily so the river flooded.",
+     "Rain was heavy and river flooded."
+    ],
+    "answer": 1,
+    "explain": "Придаточное причины (because) трансформировано в сочетание существительного и глагола ('rainfall resulted in flood')."
+   }
+  ],
+  "homework": {
+   "intro": "Переформулирование академических текстов с помощью грамматической метафоры.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Переведите предложение 'If technology advances rapidly, society transforms deeply.' в форму Grammatical Metaphor (Ideational).",
+     "answer": "Rapid technological advancement leads to deep societal transformation.",
+     "hint": "Замените условное придаточное глаголом 'leads to' или 'causes' и именными сочетаниями."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Согласно функциональной грамматике, перепишите субъективное модальное выражение 'I strongly believe that...' в форме объективной Interpersonal Metaphor."
+    }
+   ]
+  }
+ },
+ "pragmatik-markyorlar-va-nutqiy-aktlar": {
+  "title": "Прагматические маркеры и теория речевых актов",
+  "summary": "Изучение речевых актов (локуция, иллокуция, перлокуция) и роли прагматических маркеров в устном и письменном общении.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Согласно теории Дж. Остина и Дж. Сёрла, говорить — значит совершать действие (Speech Acts). Речевой акт состоит из 3 уровней: локуция (прямое значение высказывания), иллокуция (скрытая цель говорящего) и перлокуция (воздействие на слушающего). Прагматические маркеры (strictly speaking, as it were, mind you) помогают понять эту цель."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Высказывание: 'It's cold in here.'\n- Локуция: в комнате низкая температура.\n- Иллокуция (прагматическая цель): просьба/запрос «закройте окно».\n- Перлокуция: слушающий встаёт и закрывает окно."
+   },
+   {
+    "type": "steps",
+    "title": "Шаги прагматического анализа",
+    "items": [
+     "Определение иллокутивной силы (приказ, предложение, обещание, просьба).",
+     "Анализ функции прагматических маркеров (Hedge, Face-saving, Focus).",
+     "Учёт контекста и социального статуса говорящего и слушающего."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Прагматические маркеры не меняют пропозиционального (семантического) содержания высказывания, но регулируют отношения собеседников."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Что означает иллокуция (illocutionary act) в теории речевых актов?",
+    "options": [
+     "Грамматическую правильность слов",
+     "Практическую цель и намерение, которые говорящий преследует высказыванием",
+     "Физиологическую реакцию слушающего",
+     "Произношение звуков"
+    ],
+    "answer": 1,
+    "explain": "Иллокуция — скрытая цель (intention) говорящего за высказыванием."
+   },
+   {
+    "type": "tf",
+    "q": "Прагматический маркер 'Mind you' используется, чтобы предупредить собеседника о неожиданном дополнительном условии или исключении.",
+    "answer": true,
+    "explain": "'Mind you' обозначает дополнительное условие в значении «имей в виду / обрати внимание»."
+   },
+   {
+    "type": "mc",
+    "q": "Какую прагматическую функцию выполняет 'Strictly speaking' в предложении 'Strictly speaking, whales are mammals, not fish.'?",
+    "options": [
+     "Hedging (осторожность)",
+     "Precision/Boundary Marker (точное разграничение/определение)",
+     "Apology (извинение)",
+     "Turn-taking (взятие очереди)"
+    ],
+    "answer": 1,
+    "explain": "'Strictly speaking' — маркер, задающий границу строгого определения и точности."
+   }
+  ],
+  "homework": {
+   "intro": "Задания на анализ речевых актов и прагматических маркеров в контексте.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Какова иллокутивная цель (Illocutionary force) фразы 'Could you pass the salt?'?",
+     "answer": "A polite request / Request to pass the salt",
+     "hint": "Это не вопрос, а предложение какого практического действия?"
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Напишите 2 предложения с прагматическими маркерами 'As it were' и 'So to speak', чтобы не высказывать мнение резко в академической дискуссии."
+    }
+   ]
+  }
+ },
+ "leksik-prayming-va-kollokatsion-grammatika": {
+  "title": "Лексический прайминг и коллокационная грамматика",
+  "summary": "Психолингвистическая вероятность совместной встречаемости слов (Colligation и Collocation) и грамматический выбор по теории Майкла Хоя.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Согласно теории Lexical Priming, выдвинутой Майклом Хоем, мозг человека не хранит грамматику и лексику раздельно. Каждое слово «праймировано» (запрограммировано) определёнными грамматическими конструкциями (colligation), позициями в тексте и семантическими соседями (collocation)."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "Глагол 'Incur' праймирован в нашем мозге негативными последствиями: incur losses, incur debts, incur wrath. С положительными словами он не используется."
+   },
+   {
+    "type": "steps",
+    "title": "Коллокационный и коллигационный анализ",
+    "items": [
+     "Collocation: лексическая совместная встречаемость слов (e.g., fast food, heavy rain).",
+     "Colligation: соединение слова с определённой грамматической категорией или позицией (e.g., глагол 'deny' требует GERUND).",
+     "Semantic Preference: соединение слова со словами определённой семантической группы (e.g., 'cause' + негативные последствия)."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Носители английского высокого уровня интуитивно чувствуют эти правила прайминга и не нарушают их."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Что означает коллигация (Colligation)?",
+    "options": [
+     "Согласование слова с другими прилагательными",
+     "Склонность слова соединяться с определёнными грамматическими структурами и формами",
+     "Совокупность грамматических ошибок в тексте",
+     "Цепочка слов, начинающихся с одной буквы"
+    ],
+    "answer": 1,
+    "explain": "Colligation — связь между словом и грамматической категорией (например, глагол + gerund)."
+   },
+   {
+    "type": "tf",
+    "q": "Согласно теории Lexical Priming, грамматика и словарь — две полностью раздельные системы в мозге.",
+    "answer": false,
+    "explain": "Наоборот, теория утверждает, что грамматика и словарь интегрированы вместе."
+   },
+   {
+    "type": "mc",
+    "q": "Какая коллокация соответствует правилу лексического прайминга?",
+    "options": [
+     "Incur success",
+     "Commit a crime",
+     "Do a mistake",
+     "Make damage"
+    ],
+    "answer": 1,
+    "explain": "Глагол 'Commit' праймирован негативными и незаконными действиями (crime, suicide, fraud)."
+   }
+  ],
+  "homework": {
+   "intro": "Применение правил лексического прайминга и коллокации на практике.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "С каким предлогом и грамматической формой праймировано прилагательное 'Conducive'?",
+     "answer": "to / conducive to + Noun/V-ing",
+     "hint": "Вспомните сочетание 'Conducive ___ learning'."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Составьте для каждого из глаголов 'Foster', 'Trigger', 'Prompt' предложения, показывающие их лексические и семантические особенности сочетаемости."
+    }
+   ]
+  }
+ },
+ "semantik-prozodiya-va-korpus-stilistikasi": {
+  "title": "Семантическая просодия и корпусная стилистика",
+  "summary": "Скрытая положительная или отрицательная окраска нейтральных слов в контексте (Semantic Prosody) и корпусные методы.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Одно из важнейших открытий корпусной лингвистики — семантическая просодия (Semantic Prosody). Хотя само слово в словаре выглядит нейтральным, за счёт слов, с которыми оно часто встречается, оно приобретает скрытую положительную (positive prosody) или отрицательную (negative prosody) окраску и тон."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "1. Глагол 'Cause' имеет отрицательную просодию: cause damage, cause trouble, cause cancer.\n2. Глагол 'Provide' имеет положительную просодию: provide assistance, provide opportunities."
+   },
+   {
+    "type": "steps",
+    "title": "Этапы корпусного анализа",
+    "items": [
+     "Анализ строк конкорданса (Concordance).",
+     "Разделение соседних слов (Collocates) на положительные/отрицательные группы.",
+     "Выявление скрытого отношения автора в письменном дискурсе."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Незнание семантической просодии приводит к появлению в академическом письме выражений, «грамматически правильных, но странных»."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Какая семантическая просодия у глагола 'Break out'?",
+    "options": [
+     "Положительная (Positive)",
+     "Отрицательная (Negative)",
+     "Абсолютно нейтральная",
+     "Архаичная"
+    ],
+    "answer": 1,
+    "explain": "'Break out' обычно используется с негативными событиями: война, болезнь, пожар (Negative Prosody)."
+   },
+   {
+    "type": "tf",
+    "q": "Семантическую просодию не всегда можно сразу определить по обычному словарному определению.",
+    "answer": true,
+    "explain": "Потому что это скрытая окраска, проявляющаяся при анализе больших объёмов текстов и коллокаций в корпусах."
+   },
+   {
+    "type": "mc",
+    "q": "В каком предложении наблюдается нарушение семантической просодии (странное употребление)?",
+    "options": [
+     "The project generated significant interest.",
+     "The new medicine caused complete recovery.",
+     "The storm brought severe destruction.",
+     "He harbored resentment for years."
+    ],
+    "answer": 1,
+    "explain": "Глагол 'Cause' имеет отрицательную просодию, его употребление с 'complete recovery' (положительное) создаёт тонкую стилистическую странность."
+   }
+  ],
+  "homework": {
+   "intro": "Определение семантической просодии и упражнения.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Фразовый глагол 'Set in' (e.g. Winter set in, Panic set in) имеет положительную или отрицательную просодию?",
+     "answer": "Отрицательная (Negative prosody)",
+     "hint": "Вспомните ситуации, с которыми встречается этот глагол (winter, decay, depression)."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Объясните корпусную просодию (отрицательную/положительную/нейтральную) слов 'Commit', 'Undergo' и 'Attain' и напишите к каждому по 1 научному предложению."
+    }
+   ]
+  }
+ },
+ "kritik-diskurs-tahlili-va-sintaktik-freyming": {
+  "title": "Критический дискурс-анализ и синтаксический фрейминг",
+  "summary": "Сокрытие ответственности и идеологический фрейминг в медийных и политических текстах с помощью синтаксиса, пассива и номинализации.",
+  "lesson": [
+   {
+    "type": "text",
+    "title": "Введение",
+    "body": "Критический дискурс-анализ (Critical Discourse Analysis — CDA) изучает связь между языком и властью, идеологией и манипуляцией. С помощью синтаксического фрейминга (Syntactic Framing) автор может скрыть исполнителя действия (agent) или отвлечь внимание в другую сторону."
+   },
+   {
+    "type": "example",
+    "title": "Пример",
+    "body": "1. С агентом (явно): 'Police shot civilians.'\n2. Passive Agentless (скрыто): 'Civilians were shot.'\n3. Nominalized (натурализовано): 'Shooting occurred.' (ответственность полностью устранена)"
+   },
+   {
+    "type": "steps",
+    "title": "Выявление синтаксической манипуляции",
+    "items": [
+     "Agent-deletions: опущение исполнителя действия с помощью пассивного залога.",
+     "Анализ транзитивности: анализ того, кто и по отношению к кому действует (Actor vs. Goal).",
+     "Lexical Naming & Framing: грамматические и лексические ярлыки, присваиваемые людям или событиям (e.g., 'freedom fighters' vs 'terrorists')."
+    ]
+   },
+   {
+    "type": "note",
+    "body": "Лингвист уровня C2 должен уметь анализировать не только то, что сказано в тексте, но и то, что скрыто с помощью грамматического выбора."
+   }
+  ],
+  "quiz": [
+   {
+    "type": "mc",
+    "q": "Какова основная идеологическая цель использования Agentless Passive (пассива без исполнителя) в критическом дискурс-анализе?",
+    "options": [
+     "Увеличить объём текста",
+     "Скрыть лицо/сторону, ответственную за действие, или оставить её вне внимания",
+     "Повысить эмоциональность текста",
+     "Исправить грамматические ошибки"
+    ],
+    "answer": 1,
+    "explain": "Пассив без указания исполнителя снимает ответственность с автора/исполнителя."
+   },
+   {
+    "type": "tf",
+    "q": "Номинализация позволяет представлять события как природные явления вне человеческой воли (Reification).",
+    "answer": true,
+    "explain": "Например, если вместо 'Prices increased' сказать 'Price increases occurred', кажется, что никто в этом не виноват."
+   },
+   {
+    "type": "mc",
+    "q": "В каком предложении субъект действия и ответственность скрыты сильнее всего?",
+    "options": [
+     "The manager fired fifty employees.",
+     "Fifty employees were fired by the manager.",
+     "Fifty employees were fired.",
+     "Redundancies occurred in the company."
+    ],
+    "answer": 3,
+    "explain": "Фраза 'Redundancies occurred' с помощью номинализации полностью нейтрализовала и исполнителя, и даже само действие глагола."
+   }
+  ],
+  "homework": {
+   "intro": "Задания по практическому анализу текста методами критического дискурс-анализа.",
+   "tasks": [
+    {
+     "id": "t1",
+     "type": "text",
+     "prompt": "Переведите предложение 'The government increased energy prices rapidly.' в номинализированную форму, где ответственность полностью скрыта.",
+     "answer": "Rapid energy price increases occurred. / There was a rapid increase in energy prices.",
+     "hint": "Опустите слово «правительство» (government) и образуйте именное сочетание."
+    },
+    {
+     "id": "t2",
+     "type": "open",
+     "prompt": "Проанализируйте любое политическое или экономическое сообщение с новостного портала с точки зрения критического дискурс-анализа (CDA) по синтаксическому фреймингу (3–4 предложения)."
+    }
+   ]
+  }
+ }
+}

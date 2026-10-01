@@ -33899,7 +33899,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "'Good' sifatining ortirma darajasi 'the goodest' bo'ladi.",
                         'answer': False,
-                        'explain': "'Good' noaniq/istisno sifat bo'lib, uning ortirma darajasi 'the best' hisoblanadi."
+                        'explain': "'Good' istisno sifat bo'lib, uning ortirma darajasi 'the best' hisoblanadi."
                     },
                     {
                         'type': 'mc',
@@ -34034,7 +34034,7 @@ SUBJECTS = [
                         'items': [
                             "Maslahat berilayotgan bo'lsa -> Should.",
                             "Rasmiy qonun-qoida yoki majburiyat bo'lsa -> Have to.",
-                            "Spikerning shaxsiy qarori/buyrug'i bo'lsa -> Must."
+                            "So'zlovchining shaxsiy qarori/buyrug'i bo'lsa -> Must."
                         ]
                     },
                     {
@@ -34140,7 +34140,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Non-defining relative clause gaplarida 'that' so'zini ishlatish mumkin.",
                         'answer': False,
-                        'explain': "Vergul bilan ajratilgan (non-defining) gaplarda 'that' ishlatib bo meydi."
+                        'explain': "Vergul bilan ajratilgan (non-defining) gaplarda 'that' ishlatib bo'lmaydi."
                     },
                     {
                         'type': 'mc',
@@ -34175,7 +34175,7 @@ SUBJECTS = [
             },
             {
                 'slug': 'passive-voice-present-and-past-simple',
-                'title': 'Majjul Nisbat (Passive Voice): Present va Past Simple',
+                'title': 'Majhul Nisbat (Passive Voice): Present va Past Simple',
                 'summary': "E'tiborni harakat bajaruvchisidan harakatning o'ziga qaratish usuli.",
                 'duration': 25,
                 'lesson': [
@@ -34194,7 +34194,7 @@ SUBJECTS = [
                         'title': "Majhul nisbatga o'tkazish",
                         'items': [
                             "Aktiv gapdagi to'ldiruvchini (object) passive gapning egasiga aylantiring.",
-                            "Zamongga mos 'be' fe'lini tanlang (am/is/are yoki was/were).",
+                            "Zamonga mos 'be' fe'lini tanlang (am/is/are yoki was/were).",
                             "Asosiy fe'lni 3-shaklga (V3/ed) o'tkazing.",
                             "Bajaruvchi muhim bo'lsa 'by + bajaruvchi' qo'shing."
                         ]
@@ -34225,7 +34225,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': ' these letters ___ sent yesterday?',
+                        'q': '___ these letters sent yesterday?',
                         'options': [
                             'Did',
                             'Were',
@@ -34318,7 +34318,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "To'g'ridan-to me o'zlashtirma gapga o'tkazing.",
+                    'intro': "To'g'ri nutqni o'zlashtirma gapga o'tkazing.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -34344,7 +34344,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Ingliz tilida bir fe'ldan keyin ikkinchi fe'l kelganda u ya gerund (-ing) yoki to-infinitive shaklida bo'ladi. Ba'zi fe'llar har ikkala shaklni ham qabul qiladi, lekin ma'no o'zgarishi mumkin."
+                        'body': "Ingliz tilida bir fe'ldan keyin ikkinchi fe'l kelganda u yo gerund (-ing) yoki to-infinitive shaklida bo'ladi. Ba'zi fe'llar har ikkala shaklni ham qabul qiladi, lekin ma'no o'zgarishi mumkin."
                     },
                     {
                         'type': 'example',
@@ -34462,7 +34462,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Past Perfect o'tmishdagi ikki harakatning keyinrog'i uchun ishlatiladi.",
                         'answer': False,
-                        'explain': "Past Perfect o'tmishdagi ikki harakatning eng BIRINChI sodir bo'lgani uchun ishlatiladi."
+                        'explain': "Past Perfect o'tmishdagi ikki harakatning eng BIRINCHI sodir bo'lgani uchun ishlatiladi."
                     },
                     {
                         'type': 'mc',
@@ -34515,7 +34515,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Farqlash qoidasi',
                         'items': [
-                            'Hozir shu topshiriq vaqtida qaror qildingizmi? -> Will.',
+                            'Qarorni hozir, gapirish paytida qildingizmi? -> Will.',
                             'Oldindan niyatingiz bor ammo aniq vaqti belgilanmaganmi? -> Be going to.',
                             "Aniq vaqti va joyi kelishib qo'yilgan rejami? -> Present Continuous."
                         ]
@@ -34540,9 +34540,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Spontangan (o'sha zahoti berilgan) qarorlar uchun 'be going to' ishlatiladi.",
+                        'q': "Spontan (o'sha zahoti berilgan) qarorlar uchun 'be going to' ishlatiladi.",
                         'answer': False,
-                        'explain': "Kutilmagan/spontangan qarorlar uchun 'will' ishlatiladi."
+                        'explain': "Kutilmagan/spontan qarorlar uchun 'will' ishlatiladi."
                     },
                     {
                         'type': 'mc',
@@ -34589,7 +34589,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misollar',
-                        'body': "3rd: If I had studied harder, I would have passed the exam (O'tmishda o'qimadim, o'tmishda o'tmadim). Mixed: If I had taken the map, I wouldn't be lost now (O'tmishda xaritan olmay ketganman, hozir adashib yuribman)."
+                        'body': "3rd: If I had studied harder, I would have passed the exam (O'tmishda o'qimadim, o'tmishda o'tmadim). Mixed: If I had taken the map, I wouldn't be lost now (O'tmishda xaritani olmay ketganman, hozir adashib yuribman)."
                     },
                     {
                         'type': 'steps',
@@ -34714,7 +34714,7 @@ SUBJECTS = [
                             'are sold'
                         ],
                         'answer': 0,
-                        'explain': "Biz kelishimizdan Oldin sotib bo'lingan edi (Past Perfect Passive)."
+                        'explain': "Biz kelishimizdan oldin sotib bo'lingan edi (Past Perfect Passive)."
                     }
                 ],
                 'homework': {
@@ -34904,7 +34904,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Ingliz tilida artikllar juda nozik reja bo'yicha ishlatiladi. 'The' okeanlar, daryolar, tog' tizmalari, mamlakat guruhlari bilan ishlatiladi. Yolg'iz tog'lar, ko'llar, qit'alar va ko'pchilik shahar/mamlakatlar oldidan artikl ishlatilmaydi (Zero article)."
+                        'body': "Ingliz tilida artikllar juda nozik qoidalar bo'yicha ishlatiladi. 'The' okeanlar, daryolar, tog' tizmalari, mamlakat guruhlari bilan ishlatiladi. Yolg'iz tog'lar, ko'llar, qit'alar va ko'pchilik shahar/mamlakatlar oldidan artikl ishlatilmaydi (Zero article)."
                     },
                     {
                         'type': 'example',
@@ -34946,7 +34946,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': ' He was taken to ___ hospital because he was badly injured.',
+                        'q': 'He was taken to ___ hospital because he was badly injured.',
                         'options': [
                             'a',
                             'the',
@@ -34954,7 +34954,7 @@ SUBJECTS = [
                             'an'
                         ],
                         'answer': 2,
-                        'explain': "Bemor sifatidat davolanish maqsada kasalxonaga yotqizilganda artikl qo'yilmaydi (zero article)."
+                        'explain': "Bemor sifatida davolanish maqsadida kasalxonaga yotqizilganda artikl qo'yilmaydi (zero article)."
                     }
                 ],
                 'homework': {
@@ -34995,7 +34995,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Qurilmani yasash',
                         'items': [
-                            "Zamongga mos raven 'have' yoki 'get' fe'lini tanlang.",
+                            "Zamonga mos ravishda 'have' yoki 'get' fe'lini tanlang.",
                             "Narsa/obyektni qo'ying.",
                             "Asosiy fe'lning 3-shaklini (V3) qo'shing."
                         ]
@@ -35096,7 +35096,7 @@ SUBJECTS = [
                             'a few'
                         ],
                         'answer': 1,
-                        'explain': "Vaqt sanalmaydi va Shoshiling deyilgani uchun vaqt deyarli yo'q (little) ma'nosi keladi."
+                        'explain': "Vaqt sanalmaydi va 'Shoshiling' deyilgani uchun vaqt deyarli yo'q (little) ma'nosi keladi."
                     },
                     {
                         'type': 'tf',
@@ -35156,7 +35156,7 @@ SUBJECTS = [
                         'title': 'Qurilmani tuzish',
                         'items': [
                             'Complex Object: Want, expect, ask, order + person + TO + V1.',
-                            "Make va Let fe'llaridan keyin 'TO' ISHLATILMAYoTGANINI tekshiring.",
+                            "Make va Let fe'llaridan keyin 'TO' ISHLATILMASLIGINI tekshiring.",
                             "Complex Subject: Ega + Passive fe'l (is said/believed) + TO + V1."
                         ]
                     },
@@ -35218,7 +35218,7 @@ SUBJECTS = [
             {
                 'slug': 'subjunctive-mood-and-wish-if-only',
                 'title': 'Istak va Afsus Shakllari: Wish va If only',
-                'summary': "Hozirgi va o'tgan zamondagi armonsiz yoki amalga oshmagan istaklarni bildirish.",
+                'summary': "Hozirgi va o'tgan zamondagi armonli yoki amalga oshmagan istaklarni bildirish.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -35545,7 +35545,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Akademik nutq va insholar uchun bog'lovchi so'zlar muhimdir. zidlov: Although, In spite of, Despite, Whereas, However. Qo'shimcha ma'lumot: Furthermore, Moreover. Oqibat: Consequently, Therefore."
+                        'body': "Akademik nutq va insholar uchun bog'lovchi so'zlar muhimdir. Zidlov: Although, In spite of, Despite, Whereas, However. Qo'shimcha ma'lumot: Furthermore, Moreover. Oqibat: Consequently, Therefore."
                     },
                     {
                         'type': 'example',
@@ -35634,7 +35634,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Urgu berish bosqichlari',
+                        'title': "Urg'u berish bosqichlari",
                         'items': [
                             "Qaysi bo'lakka urg'u bermoqchiligingizni aniqlang.",
                             "It-cleft uchun: It + be + [urg'u bo'lagi] + that/who + qolgan gap.",
@@ -35716,7 +35716,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Moslashtirish tartibi',
                         'items': [
-                            "Neither/Either bo'lsa: fe'lga eng YaQIN bo'lgan otga qarang.",
+                            "Neither/Either bo'lsa: fe'lga eng YAQIN bo'lgan otga qarang.",
                             "Together with, as well as, along with bo'lsa: birinchi otga qarab fe'l tanlang.",
                             "Sanoqsiz otlar va miqdorlar (money, time, distance) har doim BIRLIK fe'lini oladi."
                         ]
@@ -35743,7 +35743,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "'Ten miles are a long distance to walk' gapi to'g'ri tuzilgan.",
                         'answer': False,
-                        'explain': "Xato. Masofa (Ten miles) bir butun o'lchov sifati ko'riladi va BIRLIK fe'li (is) oladi."
+                        'explain': "Xato. Masofa (Ten miles) bir butun o'lchov sifatida ko'riladi va BIRLIK fe'li (is) oladi."
                     },
                     {
                         'type': 'mc',
@@ -35897,7 +35897,7 @@ SUBJECTS = [
                             'Whether'
                         ],
                         'answer': 0,
-                        'explain': "'U problemani yechganligi (fakt)' gapning egasi: That she managed..."
+                        'explain': "'U muammoni yechganligi (fakt)' gapning egasi: That she managed..."
                     },
                     {
                         'type': 'tf',
@@ -36118,7 +36118,7 @@ SUBJECTS = [
                         'items': [
                             "O'rin-joy predlog iborasini gap boshiga chiqaring (e.g. On the table...).",
                             "Asosiy fe'lni (stand, lie, sit, come) egadan oldinga o'tkazing.",
-                            "Egani fe'ldan keyin yozing (yordamchi fe'l ShART EMAS)."
+                            "Egani fe'ldan keyin yozing (yordamchi fe'l SHART EMAS)."
                         ]
                     },
                     {
@@ -36185,7 +36185,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Akademik va ilmiy matnlarda g'oyalarni mantiqiy bog'lash uchun shunchaki bog'lovchilar etarli emas. Diskurs markyorlari (Discourse Markers) va anaforik/kataforik ishoralar matnning ravonligi hamda mantiqiy koheziyasini ta'minlaydi."
+                        'body': "Akademik va ilmiy matnlarda g'oyalarni mantiqiy bog'lash uchun shunchaki bog'lovchilar yetarli emas. Diskurs markyorlari (Discourse Markers) va anaforik/kataforik ishoralar matnning ravonligi hamda mantiqiy koheziyasini ta'minlaydi."
                     },
                     {
                         'type': 'example',
@@ -36227,7 +36227,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'The research failed. ______, valuable data was gathered.' Boshliqni to'ldiring.",
+                        'q': "'The research failed. ______, valuable data was gathered.' Bo'shliqni to'ldiring.",
                         'options': [
                             'Be that as it may',
                             'As a result',
@@ -36276,7 +36276,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Modallik turlarini ajratish',
                         'items': [
-                            "Deontic modallik sub'yekt ustidan nazorat va irodani ifodalaydi (must, should, may).",
+                            'Deontic modallik subyekt ustidan nazorat va irodani ifodalaydi (must, should, may).',
                             'Epistemic modallik dalillarga asoslangan ehtimollik va haqiqat darajasini bildiradi (might, must, could).',
                             'Akademik matnlarda Epistemik modallik xulosalarni ehtiyotkorlik bilan bildirishda (hedging) muhim vositadir.'
                         ]
@@ -36475,7 +36475,7 @@ SUBJECTS = [
                             'Without hesitation to accept the offer was difficult.'
                         ],
                         'answer': 1,
-                        'explain': "Preparatory 'It' orqali uzun infitinitiv birikma gap oxiriga surilgan."
+                        'explain': "Preparatory 'It' orqali uzun infinitiv birikma gap oxiriga surilgan."
                     }
                 ],
                 'homework': {
@@ -36498,14 +36498,14 @@ SUBJECTS = [
             },
             {
                 'slug': 'subyunkativ-mayl-va-arxaik-konstruksiyalar',
-                'title': "Sub'yunkativ Mayl va Arxaik Grammatik Konstruksiyalar",
+                'title': 'Subyunktiv Mayl va Arxaik Grammatik Konstruksiyalar',
                 'summary': 'Rasmiy, yuridik va akademik ingliz tilidagi Subjunctive Mood (Be-subjunctive, Were-subjunctive) va sintaktik arxaizmlar.',
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Subjunctive Mood (Istak-istak va gipoteza mayli) zamonaviy so'zlashuvda kamaysa-da, rasmiy yuridik hujjatlar va akademik matnlarda saqlanib qolgan. U Be-subjunctive (fe'lning yalang'och negizi) va Were-subjunctive (barcha shaxslar uchun were) shakllarida uchraydi."
+                        'body': "Subjunctive Mood (Istak va gipoteza mayli) zamonaviy so'zlashuvda kamaysa-da, rasmiy yuridik hujjatlar va akademik matnlarda saqlanib qolgan. U Be-subjunctive (fe'lning yalang'och negizi) va Were-subjunctive (barcha shaxslar uchun were) shakllarida uchraydi."
                     },
                     {
                         'type': 'example',
@@ -36529,7 +36529,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'The committee insisted that the report ______ published without delay.' Boshliqni to'ldiring.",
+                        'q': "'The committee insisted that the report ______ published without delay.' Bo'shliqni to'ldiring.",
                         'options': [
                             'is',
                             'was',
@@ -36549,7 +36549,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "'Suffice it to say' iborasining ma'nosi nima?",
                         'options': [
-                            "Aytish yetarli bo'lsaki",
+                            'Shuni aytish kifoyaki',
                             "Xulosa qilib aytganda yo'q",
                             'Aytish taqiqlanadi',
                             'Tushunish qiyinki'
@@ -36585,7 +36585,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sistem-funksional grammatikada (Systemic Functional Linguistics) Grammatik Metafora - bu ma'lum bir semantik ma'noning nodatdiy (incongruent) grammatik shaklda ifodalanishidir. Leksik metaforada so'z o'zgaradi, grammatik metaforada esa sintaktik kategoriya o'zgaradi."
+                        'body': "Sistem-funksional grammatikada (Systemic Functional Linguistics) Grammatik Metafora - bu ma'lum bir semantik ma'noning nooddiy (incongruent) grammatik shaklda ifodalanishidir. Leksik metaforada so'z o'zgaradi, grammatik metaforada esa sintaktik kategoriya o'zgaradi."
                     },
                     {
                         'type': 'example',
@@ -36651,7 +36651,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Funksional grammatikaga ko'ra, 'I strongly believe that...' subyektiv modal iborasini ob'yektiv Interpersonal Metaphor shakliga o'tkazib yozing."
+                            'prompt': "Funksional grammatikaga ko'ra, 'I strongly believe that...' subyektiv modal iborasini obyektiv Interpersonal Metaphor shakliga o'tkazib yozing."
                         }
                     ]
                 }
@@ -36674,7 +36674,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Pragmatik tahlil adamlari',
+                        'title': 'Pragmatik tahlil qadamlari',
                         'items': [
                             "Illokutsiya kuchini aniqlash (Buyruq, taklif, va'da, so'rov).",
                             'Pragmatik markyorlar funksiyasini tahlil qilish (Hedge, Face-saving, Focus).',
@@ -36683,7 +36683,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Pragmatik markyorlar gapning propozitsional (semantik) mazmunini o'zgartirmaydi, lekin so'lar munosabatini tartiblaydi."
+                        'body': "Pragmatik markyorlar gapning propozitsional (semantik) mazmunini o'zgartirmaydi, lekin so'zlashuvchilar munosabatini tartiblaydi."
                     }
                 ],
                 'quiz': [
@@ -36701,7 +36701,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Mind you' pragmatik markyor sentimenti suhbatdoshni kutilmagan qo'shimcha shart yoki istisnodan ogohlantirish uchun ishlatiladi.",
+                        'q': "'Mind you' pragmatik markyori suhbatdoshni kutilmagan qo'shimcha shart yoki istisnodan ogohlantirish uchun ishlatiladi.",
                         'answer': True,
                         'explain': "'Mind you' suhbatdoshga 'esingda tutginki / e'tibor bergin' ma'nosida qo'shimcha shartni bildiradi."
                     },
@@ -36715,7 +36715,7 @@ SUBJECTS = [
                             'Turn-taking (Navbat olish)'
                         ],
                         'answer': 1,
-                        'explain': "'Strictly speaking' - qat'iy ta'rif va aniqlik chegarasini belgiliydigan markyordir."
+                        'explain': "'Strictly speaking' - qat'iy ta'rif va aniqlik chegarasini belgilaydigan markyordir."
                     }
                 ],
                 'homework': {
@@ -36758,7 +36758,7 @@ SUBJECTS = [
                         'items': [
                             "Collocation: So'zlarning leksik jihatdan birga kelishi (e.g., fast food, heavy rain).",
                             "Colligation: So'zning muayyan grammatik kategoriya yoki pozitsiya bilan birikishi (e.g., 'deny' fe'lining GERUND talab qilishi).",
-                            "Semantic Preference: So'ning ma'lum semantik guruh so'zlari bilan birikishi (e.g., 'cause' + salbiy oqibatlar)."
+                            "Semantic Preference: So'zning ma'lum semantik guruh so'zlari bilan birikishi (e.g., 'cause' + salbiy oqibatlar)."
                         ]
                     },
                     {
@@ -36772,7 +36772,7 @@ SUBJECTS = [
                         'q': 'Kolligatsiya (Colligation) nimani anglatadi?',
                         'options': [
                             "So'zning boshqa sifatlar bilan moslashuvi",
-                            "So'zning muayyan grammatik struktura va shakllar bilan afzallik birikishi",
+                            "So'zning muayyan grammatik struktura va shakllar bilan birikishga moyilligi",
                             "Matndagi grammatik xatolar yig'indisi",
                             "Faqat bir xil harf bilan boshlanadigan so'zlar zanjiri"
                         ],
@@ -36799,7 +36799,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Leksik prayming va kollikatsiya qoidalarini amalda qo'llash.",
+                    'intro': "Leksik prayming va kollokatsiya qoidalarini amalda qo'llash.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -36825,7 +36825,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Korpus lingvistikasidagi eng muhim kashfiyotlardan biri - Semantik Prozodiya (Semantic Prosody) dir. Bu so'zning o'zi luqoda neytral ko'rinsada, u tez-tez birga keladigan so'zlar hisobiga yashirin ijobiy (positive prosody) yoki salbiy (negative prosody) avra va ohang kasb etishidir."
+                        'body': "Korpus lingvistikasidagi eng muhim kashfiyotlardan biri - Semantik Prozodiya (Semantic Prosody) dir. Bu so'zning o'zi lug'atda neytral ko'rinsa-da, u tez-tez birga keladigan so'zlar hisobiga yashirin ijobiy (positive prosody) yoki salbiy (negative prosody) bo'yoq va ohang kasb etishidir."
                     },
                     {
                         'type': 'example',
@@ -36837,7 +36837,7 @@ SUBJECTS = [
                         'title': 'Korpus tahlil bosqichlari',
                         'items': [
                             'Konkordans (Concordance) qatorlarini tahlil qilish.',
-                            "So'z atrofidagi konkurentlarni (Collocates) ijobiy/salbiy guruhlarga ajratish.",
+                            "So'z atrofidagi qo'shni so'zlarni (Collocates) ijobiy/salbiy guruhlarga ajratish.",
                             'Yozma diskursda muallifning yashirin munosabatini aniqlash.'
                         ]
                     },
@@ -36863,7 +36863,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Semantik prozodiyani oddiy lug'at ta'rifidan har doim ham darhol aniqlab bo'lmaydi.",
                         'answer': True,
-                        'explain': 'Chunki u korpuslardagi katta hajmdagi matnlarni va kollokatsiyalarni tahlil qilish orqali namoyon bo mezon yashirin aura hisoblanadi.'
+                        'explain': "Chunki u korpuslardagi katta hajmdagi matnlarni va kollokatsiyalarni tahlil qilish orqali namoyon bo'ladigan yashirin bo'yoq hisoblanadi."
                     },
                     {
                         'type': 'mc',
@@ -36886,7 +36886,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "'Set in' phrasal verb'i (e.g. Winter set in, Panic set in) ijobiy prozodiyagami yoki salbiymi?",
                             'answer': 'Salbiy (Negative prosody)',
-                            'hint': "Ushbu fe mezon yeyilishi mumkin bo'lgan holatlarni eslang (winter, decay, depression)."
+                            'hint': "Ushbu fe'l bilan birga keladigan holatlarni eslang (winter, decay, depression)."
                         },
                         {
                             'id': 't2',
@@ -36947,7 +36947,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Qaysi gapda harakat sub'yekti va javobgarlik eng yuqori darajada yashiringan?",
+                        'q': 'Qaysi gapda harakat subyekti va javobgarlik eng yuqori darajada yashiringan?',
                         'options': [
                             'The manager fired fifty employees.',
                             'Fifty employees were fired by the manager.',
@@ -36955,7 +36955,7 @@ SUBJECTS = [
                             'Redundancies occurred in the company.'
                         ],
                         'answer': 3,
-                        'explain': "'Redundancies occurred' jumlasi nominalizatsiya orqali bajarguvchi va hatto fe'l harakatini ham tamoman neytrallashtirgan."
+                        'explain': "'Redundancies occurred' jumlasi nominalizatsiya orqali bajaruvchi va hatto fe'l harakatini ham tamoman neytrallashtirgan."
                     }
                 ],
                 'homework': {
