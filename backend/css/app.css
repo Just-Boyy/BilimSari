@@ -2059,6 +2059,9 @@ button.chaqmoq-belgi:active { transform: scale(.95); }
 .ramka.r-oltin-chaqmoq { background-image: url(../assets/ramka/oltin-chaqmoq.webp?v=2); }
 .ramka.r-kok-chaqmoq { background-image: url(../assets/ramka/kok-chaqmoq.webp?v=2); }
 .ramka.r-yashil-chaqmoq { background-image: url(../assets/ramka/yashil-chaqmoq.webp?v=2); }
+.ramka.r-binafsha-chaqmoq { background-image: url(../assets/ramka/binafsha-chaqmoq.webp?v=1); }
+.ramka.r-qizil-chaqmoq { background-image: url(../assets/ramka/qizil-chaqmoq.webp?v=1); }
+.ramka.r-oq-chaqmoq { background-image: url(../assets/ramka/oq-chaqmoq.webp?v=1); }
 @keyframes ramkaAylan {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to { transform: translate(-50%, -50%) rotate(360deg); }

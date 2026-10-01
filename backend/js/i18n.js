@@ -368,13 +368,10 @@
     'AI, shaxsiy darslar, emoji va oltin halqa': 'ИИ, личные уроки, эмодзи и золотое кольцо',
     'AI, shaxsiy darslar, emoji va avatar ramkasi': 'ИИ, личные уроки, эмодзи и рамка аватара',
     'Avatar ramkasi': 'Рамка аватара', 'Oltin chaqmoq': 'Золотая молния', "Ko'k chaqmoq": 'Синяя молния',
-    'Yashil chaqmoq': 'Зелёная молния', 'Ramka saqlandi': 'Рамка сохранена',
-    "Avataringiz atrofida chaqmoqli ramka paydo bo'ladi — 3 xil ramkadan birini tanlaysiz. Hamma sizni Premium o'quvchi ekaningizni ko'radi.":
-      'Вокруг аватара появится рамка с молниями — выберите одну из 3. Все увидят, что вы ученик с Premium.',
+    'Yashil chaqmoq': 'Зелёная молния', 'Binafsha chaqmoq': 'Фиолетовая молния', 'Qizil chaqmoq': 'Красная молния',
+    'Oq chaqmoq': 'Белая молния', 'Ramka saqlandi': 'Рамка сохранена',
     "Tanlagan ramkangiz profil, reyting va o'yinlarda avataringiz atrofida ko'rinadi.":
       'Выбранная рамка видна вокруг аватара в профиле, рейтинге и играх.',
-    "Bilim Premium bilan avataringiz atrofida chaqmoqli ramka paydo bo'ladi — 3 xildan birini tanlaysiz.":
-      'С Bilim Premium вокруг аватара появится рамка с молниями — выберите одну из 3.',
     "Ramka faqat Bilim Premium bilan ishlaydi.": 'Рамка доступна только с Bilim Premium.',
     "O'qishni yanada qiziqarli va samarali qiladigan imkoniyatlar.": 'Возможности, которые делают учёбу интереснее и эффективнее.',
     'Premium faol —': 'Premium активен — до', 'Premium faol': 'Premium активен',
@@ -728,6 +725,10 @@
       'Выберите одно из $1 особых эмодзи — оно будет видно рядом с вашим именем в рейтинге, играх и вопросе дня.'],
     [/^Bilim Premium bilan (\d+) ta maxsus emoji'dan birini tanlaysiz — u reyting, o'yinlar va kun savolida ismingiz yonida ko'rinadi\.$/,
       'С Bilim Premium вы выберете одно из $1 особых эмодзи — оно будет видно рядом с вашим именем в рейтинге, играх и вопросе дня.'],
+    [/^Avataringiz atrofida chaqmoqli ramka paydo bo'ladi — (\d+) xil ramkadan birini tanlaysiz\. Hamma sizni Premium o'quvchi ekaningizni ko'radi\.$/,
+      'Вокруг аватара появится рамка с молниями — выберите одну из $1. Все увидят, что вы ученик с Premium.'],
+    [/^Bilim Premium bilan avataringiz atrofida chaqmoqli ramka paydo bo'ladi — (\d+) xildan birini tanlaysiz\.$/,
+      'С Bilim Premium вокруг аватара появится рамка с молниями — выберите одну из $1.'],
     [/^«(.+)» tayyorlanmoqda\.\.\.$/, '«$1» готовится...'],
     [/^«(.+)» shaxsiy darslaringizga qo'shildi$/, '«$1» добавлен в ваши личные уроки'],
     [/^«(.+)» darsini tayyorlab bo'lmadi\. Qayta urinib ko'ring\.$/, 'Не удалось подготовить урок «$1». Попробуйте ещё раз.'],

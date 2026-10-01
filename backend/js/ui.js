@@ -344,7 +344,7 @@
   }
 
   /** Premium o'quvchi tanlagan emoji (ism yonida). Kalit bo'lmasa — bo'sh. */
-  var RAMKALAR = { 'oltin-chaqmoq': 1, 'kok-chaqmoq': 1, 'yashil-chaqmoq': 1 };
+  var RAMKALAR = { 'oltin-chaqmoq': 1, 'kok-chaqmoq': 1, 'yashil-chaqmoq': 1, 'binafsha-chaqmoq': 1, 'qizil-chaqmoq': 1, 'oq-chaqmoq': 1 };
   /** Avatar HTML'ini Premium ramkasi bilan o'raydi (ramka bo'lmasa — o'zgarishsiz). */
   function ramkali(avatarHtml, ramka, cls) {
     if (!ramka || !RAMKALAR[ramka]) return avatarHtml;

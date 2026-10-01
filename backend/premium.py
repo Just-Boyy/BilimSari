@@ -34,6 +34,9 @@ FRAMES = [
     ('oltin-chaqmoq', 'Oltin chaqmoq'),
     ('kok-chaqmoq', "Ko'k chaqmoq"),
     ('yashil-chaqmoq', 'Yashil chaqmoq'),
+    ('binafsha-chaqmoq', 'Binafsha chaqmoq'),
+    ('qizil-chaqmoq', 'Qizil chaqmoq'),
+    ('oq-chaqmoq', 'Oq chaqmoq'),
 ]
 FRAME_KEYS = [k for k, _ in FRAMES]
 DEFAULT_FRAME = FRAME_KEYS[0]

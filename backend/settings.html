@@ -154,7 +154,7 @@
     var tanlangan = st.active ? (st.frame_saved || (ramkalar[0] || {}).key) : null;
     quti.innerHTML = '<p class="izoh">' + (st.active
         ? 'Tanlagan ramkangiz profil, reyting va o\'yinlarda avataringiz atrofida ko\'rinadi.'
-        : 'Bilim Premium bilan avataringiz atrofida chaqmoqli ramka paydo bo\'ladi — 3 xildan birini tanlaysiz.') + '</p>' +
+        : 'Bilim Premium bilan avataringiz atrofida chaqmoqli ramka paydo bo\'ladi — ' + ramkalar.length + ' xildan birini tanlaysiz.') + '</p>' +
       '<div class="ramka-tanlov' + (st.active ? '' : ' qulf') + '" role="radiogroup" aria-label="Avatar ramkasi">' +
       ramkalar.map(function (f) {
         var tag = st.active ? 'button type="button"' : 'span';
