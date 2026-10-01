@@ -16042,19 +16042,19 @@ SUBJECTS = [
         'topics': [
             {
                 'slug': 'arab-xifaligi-va-orta-osiyo',
-                'title': "Arab xifaligining tashkil topishi va O'rta Osiyoga yurishlari",
-                'summary': "VII-VIII asrlarda Arab xifaligining shakllanishi, Mavorounnahrga harbiy yurishlar va mahalliy xalqlarning qarshilik ko'rsatishi haqida ma'lumot beriladi.",
+                'title': "Arab xalifaligining tashkil topishi va O'rta Osiyoga yurishlari",
+                'summary': "VII-VIII asrlarda Arab xalifaligining shakllanishi, Mavorounnahrga harbiy yurishlar va mahalliy xalqlarning qarshilik ko'rsatishi haqida ma'lumot beriladi.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish va Tarixiy Kontekst',
-                        'body': "VII asr boshlarida Arabiston yarimorolida islom dinining paydo bo'lishi va tarqalishi bilan qudratli Arab xifaligi davlati tashkil topdi. Dastlabki xalifalar davrida boshlangan harbiy yurishlar tez orada Vizantiya va Sosoniylar imperiyasini kuchsizlantirdi. Qutayba ibn Muslim boshchiligida arab qo'shinlari Mavorounnahrga (Ceyhun va Seyhun daryolari oralig'i) kirib keldi."
+                        'body': "VII asr boshlarida Arabiston yarimorolida islom dinining paydo bo'lishi va tarqalishi bilan qudratli Arab xalifaligi davlati tashkil topdi. Dastlabki xalifalar davrida boshlangan harbiy yurishlar tez orada Vizantiya va Sosoniylar imperiyasini kuchsizlantirdi. Qutayba ibn Muslim boshchiligida arab qo'shinlari Mavorounnahrga (Jayhun va Sayhun daryolari oralig'i) kirib keldi."
                     },
                     {
                         'type': 'example',
                         'title': "Muqanna qo'zg'oloni va mahalliy qarshilik",
-                        'body': "Arab xifaligi hukmronligiga qarshi eng yirik harakatlardan biri 770-780-yillarda sodir bo'lgan 'Oq kiyimliklar' harakati yoki Muqanna qo'zg'olonidir. Bu qo me'morchilik va mahalliy ozodlik kurashining yorqin namunasi edi."
+                        'body': "Arab xalifaligi hukmronligiga qarshi eng yirik harakatlardan biri 770-780-yillarda sodir bo'lgan 'Oq kiyimliklar' harakati yoki Muqanna qo'zg'olonidir. Bu qo'zg'olon mahalliy ozodlik kurashining yorqin namunasi edi."
                     },
                     {
                         'type': 'steps',
@@ -16067,7 +16067,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Talas jangi markaziy Osiyoda xitoy ta'siriga chek qo'ydi va mintaqada islom madaniyatining uzil-kesil qaror topishiga zamin yaratdi."
+                        'body': "Esda tuting: Talas jangi Markaziy Osiyoda Xitoy ta'siriga chek qo'ydi va mintaqada islom madaniyatining uzil-kesil qaror topishiga zamin yaratdi."
                     }
                 ],
                 'quiz': [
@@ -16085,7 +16085,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Talas jangi 751-yilda Arab xifaligi va Tan imperiyasi o'rtasida bo'lib o'tgan.",
+                        'q': "Talas jangi 751-yilda Arab xalifaligi va Tan imperiyasi o'rtasida bo'lib o'tgan.",
                         'answer': True,
                         'explain': "Ha, 751-yilda Talas daryosi bo'yida arab va xitoy qo'shinlari o'rtasida hal qiluvchi jang bo'lgan."
                     },
@@ -16103,7 +16103,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Arab xifaligi davri bo'yicha bilimlarni mustahkamlash uchun quyidagi topshiriqlarni bajaring.",
+                    'intro': "Arab xalifaligi davri bo'yicha bilimlarni mustahkamlash uchun quyidagi topshiriqlarni bajaring.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -16129,19 +16129,19 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Samoniylar davlatining tashkil topishi',
-                        'body': "IX asr oxirida Ismoil Somoniy sa'y-harakatlari bilan Mavorounnahr va Xuroson birlashtirilib, poytaxti Buxoro bo'lgan markazlashgan Samoniylar davlati tuzildi. Bu davlat arab xalifali xizmatidan xalos bo'lgan ilk mustaqil o'zbek davlatchiligi poydevorlaridan biri edi."
+                        'body': "IX asr oxirida Ismoil Somoniy sa'y-harakatlari bilan Mavorounnahr va Xuroson birlashtirilib, poytaxti Buxoro bo'lgan markazlashgan Samoniylar davlati tuzildi. Bu davlat arab xalifaligi tobeligidan xalos bo'lgan ilk mustaqil o'zbek davlatchiligi poydevorlaridan biri edi."
                     },
                     {
                         'type': 'example',
                         'title': 'Boshqaruv va Devoni omi',
-                        'body': 'Samoniylar davlatida boshqaruv devonlar tizimiga asoslangan edi. Bosh vazir boshchiligidagi Dargoh hamda 10 ta maxsus devon (moliya, harbiy, pochtasi va b.) davlat idorasini amalga oshirgan.'
+                        'body': 'Samoniylar davlatida boshqaruv devonlar tizimiga asoslangan edi. Bosh vazir boshchiligidagi Dargoh hamda 10 ta maxsus devon (moliya, harbiy, pochta va b.) davlat idorasini amalga oshirgan.'
                     },
                     {
                         'type': 'steps',
                         'title': 'Ismoil Somoniy islohotlari',
                         'items': [
                             "893-yil — Tarazga yurish va ko'chmanchi turkiy qabilalarga qarshi chegara xavfsizligini ta'minlash.",
-                            "Pul islohoti: Kumush dirhamlar ('isMoiliy' dirhamlar) zarb etilishi va savdo rivoji.",
+                            "Pul islohoti: Kumush dirhamlar ('ismoiliy' dirhamlar) zarb etilishi va savdo rivoji.",
                             'Buxoroni madaniyat va ilm-fan markaziga aylantirish.'
                         ]
                     },
@@ -16289,12 +16289,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Anushteginiylar sulolasining yuksalishi',
-                        'body': "XII asr oxiri — XIII asr boshlarida Otsiz, Il-Arslon, Takash va Alovuddin Muhammad davrida Xorazmshohlar davlati Sharqning eng qudratli imperiyalaridan biriga aylandi. Qoraxitoylar va Saljuqiylarga qaramlikdan xalos bo me'morchilik O'rta Sharqni bo'ysundirdi."
+                        'body': "XII asr oxiri — XIII asr boshlarida Otsiz, Il-Arslon, Takash va Alovuddin Muhammad davrida Xorazmshohlar davlati Sharqning eng qudratli imperiyalaridan biriga aylandi. Qoraxitoylar va Saljuqiylarga qaramlikdan xalos bo'lib, O'rta Sharqni bo'ysundirdi."
                     },
                     {
                         'type': 'example',
                         'title': 'Otror fojiasi (1218-yil)',
-                        'body': "1218-yilda Mo'g'uliston xoni Chingizxon yuborgan 450 kishilik savdo karvoni Otror hokimi Inolchiq (G'ayirxon) tomonidan qirib tashlandi. Bu voqea Chingizxonning Xorazmga bostirib kirishi uchun bahaona bo'ldi."
+                        'body': "1218-yilda Mo'g'uliston xoni Chingizxon yuborgan 450 kishilik savdo karvoni Otror hokimi Inolchiq (G'ayirxon) tomonidan qirib tashlandi. Bu voqea Chingizxonning Xorazmga bostirib kirishi uchun bahona bo'ldi."
                     },
                     {
                         'type': 'steps',
@@ -16313,7 +16313,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Otror fojisasi nechanchi yili sodir bo'lgan?",
+                        'q': "Otror fojiasi nechanchi yili sodir bo'lgan?",
                         'options': [
                             '1219-yil',
                             '1218-yil',
@@ -16378,11 +16378,11 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': "Qo me'morchilikning rivojlanish bosqichlari",
+                        'title': "Qo'zg'olonning rivojlanish bosqichlari",
                         'items': [
-                            "1238-yil bahor — Torobiy boshchiligida Buxoroning egallanishi va mo me'morchilik amaldorlarining haydalishi.",
+                            "1238-yil bahor — Torobiy boshchiligida Buxoroning egallanishi va mo'g'ul amaldorlarining haydalishi.",
                             "Mahmud Torobiyning 'Sadr' va xalq rahnamosi deb e'lon qilinishi.",
-                            "Kirmina yaqinidagi jang: Mo'g me'morchilar mag'lub etildi, ammo Torobiy halok bo'ldi. Qo me'morchilik keyinchalik shafqatsizlarcha bostirildi."
+                            "Kirmina yaqinidagi jang: Mo'g'ullar mag'lub etildi, ammo Torobiy halok bo'ldi. Qo'zg'olon keyinchalik shafqatsizlarcha bostirildi."
                         ]
                     },
                     {
@@ -16428,9 +16428,9 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Chingizxon Mavorounnahr yerlarini qaysi o'g me'moriga suyurg'ol qilib bergan edi?",
+                            'prompt': "Chingizxon Mavorounnahr yerlarini qaysi o'g'liga suyurg'ol qilib bergan edi?",
                             'answer': "Chag'atay",
-                            'hint': "Ulus nomi ham shu shahzs bilan bog'liq."
+                            'hint': "Ulus nomi ham shu shahzoda bilan bog'liq."
                         },
                         {
                             'id': 't2',
@@ -16449,12 +16449,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Siyosiy tarqoqlikka chek qo'yilishi",
-                        'body': "XIV asr o'rtalarida Mavorounnahr feodal tarqoqlik va mo'g'ul xonlarining (Mo'g me'moriston) uzluksiz bosqinlaridan aziyat chekayotgan edi. Amir Temur va Husayn o'rtasidagi ittifoq dastlab Sarbadorlar harakati ko'magida mo'g'ullarni quvishga yordam berdi."
+                        'body': "XIV asr o'rtalarida Mavorounnahr feodal tarqoqlik va mo'g'ul xonlarining (Mo'g'uliston) uzluksiz bosqinlaridan aziyat chekayotgan edi. Amir Temur va Husayn o'rtasidagi ittifoq dastlab Sarbadorlar harakati ko'magida mo'g'ullarni quvishga yordam berdi."
                     },
                     {
                         'type': 'example',
                         'title': '1370-yil Qurultoyi',
-                        'body': "1370-yil aprel oyida Balkh shahrida bo'lib o'tgan Qurultoyda Amir Temur Mavorounnahrning oliy hukmdori — Аmirdor deb e'lon qilindi va Samarqand poytaxt etib belgilandi."
+                        'body': "1370-yil aprel oyida Balx shahrida bo'lib o'tgan Qurultoyda Amir Temur Mavorounnahrning oliy hukmdori — amir deb e'lon qilindi va Samarqand poytaxt etib belgilandi."
                     },
                     {
                         'type': 'steps',
@@ -16462,7 +16462,7 @@ SUBJECTS = [
                         'items': [
                             "1370-1380-yillar — Farg'ona, Xorazm va Mavorounnahrning barcha hududlarini yagona markazga bo'ysundirish.",
                             'Uch, besh va yetti yillik harbiy yurishlar orqali chegaralarni kengaytirish.',
-                            "1395-yil — Qunduzcha va Terek daryosi bo'yidagi janglarda Toxtamshxonning mag'lub etilishi va Oltin O'rdaning kuchsizlantirilishi."
+                            "1391-1395-yillar — Qunduzcha va Terek daryosi bo'yidagi janglarda To'xtamishxonning mag'lub etilishi va Oltin O'rdaning kuchsizlantirilishi."
                         ]
                     },
                     {
@@ -16522,19 +16522,19 @@ SUBJECTS = [
             },
             {
                 'slug': 'temuriylar-renesansi',
-                'title': "Temuriylar renesansi: ilm-fan va me me'morchilik",
+                'title': "Temuriylar renesansi: ilm-fan va me'morchilik",
                 'summary': "XV asrda Temuriylar davrida Mavorounnahr va Xurosonda Ikkinchi Sharq Uyg'onish davrining gurkirab rivojlanishi.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': "Ikkinchi Sharq Uyg'onish davri",
-                        'body': "XV asrda Mirzo Ulug'bek, Shohruh Mirza va Husayn Boyqaro rahbarligida me me'morchilik, adabiyot, astronomiya va tasviriy san'at yuksak bosqichga ko'tarildi. Bu davr jahon tarixshunosligida 'Temuriylar renesansi' deb ataladi."
+                        'body': "XV asrda Mirzo Ulug'bek, Shohruh Mirza va Husayn Boyqaro rahbarligida me'morchilik, adabiyot, astronomiya va tasviriy san'at yuksak bosqichga ko'tarildi. Bu davr jahon tarixshunosligida 'Temuriylar renesansi' deb ataladi."
                     },
                     {
                         'type': 'example',
                         'title': "Mirzo Ulug'bek va Samarqand akademiyasi",
-                        'body': "Ulug'bek Samarqandda rasadxona va madrasa qurdirib, astronomiya maktabini yaratdi. Uning 'Ziji jadidi Ko'ragoniy' asarida 1018 ta yulduzning o me'mori aniq koordinatalari keltirilgan."
+                        'body': "Ulug'bek Samarqandda rasadxona va madrasa qurdirib, astronomiya maktabini yaratdi. Uning 'Ziji jadidi Ko'ragoniy' asarida 1018 ta yulduzning aniq koordinatalari keltirilgan."
                     },
                     {
                         'type': 'steps',
@@ -16571,7 +16571,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Alisher Navoiy turkiy tilda birinchi bo'lib qaysi monumental asarlar to me'plamini yaratdi?",
+                        'q': "Alisher Navoiy turkiy tilda birinchi bo'lib qaysi monumental asarlar to'plamini yaratdi?",
                         'options': [
                             "'Boburnoma'",
                             "'Xamsa'",
@@ -16579,7 +16579,7 @@ SUBJECTS = [
                             "'Tarixi Rashidi'"
                         ],
                         'answer': 1,
-                        'explain': "Navoiy turkiy tilda birinchi bo'lib 5 dabondan iborat 'Xamsa'ni yozgan."
+                        'explain': "Navoiy turkiy tilda birinchi bo'lib 5 dostondan iborat 'Xamsa'ni yozgan."
                     }
                 ],
                 'homework': {
@@ -16609,7 +16609,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kashfiyotlarning sabablari',
-                        'body': "Usmonli imperiyasining Yevropadan Sharqqa olib boradigan quruqlikdagi savdo yo'llarini to'sib qo me'yishi Yevropada dengiz orqali Hindistonga yo'l topish ehtiyojini tug'dirdi. Karavella kemalarining yaratilishi va kompasning takomillashuvi bunga imkon berdi."
+                        'body': "Usmonli imperiyasining Yevropadan Sharqqa olib boradigan quruqlikdagi savdo yo'llarini to'sib qo'yishi Yevropada dengiz orqali Hindistonga yo'l topish ehtiyojini tug'dirdi. Karavella kemalarining yaratilishi va kompasning takomillashuvi bunga imkon berdi."
                     },
                     {
                         'type': 'example',
@@ -16620,9 +16620,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Oqibatlari va Ipak yo'lining inqirozi",
                         'items': [
-                            "Jahon savdo markazlarining O me'rta yer dengizidan Atlantika okeaniga ko'chishi.",
+                            "Jahon savdo markazlarining O'rta yer dengizidan Atlantika okeaniga ko'chishi.",
                             "Yevropaga ko'p miqdorda oltin va kumushning oqib kelishi ('Narxlar inqilobi').",
-                            "Quruqlikdagi Buyuk Ipak yo'lining o'z ahamiyatini yo me'qotishi va O'rta Osiyo xonliklarining iqtisodiy yakkalanib qolishi."
+                            "Quruqlikdagi Buyuk Ipak yo'lining o'z ahamiyatini yo'qotishi va O'rta Osiyo xonliklarining iqtisodiy yakkalanib qolishi."
                         ]
                     },
                     {
@@ -16689,7 +16689,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Gumanizm va Uyg'onish (Renessans)",
-                        'body': "Italiyada XIV asrda boshlangan Uyg'onish davri inson shaxsini, uning erkinligi va aql-idrokini oily qadriyat deb bildi (Gumanizm). Leonardo da Vinchi, Mikelanjelo, Rafael kabi daho san'atkorlar va jahon dunyoviy ilmlari yuksaldi."
+                        'body': "Italiyada XIV asrda boshlangan Uyg'onish davri inson shaxsini, uning erkinligi va aql-idrokini oliy qadriyat deb bildi (Gumanizm). Leonardo da Vinchi, Mikelanjelo, Rafael kabi daho san'atkorlar va jahon dunyoviy ilmlari yuksaldi."
                     },
                     {
                         'type': 'example',
@@ -16769,7 +16769,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Shayboniylar va Temuriylar taxt kurashi',
-                        'body': "XV asr oxirida Temuriylar o'rtasidagi feodal nizolardan foydalangan Dashti Qipchoq o me'zbektari xoni Muhammad Shayboniyxon Mavorounnahrga yurish boshladi. 1500-1501-yillarda Samarqand va Buxoro egallandi va Temuriylar hukumronligiga barham berildi."
+                        'body': "XV asr oxirida Temuriylar o'rtasidagi feodal nizolardan foydalangan Dashti Qipchoq o'zbeklari xoni Muhammad Shayboniyxon Mavorounnahrga yurish boshladi. 1500-1501-yillarda Samarqand va Buxoro egallandi va Temuriylar hukmronligiga barham berildi."
                     },
                     {
                         'type': 'example',
@@ -16781,7 +16781,7 @@ SUBJECTS = [
                         'title': 'Iqtisodiy va pul islohotlari',
                         'items': [
                             '1507-yil — Muhammad Shayboniyxonning pul islohoti: Yagona va qimmatli kumush tangalar zarb etilishi.',
-                            "Yer-suv munosabatlarini tartibga solish, vaqf yerlarini ko me'paytirish.",
+                            "Yer-suv munosabatlarini tartibga solish, vaqf yerlarini ko'paytirish.",
                             "Buxoroning doimiy poytaxtga aylantirilishi (Ubaydullaxon davridan e'tiboran)."
                         ]
                     },
@@ -16828,7 +16828,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Shayboniylar davrida cho'llarda suv to me'plash uchun qurilgan maxsus gidrotexnik inshootlar qanday atalgan?",
+                            'prompt': "Shayboniylar davrida cho'llarda suv to'plash uchun qurilgan maxsus gidrotexnik inshootlar qanday atalgan?",
                             'answer': 'Sardoba',
                             'hint': 'Gumbazli suv saqlagich.'
                         },
@@ -16849,7 +16849,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Ashtarxoniylar (Joniylar) sulolasi (1601-1753)',
-                        'body': "XVI asr oxirida Shayboniylar sulolasi tugagach, taxtga Ashtarxon xonlari avlodi keldi. Bo'qiy Muhammad, Imomqulixon va Subhonqulixon davrida madaniy me'morchilik rivojlangan bo'lsada, keyinchalik o'zaro urushlar davlatni zaiflashtirdi."
+                        'body': "XVI asr oxirida Shayboniylar sulolasi tugagach, taxtga Ashtarxon xonlari avlodi keldi. Bo'qiy Muhammad, Imomqulixon va Subhonqulixon davrida madaniy me'morchilik rivojlangan bo'lsa-da, keyinchalik o'zaro urushlar davlatni zaiflashtirdi."
                     },
                     {
                         'type': 'example',
@@ -16860,14 +16860,14 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Mang'it amirlarining markazlashtirish siyosati",
                         'items': [
-                            "Amir Shohmurod (1785-1800) — Pul va sud islohoti, amaldorlar va qo me'shin poraxo'rligiga qarshi kurash.",
-                            "Amir Nasrullo (1827-1860) — Qat'iy va shafqatsiz markazlashtirish, munazam qo'shin ('sarbozlar') tuzish.",
+                            "Amir Shohmurod (1785-1800) — Pul va sud islohoti, amaldorlar va qo'shin poraxo'rligiga qarshi kurash.",
+                            "Amir Nasrullo (1827-1860) — Qat'iy va shafqatsiz markazlashtirish, muntazam qo'shin ('sarbozlar') tuzish.",
                             'Qabilaviy tarqoqlikni bostirish hamda amirlik mavqeini mustahkamlash.'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Mang'itlar sulolasi vakillari CHingizxon avlodidan bo'lmagani uchun 'Xon' emas, 'Amir' unvonidan foydalanishgan."
+                        'body': "Esda tuting: Mang'itlar sulolasi vakillari Chingizxon avlodidan bo'lmagani uchun 'Xon' emas, 'Amir' unvonidan foydalanishgan."
                     }
                 ],
                 'quiz': [
@@ -16923,13 +16923,13 @@ SUBJECTS = [
             {
                 'slug': 'xiva-va-qoqon-xonliklari',
                 'title': "Xiva va Qo'qon xonliklarining siyosiy hamda ijtimoiy-iqtisodiy hayoti",
-                'summary': "XVII-XIX asrlarda Xorazmda Qo me me'ng'irotlar va Farg'ona vodiysida Ming sulolasining shakllanishi va rivojlanishi.",
+                'summary': "XVII-XIX asrlarda Xorazmda Qo'ng'irotlar va Farg'ona vodiysida Ming sulolasining shakllanishi va rivojlanishi.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Xiva xonligining tiklanishi',
-                        'body': "XVIII asr oxiri — XIX asr boshlarida Qo me'ng'irotlar sulolasi (Eltuzarxon, Muhammad Rahimxon I) davrida Xiva xonligi siyosiy jihatdan mustahkamlandi. Muhammad Rahimxon I (1806-1825) davlatni markazlashtirib, bojxona va sud tizimini tartibga soldi."
+                        'body': "XVIII asr oxiri — XIX asr boshlarida Qo'ng'irotlar sulolasi (Eltuzarxon, Muhammad Rahimxon I) davrida Xiva xonligi siyosiy jihatdan mustahkamlandi. Muhammad Rahimxon I (1806-1825) davlatni markazlashtirib, bojxona va sud tizimini tartibga soldi."
                     },
                     {
                         'type': 'example',
@@ -16967,11 +16967,11 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Umarxon va uning rafiqasi Nodirabegim davrida Qo'qon madaniy jihatdan rivojlangan.",
                         'answer': True,
-                        'explain': "Ha, Umarxon va Nodirabegim davri Qo'qonda adabiyot va me me'morchilik guldavri bo'lgan."
+                        'explain': "Ha, Umarxon va Nodirabegim davri Qo'qonda adabiyot va me'morchilik guldavri bo'lgan."
                     },
                     {
                         'type': 'mc',
-                        'q': "Xiva xonligida Q me'ng'irotlar sulolasidan bo'lgan birinchi rasmiy xon kim?",
+                        'q': "Xiva xonligida Qo'ng'irotlar sulolasidan bo'lgan birinchi rasmiy xon kim?",
                         'options': [
                             'Muhammad Rahimxon I',
                             'Eltuzarxon',
@@ -17014,7 +17014,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Texnik ixtirolar',
-                        'body': "1764-yilda Jeyms Xargrivs 'Djenri' ip yirish mashinasini kashf etdi. 1784-yilda Jeyms Uatt bug' dvigatelini yaratdi, bu esa zavod va fabrikalarni suv manbalaridan mustaqil ravishda har qanday joyda qurish imkonini berdi."
+                        'body': "1764-yilda Jeyms Xargrivs 'Jenni' ip yigirish mashinasini kashf etdi. 1784-yilda Jeyms Uatt bug' dvigatelini yaratdi, bu esa zavod va fabrikalarni suv manbalaridan mustaqil ravishda har qanday joyda qurish imkonini berdi."
                     },
                     {
                         'type': 'steps',
@@ -17022,7 +17022,7 @@ SUBJECTS = [
                         'items': [
                             "Jamiyatning ikki asosiy sinfga bo'linishi: Burjuaziya (kapitalistlar) va Proletariat (yollanma ishchilar).",
                             "Urbanizatsiya: Shaharlar aholisining va sanoat markazlarining jadal o'sishi.",
-                            'Transport inqilobi: Parovoz (R. Stivenson) va Paroxod (R. Fulton) kashfiyoti.'
+                            'Transport inqilobi: Parovoz (J. Stivenson) va Paroxod (R. Fulton) kashfiyoti.'
                         ]
                     },
                     {
@@ -17054,7 +17054,7 @@ SUBJECTS = [
                         'q': "Poyezd (parovoz)ni birinchi bo'lib amalda amaliyotga tatbiq etgan ixtirochi kim?",
                         'options': [
                             'Jeyms Uatt',
-                            'Rizart Stivenson',
+                            'Jorj Stivenson',
                             'Robert Fulton',
                             'Genri Ford'
                         ],
@@ -17094,7 +17094,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Toshkentning egallanishi (1865-yil)',
-                        'body': "General M. Chernyayev boshchiligidagi chor qo me'shinlari 1865-yil iyun oyida Toshkentni qamal qilib, bosib oldi. Toshkent keyinchalik Turkiston general-gubernatorligining markaziga aylantirildi."
+                        'body': "General M. Chernyayev boshchiligidagi chor qo'shinlari 1865-yil iyun oyida Toshkentni qamal qilib, bosib oldi. Toshkent keyinchalik Turkiston general-gubernatorligining markaziga aylantirildi."
                     },
                     {
                         'type': 'steps',
@@ -17144,7 +17144,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Chor Rossiyasining Turkistonni bosib olish jarayonlarini xaritada va xronologiyada o me'rganish.",
+                    'intro': "Chor Rossiyasining Turkistonni bosib olish jarayonlarini xaritada va xronologiyada o'rganish.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -17170,7 +17170,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Ma'muriy-harbiy boshqaruv",
-                        'body': "Chor hukumati Turkistonda 'Nizom'lar asosida harbiy-mustamlaka boshqaruv usulini joriy etdi. Barcha vakolatlar general-gubernator va harbiy gubernatorlar qo me'lida to'plangan edi. Mahalliy aholi huquqsiz 'inorodets' (boshqa din va irq vakili) darajasida ko'rildi."
+                        'body': "Chor hukumati Turkistonda 'Nizom'lar asosida harbiy-mustamlaka boshqaruv usulini joriy etdi. Barcha vakolatlar general-gubernator va harbiy gubernatorlar qo'lida to'plangan edi. Mahalliy aholi huquqsiz 'inorodets' (boshqa din va irq vakili) darajasida ko'rildi."
                     },
                     {
                         'type': 'example',
@@ -17183,7 +17183,7 @@ SUBJECTS = [
                         'items': [
                             "1892-yil — Toshkentdagi 'Toshko'tarish' (Vabo isyoni) voqeasi.",
                             "1898-yil — Dukchi Eshon boshchiligidagi Andijon qo'zg'oloni.",
-                            "1916-yil — Mardaorlikka olish to me'g'risidagi farmon va Butunturkiston milliy ozodlik qo'zg'oloni."
+                            "1916-yil — Mardikorlikka olish to'g'risidagi farmon va Butunturkiston milliy ozodlik qo'zg'oloni."
                         ]
                     },
                     {
@@ -17206,7 +17206,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "1916-yilgi qo'zg me'lonning asosiy sababi mahalliy aholining mardikorlik ishlariga safarbar qilinishi bo'lgan.",
+                        'q': "1916-yilgi qo'zg'olonning asosiy sababi mahalliy aholining mardikorlik ishlariga safarbar qilinishi bo'lgan.",
                         'answer': True,
                         'explain': 'Ha, iyundagi podsho farmoni mardikorlikka chaqirish haqida edi.'
                     },
@@ -17255,7 +17255,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Yetakchi siymolar',
-                        'body': "Mahmudxo'ja Behbudiy ('Padarjo'sh' dramasi va 'Samarqand' gazetasi), Munavvarqori Abdurashidxonov, Abdulla Avloniy, Abdurauf Fitrat, Hamza va Cho'lpon milliy o'zlikni anglashga ulkan hissa qo me'shdilar."
+                        'body': "Mahmudxo'ja Behbudiy ('Padarkush' dramasi va 'Samarqand' gazetasi), Munavvarqori Abdurashidxonov, Abdulla Avloniy, Abdurauf Fitrat, Hamza va Cho'lpon milliy o'zlikni anglashga ulkan hissa qo'shdilar."
                     },
                     {
                         'type': 'steps',
@@ -17289,7 +17289,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Ismoil Gasprinskiy 'Tarjimon' gazetasi orqali jadidchilik g'oyalarini butun turk dunyosiga tarqatgan.",
                         'answer': True,
-                        'explain': "Ha, Qrimda nashr etilgan 'Tarjimon' gazetasi jadidlarning ma'naviy mayoqidir."
+                        'explain': "Ha, Qrimda nashr etilgan 'Tarjimon' gazetasi jadidlarning ma'naviy mayog'idir."
                     },
                     {
                         'type': 'mc',
@@ -17301,7 +17301,7 @@ SUBJECTS = [
                             'Behbudiy'
                         ],
                         'answer': 0,
-                        'explain': "Bu mashhur da'vat Abdulla Avloniyning 'Turkiy guliston yohud axloq' eserida keltirilgan."
+                        'explain': "Bu mashhur da'vat Abdulla Avloniyning 'Turkiy guliston yohud axloq' asarida keltirilgan."
                     }
                 ],
                 'homework': {
@@ -17317,21 +17317,21 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Jadid ma me'rifatparvarlarining ta'lim va matbuot sohasidagi islohotlari bugungi kunda qanday ahamiyatga ega?"
+                            'prompt': "Jadid ma'rifatparvarlarining ta'lim va matbuot sohasidagi islohotlari bugungi kunda qanday ahamiyatga ega?"
                         }
                     ]
                 }
             },
             {
                 'slug': 'birinchi-jahon-urushi',
-                'title': "Birinchi jahon urushi: sabablari, ko me'lami va geosiyosiy oqibatlari",
+                'title': "Birinchi jahon urushi: sabablari, ko'lami va geosiyosiy oqibatlari",
                 'summary': "1914-1918-yillarda dunyoning yetakchi imperiyalari o'rtasida bo'lib o'tgan global harbiy to'qnashuv.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Urushning sabablari va bloklar',
-                        'body': "Dunyoni qayta bo me'lish va xomashyo manbalariga ega bo'lish uchun harbiy-siyosiy bloklar o me'rtasidagi raqobat urushga olib keldi. Ikki asosiy blok: Antanta (Buyuk Britaniya, Fransiya, Rossiya) va Uchlar Ittifoqi / To'rtlar Ittifoqi (Germaniya, Avstriya-Vengriya, Usmonli imperiyasi, Bolgariya)."
+                        'body': "Dunyoni qayta bo'lish va xomashyo manbalariga ega bo'lish uchun harbiy-siyosiy bloklar o'rtasidagi raqobat urushga olib keldi. Ikki asosiy blok: Antanta (Buyuk Britaniya, Fransiya, Rossiya) va Uchlar Ittifoqi / To'rtlar Ittifoqi (Germaniya, Avstriya-Vengriya, Usmonli imperiyasi, Bolgariya)."
                     },
                     {
                         'type': 'example',
@@ -17356,7 +17356,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Birinchi jahon urushi qaysi yillarda bo me'lib o'tgan?",
+                        'q': "Birinchi jahon urushi qaysi yillarda bo'lib o'tgan?",
                         'options': [
                             '1914-1918-yillar',
                             '1939-1945-yillar',
@@ -17382,7 +17382,7 @@ SUBJECTS = [
                             'Brest-Litovsk shartnomasi'
                         ],
                         'answer': 1,
-                        'explain': "Ershersog Frans Ferdinandning Sarayevoda o'ldirilishi urushni keltirib chiqardi."
+                        'explain': "Ertsgersog Frans Ferdinandning Sarayevoda o'ldirilishi urushni keltirib chiqardi."
                     }
                 ],
                 'homework': {
@@ -17406,25 +17406,25 @@ SUBJECTS = [
             {
                 'slug': 'turkiston-muxtoriyati',
                 'title': 'Turkiston Muxtoriyati va uning fojiali tugatilishi',
-                'summary': "1917-yilda Qo'qonda e me'lon qilingan ilk demokratik milliy davlat — Turkiston Muxtoriyati tarixi hamda bolsheviklar tajovuzi.",
+                'summary': "1917-yilda Qo'qonda e'lon qilingan ilk demokratik milliy davlat — Turkiston Muxtoriyati tarixi hamda bolsheviklar tajovuzi.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': "Muxtoriyatning e'lon qilinishi",
-                        'body': "1917-yilgi Rossiyadagi Fevral va Oktyabr to me'ntarishlaridan so'ng Turkiston milliy ziyolilari o'z taqdirini o'zi belgilash uchun kurashdi. 1917-yil 27-noyabrda (noyabrning 4-sessiyasi) Qo'qonda IV Umumturkiston o'lkasi musulmonlar qurultoyida Turkiston Muxtoriyati e me'lon qilindi."
+                        'body': "1917-yilgi Rossiyadagi Fevral va Oktyabr to'ntarishlaridan so'ng Turkiston milliy ziyolilari o'z taqdirini o'zi belgilash uchun kurashdi. 1917-yil 27-noyabrda Qo'qonda IV Umumturkiston o'lkasi musulmonlar qurultoyida Turkiston Muxtoriyati e'lon qilindi."
                     },
                     {
                         'type': 'example',
                         'title': 'Muxtoriyat hukumati va rahbarlari',
-                        'body': "Muxtoriyat hukumatining birinchi bosh vaziri etib Muhammedjon Tanishpayev, so'ngra Mustafo Cho'qay tayinlandi. Hukumat tezda o'z milliy valyutasi, qo me'shini va konstitutsiyasini tuzishga kirishdi."
+                        'body': "Muxtoriyat hukumatining birinchi bosh vaziri etib Muhammedjon Tanishpayev, so'ngra Mustafo Cho'qay tayinlandi. Hukumat tezda o'z milliy valyutasi, qo'shini va konstitutsiyasini tuzishga kirishdi."
                     },
                     {
                         'type': 'steps',
                         'title': 'Bolsheviklar tajovuzi va tugatilish',
                         'items': [
-                            "Toshkent Sovetining Muxtoriyatni tan olmasligi va 'noqonuniy' deb e me'lon qilishi.",
-                            "1918-yil 19-fevral — Yevgeniy Perfiliev boshchiligidagi qizil gvardiyachilar va daşnaklarning Qo me'qonga bostirib kirishi.",
+                            "Toshkent Sovetining Muxtoriyatni tan olmasligi va 'noqonuniy' deb e'lon qilishi.",
+                            "1918-yil 19-fevral — Yevgeniy Perfiliev boshchiligidagi qizil gvardiyachilar va dashnoqlarning Qo'qonga bostirib kirishi.",
                             "Qo'qon shahrining 3 kun davomida yonishi, minglab tinch aholining qirib tashlanishi va 72 kun yashagan Muxtoriyatning qonga botirilishi."
                         ]
                     },
@@ -17436,7 +17436,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Turkiston Muxtoriyati qaysi shahrda va qaysi yili e'lon qilingan?",
+                        'q': "Turkiston Muxtoriyati qaysi shaharda va qaysi yili e'lon qilingan?",
                         'options': [
                             '1917-yil Toshkentda',
                             "1917-yil Qo'qonda",
@@ -17486,13 +17486,13 @@ SUBJECTS = [
             {
                 'slug': 'sovet-hokimiyatining-ornatilishi',
                 'title': "1917-1930-yillarda O'zbekistonda Sovet hokimiyatining o'rnatilishi va sovetlashtirish siyosati",
-                'summary': "Bolsheviklar rejimining mustahkamlanishi, Ismoil (Istiqlolchilik) harakati, Milliy-hududiy chegaralanish hamda O'zSSRning tuzilishi.",
+                'summary': "Bolsheviklar rejimining mustahkamlanishi, Istiqlolchilik harakati, Milliy-hududiy chegaralanish hamda O'zSSRning tuzilishi.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Qizil terror va Istiqlolchilik harakati',
-                        'body': "Muxtoriyat tor-mor etilgach, butun Turkistonda Sovet rejimiga qarshi qurolli Istiqlolchilik harakati (Sovet tarixshunosligida 'Bosmachilik') avj oldi. Madaminbek, Shermuhammadbek, Anvar Posho va Kurshirmat boshchiligida xalq ozodlik uchun kurashdi."
+                        'body': "Muxtoriyat tor-mor etilgach, butun Turkistonda Sovet rejimiga qarshi qurolli Istiqlolchilik harakati (Sovet tarixshunosligida 'Bosmachilik') avj oldi. Madaminbek, Shermuhammadbek, Anvar Posho va Ko'rshermat boshchiligida xalq ozodlik uchun kurashdi."
                     },
                     {
                         'type': 'example',
@@ -17505,7 +17505,7 @@ SUBJECTS = [
                         'items': [
                             "1920-yillar oxiri — Kollektivlashtirish (jamoalashtirish) va 'Quloqlashtirish' siyosati.",
                             "'Hujum' harakati: Xotin-qizlar ozodligi niqobi ostida milliy-diniy qadriyatlarga tajovuz.",
-                            "Yozuvni arab alifbosidan lotin, so'ngra kirill alifbosiga majburiy o me'tkazish."
+                            "Yozuvni arab alifbosidan lotin, so'ngra kirill alifbosiga majburiy o'tkazish."
                         ]
                     },
                     {
@@ -17566,7 +17566,7 @@ SUBJECTS = [
             {
                 'slug': 'ikkinchi-jahon-urushi-jahon-kontekstida',
                 'title': 'Ikkinchi jahon urushi: sabablari, asosiy frontlar va uning natijalari',
-                'summary': "1939-1945-yillarda insoniyat tarixidagi eng daxshatli va ko'lamdor harbiy to'qnashuv tahlil qilinadi.",
+                'summary': "1939-1945-yillarda insoniyat tarixidagi eng dahshatli va ko'lamdor harbiy to'qnashuv tahlil qilinadi.",
                 'duration': 15,
                 'lesson': [
                     {
@@ -17577,7 +17577,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Asosiy burilish janglari',
-                        'body': 'Stalingrad jangi (1942-1943) va Kursk jangi (1943) urush gidi shida tub burilish yasadi. 1944-yil iyun oyida Normandiyada Ikkinchi frontning ochilishi (Ittifoqchilar: AQSH, Buyuk Britaniya) fashizmni tor-mor etishni tezlashtirdi.'
+                        'body': 'Stalingrad jangi (1942-1943) va Kursk jangi (1943) urush jarayonida tub burilish yasadi. 1944-yil iyun oyida Normandiyada Ikkinchi frontning ochilishi (Ittifoqchilar: AQSH, Buyuk Britaniya) fashizmni tor-mor etishni tezlashtirdi.'
                     },
                     {
                         'type': 'steps',
@@ -17627,7 +17627,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Ikkinchi jahon urushining bosqichlari va xalqaro oqibatlarini o me'rganish.",
+                    'intro': "Ikkinchi jahon urushining bosqichlari va xalqaro oqibatlarini o'rganish.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -17653,7 +17653,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Frontdagi mardlik',
-                        'body': "Urush yillarida O'zbekistondan 1,5 milliondan ortiq kishi frontga safarbar etildi. Ulardan 500 mingdan ziyodi halok bo'ldi yoki daraksiz yo me'qoldi. Generallar Sobir Rahimov, Ziba G'aniyeva, Turg'un Ahmedov kabi yuzlab yurtdoshlarimiz qahramonlik ko'rsatdilar."
+                        'body': "Urush yillarida O'zbekistondan 1,5 milliondan ortiq kishi frontga safarbar etildi. Ulardan 500 mingdan ziyodi halok bo'ldi yoki daraksiz yo'qoldi. General Sobir Rahimov, mergan Ziba G'aniyeva, Turg'un Ahmedov kabi yuzlab yurtdoshlarimiz qahramonlik ko'rsatdilar."
                     },
                     {
                         'type': 'example',
@@ -17665,13 +17665,13 @@ SUBJECTS = [
                         'title': 'Iqtisodiyotning frontga moslashtirilishi',
                         'items': [
                             "100 dan ortiq sanoat korxonalarining O'zbekistonga ko'chirilishi va zudlik bilan ishga tushirilishi.",
-                            "Harbiy qurol-yarag', samolyotlar (Toshkent aviatsiya zavodi), kiyim-kechak hamda oziq-ovqat yetkazib berish.",
+                            "Harbiy qurol-yarog', samolyotlar (Toshkent aviatsiya zavodi), kiyim-kechak hamda oziq-ovqat yetkazib berish.",
                             "Qishloq xo'jaligi mehnatkashlarining kechayu kunduz paxta va g'alla yetishtirishdagi fidoyiligi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: O me'zbekiston urush yillarida haqiqiy gumanizm va front orti ta'minotining mustahkam qal'asiga aylandi."
+                        'body': "Esda tuting: O'zbekiston urush yillarida haqiqiy gumanizm va front orti ta'minotining mustahkam qal'asiga aylandi."
                     }
                 ],
                 'quiz': [
@@ -17700,10 +17700,10 @@ SUBJECTS = [
                             'Hamid Olimjon',
                             'Shaahmad Shomahmudov',
                             "G'afur G'ulom",
-                            "Matyoqub Qo me'shchi"
+                            "Matyoqub Qo'shchi"
                         ],
                         'answer': 1,
-                        'explain': "Toshkentlik temirchi Shaahmad Shomahmudov va uning ayoli Bahriniso daho insonparvarlik ko'rsatishgan."
+                        'explain': "Toshkentlik temirchi Shaahmad Shomahmudov va uning ayoli Bahriniso buyuk insonparvarlik ko'rsatishgan."
                     }
                 ],
                 'homework': {
@@ -17719,7 +17719,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "O'zbekistonga ko'chirilgan sanoat korxonalarining urushdan so'ng respublika sanoatiga ko me'rsatgan ta'sirini baholang."
+                            'prompt': "O'zbekistonga ko'chirilgan sanoat korxonalarining urushdan so'ng respublika sanoatiga ko'rsatgan ta'sirini baholang."
                         }
                     ]
                 }
@@ -17745,14 +17745,14 @@ SUBJECTS = [
                         'title': 'Harbiy bloklar va tugash bosqichi',
                         'items': [
                             '1949-yil — NATO (Shimoliy Atlantika Shartnomasi Tashkiloti)ning tuzilishi.',
-                            '1955-yil — Varshawa shartnomasi tashkilotining (VST) tuzilishi.',
+                            '1955-yil — Varshava shartnomasi tashkilotining (VST) tuzilishi.',
                             "1980-yillar oxiri — SSSRda 'Oshkoralik va Qayta qurish' va sovet tizimining inqirozi.",
-                            "1991-yil — Berlin devorining qulashi, Varshawa bloki hamda SSSRning parchalanishi bilan 'Sovuq urush'ning tugashi."
+                            "1989-1991-yillar — Berlin devorining qulashi (1989), Varshava bloki hamda SSSRning parchalanishi (1991) bilan 'Sovuq urush'ning tugashi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Sovuq urush' to me'g'ridan-to'g'ri yirik harbiy to'qnashuvsiz, lekin yadro quroli bilan tiyib turish va proksi-urushlar orqali olib borildi."
+                        'body': "Esda tuting: 'Sovuq urush' to'g'ridan-to'g'ri yirik harbiy to'qnashuvsiz, lekin yadro quroli bilan tiyib turish va proksi-urushlar orqali olib borildi."
                     }
                 ],
                 'quiz': [
@@ -17776,7 +17776,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Sovet qo'shinlari Afg'onistonga qaysi yili kiratilgan?",
+                        'q': "Sovet qo'shinlari Afg'onistonga qaysi yili kiritilgan?",
                         'options': [
                             '1975-yil',
                             '1979-yil',
@@ -17819,7 +17819,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': '31-avgust 1991-yil',
-                        'body': "O'zbekiston Oliy Kengashining navbatdan tashqari sessiyasida 'O'zbekiston Respublikasining davlat mustaqilligi to me'g'risida'gi Qonun qabul qilindi. 1-sentyabr — Mustaqillik kuni deb e'lon qilindi."
+                        'body': "O'zbekiston Oliy Kengashining navbatdan tashqari sessiyasida 'O'zbekiston Respublikasining davlat mustaqilligi to'g'risida'gi Qonun qabul qilindi. 1-sentyabr — Mustaqillik kuni deb e'lon qilindi."
                     },
                     {
                         'type': 'steps',
@@ -17933,7 +17933,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "O'zbekistonda bozor iqtisodiyotiga o'tish 'Shok terapiyasi' usulida amalga oshirilgan.",
                         'answer': False,
-                        'explain': "Yo'q, O'zbekiston evolyutsion, bosqichma-bosqich o'tish yo me'lini tanlagan."
+                        'explain': "Yo'q, O'zbekiston evolyutsion, bosqichma-bosqich o'tish yo'lini tanlagan."
                     },
                     {
                         'type': 'mc',
@@ -17945,7 +17945,7 @@ SUBJECTS = [
                             'Samolyotsozlik'
                         ],
                         'answer': 1,
-                        'explain': '1996-yil iyulda Asakadayengil avtomobillar ishlab chiqaruvchi zavod Ochildi.'
+                        'explain': '1996-yil iyulda Asakada yengil avtomobillar ishlab chiqaruvchi zavod ochildi.'
                     }
                 ],
                 'homework': {
@@ -17954,7 +17954,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "O'zbekistonning Don va G'alla mustaqilligiga erishish yo'lidagi asosiy islohoti nimadan iborat bo'ldi?",
+                            'prompt': "O'zbekistonning G'alla mustaqilligiga erishish yo'lidagi asosiy islohoti nimadan iborat bo'ldi?",
                             'answer': "G'allachilikni rivojlantirish va paxta maydonlarini qisqartirish",
                             'hint': "G'alla maydonlarini ko'paytirish."
                         },
@@ -17975,7 +17975,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Tashqi siyosat prinsiplari',
-                        'body': "Mustaqil O'zbekiston tashqi siyosatining ustuvor yo'nalishi — qo'shni davlatlar bilan yaxshi qo'shnichilik, tinchlikparvarlik va xalqaro huquq normatividan kelib chiqqan holda teng huquqli hamkorlikdir."
+                        'body': "Mustaqil O'zbekiston tashqi siyosatining ustuvor yo'nalishi — qo'shni davlatlar bilan yaxshi qo'shnichilik, tinchlikparvarlik va xalqaro huquq normalaridan kelib chiqqan holda teng huquqli hamkorlikdir."
                     },
                     {
                         'type': 'example',
@@ -17987,7 +17987,7 @@ SUBJECTS = [
                         'title': 'Tashabbuslar va Mintaqaviy integratsiya',
                         'items': [
                             "BMT Bosh Assambleyalarida Markaziy Osiyo xavfsizligi, Orol dengizi fojiasi hamda Afg'onistonni tiklash bo'yicha tashabbuslar.",
-                            "2017-yildan buyun Markaziy Osiyo davlatlari rahbarlarining Maslahat uchrashuvlarini yo'lga qo me'yish.",
+                            "2017-yildan buyon Markaziy Osiyo davlatlari rahbarlarining Maslahat uchrashuvlarini yo'lga qo'yish.",
                             'TDT doirasida madaniy, iqtisodiy va transport koridorlarini rivojlantirish.'
                         ]
                     },
@@ -18017,7 +18017,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "O'zbekiston tashqi siyosatida qaysi hudud eng ustuvor yo me'nalish deb belgilangan?",
+                        'q': "O'zbekiston tashqi siyosatida qaysi hudud eng ustuvor yo'nalish deb belgilangan?",
                         'options': [
                             'Lotin Amerikasi',
                             'Markaziy Osiyo',
@@ -18029,13 +18029,13 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "O'zbekistonning xalqaro tashkilotlar doirasidagi diplomatiyasini o me'rganish.",
+                    'intro': "O'zbekistonning xalqaro tashkilotlar doirasidagi diplomatiyasini o'rganish.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Orol dengizi qurishining ekologik va ijtimoiy oqibatlariga qarshi BMT doirasida tuzilgan maxsus fond nomi?',
-                            'answer': "Orolbo'yi mintaqasi uchun Inson xavfsizligi bo'yicha ko'p tomonlama sheriklik Ko'pmonlama Trast jamg'armasi",
+                            'answer': "Orolbo'yi mintaqasi uchun Inson xavfsizligi bo'yicha ko'p tomonlama sheriklik Trast jamg'armasi",
                             'hint': "Trast jamg'armasi."
                         },
                         {
@@ -18049,24 +18049,24 @@ SUBJECTS = [
             {
                 'slug': 'globallashuv-va-mintaqaviy-xavfsizlik',
                 'title': 'XXI asrda globallashuv, mintaqaviy xavfsizlik va geosiyosiy jarayonlar',
-                'summary': 'Axborot xurujlari, xalqaro terrorizm, kiberdavlat tahdidlari va yangi geosiyosiy tartib sharoitida milliy xavfsizlik masalalari.',
+                'summary': 'Axborot xurujlari, xalqaro terrorizm, kibertahdidlar va yangi geosiyosiy tartib sharoitida milliy xavfsizlik masalalari.',
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Globallashuv tushunchasi va ziddiyatlari',
-                        'body': "XXI asrda globallashuv axborot, iqtisodiyot va texnologiyalarning umumjahon integratsiyasini tezlashtirdi. Biroq u bilan birga gibrid urushlar, axborot xurujlari va milliylikni yo'qotish xavfi (ommoviy madaniyat) vujudga keldi."
+                        'body': "XXI asrda globallashuv axborot, iqtisodiyot va texnologiyalarning umumjahon integratsiyasini tezlashtirdi. Biroq u bilan birga gibrid urushlar, axborot xurujlari va milliylikni yo'qotish xavfi (ommaviy madaniyat) vujudga keldi."
                     },
                     {
                         'type': 'example',
                         'title': "Mintaqaviy tahdidlar va Afg'oniston",
-                        'body': "Markaziy Osiyo xavfsizligiga tahdid soluvchi asosiy omillardan biri — Afg'onistondagi beqarorlik va transmilliy jinoyatchilik (narkotrafig, diniy ekstremizm)dir. O'zbekiston Afg'onistonni iqtisodiy loyihalarga (Toshkent-Qobul-Peshovar temir yo'li) jalb etish tarafdori."
+                        'body': "Markaziy Osiyo xavfsizligiga tahdid soluvchi asosiy omillardan biri — Afg'onistondagi beqarorlik va transmilliy jinoyatchilik (narkotrafik, diniy ekstremizm)dir. O'zbekiston Afg'onistonni iqtisodiy loyihalarga (Toshkent-Qobul-Peshovar temir yo'li) jalb etish tarafdori."
                     },
                     {
                         'type': 'steps',
                         'title': "Milliy xavfsizlikni ta'minlash choralari",
                         'items': [
-                            'Kiberxavfsizlik va axborot makonini himoya qilish jonzotlari.',
+                            'Kiberxavfsizlik va axborot makonini himoya qilish choralari.',
                             "Diniy bag'rikenglik va millatlararo totuvlikni mustahkamlash.",
                             'Mudofaa salohiyatini oshirish hamda qurolli kuchlarni zamonaviylashtirish.'
                         ]
@@ -18128,7 +18128,7 @@ SUBJECTS = [
             },
             {
                 'slug': 'tarixiy-manbashunoslik-va-metodologiya',
-                'title': 'Tarixiy manbashunoslik va historiografiya metodologiyasi',
+                'title': 'Tarixiy manbashunoslik va tarixshunoslik metodologiyasi',
                 'summary': 'Tarix fanining tadqiqot usullari, yozma va moddiy manbalarni kritik tahlil qilish hamda tarixiy faktlarni verifikatsiyalash.',
                 'duration': 15,
                 'lesson': [
@@ -18140,7 +18140,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Tarixiy tanqid (Kritika)',
-                        'body': "Manbani o me'rganishda Ichki va Tashqi tanqid usullari qo me'llaniladi. Tashqi tanqid — manbaning haqiqiyligini, yoshini, muallifini aniqlash bo'lsa; Ichki tanqid — matn mazmunining mantiqiyligi va obyektivligini baholaydi."
+                        'body': "Manbani o'rganishda Ichki va Tashqi tanqid usullari qo'llaniladi. Tashqi tanqid — manbaning haqiqiyligini, yoshini, muallifini aniqlash bo'lsa; Ichki tanqid — matn mazmunining mantiqiyligi va obyektivligini baholaydi."
                     },
                     {
                         'type': 'steps',
@@ -18167,7 +18167,7 @@ SUBJECTS = [
                             'Formatsion tahlil'
                         ],
                         'answer': 1,
-                        'explain': "Tashqi tanqid manbaning moddiy-tashqi xususiyatlarini va haqiqiyligini o me'rganadi."
+                        'explain': "Tashqi tanqid manbaning moddiy-tashqi xususiyatlarini va haqiqiyligini o'rganadi."
                     },
                     {
                         'type': 'tf',
@@ -18189,7 +18189,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Tarixiy manbashunoslik metodologiyasini tushunish bo me'yicha topshiriqlar.",
+                    'intro': "Tarixiy manbashunoslik metodologiyasini tushunish bo'yicha topshiriqlar.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -18288,7 +18288,7 @@ SUBJECTS = [
             },
             {
                 'slug': 'iqtisodiy-tarix-merkantilizmdan-raqamlashtirishgacha',
-                'title': "Iqtisodiy tarix: Merkantilizmdan raqamli iqtisodiyotgacha bo me'lgan rivojlanish",
+                'title': "Iqtisodiy tarix: Merkantilizmdan raqamli iqtisodiyotgacha bo'lgan rivojlanish",
                 'summary': "Jahon iqtisodiy g'oyalari hamda tizimlarining davrlar bo'yicha evolyutsiyasi: Merkantilizm, Fiziokratlar, Klassik iqtisod va Keyneschilik.",
                 'duration': 15,
                 'lesson': [
@@ -18314,13 +18314,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Keyneschilik nazariyasi AQSH Prezidenti F. Ruzveltning 'Yangi kursi' (New Deal) uchun asos bo me'lgan."
+                        'body': "Esda tuting: Keyneschilik nazariyasi AQSH Prezidenti F. Ruzveltning 'Yangi kursi' (New Deal) uchun asos bo'lgan."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Iqtisodiy ilmdagi 'Ko'rinmas qo me'l' (Invisible hand) nazariyasi muallifi kim?",
+                        'q': "Iqtisodiy ilmdagi 'Ko'rinmas qo'l' (Invisible hand) nazariyasi muallifi kim?",
                         'options': [
                             'Karl Marks',
                             'Adam Smit',
@@ -18346,7 +18346,7 @@ SUBJECTS = [
                             'Dotkomlar inqirozi'
                         ],
                         'answer': 0,
-                        'explain': "Buyuk Depressiya kapitalistik dunyoni qamrab olgan eng og me'ir iqtisodiy inqirozdir."
+                        'explain': "Buyuk Depressiya kapitalistik dunyoni qamrab olgan eng og'ir iqtisodiy inqirozdir."
                     }
                 ],
                 'homework': {
@@ -18381,7 +18381,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Xalqaro tizimlarning almashinuvi',
-                        'body': "Tarixda bir necha xalqaro tartib tizimlari mavjud bo'lgan: Vestfaliya (1648), Vena (1815), Versal-Vashington (1919), Yalta-Potsdam (1945) hamda 'Sovuq urush'dan keyingi Zamonaviy ko me'p qutbli tizim."
+                        'body': "Tarixda bir necha xalqaro tartib tizimlari mavjud bo'lgan: Vestfaliya (1648), Vena (1815), Versal-Vashington (1919), Yalta-Potsdam (1945) hamda 'Sovuq urush'dan keyingi Zamonaviy ko'p qutbli tizim."
                     },
                     {
                         'type': 'steps',
@@ -18457,7 +18457,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Xalqaro munosabatlar tarixi davlatlar o'rtasidagi kuchlar muvozanatini tartibga soluvchi global tizimlarning almashinuvidan iborat. Modern diplomatiyaning tamal toshi 1648-yildagi Vestfaliya tinchlik shartnomasi bilan qo'yilgan bo'lib, u davlat suvereniteti va ichki exposesga aralashmaslik prinsipini muhrladi."
+                        'body': "Xalqaro munosabatlar tarixi davlatlar o'rtasidagi kuchlar muvozanatini tartibga soluvchi global tizimlarning almashinuvidan iborat. Zamonaviy diplomatiyaning tamal toshi 1648-yildagi Vestfaliya tinchlik shartnomasi bilan qo'yilgan bo'lib, u davlat suvereniteti va ichki ishlarga aralashmaslik prinsipini muhrladi."
                     },
                     {
                         'type': 'example',
@@ -18476,7 +18476,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Har bir xalqaro tizim inqirozi, odatda, yirik jahon urushlari yoki tizimli geosiyosiy toqnashuvlar oqibatida yuzaga kelgan.'
+                        'body': "Esda tuting: Har bir xalqaro tizim inqirozi, odatda, yirik jahon urushlari yoki tizimli geosiyosiy to'qnashuvlar oqibatida yuzaga kelgan."
                     }
                 ],
                 'quiz': [
@@ -18550,7 +18550,7 @@ SUBJECTS = [
                         'title': 'Demografik jarayonlarni tahlil qilish bosqichlari',
                         'items': [
                             'Epidemiya va gumanitar inqirozlarni tahlil qilish (vabo, ocharchilik).',
-                            "Katta migratsiya toqinlarini (xalqlar buyuk ko'chishi, transatlantik qul savdosi) o'rganish.",
+                            "Katta migratsiya to'lqinlarini (xalqlar buyuk ko'chishi, transatlantik qul savdosi) o'rganish.",
                             "Urbanizatsiya va sanoatlashuvning aholi zichligiga ta'sirini baholash.",
                             "Demografik o'tish (Demographic Transition) nazariyasini tarixiy manbalarga tatbiq etish."
                         ]
@@ -18571,7 +18571,7 @@ SUBJECTS = [
                             "Qirollik hokimiyatining batamom yo'qolishi"
                         ],
                         'answer': 1,
-                        'explain': 'Aholi keskin kamayishi oqibatida ishchi kuchi qadrlandi, bu esa krepostnoylik va feodal qaramlikning zayiflashishiga olib keldi.'
+                        'explain': 'Aholi keskin kamayishi oqibatida ishchi kuchi qadrlandi, bu esa krepostnoylik va feodal qaramlikning zaiflashishiga olib keldi.'
                     },
                     {
                         'type': 'tf',
@@ -18619,12 +18619,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "G'oyalar tarixi (History of Ideas) insoniyat jamiyatini harakatlantiruvchi konseptual qarashlar, falsafiy oqimlar va siyosiy ideologiyalarning rivojlanishini o'rganadi. XIX-XX asrlardagi global inqiloblar va urushlar ortida doim ma'lum bir ideologik nazariyalar durgan."
+                        'body': "G'oyalar tarixi (History of Ideas) insoniyat jamiyatini harakatlantiruvchi konseptual qarashlar, falsafiy oqimlar va siyosiy ideologiyalarning rivojlanishini o'rganadi. XIX-XX asrlardagi global inqiloblar va urushlar ortida doim ma'lum bir ideologik nazariyalar turgan."
                     },
                     {
                         'type': 'example',
                         'title': 'Tarixiy misol',
-                        'body': "Jon Lokk va Janga-Jak Russo tomonidan ilgari surilgan 'Ijtimoiy shartnoma' va 'Insonning tabiiy huquqlari' g'oyalari 1776-yildagi AQSH Mustaqillik deklaratsiyasi hamda 1789-yilgi Fransuz inqilobining mafkuraviy poydevori bo'ldi."
+                        'body': "Jon Lokk va Jan-Jak Russo tomonidan ilgari surilgan 'Ijtimoiy shartnoma' va 'Insonning tabiiy huquqlari' g'oyalari 1776-yildagi AQSH Mustaqillik deklaratsiyasi hamda 1789-yilgi Fransuz inqilobining mafkuraviy poydevori bo'ldi."
                     },
                     {
                         'type': 'steps',
@@ -18632,7 +18632,7 @@ SUBJECTS = [
                         'items': [
                             'Liberalizm: Shaxs erkinligi, xususiy mulk va huquqiy davlat ustuvorligi (J. Lokk, A. Smit).',
                             "Konservatizm: An'analar, ijtimoiy tartib va mo'tadil islohotlar tarafdorligi (E. Byork).",
-                            'Sotsializm va Marksizm: Ijtimoiy tenglik, sinfiy kashfiyotlar va mulkning jamoaviyligi (K. Marks, F. Engels).',
+                            'Sotsializm va Marksizm: Ijtimoiy tenglik, sinfiy kurash va mulkning jamoaviyligi (K. Marks, F. Engels).',
                             "Natsionalizm: Milliy o'zlik va mustaqil milliy davlat qurish g'oyasi."
                         ]
                     },
@@ -18644,10 +18644,10 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Modern liberalizm ideologiyasining asosiy tayanch prinsiplaridan biri qaysi?',
+                        'q': 'Zamonaviy liberalizm ideologiyasining asosiy tayanch prinsiplaridan biri qaysi?',
                         'options': [
                             'Sinfiy kurash va absolyut tenglik',
-                            'Shaxs erkinligi va xususiy daxlsizlik',
+                            'Shaxs erkinligi va xususiy mulk daxlsizligi',
                             "An'anaviy monarxiyani saqlash",
                             "Iqtisodiyotni to'liq davlat nazoratiga olish"
                         ],
@@ -18664,7 +18664,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "XIX asrda Yevropada milliy davlatlarning (masalan, Italiya va Germaniya) birlashishida qaysi g'oya asosiy harakatlantiruvchi kuch bo'ldi?",
                         'options': [
-                            'Anarchizm',
+                            'Anarxizm',
                             'Natsionalizm (Millatchilik)',
                             'Feodalizm',
                             'Klerikalizm'
@@ -18700,7 +18700,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Harbiy san'at tarixi insoniyatning qurolli toqnashuvlarni rejalashtirish va olib borish usullarining rivojlanishini o'rganadi. Harbiy strategiya nafaqat qurol-yarag' turiga, balki jamiyatning iqtisodiy va texnologik darajasiga ham chambarchas bog'liq."
+                        'body': "Harbiy san'at tarixi insoniyatning qurolli to'qnashuvlarni rejalashtirish va olib borish usullarining rivojlanishini o'rganadi. Harbiy strategiya nafaqat qurol-yarog' turiga, balki jamiyatning iqtisodiy va texnologik darajasiga ham chambarchas bog'liq."
                     },
                     {
                         'type': 'example',
@@ -18727,7 +18727,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "O'qotar qurollarning (porox) keng qo'llanilishi harbiy san'atda qanday tub burilishga olib keldi?",
                         'options': [
-                            "Ritsarlik va og'ir otliq qo'shinlarning mavqeyi yo'qolishiga",
+                            "Ritsarlik va og'ir otliq qo'shinlarning mavqei yo'qolishiga",
                             'Kamondan otuvchilar sonining ortishiga',
                             "Qal'a devorlarining mustahkamlanishiga va urushlarning to'xtashiga",
                             'Dengiz flotining batamom tugatilishiga'
@@ -18737,7 +18737,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Karl fon Klauzevits o'zining 'Urush haqida' asarida urushni siyosatdan ayro xodisalar sifatida baholagan.",
+                        'q': "Karl fon Klauzevits o'zining 'Urush haqida' asarida urushni siyosatdan ayri hodisa sifatida baholagan.",
                         'answer': False,
                         'explain': 'Klauzevits urushni siyosatning mantiqiy davomi va uning quroli deb bilgan.'
                     },
@@ -18747,7 +18747,7 @@ SUBJECTS = [
                         'options': [
                             'Faqat tank va aviatsiyadan foydalanish',
                             'Harbiy kuch bilan birga axborot, kiberhujum va iqtisodiy bosimlardan majmuaviy foydalanish',
-                            "Faqat dengiz kuchlari o'rtasidagi toqnashuv",
+                            "Faqat dengiz kuchlari o'rtasidagi to'qnashuv",
                             "Yadro qurolini ochiq qo'llash"
                         ],
                         'answer': 1,
@@ -18761,7 +18761,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Birinchi va Ikkinchi jahon urushlaridagi taktika va texnologiyalarning asosiy farqini bitta gap bilan izohlang.',
-                            'answer': "Birinchi jahon urushi asosan pozitsion (xandaq) urushi bo'lgan bo'lsa, Ikkinchi jahon urushi manevrli va mexaniatsiyalashgan (Blicfrig) urush bo'ldi.",
+                            'answer': "Birinchi jahon urushi asosan pozitsion (xandaq) urushi bo'lgan bo'lsa, Ikkinchi jahon urushi manevrli va mexanizatsiyalashgan (blitskrig) urush bo'ldi.",
                             'hint': 'Xandaq va manevrli urush tushunchalarini eslang.'
                         },
                         {
@@ -18775,7 +18775,7 @@ SUBJECTS = [
             {
                 'slug': 'markaziy-osiyo-arxeologiyasi-va-sivilizatsiya',
                 'title': 'Markaziy Osiyo arxeologiyasi va sivilizatsion konsepsiyalar',
-                'summary': "Oks sivilizatsiyasi, Sarazm va Qadimgi Xorazm kabi arxeologik kashfiyotlarning jahon tarixdagi o'rni va konsepsiyalarning o'zgarishi.",
+                'summary': "Oks sivilizatsiyasi, Sarazm va Qadimgi Xorazm kabi arxeologik kashfiyotlarning jahon tarixidagi o'rni va konsepsiyalarning o'zgarishi.",
                 'duration': 22,
                 'lesson': [
                     {
@@ -18862,12 +18862,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "XX asr fransuz tarixshunosligida shakllangan 'Annales' maktabi (Lien Fevr, Mark Blok, Fernand Brodel) tarixga bo'lgan yondashuvni o'zgartirdi. Ular faqat podshohlar, urushlar va siyosiy voqealarni emas, balki oddiy insonlar hayoti, iqtisodiy tuzilmalar, mentalitet va ekologik omillarni o'rganishni ilgari surdilar."
+                        'body': "XX asr fransuz tarixshunosligida shakllangan 'Annales' maktabi (Lyusyen Fevr, Mark Blok, Fernand Brodel) tarixga bo'lgan yondashuvni o'zgartirdi. Ular faqat podshohlar, urushlar va siyosiy voqealarni emas, balki oddiy insonlar hayoti, iqtisodiy tuzilmalar, mentalitet va ekologik omillarni o'rganishni ilgari surdilar."
                     },
                     {
                         'type': 'example',
                         'title': 'Tarixiy misol',
-                        'body': "Fernand Brodel o'zining 'O'rta yer dengizi va II Filip davrida O'rta yer dengizi dunyosi' asarida tarixni 3 xil vaqt o'lchovida tahlil qilgan: geotarix (uzoq muddatli), ijtimoiy-iqtisodiy tarix (o'rta muddatli) va siyosiy voqealar (qisqa muddatli)."
+                        'body': "Fernand Brodel o'zining 'II Filipp davrida O'rta yer dengizi va O'rta yer dengizi dunyosi' asarida tarixni 3 xil vaqt o'lchovida tahlil qilgan: geotarix (uzoq muddatli), ijtimoiy-iqtisodiy tarix (o'rta muddatli) va siyosiy voqealar (qisqa muddatli)."
                     },
                     {
                         'type': 'steps',
@@ -18876,7 +18876,7 @@ SUBJECTS = [
                             'Tarixiy vaqtning uch darajasi (Longue durée — uzoq davomiylik).',
                             "Mentalitetlar tarixi: Muayyan davr kishilarining dunyoqarashi, e'tiqodi va qo'rquvlarini o'rganish.",
                             'Mikrotarix (Microhistory): Kichik bir voqea, qishloq yoki shaxs taqdiri orqali butun jamiyatni tahlil qilish (masalan, Karlo Ginzburg tadqiqotlari).',
-                            'Pleyer-disiplinar yondashuv: Tarixni geografiya, sotsiologiya, psixologiya va ekonomika bilan integratsiyalash.'
+                            'Fanlararo (interdisiplinar) yondashuv: Tarixni geografiya, sotsiologiya, psixologiya va ekonomika bilan integratsiyalash.'
                         ]
                     },
                     {
@@ -18943,26 +18943,26 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Ikkinchi jahon urushidan so'ng jahon miqyosida Yevropa imperiyalarining parchalanishi va o'nlarcha yangi mustaqil davlatlarning paydo bo'lishi - Dekolonizatsiya davri deb ataladi. Postkolonializm nazariyasi esa mustamlakachilikning sobiq kolaniyalarning madaniyati, tili, iqtisodiyoti va o'zligiga ko'rsatgan chuqur asoratlarini tadqiq etadi."
+                        'body': "Ikkinchi jahon urushidan so'ng jahon miqyosida Yevropa imperiyalarining parchalanishi va o'nlarcha yangi mustaqil davlatlarning paydo bo'lishi - Dekolonizatsiya davri deb ataladi. Postkolonializm nazariyasi esa mustamlakachilikning sobiq koloniyalarning madaniyati, tili, iqtisodiyoti va o'zligiga ko'rsatgan chuqur asoratlarini tadqiq etadi."
                     },
                     {
                         'type': 'example',
                         'title': 'Tarixiy misol',
-                        'body': "Edvard Said o'zining 'Orientallik' (Orentalizm) asarida G'arb sharq xalqlarini qanday qilib 'orqada qolgan', 'ekzotik' va 'boshqarilishga muhtoj' sifatda tasvirlaganini va bu tasavvur mustamlakachilikni oqlash vositasi bo'lganini ko'rsatib berdi."
+                        'body': "Edvard Said o'zining 'Orientalizm' (Orientalism) asarida G'arb Sharq xalqlarini qanday qilib 'orqada qolgan', 'ekzotik' va 'boshqarilishga muhtoj' sifatda tasvirlaganini va bu tasavvur mustamlakachilikni oqlash vositasi bo'lganini ko'rsatib berdi."
                     },
                     {
                         'type': 'steps',
                         'title': "Dekolonizatsiya va postkolonial tadqiqotlar yo'nalishlari",
                         'items': [
-                            'Osiyo va Afrikadagi dekolonizatsiya toqinlari (Hindiston mustaqilligi, Jazoir urushi).',
-                            "Neokolonializm: Sobiq metropoliyalarning iqtisodiy va madaniy ta'sirni saqlab qalishi.",
+                            "Osiyo va Afrikadagi dekolonizatsiya to'lqinlari (Hindiston mustaqilligi, Jazoir urushi).",
+                            "Neokolonializm: Sobiq metropoliyalarning iqtisodiy va madaniy ta'sirni saqlab qolishi.",
                             'Postkolonial nazariya: Edvard Said, Gayatri Spivak va Homi Bhabha tadqiqotlari.',
                             'Markaziy Osiyodagi postsovet va postkolonial diskurs tahlili.'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Siyosiy mustaqillikka erishish avtomati ravishda iqtisodiy va madaniy mustaqillikni anglatmaydi; bu uzoq davom etuvchi jarayondir.'
+                        'body': 'Esda tuting: Siyosiy mustaqillikka erishish avtomatik ravishda iqtisodiy va madaniy mustaqillikni anglatmaydi; bu uzoq davom etuvchi jarayondir.'
                     }
                 ],
                 'quiz': [
@@ -18970,9 +18970,9 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': 'Edvard Saidning postkolonial tadqiqotlar asosini tashkil etuvchi mashhur asari qaysi?',
                         'options': [
-                            'Orentalizm (Orientalism)',
+                            'Orientalizm (Orientalism)',
                             'Ijtimoiy shartnoma',
-                            'Sivilizatsiyalar toqnashuvi',
+                            "Sivilizatsiyalar to'qnashuvi",
                             'Tarixning oxiri'
                         ],
                         'answer': 0,
@@ -19018,7 +19018,7 @@ SUBJECTS = [
             {
                 'slug': 'jahon-tarixidagi-makroiqtisodiy-inqirozlar',
                 'title': 'Jahon tarixidagi makroiqtisodiy inqirozlar va moliya tizimlari',
-                'summary': "1929-yilgi Buyuk depressiya, giperinflyatsiyalar va neft krizislarining siyosiy hamda ijtimoiy tartiblarni o'zgartirishi.",
+                'summary': "1929-yilgi Buyuk depressiya, giperinflyatsiyalar va neft inqirozlarining siyosiy hamda ijtimoiy tartiblarni o'zgartirishi.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -19043,7 +19043,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Iqtisodiy inqirozlar doimiy ravishda davlatning iqtisodiyotdagi rolini qayta ko'rib chiqishga (Laissez-faire modelidan Keynesianismga va Keynschilikdan Neoliberalizmga) sabab bo'lgan."
+                        'body': "Esda tuting: Iqtisodiy inqirozlar doimiy ravishda davlatning iqtisodiyotdagi rolini qayta ko'rib chiqishga (Laissez-faire modelidan Keynschilikka va Keynschilikdan Neoliberalizmga) sabab bo'lgan."
                     }
                 ],
                 'quiz': [
@@ -19063,7 +19063,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Bretton-Vuds moliya tizimi oltin standartini to'liq saqlab qolgan va AQSH dollarini oltin bilan ta'minlangan yagona valyutaga aylantirgan.",
                         'answer': True,
-                        'explain': "Ha, Bretton-Vuds tizimida barcha valyutalar AQSH dollariga, dollar esa 1 unsiya = 35 dollar nisbatida me'yoriy oltinga bog'langan edi."
+                        'explain': "Ha, Bretton-Vuds tizimida barcha valyutalar AQSH dollariga, dollar esa 1 unsiya = 35 dollar nisbatida oltinga bog'langan edi."
                     },
                     {
                         'type': 'mc',
@@ -19099,7 +19099,7 @@ SUBJECTS = [
             {
                 'slug': 'raqamli-tarix-va-katta-malumotlar-tahlili',
                 'title': 'Raqamli tarix (Digital History) va tarixiy tadqiqotlarda Big Data',
-                'summary': 'Tarixiy manbalarni koinot va raqamli texnologiyalar yordamida tahlil qilish, miqdoriy metodlar va axborot modellashtirish.',
+                'summary': 'Tarixiy manbalarni raqamli texnologiyalar yordamida tahlil qilish, miqdoriy metodlar va axborot modellashtirish.',
                 'duration': 25,
                 'lesson': [
                     {
@@ -19229,9 +19229,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Tarixiy jarayonlarda kutilmagan kichik bir hodisaning ulkan oqibatlarga olib kelishi ilmiy dilda qanday ataladi?',
+                        'q': 'Tarixiy jarayonlarda kutilmagan kichik bir hodisaning ulkan oqibatlarga olib kelishi ilmiy tilda qanday ataladi?',
                         'options': [
-                            'Kapalak effekti (Noliziylik/Bifurkatsiya)',
+                            'Kapalak effekti (chiziqsizlik/bifurkatsiya)',
                             'Stagflyatsiya',
                             'Maltus qozoni',
                             'Bretton-Vuds effekti'
@@ -19246,7 +19246,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Sohibqiron Amir Temur 1395-yilda Toqtamyshxonni batamom tor-mor etmaganda, Sharqiy Yevropa va Rus knezliklari tarixi qanday rivojlanishi mumkin edi? (Kontrfaktual faraz yozing).',
+                            'prompt': "Sohibqiron Amir Temur 1395-yilda To'xtamishxonni batamom tor-mor etmaganda, Sharqiy Yevropa va Rus knezliklari tarixi qanday rivojlanishi mumkin edi? (Kontrfaktual faraz yozing).",
                             'answer': "Oltin O'rda parchalanmas edi va Rus knezliklarining markazlashuvi va qudratli imperiyaga aylanishi birmuncha sekinlashishi yoki to'xtashi mumkin edi.",
                             'hint': "Oltin O'rda va Moskva knezligi o'rtasidagi kuchlar nisbatiga e'tibor bering."
                         },
