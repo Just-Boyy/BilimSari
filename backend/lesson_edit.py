@@ -157,11 +157,44 @@ def _load(value, default):
         return default
 
 
+def _quiz_key(q) -> tuple:
+    key = (q.get('type', 'mc'), str(q.get('q') or '').strip(), tuple(str(o).strip() for o in q.get('options') or []))
+    if q.get('type') not in ('mc', 'tf'):
+        key += (str(q.get('answer') or '').strip(),)
+    return key
+
+
+def _ru_column(cur, topic_id, quiz):
+    """Tahrirlangan test uchun topics.ru: ruscha savol faqat kod'dagi asl savolga
+    (matni, variantlari) to'liq teng savolga qo'yiladi — savol qo'shilsa, o'chirilsa
+    yoki o'zgartirilsa, o'sha savol ruschada o'zbekcha ko'rinadi (indeks surilib,
+    tarjima boshqa savolning javobiga tushib qolmaydi). Tarjima yo'q bo'lsa — None."""
+    cur.execute('SELECT grade, subject_key, slug FROM topics WHERE id = %s', (topic_id,))
+    row = cur.fetchone()
+    if not row:
+        return None
+    original = _code_topic(row)
+    ru = cur_mod.ru_topics(row['subject_key']).get(row['slug'])
+    if not original or not ru:
+        return None
+    by_key = {}
+    for q, r in zip(original.get('quiz') or [], ru.get('quiz') or []):
+        by_key.setdefault(_quiz_key(q), r)
+    data = {k: ru[k] for k in ('lesson', 'homework') if ru.get(k)}
+    aligned = [by_key.get(_quiz_key(q), {}) for q in quiz]
+    if any(aligned):
+        data['quiz'] = aligned
+    return json.dumps(data, ensure_ascii=False)
+
+
 def _write_topic(cur, topic_id, data):
+    ru = _ru_column(cur, topic_id, data['quiz'])
     cur.execute('UPDATE topics SET title = %s, summary = %s, duration = %s, lesson = %s, quiz = %s WHERE id = %s',
                 (data['title'], data['summary'], int(data['duration']),
                  json.dumps(data['lesson'], ensure_ascii=False), json.dumps(data['quiz'], ensure_ascii=False),
                  topic_id))
+    if ru is not None:
+        cur.execute('UPDATE topics SET ru = %s WHERE id = %s', (ru, topic_id))
 
 
 def overrides(cur) -> dict:
