@@ -9658,11 +9658,11 @@ SUBJECTS = [
                             'Faqat tashqi yadro'
                         ],
                         'answer': 1,
-                        'explain': "Litosfera Yer po me'yoriy qobiqlari orasida Yer po'sti va yuqori mantiyaning qattiq qismini qamrab oladi."
+                        'explain': "Litosfera Yer qobiqlari orasida Yer po'sti va yuqori mantiyaning qattiq qismini qamrab oladi."
                     },
                     {
                         'type': 'tf',
-                        'q': "Plitalarning bir-biridan uzoqlashishi convergent chegaralarga misol bo'ladi.",
+                        'q': "Plitalarning bir-biridan uzoqlashishi konvergent chegaralarga misol bo'ladi.",
                         'answer': False,
                         'explain': "Plitalarning uzoqlashishi divergent chegaralar deyiladi, konvergent chegaralarda esa plitalar to'qnashadi."
                     },
@@ -9719,7 +9719,7 @@ SUBJECTS = [
                         'items': [
                             'Passatlar: Tropik yuqori bosim poyaslaridan ekvatorning past bosim poyasiga esadigan shamollar.',
                             "G'arbiy shamollar: Tropiklardan mo'tadil kengliklarga qarab esuvchi shamollar.",
-                            "Qutb shamollari: Qutb yuqori bosim zonalardan mo'tadil hududlarga esuvchi shamollar."
+                            "Qutb shamollari: Qutb yuqori bosim zonalaridan mo'tadil hududlarga esuvchi shamollar."
                         ]
                     },
                     {
@@ -9791,7 +9791,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Issiq va sovuq oqimlar ta'siri",
-                        'body': "Golfstrim issiq oqimi Shimoliy-G'arbiy Yevropa iqlimini yumshatadi va ushbu kenglikda joylashgan portlarning muzlamasligini ta'minlaydi. Bengela sovuq oqimi esa Afrika janubi-g'arbiy sohilida yog'in miqdorini kamaytirib, Namid cho'lining hosil bo'lishiga olib kelgan."
+                        'body': "Golfstrim issiq oqimi Shimoliy-G'arbiy Yevropa iqlimini yumshatadi va ushbu kenglikda joylashgan portlarning muzlamasligini ta'minlaydi. Bengela sovuq oqimi esa Afrika janubi-g'arbiy sohilida yog'in miqdorini kamaytirib, Namib cho'lining hosil bo'lishiga olib kelgan."
                     },
                     {
                         'type': 'steps',
@@ -9822,7 +9822,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Sovuq okean oqimlari sohil bo'yida ko me'yoriy va sero't o'rmonlar rivojlanishiga yordam beradi.",
+                        'q': "Sovuq okean oqimlari sohil bo'yida qalin va sero't o'rmonlar rivojlanishiga yordam beradi.",
                         'answer': False,
                         'explain': "Sovuq oqimlar bug'lanishni kamaytiradi, havo turg'unlashadi va sohil bo'yi cho'llari paydo bo'ladi."
                     },
@@ -10006,7 +10006,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Katta To'siq rifi haqida va uning qayerda joylashganini yozing.",
-                            'answer': "Katta To me'yoriy To'siq rifi Avstraliyaning shimoli-sharqiy sohilida Korall dengizida joylashgan marjon qurilmasidir.",
+                            'answer': "Katta To'siq rifi Avstraliyaning shimoli-sharqiy sohilida Korall dengizida joylashgan marjon qurilmasidir.",
                             'hint': 'Marjon poliplari hosil qilgan tuzilma.'
                         },
                         {
@@ -10080,7 +10080,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Janubiy Amerika gidrogrfiyasini o'rganing va savollarga javob bering.",
+                    'intro': "Janubiy Amerika gidrografiyasini o'rganing va savollarga javob bering.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -10115,10 +10115,10 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Afripaning asosiy prirod zonalari',
+                        'title': 'Afrikaning asosiy tabiat zonalari',
                         'items': [
                             "Ekvatorial nam o'rmonlar (Giley): Kongo havzasi va Gvineya qo'ltig'ida joylashgan, ko'p qatlamli, doim yashil.",
-                            "Savanna va siyrak o'rmonlar: Ekvatorial o me'yoriy zonasidan atroflarga qarab cho'zilgan, baobab va soyabon simon akatsiyalar hosil qilgan.",
+                            "Savanna va siyrak o'rmonlar: Ekvatorial o'rmonlar zonasidan atroflarga qarab cho'zilgan, baobab va soyabonsimon akatsiyalar hosil qilgan.",
                             "Tropik cho'llar: Shimolda Sahroi Kabir, janubda Kalahari va Namib cho'llari."
                         ]
                     },
@@ -10151,7 +10151,7 @@ SUBJECTS = [
                         'q': 'Afrikada eng keng maydonni egallagan tabiat zonasi qaysi?',
                         'options': [
                             "Nam ekvatorial o'rmonlar",
-                            "Savanna va siyrak o me'yoriy o'rmonlar",
+                            "Savanna va siyrak o'rmonlar",
                             "Qattiq bargli o'rmonlar",
                             'Tundra'
                         ],
@@ -10165,7 +10165,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Sahroi Kabir va Namib cho me'yordagi cho'llarining hosil bo'lish farqini izohlang.",
+                            'prompt': "Sahroi Kabir va Namib cho'llarining hosil bo'lish farqini izohlang.",
                             'answer': "Sahroi Kabir kontinental tropik havo va yuqori bosim natijasida, Namib esa sovuq Bengela okean oqimi ta'sirida shakllangan.",
                             'hint': "Okean oqimlarining ta'siriga e'tibor bering."
                         },
@@ -10186,19 +10186,19 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Relyefning xilma-xilligi',
-                        'body': "Yevroosiyo — Yerdagi eng yirik materik. Uning relyefi boshqa materiklardan murakkabligi bilan ajralib turadi. Bu yerda dunyodagi eng baland tog' — Everest (Evolest/Comolungma, 8848 m) va Yerdagi eng chuqur quruqlik botiqligi — O'lik dengiz botiqligi (-430 m) joylashgan."
+                        'body': "Yevroosiyo — Yerdagi eng yirik materik. Uning relyefi boshqa materiklardan murakkabligi bilan ajralib turadi. Bu yerda dunyodagi eng baland tog' — Everest (Jomolungma, 8848 m) va Yerdagi eng chuqur quruqlik botiqligi — O'lik dengiz botiqligi (-430 m) joylashgan."
                     },
                     {
                         'type': 'example',
                         'title': "Tog' hosil bo'lish poyaslari",
-                        'body': "Materikda ikkita ulkan burmalanish poyasi o'tgan: Alp-Himolay poyasi (g'arbdan sharqqa) va Tinch okean ruhiy olovli poyasi (materikning sharqiy chekkasi bo'ylab)."
+                        'body': "Materikda ikkita ulkan burmalanish poyasi o'tgan: Alp-Himolay poyasi (g'arbdan sharqqa) va Tinch okeani olovli halqasi (materikning sharqiy chekkasi bo'ylab)."
                     },
                     {
                         'type': 'steps',
                         'title': 'Yevroosiyoning yirik tekisliklari',
                         'items': [
                             'Sharqiy Yevropa tekisligi: Qadimiy platforma ustida joylashgan yirik tepalikli tekislik.',
-                            "G'arbiy Sibir tekisligi: Dunyodagi eng tekis va Botqoqlashgan pasttekisliklardan biri.",
+                            "G'arbiy Sibir tekisligi: Dunyodagi eng tekis va botqoqlashgan pasttekisliklardan biri.",
                             "Turon pasttekisligi: Markaziy Osiyoda joylashgan cho'lli pasttekislik."
                         ]
                     },
@@ -10240,7 +10240,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Yevroosiyo fiziki xaritasidan foydalanib topshiriqlarni bajaring.',
+                    'intro': 'Yevroosiyo tabiiy xaritasidan foydalanib topshiriqlarni bajaring.',
                     'tasks': [
                         {
                             'id': 't1',
@@ -10320,7 +10320,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "O'zbekiston kontur xaritasidan foydalanib quyidagi vazifalarni bering.",
+                    'intro': "O'zbekiston kontur xaritasidan foydalanib quyidagi vazifalarni bajaring.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -10359,7 +10359,7 @@ SUBJECTS = [
                         'items': [
                             "Yoqilg'i resurslari: Buxoro-Xiva hamda Surxondaryo, Farg'ona botiqlarida (gaz, neft).",
                             "Ruda resurslari: Navoiy, Toshkent va Oltintepa tog'li hududlarida (oltin, mis, polimetall).",
-                            "Noma'dan resurslar: Qizilqumda fosforitlar va osh tuzi konlari."
+                            'Noruda resurslar: Qizilqumda fosforitlar va osh tuzi konlari.'
                         ]
                     },
                     {
@@ -10426,7 +10426,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Iqlimning umumiy xususiyatlari',
-                        'body': "O me'yoriy va subtropik poyaslar tutashuvida joylashgan O'zbekiston iqlimi keskin kontinentaldir. Buning asosiy xususiyatlari: issiq va quruq yoz, nisbatan sovuq va o'zgaruvchan qish, kunlik va yillik harorat amplidutasining kattaligi ile yog me'yorining kamligidir."
+                        'body': "Mo'tadil va subtropik poyaslar tutashuvida joylashgan O'zbekiston iqlimi keskin kontinentaldir. Buning asosiy xususiyatlari: issiq va quruq yoz, nisbatan sovuq va o'zgaruvchan qish, kunlik va yillik harorat amplitudasining kattaligi va yog'inlarning kamligidir."
                     },
                     {
                         'type': 'example',
@@ -10464,7 +10464,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "O'zbekistonda yoz oylarida mo'tadil nam havo massalari ustunlik qiladi.",
                         'answer': False,
-                        'explain': "Yozda jazlama, quruq va issiq kontinental tropik havo massalari (turan havosi) ustun bo'ladi."
+                        'explain': "Yozda jazirama, quruq va issiq kontinental tropik havo massalari (turan havosi) ustun bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -10506,7 +10506,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Daryolar tarmog'i va oziqlanishi",
-                        'body': "O'zbekiston daryolari berkitikli Aral (Orol) dengizi havzasiga kiradi. Daryolarning asosiy manbai — baland tog'lardagi muzliklar va qorlardir. Shu sababli daryolarning toshishi ( eng ko'p suv sarfi) havo isigan bahor va yoz oylariga to'g'ri keladi."
+                        'body': "O'zbekiston daryolari berk (oqmas) Orol dengizi havzasiga kiradi. Daryolarning asosiy manbai — baland tog'lardagi muzliklar va qorlardir. Shu sababli daryolarning toshishi (eng ko'p suv sarfi) havo isigan bahor va yoz oylariga to'g'ri keladi."
                     },
                     {
                         'type': 'example',
@@ -10517,9 +10517,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Daryolarning oziqlanish tiplari',
                         'items': [
-                            'Muzlik va qor oziqlanishli: Yoz ortida (iyul-avgust) toshadi (masalan, Amudaryo, Zarafshon).',
+                            "Muzlik va qor oziqlanishli: Yoz o'rtasida (iyul-avgust) toshadi (masalan, Amudaryo, Zarafshon).",
                             "Qor va yomg'ir oziqlanishli: Bahorda (aprel-may) toshadi (Chirchiq, Ohangaron).",
-                            'Ermagak (bulaq) va soylar: Mavsumiy va yer osti suvlari hisobiga oqadi.'
+                            'Buloqlar va soylar: Mavsumiy va yer osti suvlari hisobiga oqadi.'
                         ]
                     },
                     {
@@ -10580,7 +10580,7 @@ SUBJECTS = [
             {
                 'slug': 'ozbekiston-tuproq-osimlik-qatlami-balandlik-poyaslari',
                 'title': "O'zbekistonning tuproq-o'simlik qatlami va balandlik poyaslari",
-                'summary': "Tekislikdan tog'larga ko'tarilgan sari tuproq va o'simlik qatlamining o'zgarishi va vertical poyaslik qonuniyati o'rganiladi.",
+                'summary': "Tekislikdan tog'larga ko'tarilgan sari tuproq va o'simlik qatlamining o'zgarishi va vertikal poyaslik qonuniyati o'rganiladi.",
                 'duration': 30,
                 'lesson': [
                     {
@@ -10591,7 +10591,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Balandlik poyaslari (vertikal zonalik)',
-                        'body': "Tog' tizimlarida balandlik oshgan sari harorat pasayadi va namlik ortadi. Natijada tuproq va o'simliklar almashinadi: cho'l va adirlar (bo'z tuproqlar, rang, lola) -> tog'lar (jigarrang va qo me'yoriy tuproqlar, archazorlar) -> yaylovlar (subalp va alp o me'yoriy o me'yoriy qismida shuvoq va o me'yoriy o me'yoriy)."
+                        'body': "Tog' tizimlarida balandlik oshgan sari harorat pasayadi va namlik ortadi. Natijada tuproq va o'simliklar almashinadi: cho'l va adirlar (bo'z tuproqlar, rang, lola) -> tog'lar (jigarrang va qo'ng'ir tuproqlar, archazorlar) -> yaylovlar (subalp va alp o'tloqlari)."
                     },
                     {
                         'type': 'steps',
@@ -10599,8 +10599,8 @@ SUBJECTS = [
                         'items': [
                             "Cho'l mintaqasi: 0-500 m gacha bo'lgan tekisliklar.",
                             "Adir mintaqasi: 500-1200 m gacha bo'lgan tog' oldi tepaliklari.",
-                            "Tog' mintaqasi: 1200-2800 m gacha bo'lgan balandliklar (o me me'yoriy o'rmonlar va archazorlar).",
-                            "Yaylov (Yayloq) mintaqasi: 2800 m dan yuqori Alpine va Subalpine o'loqlari."
+                            "Tog' mintaqasi: 1200-2800 m gacha bo'lgan balandliklar (o'rmonlar va archazorlar).",
+                            "Yaylov (Yayloq) mintaqasi: 2800 m dan yuqori alp va subalp o'tloqlari."
                         ]
                     },
                     {
@@ -10667,7 +10667,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Aholi soni va o'sishi",
-                        'body': "O'zbekiston Markaziy Osiyoda aholi soni bo'yicha 1-o'rinda turadi (36 milliondan ortiq). Mamlakatda aholining tabiiy ko'payishi yuqori bo'lib, tug'ilish ko me'yori o me'yorda va o'lim darajasi nisbatan past."
+                        'body': "O'zbekiston Markaziy Osiyoda aholi soni bo'yicha 1-o'rinda turadi (36 milliondan ortiq). Mamlakatda aholining tabiiy ko'payishi yuqori bo'lib, tug'ilish darajasi yuqori va o'lim darajasi nisbatan past."
                     },
                     {
                         'type': 'example',
@@ -10771,7 +10771,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "O'zbekistonda yengil avtomobillar ishlab chiqaruvchi asosiy zavod qaysi shahrida joylashgan?",
+                        'q': "O'zbekistonda yengil avtomobillar ishlab chiqaruvchi asosiy zavod qaysi shaharda joylashgan?",
                         'options': [
                             'Samarqand',
                             'Asaka',
@@ -10789,7 +10789,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Qaysi shahrida gaz-kimyo majmuasi (GTL) va sho'rtan gaz-kimyo majmuasi joylashgan?",
+                        'q': "Qaysi hududda GTL zavodi va Sho'rtan gaz-kimyo majmuasi joylashgan?",
                         'options': [
                             "Qashqadaryo viloyatida (G'uzor/Qarshi)",
                             'Xorazmda (Urganch)',
@@ -10832,7 +10832,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Boshqaruv shakllari',
-                        'body': "Boshqaruv shakliga ko'ra davlatlar respublika va monarxiyaga bo me'yorlanadi. Monarxiyaning o'zi konstitutsiyaviy (Buyuk Britaniya, Yaponiya) va absolyut (Saudiya Arabistoni, Ummon) shakllarga ega."
+                        'body': "Boshqaruv shakliga ko'ra davlatlar respublika va monarxiyaga bo'linadi. Monarxiyaning o'zi konstitutsiyaviy (Buyuk Britaniya, Yaponiya) va absolyut (Saudiya Arabistoni, Ummon) shakllarga ega."
                     },
                     {
                         'type': 'steps',
@@ -10918,8 +10918,8 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Asosiy resurs turlari',
                         'items': [
-                            "Mineral resurslar: Yoqilg'i, ruda va noma'dan minerallar.",
-                            'Er resurslari: Jahon yer fondi va unumdor tuproqlar.',
+                            "Mineral resurslar: Yoqilg'i, ruda va noruda minerallar.",
+                            'Yer resurslari: Jahon yer fondi va unumdor tuproqlar.',
                             'Suv resurslari: Chuchuk suv zaxiralari (asosan muzliklarda).',
                             "O'rmon resurslari: Shimoliy (ignabargli) va Janubiy (ekvatorial) o'rmon poyaslari."
                         ]
@@ -10988,18 +10988,18 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Demografik o'tish nazariyasi",
-                        'body': "Demografik o'tish — bu tug'ilish va o'lim ko'rsatkichlarining yuqori darajasidan past darajasiga o me'yoriy o me'yoriy o me me'yoriy o'tishi jarayonidir. U 4 ta bosqichni o'z ichiga oladi: 1) Yuqori tug'ilish va o'lim; 2) O'lim kamayishi va 'demografik portlash'; 3) Tug'ilish kamayishi; 4) Past tug'ilish va o'lim ('demografik inqiroz'/qarish)."
+                        'body': "Demografik o'tish — bu tug'ilish va o'lim ko'rsatkichlarining yuqori darajasidan past darajasiga o'tishi jarayonidir. U 4 ta bosqichni o'z ichiga oladi: 1) Yuqori tug'ilish va o'lim; 2) O'lim kamayishi va 'demografik portlash'; 3) Tug'ilish kamayishi; 4) Past tug'ilish va o'lim ('demografik inqiroz'/qarish)."
                     },
                     {
                         'type': 'example',
                         'title': "Aholi ko'payish tiplari",
-                        'body': "Rivojlangan davlatlarda (Yevropa, Yaponiya) 4-bosqich kuzatilib, aholi qarishi va demografik inqiroz mavjud. Rivojlanayotgan mamlakatlarda (Afrika, Osiyo) 2 va 3-bosqich bo'lib, aholi tez o me'yorda ko'paymoqda (demografik portlash)."
+                        'body': "Rivojlangan davlatlarda (Yevropa, Yaponiya) 4-bosqich kuzatilib, aholi qarishi va demografik inqiroz mavjud. Rivojlanayotgan mamlakatlarda (Afrika, Osiyo) 2 va 3-bosqich bo'lib, aholi tez sur'atda ko'paymoqda (demografik portlash)."
                     },
                     {
                         'type': 'steps',
                         'title': 'Demografik siyosat',
                         'items': [
-                            "Tug'ilishni rag'batlantirish: Rivojlangan mamlakat larda (yordam pullari, imtiyozlar).",
+                            "Tug'ilishni rag'batlantirish: Rivojlangan mamlakatlarda (yordam pullari, imtiyozlar).",
                             "Tug'ilishni cheklash: Aholisi juda ko'p rivojlanayotgan mamlakatlarda (masalan, Xitoyning vaqtinchalik 'Bir oila - bir bola' siyosati, Hindiston)."
                         ]
                     },
@@ -11029,7 +11029,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Demografik o'tishning to me'yordagi 4-bosqichida tug'ilish va o me me'yorda o'lim ko'rsatkichlari qanday bo'ladi?",
+                        'q': "Demografik o'tishning 4-bosqichida tug'ilish va o'lim ko'rsatkichlari qanday bo'ladi?",
                         'options': [
                             'Ikkalasi ham yuqori',
                             "Tug'ilish yuqori, o'lim past",
@@ -11041,14 +11041,14 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Demografik pyramids va statistik ma'lumotlarni tahlil qiling.",
+                    'intro': "Demografik piramidalar va statistik ma'lumotlarni tahlil qiling.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Jahon aholisi yosh tarkibida 'milliya qarishi' qanday iqtisodiy muammolarga olib keladi?",
+                            'prompt': "Jahon aholisi yosh tarkibida 'aholining qarishi' qanday iqtisodiy muammolarga olib keladi?",
                             'answer': 'Mehnat resurslarining yetishmasligi, pensiya va tibbiy xarajatlarning oshishiga olib keladi.',
-                            'hint': "Nafaqa va mehnat qobiliyati yoshidagi aholi nisbatini o me'yorlang."
+                            'hint': 'Nafaqa va mehnat qobiliyati yoshidagi aholi nisbatini solishtiring.'
                         },
                         {
                             'id': 't2',
@@ -11061,7 +11061,7 @@ SUBJECTS = [
             {
                 'slug': 'jahon-xojaligi-tuzilishi',
                 'title': "Jahon xo'jaligining tarmoqlararo va hududiy tuzilishi",
-                'summary': "Jahon xo'jaligi tushunchasi, uning rivojlanish bosqichlari (agrariya, industrial, postindustrial) hamda xalqaro mehnat taqsimoti ko'rib chiqiladi.",
+                'summary': "Jahon xo'jaligi tushunchasi, uning rivojlanish bosqichlari (agrar, industrial, postindustrial) hamda xalqaro mehnat taqsimoti ko'rib chiqiladi.",
                 'duration': 30,
                 'lesson': [
                     {
@@ -11152,14 +11152,14 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Elektr energiyasi manbalari',
-                        'body': "Jahonda elektr energiyasining 60% dan ortig'i Issiqlik elektr stansiyalarida (IES), 15-16% Gidroelektr stansiyalarda (GES), 10% Atom elektr stansiyalarida (AES) va qolgani muqobil manbalarda (Quyosh, Shamol) olindi."
+                        'body': "Jahonda elektr energiyasining 60% dan ortig'i Issiqlik elektr stansiyalarida (IES), 15-16% Gidroelektr stansiyalarda (GES), 10% Atom elektr stansiyalarida (AES) va qolgani muqobil manbalarda (quyosh, shamol) olinadi."
                     },
                     {
                         'type': 'steps',
                         'title': 'Energetika yetakchilari',
                         'items': [
                             'Neft qazib olish: AQSh, Saudiya Arabistoni, Rossiya.',
-                            'Tabiiy gaz qazib olish: AQSh, Rossiya, Qatar, Erron.',
+                            'Tabiiy gaz qazib olish: AQSh, Rossiya, Qatar, Eron.',
                             'AES elektr energiyasi: Fransiya (elektrning ~70% AESdan), AQSh, Xitoy.'
                         ]
                     },
@@ -11194,20 +11194,20 @@ SUBJECTS = [
                             'NATO',
                             'OPEK (OPEC)',
                             'ASEAN',
-                            'BRIX'
+                            'BRIKS'
                         ],
                         'answer': 1,
                         'explain': 'OPEC (Organization of the Petroleum Exporting Countries) neft eksportyorlari tashkilotidir.'
                     }
                 ],
                 'homework': {
-                    'intro': "Energetika geofrafiyasiga bag'ishlangan tahliliy savollar.",
+                    'intro': "Energetika geografiyasiga bag'ishlangan tahliliy savollar.",
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Gidroenergetika imkoniyatlari yuqori bo'lgan 3 ta mamlakatni ko'rsating va sababini ayting.",
-                            'answer': "Xitoy, Braziliya, Kanada. Ser-suv va tez oquvchi tog' daryolariga ega.",
+                            'answer': "Xitoy, Braziliya, Kanada. Sersuv va tez oquvchi tog' daryolariga ega.",
                             'hint': 'Daryo suvlari va relyef xususiyatlarini eslang.'
                         },
                         {
@@ -11221,31 +11221,31 @@ SUBJECTS = [
             {
                 'slug': 'xalqaro-transport-koridorlari-va-logistika',
                 'title': 'Xalqaro transport koridorlari va logistika',
-                'summary': "Jahon transport tizimi, dengiz, temiryo'l, avtomobil va havo transporti yo me me'yor va xalqaro magistrallar o'rganiladi.",
+                'summary': "Jahon transport tizimi, dengiz, temiryo'l, avtomobil va havo transporti yo'llari va xalqaro magistrallar o'rganiladi.",
                 'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Jahon transport tizimi',
-                        'body': "Transport — jahon xo me'yorligining moddiy asosi va xalqaro savdoning tomiridir. Transport turlari: quruqlik (avtomobil, temiryo'l, quvur), suv (dengiz, ichki suv) va havo transporti. Rivojlangan mamlakatlar transport tarmog'ining zichligi va sifat ko'rsatkichlari bilan ajralib turadi."
+                        'body': "Transport — jahon xo'jaligining moddiy asosi va xalqaro savdoning tomiridir. Transport turlari: quruqlik (avtomobil, temiryo'l, quvur), suv (dengiz, ichki suv) va havo transporti. Rivojlangan mamlakatlar transport tarmog'ining zichligi va sifat ko'rsatkichlari bilan ajralib turadi."
                     },
                     {
                         'type': 'example',
-                        'title': "Dengiz kanallari va bo me'yozlar",
-                        'body': "Xalqaro dengiz savdosida Panama kanali (Tinch va Atlantika okeanlarini bog me'yorlaydi) va Suvaysh kanali (O'rtayer dengizi va Qizil dengizni bog'laydi) strategik ahamiyatga ega."
+                        'title': "Dengiz kanallari va bo'g'ozlar",
+                        'body': "Xalqaro dengiz savdosida Panama kanali (Tinch va Atlantika okeanlarini bog'laydi) va Suvaysh kanali (O'rtayer dengizi va Qizil dengizni bog'laydi) strategik ahamiyatga ega."
                     },
                     {
                         'type': 'steps',
                         'title': 'Asosiy magistrallar va tashabbuslar',
                         'items': [
-                            "Bir makon, bir yo'l (Xitoy): Yevroosiyo bo'ylab yangi Ipak yo me'yori logistika tarmoqlarini yaratish.",
+                            "Bir makon, bir yo'l (Xitoy): Yevroosiyo bo'ylab yangi Ipak yo'li logistika tarmoqlarini yaratish.",
                             "Trans-Sibir temir yo'li: Rossiya va Sharqiy Osiyoni Yevropa bilan bog'lovchi eng uzun temiryo'l.",
                             "Shimol-Janub koridori: Rossiya, Eron va Hindiston o'rtasidagi transport yo'li."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Yuk aylanmasi hajmi bo'yicha dengiz transporti dunyoda Mutlaq birinchi o'rinni egallaydi."
+                        'body': "Esda tuting: Yuk aylanmasi hajmi bo'yicha dengiz transporti dunyoda mutlaq birinchi o'rinni egallaydi."
                     }
                 ],
                 'quiz': [
@@ -11277,7 +11277,7 @@ SUBJECTS = [
                             "Gibraltar bo'g'ozi"
                         ],
                         'answer': 2,
-                        'explain': "Fors qo'ltig me'yoridagi Hormuz bo'g'ozi neft tashishdagi eng muhim geostrategik nuqtadir."
+                        'explain': "Fors qo'ltig'idagi Hormuz bo'g'ozi neft tashishdagi eng muhim geostrategik nuqtadir."
                     }
                 ],
                 'homework': {
@@ -11287,20 +11287,20 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "'O'zbekiston-Xitoy-Qirg'iziston' temir yo'li qurilishining O'zbekiston uchun iqtisodiy ahamiyatini tushuntiring.",
-                            'answer': "O'zbekistonga Tinch okeani portlariga eng qisqa yo me'yor orqali chiqish va tranzit salohiyatini oshirish imkonini beradi.",
+                            'answer': "O'zbekistonga Tinch okeani portlariga eng qisqa yo'l orqali chiqish va tranzit salohiyatini oshirish imkonini beradi.",
                             'hint': 'Okeanga chiqish va masofa qisqarishini hisobga oling.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Konteynerlashtirish (containerization) jarayoni logistada qanday inqilob qildi?'
+                            'prompt': 'Konteynerlashtirish (containerization) jarayoni logistikada qanday inqilob qildi?'
                         }
                     ]
                 }
             },
             {
                 'slug': 'xalqaro-iqtisodiy-integratsiya-va-bloklar',
-                'title': 'Xalqaro iqtisodiy integratsiya va bloklar (Yevroittifoq, ASEAN, BRIX)',
+                'title': 'Xalqaro iqtisodiy integratsiya va bloklar (Yevroittifoq, ASEAN, BRIKS)',
                 'summary': 'Mavzuda hududiy iqtisodiy integratsiyalashuv, erkin savdo zonalari hamda yirik xalqaro uyushmalar tahlil qilinadi.',
                 'duration': 35,
                 'lesson': [
@@ -11312,7 +11312,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Yevropa Ittifoqi (YI)',
-                        'body': "Yevropa Ittifoqi (EU) — eng chuqur integratsiyalashgan birlashma bo'lib, unga 27 ma mamlakat a'zo. U umumiy valyuta (Yevro), yagona bozor va chegarasiz harakatlanish (Shengen zonasi) tizimiga ega."
+                        'body': "Yevropa Ittifoqi (EU) — eng chuqur integratsiyalashgan birlashma bo'lib, unga 27 ta mamlakat a'zo. U umumiy valyuta (Yevro), yagona bozor va chegarasiz harakatlanish (Shengen zonasi) tizimiga ega."
                     },
                     {
                         'type': 'steps',
@@ -11320,12 +11320,12 @@ SUBJECTS = [
                         'items': [
                             "ASEAN: Janubiy-Sharqiy Osiyo davlatlari assotsiatsiyasi (mintaqaviy barqarorlik va iqtisodiy o'sish).",
                             'USMCA (sobiq NAFTA): Shimoliy Amerika erkin savdo hududi (AQSh, Kanada, Meksika).',
-                            'BRICS (BRIX): Tez rivojlanayotgan yirik mamlakatlar ittifoqi (Braziliya, Rossiya, Hindiston, Xitoy, JARS va boshqalar).'
+                            'BRICS (BRIKS): Tez rivojlanayotgan yirik mamlakatlar ittifoqi (Braziliya, Rossiya, Hindiston, Xitoy, JARS va boshqalar).'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: SHTT (Shanhay Hamkorlik Tashkiloti) — Yevroosiyoda xavfsizlik va iqtisodiy hamkorlikni rivojlantiruvchi muhim blokdir.'
+                        'body': 'Esda tuting: SHTT (Shanxay Hamkorlik Tashkiloti) — Yevroosiyoda xavfsizlik va iqtisodiy hamkorlikni rivojlantiruvchi muhim blokdir.'
                     }
                 ],
                 'quiz': [
@@ -11343,13 +11343,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "BRICS (BRIX) faqat Yevropa davlatlarini o'z ichiga olgan harbiy blokdir.",
+                        'q': "BRICS (BRIKS) faqat Yevropa davlatlarini o'z ichiga olgan harbiy blokdir.",
                         'answer': False,
                         'explain': 'BRICS rivojlanayotgan yirik iqtisodiyotli mamlakatlar (Braziliya, Rossiya, Hindiston, Xitoy, JARS va h.k.) iqtisodiy uyushmasidir.'
                     },
                     {
                         'type': 'mc',
-                        'q': 'Janubiy-Sharqiy Osiyo mamlakatlarini birglashtirgan regional tashkilot qaysi?',
+                        'q': 'Janubiy-Sharqiy Osiyo mamlakatlarini birlashtirgan regional tashkilot qaysi?',
                         'options': [
                             'NAFTA',
                             'ASEAN',
@@ -11367,7 +11367,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "O'zbekiston a'zo va kuzatuvchi bo'lgan 2 ta xalqaro/mintaqaviy tashkilotni yozing.",
-                            'answer': "BMT, SHTT, MDH (a'zo); YOI (EAEU - kuzatuvchi), JSST (Jahon savdo tashkiloti - muzokaralar olib bormoqda).",
+                            'answer': "BMT, SHTT, MDH (a'zo); YeOII (Yevroosiyo iqtisodiy ittifoqi - kuzatuvchi), JST (Jahon savdo tashkiloti - muzokaralar olib bormoqda).",
                             'hint': "O'zbekistonning tashqi siyosatini eslang."
                         },
                         {
@@ -11467,7 +11467,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Geoekologiya tushunchasi va muammolar',
-                        'body': "Geoekologiya — geografik muhit va inson jamiyati o'rtasidagi o'zaro ta'sirlarni, ekologik muammolarning hududiy tarqalishini o'rganadi. Insoniyat bugun global darajadagi ekologik inqirozlar bilan to me'yosh kelmoqda."
+                        'body': "Geoekologiya — geografik muhit va inson jamiyati o'rtasidagi o'zaro ta'sirlarni, ekologik muammolarning hududiy tarqalishini o'rganadi. Insoniyat bugun global darajadagi ekologik inqirozlar bilan to'qnash kelmoqda."
                     },
                     {
                         'type': 'example',
@@ -11480,7 +11480,7 @@ SUBJECTS = [
                         'items': [
                             "Global iqlim o'zgarishi: O'rtacha haroratning ko'tarilishi.",
                             "Ozon teshigi: Stratosferadagi ozon qatlamining freonlar ta'sirida yemirilishi.",
-                            "Cho'llashish va tuproq degradatsiyasi: Noto me me'yroiy dehqonchilik va o'rmonlarning qisqarishi.",
+                            "Cho'llashish va tuproq degradatsiyasi: Noto'g'ri dehqonchilik va o'rmonlarning qisqarishi.",
                             "Biologik xilma-xillikning kamayishi: Hayvon va o'simlik turlarining yo'qolishi."
                         ]
                     },
@@ -11541,19 +11541,19 @@ SUBJECTS = [
             },
             {
                 'slug': 'kartografik-proyeksiyalar-va-xarita-matematik-esasi',
-                'title': 'Kartografik proyeksiyalar va xaritalar matematik esasi',
-                'summary': 'Mavzu Yer sharining tekislikda tasvirlanishi, kartografik proyeksiyalar turlari va xatoliklar (bujliklar) klassifikatsiyasini tushuntiradi.',
+                'title': 'Kartografik proyeksiyalar va xaritalarning matematik asosi',
+                'summary': 'Mavzu Yer sharining tekislikda tasvirlanishi, kartografik proyeksiyalar turlari va xatoliklar (buzilishlar) klassifikatsiyasini tushuntiradi.',
                 'duration': 35,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kartografik proyeksiya tushunchasi',
-                        'body': 'Yer ellipsoidi sirtini xarita tekisligida tasvirlashning matematik usuli kartografik proyeksiya deyiladi. Sharsimon sirtni tekislikka yoyganda baribir xatoliklar (bujliklar) yuzaga keladi: burchak, masofa, maydon va shakl bujliklari.'
+                        'body': 'Yer ellipsoidi sirtini xarita tekisligida tasvirlashning matematik usuli kartografik proyeksiya deyiladi. Sharsimon sirtni tekislikka yoyganda baribir xatoliklar (buzilishlar) yuzaga keladi: burchak, masofa, maydon va shakl buzilishlari.'
                     },
                     {
                         'type': 'example',
                         'title': 'Merkator proyeksiyasi',
-                        'body': "Merkatorning silindrik proyeksiyasida burchaklar to'g me'yoriy saqlanadi (teng burchakli), shuning uchun dengiz va havo navigatsiyasida keng qo me'yorlanadi. Ammo qutblarga yaqinlashgan sari maydon bujligi keskin ortadi (masalan, Grenlandiya Afrika bilan tengdek ko'rinadi, aslida Afrika 14 baravar katta)."
+                        'body': "Merkatorning silindrik proyeksiyasida burchaklar to'g'ri saqlanadi (teng burchakli), shuning uchun dengiz va havo navigatsiyasida keng qo'llaniladi. Ammo qutblarga yaqinlashgan sari maydon buzilishi keskin ortadi (masalan, Grenlandiya Afrika bilan tengdek ko'rinadi, aslida Afrika 14 baravar katta)."
                     },
                     {
                         'type': 'steps',
@@ -11598,7 +11598,7 @@ SUBJECTS = [
                             'Teng masofali (ekvidistant)'
                         ],
                         'answer': 1,
-                        'explain': "Teng maydonli (ekvivalent) proyeksiyalarda maydonlar bujligi bo'lmaydi, lekin shakllar buziladi."
+                        'explain': "Teng maydonli (ekvivalent) proyeksiyalarda maydonlar buzilishi bo'lmaydi, lekin shakllar buziladi."
                     }
                 ],
                 'homework': {
@@ -11608,7 +11608,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Nima uchun Merkator xaritasida Grenlandiya va Afrika maydonlari deyarli teng ko'rinadi?",
-                            'answer': "Chunki Merkator proyeksiyasida yuqori kengliklarda (qutblarga yaqin) maydon bujligi juda katta bo'ladi.",
+                            'answer': "Chunki Merkator proyeksiyasida yuqori kengliklarda (qutblarga yaqin) maydon buzilishi juda katta bo'ladi.",
                             'hint': 'Silindrik proyeksiya va qutblardagi kengayishni eslang.'
                         },
                         {
@@ -11639,9 +11639,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'GATning amaliy sohalari',
                         'items': [
-                            "Shaharsozlik va kadastr: Yer va ko me me'yorsiz mulklarni ro'yxatga olish va rejalashtirish.",
-                            "Ekologik monitoring: O me'rmonlar qisqarishi, suv resurslari va cho'llashishni sun'iy yo'ldoshdan kuzatish.",
-                            "Favqulodda vaziyatlar: Suv tasqinlari, yong me'yinlar va zilzilalar xavfini modellashtirish va zudlik bilan baholash."
+                            "Shaharsozlik va kadastr: Yer va ko'chmas mulklarni ro'yxatga olish va rejalashtirish.",
+                            "Ekologik monitoring: O'rmonlar qisqarishi, suv resurslari va cho'llashishni sun'iy yo'ldoshdan kuzatish.",
+                            "Favqulodda vaziyatlar: Suv tasqinlari, yong'inlar va zilzilalar xavfini modellashtirish va zudlik bilan baholash."
                         ]
                     },
                     {
@@ -11664,7 +11664,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Masofadan zondlash (Remote Sensing) asosan Yerdagi ma'lumotlarni faqat joyiga borib qo me'lda o o'chirishni anglatadi.",
+                        'q': "Masofadan zondlash (Remote Sensing) asosan Yerdagi ma'lumotlarni faqat joyiga borib qo'lda o'lchashni anglatadi.",
                         'answer': False,
                         'explain': "Masofadan zondlash — bu aerofoto yoki sun'iy yo'ldoshlar orqali obyektga tegmasdan masofadan axborot olish usulidir."
                     },
@@ -11694,7 +11694,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Qishloq xo'jaligida 'Aqlli dehqonchilik' (Precision Agriculture) tizimida GAT va droanlarning o'rnini yoritib bering."
+                            'prompt': "Qishloq xo'jaligida 'Aqlli dehqonchilik' (Precision Agriculture) tizimida GAT va dronlarning o'rnini yoritib bering."
                         }
                     ]
                 }
@@ -11708,12 +11708,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Meteorologiya va Sinoptika',
-                        'body': "Meteorologiya — atmosfera va unda yuz beradigan fizik jarayonlarni o me me'yroiy o me me'yoriy o'rganadigan fan. Sinoptik meteorologiya esa doimiy kuzatuvlar va sinoptik xaritalar (izobara, izotermalar) yordamida ob-havoni prognoz qilish bilan shug'ullanadi."
+                        'body': "Meteorologiya — atmosfera va unda yuz beradigan fizik jarayonlarni o'rganadigan fan. Sinoptik meteorologiya esa doimiy kuzatuvlar va sinoptik xaritalar (izobara, izotermalar) yordamida ob-havoni prognoz qilish bilan shug'ullanadi."
                     },
                     {
                         'type': 'example',
                         'title': 'Siklon va Antisiklon',
-                        'body': "Siklon — markazida past bosim bo'lgan, shamollar chekkadan markazga qarab (Shimoliy yarimsharda soat mili yo'nalishiga qarshi) esadigan atmosferaning ulkan uyurmasi (bulutli va yog'inli ob-havo). Antisiklon — markazida yuqori bosim, havo markazdan chekkalarga esadi ( ochiq va ochiq ob-havo)."
+                        'body': "Siklon — markazida past bosim bo'lgan, shamollar chekkadan markazga qarab (Shimoliy yarimsharda soat mili yo'nalishiga qarshi) esadigan atmosferaning ulkan uyurmasi (bulutli va yog'inli ob-havo). Antisiklon — markazida yuqori bosim, havo markazdan chekkalarga esadi (ochiq va quruq ob-havo)."
                     },
                     {
                         'type': 'steps',
@@ -11745,7 +11745,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Antisiklon markazida past bosim bo'ladi va o'zi bilan doim kuchli yog'ingarchilik va bulutlilik olib keladi.",
                         'answer': False,
-                        'explain': "Antisiklon markazida yuqori bosim bo'ladi va u kam bulutli, yog me'yorsiz va ochiq ob-havoni ta'minlaydi."
+                        'explain': "Antisiklon markazida yuqori bosim bo'ladi va u kam bulutli, yog'insiz va ochiq ob-havoni ta'minlaydi."
                     },
                     {
                         'type': 'mc',
@@ -11754,7 +11754,7 @@ SUBJECTS = [
                             "Uzoq davom etuvchi mayda shivalagan yomg'ir",
                             'Qisqa muddatli kuchli jala va momaqaldiroq',
                             'Mutlaq shamolsiz ochiq issiq havo',
-                            'Quqroq garmsel shamoli'
+                            'Quruq garmsel shamoli'
                         ],
                         'answer': 1,
                         'explain': "Sovuq front o'tganda havo keskin beqarorlashadi va jalali yomg'irlar hamda momaqaldiroq bo'ladi."
@@ -11766,7 +11766,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Siklon va antisiklonda havoning Shimoliy va Janubiy yarimsharlardagi burilish yo me me'yorini tushuntiring.",
+                            'prompt': "Siklon va antisiklonda havoning Shimoliy va Janubiy yarimsharlardagi burilish yo'nalishini tushuntiring.",
                             'answer': "Shimoliy yarimsharda siklonda soat mili yo'nalishiga qarshi, antisiklonda soat mili bo'yicha. Janubiy yarimsharda aksincha.",
                             'hint': "Koriolis kuchi ta'sirini eslang."
                         },
@@ -11786,7 +11786,7 @@ SUBJECTS = [
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Geomorphologiyaning predmeti',
+                        'title': 'Geomorfologiyaning predmeti',
                         'body': "Geomorfologiya — Yer yuzasi relyefining kelib chiqishi, yoshi, rivojlanish tarixi va dinamikasini o'rganuvchi fandir. Relyef endogen (Yer ichki energiyasi: tektonika, vulqonizm) va ekzogen (Quyosh energiyasi: yemirilish, suv, shamol, muzliklar) kuchlarning doimiy o'zaro kurashi va ta'sirida shakllanadi."
                     },
                     {
@@ -11798,14 +11798,14 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Asosiy ekzogen jarayonlar',
                         'items': [
-                            'Yemirilish (Nuvash): Fizik, kimyoviy va biologik yemirilish.',
+                            'Yemirilish (Nurash): Fizik, kimyoviy va biologik yemirilish.',
                             "Denudatsiya: Yemirilgan jinslarning suv, shamol yoki og'irlik kuchi ta'sirida pastga ko'chishi.",
-                            "Akkumulyatsiya: Materiallarning botiqlarga to me me'planishi (alluvial, prolluvial yotqiziqlar)."
+                            "Akkumulyatsiya: Materiallarning botiqlarga to'planishi (alluvial, prolluvial yotqiziqlar)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Karst jarayonlari suvlarning oson eriydigan jinslarni (ohakdosh, gips) eritishi natijasida g me'orlar va o me'oriy botiqlar hosil qiladi."
+                        'body': "Esda tuting: Karst jarayonlari suvlarning oson eriydigan jinslarni (ohakdosh, gips) eritishi natijasida g'orlar va voronkasimon botiqlar hosil qiladi."
                     }
                 ],
                 'quiz': [
@@ -11823,7 +11823,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Barxan va dyunalar muzliklarning harakati natijasida paydo bo'ladigan morphologik tuzilmalardir.",
+                        'q': "Barxan va dyunalar muzliklarning harakati natijasida paydo bo'ladigan morfologik tuzilmalardir.",
                         'answer': False,
                         'explain': "Barxan va dyunalar shamolning (eol jarayonlari) qumlarni ko'chirib to'plashi natijasida hosil bo'ladi."
                     },
@@ -11841,7 +11841,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Geomorphologik jarayonlarni tahlil qilish vazifalari.',
+                    'intro': 'Geomorfologik jarayonlarni tahlil qilish vazifalari.',
                     'tasks': [
                         {
                             'id': 't1',
@@ -11861,7 +11861,7 @@ SUBJECTS = [
             {
                 'slug': 'iqtisodiy-geografik-modellashtirish-va-hududiy-tizimlar',
                 'title': 'Iqtisodiy va ijtimoiy geografik modellashtirish (Markaziy joylar nazariyasi)',
-                'summary': "Mavzuda Walter Kristallernining Markaziy joylar nazariyasi, Tyunenning qishloq xo'jalik halqalari va hududiy-ishlab chiqarish majmualari (HIChM) modellarini o'rganiladi.",
+                'summary': "Mavzuda Valter Kristallerning Markaziy joylar nazariyasi, Tyunenning qishloq xo'jalik halqalari va hududiy-ishlab chiqarish majmualari (HIChM) modellari o'rganiladi.",
                 'duration': 40,
                 'lesson': [
                     {
@@ -11878,8 +11878,8 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Klassik iqtisodiy-geografik modellar',
                         'items': [
-                            "Tyunenning 'Oshkora davlat' modeli: Shahar markazi atrofida qishloq xo'jaligi tarmoqlarining konsentrik halqalar bo'yicha joylashishi.",
-                            'Veberning sanoat shproti (lokatsiya) modeli: Transport, mehnat va aglomeratsiya xarajatlarini minimallashtirish.',
+                            "Tyunenning 'Izolyatsiyalangan davlat' modeli: Shahar markazi atrofida qishloq xo'jaligi tarmoqlarining konsentrik halqalar bo'yicha joylashishi.",
+                            'Veberning sanoat joylashuvi (lokatsiya) modeli: Transport, mehnat va aglomeratsiya xarajatlarini minimallashtirish.',
                             'Kolosovskiyning Hududiy-ishlab chiqarish majmualari (HIChM): Xomashyo va energiya asosida sanoat korxonalarining zanjirli birlashishi.'
                         ]
                     },
@@ -11909,7 +11909,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Sanoat korxonalarini joylashtirishda transport va mehnat xarajatlarini minimallashtirish modelini (Sanoat shproti) kim ishlab chiqqan?',
+                        'q': 'Sanoat korxonalarini joylashtirishda transport va mehnat xarajatlarini minimallashtirish modelini (sanoat joylashuvi) kim ishlab chiqqan?',
                         'options': [
                             'Alfred Veber',
                             'Yoqob Tyunen',
@@ -11917,7 +11917,7 @@ SUBJECTS = [
                             'Halford Makkinder'
                         ],
                         'answer': 0,
-                        'explain': 'Alfred Veber sanoat shproti (lokatsiyasi) nazariyasini yaratgan.'
+                        'explain': 'Alfred Veber sanoat joylashuvi (lokatsiyasi) nazariyasini yaratgan.'
                     }
                 ],
                 'homework': {
@@ -11927,8 +11927,8 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Tyunen modelida shahar markaziga eng yaqin halqadan eng uzoq halqaga qarab mahsulot turlarining almashinishini izohlang.',
-                            'answer': "1) Sut va sabzavot -> 2) O me'rmonchilik (o'tin) -> 3) Donli ekinlar -> 4) Yaylov chorvachiligi.",
-                            'hint': "Transport xarajati va mahsulotning buzilish muddatini o me'yorlang."
+                            'answer': "1) Sut va sabzavot -> 2) O'rmonchilik (o'tin) -> 3) Donli ekinlar -> 4) Yaylov chorvachiligi.",
+                            'hint': 'Transport xarajati va mahsulotning buzilish muddatini solishtiring.'
                         },
                         {
                             'id': 't2',
@@ -11958,8 +11958,8 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Paleoiqlimni rekonstruksiya qilish usullari',
                         'items': [
-                            'Muz kyorun tahlili: Antarktida va Grenlandiya muzliklaridan olingan chukurlik namunalaridagi havo pufakchalarini va kislorod izotoplarini (O-18/O-16) tahlil qilish.',
-                            "Dendrokronologiya: Daraxt yillik halqalarining qalinligini o me'rganish.",
+                            'Muz kernlari tahlili: Antarktida va Grenlandiya muzliklaridan olingan chuqurlik namunalaridagi havo pufakchalarini va kislorod izotoplarini (O-18/O-16) tahlil qilish.',
+                            "Dendrokronologiya: Daraxt yillik halqalarining qalinligini o'rganish.",
                             "Palinologik tahlil: Qadimiy tuproq qatlamlaridagi o'simlik changlarini o'rganish."
                         ]
                     },
@@ -11985,7 +11985,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Antarktida muzliklaridagi kislorod izotoplari (O-18/O-16) nisbati o'tmishdagi haroratni aniqlashga imkon beradi.",
                         'answer': True,
-                        'explain': "Muz kyorunlaridagi izotoplar nisbati qadimiy atmosfera harorati va konsentratsiyasini aniq ko'rsatib beradi."
+                        'explain': "Muz kernlaridagi izotoplar nisbati qadimiy atmosfera harorati va konsentratsiyasini aniq ko'rsatib beradi."
                     },
                     {
                         'type': 'mc',
@@ -12020,14 +12020,14 @@ SUBJECTS = [
             },
             {
                 'slug': 'masofadan-turib-zondualash-va-suniy-yoldosh-tasvirlari',
-                'title': "Masofadan turib zondualash va sun'iy yo'ldosh tasvirlarini raqamli tahlil qilish",
+                'title': "Masofadan turib zondlash va sun'iy yo'ldosh tasvirlarini raqamli tahlil qilish",
                 'summary': "Sun'iy yo'ldoshlar va aerofotosuratlar orqali Yerni masofadan tadqiq qilish, spektral indekslar (NDVI, NDWI) va spektral kanallar bilan ishlash asoslari.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish va Nazariy Asoslar',
-                        'body': "Masofadan turib zondualash (MTZ) — bu Yer sathi haqida jismoniy kontaktga kirishmasdan, elektromagnit nurlanishni qayd etuvchi datchiklar (sensorlar) yordamida axborot olish texnologiyasidir. Tasvirlar ko'rinadigan, infraqizil va radiolokatsion spektr diapazonlarida olinadi."
+                        'body': "Masofadan turib zondlash (MTZ) — bu Yer sathi haqida jismoniy kontaktga kirishmasdan, elektromagnit nurlanishni qayd etuvchi datchiklar (sensorlar) yordamida axborot olish texnologiyasidir. Tasvirlar ko'rinadigan, infraqizil va radiolokatsion spektr diapazonlarida olinadi."
                     },
                     {
                         'type': 'example',
@@ -12064,7 +12064,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "NDVI qiymati +0.8 bo me'yorda bo'lsa, bu hududda zich va sog'lom o'simlik qatlami mavjudligini bildiradi.",
+                        'q': "NDVI qiymati +0.8 bo'lsa, bu hududda zich va sog'lom o'simlik qatlami mavjudligini bildiradi.",
                         'answer': True,
                         'explain': "Yuqori musbat qiymatlar (0.6 - 0.8) quyuq o'rmonlar va sog'lom biomassani ko'rsatadi."
                     },
@@ -12082,7 +12082,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Masofadan turib zondualash indekslari bo'yicha masalalarni yeching va tahlil qiling.",
+                    'intro': "Masofadan turib zondlash indekslari bo'yicha masalalarni yeching va tahlil qiling.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -12102,7 +12102,7 @@ SUBJECTS = [
             {
                 'slug': 'fazoviy-ekonometrika-va-geografik-statistik-tahlil',
                 'title': 'Fazoviy ekonometrika va geografik statistik tahlil',
-                'summary': "Geografik ma'lumotlarda fazoviy avtokorrelatsiya, Moran I indeksi va fazoviy regresion modellar orqali ijtimoiy-iqtisodiy hodisalarni modellashtirish.",
+                'summary': "Geografik ma'lumotlarda fazoviy avtokorrelatsiya, Moran I indeksi va fazoviy regression modellar orqali ijtimoiy-iqtisodiy hodisalarni modellashtirish.",
                 'duration': 20,
                 'lesson': [
                     {
@@ -12113,11 +12113,11 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Moran I Koeffitsienti',
-                        'body': "Moran I indeksi fazoviy klasterlanishni o'lchaydi. Agar I > 0 bo'lsa — musbat fazoviy avtokorrelatsiya (o'xshash qiymatlar yonma-yon), I < 0 bo'lsa — manfiy (shaxmat taxtasi tartibi), I = 0 bo me'yorda tasodifiy taqsimot."
+                        'body': "Moran I indeksi fazoviy klasterlanishni o'lchaydi. Agar I > 0 bo'lsa — musbat fazoviy avtokorrelatsiya (o'xshash qiymatlar yonma-yon), I < 0 bo'lsa — manfiy (shaxmat taxtasi tartibi), I = 0 bo'lsa — tasodifiy taqsimot."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Fazoviy regresion tahlil bosqichlari',
+                        'title': 'Fazoviy regression tahlil bosqichlari',
                         'items': [
                             "Hududlar bo'yicha ma'lumotlar va matritsani shakllantirish (Spatial Weight Matrix W)",
                             "Moran I indeksi yordamida fazoviy bog'liqlikni tekshirish",
@@ -12138,7 +12138,7 @@ SUBJECTS = [
                             'Barcha hududlar bir xil rivojlanadi',
                             "Yaqin joylashgan ob'ektlar uzoqdagilarga nisbatan o'zaro ko'proq bog'liq",
                             "Aholi zichligi har doim tekislikda yuqori bo'ladi",
-                            'Iqtisodiy resurslar faqat markazda toplanadi'
+                            "Iqtisodiy resurslar faqat markazda to'planadi"
                         ],
                         'answer': 1,
                         'explain': "Tobler qonuni bo'yicha masofa yaqinligi bog'liqlik kuchini oshiradi."
@@ -12175,7 +12175,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Nima uchun ko'chmas muloqot narxlarini baholashda fazoviy ekonometrika modellaridan foydalanish shart?"
+                            'prompt': "Nima uchun ko'chmas mulk narxlarini baholashda fazoviy ekonometrika modellaridan foydalanish shart?"
                         }
                     ]
                 }
@@ -12202,13 +12202,13 @@ SUBJECTS = [
                         'items': [
                             'Relyefning raqamli modelini (DEM) olish va ekspozitsiyani (nisbatan qiyaligini) aniqlash',
                             'Quyosh insolyatsiyasi hisobini modellashtirish (Solar Radiation Tool)',
-                            "Shamol tezligi va yo'nalishining micro-aerodinamik tahlili",
+                            "Shamol tezligi va yo'nalishining mikroaerodinamik tahlili",
                             'Sirt harorati va namlik taqsimoti xaritasini shakllantirish'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Shimaliy yarimsharda janubiy yonbag'irlar har doim shimoliy yonbag'irlarga qaraganda ko'proq quyosh radiatsiyasini oladi."
+                        'body': "Esda tuting: Shimoliy yarimsharda janubiy yonbag'irlar har doim shimoliy yonbag'irlarga qaraganda ko'proq quyosh radiatsiyasini oladi."
                     }
                 ],
                 'quiz': [
@@ -12240,7 +12240,7 @@ SUBJECTS = [
                             "G'arbiy"
                         ],
                         'answer': 2,
-                        'explain': "Shimoliy yarimsharda quyosh asosan janub tomondan tushgani uchun janubiy qiyaliklar ko'proq isıydi."
+                        'explain': "Shimoliy yarimsharda quyosh asosan janub tomondan tushgani uchun janubiy qiyaliklar ko'proq isiydi."
                     }
                 ],
                 'homework': {
@@ -12283,7 +12283,7 @@ SUBJECTS = [
                         'items': [
                             'Havzaning raqamli balandlik modelini (DEM) kiritish va gidro-tarmoqni shakllantirish',
                             'Tuproq va yerga ishlov berish xaritalarini integratsiya qilish',
-                            "Meteorologik va gidrometric ma'lumotlarni kiritish (harorat, yog'in, oqim)",
+                            "Meteorologik va gidrometrik ma'lumotlarni kiritish (harorat, yog'in, oqim)",
                             'Modelni kalibrovka qilish va oqim rejimini prognozlash'
                         ]
                     },
@@ -12337,7 +12337,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Amudaryo va Sirdaryo havzasida transchegaraviy suv resurslarini kompleks boshqarishdagi muammolar va echimlar haqida fikr bildiring.'
+                            'prompt': 'Amudaryo va Sirdaryo havzasida transchegaraviy suv resurslarini kompleks boshqarishdagi muammolar va yechimlar haqida fikr bildiring.'
                         }
                     ]
                 }
@@ -12362,10 +12362,10 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'El-Ninyo va La-Ninya sikli rivojlanishi',
                         'items': [
-                            "Normal holat: Passatlar issiq suvni g'arbga tayyorlaydi, Peru oqimi apvellingni ta'minlaydi",
+                            "Normal holat: Passatlar issiq suvni g'arbga haydaydi, Peru oqimi apvellingni ta'minlaydi",
                             "El-Ninyo: Passatlar susayadi, issiq suv sharqqa siljiydi, apvelling to'xtaydi",
                             'La-Ninya: Passatlar favqulodda kuchayadi, Tinch okeani sharqiy qismi odatdagidan ham soviydi',
-                            "Global telekonneksiya: Atmosfera sirkulyatsiyasining o'zgarishi butun dunyo bo me'yoriy iqlimiga ta'sir qiladi"
+                            "Global telekonneksiya: Atmosfera sirkulyatsiyasining o'zgarishi butun dunyo iqlimiga ta'sir qiladi"
                         ]
                     },
                     {
@@ -12381,7 +12381,7 @@ SUBJECTS = [
                             "Suv haroratining ko'tarilishi va kuchli yog'ingarchilik",
                             "Kuchli qurg'oqchilik va suvning sovishi",
                             "Muzliklarning hosil bo'lishi",
-                            'Tsunami tosqinlari'
+                            'Tsunami toshqinlari'
                         ],
                         'answer': 0,
                         'explain': "El-Ninyo paytida issiq suvlar sharqqa surilib, suv harorati ko'tariladi va yomg'irlar ko'payadi."
@@ -12402,7 +12402,7 @@ SUBJECTS = [
                             'Tuzlilik darajasining 10 barobar ortishi'
                         ],
                         'answer': 1,
-                        'explain': 'Issiq suv qatlami sovuq va ozuqador tub suvlarining yuqoriga chiqishiga (apvelling) toqqinlik qiladi.'
+                        'explain': "Issiq suv qatlami sovuq va ozuqador tub suvlarining yuqoriga chiqishiga (apvelling) to'sqinlik qiladi."
                     }
                 ],
                 'homework': {
@@ -12437,7 +12437,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Muzlik yadrolari (Ice Cores) tahlili',
-                        'body': "Grenlandiya va Antarktida muzliklaridan olingan chukur namunalardagi 18O izotopi miqdori o'tmishdagi haroratni ko'rsatadi: 18O qancha kam bo'lsa, o'sha davrda iqlim shunchalik sovuq (muzlik davri) bo'lgan."
+                        'body': "Grenlandiya va Antarktida muzliklaridan olingan chuqur namunalardagi 18O izotopi miqdori o'tmishdagi haroratni ko'rsatadi: 18O qancha kam bo'lsa, o'sha davrda iqlim shunchalik sovuq (muzlik davri) bo'lgan."
                     },
                     {
                         'type': 'steps',
@@ -12451,7 +12451,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Reaktiv bo'lmagan izotoplar (barbarar izotoplar) vaqt o'tishi bilan yemirilmaydi, u faqat faza o'zgarishlarida (fraktsiyalanish) o'zgaradi."
+                        'body': "Esda tuting: Radioaktiv bo'lmagan izotoplar (barqaror izotoplar) vaqt o'tishi bilan yemirilmaydi, ular faqat faza o'zgarishlarida (fraktsiyalanish) o'zgaradi."
                     }
                 ],
                 'quiz': [
@@ -12465,11 +12465,11 @@ SUBJECTS = [
                             '4.5 milliard yil'
                         ],
                         'answer': 2,
-                        'explain': '14C radiokarboniy usulda moddalar yoshini aniqlashda 5730 yillik yarim yemirilish davriga tayaniladi.'
+                        'explain': '14C radiouglerod usulida moddalar yoshini aniqlashda 5730 yillik yarim yemirilish davriga tayaniladi.'
                     },
                     {
                         'type': 'tf',
-                        'q': "Muzlik namunalarida 18O/16O nisbatining pasayishi iqlimning globallashgan isish davriga to'g'ri keladi.",
+                        'q': "Muzlik namunalarida 18O/16O nisbatining pasayishi iqlimning isish davriga to'g'ri keladi.",
                         'answer': False,
                         'explain': "Aksincha, sovuq (muzlik) davrlarida eng yengil 16O bug'lanib muzliklarga to'planadi, muzda 18O nisbati kamayadi."
                     },
@@ -12483,7 +12483,7 @@ SUBJECTS = [
                             "Suvning bug'lanib ketgan vaqtiga"
                         ],
                         'answer': 1,
-                        'explain': "Suv yoshi — bu atmosfera yog'inining subterranean (yer osti) gidrosferasiga kirgan vaqtidan boshlab o'tgan davr."
+                        'explain': "Suv yoshi — bu atmosfera yog'inining yer osti gidrosferasiga kirgan vaqtidan boshlab o'tgan davr."
                     }
                 ],
                 'homework': {
@@ -12524,7 +12524,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Geografik Xatarlar Riski (Hazard Assessment) bosqichlari',
                         'items': [
-                            "Relyef qiyalik bucaqlarini (Slope angle) va tog' jinslari tarkibini aniqlash",
+                            "Relyef qiyalik burchaklarini (Slope angle) va tog' jinslari tarkibini aniqlash",
                             'Seysmik va gidrologik omillarni qatlamli tahlil qilish (GIS da overlay)',
                             'Xatar zonalari va zaiflik (Vulnerability) darajasini hisoblash',
                             'Geo-risk xaritasini shakllantirish va muhandislik-himoya choralarini ishlab chiqish'
@@ -12532,7 +12532,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: O'zbekistonning Farg'ona vodiysi va Bo'stonliq tumanlarida bahoriy intensiv yog'ingarchiliklar tufayli sel va ko me'yoriy ko'chkilar havfi o'ta yuqori bo'ladi."
+                        'body': "Esda tuting: O'zbekistonning Farg'ona vodiysi va Bo'stonliq tumanlarida bahoriy intensiv yog'ingarchiliklar tufayli sel va ko'chkilar xavfi o'ta yuqori bo'ladi."
                     }
                 ],
                 'quiz': [
@@ -12552,19 +12552,19 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': 'Deflyatsiya — bu oqar suvlarning yer yuzasini yemirishi jarayonidir.',
                         'answer': False,
-                        'explain': "Deflyatsiya — bu shamol ta'sirida yumshoq jinslarning urilib yo'qotilishi va uchirilishi jarayonidir (oqar suv eroziyasi emas)."
+                        'explain': "Deflyatsiya — bu shamol ta'sirida yumshoq jinslarning shamol bilan uchirib ketilishi jarayonidir (oqar suv eroziyasi emas)."
                     },
                     {
                         'type': 'mc',
                         'q': "Karst jarayonlari asosan qaysi tog' jinslarining suvda erishidan hosil bo'ladi?",
                         'options': [
                             'Granit va bazalt',
-                            'Ohatstosh va gips',
+                            'Ohaktosh va gips',
                             'Qumtosh va slanets',
                             'Gley va torf'
                         ],
                         'answer': 1,
-                        'explain': 'Karst oklash va gips kabi eruvchan karbonatli hamda sulfatli jinslarda yuzaga keladi.'
+                        'explain': 'Karst ohaktosh va gips kabi eruvchan karbonatli hamda sulfatli jinslarda yuzaga keladi.'
                     }
                 ],
                 'homework': {
@@ -12605,9 +12605,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Ko'p markazli (Harris-Ullman) va zamonaviy Smart City modellari",
                         'items': [
-                            "Yagona markaz o'rniga bir nechta ixtisoslashgan sub-markazlarning (Polycenric) rivojlanishi",
+                            "Yagona markaz o'rniga bir nechta ixtisoslashgan sub-markazlarning (polisentrik) rivojlanishi",
                             'Sanoat, turar joy va tijorat zonalarining tugunli integratsiyasi',
-                            'IoT (Asyolar interneti) va geoinformatsion tizimlar orqali shahar transportini boshqarish',
+                            'IoT (Ashyolar interneti) va geoinformatsion tizimlar orqali shahar transportini boshqarish',
                             'Kompakt va ekologik barqaror urbanistik muhit tuzish'
                         ]
                     },
@@ -12675,12 +12675,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish va Geoiqtisodiy Kontseptsiya',
-                        'body': "Geoiqtisodiyot — bu davlatlar va transmilliydan ustun bo'lgan kompaniyalarning iqtisodiy kuch va resurslar uchun global fazodagi raqobatini o'rganuvchi fan. U an'anaviy geosiyosatning harbiy unsurlarini iqtisodiy vositalar (savdo, texnologiya, sanksiyalar) bilan almashtiradi."
+                        'body': "Geoiqtisodiyot — bu davlatlar va transmilliy kompaniyalarning iqtisodiy kuch va resurslar uchun global fazodagi raqobatini o'rganuvchi fan. U an'anaviy geosiyosatning harbiy unsurlarini iqtisodiy vositalar (savdo, texnologiya, sanksiyalar) bilan almashtiradi."
                     },
                     {
                         'type': 'example',
                         'title': 'Global qiymat zanjirlari (Global Value Chains - GVC)',
-                        'body': "Aysfon (iPhone) dizayni va dasturiy ta'minoti AQShda yaratiladi, yarim o'tkazgichlar Tayvanda va Janubiy Koreyada ishlab chiqariladi, yig'ish Xitoyda amalga oshiriladi va mahsulot butun dunyoga sotiladi. Bu GVC ning fazoviy fragmentatsiyasidir."
+                        'body': "iPhone dizayni va dasturiy ta'minoti AQShda yaratiladi, yarim o'tkazgichlar Tayvanda va Janubiy Koreyada ishlab chiqariladi, yig'ish Xitoyda amalga oshiriladi va mahsulot butun dunyoga sotiladi. Bu GVC ning fazoviy fragmentatsiyasidir."
                     },
                     {
                         'type': 'steps',
@@ -12700,7 +12700,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Valersteynning Dunyo-tizim nazariyasiga ko'ra xom-ashyo yetkazib beruvchi rivojlanayotgan mamlakatlar qaysi zonaga kiradi?",
+                        'q': "Vallersteynning Dunyo-tizim nazariyasiga ko'ra xom-ashyo yetkazib beruvchi rivojlanayotgan mamlakatlar qaysi zonaga kiradi?",
                         'options': [
                             'Markaz (Core)',
                             'Yarim-periferiya',
@@ -12749,23 +12749,23 @@ SUBJECTS = [
             },
             {
                 'slug': 'amaliy-geosiyosiy-prognozlashtirish-va-geostrategiya',
-                'title': 'Amaliy geosiyosiy prognozlashtirish va geostratemik modellashtirish',
-                'summary': 'Makenzi, Spaykmen va Severskiy nazariyalari basisida zamonaviy xalqaro nizolar, geostrategik tugunlar va fazoviy doiralar prognozi.',
+                'title': 'Amaliy geosiyosiy prognozlashtirish va geostrategik modellashtirish',
+                'summary': 'Makkinder, Spaykmen va Severskiy nazariyalari asosida zamonaviy xalqaro nizolar, geostrategik tugunlar va fazoviy doiralar prognozi.',
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish va Geostrategik Doktrinalar',
-                        'body': "Geosiyosiy modellashtirish geografik omillar (joylashuv, resurslar, relyef) va davlatlarning xalqaro siyosati o'rtasidagi bog'liqlikni tizimli ravishda tahlil qiladi. Xarlord Makinderning Hirtland (Heartland) nazariyasi va Nikolas Spaykmenning Rimland (Rimland) nazariyasi buring geosiyosiy maktablar poydevoridir."
+                        'body': "Geosiyosiy modellashtirish geografik omillar (joylashuv, resurslar, relyef) va davlatlarning xalqaro siyosati o'rtasidagi bog'liqlikni tizimli ravishda tahlil qiladi. Xelford Makkinderning Xartlend (Heartland) nazariyasi va Nikolas Spaykmenning Rimlend (Rimland) nazariyasi buyuk geosiyosiy maktablar poydevoridir."
                     },
                     {
                         'type': 'example',
                         'title': 'Heartland vs Rimland',
-                        'body': "Makinder fikricha: 'Kimki Yevroosiyo markazi (Heartland)ni boshqarsa, dunyo adasini boshqaradi'. Spaykmen esa: 'Kimki sohilbo'yi hududlari (Rimland)ni nazorat qilsa, Yevroosiyoni nazorat qiladi' degan gipotezani ilgari surgan."
+                        'body': "Makkinder fikricha: 'Kimki Yevroosiyo markazi (Heartland)ni boshqarsa, dunyo orolini boshqaradi'. Spaykmen esa: 'Kimki sohilbo'yi hududlari (Rimland)ni nazorat qilsa, Yevroosiyoni nazorat qiladi' degan gipotezani ilgari surgan."
                     },
                     {
                         'type': 'steps',
-                        'title': 'Geosiyosiy scenariylarni modellashtirish bosqichlari',
+                        'title': 'Geosiyosiy ssenariylarni modellashtirish bosqichlari',
                         'items': [
                             "Geostrategik tugunlar va 'Choke Points' (Xormuz, Malakka, Suvaysh bo'g'ozlari) barqarorligini baholash",
                             'Katta davlatlarning Yevroosiyodagi manfaatlari kesishuv xaritasini (Overlay) tuzish',
@@ -12775,13 +12775,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Choke Points' — xalqaro savdo va neft va gaz tashishda strategik muhim bo'lgan tor dengiz va bo me'yoriiy o'tish joylaridir."
+                        'body': "Esda tuting: 'Choke Points' — xalqaro savdo, neft va gaz tashishda strategik muhim bo'lgan tor dengiz bo'g'ozlari va o'tish joylaridir."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Xalford Makinder nazariyasida 'Heartland' hududi qayerda joylashgan?",
+                        'q': "Xelford Makkinder nazariyasida 'Heartland' hududi qayerda joylashgan?",
                         'options': [
                             'Shimoliy Amerika va Kanada',
                             "Yevroosiyoning ichki va kirish qiyin bo'lgan markaziy hududlari",
