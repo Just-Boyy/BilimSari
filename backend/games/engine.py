@@ -468,7 +468,7 @@ def session_payload(cur, session, players, me, now, names) -> dict:
         data['deadline_ms'] = int(session['phase_started_ms']) + limit
 
     if session['phase'] in ('question', 'reveal'):
-        q = questions_for(cur, session['id'])[session['q_index']]
+        q = questions.loc(questions_for(cur, session['id'])[session['q_index']])   # o'yinchi tilida
         answers = _question_answers(cur, session)
         mine = next((a for a in answers if a['user_id'] == me['user_id']), None)
         data['question'] = questions.public(q)
@@ -533,7 +533,7 @@ def results_payload(cur, session, user_id, names) -> dict:
 def learning_summary(cur, session, user_id, played) -> dict:
     """"Nimalarni o'rgandingiz?" — mavzular bo'yicha kuchli/zaif tomonlar va
     har bir savolning to'g'ri javobi bilan tushuntirishi."""
-    qs = questions_for(cur, session['id'])[:played]
+    qs = [questions.loc(q) for q in questions_for(cur, session['id'])[:played]]
     cur.execute('SELECT q_index, answer, correct, partial FROM game_answers WHERE session_id = %s AND user_id = %s',
                 (session['id'], user_id))
     by_q = {a['q_index']: a for a in cur.fetchall()}

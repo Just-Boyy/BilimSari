@@ -18,6 +18,7 @@ from datetime import date, timedelta
 import curriculum as cur_mod
 import jurnal
 import premium
+import til
 from games import clock
 from games.errors import GameError
 
@@ -91,16 +92,18 @@ def _question(cur, conn, day, now_ms):
         conn.commit()
         cur.execute('SELECT topic_id, q_index FROM daily_questions WHERE day = %s', (day,))
         row = cur.fetchone()
-    cur.execute('SELECT id, title, subject_key, quiz FROM topics WHERE id = %s', (row['topic_id'],))
+    cur.execute('SELECT id, title, title_ru, subject_key, quiz, ru FROM topics WHERE id = %s', (row['topic_id'],))
     topic = cur.fetchone()
-    quiz = _quiz(topic['quiz']) if topic else []
+    lang = til.req_lang()
+    topic = til.topic(topic, lang) if topic else None          # ruscha interfeysda — ruscha savol (javob bir xil)
+    quiz = topic['quiz'] if topic else []
     # Admin mavzuni tahrirlab, savolni o'chirgan yoki turini o'zgartirgan bo'lishi mumkin
     q = quiz[row['q_index']] if 0 <= int(row['q_index']) < len(quiz) else None
     if not isinstance(q, dict) or q.get('type', 'mc') not in ('mc', 'tf') or not q.get('q'):
         raise GameError('no_question', "Bugungi savol topilmadi.", 503)
     kind = q.get('type', 'mc')
     if kind == 'tf':
-        options, answer = TF_OPTIONS, (0 if q.get('answer') else 1)
+        options, answer = til.tf_options(lang), (0 if q.get('answer') else 1)
     else:
         options, answer = [str(o) for o in q.get('options') or []], int(q.get('answer', 0))
     return {

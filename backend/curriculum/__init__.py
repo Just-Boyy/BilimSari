@@ -43,6 +43,8 @@ Uyga vazifa tasklari:
   type "open" — javob tekshirilmaydi, faqat topshirilgani qayd etiladi.
 """
 
+import json
+import os
 from importlib import import_module
 
 # ───────────────────────── Fanlar katalogi ─────────────────────────
@@ -114,6 +116,22 @@ def grades_overview() -> list:
             'available': bool(subjects),
         })
     return out
+
+
+_RU_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ru')
+_ru_cache: dict = {}
+
+
+def ru_topics(subject_key: str) -> dict:
+    """Fanning ruscha tarjimasi: {slug: {title, summary, lesson, quiz, homework}} (bo'lmasa — {})."""
+    if subject_key not in _ru_cache:
+        path = os.path.join(_RU_DIR, f'{subject_key}.json')
+        try:
+            with open(path, encoding='utf-8') as f:
+                _ru_cache[subject_key] = json.load(f)
+        except (OSError, ValueError):
+            _ru_cache[subject_key] = {}
+    return _ru_cache[subject_key]
 
 
 def subject_meta(key: str) -> dict:

@@ -10,6 +10,10 @@ Ichki savol (faqat serverda, game_sessions.questions ichida saqlanadi):
 
 Mijozga faqat public() — javobsiz nusxa ketadi; to'g'ri javob va tushuntirish
 savol yopilgandan keyin reveal() orqali ochiladi.
+
+Ikki til: har bir savolda q['ru'] — ruscha matn (prompt, options, explain, topic_title;
+match uchun left/right/pairs_explain). Variantlar tartibi va to'g'ri javob bir xil, shuning
+uchun bir roomda turli tilli o'yinchilar birga o'ynaydi — har biri o'z tilida ko'radi (loc()).
 """
 
 import json
@@ -17,7 +21,8 @@ import math
 import random
 from fractions import Fraction
 
-from games import catalog, data_code, data_words
+import til
+from games import catalog, data_code, data_code_ru, data_words
 from games.errors import GameError
 
 BAND = {'oson': 0, 'orta': 1, 'qiyin': 2}
@@ -39,8 +44,9 @@ def _band_of(index: int, total: int) -> int:
     return min(2, index * 3 // max(1, total))
 
 
-def _choice(prompt, correct, distractors, rng, explain, topic, topic_title, link=None):
-    """To'g'ri javob + chalg'ituvchilardan 4 ta noyob variant."""
+def _choice(prompt, correct, distractors, rng, explain, topic, topic_title, link=None, ru=None):
+    """To'g'ri javob + chalg'ituvchilardan 4 ta noyob variant.
+    ru: {'prompt', 'explain', 'topic_title', 'opt': {asl variant: ruscha}} — ruscha nusxa."""
     options = [correct]
     for d in distractors:
         if d and d not in options:
@@ -48,11 +54,28 @@ def _choice(prompt, correct, distractors, rng, explain, topic, topic_title, link
         if len(options) == 4:
             break
     rng.shuffle(options)
-    return {
+    q = {
         'kind': 'choice', 'prompt': prompt, 'options': options,
         'answer': options.index(correct), 'explain': explain,
         'topic': topic, 'topic_title': topic_title, 'link': link,
     }
+    if ru:
+        opt = ru.get('opt') or {}
+        q['ru'] = {'prompt': ru.get('prompt', prompt), 'options': [opt.get(o, o) for o in options],
+                   'explain': ru.get('explain', explain), 'topic_title': ru.get('topic_title', topic_title)}
+    return q
+
+
+def loc(q: dict, lang=None) -> dict:
+    """Savolning o'yinchi tilidagi nusxasi (to'g'ri javob va tuzilma bir xil)."""
+    lang = lang or til.req_lang()
+    if lang != 'ru' or not isinstance(q.get('ru'), dict):
+        return q
+    out = dict(q)
+    for k, v in q['ru'].items():
+        if v not in (None, '', []):
+            out[k] = v
+    return out
 
 
 def _round_robin(groups, want, first_cap=1):
@@ -75,7 +98,7 @@ def _round_robin(groups, want, first_cap=1):
 
 def _curriculum_rows(cur, subject):
     cur.execute(
-        'SELECT id, grade, slug, title, quiz FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        'SELECT id, grade, slug, title, title_ru, quiz, ru FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
         (subject,),
     )
     return cur.fetchall()
@@ -99,9 +122,10 @@ def _topic_priority(rows, settings, rng):
 
 
 def _quiz_options(q, rng):
+    """(variantlar, to'g'ri javob indeksi, aralashtirish tartibi — ruscha variantlar ham shu tartibda)."""
     qtype = q.get('type', 'mc')
     if qtype == 'tf':
-        return ["To'g'ri", "Noto'g'ri"], (0 if q.get('answer') else 1)
+        return list(til.TF_OPTIONS['uz']), (0 if q.get('answer') else 1), None
     options = [str(o) for o in (q.get('options') or [])]
     try:
         answer = int(q.get('answer', 0))
@@ -111,7 +135,14 @@ def _quiz_options(q, rng):
         return None
     order = list(range(len(options)))
     rng.shuffle(order)
-    return [options[i] for i in order], order.index(answer)
+    return [options[i] for i in order], order.index(answer), order
+
+
+def _ru_options(r, order):
+    if order is None:
+        return list(til.TF_OPTIONS['ru'])
+    opts = [str(o) for o in (r.get('options') or [])]
+    return [opts[i] for i in order]
 
 
 def _link(settings, row):
@@ -123,19 +154,25 @@ def curriculum_questions(cur, settings, rng):
     groups = []
     for i in _topic_priority(rows, settings, rng):
         row = rows[i]
+        quiz, ru_quiz = til.quiz_pair(row)
         items = []
-        for q in _load_json(row['quiz'], []):
+        for qi, q in enumerate(quiz):
             if not isinstance(q, dict) or not q.get('q'):
                 continue
             built = _quiz_options(q, rng)
             if not built:
                 continue
-            options, answer = built
-            items.append({
+            options, answer, order = built
+            item = {
                 'kind': 'choice', 'prompt': str(q['q']), 'options': options, 'answer': answer,
                 'explain': str(q.get('explain') or ''), 'topic': row['id'],
                 'topic_title': row['title'], 'link': _link(settings, row),
-            })
+            }
+            r = ru_quiz[qi] if ru_quiz and qi < len(ru_quiz) else None
+            if r and r.get('q'):
+                item['ru'] = {'prompt': str(r['q']), 'options': _ru_options(r, order),
+                              'explain': str(r.get('explain') or ''), 'topic_title': row.get('title_ru') or row['title']}
+            items.append(item)
         rng.shuffle(items)
         if items:
             groups.append(items)
@@ -155,8 +192,9 @@ def match_questions(cur, settings, rng):
     groups = []
     for i in _topic_priority(rows, settings, rng):
         row = rows[i]
+        quiz, ru_quiz = til.quiz_pair(row)
         items = []
-        for q in _load_json(row['quiz'], []):
+        for qi, q in enumerate(quiz):
             if not isinstance(q, dict) or q.get('type', 'mc') != 'mc' or not q.get('q'):
                 continue
             options = q.get('options') or []
@@ -169,9 +207,17 @@ def match_questions(cur, settings, rng):
                 continue
             if any(g in answer.lower() for g in _GENERIC_ANSWERS):
                 continue
+            r = ru_quiz[qi] if ru_quiz and qi < len(ru_quiz) else q
+            try:
+                r_answer = str((r.get('options') or [])[int(q.get('answer', 0))]).strip() or answer
+            except (TypeError, ValueError, IndexError):
+                r_answer = answer
             items.append({
                 'left': prompt, 'right': answer, 'explain': str(q.get('explain') or ''),
                 'topic': row['id'], 'topic_title': row['title'], 'link': _link(settings, row),
+                'ru': {'left': str(r.get('q') or prompt).strip(), 'right': r_answer,
+                       'explain': str(r.get('explain') or q.get('explain') or ''),
+                       'topic_title': row.get('title_ru') or row['title']},
             })
         rng.shuffle(items)
         if items:
@@ -206,6 +252,13 @@ def match_questions(cur, settings, rng):
             'topic': group[0]['topic'],
             'topic_title': group[0]['topic_title'],
             'link': group[0]['link'],
+            'ru': {
+                'prompt': 'Сопоставьте каждый вопрос с правильным ответом',
+                'left': [g['ru']['left'] for g in group],
+                'right': [group[j]['ru']['right'] for j in order],
+                'pairs_explain': [g['ru']['explain'] for g in group],
+                'topic_title': group[0]['ru']['topic_title'],
+            },
         })
     return rounds
 
@@ -253,7 +306,8 @@ def _math_add(level, rng):
             up = (b // 10 + 1) * 10
             explain = f'{a} {MINUS} {b} = {a} {MINUS} {up} + {up - b} = {_num(value)}.'
         else:
-            explain = f'{_num(a)} {MINUS} {_num(b)} = {_num(value)}. Tekshirish: {_num(value)} + {_num(b)} = {_num(a)}.'
+            explain = (f'{_num(a)} {MINUS} {_num(b)} = {_num(value)}. Tekshirish: {_num(value)} + {_num(b)} = {_num(a)}.',
+                       f'{_num(a)} {MINUS} {_num(b)} = {_num(value)}. Проверка: {_num(value)} + {_num(b)} = {_num(a)}.')
         extra = [value + 10, value - 10, a + b, value + 100 if level else value + 20]
         return prompt, value, _int_distractors(value, extra, rng, positive=level < 2), explain
     value = a + b
@@ -261,9 +315,11 @@ def _math_add(level, rng):
     if level == 0:
         tens, ones = (a // 10 + b // 10) * 10, a % 10 + b % 10
         explain = (f"O'nliklar: {a // 10 * 10} + {b // 10 * 10} = {tens}, birliklar: "
-                   f"{a % 10} + {b % 10} = {ones}. Jami: {tens} + {ones} = {value}.")
+                   f"{a % 10} + {b % 10} = {ones}. Jami: {tens} + {ones} = {value}.",
+                   f"Десятки: {a // 10 * 10} + {b // 10 * 10} = {tens}, единицы: "
+                   f"{a % 10} + {b % 10} = {ones}. Итого: {tens} + {ones} = {value}.")
     else:
-        explain = f"Xonama-xona qo'shing: {a} + {b} = {value}."
+        explain = (f"Xonama-xona qo'shing: {a} + {b} = {value}.", f"Складывайте поразрядно: {a} + {b} = {value}.")
     extra = [value + 10, value - 10, value + 100 if level else value - 1, abs(a - b)]
     return prompt, value, _int_distractors(value, extra, rng), explain
 
@@ -272,7 +328,7 @@ def _math_mul(level, rng):
     if level == 0:
         a, b = rng.randint(2, 10), rng.randint(2, 10)
         value = a * b
-        explain = f"{a} × {b} = {value} — ko'paytirish jadvali."
+        explain = (f"{a} × {b} = {value} — ko'paytirish jadvali.", f'{a} × {b} = {value} — таблица умножения.')
     elif level == 1:
         a, b = rng.randint(11, 19), rng.randint(3, 9)
         value = a * b
@@ -297,7 +353,7 @@ def _math_div(level, rng):
     else:
         b, q = rng.randint(11, 25), rng.randint(12, 60)
     a = b * q
-    explain = f"{b} × {q} = {a}, demak {a} : {b} = {q}."
+    explain = (f"{b} × {q} = {a}, demak {a} : {b} = {q}.", f'{b} × {q} = {a}, значит {a} : {b} = {q}.')
     extra = [q + 1, q - 1, q + 2, q + 10, q - 2]
     return f'{a} : {b} = ?', q, _int_distractors(q, extra, rng), explain
 
@@ -326,7 +382,8 @@ def _math_frac(level, rng):
         b = rng.randint(1, d - 1 - a)
         value = Fraction(a + b, d)
         prompt = f'{a}/{d} + {b}/{d} = ?'
-        explain = f"Maxrajlar bir xil ({d}) — faqat suratlar qo'shiladi: {a} + {b} = {a + b}. Javob: {a + b}/{d}."
+        explain = (f"Maxrajlar bir xil ({d}) — faqat suratlar qo'shiladi: {a} + {b} = {a + b}. Javob: {a + b}/{d}.",
+                   f'Знаменатели одинаковые ({d}) — складываются только числители: {a} + {b} = {a + b}. Ответ: {a + b}/{d}.')
         cands = [Fraction(a + b, 2 * d), Fraction(a + b + 1, d), Fraction(abs(a - b) or 1, d), Fraction(a * b, d)]
         return prompt, _frac(value), _frac_distractors(value, cands, rng), explain
     if level == 1:
@@ -337,7 +394,9 @@ def _math_frac(level, rng):
         value = Fraction(a, d1) + Fraction(b, d2)
         reduced = f' = {_frac(value)}' if _frac(value) != f'{s}/{common}' else ''
         explain = (f"Umumiy maxraj {common}: {a}/{d1} = {a * common // d1}/{common}, "
-                   f"{b}/{d2} = {b * common // d2}/{common}. Yig'indi: {s}/{common}{reduced}.")
+                   f"{b}/{d2} = {b * common // d2}/{common}. Yig'indi: {s}/{common}{reduced}.",
+                   f'Общий знаменатель {common}: {a}/{d1} = {a * common // d1}/{common}, '
+                   f'{b}/{d2} = {b * common // d2}/{common}. Сумма: {s}/{common}{reduced}.')
         cands = [Fraction(a + b, d1 + d2), Fraction(a * b, d1 * d2),
                  value + Fraction(1, common), value - Fraction(1, common)]
         return f'{a}/{d1} + {b}/{d2} = ?', _frac(value), _frac_distractors(value, cands, rng), explain
@@ -347,14 +406,16 @@ def _math_frac(level, rng):
         value = Fraction(a * c, b * d)
         raw = f'{a * c}/{b * d}'
         tail = f' = {_frac(value)}' if _frac(value) != raw else ''
-        explain = f"Suratlar va maxrajlar ko'paytiriladi: ({a}×{c})/({b}×{d}) = {raw}{tail}."
+        explain = (f"Suratlar va maxrajlar ko'paytiriladi: ({a}×{c})/({b}×{d}) = {raw}{tail}.",
+                   f'Числители и знаменатели перемножаются: ({a}×{c})/({b}×{d}) = {raw}{tail}.')
         prompt = f'{a}/{b} × {c}/{d} = ?'
         cands = [Fraction(a + c, b + d), Fraction(a * d, b * c), Fraction(a * c, b + d), value * 2]
     else:
         value = Fraction(a * d, b * c)
         raw = f'{a * d}/{b * c}'
         tail = f' = {_frac(value)}' if _frac(value) != raw else ''
-        explain = f"Bo'lish — teskari kasrga ko'paytirish: {a}/{b} × {d}/{c} = {raw}{tail}."
+        explain = (f"Bo'lish — teskari kasrga ko'paytirish: {a}/{b} × {d}/{c} = {raw}{tail}.",
+                   f'Деление — это умножение на обратную дробь: {a}/{b} × {d}/{c} = {raw}{tail}.')
         prompt = f'{a}/{b} : {c}/{d} = ?'
         cands = [Fraction(a * c, b * d), Fraction(b * c, a * d), value * 2, value / 2]
     return prompt, _frac(value), _frac_distractors(value, cands, rng), explain
@@ -362,6 +423,8 @@ def _math_frac(level, rng):
 
 _PCT_TIPS = {10: "10% — o'ndan bir qism", 20: "20% — beshdan bir qism",
              25: "25% — to'rtdan bir qism", 50: '50% — yarmi'}
+_PCT_TIPS_RU = {10: '10% — одна десятая часть', 20: '20% — одна пятая часть',
+                25: '25% — одна четвёртая часть', 50: '50% — половина'}
 
 
 def _math_pct(level, rng):
@@ -373,8 +436,10 @@ def _math_pct(level, rng):
                 break
         part = n * p // 100
         value = n + part
-        prompt = f"Narx {n} so'm edi va {p}% ga oshdi. Yangi narx necha so'm?"
-        explain = f"{n} ning {p}% i = {n} × {p} : 100 = {part}. Yangi narx: {n} + {part} = {value} so'm."
+        prompt = (f"Narx {n} so'm edi va {p}% ga oshdi. Yangi narx necha so'm?",
+                  f'Цена была {n} сум и выросла на {p}%. Какой стала новая цена (в сумах)?')
+        explain = (f"{n} ning {p}% i = {n} × {p} : 100 = {part}. Yangi narx: {n} + {part} = {value} so'm.",
+                   f'{p}% от {n} = {n} × {p} : 100 = {part}. Новая цена: {n} + {part} = {value} сум.')
         extra = [part, n - part, value + 10, n + p]
         return prompt, value, _int_distractors(value, extra, rng), explain
     choices = {
@@ -391,11 +456,12 @@ def _math_pct(level, rng):
     value = n * p // 100
     tip = _PCT_TIPS.get(p)
     if tip:
-        explain = f'{tip}: {n} ning {p}% i = {value}.'
+        explain = (f'{tip}: {n} ning {p}% i = {value}.', f'{_PCT_TIPS_RU[p]}: {p}% от {n} = {value}.')
     else:
         explain = f'{p}% = {p}/100. {n} × {p} : 100 = {value}.'
     extra = [value + n // 10, value * 2, n - value, value + 5, n * p // 10]
-    return f'{n} ning {p}% i nechaga teng?', value, _int_distractors(value, extra, rng), explain
+    return ((f'{n} ning {p}% i nechaga teng?', f'Чему равны {p}% от {n}?'), value,
+            _int_distractors(value, extra, rng), explain)
 
 
 def _math_pow(level, rng):
@@ -407,7 +473,7 @@ def _math_pow(level, rng):
             return (f'{n}² = ?', v, _int_distractors(v, [n * 2, v + n, (n + 1) ** 2, (n - 1) ** 2], rng),
                     f'{n}² = {n} × {n} = {v}.')
         return (f'√{n * n} = ?', n, _int_distractors(n, [n * 2, n + 1, n - 1, n * n // 2], rng),
-                f'√{n * n} = {n}, chunki {n} × {n} = {n * n}.')
+                (f'√{n * n} = {n}, chunki {n} × {n} = {n * n}.', f'√{n * n} = {n}, потому что {n} × {n} = {n * n}.'))
     if level == 1:
         if kind < 0.5:
             n = rng.randint(11, 25)
@@ -422,15 +488,17 @@ def _math_pow(level, rng):
         k = rng.randint(5, 10)
         v = 2 ** k
         return (f'2{str(k).translate(_SUP)} = ?', v, _int_distractors(v, [2 * k, v // 2, v * 2, v + 2], rng),
-                f"2{str(k).translate(_SUP)} = {v} — 2 ni {k} marta o'ziga ko'paytiring.")
+                (f"2{str(k).translate(_SUP)} = {v} — 2 ni {k} marta o'ziga ko'paytiring.",
+                 f'2{str(k).translate(_SUP)} = {v} — умножьте 2 само на себя {k} раз.'))
     if kind < 0.7:
         n = rng.randint(13, 30)
         return (f'√{n * n} = ?', n, _int_distractors(n, [n + 1, n - 1, n * 2, n + 10], rng),
-                f'√{n * n} = {n}, chunki {n} × {n} = {n * n}.')
+                (f'√{n * n} = {n}, chunki {n} × {n} = {n * n}.', f'√{n * n} = {n}, потому что {n} × {n} = {n * n}.'))
     n = rng.randint(2, 5)
     v = -(n ** 3)
     return (f'({MINUS}{n})³ = ?', v, _int_distractors(v, [-v, -(n * 3), n * 3, v + 1], rng, positive=False),
-            f"({MINUS}{n})³ = ({MINUS}{n}) × ({MINUS}{n}) × ({MINUS}{n}) = {_num(v)} — toq darajada manfiy ishora saqlanadi.")
+            (f"({MINUS}{n})³ = ({MINUS}{n}) × ({MINUS}{n}) × ({MINUS}{n}) = {_num(v)} — toq darajada manfiy ishora saqlanadi.",
+             f'({MINUS}{n})³ = ({MINUS}{n}) × ({MINUS}{n}) × ({MINUS}{n}) = {_num(v)} — в нечётной степени минус сохраняется.'))
 
 
 MATH_GENERATORS = {
@@ -442,6 +510,13 @@ MATH_GENERATORS = {
     'darajalar': _math_pow,
 }
 MATH_TITLES = dict(catalog.MATH_TOPICS)
+MATH_TITLES_RU = {'qoshish': 'Сложение и вычитание', 'kopaytirish': 'Умножение', 'bolish': 'Деление',
+                  'kasrlar': 'Дроби', 'foizlar': 'Проценты', 'darajalar': 'Степени и корни'}
+
+
+def _pair(value):
+    """Generator qiymati: oddiy satr (ikkala tilda bir xil) yoki (uz, ru)."""
+    return value if isinstance(value, tuple) else (value, value)
 
 
 def math_questions(cur, settings, rng):
@@ -454,11 +529,13 @@ def math_questions(cur, settings, rng):
         kind = kinds[attempts % len(kinds)]
         attempts += 1
         prompt, value, distractors, explain = MATH_GENERATORS[kind](level, rng)
+        (prompt, prompt_ru), (explain, explain_ru) = _pair(prompt), _pair(explain)
         if prompt in seen or len(distractors) < 3:
             continue
         seen.add(prompt)
         correct = value if isinstance(value, str) else _num(value)
-        out.append(_choice(prompt, correct, distractors, rng, explain, kind, MATH_TITLES[kind]))
+        out.append(_choice(prompt, correct, distractors, rng, explain, kind, MATH_TITLES[kind],
+                           ru={'prompt': prompt_ru, 'explain': explain_ru, 'topic_title': MATH_TITLES_RU[kind]}))
     return out
 
 
@@ -472,61 +549,88 @@ def _level_pool(items, level_of, level, rng):
     return primary + rest
 
 
-def _pair_question(pair, pairs, rng, prompt_tpl, explain, topic, title, group_of):
+def _pair_question(pair, pairs, rng, prompt_tpl, explain, topic, title, group_of, ru=None):
     """Sinonim/antonim: juftlikning bir so'zi savol, ikkinchisi javob.
-    Chalg'ituvchilar boshqa ma'no guruhlaridan olinadi."""
+    Chalg'ituvchilar boshqa ma'no guruhlaridan olinadi. ru: (prompt shabloni, tushuntirish, mavzu nomi)."""
     word, answer = (pair[0], pair[1]) if rng.random() < 0.5 else (pair[1], pair[0])
     others = [w for p in pairs if group_of(p) != group_of(pair) for w in (p[0], p[1])]
     rng.shuffle(others)
-    return _choice(prompt_tpl.format(w=word), answer, others, rng, explain, topic, title)
+    ru_spec = {'prompt': ru[0].format(w=word), 'explain': ru[1], 'topic_title': ru[2]} if ru else None
+    return _choice(prompt_tpl.format(w=word), answer, others, rng, explain, topic, title, ru=ru_spec)
+
+
+WORD_TITLES_RU = {
+    ('english', 'tarjima'): 'Перевод', ('english', 'sinonim'): 'Синонимы (synonyms)',
+    ('english', 'antonim'): 'Антонимы (antonyms)', ('english', 'imlo'): 'Правописание (spelling)',
+    ('uzbek', 'sinonim'): 'Синонимы', ('uzbek', 'antonim'): 'Антонимы',
+}
 
 
 def _word_builder(subject, kind, rng):
     """(savollar ro'yxatini beradigan) funksiya: level → iterator."""
     title = dict(catalog.WORD_TOPICS[subject])[kind]
+    title_ru = WORD_TITLES_RU.get((subject, kind), title)
     d = data_words
 
     if subject == 'english' and kind == 'tarjima':
+        uz_to_ru = {e[1]: d.EN_RU.get(e[0], e[1]) for e in d.EN_TRANSLATIONS}
+
         def build(entry):
             en, uz, lvl = entry
+            ru = d.EN_RU.get(en, uz)
             same = [e for e in d.EN_TRANSLATIONS if e is not entry]
             same.sort(key=lambda e: (e[2] != lvl, rng.random()))
             if rng.random() < 0.5:
                 return _choice(f"“{en}” so'zining o'zbekcha tarjimasi qaysi?", uz,
-                               [e[1] for e in same], rng, f'{en} — {uz}.', kind, title)
+                               [e[1] for e in same], rng, f'{en} — {uz}.', kind, title,
+                               ru={'prompt': f'Как переводится слово «{en}» на русский?', 'explain': f'{en} — {ru}.',
+                                   'topic_title': title_ru, 'opt': uz_to_ru})
             return _choice(f"“{uz}” so'zi ingliz tilida qanday bo'ladi?", en,
-                           [e[0] for e in same], rng, f'{uz} — {en}.', kind, title)
+                           [e[0] for e in same], rng, f'{uz} — {en}.', kind, title,
+                           ru={'prompt': f'Как будет «{ru}» по-английски?', 'explain': f'{ru} — {en}.',
+                               'topic_title': title_ru})
         return d.EN_TRANSLATIONS, (lambda e: e[2]), build
 
     if subject == 'english' and kind == 'sinonim':
         def build(p):
             return _pair_question(p, d.EN_SYNONYMS, rng, "“{w}” so'zining sinonimi (ma'nodoshi) qaysi?",
-                                  f"{p[0]} = {p[1]} ({p[2]}) — ma'nodosh so'zlar.", kind, title, lambda x: x[3])
+                                  f"{p[0]} = {p[1]} ({p[2]}) — ma'nodosh so'zlar.", kind, title, lambda x: x[3],
+                                  ru=('Какой синоним у слова «{w}»?',
+                                      f'{p[0]} = {p[1]} ({d.EN_RU.get(p[0], p[2])}) — слова-синонимы.', title_ru))
         return d.EN_SYNONYMS, (lambda p: p[4]), build
 
     if subject == 'english' and kind == 'antonim':
         def build(p):
             return _pair_question(p, d.EN_ANTONYMS, rng, "“{w}” so'zining antonimi (zid ma'nolisi) qaysi?",
-                                  f'{p[0]} ↔ {p[1]}: {p[2]}.', kind, title, lambda x: x[3])
+                                  f'{p[0]} ↔ {p[1]}: {p[2]}.', kind, title, lambda x: x[3],
+                                  ru=('Какой антоним (слово с противоположным значением) у слова «{w}»?',
+                                      f'{p[0]} ↔ {p[1]}: {d.EN_ANT_RU.get(p[0], p[2])}.', title_ru))
         return d.EN_ANTONYMS, (lambda p: p[4]), build
 
     if subject == 'english' and kind == 'imlo':
         def build(e):
             word, wrong, uz, _ = e
+            ru = d.EN_RU.get(word, uz)
             return _choice(f"Qaysi so'z to'g'ri yozilgan? (ma'nosi: {uz})", word, list(wrong), rng,
-                           f"To'g'ri yozilishi: {word} — {uz}.", kind, title)
+                           f"To'g'ri yozilishi: {word} — {uz}.", kind, title,
+                           ru={'prompt': f'Какое слово написано правильно? (значение: {ru})',
+                               'explain': f'Правильное написание: {word} — {ru}.', 'topic_title': title_ru})
         return d.EN_SPELLING, (lambda e: e[3]), build
 
     if subject == 'uzbek' and kind == 'sinonim':
         def build(p):
             return _pair_question(p, d.UZ_SYNONYMS, rng, "“{w}” so'zining sinonimi qaysi?",
-                                  f"{p[0]} — {p[1]}: ma'nosi yaqin so'zlar (sinonimlar).", kind, title, lambda x: x[2])
+                                  f"{p[0]} — {p[1]}: ma'nosi yaqin so'zlar (sinonimlar).", kind, title, lambda x: x[2],
+                                  ru=('Какой синоним у узбекского слова «{w}»?',
+                                      f'{p[0]} — {p[1]}: слова, близкие по значению (синонимы).', title_ru))
         return d.UZ_SYNONYMS, (lambda p: p[3]), build
 
     if subject == 'uzbek' and kind == 'antonim':
         def build(p):
             return _pair_question(p, d.UZ_ANTONYMS, rng, "“{w}” so'ziga zid ma'noli so'z (antonim) qaysi?",
-                                  f"{p[0]} — {p[1]}: qarama-qarshi ma'noli so'zlar (antonimlar).", kind, title, lambda x: x[2])
+                                  f"{p[0]} — {p[1]}: qarama-qarshi ma'noli so'zlar (antonimlar).", kind, title, lambda x: x[2],
+                                  ru=('Какое слово противоположно по значению (антоним) узбекскому слову «{w}»?',
+                                      f'{p[0]} — {p[1]}: слова с противоположным значением (антонимы).', title_ru))
         return d.UZ_ANTONYMS, (lambda p: p[3]), build
 
     return None
@@ -551,6 +655,7 @@ def words_questions(cur, settings, rng):
 # ───────────────────────── Code Challenge ─────────────────────────
 
 CODE_TITLES = dict(catalog.CODE_TOPICS)
+CODE_TITLES_RU = {'algo': 'Алгоритмы'}
 
 
 def code_questions(cur, settings, rng):
@@ -558,13 +663,18 @@ def code_questions(cur, settings, rng):
     topics = [settings['topic']] if settings.get('topic') else list(CODE_TITLES)
     groups = []
     for topic in topics:
-        pool = [q for q in data_code.QUESTIONS if q['topic'] == topic]
-        pool.sort(key=lambda q: (abs(q['level'] - level), rng.random()))
+        pool = [(i, q) for i, q in enumerate(data_code.QUESTIONS) if q['topic'] == topic]
+        pool.sort(key=lambda x: (abs(x[1]['level'] - level), rng.random()))
         items = []
-        for q in pool:
+        for i, q in pool:
             correct = q['options'][q['answer']]
             others = [o for o in q['options'] if o != correct]
-            items.append(_choice(q['q'], correct, others, rng, q['explain'], topic, CODE_TITLES[topic]))
+            r = data_code_ru.QUESTIONS_RU[i] if i < len(data_code_ru.QUESTIONS_RU) else None
+            ru = None
+            if r:
+                ru = {'prompt': r['q'], 'explain': r['explain'], 'topic_title': CODE_TITLES_RU.get(topic, CODE_TITLES[topic]),
+                      'opt': dict(zip(q['options'], r['options'])) if r.get('options') else {}}
+            items.append(_choice(q['q'], correct, others, rng, q['explain'], topic, CODE_TITLES[topic], ru=ru))
         groups.append(items)
     out = _round_robin(groups, settings['question_count'], first_cap=2)
     rng.shuffle(out)

@@ -43,6 +43,8 @@
     var bosh = { 'Content-Type': 'application/json' };
     var t = token();
     if (t) bosh['Authorization'] = 'Bearer ' + t;
+    // Kontent tili: ruscha interfeysda darslar, testlar va o'yin savollari ham ruscha keladi
+    if (window.I18N && I18N.til) bosh['X-Lang'] = I18N.til;
 
     var javob;
     try {

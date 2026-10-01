@@ -27,6 +27,7 @@ import premium
 from db import add_column_if_missing, as_utc, iso_utc, to_tashkent, utc_now
 import daily
 import jurnal
+import til
 from games import clock
 from games import stats as game_stats
 
@@ -131,6 +132,10 @@ def ensure_tables(cur, conn):
     # yangi (bo'sh) bazada "ustun allaqachon bor" xatosi rollback qilib, hali
     # commit qilinmagan CREATE TABLE'ni ham bekor qilib yuboradi.
     add_column_if_missing(cur, conn, 'subjects', 'image', 'TEXT')
+    # Ruscha kontent (curriculum/ru/*.json): ro'yxatlar uchun alohida ustunlar, dars/test/uy vazifasi — JSON
+    add_column_if_missing(cur, conn, 'topics', 'title_ru', 'TEXT')
+    add_column_if_missing(cur, conn, 'topics', 'summary_ru', 'TEXT')
+    add_column_if_missing(cur, conn, 'topics', 'ru', 'TEXT')
 
     # users jadvaliga sinf ustuni
     add_column_if_missing(cur, conn, 'users', 'grade', 'INTEGER')
@@ -174,6 +179,7 @@ def _curriculum_fingerprint() -> str:
                     'lesson': topic.get('lesson'),
                     'quiz': topic.get('quiz'),
                     'homework': topic.get('homework'),
+                    'ru': cur_mod.ru_topics(subject['key']).get(topic['slug']),
                 }, sort_keys=True, ensure_ascii=False))
     raw = '\n'.join(parts).encode('utf-8')
     return hashlib.sha256(raw).hexdigest()
@@ -225,9 +231,11 @@ def sync_curriculum(cur, conn, force=False):
                     'sort_order': order,
                 },
             )
+            ru_all = cur_mod.ru_topics(key)
             for seq, topic in enumerate(subject.get('topics', []), start=1):
                 tid = cur_mod.topic_id(grade, key, topic['slug'])
                 expected_topic_ids.add(tid)
+                ru = ru_all.get(topic['slug']) or {}
                 _upsert(
                     cur,
                     'topics',
@@ -245,6 +253,10 @@ def sync_curriculum(cur, conn, force=False):
                         'lesson': json.dumps(topic.get('lesson') or [], ensure_ascii=False),
                         'quiz': json.dumps(topic.get('quiz') or [], ensure_ascii=False),
                         'homework': json.dumps(topic.get('homework') or {}, ensure_ascii=False),
+                        'title_ru': ru.get('title') or None,
+                        'summary_ru': ru.get('summary') or None,
+                        'ru': json.dumps({k: ru[k] for k in ('lesson', 'quiz', 'homework') if ru.get(k)},
+                                         ensure_ascii=False) if ru else None,
                     },
                 )
                 written += 1
@@ -652,11 +664,11 @@ def subject_topics(cur, user_id, subject_key):
     """Fan bo'yicha BARCHA sinflardan yig'ilgan mavzular (bitta umumiy dastur,
     grade ASC/seq ASC tartibida — soddadan murakkabga ketma-ket ochiladi)."""
     cur.execute(
-        '''SELECT id, subject_key, grade, seq, slug, title, summary, duration
+        '''SELECT id, subject_key, grade, seq, slug, title, summary, duration, title_ru, summary_ru
            FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC''',
         (subject_key,),
     )
-    topics = cur.fetchall()
+    topics = til.titles(cur.fetchall())
     if not topics:
         return None, []
     cur.execute(
@@ -678,10 +690,10 @@ def subjects_overview(cur, user_id):
         return []
 
     cur.execute(
-        'SELECT id, subject_key, grade, seq, slug, title, summary, duration '
+        'SELECT id, subject_key, grade, seq, slug, title, summary, duration, title_ru, summary_ru '
         'FROM topics ORDER BY grade ASC, seq ASC'
     )
-    all_topics = cur.fetchall()
+    all_topics = til.titles(cur.fetchall())
     progress = _progress_map(cur, user_id)
     chosen = get_chosen_subject(cur, user_id)
     cur.execute('SELECT subject_key FROM subject_purchases WHERE user_id = %s', (user_id,))
@@ -811,15 +823,16 @@ def open_topic(cur, conn, user_id, topic_id, register=True):
 def topic_payload(cur, conn, user_id, topic_id):
     """Mavzu sahifasi uchun to'liq ma'lumot (to'g'ri javoblarsiz)."""
     topic, state, prog, cooldown = open_topic(cur, conn, user_id, topic_id)
+    topic = til.topic(topic)
 
-    quiz = _json(topic['quiz'], [])
-    homework = _json(topic['homework'], {})
+    quiz = topic['quiz']
+    homework = topic['homework']
 
     cur.execute(
-        'SELECT id, slug, seq, grade, title FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        'SELECT id, slug, seq, grade, title, title_ru FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
         (topic['subject_key'],),
     )
-    siblings = cur.fetchall()
+    siblings = til.titles(cur.fetchall())
     index = next((i for i, s in enumerate(siblings) if s['id'] == topic_id), 0)
 
     cur.execute('SELECT * FROM subjects WHERE id = %s', (topic['subject_id'],))
@@ -840,7 +853,7 @@ def topic_payload(cur, conn, user_id, topic_id):
             'image': subject.get('image'),
             'color': subject.get('color') or '#4F7DF3',
         },
-        'lesson': _json(topic['lesson'], []),
+        'lesson': topic['lesson'],
         'quiz': public_quiz(quiz),
         'quiz_pass_percent': QUIZ_PASS_PERCENT,
         'homework': public_homework(homework),
@@ -937,7 +950,7 @@ def answers_match(given, expected, accept=None) -> bool:
 
 def grade_quiz(cur, conn, user_id, topic_id, answers):
     topic, state, prog, cooldown = open_topic(cur, conn, user_id, topic_id)
-    quiz = _json(topic['quiz'], [])
+    quiz = til.topic(topic)['quiz']
     if not quiz:
         raise StudyError("Bu mavzuda test yo'q", code='no_quiz')
     if not isinstance(answers, list):
@@ -956,7 +969,7 @@ def grade_quiz(cur, conn, user_id, topic_id, answers):
                 ok = False
         elif qtype == 'tf':
             if isinstance(given, str):
-                given = given.strip().lower() in ('true', '1', 'ha', "to'g'ri", 'togri')
+                given = given.strip().lower() in ('true', '1', 'ha', "to'g'ri", 'togri', 'верно')
             ok = bool(given) == bool(q.get('answer'))
         else:  # fill
             ok = answers_match(given, q.get('answer'), q.get('accept'))
@@ -1016,13 +1029,13 @@ def _readable_answer(q):
         idx = q.get('answer', 0)
         return opts[idx] if 0 <= idx < len(opts) else ''
     if qtype == 'tf':
-        return "To'g'ri" if q.get('answer') else "Noto'g'ri"
+        return til.tf_options()[0 if q.get('answer') else 1]
     return str(q.get('answer', ''))
 
 
 def submit_homework(cur, conn, user_id, topic_id, answers):
     topic, state, prog, cooldown = open_topic(cur, conn, user_id, topic_id)
-    homework = _json(topic['homework'], {})
+    homework = til.topic(topic)['homework']
     tasks = homework.get('tasks', [])
     if not tasks:
         raise StudyError("Bu mavzuda uyga vazifa yo'q", code='no_homework')
@@ -1203,6 +1216,7 @@ def dashboard(cur, user_id):
 def _practice_items(row):
     """Mavzu testidagi savollar — javobsiz (to'g'ri javob serverda tekshiriladi)."""
     meta = cur_mod.subject_meta(row['subject_key'])
+    row = til.topic(row)
     return [{
         'topic_id': row['id'],
         'topic_title': row['title'],
@@ -1211,7 +1225,7 @@ def _practice_items(row):
         'type': q.get('type', 'mc'),
         'q': q.get('q'),
         'options': q.get('options'),
-    } for i, q in enumerate(_json(row['quiz'], []))]
+    } for i, q in enumerate(row['quiz'])]
 
 
 def review_questions(cur, user_id, count=10):
@@ -1222,14 +1236,14 @@ def review_questions(cur, user_id, count=10):
         return [], []
     ids = [w['topic_id'] for w in weak]
     marks = ', '.join(['%s'] * len(ids))
-    cur.execute(f'SELECT id, title, subject_key, quiz FROM topics WHERE id IN ({marks})', ids)
+    cur.execute(f'SELECT id, title, title_ru, subject_key, quiz, ru FROM topics WHERE id IN ({marks})', ids)
     rows = {r['id']: r for r in cur.fetchall()}
     topics, pool = [], []
     for w in weak:
         row = rows.get(w['topic_id'])
         if not row:
             continue
-        topics.append({'topic_id': row['id'], 'title': row['title'], 'accuracy': w['accuracy'],
+        topics.append({'topic_id': row['id'], 'title': til.topic(row)['title'], 'accuracy': w['accuracy'],
                        'subject_name': cur_mod.subject_meta(row['subject_key'])['name']})
         pool.extend(_practice_items(row))
     random.shuffle(pool)
@@ -1240,7 +1254,7 @@ def game_questions(cur, user_id, count=10):
     """O'quvchi darsini o'qigan (lesson_read) mavzulardan tasodifiy test
     savollari — to'g'ri javob hech qachon frontendga yuborilmaydi."""
     cur.execute(
-        '''SELECT t.id, t.title, t.subject_key, t.quiz
+        '''SELECT t.id, t.title, t.title_ru, t.subject_key, t.quiz, t.ru
            FROM topics t
            JOIN user_progress p ON p.topic_id = t.id AND p.user_id = %s
            WHERE p.lesson_read = 1''',
@@ -1255,11 +1269,11 @@ def game_questions(cur, user_id, count=10):
 
 def game_check_answer(cur, topic_id, q_index, given):
     """Bitta o'yin savolini tekshiradi. None qaytsa — savol topilmadi."""
-    cur.execute('SELECT quiz FROM topics WHERE id = %s', (topic_id,))
+    cur.execute('SELECT quiz, ru FROM topics WHERE id = %s', (topic_id,))
     row = cur.fetchone()
     if not row:
         return None
-    quiz = _json(row['quiz'], [])
+    quiz = til.topic(row)['quiz']
     try:
         q_index = int(q_index)
     except (TypeError, ValueError):
@@ -1277,7 +1291,7 @@ def game_check_answer(cur, topic_id, q_index, given):
             ok = False
     elif qtype == 'tf':
         if isinstance(given, str):
-            given = given.strip().lower() in ('true', '1', 'ha', "to'g'ri", 'togri')
+            given = given.strip().lower() in ('true', '1', 'ha', "to'g'ri", 'togri', 'верно')
         ok = bool(given) == bool(q.get('answer'))
     else:
         ok = answers_match(given, q.get('answer'), q.get('accept'))

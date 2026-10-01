@@ -166,3 +166,43 @@ UZ_ANTONYMS = (
     ('tong', 'shom', 'vaqt', 2),
     ('semiz', "ozg'in", 'tana', 2),
 )
+
+
+# ───────────── Ruscha (interfeys ruscha bo'lganda) ─────────────
+# Ingliz so'zining ruscha ma'nosi — EN_TRANSLATIONS, sinonim, antonim va imlo savollari uchun.
+EN_RU = {
+    'apple': 'яблоко', 'book': 'книга', 'water': 'вода', 'sun': 'солнце', 'moon': 'луна', 'house': 'дом',
+    'school': 'школа', 'friend': 'друг', 'family': 'семья', 'mother': 'мама', 'father': 'папа', 'dog': 'собака',
+    'cat': 'кошка', 'bird': 'птица', 'tree': 'дерево', 'flower': 'цветок', 'bread': 'хлеб', 'milk': 'молоко',
+    'city': 'город', 'road': 'дорога', 'window': 'окно', 'door': 'дверь', 'table': 'стол', 'red': 'красный',
+    'to read': 'читать', 'to write': 'писать', 'to run': 'бегать', 'to swim': 'плавать', 'to learn': 'учиться',
+    'to sing': 'петь', 'to build': 'строить', 'to forget': 'забывать', 'beautiful': 'красивый',
+    'strong': 'сильный', 'difficult': 'трудный', 'easy': 'лёгкий', 'clean': 'чистый', 'hungry': 'голодный',
+    'tired': 'уставший', 'brave': 'смелый', 'honest': 'честный', 'busy': 'занятой',
+    'knowledge': 'знание', 'experience': 'опыт', 'environment': 'окружающая среда', 'opportunity': 'возможность',
+    'responsibility': 'ответственность', 'government': 'правительство', 'society': 'общество',
+    'independence': 'независимость', 'development': 'развитие', 'research': 'исследование', 'patience': 'терпение',
+    'justice': 'справедливость', 'health': 'здоровье', 'education': 'образование', 'success': 'успех',
+    # sinonimlar (birinchi so'z bo'yicha)
+    'big': 'большой', 'small': 'маленький', 'happy': 'радостный', 'begin': 'начинать', 'fast': 'быстрый',
+    'smart': 'умный', 'shut': 'закрывать', 'gift': 'подарок', 'finish': 'заканчивать', 'hard': 'трудный',
+    'answer': 'отвечать', 'choose': 'выбирать', 'sick': 'больной', 'quiet': 'тихий', 'mistake': 'ошибка',
+    'rich': 'богатый', 'buy': 'покупать', 'help': 'помогать', 'huge': 'огромный', 'repair': 'чинить',
+    'journey': 'путешествие', 'idea': 'мысль',
+    # imlo
+    'because': 'потому что', 'tomorrow': 'завтра', 'different': 'другой, разный', 'believe': 'верить',
+    'receive': 'получать', 'library': 'библиотека', 'February': 'февраль', 'Wednesday': 'среда',
+    'business': 'бизнес', 'science': 'наука', 'calendar': 'календарь', 'necessary': 'необходимый',
+    'separate': 'отдельный', 'definitely': 'определённо', 'height': 'высота',
+}
+
+# Antonim juftliklarining ruscha ma'nosi (birinchi so'z bo'yicha)
+EN_ANT_RU = {
+    'hot': 'горячий — холодный', 'big': 'большой — маленький', 'happy': 'радостный — грустный',
+    'day': 'день — ночь', 'open': 'открывать — закрывать', 'up': 'вверх — вниз', 'old': 'старый — новый',
+    'fast': 'быстрый — медленный', 'early': 'рано — поздно', 'strong': 'сильный — слабый',
+    'full': 'полный — пустой', 'win': 'выигрывать — проигрывать', 'clean': 'чистый — грязный',
+    'light': 'светлый — тёмный', 'rich': 'богатый — бедный', 'buy': 'покупать — продавать',
+    'cheap': 'дешёвый — дорогой', 'always': 'всегда — никогда', 'remember': 'помнить — забывать',
+    'push': 'толкать — тянуть', 'arrive': 'приезжать — уезжать',
+}

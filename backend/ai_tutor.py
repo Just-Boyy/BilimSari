@@ -18,7 +18,7 @@ from flask import Blueprint, jsonify, request
 
 import curriculum as cur_mod
 import rate_limit
-import study
+import til
 from auth_core import auth_required
 from db import get_connection
 
@@ -193,7 +193,8 @@ def _topic_context(user_id, grade, subject_key, slug):
         if not row:
             return None, None, None
         meta = cur_mod.subject_meta(subject_key)
-        blocks = study._json(row['lesson'], [])
+        row = til.topic(row)                     # ruscha interfeysda — ruscha dars matni
+        blocks = row['lesson']
         parts = []
         for b in blocks:
             if b.get('title'):

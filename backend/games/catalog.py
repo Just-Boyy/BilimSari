@@ -8,6 +8,7 @@ questions.PROVIDERS ga savol generatori qo'shiladi. Frontend ro'yxatni
 """
 
 import curriculum as cur_mod
+import til
 from games.errors import GameError
 
 DIFFICULTIES = {'oson': 'Oson', 'orta': "O'rta", 'qiyin': 'Qiyin'}
@@ -186,10 +187,10 @@ def curriculum_topics(cur, subject: str) -> list:
     """Fan mavzulari soddadan murakkabga (grade, seq) + har birining qiyinlik
     darajasi — ro'yxatdagi o'rniga qarab uchga bo'linadi."""
     cur.execute(
-        'SELECT id, title FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
+        'SELECT id, title, title_ru FROM topics WHERE subject_key = %s ORDER BY grade ASC, seq ASC',
         (subject,),
     )
-    rows = cur.fetchall()
+    rows = til.titles(cur.fetchall())
     total = len(rows)
     keys = list(DIFFICULTIES)
     return [
@@ -258,15 +259,16 @@ _TOPIC_TITLES = {}
 def topic_title(cur, game_type: str, subject: str, topic):
     if not topic:
         return None
-    key = (game_type, subject, topic)
+    lang = til.req_lang()
+    key = (game_type, subject, topic, lang)
     if key not in _TOPIC_TITLES:
         generated = generated_topics(game_type, subject)
         if generated is not None:
             title = next((t['title'] for t in generated if t['key'] == topic), None)
         else:
-            cur.execute('SELECT title FROM topics WHERE id = %s', (topic,))
+            cur.execute('SELECT title, title_ru FROM topics WHERE id = %s', (topic,))
             row = cur.fetchone()
-            title = row['title'] if row else None
+            title = til.titles([row], lang)[0]['title'] if row else None
         if len(_TOPIC_TITLES) > 2000:
             _TOPIC_TITLES.clear()
         _TOPIC_TITLES[key] = title

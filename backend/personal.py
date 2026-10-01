@@ -25,12 +25,13 @@ import threading
 
 import ai_tutor
 import jurnal
+import til
 import curriculum as cur_mod
 import lesson_edit
 import premium
 import study
 import tgbot
-from db import get_connection
+from db import add_column_if_missing, get_connection
 from games import clock
 
 logger = logging.getLogger('bilimsari.personal')
@@ -79,6 +80,8 @@ def ensure_tables(cur, conn):
     conn.commit()
     cur.execute('CREATE INDEX IF NOT EXISTS idx_personal_user ON personal_topics (user_id, created_ms)')
     conn.commit()
+    # Dars qaysi tilda yaratilgan (o'quvchi interfeysi tili): 'uz' | 'ru'
+    add_column_if_missing(cur, conn, 'personal_topics', 'lang', "TEXT NOT NULL DEFAULT 'uz'")
 
 
 # ───────────────────────── Yordamchilar ─────────────────────────
@@ -198,13 +201,23 @@ Vazifa:
    bo'lsa ham, mazmunan shu fanga oid bo'lsa — tegishli deb hisobla. Boshqa fanga oid, o'quv
    mavzusi bo'lmagan, haqoratli yoki ma'nosiz bo'lsa — tegishli emas.
 2. Tegishli bo'lsa, o'quvchi nimani nazarda tutganini eng yaxshi ifodalaydigan 3 ta ANIQ va TO'G'RI
-   yozilgan mavzu nomini o'zbek tilida taklif qil (har biri 80 belgidan qisqa, bir-biridan farqli,
+   yozilgan mavzu nomini {til} taklif qil (har biri 80 belgidan qisqa, bir-biridan farqli,
    birinchisi eng mosi).
 
 Javobni FAQAT JSON ko'rinishida qaytar:
 {{"relevant": true, "options": ["...", "...", "..."]}}
 yoki
 {{"relevant": false, "options": []}}"""
+
+
+# Dars va mavzu nomi qaysi tilda yozilsin (prompt ichida)
+PROMPT_LANG = {
+    'uz': "o'zbek tilida (lotin yozuvida)",
+    'ru': "rus tilida (kirill yozuvida) — sarlavha, dars matni, test va uy vazifasi to'liq ruscha bo'lsin",
+}
+
+
+SUGGEST_LANG = {'uz': "o'zbek tilida", 'ru': 'rus tilida'}
 
 
 def suggest(cur, user_id, subject_key, text, now=None) -> dict:
@@ -214,7 +227,8 @@ def suggest(cur, user_id, subject_key, text, now=None) -> dict:
     subject = cur_mod.subject_meta(subject_key)['name']
     if len(text) < 2 or len(text) > 120:
         raise PersonalError(f"Iltimos, {subject} fanidan mavzu nomini kiriting.", 'off_topic')
-    data, error = ai_tutor.call_gemini_json(SUGGEST_PROMPT.format(subject=subject, text=text.replace('"', "'")),
+    data, error = ai_tutor.call_gemini_json(SUGGEST_PROMPT.format(subject=subject, text=text.replace('"', "'"),
+                                                                  til=SUGGEST_LANG[til.req_lang()]),
                                             max_tokens=1024, timeout=15, attempts=5, waits=(1, 2),
                                             budget=40)
     if error:
@@ -232,7 +246,7 @@ def suggest(cur, user_id, subject_key, text, now=None) -> dict:
 # ───────────────────────── Dars yaratish ─────────────────────────
 
 LESSON_PROMPT = """Sen O'zbekiston maktab dasturi bo'yicha tajribali o'qituvchi-metodistsan.
-"{subject}" fanidan "{title}" mavzusida bitta to'liq dars tuz, o'zbek tilida (lotin yozuvida).
+"{subject}" fanidan "{title}" mavzusida bitta to'liq dars tuz, {til}.
 
 Talablar:
 - "lesson": 4–7 ta blok. Haqiqiy, aniq, foydali o'quv matni; tushunarli, misollar bilan.
@@ -370,8 +384,9 @@ def generate(cur, conn, user, subject_key, title, now=None) -> dict:
     cur.execute('SELECT 1 FROM personal_topics WHERE user_id = %s AND status = %s', (user['id'], GENERATING))
     if cur.fetchone():
         raise PersonalError("Bitta dars allaqachon tayyorlanmoqda. Tayyor bo'lishini kuting.", 'busy', 409)
-    cur.execute('INSERT INTO personal_topics (user_id, subject_key, title, status, created_ms) '
-                'VALUES (%s, %s, %s, %s, %s) RETURNING id', (user['id'], subject_key, title, GENERATING, now))
+    cur.execute('INSERT INTO personal_topics (user_id, subject_key, title, status, created_ms, lang) '
+                'VALUES (%s, %s, %s, %s, %s, %s) RETURNING id', (user['id'], subject_key, title, GENERATING, now,
+                                                                til.req_lang()))
     pid = cur.fetchone()['id']
     conn.commit()
     threading.Thread(target=build, args=(pid,), name='bilimsari-personal', daemon=True).start()
@@ -389,7 +404,8 @@ def build(pid, attempts=2):
         if not row or row['status'] != GENERATING:
             return
         subject = cur_mod.subject_meta(row['subject_key'])['name']
-        prompt = LESSON_PROMPT.format(subject=subject, title=row['title'].replace('"', "'"))
+        prompt = LESSON_PROMPT.format(subject=subject, title=row['title'].replace('"', "'"),
+                                      til=PROMPT_LANG.get(row.get('lang') or 'uz', PROMPT_LANG['uz']))
         clean, last_error = None, None
         for _ in range(attempts):
             data, error = ai_tutor.call_gemini_json(prompt, max_tokens=16384, timeout=180, attempts=7,
