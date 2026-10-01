@@ -12842,7 +12842,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Rus tilida otlar uchta asosiy turlanish guruhiga bo'linadi. Biroq -ия, -ие, -ий ga tugaydigan otlar alohida qoidalarga bo'ysunadi va Predlojnyy hamda Datelnyy kelshiklarida -и qo'shimchasini oladi."
+                        'body': "Rus tilida otlar uchta asosiy turlanish guruhiga bo'linadi. Biroq -ия, -ие, -ий ga tugaydigan otlar alohida qoidalarga bo'ysunadi va Predlojnyy hamda Datelnyy kelishiklarida -и qo'shimchasini oladi."
                     },
                     {
                         'type': 'example',
@@ -12854,19 +12854,19 @@ SUBJECTS = [
                         'title': 'Eslab qolish qadamlari',
                         'items': [
                             "So'zning oxirgi qo'shimchasini aniqlang (-ия, -ие yoki -ий).",
-                            'Roditeli, Datelny va Predlojny kelshiklarida -ии yoki -ии kelishini tekshiring.',
+                            'Datelny va Predlojny kelishiklarida -и kelishini tekshiring.',
                             "Oddiy 1-turlanishdagi -я bilan tugaydigan so'zlar bilan adashtirmang (мама -> о маме, lekin армия -> об армии)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: -ия bilan tugagan otlar Datelny va Predlojny kelshiklarida har doim '-и' oladi, '-е' emas."
+                        'body': "Esda tuting: -ия bilan tugagan otlar Datelny va Predlojny kelishiklarida har doim '-и' oladi, '-е' emas."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'В Мария' birikmasi Predlojny kelshikda qanday to'g'ri yoziladi?",
+                        'q': "'Мария' so'zi Predlojny kelishikda qanday to'g'ri yoziladi?",
                         'options': [
                             'о Марие',
                             'о Марии',
@@ -12874,13 +12874,13 @@ SUBJECTS = [
                             'о Марьи'
                         ],
                         'answer': 1,
-                        'explain': "-ия bilan tugaydigan otlar Predlojnyy kelshikda -и qo'shimchasini oladi."
+                        'explain': "-ия bilan tugaydigan otlar Predlojnyy kelishikda -и qo'shimchasini oladi."
                     },
                     {
                         'type': 'tf',
                         'q': "'В здании' so'zida oxirgi harf 'и' bo'lishi kerak.",
                         'answer': True,
-                        'explain': '-ие ga tugaydigan otlar Predlojnyy kelshikda -и bilan tugaydi.'
+                        'explain': '-ие ga tugaydigan otlar Predlojnyy kelishikda -и bilan tugaydi.'
                     },
                     {
                         'type': 'mc',
@@ -12901,14 +12901,14 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Экскурсия' so'zini Predlojny kelshikda ishlating: Мы были на (экскурсия).",
+                            'prompt': "'Экскурсия' so'zini Predlojny kelishikda ishlating: Мы были на (экскурсия).",
                             'answer': 'экскурсии',
                             'hint': '-ия ga tugaydigan otlar P.p.da -и oladi.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "-ие va -ия bilan tugaydigan 5 ta so'z topib, ularni Predlojny kelshikda gap ichida qo'llang."
+                            'prompt': "-ие va -ия bilan tugaydigan 5 ta so'z topib, ularni Predlojny kelishikda gap ichida qo'llang."
                         }
                     ]
                 }
@@ -12916,13 +12916,13 @@ SUBJECTS = [
             {
                 'slug': 'raznosklonyaemyye-otlar',
                 'title': 'Har xil turlanuvchi otlar (Разносклоняемые существительные)',
-                'summary': "Rus tilidagi -мя bilan tugaydigan 10 ta ot hamda 'пусть' so'zining turlanish qoidalari.",
+                'summary': "Rus tilidagi -мя bilan tugaydigan 10 ta ot hamda 'путь' so'zining turlanish qoidalari.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Rus tilida 10 ta '-мя' bilan tugaydigan neuter (средний род) otlar (время, имя, племя, знамя, бремя, вымя, темя, семя, стремя, пламя) va 'путь' (мужской род) otlari raznosklonyaemyye deyiladi. Ular turlanganda ba'zan 3-turlanish, ba'zan 2-turlanish qo'shimchalarini oladi va '-ен-' surffiksi qo'shiladi."
+                        'body': "Rus tilida 10 ta '-мя' bilan tugaydigan o'rta jinsli (средний род) otlar (время, имя, племя, знамя, бремя, вымя, темя, семя, стремя, пламя) va 'путь' (мужской род) otlari raznosklonyaemyye deyiladi. Ular turlanganda ba'zan 3-turlanish, ba'zan 2-turlanish qo'shimchalarini oladi va '-ен-' suffiksi qo'shiladi."
                     },
                     {
                         'type': 'example',
@@ -12934,19 +12934,19 @@ SUBJECTS = [
                         'title': 'Turlash Tartibi',
                         'items': [
                             "So'z o'zagiga '-ен-' suffiksini qo'shish (время -> врем-ен-и).",
-                            "Творительный kelshikda '-ем' qo'shimchasini ulash (временем, именем).",
-                            "'Семя' va 'стремя' so'zlari Ko'plikning Roditelny kelshigida '-ян-' oladi (семян, стремян)."
+                            "Творительный kelishikda '-ем' qo'shimchasini ulash (временем, именем).",
+                            "'Семя' va 'стремя' so'zlari Ko'plikning Roditelny kelishigida '-ян-' oladi (семян, стремян)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Пусть' so'zi Tvoritelny kelshikda 'путем' shaklida bo'ladi, qolgan vositali kelshiklarda 3-turlanish kabi -и oladi."
+                        'body': "Esda tuting: 'Путь' so'zi Tvoritelny kelishikda 'путем' shaklida bo'ladi, qolgan vositali kelishiklarda 3-turlanish kabi -и oladi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'Время' so'zining Tvoritelnyy kelshikdagi shakli qaysi?",
+                        'q': "'Время' so'zining Tvoritelnyy kelishikdagi shakli qaysi?",
                         'options': [
                             'временем',
                             'времём',
@@ -12954,7 +12954,7 @@ SUBJECTS = [
                             'времени'
                         ],
                         'answer': 0,
-                        'explain': 'Разносклоняемые otlar Tvoritelnyy kelshikda -ем oladi.'
+                        'explain': 'Разносклоняемые otlar Tvoritelnyy kelishikda -ем oladi.'
                     },
                     {
                         'type': 'tf',
@@ -12981,7 +12981,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Имя' so'zini Roditelny kelshikda yozing: У меня нет ...",
+                            'prompt': "'Имя' so'zini Roditelny kelishikda yozing: У меня нет ...",
                             'answer': 'имени',
                             'hint': "O'zakka -ен- qo'shib, -и qo'shimchasini qo'ying."
                         },
@@ -12996,13 +12996,13 @@ SUBJECTS = [
             {
                 'slug': 'sifatlarning-qisqa-va-toliq-shakllari',
                 'title': "Sifatlarning to'liq va qisqa shakllari (Полные и краткие прилагательные)",
-                'summary': "Sifatlarning qisqa shakli hosil bo'lishi, gapdagi vazifasi va gramatik xususiyatlari.",
+                'summary': "Sifatlarning qisqa shakli hosil bo'lishi, gapdagi vazifasi va grammatik xususiyatlari.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sifatlar to'liq (красивый) va qisqa (красив) shakllarga ega. Qisqa sifatlar kelshik bo'yicha turlanmaydi, faqat rod va son bo'yicha o'zgaradi. Ular gapda asosan kesim (сказуемое) vazifasini bajaradi."
+                        'body': "Sifatlar to'liq (красивый) va qisqa (красив) shakllarga ega. Qisqa sifatlar kelishik bo'yicha turlanmaydi, faqat rod va son bo'yicha o'zgaradi. Ular gapda asosan kesim (сказуемое) vazifasini bajaradi."
                     },
                     {
                         'type': 'example',
@@ -13020,7 +13020,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Qisqa sifatlar oxirida shipillatuvchi harflardan so'ng yumshatish belgisi (Ь) yoziylmaydi: хорош, свеж, горяч."
+                        'body': "Esda tuting: Qisqa sifatlar oxirida shipillatuvchi harflardan so'ng yumshatish belgisi (Ь) yozilmaydi: хорош, свеж, горяч."
                     }
                 ],
                 'quiz': [
@@ -13093,7 +13093,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Xatolardan qochish',
                         'items': [
-                            "Hech qachon 'более' so me'yori bilan oddiy qiyosiy shaklni aralashtirmang ('более красивее' - XATO!).",
+                            "Hech qachon 'более' so'zi bilan oddiy qiyosiy shaklni aralashtirmang ('более красивее' - XATO!).",
                             "To'g'ri shakli: 'более красивый' yoki 'красивее'.",
                             "Orttirma darajada ham 'самый лучший' grammatik jihatdan joiz bo'lsa-da, 'самый красивейший' deyish xatodir."
                         ]
@@ -13180,13 +13180,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Сорок', 'нога', 'сто' sonlari faqat ikkita shaklga ega: И.п./В.п. - сорок, сто; qolgan barcha kelshiklarda - сорока, ста."
+                        'body': "Esda tuting: 'Сорок', 'девяносто', 'сто' sonlari faqat ikkita shaklga ega: И.п./В.п. - сорок, девяносто, сто; qolgan barcha kelishiklarda - сорока, девяноста, ста."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'500' sonining Tvoritelny kelshikdagi shakli qaysi?",
+                        'q': "'500' sonining Tvoritelny kelishikdagi shakli qaysi?",
                         'options': [
                             'пятьсот',
                             'пятистам',
@@ -13204,7 +13204,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Сто' sonining Dative kelshigidagi shakli qaysi?",
+                        'q': "'Сто' sonining Datelny kelishigidagi shakli qaysi?",
                         'options': [
                             'сто',
                             'стам',
@@ -13212,7 +13212,7 @@ SUBJECTS = [
                             'стоим'
                         ],
                         'answer': 2,
-                        'explain': "'Сто' vositali kelshiklarda 'ста' shaklini oladi."
+                        'explain': "'Сто' vositali kelishiklarda 'ста' shaklini oladi."
                     }
                 ],
                 'homework': {
@@ -13221,14 +13221,14 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'70' sonini Roditelny kelshikda yozing.",
+                            'prompt': "'70' sonini Roditelny kelishikda yozing.",
                             'answer': 'семидесяти',
                             'hint': 'Семь va десять qismlarini alohida turlang.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "'358' sanoat sonini Tvoritelny kelshikda so'zlar bilan yozing."
+                            'prompt': "'358' sanoat sonini Tvoritelny kelishikda so'zlar bilan yozing."
                         }
                     ]
                 }
@@ -13242,12 +13242,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Olmoshlar 9 guruhga bo'linadi (личные, возвратное, притяжательные, вопросительные, относительные, указательные, определительные, отрицательные, неопределённые). Неопределённые va Отрицательные olmoshlarda НЕ urg'o ostida, НИ urg'osiz yoziladi."
+                        'body': "Olmoshlar 9 guruhga bo'linadi (личные, возвратное, притяжательные, вопросительные, относительные, указательные, определительные, отрицательные, неопределённые). Неопределённые va Отрицательные olmoshlarda НЕ urg'u ostida, НИ urg'usiz yoziladi."
                     },
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "нЕчего (urg'o bor) - ничегО (urg'o yo'q). Если есть предлог: не с кем, ни у кого (3 so'z bo'lib yoziladi)."
+                        'body': "нЕчего (urg'u bor) - ничегО (urg'u yo'q). Если есть предлог: не с кем, ни у кого (3 so'z bo'lib yoziladi)."
                     },
                     {
                         'type': 'steps',
@@ -13284,7 +13284,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Н..кого спросить' birikmasida qaysi harf yoziladi (urg'o bor)?",
+                        'q': "'Н..кого спросить' birikmasida qaysi harf yoziladi (urg'u bor)?",
                         'options': [
                             'ни',
                             'не',
@@ -13315,14 +13315,14 @@ SUBJECTS = [
             },
             {
                 'slug': 'otimli-va-otimsiz-fellar',
-                'title': "O'timli va o me'yorsiz fe'llar (Переходные и непереходные глаголы)",
-                'summary': "Fe'llarning tushum kelshigidagi to'ldiruvchi bilan birkikishi hamda -ся vositasi.",
+                'title': "O'timli va o'timsiz fe'llar (Переходные и непереходные глаголы)",
+                'summary': "Fe'llarning tushum kelishigidagi to'ldiruvchi bilan birikishi hamda -ся vositasi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "O'timli fe'llar (переходные) predlogssiz Vinitelny kelshikdagi otni talab qiladi va harakat to'g'ridan-to'g'ri obyektga o'tadi. Boshqa barcha fe'llar o'timsiz (непереходные) hisoblanadi. '-СЯ' suffiksiga ega fe'llar har doim o'timsizdir."
+                        'body': "O'timli fe'llar (переходные) predlogsiz Vinitelny kelishikdagi otni talab qiladi va harakat to'g'ridan-to'g'ri obyektga o'tadi. Boshqa barcha fe'llar o'timsiz (непереходные) hisoblanadi. '-СЯ' suffiksiga ega fe'llar har doim o'timsizdir."
                     },
                     {
                         'type': 'example',
@@ -13333,9 +13333,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "O'timlilikni aniqlash",
                         'items': [
-                            "Fe'lga 'кого?' 'что?' so'rog'ini berib ko'ring (predlogssiz).",
-                            "Agar tushum kelshigi to'g'ri kelsa - fe'l o'timli.",
-                            "Agar inkor bo'lsa, Roditelny kelshigi ham bo'lishi mumkin (не пил воды)."
+                            "Fe'lga 'кого?' 'что?' so'rog'ini berib ko'ring (predlogsiz).",
+                            "Agar tushum kelishigi to'g'ri kelsa - fe'l o'timli.",
+                            "Agar inkor bo'lsa, Roditelny kelishigi ham bo'lishi mumkin (не пил воды)."
                         ]
                     },
                     {
@@ -13354,7 +13354,7 @@ SUBJECTS = [
                             'учиться'
                         ],
                         'answer': 1,
-                        'explain': "'Написать' predlogssiz Vinitelnyy kelshigini oladi (письмо)."
+                        'explain': "'Написать' predlogsiz Vinitelnyy kelishigini oladi (письмо)."
                     },
                     {
                         'type': 'tf',
@@ -13364,7 +13364,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Не пил (вода)' birikmasida ot qaysi kelshikda bo'ladi va fe'l o'timlimi?",
+                        'q': "'Не пил (вода)' birikmasida ot qaysi kelishikda bo'ladi va fe'l o'timlimi?",
                         'options': [
                             "воду, o'timsiz",
                             "воды, o'timli",
@@ -13372,7 +13372,7 @@ SUBJECTS = [
                             "водой, o'timsiz"
                         ],
                         'answer': 1,
-                        'explain': "Inkor shaklidagi o'timli fe'ldan keyin ot Roditelny kelshikda (воды) kelishi mumkin."
+                        'explain': "Inkor shaklidagi o'timli fe'ldan keyin ot Roditelny kelishikda (воды) kelishi mumkin."
                     }
                 ],
                 'homework': {
@@ -13444,7 +13444,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Решать' fe me'yori Nesovershenny bo'lsa, uning Sovershenny jufti qaysi?",
+                        'q': "'Решать' fe'li Nesovershenny bo'lsa, uning Sovershenny jufti qaysi?",
                         'options': [
                             'порешать',
                             'решить',
@@ -13487,7 +13487,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Изъявительное: я читаю. Сослагательное: я читал бы (гар o'qiganimda). Повелительное: читай, читайте."
+                        'body': "Изъявительное: я читаю. Сослагательное: я читал бы (agar o'qiganimda). Повелительное: читай, читайте."
                     },
                     {
                         'type': 'steps',
@@ -13524,7 +13524,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Ехать' fe me'yorining buyruq mayli qaysi?",
+                        'q': "'Ехать' fe'lining buyruq mayli qaysi?",
                         'options': [
                             'ехай',
                             'едь',
@@ -13562,7 +13562,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sifatdosh (Причастие) - fe'l va sifat belgilarini o'zida mukammal aks ettiruvchi so'z shakli. Sifatdosh iborasi (причастный оборот) - sifatdosh va unga tobey so'zlardan tashkil topadi."
+                        'body': "Sifatdosh (Причастие) - fe'l va sifat belgilarini o'zida mukammal aks ettiruvchi so'z shakli. Sifatdosh iborasi (причастный оборот) - sifatdosh va unga tobe so'zlardan tashkil topadi."
                     },
                     {
                         'type': 'example',
@@ -13600,7 +13600,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Sifatdosh iborasi otdan oldin kelsa, har doim vergul qo'yiladi.",
                         'answer': False,
-                        'explain': "Otdan oldin kelsa, odatda vergul qo me me'yori bo'lmaydi (agar sabab ma'nosi bo'lmasa)."
+                        'explain': "Otdan oldin kelsa, odatda vergul qo'yilmaydi (agar sabab ma'nosi bo'lmasa)."
                     },
                     {
                         'type': 'mc',
@@ -13612,7 +13612,7 @@ SUBJECTS = [
                             'Ravishdosh'
                         ],
                         'answer': 2,
-                        'explain': '-ущ- suffiksli sifatdosh.'
+                        'explain': '-ющ- suffiksli sifatdosh.'
                     }
                 ],
                 'homework': {
@@ -13621,7 +13621,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Gapni to'g'ri tinish belgisi bilan ko'chiring: 'Написаное учеником письмо лежало на столе.' (Iborani otning orqasiga o'tkazib yozing)",
+                            'prompt': "Gapni to'g'ri tinish belgisi bilan ko'chiring: 'Написанное учеником письмо лежало на столе.' (Iborani otning orqasiga o'tkazib yozing)",
                             'answer': 'Письмо, написанное учеником, лежало на столе.',
                             'hint': "'Письмо'dan keyin iborani qo'ying va ikkala tomondan vergul oling."
                         },
@@ -13717,18 +13717,18 @@ SUBJECTS = [
             {
                 'slug': 'sifatdoshlarda-n-va-nn-imlosi',
                 'title': "Sifatdoshlar va fe'ldan yasalgan sifatlarda Н va НН imlosi",
-                'summary': 'Sifatdosh va otglagolnyye prilagatelnyyelarda N va NN yozilishining 4 ta asosiy qoidasi.',
+                'summary': "Sifatdosh va fe'ldan yasalgan sifatlarda (отглагольные прилагательные) Н va НН yozilishining 4 ta asosiy qoidasi.",
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sifatdoshlar va fe'ldan yasalgan sifatlarda НН yozilishi uchun 4 ta shartdan kamida BIRTASI bajarilishi kerak: 1) Prefiks borligi (не- dan tashqari); 2) Tobey so'z borligi (причастный оборот); 3) -ованный / -ёванный suffikslari; 4) Fe'l Sovershenny vid bo'lishi."
+                        'body': "Sifatdoshlar va fe'ldan yasalgan sifatlarda НН yozilishi uchun 4 ta shartdan kamida BIRTASI bajarilishi kerak: 1) Prefiks borligi (не- dan tashqari); 2) Tobe so'z borligi (причастный оборот); 3) -ованный / -ёванный suffikslari; 4) Fe'l Sovershenny vid bo'lishi."
                     },
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Покрашенный (prefiks bor -> НН), крашенный краской (tobey so'z bor -> НН), маринованный (-ованный -> НН), решённая задача (совершенный вид -> НН). LEKIN: крашенный пол (shartlar yo'q -> Н)."
+                        'body': "Покрашенный (prefiks bor -> НН), крашенный краской (tobe so'z bor -> НН), маринованный (-ованный -> НН), решённая задача (совершенный вид -> НН). LEKIN: крашенный пол (shartlar yo'q -> Н)."
                     },
                     {
                         'type': 'steps',
@@ -13736,7 +13736,7 @@ SUBJECTS = [
                         'items': [
                             'Qisqa shaklmi? Qisqa majhul sifatdoshda har doim bitta Н yoziladi (задача решена).',
                             'Prefiks bormi? (пожаренный -> НН).',
-                            "Tobey so'z bormi? (жаренный на масле -> НН).",
+                            "Tobe so'z bormi? (жаренный на масле -> НН).",
                             '-ованный / -ёванный bormi? (организованный -> НН).',
                             "Fe'l Sovershenny vidmi? (купленный -> НН)."
                         ]
@@ -13791,7 +13791,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Н va НН yozilishiga oid 6 ta har xil so me me'yori misollar keltiring va qoidasini izohlang."
+                            'prompt': "Н va НН yozilishiga oid 6 ta har xil so'zlarga misollar keltiring va qoidasini izohlang."
                         }
                     ]
                 }
@@ -13799,7 +13799,7 @@ SUBJECTS = [
             {
                 'slug': 'ravishdosh-va-ravishdosh-iborasi',
                 'title': 'Ravishdosh va Ravishdosh iborasi (Деепричастие и деепричастный оборот)',
-                'summary': 'Ravishdoshning gramatik xususiyatlari va gapdagi grammatik xatolarni oldini olish qoidalari.',
+                'summary': 'Ravishdoshning grammatik xususiyatlari va gapdagi grammatik xatolarni oldini olish qoidalari.',
                 'duration': 20,
                 'lesson': [
                     {
@@ -13837,7 +13837,7 @@ SUBJECTS = [
                             'Подходя к дому, зонт сломался.'
                         ],
                         'answer': 1,
-                        'explain': "Harakatni bajaruvchi shaxs 'я' ham uyni oldiga kelyapti, ham yomg'ir ostida qolyapti."
+                        'explain': "Harakatni bajaruvchi shaxs 'я' ham uyga yaqinlashyapti, ham yomg'ir ostida qolyapti."
                     },
                     {
                         'type': 'tf',
@@ -13976,9 +13976,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Predlogni ot va predlogdan farqlash',
                         'items': [
-                            "Vaqt ma me'yorida bo me me'yorida bo'lsa -> 'в течение', 'в продолжение' (alohida va oxiri E).",
-                            "Sabab ma me'yorida bo'lsa -> 'вследствие' (birga va oxiri E, 'из-за' ga teng).",
-                            "Agar daryo oqimi (течение реки) bo'lsa, u ot hisoblanadi va kelshikda 'в течении' bo me me'yori bo'lishi mumkin."
+                            "Vaqt ma'nosida bo'lsa -> 'в течение', 'в продолжение' (alohida va oxiri E).",
+                            "Sabab ma'nosida bo'lsa -> 'вследствие' (birga va oxiri E, 'из-за' ga teng).",
+                            "Agar daryo oqimi (течение реки) bo'lsa, u ot hisoblanadi va kelishikda 'в течении' bo'lishi mumkin."
                         ]
                     },
                     {
@@ -14137,7 +14137,7 @@ SUBJECTS = [
                         'title': 'Farqlash qoidasi',
                         'items': [
                             "Gapda 'нет' so'zi bo'lsa yoki nazarda tutilsa -> НИ qo'yiladi.",
-                            "Qo'shaloq inkor (не мог не...) tasdiq ma me'yorini beradi va ikkala o me'yorida ham НЕ yoziladi.",
+                            "Qo'shaloq inkor (не мог не...) tasdiq ma'nosini beradi va ikkala o'rinda ham НЕ yoziladi.",
                             "Куда ни... (Qayerga bo'lsa ham...) birikmalarida НИ yoziladi."
                         ]
                     },
@@ -14149,7 +14149,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'На небе н.. шляпki, н.. облачка' bo'sh o'rniga qaysi yuklama mos keladi?",
+                        'q': "'На небе н.. тучки, н.. облачка' bo'sh o'rniga qaysi yuklama mos keladi?",
                         'options': [
                             'не',
                             'ни',
@@ -14161,9 +14161,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Я не мог не знать' birikmasi 'Men bilar edim' degan tasdiq ma me'yorini bildiradi.",
+                        'q': "'Я не мог не знать' birikmasi 'Men bilar edim' degan tasdiq ma'nosini bildiradi.",
                         'answer': True,
-                        'explain': "Qo'shaloq НЕ (не мог не...) tasdiq ma me me'yorini beradi."
+                        'explain': "Qo'shaloq НЕ (не мог не...) tasdiq ma'nosini beradi."
                     },
                     {
                         'type': 'mc',
@@ -14241,9 +14241,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Undov so'zlar gap bo me me'yori bo'lib kela oladi.",
+                        'q': "Undov so'zlar gap bo'lagi bo'lib kela oladi.",
                         'answer': False,
-                        'explain': "Undov so'zlar grammatik jihatdan gap bo'laklari bilan bog me me'yorlanmaydi va gap bo'lagi bo'lmaydi."
+                        'explain': "Undov so'zlar grammatik jihatdan gap bo'laklari bilan bog'lanmaydi va gap bo'lagi bo'lmaydi."
                     },
                     {
                         'type': 'mc',
@@ -14285,7 +14285,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sodda gapda ega va kesim o'rtasida bog'lama (бовязка) bo'lmaganda tire qo'yiladi. Bu asosan ega va kesim Nominative kelshigidagi ot, инфинитив yoki son bilan ifodalanganda yuz beradi."
+                        'body': "Sodda gapda ega va kesim o'rtasida bog'lama (связка) bo'lmaganda tire qo'yiladi. Bu asosan ega va kesim Imenitelnyy kelishigidagi ot, инфинитив yoki son bilan ifodalanganda yuz beradi."
                     },
                     {
                         'type': 'example',
@@ -14297,7 +14297,7 @@ SUBJECTS = [
                         'title': "Tire qo'yilmaydigan holatlar",
                         'items': [
                             "Ega kishi olmoshi bo'lganda (Я студент - tire qo'yilmaydi).",
-                            "Kesim oldida 'как', 'словно', 'будто' nisbiy so'zlari bo'lganda (Прудо как зеркало).",
+                            "Kesim oldida 'как', 'словно', 'будто' qiyosiy bog'lovchilari bo'lganda (Пруд как зеркало).",
                             "Kesim oldida 'не' inkori bo'lganda (Бедность не порок)."
                         ]
                     },
@@ -14323,7 +14323,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "'Жить - родине служить' gapida tire to'g'ri qo'yilgan.",
                         'answer': True,
-                        'explain': "Ikkala bosh bo me'ylak ham инфинитив bilan ifodalangan."
+                        'explain': "Ikkala bosh bo'lak ham инфинитив bilan ifodalangan."
                     },
                     {
                         'type': 'mc',
@@ -14359,7 +14359,7 @@ SUBJECTS = [
             {
                 'slug': 'bir-tarkibli-gaplar',
                 'title': 'Bir tarkibli gaplar turlari (Односоставные предложения)',
-                'summary': 'Определённо-личные, неопределённо-личные, безличные va назывные gaplarning gramatik farqlari.',
+                'summary': 'Определённо-личные, неопределённо-личные, безличные va назывные gaplarning grammatik farqlari.',
                 'duration': 25,
                 'lesson': [
                     {
@@ -14440,7 +14440,7 @@ SUBJECTS = [
             {
                 'slug': 'ajratilgan-ikkinchi-darajali-bolaklar',
                 'title': "Ajratilgan ikkinchi darajali bo'laklar (Обособленные члены предложения)",
-                'summary': "Ajratilgan aniqlovchi, hol va to me'ldiruvchilar va ularda tinish belgilarining ishlatilishi.",
+                'summary': "Ajratilgan aniqlovchi, hol va to'ldiruvchilar va ularda tinish belgilarining ishlatilishi.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -14459,7 +14459,7 @@ SUBJECTS = [
                         'items': [
                             'Kishi olmoshiga tegishli har qanday aniqlovchi ajratiladi (Уставшая, она легла спать).',
                             'Har qanday ravishdosh iborasi va yakka ravishdosh ajratiladi.',
-                            "'Кроме', 'вместо', 'включая', 'за исключением' predlogli to me'ldiruvchilar ajratiladi."
+                            "'Кроме', 'вместо', 'включая', 'за исключением' predlogli to'ldiruvchilar ajratiladi."
                         ]
                     },
                     {
@@ -14496,7 +14496,7 @@ SUBJECTS = [
                             'Shart emas'
                         ],
                         'answer': 0,
-                        'explain': "Kishi olmoshiga tegishli aniqlovchilar har qanday o me'rinda ajratiladi."
+                        'explain': "Kishi olmoshiga tegishli aniqlovchilar har qanday o'rinda ajratiladi."
                     }
                 ],
                 'homework': {
@@ -14505,7 +14505,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Никто кроме тебя ne сможет это сделать' gapida vergullarni qo'ying.",
+                            'prompt': "'Никто кроме тебя не сможет это сделать' gapida vergullarni qo'ying.",
                             'answer': 'Никто, кроме тебя, не сможет это сделать.',
                             'hint': "'Кроме тебя' qismini ikkala tomondan ajrating."
                         },
@@ -14520,7 +14520,7 @@ SUBJECTS = [
             {
                 'slug': 'kirish-sozlar-va-kirish-gaplar',
                 'title': "Kirish so'zlar va kirish gaplar (Вводные слова и предложения)",
-                'summary': "Kirish so'zlarning ma'no turlari va ularni gap bo me'laklaridan farqlash qoidalari.",
+                'summary': "Kirish so'zlarning ma'no turlari va ularni gap bo'laklaridan farqlash qoidalari.",
                 'duration': 20,
                 'lesson': [
                     {
@@ -14538,12 +14538,12 @@ SUBJECTS = [
                         'title': "Kirish so'z emas so'zlarni eslab qolish",
                         'items': [
                             "Quyidagi so'zlar HECH QACHON kirish so'z bo'lmaydi va vergul bilan ajratilmaydi: однако (gap boshida = но), ведь, вот, будто, как будто, словно, едва ли, вряд ли, между тем, как раз.",
-                            "Kirish so'zni gapdan olib tashlasa, gap ma me me'nosi buzilmaydi."
+                            "Kirish so'zni gapdan olib tashlasa, gap ma'nosi buzilmaydi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Однако' gap boshida kelsa teng bog me'lovchi (но) hisoblanadi va undan keyin VERGUL QO'YILMAYDI!"
+                        'body': "Esda tuting: 'Однако' gap boshida kelsa teng bog'lovchi (но) hisoblanadi va undan keyin VERGUL QO'YILMAYDI!"
                     }
                 ],
                 'quiz': [
@@ -14617,8 +14617,8 @@ SUBJECTS = [
                         'title': "Vergul QO'YILMAYDIGAN holatlar",
                         'items': [
                             "Gaplarda umumiy ikkinchi darajali bo'lak (asosan hol) bo'lganda (В саду поют птицы и цветут цветы - 'В саду' ikkalasiga umumiy).",
-                            "Umumiy kirish so me'yori bo'lganda (Кажется, дождь кончился и солнце выходит).",
-                            "Ikkala gap ham so me'roq yoki undov gap bo'lganda (Который час и когда мы пойдём?)."
+                            "Umumiy kirish so'zi bo'lganda (Кажется, дождь кончился и солнце выходит).",
+                            "Ikkala gap ham so'roq yoki undov gap bo'lganda (Который час и когда мы пойдём?)."
                         ]
                     },
                     {
@@ -14679,18 +14679,18 @@ SUBJECTS = [
             {
                 'slug': 'ergashtiruvchi-qoshma-gaplar-spp',
                 'title': "Ergashtiruvchi qo'shma gaplar va ularning tuzilishi (СПП)",
-                'summary': "Bosh gap va ergash gapning munosabati, ko'rsatish so'zlari (указательные слова) va ergashtiruvchi bog me'lovchilar.",
+                'summary': "Bosh gap va ergash gapning munosabati, ko'rsatish so'zlari (указательные слова) va ergashtiruvchi bog'lovchilar.",
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Ergashtiruvchi qo'shma gaplar (СПП) Bosh gap (главное предложение) va Ergash gapdan (придаточное предложение) tashkil topadi. Ergash gap bosh gapga bog'lovchilar va bog me'lovchi so'zlar (союзные слова) orqali bog'lanadi va har doim vergul bilan ajratiladi."
+                        'body': "Ergashtiruvchi qo'shma gaplar (СПП) Bosh gap (главное предложение) va Ergash gapdan (придаточное предложение) tashkil topadi. Ergash gap bosh gapga bog'lovchilar va bog'lovchi so'zlar (союзные слова) orqali bog'lanadi va har doim vergul bilan ajratiladi."
                     },
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': '[Я знаю], (что ты прийдёшь). [Тот], (кто ищет), [всегда найдёт].'
+                        'body': '[Я знаю], (что ты придёшь). [Тот], (кто ищет), [всегда найдёт].'
                     },
                     {
                         'type': 'steps',
@@ -14698,7 +14698,7 @@ SUBJECTS = [
                         'items': [
                             'Bosh gapdan ergash gapga savol bering.',
                             'Ergash gap bosh gapning ichida, oldida yoki orqasida kelishi mumkin.',
-                            "Agar ergash gap bosh gapning o me'rtasida kelsa, u ikkala tomondan vergul bilan ajratiladi."
+                            "Agar ergash gap bosh gapning o'rtasida kelsa, u ikkala tomondan vergul bilan ajratiladi."
                         ]
                     },
                     {
@@ -14721,7 +14721,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Подчинительный союз gap bo me'lagi bo'lib kelishi mumkin.",
+                        'q': "Подчинительный союз gap bo'lagi bo'lib kelishi mumkin.",
                         'answer': False,
                         'explain': "Ergashtiruvchi bog'lovchilar gap bo'lagi bo'lmaydi (союзные слова bo'lishi mumkin)."
                     },
@@ -14759,7 +14759,7 @@ SUBJECTS = [
             {
                 'slug': 'ergash-vaqt-sabab-va-maqsad-gaplar',
                 'title': 'Ergash vaqt, sabab va maqsad gaplar (СПП времени, причины, цели)',
-                'summary': "Когда, потому что, чтобы bog me'lovchilariga ega ergash gaplar va murakkab bog'lovchilarning bo'linishi.",
+                'summary': "Когда, потому что, чтобы bog'lovchilariga ega ergash gaplar va murakkab bog'lovchilarning bo'linishi.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -14774,29 +14774,29 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': "Murakkab bog me'lovchilarni bo'lish",
+                        'title': "Murakkab bog'lovchilarni bo'lish",
                         'items': [
                             "'Потому что', 'для того чтобы' kabi bog'lovchilar ergash gap boshida kelsa bo'linmaydi.",
-                            "Lekin bosh gapda mantiqiy urg'o tushsa, vergul bog'lovchi ichiga qo'yiladi: 'Я пришёл для того, чтобы помочь'."
+                            "Lekin bosh gapda mantiqiy urg'u tushsa, vergul bog'lovchi ichiga qo'yiladi: 'Я пришёл для того, чтобы помочь'."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Так как' bog'lovchisi bilan boshlanuvchi ergash gap har doim BOSH GAPDAN OLDIN keladi."
+                        'body': "Esda tuting: 'Так как' bilan boshlanuvchi sabab ergash gap bosh gapdan oldin ham, keyin ham kelishi mumkin, 'потому что' bilan boshlanuvchi ergash gap esa faqat bosh gapdan keyin keladi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'Так как' bog me'lovchili ergash sabab gap odatda qayerda joylashadi?",
+                        'q': "'Так как' bog'lovchili ergash sabab gap odatda qayerda joylashadi?",
                         'options': [
                             'Bosh gapdan keyin',
                             'Bosh gapdan oldin',
                             "Bosh gap o'rtasida",
                             "Farqi yo'q"
                         ],
-                        'answer': 1,
-                        'explain': "'Так как' bog'lovchisi bilan kelgan sabab ergash gap bosh gapdan OLDIN keladi."
+                        'answer': 3,
+                        'explain': "'Так как' bog'lovchili sabab ergash gap bosh gapdan oldin ham (Так как шёл дождь, мы остались дома), keyin ham (Мы остались дома, так как шёл дождь) kela oladi."
                     },
                     {
                         'type': 'tf',
@@ -14823,7 +14823,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Мы остановились (что)бы отдохнуть' gapidagi bog me'lovchini to'g'ri yozing.",
+                            'prompt': "'Мы остановились (что)бы отдохнуть' gapidagi bog'lovchini to'g'ri yozing.",
                             'answer': 'чтобы',
                             'hint': "Maqsad ergash gap bog'lovchisi birga yoziladi."
                         },
@@ -14855,7 +14855,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Natija bog'lovchisi 'Так что' qoidasi",
                         'items': [
-                            "'Так что' natija bog me'lovchisi bo'lib, VERGUL FAQAT UNING OLDIGA QO'YILADI (так va что o'rtasiga qo'yilmaydi!).",
+                            "'Так что' natija bog'lovchisi bo'lib, VERGUL FAQAT UNING OLDIGA QO'YILADI (так va что o'rtasiga qo'yilmaydi!).",
                             "Agar 'так, что' bo'lib ajratilsa, u o'rin/daraja ergash gapga aylanadi."
                         ]
                     },
@@ -14923,7 +14923,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Bir nechta ergash gapga ega bo'lgan СППlar quyidagi turlarga bo'linadi: 1) Однородное (bir jinsli: bir xil savolga javob beradi va bitta so'zga tegishli); 2) Параллельное (har xil savolga javob beradi); 3) Последовательное (ketma-ket: har bir ergash gap o me'zidan oldingi gapga tobe bo me'ladi)."
+                        'body': "Bir nechta ergash gapga ega bo'lgan СППlar quyidagi turlarga bo'linadi: 1) Однородное (bir jinsli: bir xil savolga javob beradi va bitta so'zga tegishli); 2) Параллельное (har xil savolga javob beradi); 3) Последовательное (ketma-ket: har bir ergash gap o'zidan oldingi gapga tobe bo'ladi)."
                     },
                     {
                         'type': 'example',
@@ -14934,8 +14934,8 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Bir jinsli ergashtirishda vergul qoidasi',
                         'items': [
-                            "Bir jinsli ergash gaplar 'и' bog me'lovchisi bilan bog'lansa, 'И' OLDIDAN VERGUL QO'YILMAYDI (Xuddi bir jinsli bo'laklardagidek).",
-                            "Ketma-ket ergashtirishda ikkita bog me'lovchi yonma-yon kelsa (что если, что когда), agar keyin 'то', 'так' bo'lmasa, vergul qo'yiladi."
+                            "Bir jinsli ergash gaplar 'и' bog'lovchisi bilan bog'lansa, 'И' OLDIDAN VERGUL QO'YILMAYDI (Xuddi bir jinsli bo'laklardagidek).",
+                            "Ketma-ket ergashtirishda ikkita bog'lovchi yonma-yon kelsa (что если, что когда), agar keyin 'то', 'так' bo'lmasa, vergul qo'yiladi."
                         ]
                     },
                     {
@@ -14960,7 +14960,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "'Я знаю, что, если постараться, всё получится' gapida 'что' va 'если' o'rtasida vergul to'g'ri qo'yilgan.",
                         'answer': True,
-                        'explain': "Ikkinchi qismda 'то' so me'yori bo'lmagani uchun 'что' va 'если' o'rtasiga vergul qo'yiladi."
+                        'explain': "Ikkinchi qismda 'то' so'zi bo'lmagani uchun 'что' va 'если' o'rtasiga vergul qo'yiladi."
                     },
                     {
                         'type': 'mc',
@@ -15002,7 +15002,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Bog me me'lovchisiz qo me'shma gaplarda (БСП) sodda gaplar faqat intonatsiya orqali bog'lanadi. Gaplar orasidagi ma me'no munosabatiga qarab Vergul, Nuqtali vergul, Ikki nuqta (Двоеточие) yoki Tire qo'yiladi."
+                        'body': "Bog'lovchisiz qo'shma gaplarda (БСП) sodda gaplar faqat intonatsiya orqali bog'lanadi. Gaplar orasidagi ma'no munosabatiga qarab Vergul, Nuqtali vergul, Ikki nuqta (Двоеточие) yoki Tire qo'yiladi."
                     },
                     {
                         'type': 'example',
@@ -15039,7 +15039,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "БСПda qarama-qarshilik (но, а ma'nosi) bo'lganda TIRE qo'yiladi.",
                         'answer': True,
-                        'explain': "Qarama-qarshilik ma'nosida TIRE qo'yiladi (Chести не убережёшь - потеряешь)."
+                        'explain': "Qarama-qarshilik ma'nosida TIRE qo'yiladi (Хотел помочь - помешал)."
                     },
                     {
                         'type': 'mc',
@@ -15099,7 +15099,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: O'zlashtirma nutqda so me me'roq belgisi va undov belgisi qo'yilmaydi, oddiy nuqta qo'yiladi."
+                        'body': "Esda tuting: O'zlashtirma nutqda so'roq belgisi va undov belgisi qo'yilmaydi, oddiy nuqta qo'yiladi."
                     }
                 ],
                 'quiz': [
@@ -15119,7 +15119,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "O'zlashtirma nutqda (косвенная речь) qo'shtirnoqlar saqlanadi.",
                         'answer': False,
-                        'explain': "O'zlashtirma nutq СПП shaklida yoziladi va qo me'shtirnoq ishlatilmaydi."
+                        'explain': "O'zlashtirma nutq СПП shaklida yoziladi va qo'shtirnoq ishlatilmaydi."
                     },
                     {
                         'type': 'mc',
@@ -15172,14 +15172,14 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Tez-tez uchraydigan grammatik xatolar',
                         'items': [
-                            "'Согласно', 'благодаря', 'вопреки', 'подобно' predloglaridan keyin Ot har doim DATELNYY kelshigida bo me'ladi (согласно расписанию).",
-                            "'По приезде', 'по прилёте', 'по окончании' (Prelojnyy kelshikda 'и' yoki 'е' bilan).",
-                            "Bir jinsli kesimlarning har xil kelshikdagi to'ldiruvchini talab qilishi xatodir (любить и восхищаться природой - XATO; любить природу и восхищаться ею - TO'G'RI)."
+                            "'Согласно', 'благодаря', 'вопреки', 'подобно' predloglaridan keyin Ot har doim DATELNYY kelishigida bo'ladi (согласно расписанию).",
+                            "'По приезде', 'по прилёте', 'по окончании' (Prelojnyy kelishikda 'и' yoki 'е' bilan).",
+                            "Bir jinsli kesimlarning har xil kelishikdagi to'ldiruvchini talab qilishi xatodir (любить и восхищаться природой - XATO; любить природу и восхищаться ею - TO'G'RI)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Благодаря', 'согласно', 'вопреки' predloglari har doim DATELNY kelshikni talab qiladi (согласно документу, благодаря помощи)."
+                        'body': "Esda tuting: 'Благодаря', 'согласно', 'вопреки' predloglari har doim DATELNY kelishikni talab qiladi (согласно документу, благодаря помощи)."
                     }
                 ],
                 'quiz': [
@@ -15193,17 +15193,17 @@ SUBJECTS = [
                             'согласно о приказе'
                         ],
                         'answer': 1,
-                        'explain': "'Согласно' predlogi Datelny kelshigini talab qiladi: согласно приказу."
+                        'explain': "'Согласно' predlogi Datelny kelishigini talab qiladi: согласно приказу."
                     },
                     {
                         'type': 'tf',
                         'q': "'По окончанию школы' iborasi grammatik to'g'ri yozilgan.",
                         'answer': False,
-                        'explain': "To'g'ri shakli: 'По окончаниИ школы' (Predlojnyy kelshik)."
+                        'explain': "To'g'ri shakli: 'По окончаниИ школы' (Predlojnyy kelishik)."
                     },
                     {
                         'type': 'mc',
-                        'q': "'Оплатить' va 'заплатить' fe'llari mos ravishda qanday kelshik oladi?",
+                        'q': "'Оплатить' va 'заплатить' fe'llari mos ravishda qanday kelishik oladi?",
                         'options': [
                             'оплатить за проезд / заплатить проезд',
                             'оплатить проезд / заплатить за проезд',
@@ -15220,14 +15220,14 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Благодаря (хорошая погода) мы пошли гулять' gapidagi otni to'g'ri kelshikda yozing.",
+                            'prompt': "'Благодаря (хорошая погода) мы пошли гулять' gapidagi otni to'g'ri kelishikda yozing.",
                             'answer': 'хорошей погоде',
-                            'hint': "Datelny kelshigi qo'llang."
+                            'hint': "Datelny kelishigi qo'llang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "So me me'zlashuv, ilmiy va rasmiy uslubga oid 1 tadan qisqa matn yoki gaplar yozing va farqini tushuntiring."
+                            'prompt': "So'zlashuv, ilmiy va rasmiy uslubga oid 1 tadan qisqa matn yoki gaplar yozing va farqini tushuntiring."
                         }
                     ]
                 }
@@ -15268,7 +15268,7 @@ SUBJECTS = [
                         'q': "Qaysi gapda paronim to'g'ri qo'llanilgan?",
                         'options': [
                             'Он надел ребёнка в тёплую куртку.',
-                            "Сегодня sky shaharda эффектный метод лечения qo'llanildi.",
+                            'Сегодня в больнице применили эффектный метод лечения.',
                             'Учитель представил нового ученика классу.',
                             'Ученик предоставил результаты конкурса.'
                         ],
@@ -15283,7 +15283,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Aбонент' va 'Aбонемент' paronimlarining to'g'ri farqini toping.",
+                        'q': "'Абонент' va 'Абонемент' paronimlarining to'g'ri farqini toping.",
                         'answer': 0,
                         'options': [
                             'Абонент — shaxs (foydalanuvchi), Абонемент — huquq beruvchi hujjat/chipta.',
@@ -15307,7 +15307,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "'Garantin' va 'Garant' so'zlari ishtirokida bittadan ruscha gap tuzing va ma'nosini tushuntiring."
+                            'prompt': "'Гарантийный' va 'Гарантированный' so'zlari ishtirokida bittadan ruscha gap tuzing va ma'nosini tushuntiring."
                         }
                     ]
                 }
@@ -15332,7 +15332,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Sintaktik tahlil qilish tartibi',
                         'items': [
-                            'Barcha gramatik asoslarni (предикативные центры) aniqlang va belgilang.',
+                            'Barcha grammatik asoslarni (предикативные центры) aniqlang va belgilang.',
                             'Gaplarni qavslarga ajrating: bosh gaplar [...], ergash gaplar (...).',
                             "Bog'lovchi vositalarni (союзы, союзные слова) ko'rib chiqib, ulash turini aniqlang.",
                             "Vergul va boshqa tinish belgilarini chegara bo'yicha qo'yib chiqing."
@@ -15360,7 +15360,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "'и если... то' qurilmasida 'и' va 'если' orasiga har doim vergul qo'yiladi.",
                         'answer': False,
-                        'explain': "Xato. Agar ikkinchi qismda 'то' yoki 'но' sozlar bo'lsa, 'и' va 'если' orasiga vergul QO'YILMAYDI."
+                        'explain': "Xato. Agar ikkinchi qismda 'то' yoki 'но' so'zlari bo'lsa, 'и' va 'если' orasiga vergul QO'YILMAYDI."
                     },
                     {
                         'type': 'mc',
@@ -15381,9 +15381,9 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Quyidagi gapdagi vergullar sonini aniqlang: 'Наступил вечер и хотя sky beqaror bo'lsa ham (небо было пасмурным) мы решили идти дальше потому что время истекало.'",
-                            'answer': '3',
-                            'hint': 'Grammatik asoslar orasidagi va ergash gaplar chegarasidagi vergullarni sanang.'
+                            'prompt': "Quyidagi gapdagi vergullar sonini aniqlang: 'Наступил вечер и хотя небо было пасмурным мы решили идти дальше потому что время истекало.'",
+                            'answer': '4',
+                            'hint': "Наступил вечер, и, хотя небо было пасмурным, мы решили идти дальше, потому что время истекало. ('и' va 'хотя' orasida ham vergul bor, chunki keyin 'то/но' yo'q.)"
                         },
                         {
                             'id': 't2',
@@ -15461,7 +15461,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Ученик, решить задачу, обрадовался' gapini 'который' olmoshi yordamida qayta yazing.",
+                            'prompt': "'Ученик, решивший задачу, обрадовался' gapini 'который' olmoshi yordamida qayta yozing.",
                             'answer': 'Ученик, который решил задачу, обрадовался.',
                             'hint': "Fe'lni o'tgan zamonga va to'g'ri shaklga qo'ying."
                         },
@@ -15482,7 +15482,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Boshqaruvdagi nozik holatlar (Управление)',
-                        'body': "Rus tilida ma'nodosh fe'llar har xil kelishik va predloglarni talab qilishi mumkin. Masalan: оплатить (что?) счёт — NO: оплатить за счёт; payda bo'ladigan eng ko'p xatolardan biri predloglarni noto'g'ri qo'llashdir."
+                        'body': "Rus tilida ma'nodosh fe'llar har xil kelishik va predloglarni talab qilishi mumkin. Masalan: оплатить (что?) счёт — 'оплатить за счёт' emas; payda bo'ladigan eng ko'p xatolardan biri predloglarni noto'g'ri qo'llashdir."
                     },
                     {
                         'type': 'example',
@@ -15493,7 +15493,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Xatolarni aniqlash va tuzatish usuli',
                         'items': [
-                            "'Согласно', 'благодаря', 'вопреки' so'zlaridan keyin Har doim Jo'nalish kelishigi (Дательный падеж) qo'yiladi: Согласно приказУ (приказа emas!).",
+                            "'Согласно', 'благодаря', 'вопреки' so'zlaridan keyin har doim jo'nalish kelishigi (Дательный падеж) qo'yiladi: Согласно приказУ (приказа emas!).",
                             'Уверенность (в чём?) va вера (во что?) boshqaruvlarini aralashtirmang.',
                             'Указывать (на что?), отчитываться (в чём?) shakllarini yodda tuting.'
                         ]
@@ -15567,7 +15567,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Asosiy figuralar',
-                        'body': "• Парцелляция (gapni bo'laklash): Он ушёл. Навсегда. Без слов.\n• Сегментация (Mavzu-рема bo'linishi): Деньги... Где их взять?\n• Инверсия (so'z tartibini buzish): Белеет парус одинокий (одинокий парус белеет emas).\n• Эллипсис (tushirib qoldirish): Мы села — в оригиналы, они — в переводчики."
+                        'body': "• Парцелляция (gapni bo'laklash): Он ушёл. Навсегда. Без слов.\n• Сегментация (тема-рема bo'linishi): Деньги... Где их взять?\n• Инверсия (so'z tartibini buzish): Белеет парус одинокий (одинокий парус белеет emas).\n• Эллипсис (tushirib qoldirish): Мы сёла — в пепел, грады — в прах."
                     },
                     {
                         'type': 'steps',
@@ -15580,7 +15580,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Parsellyatsiya vositasida ajratilgan so me'yoriy grammatikada bitta gapning bo'lagi hisoblanadi, lekin muallif uni nuqta bilan alohida gapga aylantiradi."
+                        'body': "Parsellyatsiya vositasida ajratilgan qism me'yoriy grammatikada bitta gapning bo'lagi hisoblanadi, lekin muallif uni nuqta bilan alohida gapga aylantiradi."
                     }
                 ],
                 'quiz': [
@@ -15598,7 +15598,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Инверсия' — bu gapda so me'yoriy to'g'ri tartibda (Ega + Kesim) joylashishidir.",
+                        'q': "'Инверсия' — bu gapda so'zlarning to'g'ri tartibda (Ega + Kesim) joylashishidir.",
                         'answer': False,
                         'explain': "Xato. Inversiya — bu so'zlarning odatiy tartibini atayin o'zgartirishdir (masalan, Kesim + Ega)."
                     },
@@ -15621,7 +15621,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Он опять опоздал. Снова.' gapidagi ekspressiv usul nomini yazing.",
+                            'prompt': "'Он опять опоздал. Снова.' gapidagi ekspressiv usul nomini yozing.",
                             'answer': 'Парцелляция',
                             'hint': "Nuqta orqali bo'laklash usuli."
                         },
@@ -15655,12 +15655,12 @@ SUBJECTS = [
                         'items': [
                             "So'z o'zagidagi unlilar birikmasiga qarang (ра/оро, ла/оло).",
                             "Old qo'shimchalarni (приставка) tekshiring: из-, воз-, низ-, пред-, чрез- (slavyanizmlar).",
-                            'Sufikslarni tekshiring: -ствиj- (бедствие), -эниj- (решение), -ащ-/-ящ- (горящий).'
+                            'Suffikslarni tekshiring: -ствиj- (бедствие), -эниj- (решение), -ащ-/-ящ- (горящий).'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Sifatdoshlarning '-ащ- / -ящ-, -ущ- / -ющ-' sufikslari ham kelib chiqishiga ko'ra staroslavyanizmdir!"
+                        'body': "Sifatdoshlarning '-ащ- / -ящ-, -ущ- / -ющ-' suffikslari ham kelib chiqishiga ko'ra staroslavyanizmdir!"
                     }
                 ],
                 'quiz': [
@@ -15678,9 +15678,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'-ащ-' sufiksli sifatdoshlar sof sharqiy slavyan (rus) kelib chiqishiga ega.",
+                        'q': "'-ащ-' suffiksli sifatdoshlar sof sharqiy slavyan (rus) kelib chiqishiga ega.",
                         'answer': False,
-                        'explain': "Xato. Bu sufiks старославянский kelib chiqishga ega. Sof ruscha shakli '-ч-' bilan bo'lgan (горячий / горящий)."
+                        'explain': "Xato. Bu suffiks старославянский kelib chiqishga ega. Sof ruscha shakli '-ч-' bilan bo'lgan (горячий / горящий)."
                     },
                     {
                         'type': 'mc',
@@ -15701,7 +15701,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Берег' so'zining staroslavyancha неполногласие shaklini yazing.",
+                            'prompt': "'Берег' so'zining staroslavyancha неполногласие shaklini yozing.",
                             'answer': 'Брег',
                             'hint': "-ере- o'rniga -ре- ishlatiladi."
                         },
@@ -15715,8 +15715,8 @@ SUBJECTS = [
             },
             {
                 'slug': "fe'llarning-harakat-tarzi-va-aspektual-ma'nolar",
-                'title': "Fe'l harakat usullari (Способы действия) va aspektsial semantika",
-                'summary': "Fe'l ko me'yorlarining (вид) grammatik toifasidan tashqari semantik harakat turlari: boshlanuvchi, cheklangan, intensiv va takroriy harakatlar.",
+                'title': "Fe'l harakat usullari (Способы действия) va aspektual semantika",
+                'summary': "Fe'l turlarining (вид) grammatik toifasidan tashqari semantik harakat turlari: boshlanuvchi, cheklangan, intensiv va takroriy harakatlar.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -15741,7 +15741,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: 'Поговорить' fe'li Sovershennyy vid bo'lsada, harakatning to'liq tugashini emas, balki bir oz vaqt davom etganini (ограничительный) bildiradi."
+                        'body': "Esda tuting: 'Поговорить' fe'li Sovershennyy vid bo'lsa-da, harakatning to'liq tugashini emas, balki bir oz vaqt davom etganini (ограничительный) bildiradi."
                     }
                 ],
                 'quiz': [
@@ -15782,7 +15782,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Поработать' fe'lining harakat usuli (способ действия) nomini yazing.",
+                            'prompt': "'Поработать' fe'lining harakat usuli (способ действия) nomini yozing.",
                             'answer': 'Ограничительный',
                             'hint': 'Bir oz vaqt davom etgan harakat.'
                         },
@@ -15869,7 +15869,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Zanjirsimon aloqaga (цепная связь) ega 3 gapdan iborat ruscha kichik matn yazing.'
+                            'prompt': 'Zanjirsimon aloqaga (цепная связь) ega 3 gapdan iborat ruscha kichik matn yozing.'
                         }
                     ]
                 }
@@ -15888,14 +15888,14 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Kantselyarizm va nutqiy ortiqchalik (Плеоназм/Тавтология)',
-                        'body': "• Канцеляризм (sozlashuvda ishlatilmasligi kerak): Мы совершили прогулку -> Мы прогулялись.\n• Плеоназм (ortiqcha so'z): Главная суть (суть o'zi главная), молодой юноша, расплатиться деньгами.\n• Тавтология: Спросить вопрос, объединить вместе."
+                        'body': "• Канцеляризм (so'zlashuvda ishlatilmasligi kerak): Мы совершили прогулку -> Мы прогулялись.\n• Плеоназм (ortiqcha so'z): Главная суть (суть o'zi главная), молодой юноша, расплатиться деньгами.\n• Тавтология: Спросить вопрос, объединить вместе."
                     },
                     {
                         'type': 'steps',
                         'title': 'Matnni tahrir qilish bosqichlari',
                         'items': [
                             "Mantiqiy va nutqiy takrorlarni (плеоназм va тавтология) o'chirib tashlang.",
-                            "Sozlashuv nutqida kantselyar so'z birikmalarini sodda fe'llarga almashtiring.",
+                            "So'zlashuv nutqida kantselyar so'z birikmalarini sodda fe'llarga almashtiring.",
                             "Ilmiy matnda obyektivlikni saqlang (birinchi shaxs 'я' o'rniga 'мы' yoki majhul nisbat)."
                         ]
                     },
@@ -15919,7 +15919,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Имеет место быть' iborasi zamonaviy adabiy rus tili me me'yorlariga ko'ra to'g'ri hisoblanadi.",
+                        'q': "'Имеет место быть' iborasi zamonaviy adabiy rus tili me'yorlariga ko'ra to'g'ri hisoblanadi.",
                         'answer': False,
                         'explain': "Xato. Bu noto'g'ri kantselyar duragay bo'lib, adabiy tilda 'имеет место' yoki 'имеет быть' deb ishlatilishi kerak."
                     },
@@ -15942,14 +15942,14 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Xatoni tuzatib yazing: 'Я написал свою автобиографию.'",
+                            'prompt': "Xatoni tuzatib yozing: 'Я написал свою автобиографию.'",
                             'answer': 'Я написал автобиографию.',
                             'hint': "'Свою' so'zini chiqarib tashlang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Pleonazm va Tavtologiyaga 2 tadan misol topib, ularning to'g'ri variantini yazing."
+                            'prompt': "Pleonazm va Tavtologiyaga 2 tadan misol topib, ularning to'g'ri variantini yozing."
                         }
                     ]
                 }
@@ -15996,7 +15996,7 @@ SUBJECTS = [
                             'Литота'
                         ],
                         'answer': 1,
-                        'explain': "'Золая' ko'chma ma'nodagi sifatlovchi bo'lib, Эпитет hisoblanadi."
+                        'explain': "'Золотая' ko'chma ma'nodagi sifatlovchi bo'lib, Эпитет hisoblanadi."
                     },
                     {
                         'type': 'tf',
@@ -16023,7 +16023,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Шепчут деревья...' gapidagi badiiy tasvir vositasining (троп) nomini yazing.",
+                            'prompt': "'Шепчут деревья...' gapidagi badiiy tasvir vositasining (троп) nomini yozing.",
                             'answer': 'Олицетворение',
                             'hint': 'Jonlantirish usuli (метод одушевления).'
                         },
@@ -21797,7 +21797,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Reseptiv estetikaga ko'ra, badiiy asar ma'nosi faqat muallif tomonidan uzil-kesil belgilanadi.",
                         'answer': False,
-                        'explain': "Yo'q, reseptiv estetikada asar ma me'nosi matn va o'quvchi muloqoti natijasida hosil bo me'yorlanadi."
+                        'explain': "Yo'q, reseptiv estetikada asar ma'nosi matn va o'quvchi muloqoti natijasida hosil bo me'yorlanadi."
                     },
                     {
                         'type': 'mc',
@@ -29586,7 +29586,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Siz telefoningizni ushlab turishingiz (egalik), undan qo me'ng'iroq qilishingiz (foydalanish) va uni kimgadir sovg'a qilishingiz yoki sotishingiz (tasarruf etish) mukammal mulk huquqini tashkil etadi."
+                        'body': "Siz telefoningizni ushlab turishingiz (egalik), undan qo'ng'iroq qilishingiz (foydalanish) va uni kimgadir sovg'a qilishingiz yoki sotishingiz (tasarruf etish) mukammal mulk huquqini tashkil etadi."
                     },
                     {
                         'type': 'steps',
@@ -29720,7 +29720,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Oferta va Aksept o'rtasidagi bog me'liqlikni yozing.",
+                            'prompt': "Oferta va Aksept o'rtasidagi bog'liqlikni yozing.",
                             'answer': 'Oferta — taklif, Aksept esa shu taklifni qabul qilishdir; ikkalasi birgalikda shartnomani vujudga keltiradi.',
                             'hint': 'Taklif va rozilik.'
                         },
@@ -29836,7 +29836,7 @@ SUBJECTS = [
                             'Oilada yashash va tarbiyalanish huquqi.',
                             'Ota-onasi va boshqa qarindoshlari bilan muloqot qilish huquqi.',
                             "O'z fikrini bildirish huquqi (10 yoshdan e'tiborga olinadi).",
-                            "Ta me'minot olish va mulk huquqi."
+                            "Ta'minot olish va mulk huquqi."
                         ]
                     },
                     {
@@ -30069,7 +30069,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Jamoat joyida haqoratli so me'zlar ishlatish (mayda bezorilik) yoki belgilangan joydan boshqa joyga axlat tashlash ma'muriy huquqbuzarlikdir."
+                        'body': "Jamoat joyida haqoratli so'zlar ishlatish (mayda bezorilik) yoki belgilangan joydan boshqa joyga axlat tashlash ma'muriy huquqbuzarlikdir."
                     },
                     {
                         'type': 'steps',
@@ -30230,7 +30230,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "O me me'rilik (boshqaning mulkini yashirin ravishda talan-taroj qilish) Jinoyat kodeksi bo'yicha javobgarlikka sabab bo'ladi."
+                        'body': "O'g'rilik (boshqaning mulkini yashirin ravishda talan-taroj qilish) Jinoyat kodeksi bo'yicha javobgarlikka sabab bo'ladi."
                     },
                     {
                         'type': 'steps',
@@ -30270,7 +30270,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "Jinoyat kodeksida ko'rsatib qo'yilmagan harakat uchun jazo qo'llash mumkinmi?",
                         'options': [
-                            "Ha, agar u ma me'naviyatga zid bo'lsa",
+                            "Ha, agar u ma'naviyatga zid bo'lsa",
                             "Yo'q, faqat kodeksda ko'rsatilgan qilmishlargina jinoyatdir",
                             "Sudiya xohishiga bog'liq",
                             'Mahalla qarori bilan mumkin'
@@ -30392,7 +30392,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Qasddan odam o'ldirish, bosqinchilik, o'g me'rilik, ta'magirlik kabi og'ir jinoyatlar uchun javobgarlik 14 yoshdan belgilanadi."
+                        'body': "Qasddan odam o'ldirish, bosqinchilik, o'g'rilik, ta'magirlik kabi og'ir jinoyatlar uchun javobgarlik 14 yoshdan belgilanadi."
                     },
                     {
                         'type': 'steps',
@@ -30481,7 +30481,7 @@ SUBJECTS = [
                         'items': [
                             "Insonning qulay atrof-muhitga bo'lgan huquqini ta'minlash.",
                             'Tabiiy resurslardan oqilona foydalanish.',
-                            "Ekologik zararni qoplash (zarar yetkazgan to me'laydi).",
+                            "Ekologik zararni qoplash (zarar yetkazgan to'laydi).",
                             'Ekologik huquqbuzarliklar uchun javobgarlikning muqarrarligi.'
                         ]
                     },
@@ -30574,7 +30574,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Nuqsonsiz (sog'lom) me'yoriy tovarni boshqa o me'chamga almashtirish uchun xaridorga necha kun muddat beriladi?",
+                        'q': "Nuqsonsiz (sog'lom) me'yoriy tovarni boshqa o'lchamga almashtirish uchun xaridorga necha kun muddat beriladi?",
                         'options': [
                             '3 kun',
                             '7 kun',
@@ -30801,7 +30801,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': "Advokatning asosiy faoliyat yo me'nalishlari",
+                        'title': "Advokatning asosiy faoliyat yo'nalishlari",
                         'items': [
                             "Fuqarolarga huquqiy masalalar bo'yicha maslahatlar va tushuntirishlar berish.",
                             'Sudlarda, davlat idoralarida mijozning manfaatlarini himoya qilish.',
@@ -30853,7 +30853,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'Advokatlik siri nima?',
-                            'answer': "Mijozning advokatga ishonib topshirgan har qanday ma me'lumoti va advokatlik faoliyati davomida ma me'lum bo'lgan sirlarning maxfiyligi.",
+                            'answer': "Mijozning advokatga ishonib topshirgan har qanday ma'lumoti va advokatlik faoliyati davomida ma'lum bo'lgan sirlarning maxfiyligi.",
                             'hint': 'Maxfiylik prinsipi.'
                         },
                         {
@@ -30992,7 +30992,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Fuqarolar o'zlarining konstitutsiyaviy huquq va erkinliklarini himoya qilish uchun Konstitutsiyaviy sudga bevosita murojaat qilish huquqiga ega.",
                         'answer': True,
-                        'explain': "Konstitutsiyaviy islohotlardan so me'ng fuqarolarga Konstitutsiyaviy sudga shikoyat kiritish huquqi berildi."
+                        'explain': "Konstitutsiyaviy islohotlardan so'ng fuqarolarga Konstitutsiyaviy sudga shikoyat kiritish huquqi berildi."
                     },
                     {
                         'type': 'mc',
@@ -31131,7 +31131,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Urush jinoyatlari va insoniyatga qarshi jinoyatlar uchun da'vo muddati o me'tmaydi."
+                        'body': "Esda tuting: Urush jinoyatlari va insoniyatga qarshi jinoyatlar uchun da'vo muddati o'tmaydi."
                     }
                 ],
                 'quiz': [
@@ -31193,7 +31193,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Korrupsiya — shaxsning o'z mansab yoki xizmat mavqeidan shaxsiy manfaatlari yo me'lida noqonuniy foydalanishidir. U davlat va jamiyat rivojiga g'ov bo'ladi."
+                        'body': "Korrupsiya — shaxsning o'z mansab yoki xizmat mavqeidan shaxsiy manfaatlari yo'lida noqonuniy foydalanishidir. U davlat va jamiyat rivojiga g'ov bo'ladi."
                     },
                     {
                         'type': 'example',
@@ -31274,7 +31274,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Huquqiy davlat — bu barcha faoliyatida qonun ustuvor bo'lgan, inson huquqlari eng oliy qadriyat sanalgan va hokimiyat bo me'linishi tamoyili amal qiladigan davlatdir."
+                        'body': "Huquqiy davlat — bu barcha faoliyatida qonun ustuvor bo'lgan, inson huquqlari eng oliy qadriyat sanalgan va hokimiyat bo'linishi tamoyili amal qiladigan davlatdir."
                     },
                     {
                         'type': 'example',
@@ -33860,7 +33860,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Qisqa (1 bo'g'inli) sifatlarga -er/-est qo'shimchalari qo'shiladi. Ko'p bo'g me'zonli sifatlar oldidan more/most ishlatiladi. Ba'zi sifatlar esa o'zagidan o'zgaradi."
+                        'body': "Qisqa (1 bo'g'inli) sifatlarga -er/-est qo'shimchalari qo'shiladi. Ko'p bo'g'inli sifatlar oldidan more/most ishlatiladi. Ba'zi sifatlar esa o'zagidan o'zgaradi."
                     },
                     {
                         'type': 'example',
@@ -34357,7 +34357,7 @@ SUBJECTS = [
                         'items': [
                             'Enjoy, avoid, mind, suggest -> V-ing qabul qiladi.',
                             'Decide, hope, plan, promise -> To + V1 qabul qiladi.',
-                            "Stop, remember, forget fe me'zonlarini ma'nosiga qarab tanlang."
+                            "Stop, remember, forget fe'llarini ma'nosiga qarab tanlang."
                         ]
                     },
                     {
@@ -34517,7 +34517,7 @@ SUBJECTS = [
                         'items': [
                             'Hozir shu topshiriq vaqtida qaror qildingizmi? -> Will.',
                             'Oldindan niyatingiz bor ammo aniq vaqti belgilanmaganmi? -> Be going to.',
-                            "Aniq vaqti va joyi kelishib qo me'zonlangan rejami? -> Present Continuous."
+                            "Aniq vaqti va joyi kelishib qo'yilgan rejami? -> Present Continuous."
                         ]
                     },
                     {
@@ -35100,7 +35100,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Every' so me'zidan keyin har doim ko'plikdagi ot keladi.",
+                        'q': "'Every' so'zidan keyin har doim ko'plikdagi ot keladi.",
                         'answer': False,
                         'explain': "Xato. 'Every' dan keyin har doim birlikdagi ot keladi (e.g. Every student)."
                     },
@@ -35118,7 +35118,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Quantifier so me'zlarini to'g'ri tanlang.",
+                    'intro': "Quantifier so'zlarini to'g'ri tanlang.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -35157,7 +35157,7 @@ SUBJECTS = [
                         'items': [
                             'Complex Object: Want, expect, ask, order + person + TO + V1.',
                             "Make va Let fe'llaridan keyin 'TO' ISHLATILMAYoTGANINI tekshiring.",
-                            "Complex Subject: Ega + Passive fe me'l (is said/believed) + TO + V1."
+                            "Complex Subject: Ega + Passive fe'l (is said/believed) + TO + V1."
                         ]
                     },
                     {
@@ -35210,7 +35210,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Ota-onangiz sizdan nima qilishni so me'rashini (Complex Object yordamida 2 ta gap) yozing."
+                            'prompt': "Ota-onangiz sizdan nima qilishni so'rashini (Complex Object yordamida 2 ta gap) yozing."
                         }
                     ]
                 }
@@ -35397,7 +35397,7 @@ SUBJECTS = [
                         'items': [
                             "Asosiy gap va ergash gapning EGASI BIR xil bo'lishi shart!",
                             "Faol harakat bo'lsa -> V-ing qo'llang.",
-                            "Majhul holat bo me'sa -> V3 (-ed) qo'llang.",
+                            "Majhul holat bo'lsa -> V3 (-ed) qo'llang.",
                             "Oldinroq tugallangan faol harakat uchun -> Having + V3 qo'llang."
                         ]
                     },
@@ -35501,7 +35501,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Look after' phrasal fe'li ajraladigan fe me'ldir (e.g. look him after).",
+                        'q': "'Look after' phrasal fe'li ajraladigan fe'ldir (e.g. look him after).",
                         'answer': False,
                         'explain': "Xato. 'Look after' ajralmaydi: look after him bo'ladi."
                     },
@@ -35625,7 +35625,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Cleft sentences gapdagi muayyan bo me me'lakka (ega, to'ldiruvchi, hol) alohida diqqatni qaratish uchun ishlatiladi. 'It-cleft': It is/was [urg'u beriladigan qism] that... 'Wh-cleft': What [subject] [verb] is/was..."
+                        'body': "Cleft sentences gapdagi muayyan bo'lakka (ega, to'ldiruvchi, hol) alohida diqqatni qaratish uchun ishlatiladi. 'It-cleft': It is/was [urg'u beriladigan qism] that... 'Wh-cleft': What [subject] [verb] is/was..."
                     },
                     {
                         'type': 'example',
@@ -35785,7 +35785,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Nutqda va yozuvda bir xil so'zlarni takrorlamaslik uchun Ellipsis (so me'zni tushirib qoldirish) va Substitution (do so, so, one/ones, neither kabi so me'zlar bilan almashtirish) usullaridan foydalaniladi."
+                        'body': "Nutqda va yozuvda bir xil so'zlarni takrorlamaslik uchun Ellipsis (so'zni tushirib qoldirish) va Substitution (do so, so, one/ones, neither kabi so'zlar bilan almashtirish) usullaridan foydalaniladi."
                     },
                     {
                         'type': 'example',
@@ -36025,7 +36025,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Hedging ilmiy va akademik matnlarda biror fikrni 100% absolyut qilib ko'rsatmasdan, ehtimollik va ehtiyotkorlik bilan taqdim etish usulidir. Bunda 'seem, appear, tend to, it is likely that, possibly' kabi so me'zlardan foydalaniladi."
+                        'body': "Hedging ilmiy va akademik matnlarda biror fikrni 100% absolyut qilib ko'rsatmasdan, ehtimollik va ehtiyotkorlik bilan taqdim etish usulidir. Bunda 'seem, appear, tend to, it is likely that, possibly' kabi so'zlardan foydalaniladi."
                     },
                     {
                         'type': 'example',
@@ -36043,7 +36043,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Akademik ilmiy ishlarda 'always', 'never', 'definitely' kabi keskin so me'zlardan qochish kerak."
+                        'body': "Esda tuting: Akademik ilmiy ishlarda 'always', 'never', 'definitely' kabi keskin so'zlardan qochish kerak."
                     }
                 ],
                 'quiz': [
@@ -36105,7 +36105,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Yuqori darajadagi (C1/C2) yozuv va nutqda ma'lum bir bo'lakni gap boshiga olib o'tish (Fronting) hamda o me'rin-joy predloglari bilan inversiya qilish (Locative Inversion) o me'ta ta'sirchan uslub hisoblanadi."
+                        'body': "Yuqori darajadagi (C1/C2) yozuv va nutqda ma'lum bir bo'lakni gap boshiga olib o'tish (Fronting) hamda o'rin-joy predloglari bilan inversiya qilish (Locative Inversion) o'ta ta'sirchan uslub hisoblanadi."
                     },
                     {
                         'type': 'example',
@@ -36116,9 +36116,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Locative Inversion bosqichlari',
                         'items': [
-                            "O me'rin-joy predlog iborasini gap boshiga chiqaring (e.g. On the table...).",
+                            "O'rin-joy predlog iborasini gap boshiga chiqaring (e.g. On the table...).",
                             "Asosiy fe'lni (stand, lie, sit, come) egadan oldinga o'tkazing.",
-                            "Egani fe me'ldan keyin yozing (yordamchi fe'l ShART EMAS)."
+                            "Egani fe'ldan keyin yozing (yordamchi fe'l ShART EMAS)."
                         ]
                     },
                     {
