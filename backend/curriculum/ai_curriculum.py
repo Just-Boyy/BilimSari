@@ -6421,25 +6421,25 @@ SUBJECTS = [
             {
                 'slug': 'soz-birikmasi-va-uning-turlari',
                 'title': "So'z birikmasi va ularning birikish usullari",
-                'summary': "Mustaqil so'zlarning ma'no va grammatik jihatdan tobe bog'lanishidan hosil bo mezonlari va turkumlanishi.",
+                'summary': "Mustaqil so'zlarning ma'no va grammatik jihatdan tobe bog'lanishidan hosil bo'lgan birikmalar va ularning turkumlanishi.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': "So'z birikmasining mohiyati",
-                        'body': "Ikki yoki undan ortiq mustaqil so'zning ma'no va grammatik jihatdan tobe munosabatga kirishuvi so'z birikmasi deyiladi. U hokim va tobiy qismdan iborat."
+                        'body': "Ikki yoki undan ortiq mustaqil so'zning ma'no va grammatik jihatdan tobe munosabatga kirishuvi so'z birikmasi deyiladi. U hokim va tobe qismdan iborat."
                     },
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "'Alochi o'quvchi' birikmasida 'o'quvchi' - hokim so'z, 'alochi' - tobiy so'z."
+                        'body': "'A'lochi o'quvchi' birikmasida 'o'quvchi' - hokim so'z, 'a'lochi' - tobe so'z."
                     },
                     {
                         'type': 'steps',
                         'title': 'Birikish usullari',
                         'items': [
-                            "Moslashuv: Tobiy so'z hokim so'zga egalik va shaxs-son qo'shimchalari orqali moslashadi.",
-                            "Boshqaruv: Hokim so'z tobiy so mezoniga kelshik yoki ko'makchilar talab qiladi.",
+                            "Moslashuv: Tobe so'z hokim so'zga egalik va shaxs-son qo'shimchalari orqali moslashadi.",
+                            "Boshqaruv: Hokim so'z tobe so'zning ma'lum kelishikda yoki ko'makchi bilan kelishini talab qiladi.",
                             "Bitishuv: So'zlar faqat ma'no va tartib orqali birikadi."
                         ]
                     },
@@ -6465,19 +6465,19 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Ega va kesim birikmasi so'z birikmasi sanaladi.",
                         'answer': False,
-                        'explain': "Ega va kesim munosabati predivativ aloqa bo'lib, u gapni hosil qiladi."
+                        'explain': "Ega va kesim munosabati predikativ aloqa bo'lib, u gapni hosil qiladi."
                     },
                     {
                         'type': 'mc',
-                        'q': "Boshqaruv usulida tobiy so'z qanday shakllanadi?",
+                        'q': "Boshqaruv usulida tobe so'z qanday shakllanadi?",
                         'options': [
                             "Egalik qo'shimchasi bilan",
-                            "Keliik yoki ko'makchi bilan",
+                            "Kelishik yoki ko'makchi bilan",
                             "Shakl yasovchi qo'shimchasiz",
                             "Nisbat qo'shimchasi bilan"
                         ],
                         'answer': 1,
-                        'explain': "Boshqaruvda tobiy so'z tushum, jo'nalish, o'rin-payt, chiqish kelishiklari yoki ko'makchilar oladi."
+                        'explain': "Boshqaruvda tobe so'z tushum, jo'nalish, o'rin-payt, chiqish kelishiklari yoki ko'makchilar oladi."
                     }
                 ],
                 'homework': {
@@ -6488,7 +6488,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "'Kitobni o'qish' birikmasidagi bog'lanish usulini aniqlang.",
                             'answer': 'Boshqaruv',
-                            'hint': "Tobiy so'zda tushum kelishigi qo'llangan."
+                            'hint': "Tobe so'zda tushum kelishigi qo'llangan."
                         },
                         {
                             'id': 't2',
@@ -6507,7 +6507,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Erkin va turg'un birikmalar farqi",
-                        'body': "Erkin birikmalarda har bir so'z o'zining leksik ma'nosini saqlaydi. Turg'un birikmalarda (iboralarda) so mezonlari yaxlit bitta ko'chma ma'noni anglatadi."
+                        'body': "Erkin birikmalarda har bir so'z o'zining leksik ma'nosini saqlaydi. Turg'un birikmalarda (iboralarda) so'zlar yaxlit bitta ko'chma ma'noni anglatadi."
                     },
                     {
                         'type': 'example',
@@ -6552,12 +6552,12 @@ SUBJECTS = [
                         'q': "'Tili uzun' iborasining ma'nodoshi qaysi?",
                         'options': [
                             'bedana dil',
-                            'betgachaparlar',
+                            'betgachoparlar',
                             'pishiq',
                             'kamgap'
                         ],
                         'answer': 1,
-                        'explain': "'Tili uzun' va 'betgachapar' tili o'tkir, beandisha ma'nolarida ishlatiladi."
+                        'explain': "'Tili uzun' va 'betgachopar' tili o'tkir, beandisha ma'nolarida ishlatiladi."
                     }
                 ],
                 'homework': {
@@ -6581,7 +6581,7 @@ SUBJECTS = [
             {
                 'slug': 'gapning-maqsadga-ko-ra-turlari',
                 'title': "Gapning maqsadga ko'ra turlari va punktuatsiyasi",
-                'summary': "Darak, so'roq, buyruq va xitob gaplarning ifodalanishi va tinish belgilari rules.",
+                'summary': "Darak, so'roq, buyruq va xitob gaplarning ifodalanishi va tinish belgilari qoidalari.",
                 'duration': 20,
                 'lesson': [
                     {
@@ -6611,7 +6611,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Buyruq gapning kesimi qaysi menda bo'ladi?",
+                        'q': "Buyruq gapning kesimi qaysi shaklda bo'ladi?",
                         'options': [
                             "Ijro va istak fe'li",
                             "Buyruq-istak maylidagi fe'l",
@@ -6747,7 +6747,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kesim turlari',
-                        'body': "Kesimlar qaysi so'z turkumi bilan ifodalanishiga ko'ra fe'l-kesim va ot-kesimga, tuzilishiga ko mezonidan sodda va murakkab kesimlarga bo'linadi."
+                        'body': "Kesimlar qaysi so'z turkumi bilan ifodalanishiga ko'ra fe'l-kesim va ot-kesimga, tuzilishiga ko'ra sodda va murakkab kesimlarga bo'linadi."
                     },
                     {
                         'type': 'example',
@@ -6939,11 +6939,11 @@ SUBJECTS = [
                             'Tarz holi'
                         ],
                         'answer': 1,
-                        'explain': "'Bilimsizlikdan' xatoga yo'l qo mezonining sababini ko'rsatmoqda."
+                        'explain': "'Bilimsizlikdan' xatoga yo'l qo'yilishining sababini ko'rsatmoqda."
                     },
                     {
                         'type': 'tf',
-                        'q': 'Maqsad holi va sabab holi bir xil so mezonlariga javob beradi.',
+                        'q': "Maqsad holi va sabab holi bir xil so'roqlarga javob beradi.",
                         'answer': False,
                         'explain': "Maqsad 'nima maqsadda?', sabab 'nima sababdan?' so'roqlariga javob bo'ladi."
                     },
@@ -7033,7 +7033,7 @@ SUBJECTS = [
                             'Katta bino',
                             "O'qigan odam",
                             'Uchta kitob',
-                            'Usha joy'
+                            "O'sha joy"
                         ],
                         'answer': 1,
                         'explain': "'O'qigan' - sifatdosh shakli bo'lib, 'odam' so'zini aniqlamoqda."
@@ -7066,7 +7066,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Bir tarkibli gap tushunchasi',
-                        'body': "Gaplar gramatik markazining tarkibiga ko'ra ikki tarkibli (ega va kesim) hamda bir tarkibli (faqat ega yoki faqat kesim) bo'ladi."
+                        'body': "Gaplar grammatik markazining tarkibiga ko'ra ikki tarkibli (ega va kesim) hamda bir tarkibli (faqat ega yoki faqat kesim) bo'ladi."
                     },
                     {
                         'type': 'example',
@@ -7094,7 +7094,7 @@ SUBJECTS = [
                             'Bugun topshiriqni bajaramiz.',
                             'Kuz keldi.',
                             "Oz bo'lsin, soz bo'lsin.",
-                            "Ko'chada yog'mur."
+                            "Ko'chada yomg'ir."
                         ],
                         'answer': 0,
                         'explain': "'Bajaramiz' kesimidan eganing 'Biz' ekani aniq ko'rinib turibdi."
@@ -7139,7 +7139,7 @@ SUBJECTS = [
             {
                 'slug': 'shaxsi-nomalum-va-egasiz-gaplar',
                 'title': "Shaxsi noma'lum va egasiz gaplar",
-                'summary': "Harakat bajaruvisi noma'lum bo'lgan yoki egani umuman qo'llab bo'lmaydigan gap strukturalari.",
+                'summary': "Harakat bajaruvchisi noma'lum bo'lgan yoki egani umuman qo'llab bo'lmaydigan gap strukturalari.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -7162,7 +7162,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Egasiz gaplarda ega uchun oratliq joy mutlaqo mavjud emas.'
+                        'body': "Esda tuting: Egasiz gaplarda ega uchun o'rin mutlaqo mavjud emas."
                     }
                 ],
                 'quiz': [
@@ -7194,7 +7194,7 @@ SUBJECTS = [
                             'yozdim'
                         ],
                         'answer': 3,
-                        'explain': "'Yozdim' I shaxs fe mezoni bo'lib, shaxsi aniq gap hosil qiladi."
+                        'explain': "'Yozdim' I shaxs fe'li bo'lib, shaxsi aniq gap hosil qiladi."
                     }
                 ],
                 'homework': {
@@ -7298,7 +7298,7 @@ SUBJECTS = [
             {
                 'slug': 'uyushiq-bolaklar-va-tinish-belgilari',
                 'title': "Gapning uyushiq bo'laklari va tinish belgilari",
-                'summary': "Bir xil so'roqqa javob bo'lib, bir xil sintaktik vazifani bajaruvchi teng huquqli bo'laklar hamda punktuatsiya rules.",
+                'summary': "Bir xil so'roqqa javob bo'lib, bir xil sintaktik vazifani bajaruvchi teng huquqli bo'laklar hamda punktuatsiya qoidalari.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -7322,13 +7322,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Uyushgan bo mezonlarining umumiylashtiruvchi so'zi kelganda ikki nuqta va tire qo'llanishi mumkin."
+                        'body': "Esda tuting: Uyushgan bo'laklarning umumlashtiruvchi so'zi kelganda ikki nuqta va tire qo'llanishi mumkin."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Umumiylashtiruvchi so'z uyushiq bo'laklardan Oldin kelsa qaysi tinish belgisi qo'yiladi?",
+                        'q': "Umumlashtiruvchi so'z uyushiq bo'laklardan oldin kelsa qaysi tinish belgisi qo'yiladi?",
                         'options': [
                             'Tire',
                             'Ikki nuqta',
@@ -7336,7 +7336,7 @@ SUBJECTS = [
                             'Nuqtali vergul'
                         ],
                         'answer': 1,
-                        'explain': "Umumiylashtiruvchi so'z oldin kelsa, undan keyin ikki nuqta qo'yiladi."
+                        'explain': "Umumlashtiruvchi so'z oldin kelsa, undan keyin ikki nuqta qo'yiladi."
                     },
                     {
                         'type': 'tf',
@@ -7346,7 +7346,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Qaysi gapda uyushiq egagalar berilgan?',
+                        'q': 'Qaysi gapda uyushiq egalar berilgan?',
                         'options': [
                             'U kitob va daftarni oldi.',
                             'Ali va Vali maktabga borishdi.',
@@ -7364,13 +7364,13 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "'Hamma: o'qituvchilar o'quvchilar va ota-onalar yig'ilishdi' gapidagi tinish belgilarini to'g'rilang.",
-                            'answer': "Hamma: o'qituvchilar, o mezonlar va ota-onalar yig'ilishdi.",
+                            'answer': "Hamma: o'qituvchilar, o'quvchilar va ota-onalar yig'ilishdi.",
                             'hint': "Ikki nuqta va sanash orasidagi vergullarga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Umumiylashtiruvchi so'z uyushiq bo'laklardan Keyin kelgan gap tuzing."
+                            'prompt': "Umumlashtiruvchi so'z uyushiq bo'laklardan keyin kelgan gap tuzing."
                         }
                     ]
                 }
@@ -7378,13 +7378,13 @@ SUBJECTS = [
             {
                 'slug': 'ajratilgan-bolaklar-va-punktuatsiya',
                 'title': "Ajratilgan bo'laklar va ularda tinish belgilari",
-                'summary': "O'zidan oldingi bo'lakning ma mezonini aniqlashtirib, mantiqan va intonatsion ajralib turuvchi ikkinchi darajali bo'laklar.",
+                'summary': "O'zidan oldingi bo'lakning ma'nosini aniqlashtirib, mantiqan va intonatsion ajralib turuvchi ikkinchi darajali bo'laklar.",
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': "Ajratilgan bo'lak tushunchasi",
-                        'body': "O'zi bog'langan bo'lak ma mezonini izohlab, aniqlashtirib keladigan va alohida intonatsiya bilan aytiladigan bo'laklar ajratilgan bo'laklar deyiladi."
+                        'body': "O'zi bog'langan bo'lak ma'nosini izohlab, aniqlashtirib keladigan va alohida intonatsiya bilan aytiladigan bo'laklar ajratilgan bo'laklar deyiladi."
                     },
                     {
                         'type': 'example',
@@ -7412,7 +7412,7 @@ SUBJECTS = [
                             'Biz, yoshlar, kelajak bunyodkorimiz.',
                             "Pastda, daryo bo'yida, chiroqlar yonardi.",
                             "Kitobni - eng yaqin do'stni - asrang.",
-                            "U, ya'ni mening do mezonim, keldi."
+                            "U, ya'ni mening do'stim, keldi."
                         ],
                         'answer': 1,
                         'explain': "'Pastda, daryo bo'yida' - o'rin holining ajratilgan izohlovchisidir."
@@ -7425,7 +7425,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Qaysi bo'lak ajratilgan ajratilgan to'ldiruvchi hisoblanadi?",
+                        'q': "Qaysi bo'lak ajratilgan to'ldiruvchi hisoblanadi?",
                         'options': [
                             "Unga, ya'ni ukamga, kitob berdim.",
                             'Toshkentda, poytaxtda, uchrashdik.',
@@ -7457,13 +7457,13 @@ SUBJECTS = [
             {
                 'slug': 'kiritma-va-kiritma-gaplar',
                 'title': "Kiritma so'zlar, birikmalar va kiritma gaplar",
-                'summary': "So mezonlovchining fikrga bo'lgan munosabatini ifodalovchi, gap bo'laklari bilan grammatik bog'lanmaydigan qurilmalar.",
+                'summary': "So'zlovchining fikrga bo'lgan munosabatini ifodalovchi, gap bo'laklari bilan grammatik bog'lanmaydigan qurilmalar.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kiritma qurilmalar',
-                        'body': "Gapda aytilayotgan fikrga so mezonlovchining munosabatini (ishonch, shubha, quvonch, manba va b.) bildiruvchi so'z, birikma va gaplar kiritma deyiladi."
+                        'body': "Gapda aytilayotgan fikrga so'zlovchining munosabatini (ishonch, shubha, quvonch, manba va b.) bildiruvchi so'z, birikma va gaplar kiritma deyiladi."
                     },
                     {
                         'type': 'example',
@@ -7494,7 +7494,7 @@ SUBJECTS = [
                             'Afsuski'
                         ],
                         'answer': 1,
-                        'explain': "'Albatta' so'zi so mezonlovchining qat'iy ishonchini bildiradi."
+                        'explain': "'Albatta' so'zi so'zlovchining qat'iy ishonchini bildiradi."
                     },
                     {
                         'type': 'tf',
@@ -7554,7 +7554,7 @@ SUBJECTS = [
                         'title': 'Joylashishi va tinish belgilari',
                         'items': [
                             "Gap boshida kelsa: Undalmadan keyin vergul (kuchli his bilan aytilsa undov) qo'yiladi.",
-                            "Gap ortasida kelsa: Ikki tarafidan vergul qo'yiladi.",
+                            "Gap o'rtasida kelsa: Ikki tarafidan vergul qo'yiladi.",
                             "Gap oxirida kelsa: Undalmadan oldin vergul qo'yiladi."
                         ]
                     },
@@ -7587,7 +7587,7 @@ SUBJECTS = [
                         'q': 'Qaysi gapda undalma mavjud?',
                         'options': [
                             "Ota-onamizni e'zozlaylik.",
-                            "Vatan, senga sodiq o'g mezonman!",
+                            "Vatan, senga sodiq o'g'lonman!",
                             'U jonli gapirdi.',
                             "Kitob do'sti bo'ling."
                         ],
@@ -7616,12 +7616,12 @@ SUBJECTS = [
             {
                 'slug': 'qoshma-gap-va-uning-turlari',
                 'title': "Qo'shma gap haqida tushuncha va uning tasnifi",
-                'summary': 'Ikki yoki undan ortiq predivativ markazdan (sodda gapdan) tashkil topgan gaplar va ularning asosiy turlari.',
+                'summary': 'Ikki yoki undan ortiq predikativ markazdan (sodda gapdan) tashkil topgan gaplar va ularning asosiy turlari.',
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
-                        'title': 'Qo mezonma gap nima?',
+                        'title': "Qo'shma gap nima?",
                         'body': "Ikki yoki undan ortiq sodda gapning ma'no, intonatsiya va grammatik jihatdan birikuvidan hosil bo'lgan murakkab sintaktik butunlik qo'shma gap deyiladi."
                     },
                     {
@@ -7649,12 +7649,12 @@ SUBJECTS = [
                         'q': "Qo'shma gap sodda gapdan nimasi bilan farq qiladi?",
                         'options': [
                             'Uzunligi bilan',
-                            'Ikkita va undan ortiq gramatik markazga (ega-kesimga) egaligi bilan',
+                            'Ikkita va undan ortiq grammatik markazga (ega-kesimga) egaligi bilan',
                             "So'zlar soni bilan",
                             'Tinish belgilari bilan'
                         ],
                         'answer': 1,
-                        'explain': "Qo'shma gap bir nechta sodda gap predivativ asosidan iborat bo'ladi."
+                        'explain': "Qo'shma gap bir nechta sodda gap predikativ asosidan iborat bo'ladi."
                     },
                     {
                         'type': 'tf',
@@ -7672,7 +7672,7 @@ SUBJECTS = [
                             "Maktab va bog'cha qurildi."
                         ],
                         'answer': 1,
-                        'explain': "'Quyosh chiqdi' (1-gap) hamda 'zamin isiy boshladi' (2-gap) alohida eglarga va kesimlarga ega."
+                        'explain': "'Quyosh chiqdi' (1-gap) hamda 'zamin isiy boshladi' (2-gap) alohida egalarga va kesimlarga ega."
                     }
                 ],
                 'homework': {
@@ -7714,7 +7714,7 @@ SUBJECTS = [
                         'title': 'Munosabat turlari',
                         'items': [
                             'Biriktiruv (va, hamda, ham)',
-                            'Zidlov (lekin, ammo, biroq, lekin)',
+                            'Zidlov (lekin, ammo, biroq)',
                             "Ayiruv (yo... yo, goh... goh, ba'zan... ba'zan)",
                             'Inkor (na... na)'
                         ]
@@ -7731,7 +7731,7 @@ SUBJECTS = [
                         'options': [
                             'U keldi va dars boshlandi.',
                             'Havo sovuq, lekin u palto kiymadi.',
-                            "Goh yomg'ir yog'adi, goh quyosh charqlaydi.",
+                            "Goh yomg'ir yog'adi, goh quyosh charaqlaydi.",
                             'Na u gapirdi, na bu indadi.'
                         ],
                         'answer': 1,
@@ -7875,7 +7875,7 @@ SUBJECTS = [
                         'title': 'Farqlash usuli',
                         'items': [
                             "Ega ergash gap: Bosh gapda 'shu, olmosh' kabi ega vazifasidagi so'z bo'ladi yoki ega bo'lmaydi.",
-                            "Kesim ergash gap: Bosh gapning kesimi 'shudir, shundan iboratki' kabi so mezonlar bo'ladi."
+                            "Kesim ergash gap: Bosh gapning kesimi 'shudir, shundan iboratki' kabi so'zlar bo'ladi."
                         ]
                     },
                     {
@@ -7886,7 +7886,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "'Kim ko mezonp o mezonqisa, shu g mezonlib chiqadi' gapida ergash gap turi qaysi?",
+                        'q': "'Kim ko'p o'qisa, shu g'olib chiqadi' gapida ergash gap turi qaysi?",
                         'options': [
                             'Kesim ergash gap',
                             'Ega ergash gap',
@@ -7894,7 +7894,7 @@ SUBJECTS = [
                             'Hol ergash gap'
                         ],
                         'answer': 1,
-                        'explain': "'Kim ko'p o'qisa' ergash gapi bosh gapdagi 'shu' eganining mazmunini ochib beradi."
+                        'explain': "'Kim ko'p o'qisa' ergash gapi bosh gapdagi 'shu' eganing mazmunini ochib beradi."
                     },
                     {
                         'type': 'tf',
@@ -7942,7 +7942,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "To'ldiruvchi va aniqlovchi ergash gaplar",
-                        'body': "To'ldiruvchi ergash gap bosh gapdagi fe'l-kesimdan anglashilgan harakatning obyektini, aniqlovchi ergash gap esa bosh gapdagi ot-bo mezonning belgisini izohlaydi."
+                        'body': "To'ldiruvchi ergash gap bosh gapdagi fe'l-kesimdan anglashilgan harakatning obyektini, aniqlovchi ergash gap esa bosh gapdagi ot-bo'lakning belgisini izohlaydi."
                     },
                     {
                         'type': 'example',
@@ -8101,7 +8101,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Shart va to'siqsiz munosabatlar",
-                        'body': "Shart ergash gap bosh gapdagi harakatning amalga oshish shartini, to'siqsiz ergash gap esa bosh gapdagi harakatga to mezon bo'lishiga qaramay baribir yuzaga chiqishini bildiradi."
+                        'body': "Shart ergash gap bosh gapdagi harakatning amalga oshish shartini, to'siqsiz ergash gap esa bosh gapdagi harakatga to'siq bo'lishiga qaramay baribir yuzaga chiqishini bildiradi."
                     },
                     {
                         'type': 'example',
@@ -8212,13 +8212,13 @@ SUBJECTS = [
                             '5 ta'
                         ],
                         'answer': 1,
-                        'explain': "Murakkab qo'shma gaplar kamida 3 ta sodda gap predivativ markazidan iborat bo'ladi."
+                        'explain': "Murakkab qo'shma gaplar kamida 3 ta sodda gap predikativ markazidan iborat bo'ladi."
                     },
                     {
                         'type': 'tf',
                         'q': "Bir necha ergash gapli murakkab qo'shma gapda ergash gaplar bir-biriga ham ergashishi mumkin.",
                         'answer': True,
-                        'explain': "Bu ketma-ket ergashish deyiladi (poyg'ali tobelanish)."
+                        'explain': "Bu ketma-ket ergashish deyiladi (pog'onali tobelanish)."
                     },
                     {
                         'type': 'mc',
@@ -8293,7 +8293,7 @@ SUBJECTS = [
                             'Nuqtali vergul'
                         ],
                         'answer': 1,
-                        'explain': "Sabab munosabatida ikki nuqta qo'yiladi (chunki so'zini qo mezonsh mumkin)."
+                        'explain': "Sabab munosabatida ikki nuqta qo'yiladi (chunki so'zini qo'shish mumkin)."
                     },
                     {
                         'type': 'tf',
@@ -8359,7 +8359,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Ko'chirma gap o'zlashtirma gapga aylantirilganda murakkab sodda gap yoki ergashgan qo'shma gap hosil bo'ladi."
+                        'body': "Esda tuting: Ko'chirma gap o'zlashtirma gapga aylantirilganda murakkablashgan sodda gap yoki ergashgan qo'shma gap hosil bo'ladi."
                     }
                 ],
                 'quiz': [
@@ -8377,7 +8377,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Ko'chirma gap qo tirnoq ichida yozilishi mumkin.",
+                        'q': "Ko'chirma gap qo'shtirnoq ichida yozilishi mumkin.",
                         'answer': True,
                         'explain': "Muallif gapidan keyin kelgan ko'chirma gap tirnoq ichida beriladi."
                     },
@@ -8391,7 +8391,7 @@ SUBJECTS = [
                             'Ali ertaga kelaymi dedi.'
                         ],
                         'answer': 1,
-                        'explain': "'Kelaman' fe'li harakat nomiga ('kelishini') va 'dedi' fe'li 'aytdi' fe mezoniga o'zgartiriladi."
+                        'explain': "'Kelaman' fe'li harakat nomiga ('kelishini') va 'dedi' fe'li 'aytdi' fe'liga o'zgartiriladi."
                     }
                 ],
                 'homework': {
@@ -8421,7 +8421,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Rasmiy va ilmiy uslub sintaksisi',
-                        'body': "Rasmiy-idoraviy uslub standart qoliplarga, aniqlikka va emotsionallikning yo'qligiga tayanadi. Ilmiy uslub esa mantiqiy izchillik va atamalarning aniq sintaktik bog mezonlanishini talab qiladi."
+                        'body': "Rasmiy-idoraviy uslub standart qoliplarga, aniqlikka va emotsionallikning yo'qligiga tayanadi. Ilmiy uslub esa mantiqiy izchillik va atamalarning aniq sintaktik bog'lanishini talab qiladi."
                     },
                     {
                         'type': 'example',
@@ -8433,7 +8433,7 @@ SUBJECTS = [
                         'title': 'Xususiyatlar',
                         'items': [
                             "Rasmiy uslubda majhul nisbatdagi fe'llar, so'z-kesimlar va tayyor qoliplar (shablonlar) ko'p ishlatiladi.",
-                            "Ilmiy uslubda murakkab qo'shma gaplar, kirish so mezonlar, mantiqiy bog'lovchilar ustunlik qiladi."
+                            "Ilmiy uslubda murakkab qo'shma gaplar, kirish so'zlar, mantiqiy bog'lovchilar ustunlik qiladi."
                         ]
                     },
                     {
@@ -8474,7 +8474,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Nutq uslublari bo mezonicha topshiriqlar.',
+                    'intro': "Nutq uslublari bo'yicha topshiriqlar.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -8594,12 +8594,12 @@ SUBJECTS = [
                         'items': [
                             "Zanjirsimon bog'lanish: Keyingi gap oldingi gapdagi biror so'z/tushunchani mantiqan davom ettiradi.",
                             "Parallel bog'lanish: Gaplar bir vaqtda sodir bo'lgan voqealarni teng ravishda tasvirlaydi.",
-                            "Aktual bo mezinish: Matnda 'Tema' (ma'lum axborot) va 'Rema' (yangi axborot) ajratiladi."
+                            "Aktual bo'linish: Matnda 'Tema' (ma'lum axborot) va 'Rema' (yangi axborot) ajratiladi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Abzas matndagi yangi micro-mavzuning boshlanishini bildiradi.'
+                        'body': 'Esda tuting: Abzas matndagi yangi mikromavzuning boshlanishini bildiradi.'
                     }
                 ],
                 'quiz': [
@@ -8619,7 +8619,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Zanjirsimon bog'lanishda har bir yangi gap oldingi gapdagi elementga tayanadi.",
                         'answer': True,
-                        'explain': 'Axborot halqa simon (zanjir kabi) ulanib boradi.'
+                        'explain': 'Axborot halqasimon (zanjir kabi) ulanib boradi.'
                     },
                     {
                         'type': 'mc',
@@ -8631,7 +8631,7 @@ SUBJECTS = [
                             "Barchasi to'g'ri"
                         ],
                         'answer': 3,
-                        'explain': "Olmoshlar, takrorlar va bog'lovchilar matn birliqligini ta'minlaydi."
+                        'explain': "Olmoshlar, takrorlar va bog'lovchilar matn birligini ta'minlaydi."
                     }
                 ],
                 'homework': {
@@ -8641,7 +8641,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "3 ta gapdan iborat zanjirsimon bog'langan matn namunasini yozing.",
-                            'answer': "Masalan: Men kitob sotib oldim. Kitobda qiziqarli eraklar bor edi. Ertaklar menga ma'qul bo'ldi.",
+                            'answer': "Masalan: Men kitob sotib oldim. Kitobda qiziqarli ertaklar bor edi. Ertaklar menga ma'qul bo'ldi.",
                             'hint': "Keyingi gap oldingisi bilan ma'nodosh yoki takroriy so'z orqali bog'lansin."
                         },
                         {
@@ -8672,9 +8672,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Semantik tahlil',
                         'items': [
-                            "Parataxisda gaplar mustaqil gramatik maqomga va teng munosabatga ega bo'ladi.",
+                            "Parataxisda gaplar mustaqil grammatik maqomga va teng munosabatga ega bo'ladi.",
                             'Gipotaxisda esa iyerarxiya va semantik tobelik (subordinatsiya) mavjud.',
-                            'Asinkron va inkron vositalarning semantik roli.'
+                            'Sindetik va asindetik vositalarning semantik roli.'
                         ]
                     },
                     {
@@ -8706,7 +8706,7 @@ SUBJECTS = [
                         'q': "Qaysi gapda gipotaktik munosabat yorqin namoyon bo'lgan?",
                         'options': [
                             "Keldim va ko'rdim.",
-                            'Chuniki u harakat qildi, maqsadiga erishdi.',
+                            'Chunki u harakat qildi, maqsadiga erishdi.',
                             "Kech bo'ldi, ammo u kelmadi.",
                             "Havo ochiq, shamol yo'q."
                         ],
@@ -8741,7 +8741,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sintaktik valentlik deb so'zning o'z semantik va grammatik xususiyatlariga ko'ra boshqa so'zlarni o'ziga biriktira olish va sintaktik aloqaga kirisha olish imkoniyatiga aytiladi. Valentlik majburiy (obshat) va ixtiyoriy (faktultat) turlarga bo'linadi. Fe'llar valentlik markazi hisoblanadi."
+                        'body': "Sintaktik valentlik deb so'zning o'z semantik va grammatik xususiyatlariga ko'ra boshqa so'zlarni o'ziga biriktira olish va sintaktik aloqaga kirisha olish imkoniyatiga aytiladi. Valentlik majburiy (obligator) va ixtiyoriy (fakultativ) turlarga bo'linadi. Fe'llar valentlik markazi hisoblanadi."
                     },
                     {
                         'type': 'example',
@@ -8753,7 +8753,7 @@ SUBJECTS = [
                         'title': 'Valentlikni aniqlash bosqichlari',
                         'items': [
                             "Gapdagi hokim so'zning (ko'pincha fe'lning) semantik ma'nosini tahlil qilish.",
-                            "So me'yoran talab qiladigan majburiy o'rinlar sonini ajratish.",
+                            "Fe'l talab qiladigan majburiy o'rinlar sonini ajratish.",
                             "Ixtiyoriy qurilmalarni (hol, ajratilgan bo'laklar) majburiy valentlikdan farqlash."
                         ]
                     },
@@ -8765,7 +8765,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Nechta majburiy valentlikka ega fe'llar uch valentli fe me'yoriy strukturasini hosil qiladi?",
+                        'q': "Nechta majburiy valentlikka ega fe'llar uch valentli fe'l strukturasini hosil qiladi?",
                         'options': [
                             '1 ta',
                             '2 ta',
@@ -8779,7 +8779,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': 'Ixtiyoriy valentlik gapning grammatik kompozitsiyasi uchun mutlaq shart hisoblanadi.',
                         'answer': False,
-                        'explain': "Ixtiyoriy valentlik (faktualtat) tushib qolganda ham gap grammatik va semantik tugallikni yo'qotmaydi."
+                        'explain': "Ixtiyoriy valentlik (fakultativ) tushib qolganda ham gap grammatik va semantik tugallikni yo'qotmaydi."
                     },
                     {
                         'type': 'mc',
@@ -8815,13 +8815,13 @@ SUBJECTS = [
             {
                 'slug': 'tema-va-rema-kommunikativ-sintaksis',
                 'title': 'Gapning aktuallashuvi: Tema va rema munosabati',
-                'summary': "Gapning kommunikativ bo'linishi, ya'ni ma'lum bo'lgan axborot (tema) va yangi axborot (rema) munosabatini o me'yoriy sintaksisda o'rganish.",
+                'summary': "Gapning kommunikativ bo'linishi, ya'ni ma'lum bo'lgan axborot (tema) va yangi axborot (rema) munosabatini kommunikativ sintaksisda o'rganish.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Gapning dolzarb bo'linishi (kommunikativ sintaksis) gapni tinglovchiga ma'lum bo'lgan va yangi axborot beruvchi qismlarga ajratadi. Tema — ma'lum bo me'yoriy axborot (baza), rema — gapdagi eng muhim, yangi axborot (kommunikativ markaz) hisoblanadi."
+                        'body': "Gapning dolzarb bo'linishi (kommunikativ sintaksis) gapni tinglovchiga ma'lum bo'lgan va yangi axborot beruvchi qismlarga ajratadi. Tema — ma'lum bo'lgan axborot (baza), rema — gapdagi eng muhim, yangi axborot (kommunikativ markaz) hisoblanadi."
                     },
                     {
                         'type': 'example',
@@ -8839,7 +8839,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: O'zbek tilida rema ko'pincha kesim oldidan joylashadi va mantiqiy urg me'yori bilan ajratiladi."
+                        'body': "Esda tuting: O'zbek tilida rema ko'pincha kesim oldidan joylashadi va mantiqiy urg'u bilan ajratiladi."
                     }
                 ],
                 'quiz': [
@@ -8875,7 +8875,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Kommunikativ bo'linishga oid topsiriqlar.",
+                    'intro': "Kommunikativ bo'linishga oid topshiriqlar.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -8955,7 +8955,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Sintaktik munosabatlar bo'yicha amaliy topsiriqlar.",
+                    'intro': "Sintaktik munosabatlar bo'yicha amaliy topshiriqlar.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -8994,7 +8994,7 @@ SUBJECTS = [
                         'items': [
                             "Tushirib qoldirilgan bo'lakni kontekst orqali aniqlash.",
                             'Elipsisning nutqiy tejamkorlikdagi rolini baholash.',
-                            "Sintaktik takror va taftologiyani o'zaro farqlash."
+                            "Sintaktik takror va tavtologiyani o'zaro farqlash."
                         ]
                     },
                     {
@@ -9061,7 +9061,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Matn tilshunosligida matn yaxlitligi ikki asosiy tushunchaga tayanadi: Kogeziya — matn unsurlarining lisoniy, grammatik va leksik vositalar (olmoshlar, bog'lovchilar, takrorlar) orqali yuzaki bog me'yoriy bog'lanishi; Kogerentlik — matnning ichki, mantiqiy va semantik yaxlitligidir."
+                        'body': "Matn tilshunosligida matn yaxlitligi ikki asosiy tushunchaga tayanadi: Kogeziya — matn unsurlarining lisoniy, grammatik va leksik vositalar (olmoshlar, bog'lovchilar, takrorlar) orqali yuzaki bog'lanishi; Kogerentlik — matnning ichki, mantiqiy va semantik yaxlitligidir."
                     },
                     {
                         'type': 'example',
@@ -9073,13 +9073,13 @@ SUBJECTS = [
                         'title': 'Kogeziya va kogerentlikni tahlil qilish',
                         'items': [
                             'Matndagi olmoshlar, konnektorlar va anaforik vositalarni topish (kogeziya).',
-                            "Gaplar o'rtasidagi sabab-oqibat, vaqt va mantiqiy bog me'yoriy zanjirni aniqlash (kogerentlik).",
+                            "Gaplar o'rtasidagi sabab-oqibat, vaqt va mantiqiy bog'lanish zanjirini aniqlash (kogerentlik).",
                             'Matn mazmunining yaxlit konseptsiyasini shakllantirish.'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Gaplar formal jihatdan grammatik bog'lanmasada (kogeziyasiz), mantiqan chuqur bog'liq bo'lishi mumkin (kogerentlik)."
+                        'body': "Esda tuting: Gaplar formal jihatdan grammatik bog'lanmasa-da (kogeziyasiz), mantiqan chuqur bog'liq bo'lishi mumkin (kogerentlik)."
                     }
                 ],
                 'quiz': [
@@ -9271,16 +9271,16 @@ SUBJECTS = [
                             'Parataxis'
                         ],
                         'answer': 1,
-                        'explain': "Nominalizatsiya — fe me'yoriy kesimli gapning otli birikmaga ko'chish hodisasidir."
+                        'explain': "Nominalizatsiya — fe'l-kesimli gapning otli birikmaga ko'chish hodisasidir."
                     }
                 ],
                 'homework': {
-                    'intro': 'Transformatsion sintaksisga doir topsiriqlar.',
+                    'intro': 'Transformatsion sintaksisga doir topshiriqlar.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "'Oqituvchi daftarlarni tekshirdi' gapini majhul nisbatli gapga transformatsiya qiling.",
+                            'prompt': "'O'qituvchi daftarlarni tekshirdi' gapini majhul nisbatli gapga transformatsiya qiling.",
                             'answer': "Daftarlar o'qituvchi tomonidan tekshirildi (yoki Daftarlar tekshirildi).",
                             'hint': "Egani vositali to'ldiruvchiga, to'ldiruvchini egaga aylantiring."
                         },
@@ -9301,7 +9301,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Modallik gapning ajralmas belgisidir. Ob'ektiv modallik gapda ifodalangan fikrning borliqqa munosabatini (haqiqat, imkoniyat, shartlilik, zaruriyat) bildiradi va barcha gaplarda mavjud. Sub'ektiv modallik esa so me me'yoriy fikrga so'zlovchining shaxsiy munosabatini (shubha, ishonch, quvonch) ko'rsatadi."
+                        'body': "Modallik gapning ajralmas belgisidir. Ob'ektiv modallik gapda ifodalangan fikrning borliqqa munosabatini (haqiqat, imkoniyat, shartlilik, zaruriyat) bildiradi va barcha gaplarda mavjud. Sub'ektiv modallik esa aytilayotgan fikrga so'zlovchining shaxsiy munosabatini (shubha, ishonch, quvonch) ko'rsatadi."
                     },
                     {
                         'type': 'example',
@@ -9312,7 +9312,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Modallik turlarini aniqlash',
                         'items': [
-                            "Gapning zamon va mayil ko'rsatkichlarini topish (ob'ektiv modallik).",
+                            "Gapning zamon va mayl ko'rsatkichlarini topish (ob'ektiv modallik).",
                             "Kiritma so'zlar, modal zarrachalar va intonatsiyani tahlil qilish (sub'ektiv modallik).",
                             "Modallik vositalarining ma'noviy tonini belgilash."
                         ]
@@ -9333,7 +9333,7 @@ SUBJECTS = [
                             'Nollik modallik'
                         ],
                         'answer': 1,
-                        'explain': "Ob'ektiv modallik (zamon va mayil shakllari orqali) barcha gaplarda majburiy mavjud."
+                        'explain': "Ob'ektiv modallik (zamon va mayl shakllari orqali) barcha gaplarda majburiy mavjud."
                     },
                     {
                         'type': 'tf',
@@ -9355,7 +9355,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Modal sintaksisga oid amaliy topsiriqlar.',
+                    'intro': 'Modal sintaksisga oid amaliy topshiriqlar.',
                     'tasks': [
                         {
                             'id': 't1',
@@ -9381,19 +9381,19 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "O'zbek tilida odatiy (neytral) so'z tartibi: Ega + To'ldiruvchi/Hol + Kesim. Bu tartibning muayyan uslubiy va poetik masadlarda o'zgardiilishi inversiya deb ataladi. Inversiya badiiy, publisistik va so'zlashuv uslublarida hissiyot va rhythm yaratish uchun qo'llaniladi."
+                        'body': "O'zbek tilida odatiy (neytral) so'z tartibi: Ega + To'ldiruvchi/Hol + Kesim. Bu tartibning muayyan uslubiy va poetik maqsadlarda o'zgartirilishi inversiya deb ataladi. Inversiya badiiy, publisistik va so'zlashuv uslublarida hissiyot va ritm yaratish uchun qo'llaniladi."
                     },
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "To'g me'yoriy tartib: 'O'zbekiston mening vatanimdir.' Inversiya: 'Vatanimdir mening O'zbekiston!' (Kesim va egalik egalik o'rni almashtirilib, poetik pafos oshirilgan)."
+                        'body': "To'g'ri tartib: 'O'zbekiston mening vatanimdir.' Inversiya: 'Vatanimdir mening O'zbekiston!' (Kesim va ega o'rni almashtirilib, poetik pafos oshirilgan)."
                     },
                     {
                         'type': 'steps',
                         'title': 'Inversiyani tahlil etish',
                         'items': [
                             "Gapdagi grammatik bo'laklarning joylashuv o'rnini aniqlash.",
-                            "O'zbek tilining neytral sinatktik tartibi bilan solishtirish.",
+                            "O'zbek tilining neytral sintaktik tartibi bilan solishtirish.",
                             'Inversiya orqali erishilgan stilistik va emotsional samarani baholash.'
                         ]
                     },
@@ -9419,7 +9419,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': 'Rasmiy-idoraviy hujjatlarda inversiyadan keng foydalaniladi.',
                         'answer': False,
-                        'explain': "Rasmiy-idoraviy uslub qat'iy to'g'ri so me'yoriy so'z tartibini talab qiladi."
+                        'explain': "Rasmiy-idoraviy uslub qat'iy to'g'ri so'z tartibini talab qiladi."
                     },
                     {
                         'type': 'mc',
@@ -9455,7 +9455,7 @@ SUBJECTS = [
             {
                 'slug': 'ozbek-tili-tarixiy-sintaksisi',
                 'title': "O'zbek tili tarixiy sintaksisi",
-                'summary': "Qadimgi va eski o'zbek tilidagi gap qurilishining evolyutsiyasi, kelishik va bog me'yoriy vositalarning tarixiy taraqqiyoti.",
+                'summary': "Qadimgi va eski o'zbek tilidagi gap qurilishining evolyutsiyasi, kelishik va bog'lovchi vositalarning tarixiy taraqqiyoti.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -9497,7 +9497,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Qadimgi turkiy tilda ergashgan qo'shma gaplar o'rnida asosan fe'l-atvor va ravishdoshli iboralar (o'ramlar) qo'llanilgan.",
+                        'q': "Qadimgi turkiy tilda ergashgan qo'shma gaplar o'rnida asosan sifatdosh va ravishdoshli iboralar (o'ramlar) qo'llanilgan.",
                         'answer': True,
                         'explain': "Qadimgi bitiklarda moslashgan ergash gaplar o'rniga ravishdosh va sifatdoshli o'ramlar faol bo'lgan."
                     },
@@ -9515,7 +9515,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Tarixiy sintaksis bo'yicha tahlil topsiriqlari.",
+                    'intro': "Tarixiy sintaksis bo'yicha tahlil topshiriqlari.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -9553,7 +9553,7 @@ SUBJECTS = [
                         'title': 'Sintaktik parse-daraxt tuzish bosqichlari',
                         'items': [
                             'Gapdagi kesimni grammatik va mantiqiy ildiz (Root) sifatida belgilash.',
-                            "Root bilan bevosita bog'liq bosh bo'lak va to'ldiruvchilarni bog me'yoriy shoxlarga ajratish.",
+                            "Root bilan bevosita bog'liq bosh bo'lak va to'ldiruvchilarni bog'liq shoxlarga ajratish.",
                             'Taqsimot va qaramlik munosabatlarini algoritmlar orqali tavsiflash.'
                         ]
                     },
@@ -9595,14 +9595,14 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Kompyuter va kognitiv sintaksisga oid amaliy topsiriq.',
+                    'intro': 'Kompyuter va kognitiv sintaksisga oid amaliy topshiriq.',
                     'tasks': [
                         {
                             'id': 't1',
                             'type': 'text',
                             'prompt': "'Ahmad tez yugurdi' gapidagi Root (ildiz) so'z qaysi va unga qaysi so'zlar bo'ysunadi?",
-                            'answer': 'Root: yugurdi. Notalar: Ahmad (Ega), tez (Hol).',
-                            'hint': "Ega va hol qaysi so me'yoriy bo'lakka qaram ekanligini belgilang."
+                            'answer': "Root: yugurdi. Qaram so'zlar: Ahmad (Ega), tez (Hol).",
+                            'hint': "Ega va hol qaysi bo'lakka qaram ekanligini belgilang."
                         },
                         {
                             'id': 't2',
