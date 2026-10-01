@@ -28946,7 +28946,7 @@ SUBJECTS = [
                         'title': 'Huquqning asosiy funksiyalari',
                         'items': [
                             "Tartibga soluvchilik: jamiyatdagi munosabatlarni aniq me'yorga soladi.",
-                            "Muhofaza qilish: inson va jamiyat manfaatlarini salbiy ta'sirlardan hidoya qiladi.",
+                            "Muhofaza qilish: inson va jamiyat manfaatlarini salbiy ta'sirlardan himoya qiladi.",
                             'Tarbiyaviy: fuqarolarda qonunga hurmat hissini shakllantiradi.'
                         ]
                     },
@@ -28972,7 +28972,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Huquqiy normalarga rioya qilmaslik ma'lum ma'muriy yoki jinoiy javobgarlikka sabab bo'ladi.",
                         'answer': True,
-                        'explain': "Huquqiy me me'yorlar buzilsa, davlat majburlov choralarini qo'llaydi."
+                        'explain': "Huquqiy me'yorlar buzilsa, davlat majburlov choralarini qo'llaydi."
                     },
                     {
                         'type': 'mc',
@@ -28993,7 +28993,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Huquq va axloq me me'yorlari o'rtasidagi asosiy farqni yozing.",
+                            'prompt': "Huquq va axloq me'yorlari o'rtasidagi asosiy farqni yozing.",
                             'answer': 'Huquq davlat tomonidan belgilanadi va majburiy, axloq esa jamiyat tushunchalari va jamoatchilik fikriga tayanadi.',
                             'hint': 'Davlat majburlov kuchini hisobga oling.'
                         },
@@ -29008,13 +29008,13 @@ SUBJECTS = [
             {
                 'slug': 'davlat-tushunchasi-va-belgilari',
                 'title': 'Davlat tushunchasi va uning asosiy belgilari',
-                'summary': "Davlatning siyosiy-hududiy tashkilot sifatida paydo bo me'yorlari va uning muhim belgilari.",
+                'summary': "Davlatning siyosiy-hududiy tashkilot sifatida paydo bo'lishi va uning muhim belgilari.",
                 'duration': 15,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Davlat — muayyan hududda jamiyatni boshqaruvchi va sug'orilgan siyosiy hokimiyatga ega bo'lgan tashkilotdir."
+                        'body': "Davlat — muayyan hududda jamiyatni boshqaruvchi va suveren siyosiy hokimiyatga ega bo'lgan tashkilotdir."
                     },
                     {
                         'type': 'example',
@@ -29058,7 +29058,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Quyidagilardan qaysi biri davlatning ajralmas belgisi HESOBANMAYDI?',
+                        'q': 'Quyidagilardan qaysi biri davlatning ajralmas belgisi HISOBLANMAYDI?',
                         'options': [
                             'Hudud',
                             'Ommaviy hokimiyat',
@@ -29146,7 +29146,7 @@ SUBJECTS = [
                             "Yo'riqnoma"
                         ],
                         'answer': 1,
-                        'explain': "Konstitutsiya asosiy qonun bo'lib, iyerarxiyaning eng yuqori pog'onasida duradi."
+                        'explain': "Konstitutsiya asosiy qonun bo'lib, iyerarxiyaning eng yuqori pog'onasida turadi."
                     }
                 ],
                 'homework': {
@@ -29189,7 +29189,7 @@ SUBJECTS = [
                         'items': [
                             'Davlat suvereniteti va xalq hokimiyatchiligi.',
                             'Konstitutsiya va qonunlarning ustunligi.',
-                            'Tashqi siyosat va inson huquqlarining ustuvorligi.'
+                            'Inson huquq va erkinliklarining ustuvorligi.'
                         ]
                     },
                     {
@@ -29265,7 +29265,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Huquqlarning guruxlanishi',
+                        'title': 'Huquqlarning guruhlanishi',
                         'items': [
                             'Shaxsiy huquq va erkinliklar (yashash, erkinlik va shaxsiy daxlsizlik).',
                             'Siyosiy huquqlar (saylash va saylanish, davlat ishlarini boshqarishda qatnashish).',
@@ -29386,7 +29386,7 @@ SUBJECTS = [
                         'options': [
                             'Faqat ekologiya vazirligining',
                             'Barcha fuqarolarning',
-                            "Faqat o me'yoriy korxonalarning",
+                            'Faqat yirik korxonalarning',
                             'Faqat chet elliklarning'
                         ],
                         'answer': 1,
@@ -29425,7 +29425,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': 'Magazinga borib non yoki daftar sotib olishingiz — bu fuqarolik-huquqiy oldi-sotdi munosabatidir.'
+                        'body': "Do'konga borib non yoki daftar sotib olishingiz — bu fuqarolik-huquqiy oldi-sotdi munosabatidir."
                     },
                     {
                         'type': 'steps',
@@ -29438,7 +29438,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Fuqarolik huquqida taraflar bir-biriga bo me'yoriy emas, balki teng huquqli hisoblanadi."
+                        'body': "Esda tuting: Fuqarolik huquqida taraflar bir-biriga bo'ysunuvchi emas, balki teng huquqli hisoblanadi."
                     }
                 ],
                 'quiz': [
@@ -29613,7 +29613,7 @@ SUBJECTS = [
                             'Ijaraga olish'
                         ],
                         'answer': 2,
-                        'explain': 'Tasarruf etish — mulkning huquqiy taqdirini belgilash (sotish, hadiysha qilish) imkoniyatidir.'
+                        'explain': 'Tasarruf etish — mulkning huquqiy taqdirini belgilash (sotish, hadya qilish) imkoniyatidir.'
                     },
                     {
                         'type': 'tf',
@@ -29666,7 +29666,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Oldi-sotdi, xizmat ko'rsatish, ijara va hadiysha shartnomalari eng keng tarqalgan turlardandir."
+                        'body': "Oldi-sotdi, xizmat ko'rsatish, ijara va hadya shartnomalari eng keng tarqalgan turlardandir."
                     },
                     {
                         'type': 'steps',
@@ -29690,7 +29690,7 @@ SUBJECTS = [
                             'Aksept',
                             'Oferta',
                             'Garov',
-                            'Avanz'
+                            'Avans'
                         ],
                         'answer': 1,
                         'explain': 'Oferta — bir yoki bir nechta muayyan shaxsga yuborilgan shartnoma tuzish taklifidir.'
@@ -29706,12 +29706,12 @@ SUBJECTS = [
                         'q': 'Mol-mulkni haqsiz (tekinga) boshqa shaxsga berish shartnomasi qanday ataladi?',
                         'options': [
                             'Oldi-sotdi',
-                            "Hadiysha (sovg'a)",
+                            "Hadya (sovg'a)",
                             'Pudrat',
                             'Lizing'
                         ],
                         'answer': 1,
-                        'explain': "Hadiysha shartnomasi bo'yicha bir taraf o'z mol-mulkini boshqa tarafga tekinga mulk qilib beradi."
+                        'explain': "Hadya shartnomasi bo'yicha bir taraf o'z mol-mulkini boshqa tarafga tekinga mulk qilib beradi."
                     }
                 ],
                 'homework': {
@@ -29760,7 +29760,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Diniy rasm-rusumlarga ko'ra tuzilgan nikoh (nikoh o me'yishi) huquqiy kuchga ega emas."
+                        'body': "Esda tuting: Diniy rasm-rusumlarga ko'ra tuzilgan nikoh (nikoh o'qilishi) huquqiy kuchga ega emas."
                     }
                 ],
                 'quiz': [
@@ -29778,7 +29778,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Faqat masjid yoki cherkovda o'qitilgan nikoh huquqiy oqibatlar keltirib chiqaradi.",
+                        'q': "Faqat masjid yoki cherkovda o'qilgan nikoh huquqiy oqibatlar keltirib chiqaradi.",
                         'answer': False,
                         'explain': "Faqat FHDYo organida davlat ro'yxatidan o'tkazilgan nikoh qonuniy va yuridik kuchga ega."
                     },
@@ -29827,7 +29827,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Ament (aliment) — ota-onaning o'z voyaga yetmagan farzandlariga ta'minot berish uchun to'laydigan majburiy mablag'idir."
+                        'body': "Aliment — ota-onaning o'z voyaga yetmagan farzandlariga ta'minot berish uchun to'laydigan majburiy mablag'idir."
                     },
                     {
                         'type': 'steps',
@@ -29940,7 +29940,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': '15 yoshdan boshlab ota-onasining yozma roziligi bilan engil ishga kirish mumkin.',
+                        'q': '15 yoshdan boshlab ota-onasining yozma roziligi bilan yengil ishga kirish mumkin.',
                         'answer': True,
                         'explain': "15 yoshga to'lgan o'quvchilar ota-onalaridan birining yozma roziligi bilan o'qishdan bo'sh vaqtlarida yengil ishlarga qabul qilinishi mumkin."
                     },
@@ -29964,7 +29964,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': '15 yoshli shaxs ishga kirishi uchun qanday shart bajarilishi kerak?',
-                            'answer': "Ota-onasidan birining (yoki vasiyning) yozma roziligi va ish sog'lig'iga hamda o'qishiga xalaqit bermaydigan yengil ish bo'lishi kerak.",
+                            'answer': "Ota-onasidan birining (yoki vasiyning) yozma roziligi va sog'lig'iga hamda o'qishiga xalaqit bermaydigan yengil ish bo'lishi kerak.",
                             'hint': 'Ota-ona roziligini eslang.'
                         },
                         {
@@ -29978,7 +29978,7 @@ SUBJECTS = [
             {
                 'slug': 'ish-vaqti-va-dam-olish-huquqi',
                 'title': "Ish vaqti, dam olish vaqti va mehnat ta'tillari",
-                'summary': "Ish vaqtining me me me me me me'yori, dam olish kunlari va har yilgi mehnat ta'tilining huquqiy tartibi.",
+                'summary': "Ish vaqtining me'yori, dam olish kunlari va har yilgi mehnat ta'tilining huquqiy tartibi.",
                 'duration': 20,
                 'lesson': [
                     {
@@ -29996,7 +29996,7 @@ SUBJECTS = [
                         'title': "Ish vaqti turlari va ta'tillar",
                         'items': [
                             "Normal ish vaqti: haftasiga ko'pi bilan 40 soat.",
-                            "Qisqartirilgan ish vaqti: voyaga yetmaganlar (16-18 yoshdagilar uchun 36 soat), nogironligi bo'lganlar va zararli me'yorda ishlovchilar uchun.",
+                            "Qisqartirilgan ish vaqti: voyaga yetmaganlar (16-18 yoshdagilar uchun 36 soat), nogironligi bo'lganlar va zararli sharoitda ishlovchilar uchun.",
                             "Har yilgi asosiy mehnat ta'tili: kamida 21 ish kuni (yangi Mehnat kodeksi bo'yicha)."
                         ]
                     },
@@ -30008,7 +30008,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Xodimlar uchun haftalik ish vaqtining me me'yori ko'pi bilan qancha soat etib belgilangan?",
+                        'q': "Xodimlar uchun haftalik ish vaqtining me'yori ko'pi bilan qancha soat etib belgilangan?",
                         'options': [
                             '30 soat',
                             '36 soat',
@@ -30038,7 +30038,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': "Ish vaqti me me'yorlarini bilish.",
+                    'intro': "Ish vaqti me'yorlarini bilish.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -30225,7 +30225,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': 'Jinoyat huquqi — qanday qilmishlar jinoyat hisoblanishi va uning uchun qanday jinoiy jazolanishi belgilab beruvchi huquq sohasi hisoblanadi.'
+                        'body': "Jinoyat huquqi — qanday qilmishlar jinoyat hisoblanishi va ular uchun qanday jazo qo'llanilishini belgilab beruvchi huquq sohasi hisoblanadi."
                     },
                     {
                         'type': 'example',
@@ -30292,7 +30292,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Aybaybsizlik prezumpsiyasi nima va u inson huquqlarini himoya qilishda qanday ahamiyatga ega?'
+                            'prompt': 'Aybsizlik prezumpsiyasi nima va u inson huquqlarini himoya qilishda qanday ahamiyatga ega?'
                         }
                     ]
                 }
@@ -30317,7 +30317,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Jinoyat tarkibining 4 ta elementlari',
                         'items': [
-                            'Jinoyat obyekti: jinoyat suqilayotgan ijtimoiy munosabat (hayot, mulk va h.k.).',
+                            'Jinoyat obyekti: jinoyat tajovuz qilayotgan ijtimoiy munosabat (hayot, mulk va h.k.).',
                             "Jinoyatning obyektiv tomoni: harakat/harakatsizlik, oqibat va sababiy bog'lanish.",
                             'Jinoyat subyekti: jinoyat sodir etgan aqli raso, muayyan yoshga yetgan shaxs.',
                             'Jinoyatning subyektiv tomoni: ayb (qasd yoki ehtiyotsizlik), sabab va maqsad.'
@@ -30399,14 +30399,14 @@ SUBJECTS = [
                         'title': "Voyaga yetmaganlarga qo'llaniladigan jazolar",
                         'items': [
                             "Jarima (faqat mustaqil daromadga ega bo'lganda).",
-                            'Axlok tuzatish ishlari.',
-                            'Mijoz va ozodlikni cheklash.',
+                            'Axloq tuzatish ishlari.',
+                            'Ozodlikni cheklash.',
                             "Muddati qisqartirilgan ozodlikdan mahrum qilish (ko'pi bilan 10 yil)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Voyaga yetmaganlarga umrbod ozodlikdan mahrum qilish jazosi tayinlanishi MUMPUSIZDIR.'
+                        'body': 'Esda tuting: Voyaga yetmaganlarga umrbod ozodlikdan mahrum qilish jazosi tayinlanishi MUMKIN EMAS.'
                     }
                 ],
                 'quiz': [
@@ -30511,7 +30511,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Daraxt va sut emizuvchilarni noqonuniy kesganlik uchun qanday javobgarlik choralari mavjud?',
+                        'q': 'Daraxtlarni noqonuniy kesganlik uchun qanday javobgarlik choralari mavjud?',
                         'options': [
                             'Faqat ogohlantirish',
                             "Ma'muriy va jinoiy javobgarlik",
@@ -30554,7 +30554,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': 'Nusxasi nuqsonli chiqib qolgan poyabzalni xaridor 14 kun ichida almashtirishi yoki pulini qaytarib olishi mumkin.'
+                        'body': "O'lchami to'g'ri kelmagan poyabzalni xaridor 14 kun ichida almashtirishi, nuqsonli chiqsa esa pulini qaytarib olishi mumkin."
                     },
                     {
                         'type': 'steps',
@@ -30574,7 +30574,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Nuqsonsiz (sog'lom) me'yoriy tovarni boshqa o'lchamga almashtirish uchun xaridorga necha kun muddat beriladi?",
+                        'q': "Sifatli (nuqsonsiz) tovarni boshqa o'lchamga almashtirish uchun xaridorga necha kun muddat beriladi?",
                         'options': [
                             '3 kun',
                             '7 kun',
@@ -30711,7 +30711,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Huquqni muhofaza qiluvchi organlar — qonuniylik va huquq-tartibotni ta'minlash, jinoyatchilikka qarshi kurashish hamda fuqarolar huquqlarini himoya qilish uchun ma'sul davlat organlaridir."
+                        'body': "Huquqni muhofaza qiluvchi organlar — qonuniylik va huquq-tartibotni ta'minlash, jinoyatchilikka qarshi kurashish hamda fuqarolar huquqlarini himoya qilish uchun mas'ul davlat organlaridir."
                     },
                     {
                         'type': 'example',
@@ -30805,7 +30805,7 @@ SUBJECTS = [
                         'items': [
                             "Fuqarolarga huquqiy masalalar bo'yicha maslahatlar va tushuntirishlar berish.",
                             'Sudlarda, davlat idoralarida mijozning manfaatlarini himoya qilish.',
-                            'Jinoiy ishlarda himoyachi rejimida qatnashish.',
+                            'Jinoiy ishlarda himoyachi sifatida qatnashish.',
                             "Huquqiy hujjatlar (shartnomalar, da'vo arizalari) tuzib berish."
                         ]
                     },
@@ -30916,7 +30916,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Xalqaro shartnomaning davlat parlamenti tomonidan tasdiqlanishi va kuchga kirishi yuridik dilda nima deyiladi?',
+                        'q': 'Xalqaro shartnomaning davlat parlamenti tomonidan tasdiqlanishi va kuchga kirishi yuridik tilda nima deyiladi?',
                         'options': [
                             'Deklaratsiya',
                             'Ratifikatsiya',
@@ -31039,7 +31039,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Siz yozgan kitob, yaratgan kompyuter o me'yini yoki kompozitsiya mualliflik huquqi obyekti sanaladi."
+                        'body': "Siz yozgan kitob, yaratgan kompyuter o'yini yoki kompozitsiya mualliflik huquqi obyekti sanaladi."
                     },
                     {
                         'type': 'steps',
@@ -31113,7 +31113,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Xalqaro ommaviy huquq — davlatlar va xalqaro tashkilotlar o'rtasidagi munosabatlarni tartibga soladi. Xalqaro gumanitar huquq esa qurolli nizolar (urush) vaqtida shaxslar va ob'yektlarni muhofaza qiluvchi normalar majmuidir."
+                        'body': "Xalqaro ommaviy huquq — davlatlar va xalqaro tashkilotlar o'rtasidagi munosabatlarni tartibga soladi. Xalqaro gumanitar huquq esa qurolli nizolar (urush) vaqtida shaxslar va obyektlarni muhofaza qiluvchi normalar majmuidir."
                     },
                     {
                         'type': 'example',
@@ -31124,7 +31124,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Xalqaro gumanitar huquqning oltin qoidalari',
                         'items': [
-                            "Tinch aholiga va fuqarolik ob'yektlariga hujaum qilish taqiqlanadi.",
+                            'Tinch aholiga va fuqarolik obyektlariga hujum qilish taqiqlanadi.',
                             "Harbiy asirlarga nisbatan insoniy munosabatda bo'lish shart.",
                             'Tibbiyot xodimlari va Qizil Yarim Oy/Qizil Xoch xodimlariga tegmaslik.'
                         ]
@@ -31149,7 +31149,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Urush paytida kasalxona va maktab kabi fuqarolik ob'yektlariga hujum qilish qat'iyan taqiqlanadi.",
+                        'q': "Urush paytida kasalxona va maktab kabi fuqarolik obyektlariga hujum qilish qat'iyan taqiqlanadi.",
                         'answer': True,
                         'explain': "Gumanitar huquq harbiy va fuqarolik obyektlarini ajratish tamoyiliga qat'iy tayanadi."
                     },
@@ -31179,7 +31179,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Xalqaro Qizil Xoch va Qizil Yarim Oy jamiyatining bitarafik va insonparvarlik roli haqida fikringizni bayon eting.'
+                            'prompt': 'Xalqaro Qizil Xoch va Qizil Yarim Oy jamiyatining betaraflik va insonparvarlik roli haqida fikringizni bayon eting.'
                         }
                     ]
                 }
@@ -31187,7 +31187,7 @@ SUBJECTS = [
             {
                 'slug': 'korrupsiyaga-qarshi-kurash-huquqiy-asoslari',
                 'title': 'Korrupsiyaga qarshi kurashishning huquqiy asoslari',
-                'summary': 'Korrupsiya tushunchasi, manfaatlar toqnashuvi va korrupsiyaga qarshi kurashish davlat siyosati.',
+                'summary': "Korrupsiya tushunchasi, manfaatlar to'qnashuvi va korrupsiyaga qarshi kurashish davlat siyosati.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -31198,14 +31198,14 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Misol',
-                        'body': "Pora olish, pora berish, mansab vakolatini suiste me'mol qilish va manfaatlar toqnashuvi korrupsiyaviy huquqbuzarliklarga kiradi."
+                        'body': "Pora olish, pora berish, mansab vakolatini suiiste'mol qilish va manfaatlar to'qnashuvi korrupsiyaviy huquqbuzarliklarga kiradi."
                     },
                     {
                         'type': 'steps',
                         'title': 'Korrupsiyaga qarshi kurash mexanizmlari',
                         'items': [
                             "Ochiqlik va shaffoflikni ta'minlash (raqamlashtirish).",
-                            'Manfaatlar toqnashuvini oldini olish va hal etish.',
+                            "Manfaatlar to'qnashuvini oldini olish va hal etish.",
                             'Korrupsiyaga qarshi kurashish agentligi faoliyati.',
                             "Jazo muqarrarligini ta'minlash va profilaktika."
                         ]
@@ -31239,12 +31239,12 @@ SUBJECTS = [
                         'q': "Mansabdor shaxsning shaxsiy manfaatlari va uning xizmat majburiyatlari o'rtasida qarama-qarshilik yuzaga kelishi nima deyiladi?",
                         'options': [
                             'Emansipatsiya',
-                            'Manfaatlar toqnashuvi',
+                            "Manfaatlar to'qnashuvi",
                             'Sanktsiya',
                             'Privatizatsiya'
                         ],
                         'answer': 1,
-                        'explain': "Manfaatlar toqnashuvi (conflict of interest) mansabdor shaxs xolisligiga ta'sir qilishi mumkin bo'lgan holatdir."
+                        'explain': "Manfaatlar to'qnashuvi (conflict of interest) mansabdor shaxs xolisligiga ta'sir qilishi mumkin bo'lgan holatdir."
                     }
                 ],
                 'homework': {
@@ -31253,7 +31253,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Manfaatlar toqnashuvi nima?',
+                            'prompt': "Manfaatlar to'qnashuvi nima?",
                             'answer': "Shaxsning jamoat yoki xizmat vazifalarini bajarishdagi xolisligiga uning shaxsiy manfaatlari ta'sir o'tkazishi holati.",
                             'hint': 'Shaxsiy va xizmat manfaatlari qarama-qarshiligi.'
                         },
