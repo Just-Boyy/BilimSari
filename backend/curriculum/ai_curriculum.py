@@ -794,7 +794,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Kvadratning tomoni 4 cm bo'lsa, uning diogonalini toping.",
+                            'prompt': "Kvadratning tomoni 4 cm bo'lsa, uning diagonalini toping.",
                             'answer': '4sqrt(2)',
                             'hint': 'd^2 = a^2 + a^2 = 2a^2.'
                         },
@@ -3237,7 +3237,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Burchaklarni o'lchash tartibi",
                         'items': [
-                            'Transportir markazini burchak uchiga qo me-ling.',
+                            "Transportir markazini burchak uchiga qo'ying.",
                             "Bir tomonini 0 daraja chizig'iga moslang.",
                             "Ikkinchi tomon tegib turgan darajani o'qing."
                         ]
@@ -3306,7 +3306,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Qo'shni va Vertikal burchaklar",
-                        'body': "Bir tomoni umumiy, qolgan ikki tomoni bir to'g'ri chiziqni hosil qiluvchi burchaklar qo'shni burchaklar deyiladi. Ikki to me-g'ri chiziq kesishganda hosil bo'lgan qarama-qarshi burchaklar vertikal burchaklar deyiladi."
+                        'body': "Bir tomoni umumiy, qolgan ikki tomoni bir to'g'ri chiziqni hosil qiluvchi burchaklar qo'shni burchaklar deyiladi. Ikki to'g'ri chiziq kesishganda hosil bo'lgan qarama-qarshi burchaklar vertikal burchaklar deyiladi."
                     },
                     {
                         'type': 'example',
@@ -3386,7 +3386,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Uchburchak tenglik alomatlari',
-                        'body': "Uchburchak — bir to'g'ri chiziqda yatmaydigan 3 nuqta va ularni tutashtiruvchi 3 kesmadan iborat shakl. Uchburchaklar tengligining 3 ta alomati bor: TTB (Tomon-Burchak-Tomon), BTB (Burchak-Tomon-Burchak) va TTT (Tomon-Tomon-Tomon)."
+                        'body': "Uchburchak — bir to'g'ri chiziqda yotmaydigan 3 nuqta va ularni tutashtiruvchi 3 kesmadan iborat shakl. Uchburchaklar tengligining 3 ta alomati bor: TTB (Tomon-Burchak-Tomon), BTB (Burchak-Tomon-Burchak) va TTT (Tomon-Tomon-Tomon)."
                     },
                     {
                         'type': 'example',
@@ -3460,7 +3460,7 @@ SUBJECTS = [
             {
                 'slug': 'teng-yonli-va-teng-tomonli-uchburchaklar',
                 'title': 'Teng yonli va teng tomonli uchburchaklar',
-                'summary': 'Teng yonli uchburchakning asosidagi burchaklari tengligi, mediana, balandlik va bissiktrisa xossalari.',
+                'summary': 'Teng yonli uchburchakning asosidagi burchaklari tengligi, mediana, balandlik va bissektrisa xossalari.',
                 'duration': 20,
                 'lesson': [
                     {
@@ -3583,7 +3583,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Mos burchaklar har doim o'zaro teng bo'ladi.",
                         'answer': True,
-                        'explain': "To'g'ri chiziqlar parallel bo'lsa, mos burchaklar teng bo me-ladi."
+                        'explain': "To'g'ri chiziqlar parallel bo'lsa, mos burchaklar teng bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -3763,7 +3763,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Kvadratning tomoni 5 cm bo'lsa, diogonalini toping.",
+                            'prompt': "Kvadratning tomoni 5 cm bo'lsa, diagonalini toping.",
                             'answer': '5√2 cm',
                             'hint': "Pifagor teoremasiga ko'ra d² = 5² + 5²."
                         },
@@ -3778,7 +3778,7 @@ SUBJECTS = [
             {
                 'slug': 'parallelogramm-va-uning-xossalari',
                 'title': "To'rtburchaklar: Parallelogramm va uning xossalari",
-                'summary': 'Parallelogramm ta me-rifi, qarama-qarshi tomonlari va burchaklarining tengligi, diogonallar xossasi.',
+                'summary': "Parallelogramm ta'rifi, qarama-qarshi tomonlari va burchaklarining tengligi, diagonallar xossasi.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -3821,7 +3821,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Parallelogramm diagonallari har doim teng bo'ladi.",
                         'answer': False,
-                        'explain': "Diagonallar faqat to'g'ri to'rtburchak va kvadratda teng bo me-ladi."
+                        'explain': "Diagonallar faqat to'g'ri to'rtburchak va kvadratda teng bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -3863,12 +3863,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Xususiy parallelogrammlar',
-                        'body': "Barcha burchaklari to'g'ri bo'lgan parallelogramm — to me-g'ri to'rtburchak. Barcha tomonlari teng bo'lgan parallelogramm — romb. Barcha tomonlari va burchaklari teng shakl — kvadratdir."
+                        'body': "Barcha burchaklari to'g'ri bo'lgan parallelogramm — to'g'ri to'rtburchak. Barcha tomonlari teng bo'lgan parallelogramm — romb. Barcha tomonlari va burchaklari teng shakl — kvadratdir."
                     },
                     {
                         'type': 'example',
                         'title': 'Romb diagonallari',
-                        'body': "Romb diagonallari o me-zaro perpendikulyar va burchak bissektrisalari bo'ladi. Diagonallar kesishib 90° burchak hosil qiladi."
+                        'body': "Romb diagonallari o'zaro perpendikulyar va burchak bissektrisalari bo'ladi. Diagonallar kesishib 90° burchak hosil qiladi."
                     },
                     {
                         'type': 'steps',
@@ -3905,7 +3905,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Kvadrat diogonali tomoni bilan necha gradusli burchak hosil qiladi?',
+                        'q': 'Kvadrat diagonali tomoni bilan necha gradusli burchak hosil qiladi?',
                         'options': [
                             '30°',
                             '45°',
@@ -3948,7 +3948,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "O'rta chiziq teoremasi",
-                        'body': "Trapetsiyaning o me-rta chizig'i asoslariga parallel va ularning yarim yig'indisiga teng: m = (a + b) / 2."
+                        'body': "Trapetsiyaning o'rta chizig'i asoslariga parallel va ularning yarim yig'indisiga teng: m = (a + b) / 2."
                     },
                     {
                         'type': 'steps',
@@ -4001,7 +4001,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Teng yonli trapetsiyaning bir o'tkir burchagi 60° bo me-lsa, uning o'tmas burchagini toping.",
+                            'prompt': "Teng yonli trapetsiyaning bir o'tkir burchagi 60° bo'lsa, uning o'tmas burchagini toping.",
                             'answer': '120°',
                             'hint': "Bir yon tomonga yopishgan burchaklar yig'indisi 180°."
                         },
@@ -4027,7 +4027,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Urinma xossasi',
-                        'body': "Aylanaga o me-tkazilgan urinma urinish nuqtasiga o'tkazilgan radiusga har doim perpendikulyar bo'ladi (90° burchak hosil qiladi)."
+                        'body': "Aylanaga o'tkazilgan urinma urinish nuqtasiga o'tkazilgan radiusga har doim perpendikulyar bo'ladi (90° burchak hosil qiladi)."
                     },
                     {
                         'type': 'steps',
@@ -4095,7 +4095,7 @@ SUBJECTS = [
             {
                 'slug': 'markaziy-va-ichga-chizilgan-burchaklar',
                 'title': 'Aylana va burchaklar: Markaziy va ichga chizilgan burchaklar',
-                'summary': "Markaziy burchak va ichga chizilgan burchaklarning o'lchovlari hamda ular tiranayotgan yoylar bilan bog'liqligi.",
+                'summary': "Markaziy burchak va ichga chizilgan burchaklarning o'lchovlari hamda ular tiralgan yoylar bilan bog'liqligi.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -4174,7 +4174,7 @@ SUBJECTS = [
             {
                 'slug': 'ichki-va-tashqi-chizilgan-aylanalar',
                 'title': "Uchburchak va to'rtburchaklarga ichki va tashqi chizilgan aylanalar",
-                'summary': 'Koppburchaklarga ichki va tashqi chizilgan aylanalar markazlarining joylashuvi va shartlari.',
+                'summary': "Ko'pburchaklarga ichki va tashqi chizilgan aylanalar markazlarining joylashuvi va shartlari.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -4185,13 +4185,13 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "To'rtburchak sharti",
-                        'body': "To me-rtburchakka ichki aylana chizish uchun qarama-qarshi tomonlar yig'indisi teng bo'lishi kerak: a + c = b + d. Tashqi aylana chizish uchun qarama-qarshi burchaklar yig'indisi 180° bo'lishi kerak."
+                        'body': "To'rtburchakka ichki aylana chizish uchun qarama-qarshi tomonlar yig'indisi teng bo'lishi kerak: a + c = b + d. Tashqi aylana chizish uchun qarama-qarshi burchaklar yig'indisi 180° bo'lishi kerak."
                     },
                     {
                         'type': 'steps',
                         'title': 'Uchburchak markazlarini topish',
                         'items': [
-                            "Tashqi aylana markazi — tomonlarga o'tkazilgan orta perpendikulyarlar kesishish nuqtasi.",
+                            "Tashqi aylana markazi — tomonlarga o'tkazilgan o'rta perpendikulyarlar kesishish nuqtasi.",
                             'Ichki aylana markazi — bissektrisalar kesishish nuqtasi.'
                         ]
                     },
@@ -4217,7 +4217,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': 'Har qanday parallelogrammga ichki aylana chizish mumkin.',
                         'answer': False,
-                        'explain': "Faqat tomonlari teng bo'lgan parallelogrammga (romb, kvadrat) ichki aylana chizsa bo me-ladi."
+                        'explain': "Faqat tomonlari teng bo'lgan parallelogrammga (romb, kvadrat) ichki aylana chizsa bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -4263,7 +4263,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': "O'xshashlik keffitsiyenti",
+                        'title': "O'xshashlik koeffitsiyenti",
                         'body': "Agar k = 2 bo'lsa, o'xshash uchburchak tomonlari 2 marta katta bo'ladi. Yuzalari esa k² = 4 marta katta bo'ladi."
                     },
                     {
@@ -4344,7 +4344,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Parallelogramm va Romb yuzi',
-                        'body': 'Parallelogramm: S = a * h. Romb: S = 1/2 * d1 * d2 (diagonallar ko me-paytmasining yarmi).'
+                        'body': "Parallelogramm: S = a * h. Romb: S = 1/2 * d1 * d2 (diagonallar ko'paytmasining yarmi)."
                     },
                     {
                         'type': 'steps',
@@ -4498,7 +4498,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Vektor tushunchasi',
-                        'body': "Son qiymati va yo me-nalishiga ega bo'lgan kattalik vektor deyiladi. Vektor yo'naltirilgan kesma bilan tasvirlanadi. Vektorlarni qo'shishda Uchburchak qoidasi va Parallelogramm qoidasi ishlatiladi."
+                        'body': "Son qiymati va yo'nalishiga ega bo'lgan kattalik vektor deyiladi. Vektor yo'naltirilgan kesma bilan tasvirlanadi. Vektorlarni qo'shishda Uchburchak qoidasi va Parallelogramm qoidasi ishlatiladi."
                     },
                     {
                         'type': 'example',
@@ -4541,13 +4541,13 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "a vektorni -2 soniga ko'paytirsa, yo'nalishi qanday o'zgaradi?",
                         'options': [
-                            'O me-zgarmaydi',
+                            "O'zgarmaydi",
                             "Qarama-qarshiga o'zgaradi",
                             '90 gradusga buriladi',
                             'Nolga aylanadi'
                         ],
                         'answer': 1,
-                        'explain': "Manfiy songa ko'paytirilsa yo'nalish qarama-qarshiga o me-zgaradi."
+                        'explain': "Manfiy songa ko'paytirilsa yo'nalish qarama-qarshiga o'zgaradi."
                     }
                 ],
                 'homework': {
@@ -4577,12 +4577,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Skalyar ko'paytma",
-                        'body': "Ikki a va b vektorning skalyar ko me-paytmasi ularning modullari va ular orasidagi burchak kosinusi ko'paytmasiga teng: a · b = |a| * |b| * cos(φ). Koordinatalarda: a · b = x1*x2 + y1*y2."
+                        'body': "Ikki a va b vektorning skalyar ko'paytmasi ularning modullari va ular orasidagi burchak kosinusi ko'paytmasiga teng: a · b = |a| * |b| * cos(φ). Koordinatalarda: a · b = x1*x2 + y1*y2."
                     },
                     {
                         'type': 'example',
                         'title': 'Perpendikulyarlik sharti',
-                        'body': "Agar ikki nol bo me-lmagan vektorning skalyar ko'paytmasi 0 ga teng bo'lsa (a · b = 0), bu vektorlar o'zaro perpendikulyardir (φ = 90°)."
+                        'body': "Agar ikki nol bo'lmagan vektorning skalyar ko'paytmasi 0 ga teng bo'lsa (a · b = 0), bu vektorlar o'zaro perpendikulyardir (φ = 90°)."
                     },
                     {
                         'type': 'steps',
@@ -4662,19 +4662,19 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Parallel ko'chirish",
-                        'body': "(x, y) nuqta a va b ga ko me-chirilganda yangi koordinatalar (x + a, y + b) hosil bo'ladi."
+                        'body': "(x, y) nuqta a va b ga ko'chirilganda yangi koordinatalar (x + a, y + b) hosil bo'ladi."
                     },
                     {
                         'type': 'steps',
                         'title': "O'qqa nisbatan simmetriya (Ox o'qi)",
                         'items': [
-                            'x koordinatasini o me-zgarmasdan qoldiring.',
-                            "y koordinatasisining ishorasini qarama-qarshisiga o'zgartiring: (x, y) -> (x, -y)."
+                            "x koordinatasini o'zgartirmasdan qoldiring.",
+                            "y koordinatasining ishorasini qarama-qarshisiga o'zgartiring: (x, y) -> (x, -y)."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Harakat natijasida shaklning o'lchamlari va yuzi o me-zgarmaydi (konfiguratsiya saqlanadi)."
+                        'body': "Esda tuting: Harakat natijasida shaklning o'lchamlari va yuzi o'zgarmaydi (konfiguratsiya saqlanadi)."
                     }
                 ],
                 'quiz': [
@@ -4722,7 +4722,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Teng yonli uchburchak nechta simmetriya o me-qiga ega?'
+                            'prompt': "Teng yonli uchburchak nechta simmetriya o'qiga ega?"
                         }
                     ]
                 }
@@ -4730,18 +4730,18 @@ SUBJECTS = [
             {
                 'slug': 'stereometriya-asoslari',
                 'title': "Stereometriya kirish: Fazoda nuqta, to'g'ri chiziq va tekisliklar",
-                'summary': "Stereometriya aksiomalari, fazoda to'g me-ri chiziqlar va tekisliklarning o'zaro joylashuvi.",
+                'summary': "Stereometriya aksiomalari, fazoda to'g'ri chiziqlar va tekisliklarning o'zaro joylashuvi.",
                 'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Stereometriyaga kirish',
-                        'body': "Stereometriya — geometriyaning fazoviy shakllarni o me-rganuvchi bo'limi. Asosiy elementlar: nuqta, to'g'ri chiziq va tekislik. Aksioma: Bir to'g'ri chiziqda yatmaydigan 3 nuqta orqali faqat bitta tekislik o me-tkazish mumkin."
+                        'body': "Stereometriya — geometriyaning fazoviy shakllarni o'rganuvchi bo'limi. Asosiy elementlar: nuqta, to'g'ri chiziq va tekislik. Aksioma: Bir to'g'ri chiziqda yotmaydigan 3 nuqta orqali faqat bitta tekislik o'tkazish mumkin."
                     },
                     {
                         'type': 'example',
                         'title': "Fazoda to'g'ri chiziqlar",
-                        'body': "Fazoda ikki to'g'ri chiziq: 1) Kesishishi, 2) Parallel bo'lishi, 3) Ayri-mayri (bir tekislikda yatmaydigan va kesishmaydigan) bo'lishi mumkin."
+                        'body': "Fazoda ikki to'g'ri chiziq: 1) Kesishishi, 2) Parallel bo'lishi, 3) Ayri-mayri (bir tekislikda yotmaydigan va kesishmaydigan) bo'lishi mumkin."
                     },
                     {
                         'type': 'steps',
@@ -4754,7 +4754,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Ayri-mayri to me-ri chiziqlar bir tekislikda yotmaydi!'
+                        'body': "Esda tuting: Ayri-mayri to'g'ri chiziqlar bir tekislikda yotmaydi!"
                     }
                 ],
                 'quiz': [
@@ -4772,13 +4772,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Fazoda kesishmaydigan har qanday ikki to me-ri chiziq parallel bo'ladi.",
+                        'q': "Fazoda kesishmaydigan har qanday ikki to'g'ri chiziq parallel bo'ladi.",
                         'answer': False,
                         'explain': "Ular ayri-mayri ham bo'lishi mumkin."
                     },
                     {
                         'type': 'mc',
-                        'q': 'Bir tekislikda yotmaydigan va kesishmaydigan to me-ri chiziqlar qanday deyiladi?',
+                        'q': "Bir tekislikda yotmaydigan va kesishmaydigan to'g'ri chiziqlar qanday deyiladi?",
                         'options': [
                             'Parallel',
                             'Perpendikulyar',
@@ -4790,7 +4790,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Stereometriya aksionalari va fazoviy munosabatlar.',
+                    'intro': 'Stereometriya aksiomalari va fazoviy munosabatlar.',
                     'tasks': [
                         {
                             'id': 't1',
@@ -4816,7 +4816,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Uch perpendikulyar haqida teorema',
-                        'body': "Tekislikda og'maning asosidan o me-tkazilgan to'g'ri chiziq uning proyeksiyasiga perpendikulyar bo'lsa, og'maning o'ziga ham perpendikulyar bo'ladi (va aksincha)."
+                        'body': "Tekislikda og'maning asosidan o'tkazilgan to'g'ri chiziq uning proyeksiyasiga perpendikulyar bo'lsa, og'maning o'ziga ham perpendikulyar bo'ladi (va aksincha)."
                     },
                     {
                         'type': 'example',
@@ -4890,17 +4890,17 @@ SUBJECTS = [
             {
                 'slug': 'prizma-va-uning-hajmi',
                 'title': "Ko'pyoqlilar: Prizma va uning sirtining yuzi, hajmi",
-                'summary': "To'g'ri va og'ma prizma, paralelepiped, yon va to'la sirti hamda hajmini hisoblash.",
+                'summary': "To'g'ri va og'ma prizma, parallelepiped, yon va to'la sirti hamda hajmini hisoblash.",
                 'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Prizma va Parallelepiped',
-                        'body': "Ikki yo'g'i (asoslari) teng va parallel ko'pburchaklar, qolgan yo'qlari parallelogrammlar bo'lgan ko'pyoq prizma deyiladi. Yon qirralari asosiga perpendikulyar bo'lsa, to'g'ri prizma deyiladi. Hajm: V = S_asos * h."
+                        'body': "Ikki yog'i (asoslari) teng va parallel ko'pburchaklar, qolgan yoqlari parallelogrammlar bo'lgan ko'pyoq prizma deyiladi. Yon qirralari asosiga perpendikulyar bo'lsa, to'g'ri prizma deyiladi. Hajm: V = S_asos * h."
                     },
                     {
                         'type': 'example',
-                        'title': "To me-g'ri parallelepiped",
+                        'title': "To'g'ri parallelepiped",
                         'body': "O'lchamlari a, b, c bo'lgan to'g'ri burchakli parallelepiped hajmi: V = a * b * c. To'la sirti: S = 2(ab + bc + ac)."
                     },
                     {
@@ -4932,9 +4932,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "To'g'ri prizmaning yon yo me-qlari har doim to'g'ri to'rtburchaklardan iborat.",
+                        'q': "To'g'ri prizmaning yon yoqlari har doim to'g'ri to'rtburchaklardan iborat.",
                         'answer': True,
-                        'explain': "To'g'ri prizmada yon qirralar asosga perpendikulyar bo'lgani uchun yon yo'qlar to'g'ri to'rtburchak bo me-ladi."
+                        'explain': "To'g'ri prizmada yon qirralar asosga perpendikulyar bo'lgani uchun yon yoqlar to'g'ri to'rtburchak bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -4976,7 +4976,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Piramida',
-                        'body': "Bir yo'g'i (asosi) ixtiyoriy ko me-pburchak, qolgan yo'qlari umumiy uchga ega uchburchaklardan iborat ko'pyoq piramida deyiladi. Muntazam piramida yon yog'ining balandligi apofema (h_a) deyiladi. Hajm: V = 1/3 * S_asos * h."
+                        'body': "Bir yog'i (asosi) ixtiyoriy ko'pburchak, qolgan yoqlari umumiy uchga ega uchburchaklardan iborat ko'pyoq piramida deyiladi. Muntazam piramida yon yog'ining balandligi apofema (h_a) deyiladi. Hajm: V = 1/3 * S_asos * h."
                     },
                     {
                         'type': 'example',
@@ -5050,7 +5050,7 @@ SUBJECTS = [
             {
                 'slug': 'silindr-va-uning-xossalari',
                 'title': 'Aylanish jismlari: Silindr va uning sirtining yuzi hamda hajmi',
-                'summary': "To'g'ri to'rtburchakni bir tomoni atrofida aylantirishdan hosil bo me-lgan jism (silindr), yon sirti, to'la sirti va hajmi.",
+                'summary': "To'g'ri to'rtburchakni bir tomoni atrofida aylantirishdan hosil bo'lgan jism (silindr), yon sirti, to'la sirti va hajmi.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -5060,7 +5060,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': 'To me-la sirt formulasi',
+                        'title': "To'la sirt formulasi",
                         'body': "S_to'la = S_yon + 2 * S_asos = 2πRh + 2πR² = 2πR(h + R)."
                     },
                     {
@@ -5074,7 +5074,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Silindrning o'q kesimi to me-g'ri to'rtburchakdan iborat bo'ladi."
+                        'body': "Esda tuting: Silindrning o'q kesimi to'g'ri to'rtburchakdan iborat bo'ladi."
                     }
                 ],
                 'quiz': [
@@ -5094,7 +5094,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Silindr yon sirtining yoyilmasi to'g'ri to'rtburchakdan iborat.",
                         'answer': True,
-                        'explain': "Silindr yon sirtini yozsak, eni 2πR va bo me-yi h bo'lgan to'rtburchak hosil bo'ladi."
+                        'explain': "Silindr yon sirtini yozsak, eni 2πR va bo'yi h bo'lgan to'rtburchak hosil bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -5115,7 +5115,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Silindrning o'q kesimi kvadratchadan iborat bo'lib, uning tomoni 6 cm. Silindr hajmini toping (π hisobga olinsin).",
+                            'prompt': "Silindrning o'q kesimi kvadratdan iborat bo'lib, uning tomoni 6 cm. Silindr hajmini toping (π hisobga olinsin).",
                             'answer': '54π cm³',
                             'hint': 'H=6, D=6 => R=3. V = π * 3² * 6 = 54π.'
                         },
@@ -5184,8 +5184,8 @@ SUBJECTS = [
                             '45π cm³',
                             '12π cm³'
                         ],
-                        'answer': 1,
-                        'explain': 'V = 1/3 * π * 3² * 5 = 15π / 3 = 5π cm³.'
+                        'answer': 0,
+                        'explain': 'V = 1/3 * π * 3² * 5 = 1/3 * 45π = 15π cm³.'
                     }
                 ],
                 'homework': {
@@ -5201,7 +5201,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Konus va piramida geometrik shakllarining o'xshashliklarini sanab o me-ting."
+                            'prompt': "Konus va piramida geometrik shakllarining o'xshashliklarini sanab o'ting."
                         }
                     ]
                 }
@@ -5220,19 +5220,19 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Shar kesimi',
-                        'body': "Sharning har qanday tekislik bilan kesimi doiradan iborat bo'ladi. Kesim markazdan o me-tganda eng katta doira (R radiusli) hosil bo'ladi."
+                        'body': "Sharning har qanday tekislik bilan kesimi doiradan iborat bo'ladi. Kesim markazdan o'tganda eng katta doira (R radiusli) hosil bo'ladi."
                     },
                     {
                         'type': 'steps',
                         'title': 'Shar hajmini hisoblash',
                         'items': [
                             'Radius R ni kubga oshiring (R³).',
-                            '4/3 va π ga ko me-paytiring.'
+                            "4/3 va π ga ko'paytiring."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Sfera yuzida uzunliklar yo'q, u faqat sirt maydoniga ega (2D manifold fazoda)."
+                        'body': "Esda tuting: Sfera — bu sirt (fazodagi ikki o'lchamli ko'pxillik), shuning uchun u faqat yuzaga ega, hajmga esa shar ega."
                     }
                 ],
                 'quiz': [
@@ -5268,7 +5268,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Shar va sfera formulalarini amalda qo me-llash.',
+                    'intro': "Shar va sfera formulalarini amalda qo'llash.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -5312,7 +5312,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Fazoda ham perpendikulyar vektorlar skalyar ko me-paytmasi 0 ga teng bo'ladi."
+                        'body': "Esda tuting: Fazoda ham perpendikulyar vektorlar skalyar ko'paytmasi 0 ga teng bo'ladi."
                     }
                 ],
                 'quiz': [
@@ -5330,9 +5330,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Fazoda ikkita vektorning skalyar ko me-paytmasi manfiy bo'lishi mumkin.",
+                        'q': "Fazoda ikkita vektorning skalyar ko'paytmasi manfiy bo'lishi mumkin.",
                         'answer': True,
-                        'explain': "Agar burchak o'tmas bo'lsa (cos < 0), skalyar ko me-paytma manfiy bo'ladi."
+                        'explain': "Agar burchak o'tmas bo'lsa (cos < 0), skalyar ko'paytma manfiy bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -5411,7 +5411,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Normal vektorlari kollinear bo'lgan tekisliklar o'zaro parallel yoki ustma-ust tushadi.",
                         'answer': True,
-                        'explain': "Normal vektorlar bir xil yo'nalishda bo me-lsa tekisliklar parallel bo me-ladi."
+                        'explain': "Normal vektorlar bir xil yo'nalishda bo'lsa tekisliklar parallel bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -5439,7 +5439,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "To me-g'ri chiziqning fazodagi kanonik tenglamasini tushuntirib bering."
+                            'prompt': "To'g'ri chiziqning fazodagi kanonik tenglamasini tushuntirib bering."
                         }
                     ]
                 }
@@ -5453,7 +5453,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Noevklid geometriyalar',
-                        'body': "Evklid geometriyasida to'g'ri chiziqdan tashqaridagi nuqta orqali unga parallel faqat 1 ta to me-ri chiziq o me-tkazish mumkin. Lobachevskiy geometriyasida kamida 2 ta, sferik geometriyada esa birorta ham parallel to'g'ri chiziq o'tkazib bo'lmaydi!"
+                        'body': "Evklid geometriyasida to'g'ri chiziqdan tashqaridagi nuqta orqali unga parallel faqat 1 ta to'g'ri chiziq o'tkazish mumkin. Lobachevskiy geometriyasida kamida 2 ta, sferik geometriyada esa birorta ham parallel to'g'ri chiziq o'tkazib bo'lmaydi!"
                     },
                     {
                         'type': 'example',
@@ -5489,7 +5489,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Lobachevskiy geometriyasida parallel to'g me-ri chiziqlar yo'q.",
+                        'q': "Lobachevskiy geometriyasida parallel to'g'ri chiziqlar yo'q.",
                         'answer': False,
                         'explain': "Lobachevskiy geometriyasida berilgan nuqtadan bir nechta (cheksiz) parallel to'g'ri chiziq o'tkazish mumkin."
                     },
@@ -5514,7 +5514,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "Sferik uchburchakning uchala burchagi ham 90° bo'lishi mumkinmi?",
                             'answer': 'Ha',
-                            'hint': 'Ekvator va ikkita meridian kesishuvini ko me-z oldingizga keltiring.'
+                            'hint': "Ekvator va ikkita meridian kesishuvini ko'z oldingizga keltiring."
                         },
                         {
                             'id': 't2',
@@ -5533,7 +5533,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Differensial geometriya asoslari',
-                        'body': "Differensial geometriya matematikaning hosila va integral apparatidan foydalanib geometrik shakllarni o'rganadigan bo'limidir. Parametrik egri chiziq r(t) = (x(t), y(t), z(t)) ko'rinishida beriladi. Egri chiziqning egriligi (k) uning to me-ri chiziqdan og'ish darajasini o'lchaydi."
+                        'body': "Differensial geometriya matematikaning hosila va integral apparatidan foydalanib geometrik shakllarni o'rganadigan bo'limidir. Parametrik egri chiziq r(t) = (x(t), y(t), z(t)) ko'rinishida beriladi. Egri chiziqning egriligi (k) uning to'g'ri chiziqdan og'ish darajasini o'lchaydi."
                     },
                     {
                         'type': 'example',
@@ -5626,7 +5626,7 @@ SUBJECTS = [
                         'items': [
                             'Koordinatalar sistemasini va ularning differensiallarini (dx1, dx2) aniqlash.',
                             'Fazoning berilgan nuqtasidagi g_ij metrik tenzor komponentlarini topish.',
-                            "ds^2 = g_11*dx1^2 + 2*g_12*dx1*dx2 + g_22*dx2^2 formulasi bo me'yoriy diferensial masofani tuzish.",
+                            "ds^2 = g_11*dx1^2 + 2*g_12*dx1*dx2 + g_22*dx2^2 formulasi bo'yicha differensial masofani tuzish.",
                             "Egri chiziq bo'ylab integrallash orqali to'liq masofani hisoblash."
                         ]
                     },
@@ -5664,7 +5664,7 @@ SUBJECTS = [
                             "Fazo cheksiz o'lchamli"
                         ],
                         'answer': 1,
-                        'explain': "Metrik tenzorning no-diagonal elementlari (g_12) koordinata chiziklarining o'zaro ortogonal emasligini ko'rsatadi."
+                        'explain': "Metrik tenzorning no-diagonal elementlari (g_12) koordinata chiziqlarining o'zaro ortogonal emasligini ko'rsatadi."
                     }
                 ],
                 'homework': {
@@ -5705,10 +5705,10 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Sirtning Eyler xarakteristikasini aniqlash',
                         'items': [
-                            'Sirtni trianggulyatsiya qilish (uchburchaklarga yoki kataklarga ajratish).',
+                            'Sirtni triangulyatsiya qilish (uchburchaklarga yoki kataklarga ajratish).',
                             'Barcha uchlar (V), qirralar (E) va yoqlar (F) sonini hisoblash.',
                             "chi = V - E + F formulasini qo'llash.",
-                            "Jins (g - teshiklar soni) ma'lum bo'lsa, yopiq mo'ljallangan sirt uchun chi = 2 - 2g formulasi bilan tekshirish."
+                            "Jins (g - teshiklar soni) ma'lum bo'lsa, yopiq oriyentirlangan sirt uchun chi = 2 - 2g formulasi bilan tekshirish."
                         ]
                     },
                     {
@@ -5788,7 +5788,7 @@ SUBJECTS = [
                         'items': [
                             "To'g'ri chiziqlarni L1 = (a1, b1, c1) va L2 = (a2, b2, c2) ko'rinishida vektor sifatida yozish.",
                             "Kesishish nuqtasini P = L1 x L2 (vektor ko'paytma) formula bilan hisoblash.",
-                            "Aralash koordinatalar (x, y, w) hosil bo'ladi. Agar w != 0 bo'lsa, (x/w, y/w) oddiy nuqta, w=0 bo'lsa cheksiz olis nuqta."
+                            "Bir jinsli koordinatalar (x, y, w) hosil bo'ladi. Agar w != 0 bo'lsa, (x/w, y/w) oddiy nuqta, w=0 bo'lsa cheksiz olis nuqta."
                         ]
                     },
                     {
@@ -5821,11 +5821,11 @@ SUBJECTS = [
                         'options': [
                             'Kesmalar uzunliklari nisbati',
                             'Burchaklar darajasi',
-                            "Qo'shnisbat (Cross-ratio / Doynoy otnosheniye)",
+                            "Qo'sh nisbat (cross-ratio)",
                             'Yuzalar nisbati'
                         ],
                         'answer': 2,
-                        'explain': "Projektiv almashtirishlarda 4 ta nuqtaning qo'shnisbati (cross-ratio) invariant bo'lib qoladi."
+                        'explain': "Projektiv almashtirishlarda 4 ta nuqtaning qo'sh nisbati (cross-ratio) invariant bo'lib qoladi."
                     }
                 ],
                 'homework': {
@@ -5969,7 +5969,7 @@ SUBJECTS = [
                             "Uchburchak turiga qarab har xil bo'lishi mumkin"
                         ],
                         'answer': 2,
-                        'explain': "Giperbolik geometriyada uchburchak burchaklar yig'indisi har doim pi (180 deg) dan kichik bo'ladi."
+                        'explain': "Giperbolik geometriyada uchburchak burchaklar yig'indisi har doim pi (180°) dan kichik bo'ladi."
                     },
                     {
                         'type': 'tf',
@@ -6068,7 +6068,7 @@ SUBJECTS = [
                             'Aylana'
                         ],
                         'answer': 1,
-                        'explain': "Konus yasovchisiga parallel kesim har doim parabolasimon bo'ladi."
+                        'explain': "Konus yasovchisiga parallel kesim har doim parabola bo'ladi."
                     }
                 ],
                 'homework': {
@@ -6077,7 +6077,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Silindrni uning o me'yoriy o'qiga ko'ndalang (perpendikulyar) kessak, kesim shakli nima bo'ladi?",
+                            'prompt': "Silindrni uning o'qiga ko'ndalang (perpendikulyar) kessak, kesim shakli nima bo'ladi?",
                             'answer': 'Aylana',
                             'hint': "Silindrning ko'ndalang kesimi uning asosiga parallel bo'ladi."
                         },
@@ -6098,7 +6098,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Biz yashayotgan 3 o'lchamli fazoni n-o'lchamli Evklid fazosiga (R^n) umumiylashtirish mumkin. n-o'lchamli fazoda nuqta n ta koordinata (x1, x2, ..., xn) bilan beriladi. 4 o'lchamli kub 'tesserakt' deb ataladi va u 16 ta uch, 32 ta qirra, 24 ta kvadrat yoq va 8 ta kubik giperyoqdan iborat."
+                        'body': "Biz yashayotgan 3 o'lchamli fazoni n-o'lchamli Evklid fazosiga (R^n) umumlashtirish mumkin. n-o'lchamli fazoda nuqta n ta koordinata (x1, x2, ..., xn) bilan beriladi. 4 o'lchamli kub 'tesserakt' deb ataladi va u 16 ta uch, 32 ta qirra, 24 ta kvadrat yoq va 8 ta kubik giperyoqdan iborat."
                     },
                     {
                         'type': 'example',
@@ -6107,7 +6107,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': "n-o me'yoriy giperkub qirralari sonini topish formulasi",
+                        'title': "n-o'lchovli giperkub qirralari sonini topish formulasi",
                         'items': [
                             "Giperkubning o'lchamini n deb belgilash.",
                             'Uchlar sonini hisoblash: V = 2^n.',
@@ -6179,12 +6179,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Differensial formalar apparati ko me'yoriy o'lchamli fazolarda integrallash nazariyasini birlashtiradi. 1-forma dx, dy; 2-forma dx^dy ko'rinishida bo'ladi va tashqi ko'paytma (wedge product ^) antisimmetrikdir (dx ^ dy = - dy ^ dx). Umumlashgan Stoks teoremasi barcha klassik integral teoremalarini bitta formulaga keltiradi: int_{M} d(omega) = int_{dM} omega."
+                        'body': "Differensial formalar apparati ko'p o'lchamli fazolarda integrallash nazariyasini birlashtiradi. 1-forma dx, dy; 2-forma dx^dy ko'rinishida bo'ladi va tashqi ko'paytma (wedge product ^) antisimmetrikdir (dx ^ dy = - dy ^ dx). Umumlashgan Stoks teoremasi barcha klassik integral teoremalarini bitta formulaga keltiradi: int_{M} d(omega) = int_{dM} omega."
                     },
                     {
                         'type': 'example',
                         'title': "Tashqi ko'paytma xossasi",
-                        'body': "dx ^ dx = 0 bo'ladi, chunki antisimmetriyalikdan dx ^ dx = - (dx ^ dx) => 2(dx ^ dx) = 0. Shu sababli bir xil diferensiallar tashqi ko'paytmasi har doim nolga teng."
+                        'body': "dx ^ dx = 0 bo'ladi, chunki antisimmetriyalikdan dx ^ dx = - (dx ^ dx) => 2(dx ^ dx) = 0. Shu sababli bir xil differensiallar tashqi ko'paytmasi har doim nolga teng."
                     },
                     {
                         'type': 'steps',
@@ -6198,7 +6198,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Nyuton-Leybnits, Grin, Gauss-Ostrogradskiy va klassik Stoks teoremalari umumlashgan Stoks teoremasining xos holatlantidir.'
+                        'body': 'Esda tuting: Nyuton-Leybnits, Grin, Gauss-Ostrogradskiy va klassik Stoks teoremalari umumlashgan Stoks teoremasining xos hollaridir.'
                     }
                 ],
                 'quiz': [
@@ -6216,21 +6216,21 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Har qanday differensial forma uchun d(d(omega)) = 0 (tashqi differensialning kvadrat nol) tengligi o me'yoriy o'rinli.",
+                        'q': "Har qanday differensial forma uchun d(d(omega)) = 0 (tashqi differensialning kvadrati nolga teng) tengligi doim o'rinli.",
                         'answer': True,
-                        'explain': 'd^2 = 0 ushbu apparatning eng asosiy ayaniy va topologik xossasidir.'
+                        'explain': 'd^2 = 0 ushbu apparatning eng asosiy algebraik va topologik xossasidir.'
                     },
                     {
                         'type': 'mc',
                         'q': 'Umumlashgan Stoks teoremasida dM nimani anglatadi?',
                         'options': [
-                            "M ko'pobrazligining hajmini",
-                            "M ko'pobrazligining chegarasini (boundary)",
+                            "M ko'pxilligining hajmini",
+                            "M ko'pxilligining chegarasini (boundary)",
                             'M ning hosilasini',
-                            "M ko'pobrazligining metrikasini"
+                            "M ko'pxilligining metrikasini"
                         ],
                         'answer': 1,
-                        'explain': "dM belgisi M manifoldining (ko'pobrazligining) geometrik chegarasini bildiradi."
+                        'explain': "dM belgisi M ko'pxilligining (manifold) geometrik chegarasini bildiradi."
                     }
                 ],
                 'homework': {
@@ -6265,7 +6265,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Kox qor parchasi va Serpinskiy uchburchagi',
-                        'body': "Serpinskiy uchburchagini yasashda har bir bosqichda uchburchak N=3 ta kichik uchburchakka bo'linadi va masshtab r=1/2 barobar kichrayadi. Unining Xausdorf (fraktal) o'lchami: D = log(N) / log(1/r) = log(3) / log(2) approx 1.585 ga teng."
+                        'body': "Serpinskiy uchburchagini yasashda har bir bosqichda uchburchak N=3 ta kichik uchburchakka bo'linadi va masshtab r=1/2 barobar kichrayadi. Uning Xausdorf (fraktal) o'lchami: D = log(N) / log(1/r) = log(3) / log(2) approx 1.585 ga teng."
                     },
                     {
                         'type': 'steps',
@@ -6327,7 +6327,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Mandelbrot to me'yoriy to'plami nima va u qanday kompleks tenglama z_{n+1} = z_n^2 + c orqali hosil bo'lishini tushuntiring."
+                            'prompt': "Mandelbrot to'plami nima va u qanday kompleks tenglama z_{n+1} = z_n^2 + c orqali hosil bo'lishini tushuntiring."
                         }
                     ]
                 }
@@ -6341,7 +6341,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Hisoblash geometriyasi (Computational Geometry) geometrik masalalarni samarali algoritmlar orqali yechishni o'rganadi. Ikkita eng asosiy tushuncha: 1) Konveks qobiq (Convex Hull) — berilgan nuqtalar to me'yoriy to'plamini o'rab oluvchi eng kichik qavariq ko'pburchak; 2) Voronoy diagrammasi — tekislikni berilgan nuqtalarga eng yaqin hududlarga bo'lish."
+                        'body': "Hisoblash geometriyasi (Computational Geometry) geometrik masalalarni samarali algoritmlar orqali yechishni o'rganadi. Ikkita eng asosiy tushuncha: 1) Konveks qobiq (Convex Hull) — berilgan nuqtalar to'plamini o'rab oluvchi eng kichik qavariq ko'pburchak; 2) Voronoy diagrammasi — tekislikni berilgan nuqtalarga eng yaqin hududlarga bo'lish."
                     },
                     {
                         'type': 'example',
@@ -6354,7 +6354,7 @@ SUBJECTS = [
                         'items': [
                             "Tekislikda S nuqtalar (saytlar) to'plamini belgilash.",
                             "Har bir juft nuqta orasiga o'rta perpendikulyar to'g'ri chiziq o'tkazish.",
-                            "Har bir nuqta uchun ushbu perpendikulyarlar bilan chegaralangan ko me'yoriy yarimtekisliklar kesishmasini (Voronoy katagini) topish.",
+                            'Har bir nuqta uchun ushbu perpendikulyarlar bilan chegaralangan yarimtekisliklar kesishmasini (Voronoy katagini) topish.',
                             'Voronoy kataklariga duallik tashkil etuvchi Delone (Delaunay) triangulyatsiyasini hosil qilish.'
                         ]
                     },
@@ -6380,7 +6380,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Voronoy diagrammasidagi har bir qirra ikki nuqtani tutashtiruvchi kesmaning o'rta perpendikulyarida yotadi.",
                         'answer': True,
-                        'explain': "Voronoy qirralari ikki eng yaqin manbadan teng uzoqlikda joylashgan nuqtalar to me'yoriy to'plamidir."
+                        'explain': "Voronoy qirralari ikki eng yaqin manbadan teng uzoqlikda joylashgan nuqtalar to'plamidir."
                     },
                     {
                         'type': 'mc',
