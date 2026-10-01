@@ -136,6 +136,7 @@
     // — Do'stlar —
     marafon: function () { return so_rov('/api/marathon'); },
     marafonBanner: function () { return so_rov('/api/marathon/banner'); },
+    marafonTarix: function (id) { return so_rov('/api/marathon/history/' + Number(id)); },
     marafonQatnash: function (id) { return so_rov('/api/marathon/join', { method: 'POST', body: { id: id, agree: true } }); },
     dostlar: function () { return so_rov('/api/friends'); },
     dostChaqiruvlar: function () { return so_rov('/api/friends/invites'); },

@@ -2241,3 +2241,26 @@ a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
 .marafon-banner-ong b { font-size: 24px; line-height: 1; font-family: var(--sarlavha); }
 .marafon-banner-ong small { font-size: 11px; }
 .marafon-banner-ong em { font-style: normal; font-weight: 800; font-size: 13px; background: rgba(255, 255, 255, .22); padding: 6px 10px; border-radius: 999px; }
+
+/* ── Marafonlar tarixi ─────────────────────────────────── */
+.marafon-tarix { margin-top: 18px; }
+.marafon-tarix-tugma { width: 100%; display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: var(--r);
+  background: var(--oq); border: 1px solid var(--chiziq); font: inherit; font-weight: 800; color: var(--matn-quyuq); cursor: pointer; text-align: left; }
+.marafon-tarix-tugma svg { width: 20px; height: 20px; color: var(--matn-2); flex: 0 0 auto; }
+.marafon-tarix-tugma .son { min-width: 24px; padding: 1px 8px; border-radius: 999px; background: var(--fon); color: var(--matn-2); font-size: 13px; text-align: center; }
+.marafon-tarix-strelka { margin-left: auto; color: var(--matn-3); font-size: 12px; }
+.marafon-tarix-royxat { display: grid; gap: 8px; margin-top: 8px; }
+.marafon-tarix-el { border-radius: var(--r); background: var(--oq); border: 1px solid var(--chiziq); overflow: hidden; }
+.marafon-tarix-el.ochiq { border-color: #fcd34d; }
+.marafon-tarix-el > button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 0; background: transparent;
+  font: inherit; text-align: left; cursor: pointer; color: inherit; }
+.marafon-tarix-matn { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.marafon-tarix-matn b { font-size: 15px; }
+.marafon-tarix-matn small { font-size: 12px; color: var(--matn-2); }
+.marafon-tarix-orin { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; background: #fef3c7;
+  color: #92400e; font-size: 12px; font-weight: 800; flex: 0 0 auto; }
+.marafon-tarix-orin svg { width: 14px; height: 14px; }
+.marafon-tarix-ichi { padding: 0 12px 12px; }
+.marafon-tarix-ichi .marafon-men.golib { margin: 0 0 10px; }
+.reyting-qator .ism.ism-ustun { flex-wrap: wrap; row-gap: 2px; }
+.reyting-qator .ism.ism-ustun .marafon-sovrin-kichik { flex-basis: 100%; }

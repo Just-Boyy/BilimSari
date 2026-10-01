@@ -540,6 +540,7 @@
     'Qoidalarga roziman': 'Согласен с правилами', 'Qatnashaman': 'Участвую',
     "Siz marafonga qo'shildingiz. Omad!": 'Вы присоединились к марафону. Удачи!', "o'rin": 'место',
     'Qatnashyapsiz': 'Участвуете',
+    "Hozircha faol marafon yo'q": 'Сейчас активных марафонов нет', 'Marafonlar tarixi': 'История марафонов',
     "Chaqmoq to'plang — sovrin kamida 1 chaqmoq to'plaganlarga beriladi": 'Собирайте молнии — приз получают набравшие хотя бы 1 молнию',
     "Marafonda shaxsiy darslardan 24 soatda faqat 1 ta darsning chaqmoqi sanaladi — bu dars chaqmoqi umumiy hisobingizga qo'shildi, marafonga esa qo'shilmadi.":
       'В марафоне из личных уроков за 24 часа засчитывается только один урок — молнии этого урока добавлены в общий счёт, но не в марафон.',

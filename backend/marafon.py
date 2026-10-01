@@ -48,7 +48,6 @@ MAX_ADJUST = 100000
 CACHE_MS = 20 * 1000
 REMIND_HOUR = 19                 # kechki eslatma (Toshkent vaqti)
 PREMIUM_WARN_MS = 3 * DAY_MS     # Premium tugashiga shuncha qolganda ogohlantirish
-SHOW_FINISHED_MS = 14 * DAY_MS   # tugagan marafon natijasi shuncha vaqt ko'rinib turadi
 OPEN = ('draft', 'scheduled', 'active')
 _USERNAME = re.compile(r'^[A-Za-z][A-Za-z0-9_]{3,31}$')
 
@@ -194,13 +193,8 @@ def open_marathon(cur):
 
 
 def shown_marathon(cur, now):
-    """O'quvchilarga ko'rsatiladigan: rejalashtirilgan/faol yoki yaqinda tugagan."""
+    """O'quvchilarga ko'rsatiladigan: rejalashtirilgan yoki faol (tugaganlari — tarixda)."""
     cur.execute("SELECT * FROM marathons WHERE status IN ('scheduled', 'active') ORDER BY id DESC LIMIT 1")
-    m = cur.fetchone()
-    if m:
-        return dict(m)
-    cur.execute("SELECT * FROM marathons WHERE status = 'finished' AND finished_ms >= %s ORDER BY id DESC LIMIT 1",
-                (now - SHOW_FINISHED_MS,))
     m = cur.fetchone()
     return dict(m) if m else None
 
@@ -678,17 +672,11 @@ def view(cur, uid, now=None, limit=100) -> dict:
     """Reyting sahifasining "Marafon" bo'limi."""
     now = now or clock.now_ms()
     m = shown_marathon(cur, now)
+    history = past_list(cur, uid)
     if not m:
-        return {'marathon': None}
+        return {'marathon': None, 'history': history}
     info = public_info(cur, m, now)
     friends = set(dostlar.friend_ids(cur, uid))
-    if m['status'] == 'finished':
-        cur.execute('SELECT * FROM marathon_winners WHERE marathon_id = %s ORDER BY place', (m['id'],))
-        winners = [{'place': int(w['place']), 'user_id': int(w['user_id']), 'name': w['name'] or "O'quvchi",
-                    'photo_url': w['photo_url'], 'score': int(w['score']), 'amount': int(w['amount'] or 0),
-                    'note': w['note'] or '', 'me': int(w['user_id']) == uid, 'friend': int(w['user_id']) in friends}
-                   for w in cur.fetchall()]
-        return {'marathon': info, 'winners': winners, 'me': {'place': next((w['place'] for w in winners if w['me']), None)}}
     st = standings(cur, m, now)
     e = eligibility(cur, m, uid, now)
     mine = next((p for p in st if p['user_id'] == uid), None)
@@ -708,7 +696,41 @@ def view(cur, uid, now=None, limit=100) -> dict:
         top_n = int(m['top_n'])
         if mine['rank'] > top_n and len(st) >= top_n:
             me['to_top'] = st[top_n - 1]['score'] - mine['score'] + 1
-    return {'marathon': info, 'top': top, 'participants': len(st), 'me': me}
+    return {'marathon': info, 'top': top, 'participants': len(st), 'me': me, 'history': history}
+
+
+def past_list(cur, uid, limit=30) -> list:
+    """Marafonlar tarixi: tugaganlari (yangisi birinchi), o'quvchining o'rni bilan."""
+    cur.execute("SELECT id, title, start_ms, end_ms, top_n FROM marathons WHERE status = 'finished' "
+                "ORDER BY end_ms DESC, id DESC LIMIT %s", (limit,))
+    rows = cur.fetchall()
+    if not rows:
+        return []
+    ids = [r['id'] for r in rows]
+    marks = ', '.join(['%s'] * len(ids))
+    cur.execute(f'SELECT marathon_id, COALESCE(SUM(amount), 0) AS fund FROM marathon_prizes WHERE marathon_id IN ({marks}) '
+                f'GROUP BY marathon_id', ids)
+    funds = {r['marathon_id']: int(r['fund'] or 0) for r in cur.fetchall()}
+    cur.execute(f'SELECT marathon_id, place FROM marathon_winners WHERE marathon_id IN ({marks}) AND user_id = %s', ids + [uid])
+    mine = {r['marathon_id']: int(r['place']) for r in cur.fetchall()}
+    return [{'id': r['id'], 'title': r['title'], 'start_ms': int(r['start_ms']), 'end_ms': int(r['end_ms']),
+             'top_n': int(r['top_n']), 'prize_fund': funds.get(r['id'], 0), 'my_place': mine.get(r['id'])} for r in rows]
+
+
+def past_view(cur, mid, uid, now=None) -> dict:
+    """Tugagan marafon: g'oliblar va sovrinlari."""
+    now = now or clock.now_ms()
+    m = _row(cur, mid)
+    if m['status'] != 'finished':
+        raise MarafonError('Marafon topilmadi.', 'not_found', 404)
+    friends = set(dostlar.friend_ids(cur, uid))
+    cur.execute('SELECT * FROM marathon_winners WHERE marathon_id = %s ORDER BY place', (mid,))
+    winners = [{'place': int(w['place']), 'user_id': int(w['user_id']), 'name': w['name'] or "O'quvchi",
+                'photo_url': w['photo_url'], 'score': int(w['score']), 'amount': int(w['amount'] or 0),
+                'note': w['note'] or '', 'me': int(w['user_id']) == uid, 'friend': int(w['user_id']) in friends}
+               for w in cur.fetchall()]
+    return {'marathon': public_info(cur, m, now), 'winners': winners,
+            'me': {'place': next((w['place'] for w in winners if w['me']), None)}}
 
 
 def banner(cur, uid, now=None):

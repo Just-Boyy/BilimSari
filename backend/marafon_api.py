@@ -61,6 +61,18 @@ def view():
         _close(conn, cur)
 
 
+@bp.route('/history/<int:mid>', methods=['GET'])
+@auth_required
+def history(mid):
+    conn, cur = _conn()
+    try:
+        return jsonify(dict(marafon.past_view(cur, mid, _uid()), ok=True))
+    except marafon.MarafonError as exc:
+        return _fail(exc)
+    finally:
+        _close(conn, cur)
+
+
 @bp.route('/banner', methods=['GET'])
 @auth_required
 def banner():

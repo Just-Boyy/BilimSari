@@ -184,12 +184,82 @@
   }
   setInterval(taymerChiz, 1000);
 
+  // ── Marafonlar tarixi (tugaganlari): bosilganda ochiladi, har birida — g'oliblar ──
+  var tarixOchiq = false, tarixTanlangan = null, tarixKesh = {};
+
+  function golibQator(x) {
+    return UI.qatorTeg('reyting-qator' + (x.me ? ' men' : '') + ' sovrinli', x.user_id, x.me) + orinHtml(x.place) + avatarHtml(x) +
+      '<span class="ism ism-ustun"><span>' + UI.esc(x.name) + (x.me ? ' (siz)' : '') + '</span>' +
+        (x.friend ? '<small class="dost-yorliq">do\'st</small>' : '') +
+        '<small class="marafon-sovrin-kichik">' + UI.esc(sovrinMatn(x)) + '</small></span>' +
+      '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + x.score + '</span></span>' + UI.qatorYop(x.user_id);
+  }
+
+  function tarixIchiHtml(id) {
+    var d = tarixKesh[id];
+    if (!d) return UI.yuklanmoqda();
+    if (d.error) return '<p class="izoh">' + UI.esc(d.error) + '</p>';
+    var w = d.winners || [];
+    return (d.me && d.me.place ? '<div class="marafon-men golib">' + UI.nishon('trophy') + '<span>Tabriklaymiz! Siz ' + d.me.place +
+        '-o\'rinni egalladingiz. Sovrin haqida botga xabar yuborildi.</span></div>' : '') +
+      '<p class="izoh" style="margin:2px 0 8px">G\'oliblar</p>' +
+      (w.length ? w.map(golibQator).join('') : '<p class="izoh">Bu safar g\'olib bo\'lmadi.</p>');
+  }
+
+  function tarixHtml() {
+    var h = (M && M.history) || [];
+    if (!h.length) return '';
+    return '<section class="marafon-tarix">' +
+      '<button type="button" class="marafon-tarix-tugma" id="tarixTugma" aria-expanded="' + tarixOchiq + '">' +
+        UI.nishon('clock') + '<span>Marafonlar tarixi</span><span class="son">' + h.length + '</span>' +
+        '<span class="marafon-tarix-strelka" aria-hidden="true">' + (tarixOchiq ? '▲' : '▼') + '</span></button>' +
+      (tarixOchiq ? '<div class="marafon-tarix-royxat">' + h.map(function (x) {
+        var ochiq = tarixTanlangan === x.id;
+        return '<div class="marafon-tarix-el' + (ochiq ? ' ochiq' : '') + '">' +
+          '<button type="button" data-tarix="' + x.id + '" aria-expanded="' + ochiq + '">' +
+            '<span class="marafon-tarix-matn"><b>' + UI.esc(x.title) + '</b>' +
+              '<small>' + sana(x.start_ms).slice(0, 5) + ' — ' + sana(x.end_ms).slice(0, 5) +
+              (x.prize_fund ? ' • ' + pul(x.prize_fund) : '') + '</small></span>' +
+            (x.my_place ? '<span class="marafon-tarix-orin">' + UI.nishon('trophy') + x.my_place + '-o\'rin</span>' : '') +
+          '</button>' +
+          (ochiq ? '<div class="marafon-tarix-ichi">' + tarixIchiHtml(x.id) + '</div>' : '') +
+        '</div>';
+      }).join('') + '</div>' : '') +
+    '</section>';
+  }
+
+  function tarixBogla() {
+    var t = document.getElementById('tarixTugma');
+    if (t) t.onclick = function () { tarixOchiq = !tarixOchiq; tarixYangila(); };
+    document.querySelectorAll('[data-tarix]').forEach(function (b) {
+      b.onclick = async function () {
+        var id = Number(b.dataset.tarix);
+        tarixTanlangan = tarixTanlangan === id ? null : id;
+        tarixYangila();
+        if (tarixTanlangan === id && !tarixKesh[id]) {
+          var r = await API.marafonTarix(id);
+          tarixKesh[id] = r.ok ? r : { error: r.error || 'Xatolik' };
+          tarixYangila();
+        }
+      };
+    });
+  }
+
+  function tarixYangila() {
+    var joy = document.getElementById('tarixJoy');
+    if (!joy) return;
+    joy.innerHTML = tarixHtml();
+    tarixBogla();
+  }
+
   function marafonChiz() {
     var tana = document.getElementById('marafonTana');
     pastkiHtml = '';
     if (!M.marathon) {
-      tana.innerHTML = UI.holat({ belgi: 'flame', sarlavha: 'Hozircha marafon yo\'q',
-        matn: 'Yangi yutuqli marafon boshlanganda bot orqali xabar beramiz.' });
+      tana.innerHTML = UI.holat({ belgi: 'flame', sarlavha: 'Hozircha faol marafon yo\'q',
+        matn: 'Yangi yutuqli marafon boshlanganda bot orqali xabar beramiz.' }) + '<div id="tarixJoy"></div>';
+      document.getElementById('marafonPastki').innerHTML = '';
+      tarixYangila();
       tabChiz();
       return;
     }
@@ -198,8 +268,7 @@
       '<div class="marafon-hero-bosh">' + UI.nishon('flame') + '<h2>' + UI.esc(m.title) + '</h2></div>' +
       (m.prize_fund ? '<p class="marafon-fond"><small>Sovrin jamg\'armasi</small><b>' + pul(m.prize_fund) + '</b></p>' : '') +
       '<div class="marafon-chiplar">' +
-        (m.status === 'finished' ? '<span>Marafon yakunlandi</span>'
-          : '<span>' + (m.status === 'scheduled' ? 'Boshlanishiga:' : 'Tugashiga:') + ' <b id="marafonTaymer"></b></span>') +
+        '<span>' + (m.status === 'scheduled' ? 'Boshlanishiga:' : 'Tugashiga:') + ' <b id="marafonTaymer"></b></span>' +
         '<span>Top-' + m.top_n + ' sovrin oladi</span>' +
         (m.audience === 'premium' ? '<span class="premium">' + UI.nishon('crown') + 'Faqat Premium</span>' : '') +
         (M.participants != null ? '<span>' + M.participants + ' qatnashchi</span>' : '') +
@@ -207,21 +276,6 @@
       (m.status === 'scheduled' ? '<p class="izoh-oq">Boshlanadi: ' + sana(m.start_ms) + '. Hozirdan qo\'shilib qo\'yishingiz mumkin.</p>' : '') +
     '</section>';
     var html = hero + (m.description ? '<p class="marafon-tavsif">' + UI.esc(m.description) + '</p>' : '');
-
-    if (m.status === 'finished') {
-      var w = M.winners || [];
-      html += '<section class="bo-lim"><div class="bo-lim-bosh"><h2>G\'oliblar</h2></div>' +
-        (w.length ? w.map(function (x) {
-          return UI.qatorTeg('reyting-qator' + (x.me ? ' men' : '') + ' sovrinli', x.user_id, x.me) + orinHtml(x.place) + avatarHtml(x) +
-            '<span class="ism"><span>' + UI.esc(x.name) + (x.me ? ' (siz)' : '') + '</span><small class="marafon-sovrin-kichik">' +
-            UI.esc(sovrinMatn(x)) + '</small></span>' +
-            '<span class="chaqmoq-belgi">' + UI.nishon('chaqmoq', 'nishon') + '<span class="son">' + x.score + '</span></span>' + UI.qatorYop(x.user_id);
-        }).join('') : '<p class="izoh">Bu safar g\'olib bo\'lmadi.</p>') + '</section>';
-      if (M.me && M.me.place) html = '<div class="marafon-men golib">' + UI.nishon('trophy') + '<span>Tabriklaymiz! Siz ' + M.me.place + '-o\'rinni egalladingiz. Sovrin haqida botga xabar yuborildi.</span></div>' + html;
-      tana.innerHTML = html;
-      tabChiz();
-      return;
-    }
 
     var me = M.me || {};
     if (me.joined) {
@@ -246,7 +300,8 @@
           ? '<div class="marafon-chegara"><span>Sovrinli o\'rinlar chegarasi</span></div>' : '';
         return chiziq + marafonQator(u, m.top_n);
       }).join('') : '<p class="izoh">Hali hech kim qo\'shilmagan. Birinchi bo\'ling!</p>') + '</section>';
-    tana.innerHTML = html;
+    tana.innerHTML = html + '<div id="tarixJoy"></div>';
+    tarixYangila();
 
     if (me.can_join) {
       pastkiHtml = '<button class="tugma" type="button" id="qatnashTugma">' + UI.nishon('flame') + '<span>Qatnashish</span></button>';
