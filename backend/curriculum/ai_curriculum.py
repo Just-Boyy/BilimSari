@@ -19272,7 +19272,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Badiiy nutq oddiy nutqdan o'zining jozibadorligi, ta'sirchanligi va serjiloligi bilan ajralib turadi. Yozuvchi yoki shoir kitobxon qalbida muayyan his-tuyg'u va tasavvur oshtirish uchun turli badiiy tasvir vositalaridan foydalanadi. Shulardan eng keng tarqalganlari tashbeh va sifatlashdir."
+                        'body': "Badiiy nutq oddiy nutqdan o'zining jozibadorligi, ta'sirchanligi va serjiloligi bilan ajralib turadi. Yozuvchi yoki shoir kitobxon qalbida muayyan his-tuyg'u va tasavvur uyg'otish uchun turli badiiy tasvir vositalaridan foydalanadi. Shulardan eng keng tarqalganlari tashbeh va sifatlashdir."
                     },
                     {
                         'type': 'example',
@@ -19284,7 +19284,7 @@ SUBJECTS = [
                         'title': 'Tashbehning 4 ta elementi',
                         'items': [
                             "O'xshatilmish (o'xshatilayotgan narsa/shaxs, masalan: Yuz)",
-                            "O'xshatuvchi (nimaga o mezon qilib olinayotgani, masalan: Lola)",
+                            "O'xshatuvchi (nimaga o'xshatilayotgani, masalan: Lola)",
                             "O'xshatish belgisi (ularni bog'lab turgan sifat, masalan: Qizillik)",
                             "O'xshatish vositasi (kabi, dek, go'yo, yanglig' yuklamalari va ko'makchilar)"
                         ]
@@ -19353,7 +19353,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Badiiy adabiyotda tasvir ta'sirchanligini oshirish va kitobxonda kuchli taassurot qoldirish uchun hodisalarni oshirib ko'rsatish (mubolag'a) hamda ma'noni yashirin o'xshatish orqali ko'chirish (istiora) usullari qo mezon qilib olinadi."
+                        'body': "Badiiy adabiyotda tasvir ta'sirchanligini oshirish va kitobxonda kuchli taassurot qoldirish uchun hodisalarni oshirib ko'rsatish (mubolag'a) hamda ma'noni yashirin o'xshatish orqali ko'chirish (istiora) usullari qo'llaniladi."
                     },
                     {
                         'type': 'example',
@@ -19385,7 +19385,7 @@ SUBJECTS = [
                             'Tashbeh'
                         ],
                         'answer': 2,
-                        'explain': "Mubolag'aning uch turi bor: tablig', ig'ro' va eng yuqori, mantiqan imkonsiz darajasi g'uluv hisoblanadi."
+                        'explain': "Mubolag'aning uch turi bor: tablig', ig'roq va eng yuqori, mantiqan imkonsiz darajasi g'uluv hisoblanadi."
                     },
                     {
                         'type': 'tf',
@@ -19495,7 +19495,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "Alisher Navoiyning biror g'azalidan matla va makta baytlarini ko'chiring hamda radif va qofiyasini ajratib ko'rsating.",
                             'answer': "O'quvchi g'azalning 1-bayti va oxirgi baytini yozib, qofiya hamda radifni ajratadi.",
-                            'hint': "Har bir misra oxiridagi takrorlanuvchi so mezon so'zlarni radif sifatida belgilang."
+                            'hint': "Har bir misra oxiridagi takrorlanuvchi so'z yoki so'zlarni radif sifatida belgilang."
                         },
                         {
                             'id': 't2',
@@ -19594,7 +19594,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sharq klassik she'riyatida kichik hajmli, lekin teran ma'noli janrlar muhim o'rin tutadi. Ruboiy va qit'a shunday janrlar sirasiga kiradi. Ular loqda, pishiq va aniq falsafiy fikrni ifodalaydi."
+                        'body': "Sharq klassik she'riyatida kichik hajmli, lekin teran ma'noli janrlar muhim o'rin tutadi. Ruboiy va qit'a shunday janrlar sirasiga kiradi. Ular lo'nda, pishiq va aniq falsafiy fikrni ifodalaydi."
                     },
                     {
                         'type': 'example',
@@ -19605,7 +19605,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Ruboiy va Qit'a o'rtasidagi tafovutlar",
                         'items': [
-                            "Ruboiida asosiy fikr 4-misrada xulosa qilinadi; qit'ada esa har bir bayt mantiqan davom etadi.",
+                            "Ruboiyda asosiy fikr 4-misrada xulosa qilinadi; qit'ada esa har bir bayt mantiqan davom etadi.",
                             "Ruboiy faqat aruzning hazaj bahrida bitiladi, qit'a boshqa bahr xillarida ham yozilishi mumkin.",
                             "Qit'ada ko'pincha ijtimoiy-axloqiy va ta'limiy fikrlar beriladi."
                         ]
@@ -19674,7 +19674,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Doston — adabiyotdagi eng yirik epik-she'riy janrlardan biridir. Unda voqealar rivoji, qahramonlarning sarguzashtlari va ijtimoiy-siyosiy hamda shaxsiy toqnashuvlar keng va atroflicha tasvirlanadi."
+                        'body': "Doston — adabiyotdagi eng yirik epik-she'riy janrlardan biridir. Unda voqealar rivoji, qahramonlarning sarguzashtlari va ijtimoiy-siyosiy hamda shaxsiy to'qnashuvlar keng va atroflicha tasvirlanadi."
                     },
                     {
                         'type': 'example',
@@ -19766,7 +19766,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Syujetning 5 asosiy elementi',
                         'items': [
-                            'Expozitsiya (Muqaddima): Qahramonlar va joy bilan tanishtiruv',
+                            'Ekspozitsiya (Muqaddima): Qahramonlar va joy bilan tanishtiruv',
                             'Tugun: Ziddiyat (konflikt)ning boshlanishi',
                             'Voqealar rivoji: Qarama-qarshilikning keskinlashuvi',
                             'Kulminatsiya: Voqealarning eng yuqori nuqtasi',
@@ -19784,7 +19784,7 @@ SUBJECTS = [
                         'q': 'Syujetning eng yuqori, taranglashgan nuqtasi nima deb ataladi?',
                         'options': [
                             'Tugun',
-                            'Expozitsiya',
+                            'Ekspozitsiya',
                             'Kulminatsiya',
                             'Yechim'
                         ],
@@ -19793,21 +19793,21 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': 'Expozitsiya — bu voqealarning yakunlanishi va ziddiyatning yechilishidir.',
+                        'q': 'Ekspozitsiya — bu voqealarning yakunlanishi va ziddiyatning yechilishidir.',
                         'answer': False,
-                        'explain': "Noto'g'ri. Expozitsiya — asar boshida qahramonlar va sharoit bilan dastlabki tanishtiruvdir."
+                        'explain': "Noto'g'ri. Ekspozitsiya — asar boshida qahramonlar va sharoit bilan dastlabki tanishtiruvdir."
                     },
                     {
                         'type': 'mc',
                         'q': "Asarda ziddiyat qaysi bosqichdan e'tiboran boshlanadi?",
                         'options': [
-                            'Expozitsiya',
+                            'Ekspozitsiya',
                             'Tugun',
                             'Kulminatsiya',
                             'Yechim'
                         ],
                         'answer': 1,
-                        'explain': 'Tugun — voqealar zanjiridagi ziddiyat va toqnashuvlarning boshlanish nuqtasidir.'
+                        'explain': "Tugun — voqealar zanjiridagi ziddiyat va to'qnashuvlarning boshlanish nuqtasidir."
                     }
                 ],
                 'homework': {
@@ -19817,7 +19817,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "O'zingiz o'qigan biror hikoyaning syujet unsurlarini (expozitsiya, tugun, kulminatsiya, yechim) ajratib yozing.",
-                            'answer': "O mezoniy o'quvchi tanlangan hikoya voqealarini 5 bosqichga bo'lib beradi.",
+                            'answer': "O'quvchi tanlangan hikoya voqealarini 5 bosqichga bo'lib beradi.",
                             'hint': "Abdulla Qahhorning 'Anor' yoki 'Dahshat' hikoyasini tanlashingiz mumkin."
                         },
                         {
@@ -19837,7 +19837,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Kompozitsiya (lotincha 'compositio' — tuzilish, birikish) — badiiy asar qismlari, lavhalari va elementlarining muayyan g'oyaviy maqsadga bo mezonlashtirilib joylashtirilishidir. Asar g'oyasi esa muallifning shu asar orqali aytmoqchi bo'lgan bosh fikridir."
+                        'body': "Kompozitsiya (lotincha 'compositio' — tuzilish, birikish) — badiiy asar qismlari, lavhalari va elementlarining muayyan g'oyaviy maqsadga bo'ysundirilib joylashtirilishidir. Asar g'oyasi esa muallifning shu asar orqali aytmoqchi bo'lgan bosh fikridir."
                     },
                     {
                         'type': 'example',
@@ -19849,7 +19849,7 @@ SUBJECTS = [
                         'title': "Asar g'oyasini aniqlash ketma-ketligi",
                         'items': [
                             "Asar mavzusini (nimaga bag'ishlanganini) aniqlash",
-                            'Qahramonlarning xatti-harakatlari va takdirini kuzatish',
+                            'Qahramonlarning xatti-harakatlari va taqdirini kuzatish',
                             "Muallif pozitsiyasini o'rganish",
                             'Yozuvchining jamiyatga berayotgan xabarini jamlash'
                         ]
@@ -19874,7 +19874,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Asarning mavzusi bilan uning g mezoniy g'oyasi mutlaqo bir xil tushunchadir.",
+                        'q': "Asarning mavzusi bilan uning g'oyasi mutlaqo bir xil tushunchadir.",
                         'answer': False,
                         'explain': "Noto'g'ri. Mavzu — nima haqidaligi, g'oya esa asardan chiqariladigan asosiy xulosa va maqsaddir."
                     },
@@ -19922,7 +19922,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': 'Dramatik turunining janrlari',
+                        'title': 'Dramatik turning janrlari',
                         'body': "Tragediya (Fojia): Qahramonning haloqati bilan tugaydi ('Otello', 'Jaloliddin Manguberdi').\nKomediya: Kulgi va hajvga asoslanadi ('Maysaraning ishi').\nDrama: Jiddiy ijtimoiy-maishiy ziddiyatlarni ko'taradi ('Padarkush')."
                     },
                     {
@@ -19936,13 +19936,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Dramatik asarda epizod va boblar o'rniga 'parda', 'ko'rinish' va 'pahlav' tushunchalari qo'llaniladi."
+                        'body': "Esda tuting: Dramatik asarda epizod va boblar o'rniga 'parda', 'ko'rinish' va 'sahna' tushunchalari qo'llaniladi."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': 'Muallifning sahna bezaqlari va qahramon harakatlari haqida qavs ichida beradigan izohi nima deyiladi?',
+                        'q': 'Muallifning sahna bezaklari va qahramon harakatlari haqida qavs ichida beradigan izohi nima deyiladi?',
                         'options': [
                             'Monolog',
                             'Remarka',
@@ -20003,20 +20003,20 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Aruz va Barmoq vazni farqi',
-                        'body': "Barmoq vaznida bo'g'inlar soni teng bo'lishi shart (masalan: 7, 8, 11 bo'g'in).\nAruz vaznida esa misradagi bo mezoniy bo'g'inlarning uzun-qisqalik tartibi mos kelishi kerak."
+                        'body': "Barmoq vaznida bo'g'inlar soni teng bo'lishi shart (masalan: 7, 8, 11 bo'g'in).\nAruz vaznida esa misradagi bo'g'inlarning uzun-qisqalik tartibi mos kelishi kerak."
                     },
                     {
                         'type': 'steps',
                         'title': "Aruzdagi bo'g'in turlari",
                         'items': [
-                            "Qisqa bo mezon (unli bilan tugagan ochiq bo'g'in: 'v-')",
-                            "Cho'ziq bo mezon (undosh bilan tugagan yopiq yoki uzun unlili bo'g'in: '- ')",
-                            "O'ta cho'ziq bo mezon (vaqt jihatidan eng uzun bo'g'in: '~')"
+                            "Qisqa bo'g'in (unli bilan tugagan ochiq bo'g'in: 'v-')",
+                            "Cho'ziq bo'g'in (undosh bilan tugagan yopiq yoki uzun unlili bo'g'in: '- ')",
+                            "O'ta cho'ziq bo'g'in (vaqt jihatidan eng uzun bo'g'in: '~')"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Aruz vaznida ruknlar (masalan: 'Fa'ulun', 'Mafa'ilun') she'r o mezonining musiqiyligini ta'minlaydi."
+                        'body': "Esda tuting: Aruz vaznida ruknlar (masalan: 'Fa'ulun', 'Mafa'ilun') she'r ohangining musiqiyligini ta'minlaydi."
                     }
                 ],
                 'quiz': [
@@ -20048,7 +20048,7 @@ SUBJECTS = [
                             'Nasaoyim ul-muhabbat'
                         ],
                         'answer': 0,
-                        'explain': "'Mezon ul-avzon' (Vaznlar mezon) — Navoiyning aruz vazniga bag'ishlangan ilmiy risolasidir."
+                        'explain': "'Mezon ul-avzon' (Vaznlar mezoni) — Navoiyning aruz vazniga bag'ishlangan ilmiy risolasidir."
                     }
                 ],
                 'homework': {
@@ -20072,13 +20072,13 @@ SUBJECTS = [
             {
                 'slug': 'zahiriddin-muhammad-bobur-va-boburnoma',
                 'title': "Zahiriddin Muhammad Bobur hayoti va 'Boburnoma'",
-                'summary': "Boburning serqirra ijodi, uning mashhur 'Boburnoma' (Vaqoye) meuar asarining tarixiy, adabiy va geografik qiymati tahlili.",
+                'summary': "Boburning serqirra ijodi, uning mashhur 'Boburnoma' (Vaqoye) memuar asarining tarixiy, adabiy va geografik qiymati tahlili.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Zahiriddin Muhammad Bobur — shoh, shoir, qomusiy olim va sarkarda. Unining 'Boburnoma' asari jahon adabiyotida memuar (xotira) janrining eng nodir durdonalaridan biri sanaladi."
+                        'body': "Zahiriddin Muhammad Bobur — shoh, shoir, qomusiy olim va sarkarda. Uning 'Boburnoma' asari jahon adabiyotida memuar (xotira) janrining eng nodir durdonalaridan biri sanaladi."
                     },
                     {
                         'type': 'example',
@@ -20090,9 +20090,9 @@ SUBJECTS = [
                         'title': 'Boburning adabiy merosi',
                         'items': [
                             "Lirik meros (Devon, g'azal, ruboiylar)",
-                            "'Boburnoma' (Tarixiy-biografik meuar)",
+                            "'Boburnoma' (Tarixiy-biografik memuar)",
                             "'Mubayyin' (Fiqh va zakotga oid masnaviy)",
-                            "'Katt-i Boburiy' (Yangi alifbo va xat turi)"
+                            "'Xatti Boburiy' (Yangi alifbo va xat turi)"
                         ]
                     },
                     {
@@ -20115,7 +20115,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Bobur 'Katt-i Boburiy' deb nomlangan yangi xat va alifbo turini yaratgan.",
+                        'q': "Bobur 'Xatti Boburiy' deb nomlangan yangi xat va alifbo turini yaratgan.",
                         'answer': True,
                         'explain': 'Ha, Bobur arab alifbosi asosida yozuvni soddalashtirgan xat turini ixtiro qilgan.'
                     },
@@ -20124,7 +20124,7 @@ SUBJECTS = [
                         'q': "Bobur ruboiylarining asosiy ruhiy motivida qaysi tuyg'u ustuvorlik qiladi?",
                         'options': [
                             "Katta g'alaba nashidasi",
-                            'Vatan hamda yurt soginchi',
+                            "Vatan hamda yurt sog'inchi",
                             'Faoliyatsizlik',
                             'Tabiatga nafrat'
                         ],
@@ -20233,13 +20233,13 @@ SUBJECTS = [
             {
                 'slug': 'uzbek-marifatparvarlik-adabiyoti',
                 'title': "XIX asr oxiri - XX asr boshlari O'zbek ma'rifatparvarlik adabiyoti",
-                'summary': "Jamiyatni ilim-fan, ma'rifat va maktablar orqali uyg'otishga intilgan ma'rifatparvarlik harakati va ushbu davr adabiyotining yetakchi g'oyalari.",
+                'summary': "Jamiyatni ilm-fan, ma'rifat va maktablar orqali uyg'otishga intilgan ma'rifatparvarlik harakati va ushbu davr adabiyotining yetakchi g'oyalari.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "XIX asrning ikkinchi yarmi va XX asr boshlarida O'zbekiston Turkiston chor Rossiyasi mustamlakasiga aylandi. Shunday og'ir sharoitda millatni qorong'ilikdan olib chiqish uchun milliy ma'rifatparvarlik harakati va adabiyoti shakllandi."
+                        'body': "XIX asrning ikkinchi yarmi va XX asr boshlarida Turkiston chor Rossiyasi mustamlakasiga aylandi. Shunday og'ir sharoitda millatni qorong'ilikdan olib chiqish uchun milliy ma'rifatparvarlik harakati va adabiyoti shakllandi."
                     },
                     {
                         'type': 'example',
@@ -20258,7 +20258,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Abdullah Avloniyning 'Tarbiya biz uchun yo hayot — yo mamot, yo najot — yo halokat, yo saodat — yo falokat masalasidir' degan so'zlari ushbu davr shioriga aylandi."
+                        'body': "Esda tuting: Abdulla Avloniyning 'Tarbiya biz uchun yo hayot — yo mamot, yo najot — yo halokat, yo saodat — yo falokat masalasidir' degan so'zlari ushbu davr shioriga aylandi."
                     }
                 ],
                 'quiz': [
@@ -20325,7 +20325,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Hajviyot va ma'rifatparvarlik",
-                        'body': "Muqimiy hajviyoti: 'Tanobchilar', 'Vektor sotovoy' (amaldorlar va hiylakorlarni fosh qilish).\nFurqat ma'rifatparvarligi: 'Ilm xosiyati', 'Gimnaziya' (ilm va dunyoviy bilimlarni ulug'lash)."
+                        'body': "Muqimiy hajviyoti: 'Tanobchilar', 'Viktorboy' (amaldorlar va hiylakorlarni fosh qilish).\nFurqat ma'rifatparvarligi: 'Ilm xosiyati', 'Gimnaziya' (ilm va dunyoviy bilimlarni ulug'lash)."
                     },
                     {
                         'type': 'steps',
@@ -20333,7 +20333,7 @@ SUBJECTS = [
                         'items': [
                             "Hajviy tiplar yaratilgan asarlar ('Sayohatnoma')",
                             "Ijtimoiy adolatsizlik fosh qilingan hajvlar ('Tanobchilar')",
-                            "Maishiy muammolarga bag'ishlangan asarlar ('Leksin sobiq')"
+                            "Maishiy muammolarga bag'ishlangan asarlar ('Loy')"
                         ]
                     },
                     {
@@ -20349,10 +20349,10 @@ SUBJECTS = [
                             "Lirik g'azal",
                             "Hajviy doston/she'r",
                             'Dramatik asar',
-                            'Tarixiy meuar'
+                            'Tarixiy memuar'
                         ],
                         'answer': 1,
-                        'explain': "'Tanobchilar' — yer o'lchovchilar va poytaxt amaldorlarining qallobligini fosh etuvchi hajviy asardir."
+                        'explain': "'Tanobchilar' — yer o'lchovchilar va mahalliy amaldorlarining qallobligini fosh etuvchi hajviy asardir."
                     },
                     {
                         'type': 'tf',
@@ -20366,7 +20366,7 @@ SUBJECTS = [
                         'options': [
                             'Sayohatnoma',
                             'Ilm xosiyati',
-                            'Vektor sotovoy',
+                            'Viktorboy',
                             "To'y bolar"
                         ],
                         'answer': 1,
@@ -20381,7 +20381,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "Muqimiyning 'Tanobchilar' asaridagi Sultanali va Mingboshi obrazlariga xarakteristika bering.",
                             'answer': "O'quvchi xalqni shiluvchi, tamagir va hiylakor amaldorlar qiyofasini tasvirlaydi.",
-                            'hint': "Er tanobini o'lchashdagi g'irromlik sahnalarini eslang."
+                            'hint': "Yer tanobini o'lchashdagi g'irromlik sahnalarini eslang."
                         },
                         {
                             'id': 't2',
@@ -20413,7 +20413,7 @@ SUBJECTS = [
                         'items': [
                             'Toshmurod boy — ilmni mensimaydigan, nodon boy',
                             "Mulla Do'st — ilmsiz va kaltabin hamroh",
-                            "Toshmurodning o'g mezonli (Toshpo mezonlat) — tarbiyasiz, maishatparvar yosh",
+                            "Toshmurodning o'g'li (Toshpo'lat) — tarbiyasiz, maishatparvar yosh",
                             "Ziyoli (O'qituvchi) — ma'rifat va ma'rifatli avlod tarafdori"
                         ]
                     },
@@ -20433,7 +20433,7 @@ SUBJECTS = [
                             '1920-yil'
                         ],
                         'answer': 1,
-                        'explain': "Behbudiy 'Padarkush' pyesasini 1911-yilda yozgan, u 1913-yilda chop etilib, 1914-yilda sahnaga qo mezonyilgan."
+                        'explain': "Behbudiy 'Padarkush' pyesasini 1911-yilda yozgan, u 1913-yilda chop etilib, 1914-yilda sahnaga qo'yilgan."
                     },
                     {
                         'type': 'tf',
@@ -20474,14 +20474,14 @@ SUBJECTS = [
             },
             {
                 'slug': 'abdulla-qodiriy-va-otkan-kunlar-romani',
-                'title': "Abdulla Qodiriy va o'zbek romanichiligi ('O'tkan kunlar')",
+                'title': "Abdulla Qodiriy va o'zbek romanchiligi ('O'tkan kunlar')",
                 'summary': "O'zbek adabiyotida birinchi roman yaratuvchisi Abdulla Qodiriyning 'O'tkan kunlar' asaridagi ijtimoiy-siyosiy ziddiyatlar va milliy xarakterlar.",
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Abdulla Qodiriy (Julqunboy) (1894–1938) — o mezonzbek milliy romanichiligining asoschisi. Uning 'O'tkan kunlar' (1922–1925) romani o'zbek adabiyoti tarixida yangi davr va bosqichni boshlab berdi."
+                        'body': "Abdulla Qodiriy (Julqunboy) (1894–1938) — o'zbek milliy romanchiligining asoschisi. Uning 'O'tkan kunlar' (1922–1925) romani o'zbek adabiyoti tarixida yangi davr va bosqichni boshlab berdi."
                     },
                     {
                         'type': 'example',
@@ -20494,12 +20494,12 @@ SUBJECTS = [
                         'items': [
                             "O'zibo'shlik, ichki nizolar va xonliklar aro urushlarning millat va davlatga yetkazgan zarari",
                             "Inson erki, sevgi sofligi va oilaviy muammolar (ko'p xotinlilik asoratlari)",
-                            "Yangi va ilg'or fikrli yoshlar (Otabek) va eski jamiyat toqnashuvi"
+                            "Yangi va ilg'or fikrli yoshlar (Otabek) va eski jamiyat to'qnashuvi"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Abdulla Qodiriy o'z romanini 'Maziya qaytib, ish ko'rmak xayrli bo'lganidan...' degan niyat bilan yozganini ta'kidlaydi."
+                        'body': "Esda tuting: Abdulla Qodiriy o'z romanini 'Moziyga qaytib ish ko'rish xayrlik, deydilar...' degan niyat bilan yozganini ta'kidlaydi."
                     }
                 ],
                 'quiz': [
@@ -20523,7 +20523,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Otabekning yaqin do mezonsti, unga har qanday og'ir vaziyatda yelkadosh bo'lgan sodiq qahramon kim?",
+                        'q': "Otabekning yaqin do'sti, unga har qanday og'ir vaziyatda yelkadosh bo'lgan sodiq qahramon kim?",
                         'options': [
                             'Homid',
                             'Hasanali',
@@ -20561,16 +20561,16 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Abdulhamid Sulaymon o'g'li Cho'lpon (1897–1938) — o'zbek yangi she'riyatining va adabiyotining ulkan namoyandasi. Uning ijodida milliy erkinlik, istiklol va inson qadr-qimmati masalasi birinchi o'ringa ko'tarilgan."
+                        'body': "Abdulhamid Sulaymon o'g'li Cho'lpon (1897–1938) — o'zbek yangi she'riyatining va adabiyotining ulkan namoyandasi. Uning ijodida milliy erkinlik, istiqlol va inson qadr-qimmati masalasi birinchi o'ringa ko'tarilgan."
                     },
                     {
                         'type': 'example',
                         'title': "Cho'lpon she'riyati va romani",
-                        'body': "She'riyat: 'Go'zal', 'Kishan giydim', 'Xalq' she'rlarida erksizlik asorati va mustaqillik orzusi nola qiladi.\nRoman: 'Kecha va kunduz' (1936) — millatning topatilgan taqdiri va chor amaldorlari hamda mahalliy boylarning zulmini aks ettiradi."
+                        'body': "She'riyat: 'Go'zal', 'Kishan giydim', 'Xalq' she'rlarida erksizlik asorati va mustaqillik orzusi nola qiladi.\nRoman: 'Kecha va kunduz' (1936) — millatning toptalgan taqdiri va chor amaldorlari hamda mahalliy boylarning zulmini aks ettiradi."
                     },
                     {
                         'type': 'steps',
-                        'title': "'Kecha va kunduz' asari dramaturji qurilishi",
+                        'title': "'Kecha va kunduz' asarining kompozitsion qurilishi",
                         'items': [
                             "'Kecha' qismi: Jaholat, erksizlik va zulm qorong'iligi (Zebining begunoh fojiasi)",
                             "'Kunduz' qismi: Rejalashtirilgan, lekin muallif qatag'on qilingani sababli yozilmay qolgan uyg'onish davri"
@@ -20578,13 +20578,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Cho'lponning 'Ko'ngil, sen bunchalar nega zanjirlar bilan bog'landang...' misrasi milliy uyg'onish gipnozidan uyg mezonotuvchi da'vatdir."
+                        'body': "Esda tuting: Cho'lponning 'Ko'ngil, sen bunchalar nega zanjirlar bilan bog'landing...' misrasi millatni uyqudan uyg'otuvchi da'vatdir."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Cho'lponning 'Kecha va kunduz' romanidagi begunoh jabr ko'rib, Sibirga surgun qilingan shoira qiz kim?",
+                        'q': "Cho'lponning 'Kecha va kunduz' romanidagi begunoh jabr ko'rib, Sibirga surgun qilingan qiz kim?",
                         'options': [
                             'Kumush',
                             'Zebi',
@@ -20610,7 +20610,7 @@ SUBJECTS = [
                             'Usmon Nasir'
                         ],
                         'answer': 1,
-                        'explain': "Ushbu otashin va erksevar she mezonrlar Abdulhamid Cho'lpon qalamiga mansub."
+                        'explain': "Ushbu otashin va erksevar she'rlar Abdulhamid Cho'lpon qalamiga mansub."
                     }
                 ],
                 'homework': {
@@ -20620,7 +20620,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Cho'lponning 'Go'zal' she'ridagi badiiy tasvir vositalarini va she'rning g'oyaviy poydevorini yozing.",
-                            'answer': "O'quvchi go mezonzallik niqobi ostidagi Hurlik va Erkinlik g'oyasini tahlil qiladi.",
+                            'answer': "O'quvchi go'zallik niqobi ostidagi Hurlik va Erkinlik g'oyasini tahlil qiladi.",
                             'hint': "Shoir 'Go'zal' deganda nimani (yoki kimni) nazarda tutganini o'ylang."
                         },
                         {
@@ -20645,20 +20645,20 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Fitrat dramalari',
-                        'body': "'Abulfayzxon' (tarixiy fojia — milliy parokandalik fojiasi), 'Arslon' (ijtimoiy drama), 'Hind ixtilolchilari', 'M Shaytonning tangriga isyoni' (falsafiy drama)."
+                        'body': "'Abulfayzxon' (tarixiy fojia — milliy parokandalik fojiasi), 'Arslon' (ijtimoiy drama), 'Hind ixtilolchilari', 'Shaytonning tangriga isyoni' (falsafiy drama)."
                     },
                     {
                         'type': 'steps',
                         'title': "'Abulfayzxon' tragediyasining mohiyati",
                         'items': [
-                            'Joniy va Ashtarxoniylar sülolasining inqirozi',
+                            'Joniy va Ashtarxoniylar sulolasining inqirozi',
                             "Shoh Abulfayzxonning taxt uchun shafqatsizligi va qo'rqoqligi",
-                            'Davlat va millatning mustaqilligini yo mezonqotish sabablari'
+                            "Davlat va millatning mustaqilligini yo'qotish sabablari"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Fitrat 'Abulfayzxon' dramasi orqali stalinistik diktatura va taxt vasvasasiga berilgan hukmdorlar oqibatini badiiy bashorat qilgan."
+                        'body': "Esda tuting: Fitrat 'Abulfayzxon' dramasi orqali despotik hokimiyat va taxt vasvasasiga berilgan hukmdorlar oqibatini badiiy bashorat qilgan."
                     }
                 ],
                 'quiz': [
@@ -20676,7 +20676,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': 'Fitrat nafaqat badiiy asarlar yozgan, balki ilmiy adabiyotshunoslik va tilshunoslikka ham katta hissa qo mezonshgan.',
+                        'q': "Fitrat nafaqat badiiy asarlar yozgan, balki ilmiy adabiyotshunoslik va tilshunoslikka ham katta hissa qo'shgan.",
                         'answer': True,
                         'explain': "Ha, Fitrat birinchi professor sifatida o'zbek tili va adabiyoti tarixiga oid ko'plab fundamental ilmiy ishlar yaratgan."
                     },
@@ -20700,13 +20700,13 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "'Abulfayzxon' dramasida 'Qon qon bilan yuvilmas, suvsiz yuvilmas' g'oyasi qanday aks etganini yozing.",
-                            'answer': "O'quvchi zolim hukmdorning taxt uchun to'kkan qonlari oxir-o'zini ham haloq qilganini izohlaydi.",
+                            'answer': "O'quvchi zolim hukmdorning taxt uchun to'kkan qonlari oxir-oqibat o'zini ham halok qilganini izohlaydi.",
                             'hint': 'Abulfayzxonning saroydagi fitnalari va mantiqiy oqibatini keltiring.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Fitratning 'O mezonzbek klassik musiqasi va uning tarixi' asarining milliy san'atimizdagi o'rnini yoritib bering."
+                            'prompt': "Fitratning 'O'zbek klassik musiqasi va uning tarixi' asarining milliy san'atimizdagi o'rnini yoritib bering."
                         }
                     ]
                 }
@@ -20714,7 +20714,7 @@ SUBJECTS = [
             {
                 'slug': 'oybekning-navoiy-romani-va-tarixiy-psixologizm',
                 'title': "Oybekning 'Navoiy' romani va tarixiy psixologizm",
-                'summary': "Musa Toshmuhammad o'g'li Oybekning 'Navoiy' romanida ulug' shoir va mutafakkir Alisher Navoiy siymosining hamda XV asr Muhitining ruhiy va ijtimoiy tasviri.",
+                'summary': "Musa Toshmuhammad o'g'li Oybekning 'Navoiy' romanida ulug' shoir va mutafakkir Alisher Navoiy siymosining hamda XV asr muhitining ruhiy va ijtimoiy tasviri.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -20780,13 +20780,13 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Romandagi Majididdin va Alisher Navoiy o'rtasidagi ijtimoiy va axloqiy qarama-qarshilikni yozing.",
-                            'answer': "O'quvchi xalq g'amini yeydigan Navoiy va o'z manfaati hamda mansab uchun fittna qiluvchi Majididdinni solishtiradi.",
+                            'answer': "O'quvchi xalq g'amini yeydigan Navoiy va o'z manfaati hamda mansab uchun fitna qiluvchi Majididdinni solishtiradi.",
                             'hint': 'Majididdinning soliqlar va saroy fitnalaridagi rolini tasvirlang.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Nima uchun Oybek Navoiy obrazini yaratishda uning poetik ijodidan ko'ra davlat va xalq uchun qilgan fidoyiligiga ko'proq урg'u bergan?"
+                            'prompt': "Nima uchun Oybek Navoiy obrazini yaratishda uning poetik ijodidan ko'ra davlat va xalq uchun qilgan fidoyiligiga ko'proq urg'u bergan?"
                         }
                     ]
                 }
@@ -20794,7 +20794,7 @@ SUBJECTS = [
             {
                 'slug': 'gafur-gulom-va-maqsud-shayxzoda-poeziyasi',
                 'title': "G'afur G'ulom va Maqsud Shayxzoda poeziyasi",
-                'summary': "XX asr o'zbek she'riyatining ikki yirik vakili — G'afur G mezonulomning hayotiy falsafiy she'riyati hamda Maqsud Shayxzodaning intellektual va dramatik poeziyasi.",
+                'summary': "XX asr o'zbek she'riyatining ikki yirik vakili — G'afur G'ulomning hayotiy falsafiy she'riyati hamda Maqsud Shayxzodaning intellektual va dramatik poeziyasi.",
                 'duration': 20,
                 'lesson': [
                     {
@@ -20805,7 +20805,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Shoirlarning durdona asarlari',
-                        'body': "G'afur G'ulom: 'Senga kalit beraman', 'Sening toychoq' she'rlari hamda 'Shum bola' qissasi.\nShayxzoda: 'Mirzo Ulug'bek', 'Jalaliddin Manguberdi' dramalari va 'Toshkentnoma' doston-romani."
+                        'body': "G'afur G'ulom: 'Senga kalit beraman', 'Sen yetim emassan' she'rlari hamda 'Shum bola' qissasi.\nShayxzoda: 'Mirzo Ulug'bek', 'Jalaliddin Manguberdi' dramalari va 'Toshkentnoma' doston-romani."
                     },
                     {
                         'type': 'steps',
@@ -20818,7 +20818,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: G'afur G'ulomning 'Sening toychoq' she'ri Urush yillarida yetim qolgan bolalarga bag'ishlangan eng ta'sirli asardir."
+                        'body': "Esda tuting: G'afur G'ulomning 'Sen yetim emassan' she'ri Urush yillarida yetim qolgan bolalarga bag'ishlangan eng ta'sirli asardir."
                     }
                 ],
                 'quiz': [
@@ -20832,7 +20832,7 @@ SUBJECTS = [
                             'Hamid Olimjon'
                         ],
                         'answer': 1,
-                        'explain': "G'afur G'ulomning 'Sening toychoq' (Sen yetim emassan) she'ri bag'rikenglikning yuksak madhiyasidir."
+                        'explain': "G'afur G'ulomning 'Sen yetim emassan' she'ri bag'rikenglikning yuksak madhiyasidir."
                     },
                     {
                         'type': 'tf',
@@ -20846,7 +20846,7 @@ SUBJECTS = [
                         'options': [
                             'Yodgor',
                             'Shum bola',
-                            'O mezonzbekiston',
+                            "O'zbekiston",
                             "Mening o'g'rigina bolam"
                         ],
                         'answer': 1,
@@ -20859,14 +20859,14 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "G'afur G'ulomning 'Sening toychoq' she'ridagi bag'rikenglik va insonparvarlik g'oyasini tahlil eting.",
+                            'prompt': "G'afur G'ulomning 'Sen yetim emassan' she'ridagi bag'rikenglik va insonparvarlik g'oyasini tahlil eting.",
                             'answer': "O'quvchi o'zbek xalqining yetim bolalarga quchoq ochishi va bag'rikengligini yozadi.",
                             'hint': "Shoirning o'z farzandlari bilan yetim bolalarni teng ko'rishi sahnalarini ta'riflang."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Maqsud Shayxzodaning 'Mirzo Ulug'bek' tragediyasida ilm va jaholat o'rtasidagi toqnashuvni sharhlang."
+                            'prompt': "Maqsud Shayxzodaning 'Mirzo Ulug'bek' tragediyasida ilm va jaholat o'rtasidagi to'qnashuvni sharhlang."
                         }
                     ]
                 }
@@ -20891,9 +20891,9 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Qahhor uslubining 3 oltin qoidasi',
                         'items': [
-                            "So'z tejamkorligi (ortiqcha tasvirlarsiz, aniq va loqis nutq)",
+                            "So'z tejamkorligi (ortiqcha tasvirlarsiz, aniq va lo'nda nutq)",
                             'Badiiy detalning yuklama darajasi',
-                            'Ijtimoiy fojea va xarakterning psixologik toqnashuvi'
+                            "Ijtimoiy fojea va xarakterning psixologik to'qnashuvi"
                         ]
                     },
                     {
@@ -20916,7 +20916,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': 'Abdulla Qahhor faqat hikoyalar yozgan, u komediya va roman Janrida ishlamagan.',
+                        'q': 'Abdulla Qahhor faqat hikoyalar yozgan, u komediya va roman janrida ishlamagan.',
                         'answer': False,
                         'explain': "Noto'g'ri. Qahhor 'Sarab' romani va 'Shohi sozana', 'Tobutdan tovush' kabi mashhur pyesalar ham yaratgan."
                     },
@@ -20940,7 +20940,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Abdulla Qahhorning 'Bemor' hikoyasidagi Sotiboldi va tabib munosabatlarini badiiy detal orqali tahlil qiling.",
-                            'answer': "O'quvchi jaholat, xurofot va chorasizlik asoratlarini xotinining o mezonlimi bilan tugagan fojeada tahlil etadi.",
+                            'answer': "O'quvchi jaholat, xurofot va chorasizlik asoratlarini xotinining o'limi bilan tugagan fojeada tahlil etadi.",
                             'hint': 'Sotiboldining chiroq va afsunlarga umid qilish sahnasini eslang.'
                         },
                         {
@@ -20972,7 +20972,7 @@ SUBJECTS = [
                         'title': "Poetik uslubdagi farqlar va o'xshashliklar",
                         'items': [
                             "Erkin Vohidov: Klassik an'ana (g'azaliylik), sharqona shirin kalom va badiiy nafosat",
-                            "Abdulla Oripov: Falsafiy dramatizm, o'tkir dramatik toqnashuv va iztirobli o'ylar",
+                            "Abdulla Oripov: Falsafiy dramatizm, o'tkir dramatik to'qnashuv va iztirobli o'ylar",
                             "Ikkalasida ham: Millat ravnaqi, vatan tuyg'usi va insoniylikni ulug'lash"
                         ]
                     },
@@ -21019,7 +21019,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Erkin Vohidovning 'O'zbegim' qasidasi va Abdulla Oripovning 'O'zbekiston' she mezonridagi umumiy va o'ziga xos xususiyatlarni yozing.",
+                            'prompt': "Erkin Vohidovning 'O'zbegim' qasidasi va Abdulla Oripovning 'O'zbekiston' she'ridagi umumiy va o'ziga xos xususiyatlarni yozing.",
                             'answer': "O'quvchi har ikkala asardagi milliy g'urur va vatanga bo'lgan sevgini tahlil qiladi.",
                             'hint': "Tarixiy shaxslar va vatan madhiga berilgan urg'uni qiyoslang."
                         },
@@ -21090,7 +21090,7 @@ SUBJECTS = [
                             'Daftar hoshiyasidagi bitiklar'
                         ],
                         'answer': 1,
-                        'explain': "'Tushda kechgan umrlar' romani afg'on urushi va sobiq sho mezonro davri soxtaliklarini fosh etadi."
+                        'explain': "'Tushda kechgan umrlar' romani afg'on urushi va sobiq sho'ro davri soxtaliklarini fosh etadi."
                     }
                 ],
                 'homework': {
@@ -21100,8 +21100,8 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "'Dunyoning ishlari' qissasidagi 'Ona' obraziga xos 3 ta ma'naviy sifatni va biror hikoyacha misolini yozing.",
-                            'answer': "O mezonquvchi fidoiylik, mehribonlik va kamsuqumlik sifatlarini 'Gilam paypoq' yoki 'Oq o'lan' hikoyachalarida ko'rsatadi.",
-                            'hint': "Onaning o'z ehtiyojidan ko'ra farzandlarini ustun qo mezonyishini eslang."
+                            'answer': "O'quvchi fidoiylik, mehribonlik va kamsuqumlik sifatlarini 'Gilam paypoq' yoki 'Oq o'lan' hikoyachalarida ko'rsatadi.",
+                            'hint': "Onaning o'z ehtiyojidan ko'ra farzandlarini ustun qo'yishini eslang."
                         },
                         {
                             'id': 't2',
@@ -21114,7 +21114,7 @@ SUBJECTS = [
             {
                 'slug': 'shekspir-va-jahon-dramaturgiyasi',
                 'title': 'Jahon adabiyoti: Uilyam Shekspir va jahon dramaturgiyasi',
-                'summary': "Uyg'onish davri ingliz adabiyotining daho dramaturgi Uilyam Shekspir va uning 'Gamlet', 'Otello' hamda 'Rromeo va Julyetta' asarlaridagi umumbashariy g'oyalar.",
+                'summary': "Uyg'onish davri ingliz adabiyotining daho dramaturgi Uilyam Shekspir va uning 'Gamlet', 'Otello' hamda 'Romeo va Julyetta' asarlaridagi umumbashariy g'oyalar.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -21125,14 +21125,14 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Shekspir fojialari',
-                        'body': "'Gamlet' (haqiqat va ikkilanish, 'Yashamoq yoki yo mezonq bo'lmoq' muammosi).\n'Otello' (ishonch va rashk hiylalari).\n'Romeo va Julyetta' (muhabbatning qabilaviy dushmanlikdan ustunligi va fojiasi)."
+                        'body': "'Gamlet' (haqiqat va ikkilanish, 'Yashamoq yoki yo'q bo'lmoq' muammosi).\n'Otello' (ishonch va rashk hiylalari).\n'Romeo va Julyetta' (muhabbatning qabilaviy dushmanlikdan ustunligi va fojiasi)."
                     },
                     {
                         'type': 'steps',
                         'title': 'Shekspir dramaturgiyasining belgilari',
                         'items': [
                             'Xarakterlarning murakkab va psixologik teranligi',
-                            "Yovuzlik va Ezgulik o'rtasidagi abadiy murosaiz kurash",
+                            "Yovuzlik va Ezgulik o'rtasidagi abadiy murosasiz kurash",
                             "She'riy dialoglar va yuksak falsafiy monologlar"
                         ]
                     },
@@ -21194,7 +21194,7 @@ SUBJECTS = [
             {
                 'slug': 'xeminguy-va-yoqotilgan-avlod-adabiyoti',
                 'title': "Jahon adabiyoti: Ernest Xeminguy va 'yo'qotilgan avlod' adabiyoti",
-                'summary': "XX asr amerika adabiyotining atoqli vakili Ernest Xeminguyning 'Aysberg nazariyasi' hamda 'Chil va dengiz', 'Alvido, qurol!' asarlarining badiiy tahlili.",
+                'summary': "XX asr amerika adabiyotining atoqli vakili Ernest Xeminguyning 'Aysberg nazariyasi' hamda 'Chol va dengiz', 'Alvido, qurol!' asarlarining badiiy tahlili.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -21209,7 +21209,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': "'Chal chol va dengiz' qissasining g'oyasi",
+                        'title': "'Chol va dengiz' qissasining g'oyasi",
                         'items': [
                             'Santiyago chol va uning ulkan baliq bilan tengsiz va shafqatsiz olishuvi',
                             "Matonat va taslim bo'lmaslik harakati",
@@ -21261,7 +21261,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "'Chol va dengiz' qissasidagi Santiyago chol va akulalar o'rtasidagi olishuv nimani ramziy aks ettiradi?",
                             'answer': "O'quvchi bu olishuvni inson va shafqatsiz hayot hamda taqdir kurashi sifatida izohlaydi.",
-                            'hint': "Akulalarga elat bo'lgan baliq va cholning irodasini tasvirlang."
+                            'hint': "Akulalarga yem bo'lgan baliq va cholning irodasini tasvirlang."
                         },
                         {
                             'id': 't2',
@@ -21274,13 +21274,13 @@ SUBJECTS = [
             {
                 'slug': 'aruz-vazni-bahrlar-klassifikatsiyasi',
                 'title': 'Aruz vaznining tahliliy usullari va bahrlar klassifikatsiyasi',
-                'summary': "Oliy darajadagi poetiya: Aruz vaznidagi asosiy bahrlar (Raml, Hazaj, Rajaz, Mutaqorib va b.), ruknlar va تقطيع (taqti') tahlili.",
+                'summary': "Oliy darajadagi poetika: Aruz vaznidagi asosiy bahrlar (Raml, Hazaj, Rajaz, Mutaqorib va b.), ruknlar va تقطيع (taqti') tahlili.",
                 'duration': 30,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Aruz vazni murakkab ichki ritmik tizimga ega. U asosiy 19 ta bahr va ularning tarmoqlaridan (axrab, axram va h.k.) tashkil topadi. Sheriy misrani taqti' qilish — aruzning aniq matematik kalitini topish demakdir."
+                        'body': "Aruz vazni murakkab ichki ritmik tizimga ega. U asosiy 19 ta bahr va ularning tarmoqlaridan (axrab, axram va h.k.) tashkil topadi. She'riy misrani taqti' qilish — aruzning aniq matematik kalitini topish demakdir."
                     },
                     {
                         'type': 'example',
@@ -21298,7 +21298,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Imala, zihaf va tasxin aruzda bo'g mezon va vaqt mosligini ta'minlash uchun shoirlarga berilgan poetik erkinlik shakllaridir."
+                        'body': "Esda tuting: Imala, zihaf va tasxin aruzda bo'g'in va vaqt mosligini ta'minlash uchun shoirlarga berilgan poetik erkinlik shakllaridir."
                     }
                 ],
                 'quiz': [
@@ -21340,7 +21340,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Alisher Navoiyning 'Kech keldi-yu, qildi meni bormag'ay ramida...' baytining taqti'ini qiling va bahrini aniqlang.",
-                            'answer': "O mezonquvchi Ramal bahri musammani maqsur vaznida taqti' ketma-ketligini taqdim etadi.",
+                            'answer': "O'quvchi Ramal bahri musammani maqsur vaznida taqti' ketma-ketligini taqdim etadi.",
                             'hint': "Fa'ilātun fa'ilātun fa'ilātun fa'ilun ruknlariga moslang."
                         },
                         {
@@ -21360,7 +21360,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': 'Badiiy psixologizm — yozuvchining insondagi ruhiy kechinmalar, botiniy toqnashuvlar hamda hissiyotlar dinamikasini badiiy vositalar orqali aks ettira olish mahoratidir. Bu oliy adabiyotshunoslikning markaziy muammolaridan biridir.'
+                        'body': "Badiiy psixologizm — yozuvchining insondagi ruhiy kechinmalar, botiniy to'qnashuvlar hamda hissiyotlar dinamikasini badiiy vositalar orqali aks ettira olish mahoratidir. Bu oliy adabiyotshunoslikning markaziy muammolaridan biridir."
                     },
                     {
                         'type': 'example',
@@ -21371,14 +21371,14 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Psixologik tahlil darajalari',
                         'items': [
-                            "Oshkor psixologizm (Muallif qahramon ruhiyatini to'g'ridan-to mezong'ri izohlaydi)",
+                            "Oshkor psixologizm (Muallif qahramon ruhiyatini to'g'ridan-to'g'ri izohlaydi)",
                             'Yashirin psixologizm (Qahramon harakati, xatti-harakati va imo-ishorasidan xulosa chiqariladi)',
                             "Ong oqimi (Stream of consciousness — o'y-fikrlarning mantiqsiz va uzuq-yuluq zanjiri)"
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Cholpon va Cho'lpon-Dostoyevskiy maktabi o'zbek nasrida psixologizmning teranlashuviga ulkan hissa qo mezonshgan."
+                        'body': "Esda tuting: Abdulla Qodiriy va Cho'lpon ijodi o'zbek nasrida psixologizmning teranlashuviga ulkan hissa qo'shgan."
                     }
                 ],
                 'quiz': [
@@ -21402,7 +21402,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "'Ong oqimi' (Stream of consciousness) atamasi va usuli adabiyotga asosan qaysi yo me zonnalish orqali kirib kelgan?",
+                        'q': "'Ong oqimi' (Stream of consciousness) atamasi va usuli adabiyotga asosan qaysi yo'nalish orqali kirib kelgan?",
                         'options': [
                             'Klassitsizm',
                             'Modernizm',
@@ -21419,7 +21419,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "O'zbek adabiyotidan (masalan, 'O'tkan kunlar' yoki 'Kecha va kunduz') ichki monolog qo mezonllangan o'rinni topib, uning qahramon ruhiyatini ochishdagi va vazifasini yozing.",
+                            'prompt': "O'zbek adabiyotidan (masalan, 'O'tkan kunlar' yoki 'Kecha va kunduz') ichki monolog qo'llangan o'rinni topib, uning qahramon ruhiyatini ochishdagi vazifasini yozing.",
                             'answer': "O'quvchi Otabek yoki Zebining botiniy kechinmalari matnini tahlil qiladi.",
                             'hint': "Qahramon yolg'iz qolgandagi o'y-fikrlarini keltiring."
                         },
@@ -21452,7 +21452,7 @@ SUBJECTS = [
                         'title': "Yo'nalishlarning asosiy vakillari",
                         'items': [
                             'Jahon adabiyoti: Frans Kafka, Jeyms Joys, Gabriel Garsiya Markes, Umberto Eko',
-                            "O'zbek adabiyoti: Nazar Eshanqul, Shukur Xolmirzayev (bazi hikoyalarida), Abduqayum Yo'ldoshev"
+                            "O'zbek adabiyoti: Nazar Eshanqul, Shukur Xolmirzayev (ba'zi hikoyalarida), Abduqayum Yo'ldoshev"
                         ]
                     },
                     {
@@ -21481,7 +21481,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "O'zbek adabiyotida modernistik va falsafiy-absurd yo mezonnalishda ijod qilgan, 'Maymun yetaklagan odam' hikoyasining muallifi kim?",
+                        'q': "O'zbek adabiyotida modernistik va falsafiy-absurd yo'nalishda ijod qilgan, 'Maymun yetaklagan odam' hikoyasining muallifi kim?",
                         'options': [
                             "O'tkir Hoshimov",
                             'Nazar Eshanqul',
@@ -21499,7 +21499,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Klassik realizm va Modernizm o'rtasidagi 3 ta asosiy farqni ilmiy tilda bayon qiling.",
-                            'answer': 'O mezonquvchi mantiqiy syujet, xarakter tipi va voqelikka munosabatdagi farqlarni belgilaydi.',
+                            'answer': "O'quvchi mantiqiy syujet, xarakter tipi va voqelikka munosabatdagi farqlarni belgilaydi.",
                             'hint': "Inson obraziga va dunyo tartibiga munosabatga e'tibor bering."
                         },
                         {
@@ -21530,7 +21530,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Komparativistik tahlil metodlari',
                         'items': [
-                            "Genezis va ta'sirni o'rganish (To'g'ridan-to mezong'ri ta'sirlanish va o'zlashtirish)",
+                            "Genezis va ta'sirni o'rganish (To'g'ridan-to'g'ri ta'sirlanish va o'zlashtirish)",
                             "Tipologik o'xshashlik (Bir-biridan bexabar holda o'xshash g'oyalar yaratilishi)",
                             'Muloqot va tarjima adabiyotshunosligi'
                         ]
@@ -21579,7 +21579,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Alisher Navoiy va Nizomiy Ganjaviyning 'Farhod va Shirin' dostonlaridagi Farhod obrazi talqinidagi 2 ta o'xshashlik va 2 ta farqni ko'rsating.",
-                            'answer': 'O mezonquvchi Navoiyning Farhodni turkiy qahramon va komil inson sifatida takomillashtirganini izohlaydi.',
+                            'answer': "O'quvchi Navoiyning Farhodni turkiy qahramon va komil inson sifatida takomillashtirganini izohlaydi.",
                             'hint': "Navoiy Farhodni shoh o'g'li va san'atkor-yaratuvchi qilganiga e'tibor bering."
                         },
                         {
@@ -21610,14 +21610,14 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Badiiy matn tahlili bosqichlari',
                         'items': [
-                            "Lingvo-poetik tahlil (So'z va semantik va poetik bo'yoq)",
-                            'Struktural va semiotik tahlil (Ramz va belgilarni o mezonqish)',
+                            "Lingvo-poetik tahlil (So'zning semantik va poetik bo'yog'i)",
+                            "Struktural va semiotik tahlil (Ramz va belgilarni o'qish)",
                             'Kontekstual va madaniy-tarixiy talqin'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Badiiy matn — bu tugallanmas ma mezonnolar manbaidir; har bir davr va har bir kitobxona asardan yangi ma'no qatlamini kashf etadi."
+                        'body': "Esda tuting: Badiiy matn — bu tugallanmas ma'nolar manbaidir; har bir davr va har bir kitobxon asardan yangi ma'no qatlamini kashf etadi."
                     }
                 ],
                 'quiz': [
@@ -21635,13 +21635,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "'Hermenevtik doira' prinsipiga ko'ra, matn qismlarini yaxshi tushunmasdan turib asarning butunligini teran anglab bo mezonlmaydi.",
+                        'q': "'Hermenevtik doira' prinsipiga ko'ra, matn qismlarini yaxshi tushunmasdan turib asarning butunligini teran anglab bo'lmaydi.",
                         'answer': True,
                         'explain': "Ha, qism va butunlik o'rtasidagi uzviy aloqadorlik hermenevtikaning asosiy doirasidir."
                     },
                     {
                         'type': 'mc',
-                        'q': "Asardagi belgi va ramzlarni (metfora, simvol) maxsus kodlar va sistemalar sifatida o'rganuvchi fan qaysi?",
+                        'q': "Asardagi belgi va ramzlarni (metafora, simvol) maxsus kodlar va sistemalar sifatida o'rganuvchi fan qaysi?",
                         'options': [
                             'Semiotika',
                             'Mifologiya',
@@ -21660,7 +21660,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': 'Alisher Navoiyning biror muammo yoki fardidan bittasining hermenevtik va ilmiy talqinini yozib bering.',
                             'answer': "O'quvchi yashirin ma'no va qatlamlarni so'z o'yinlari orqali ochib beradi.",
-                            'hint': "So'zlarning o'z va ko'chma ma mezonnolarini va ramzlarni tahlil qiling."
+                            'hint': "So'zlarning o'z va ko'chma ma'nolarini va ramzlarni tahlil qiling."
                         },
                         {
                             'id': 't2',
@@ -21684,7 +21684,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Amaliy misol',
-                        'body': "Cho'lponning 'Kecha va kunduz' romanidagi 'kecha' hamda 'kunduz' tushunchalari shunchaki sutka qismlari emas, balki ma'rifatsizlik hamda erkinlik, zulmat va ziyo o'rtasidagi semiotik opsiziyani (qarama-qarshilikni) anglatuvchi belgilar kodidir."
+                        'body': "Cho'lponning 'Kecha va kunduz' romanidagi 'kecha' hamda 'kunduz' tushunchalari shunchaki sutka qismlari emas, balki ma'rifatsizlik hamda erkinlik, zulmat va ziyo o'rtasidagi semiotik oppozitsiyani (qarama-qarshilikni) anglatuvchi belgilar kodidir."
                     },
                     {
                         'type': 'steps',
@@ -21797,19 +21797,19 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Reseptiv estetikaga ko'ra, badiiy asar ma'nosi faqat muallif tomonidan uzil-kesil belgilanadi.",
                         'answer': False,
-                        'explain': "Yo'q, reseptiv estetikada asar ma'nosi matn va o'quvchi muloqoti natijasida hosil bo me'yorlanadi."
+                        'explain': "Yo'q, reseptiv estetikada asar ma'nosi matn va o'quvchi muloqoti natijasida hosil bo'ladi."
                     },
                     {
                         'type': 'mc',
                         'q': "Volfgang Izer ta'riflagan matndagi 'bo'shliqlar' nima?",
                         'options': [
-                            'Matbaa hatolari va tushib qolgan harflar',
+                            'Matbaa xatolari va tushib qolgan harflar',
                             "O'quvchi fantaziyasi va talqini orqali to'ldiriladigan aytilmagan ma'no nuqtalari",
                             'Muallif yozishga ulgurmagan boblar',
                             'Senzura tomonidan olib tashlangan qismlar'
                         ],
                         'answer': 1,
-                        'explain': "Bo'shliqlar — bu muallif O'quvchi mutolaasi jarayonida o'zi anglashi va to'ldirishi uchun qoldirgan ma'noviy oraliqlardir."
+                        'explain': "Bo'shliqlar — bu muallif o'quvchi mutolaasi jarayonida o'zi anglashi va to'ldirishi uchun qoldirgan ma'noviy oraliqlardir."
                     }
                 ],
                 'homework': {
@@ -21833,7 +21833,7 @@ SUBJECTS = [
             {
                 'slug': 'intertekstualitet-va-diskursiv-tahlil',
                 'title': 'Intertekstualitet va diskursiv tahlil',
-                'summary': "Matnlarning o'zaro muloqoti, iqtiboslik, reminisensiya va badiiy diskursning sotsiokulturolojik tahlili.",
+                'summary': "Matnlarning o'zaro muloqoti, iqtiboslik, reminisensiya va badiiy diskursning sotsiokulturologik tahlili.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -21857,7 +21857,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Alluziya — aniq bir tarixiy yoki adabiy faktga, asarga nomini rasterik aytmasdan shunchaki ishora qilishdir.'
+                        'body': 'Esda tuting: Alluziya — aniq bir tarixiy yoki adabiy faktga, asarga nomini ochiq aytmasdan shunchaki ishora qilishdir.'
                     }
                 ],
                 'quiz': [
@@ -21905,7 +21905,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Zamonaviy o'zbek she'riyatidan biror asar tanlab, undagi klasik poeziyaga qilingan alluziya va reminisensiyalarni topib tahlil qiling."
+                            'prompt': "Zamonaviy o'zbek she'riyatidan biror asar tanlab, undagi klassik poeziyaga qilingan alluziya va reminisensiyalarni topib tahlil qiling."
                         }
                     ]
                 }
@@ -21919,12 +21919,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish va Nazariy Asos',
-                        'body': "Narratologiya (Jerald Jeneut nazariyasi) badiiy asarning hikoyalanish strukturasini o'rganadi. Asosiy kategoriyalar: Roviy (narrator), Fokalizatsiya (voqealarni kim ko'rib/idrok etib turgani) va Badiiy vaqt. Roviy va Muallif teng tushuncha emas. Fokalizatsiya esa nol darajali (har narsani biluvchi), ichki (personaj nigohi) va tashqi (ob'ektiv kuzatuvchi) turlarga bo me'yorlanadi."
+                        'body': "Narratologiya (Jerald Jeneut nazariyasi) badiiy asarning hikoyalanish strukturasini o'rganadi. Asosiy kategoriyalar: Roviy (narrator), Fokalizatsiya (voqealarni kim ko'rib/idrok etib turgani) va Badiiy vaqt. Roviy va Muallif teng tushuncha emas. Fokalizatsiya esa nol darajali (har narsani biluvchi), ichki (personaj nigohi) va tashqi (ob'ektiv kuzatuvchi) turlarga bo'linadi."
                     },
                     {
                         'type': 'example',
                         'title': 'Amaliy misol',
-                        'body': "Utkir Hoshimovning 'Dunyoning ishlari' asarida narratsiya (hikoyalash) birinchi shaxs (ichki fokalizatsiya — bola/yozuvchi) nigohi orqali amalga oshiriladi, bu esa voqealarga yuqori darajadagi emotsional samimiyat bag'ishlaydi."
+                        'body': "O'tkir Hoshimovning 'Dunyoning ishlari' asarida narratsiya (hikoyalash) birinchi shaxs (ichki fokalizatsiya — bola/yozuvchi) nigohi orqali amalga oshiriladi, bu esa voqealarga yuqori darajadagi emotsional samimiyat bag'ishlaydi."
                     },
                     {
                         'type': 'steps',
@@ -21937,7 +21937,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Fokalizator — voqeani hikoya qiluvchi shaxs emas, balki Voqeani KO'RIB va HIS ETIB turgan nigoh egasidir."
+                        'body': "Esda tuting: Fokalizator — voqeani hikoya qiluvchi shaxs emas, balki voqeani KO'RIB va HIS ETIB turgan nigoh egasidir."
                     }
                 ],
                 'quiz': [
@@ -21963,10 +21963,10 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "Jerald Jeneut bo'yicha 'Zero (nol) fokalizatsiya' nimani anglatadi?",
                         'options': [
-                            'Roviy voqealar haqida hechnarsa bilmaydi',
+                            'Roviy voqealar haqida hech narsa bilmaydi',
                             "Roviy har bir personajning o'y-xayollari va barcha voqealardan to'liq xabardor (har narsaga qodir roviy)",
                             "Voqealar faqat bitta personaj ko'zi bilan ko'riladi",
-                            'Matnda roviy umumiy mavjud emas'
+                            'Matnda roviy umuman mavjud emas'
                         ],
                         'answer': 1,
                         'explain': "Nol fokalizatsiyada roviy (ob'ektiv/cheksiz) biluvchi bo'lib, u har bir personajning ichki dunyosini biladi."
@@ -21979,13 +21979,13 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Abdulla Qahhorning 'Anor' hikoyasidagi fokalizatsiya turini aniqlang va izohlang.",
-                            'answer': "Hikoyada asosan ichki va nol fokalizatsiya almashinib turadi; roviy Turonboy va Turopning ichki kechinmalarini tashqaridan hamda ularning ko'zi bilan ko'rsatadi.",
+                            'answer': "Hikoyada asosan ichki va nol fokalizatsiya almashinib turadi; roviy Turobjon va uning xotinining ichki kechinmalarini tashqaridan hamda ularning ko'zi bilan ko'rsatadi.",
                             'hint': "Roviy personajlarning o'ylarini qanchalik bilishiga e'tibor bering."
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Kichik bir voqeani avval 1-shaxs rovisi (ichki fokalizatsiya), so'ngra 3-shaxs ob'ektiv rovisi (tashqi fokalizatsiya) tilidan qayta yozib, farqini tahlil qiling."
+                            'prompt': "Kichik bir voqeani avval 1-shaxs roviysi (ichki fokalizatsiya), so'ngra 3-shaxs ob'ektiv roviysi (tashqi fokalizatsiya) tilidan qayta yozib, farqini tahlil qiling."
                         }
                     ]
                 }
@@ -21993,13 +21993,13 @@ SUBJECTS = [
             {
                 'slug': 'mifokritika-va-arxetipik-tahlil',
                 'title': 'Adabiyotda mifokritika va arxetipik tahlil',
-                'summary': "K.G. Yung va N. Fray ta'limoti bo'yicha matndagi arxetiplar, mifologik sxemalar hamda kollektiv unconsciousness tahlili.",
+                'summary': "K.G. Yung va N. Fray ta'limoti bo'yicha matndagi arxetiplar, mifologik sxemalar hamda kollektiv bexabarlik (collective unconscious) tahlili.",
                 'duration': 25,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': 'Kirish va Nazariy Asos',
-                        'body': "Mifokritika va arxetipik tahlil (K.G. Yung, Nortrop Fray) badiiy asarlarning zamirida yotgan azaliy mifik sxemalar, ramzlar va universal arxetiplarni (Kollektiv ancha/mifologik qoliplar) tadqiq etadi. Badiiy ijod — insoniyatning jamoaviy bexabarlik (kollektiv ruhiyat) qatlamida saqlanib qolgan 'Soya', 'Anima/Animus', 'Qahramon safari', 'Ona arxetipi' kabi modellarning qayta namoyon bo'lishidir."
+                        'body': "Mifokritika va arxetipik tahlil (K.G. Yung, Nortrop Fray) badiiy asarlarning zamirida yotgan azaliy mifik sxemalar, ramzlar va universal arxetiplarni (kollektiv mifologik qoliplar) tadqiq etadi. Badiiy ijod — insoniyatning jamoaviy bexabarlik (kollektiv ruhiyat) qatlamida saqlanib qolgan 'Soya', 'Anima/Animus', 'Qahramon safari', 'Ona arxetipi' kabi modellarning qayta namoyon bo'lishidir."
                     },
                     {
                         'type': 'example',
@@ -22011,7 +22011,7 @@ SUBJECTS = [
                         'title': 'Arxetipik tahlil bosqichlari',
                         'items': [
                             'Matndagi takrorlanuvchi universal motiv va ramzlarni (Suv, Olov, Qariya, Sayohat) ajratish.',
-                            'Personajlar xarakteridagi arxetipik modellarni (Donishmand, Soya, Qahramon, Triksiter) belgilash.',
+                            'Personajlar xarakteridagi arxetipik modellarni (Donishmand, Soya, Qahramon, Trikster) belgilash.',
                             "Asardagi syujet chizig'ining qadimiy mifologik sikllar (Tug'ilish-O'lim-Qayta tirilish) bilan bog'liqligini ochish."
                         ]
                     },
@@ -22079,7 +22079,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish va Nazariy Asos',
-                        'body': "Psixoanalitik adabiyotshunoslik badiiy asarni muallif yoki personajlarning ruhiy osti (bexabar) jarayonlari mahsuli deb qaraydi. Zigmund Freyd bo'yicha, badiiy ijod — bu tush ko'rishga o'xshash hodisa bo'lib, unda libidinoz va bostirilgan istaklar ramziy shaklda yuzaga chiqadi. Jak Lakan esa psixoanalizni lingvistika bilan bog'lab, 'Bexabarlik tili strukturalashgandir' g'oyasini ilgari surdi."
+                        'body': "Psixoanalitik adabiyotshunoslik badiiy asarni muallif yoki personajlarning ongosti (bexabar) jarayonlari mahsuli deb qaraydi. Zigmund Freyd bo'yicha, badiiy ijod — bu tush ko'rishga o'xshash hodisa bo'lib, unda libidinoz va bostirilgan istaklar ramziy shaklda yuzaga chiqadi. Jak Lakan esa psixoanalizni lingvistika bilan bog'lab, 'Bexabarlik tili strukturalashgandir' g'oyasini ilgari surdi."
                     },
                     {
                         'type': 'example',
@@ -22108,14 +22108,14 @@ SUBJECTS = [
                             'Sublimatsiya',
                             'Depressiya',
                             'Fokalizatsiya',
-                            'Karsis'
+                            'Katarsis'
                         ],
                         'answer': 0,
                         'explain': "Sublimatsiya — ruhiy energiyaning badiiy ijod yoki boshqa ijodiy shakllarga ko'chish jarayonidir."
                     },
                     {
                         'type': 'tf',
-                        'q': "Jak Lakan bo'yicha, inson bexabarlik ruhiyati dil va dil tuzilishi kabi strukturaga ega.",
+                        'q': "Jak Lakan bo'yicha, inson bexabarlik ruhiyati til tuzilishi kabi strukturaga ega.",
                         'answer': True,
                         'explain': "Lakan 'Inson bexabarligi til kabi tuzilgandir' degan mashhur formulasini ilgari surgan."
                     },
@@ -22139,7 +22139,7 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': "Abdulla Qodiriyning 'O'tkan kunlar'ida Otabekning Zaynabga ko'ngil qo'ya olmasligining ruhiy-psixologik sababini ko'rsating.",
-                            'answer': "Otabekning ruhiyatida Kumushga bo'lgan mutlaq fiksatsiya (ruhiy bog'liqlik) va Zaynab obrazining majburiy impose qilinganligi ruhiy rad etishni yuzaga keltirgan.",
+                            'answer': "Otabekning ruhiyatida Kumushga bo'lgan mutlaq fiksatsiya (ruhiy bog'liqlik) va Zaynab obrazining majburan tiqishtirilganligi ruhiy rad etishni yuzaga keltirgan.",
                             'hint': 'Fiksatsiya va ruhiy travma tushunchalaridan foydalaning.'
                         },
                         {
@@ -22164,7 +22164,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Amaliy misol',
-                        'body': "Hamza va Fitrat asarlarida jadidchilik harakati davridagi 'mustamlaka subyekti'ning (subaltern) o'zligini anglash, chorizm va sovet mustamlakachilik diskursiga qarshe ma'rifiy isyoni yorqin postkolonial matn namunasidir."
+                        'body': "Hamza va Fitrat asarlarida jadidchilik harakati davridagi 'mustamlaka subyekti'ning (subaltern) o'zligini anglash, chorizm va sovet mustamlakachilik diskursiga qarshi ma'rifiy isyoni yorqin postkolonial matn namunasidir."
                     },
                     {
                         'type': 'steps',
@@ -22225,7 +22225,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Fitratning 'Sharq' yoki 'Hind ixtilochilari' asarini postkolonial va anti-kolonial diskurs nuqtai nazaridan tahlil qiling."
+                            'prompt': "Fitratning 'Sharq' yoki 'Hind ixtilolchilari' asarini postkolonial va anti-kolonial diskurs nuqtai nazaridan tahlil qiling."
                         }
                     ]
                 }
@@ -22244,15 +22244,15 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Amaliy misol',
-                        'body': "Nazar Eshanqulning 'Murod' yoki 'Maymun yetaklagan odam' hikoyalarida qahramonlarning jamiyatdan uzolashuvi, absurd borliq bilan yuzma-yuz kelishi ekzistensial poetikaning yorqin namunasidir."
+                        'body': "Nazar Eshanqulning 'Murod' yoki 'Maymun yetaklagan odam' hikoyalarida qahramonlarning jamiyatdan uzoqlashuvi, absurd borliq bilan yuzma-yuz kelishi ekzistensial poetikaning yorqin namunasidir."
                     },
                     {
                         'type': 'steps',
                         'title': 'Fenomenologik va ekzistensial tahlil bosqichlari',
                         'items': [
                             'Personajning dunyoni qanday his qilayotgani (subyektiv fenomenologik vaqt va fazo)ni aniqlash.',
-                            "Matnda 'Absurd', 'Yolg'izlik', 'O'lim' va 'Erkin tanlov' ekzistensialiallarining o'rnini belgilash.",
-                            "Qahramonning ozodlikka erishish yoki o'z-o'zini begonalashtirish (otчуждение) bosqichlarini tahlil qilish."
+                            "Matnda 'Absurd', 'Yolg'izlik', 'O'lim' va 'Erkin tanlov' ekzistensiallarining o'rnini belgilash.",
+                            "Qahramonning ozodlikka erishish yoki o'z-o'zini begonalashtirish (alienation) bosqichlarini tahlil qilish."
                         ]
                     },
                     {
@@ -22271,7 +22271,7 @@ SUBJECTS = [
                             'Mixail Baxtin'
                         ],
                         'answer': 0,
-                        'explain': "Albert Kamyu ('Sizif haqida afsona', 'Begi') absurd va ekzistensializmni badiiy shakllantirgan."
+                        'explain': "Albert Kamyu ('Sizif haqida afsona', 'Begona') absurd va ekzistensializmni badiiy shakllantirgan."
                     },
                     {
                         'type': 'tf',
@@ -22284,7 +22284,7 @@ SUBJECTS = [
                         'q': "Fenomenologiyadagi 'Intensionalik' (Intentionality) nimani anglatadi?",
                         'options': [
                             "Inson shuurining har doim biror narsaga/obyektga yo'naltirilganligini",
-                            "She'rda qofiya doshligini",
+                            "She'rda qofiyadoshligini",
                             'Personajning tarixiy kelib chiqishini',
                             'Badiiy kitobning qattiq muqovasini'
                         ],
@@ -22399,7 +22399,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish va Nazariy Asos',
-                        'body': "Dekonstruksiya (Jak Derrida, Pol de Man) poststrukturaviy tanqidning eng yuksak bosqichi bo'lib, badiiy matnda yagona, qat'iy va yakuniy ma'no mavjudligini rad etadi. Derridaning 'Différance' (farqlanish va kechiktirish) va Logotsentritsizmni tanqid qilish ta'limotiga ko'ra, matn o'z-o me'yorini inkor etuvchi ichki qarama-qarshiliklarga (aporiya) ega va u cheksiz talqinlarga ochiqdir."
+                        'body': "Dekonstruksiya (Jak Derrida, Pol de Man) poststrukturaviy tanqidning eng yuksak bosqichi bo'lib, badiiy matnda yagona, qat'iy va yakuniy ma'no mavjudligini rad etadi. Derridaning 'Différance' (farqlanish va kechiktirish) va Logotsentrizmni tanqid qilish ta'limotiga ko'ra, matn o'z-o'zini inkor etuvchi ichki qarama-qarshiliklarga (aporiya) ega va u cheksiz talqinlarga ochiqdir."
                     },
                     {
                         'type': 'example',
@@ -22410,14 +22410,14 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Dekonstruktiv tahlil bosqichlari',
                         'items': [
-                            "Matndagi hukmron hiyerarxiya va binor opsiziyalarni (masalan: erkak/ayol, og'zaki/yozma) topish va ularni ag'darish.",
+                            "Matndagi hukmron iyerarxiya va binar oppozitsiyalarni (masalan: erkak/ayol, og'zaki/yozma) topish va ularni ag'darish.",
                             "Matndagi 'aporiya' — mantiqiy chalkashlik, matn o'z-o'zini inkor etadigan, ma'no yoriladigan nuqtalarni aniqlash.",
                             "Matnning yagona qat'iy ma'nosi yo'qligini, ma'no doimiy harakatda hamda kechiktirishda ekanligini ko'rsatish."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Dekonstruksiya matnni 'vayron qilish' emas, balki matnning o'z mantig'i ichida yashiringan zidiyat va yorilishlarni ochib berishdir."
+                        'body': "Esda tuting: Dekonstruksiya matnni 'vayron qilish' emas, balki matnning o'z mantig'i ichida yashiringan ziddiyat va yorilishlarni ochib berishdir."
                     }
                 ],
                 'quiz': [
@@ -22437,7 +22437,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Dekonstruktiv tahlilda badiiy matn faqat bitta, yagona va to'g'ri haqiqatni aks ettirishi ta'kidlanadi.",
                         'answer': False,
-                        'explain': "Yo'q, dekonstruksiya har qanday absolut yagona ma'noni rad etadi va ma'nonin barqarorsizligini ko'rsatadi."
+                        'explain': "Yo'q, dekonstruksiya har qanday absolut yagona ma'noni rad etadi va ma'noning barqarorsizligini ko'rsatadi."
                     },
                     {
                         'type': 'mc',
@@ -22445,7 +22445,7 @@ SUBJECTS = [
                         'options': [
                             'Aporiya',
                             'Metonimiya',
-                            'Karsis',
+                            'Katarsis',
                             'Alliteratsiya'
                         ],
                         'answer': 0,
@@ -22465,7 +22465,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Klassik yoki zamonaviy biror o'zbek she'rini tanlab, undagi ichki zidiyatlar va aporiya nuqtalarini dekonstruktiv usulda tahlil qiling."
+                            'prompt': "Klassik yoki zamonaviy biror o'zbek she'rini tanlab, undagi ichki ziddiyatlar va aporiya nuqtalarini dekonstruktiv usulda tahlil qiling."
                         }
                     ]
                 }
@@ -28256,7 +28256,7 @@ SUBJECTS = [
                     }
                 ],
                 'homework': {
-                    'intro': 'Genetik regulyatsiya va operon tuzilishi bo mezonlarini tahlil qiling.',
+                    'intro': "Genetik regulyatsiya va operon tuzilishi bo'limlarini tahlil qiling.",
                     'tasks': [
                         {
                             'id': 't1',
@@ -36683,7 +36683,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Pragmatik markyorlar gapning propozitsional (semantik) mazmunini o'zgartirmaydi, lekin so mezonlar munosabatini tartiblaydi."
+                        'body': "Pragmatik markyorlar gapning propozitsional (semantik) mazmunini o'zgartirmaydi, lekin so'lar munosabatini tartiblaydi."
                     }
                 ],
                 'quiz': [
@@ -36758,7 +36758,7 @@ SUBJECTS = [
                         'items': [
                             "Collocation: So'zlarning leksik jihatdan birga kelishi (e.g., fast food, heavy rain).",
                             "Colligation: So'zning muayyan grammatik kategoriya yoki pozitsiya bilan birikishi (e.g., 'deny' fe'lining GERUND talab qilishi).",
-                            "Semantic Preference: So mezonning ma'lum semantik guruh so'zlari bilan birikishi (e.g., 'cause' + salbiy oqibatlar)."
+                            "Semantic Preference: So'ning ma'lum semantik guruh so'zlari bilan birikishi (e.g., 'cause' + salbiy oqibatlar)."
                         ]
                     },
                     {
