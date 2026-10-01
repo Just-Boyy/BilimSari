@@ -210,9 +210,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': 'Chiziqli tenglamalar sistemasi har doim yagona yechimga ega bo meydi.',
+                        'q': "Chiziqli tenglamalar sistemasi har doim yagona yechimga ega bo'ladi.",
                         'answer': True,
-                        'explain': "U chuksiz ko'p yechimga ega bo'lishi yoki umuman yechimga ega bo'lmasligi ham mumkin."
+                        'explain': "U cheksiz ko'p yechimga ega bo'lishi yoki umuman yechimga ega bo'lmasligi ham mumkin."
                     },
                     {
                         'type': 'mc',
@@ -31406,7 +31406,7 @@ SUBJECTS = [
                         'options': [
                             'Bayt',
                             'Bit',
-                            "Kilocho'p",
+                            'Kilobayt',
                             'Registr'
                         ],
                         'answer': 1,
@@ -31440,7 +31440,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Insonlar kiritgan o'nlik sonlarni kompyuter tushunadigan ikkilik kodga o'tkazish uchun bo'lish usulidan foydalaniladi. O'nlik son to bo'linma 0 bo meqdorga kelguncha ketma-ket 2 ga bo'linadi va qoldiqlar teskari tartibda yoziladi."
+                        'body': "Insonlar kiritgan o'nlik sonlarni kompyuter tushunadigan ikkilik kodga o'tkazish uchun bo'lish usulidan foydalaniladi. O'nlik son to bo'linma 0 ga teng bo'lguncha ketma-ket 2 ga bo'linadi va qoldiqlar teskari tartibda yoziladi."
                     },
                     {
                         'type': 'example',
@@ -31507,7 +31507,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "O'nlikdagi 50 va 100 sonlarini ikkilik o'tkazish bosqichlarini daftarizga yozing."
+                            'prompt': "O'nlikdagi 50 va 100 sonlarini ikkilik o'tkazish bosqichlarini daftaringizga yozing."
                         }
                     ]
                 }
@@ -31595,7 +31595,7 @@ SUBJECTS = [
             {
                 'slug': 'mantiqiy-amallar-and-or-not',
                 'title': 'Mantiqiy amallar va mantiq algebrasi',
-                'summary': 'Mantiqiy MULOHAZA, va (AND), yoki (OR), emas (NOT) amallari hamda uning rostlik jadvallari.',
+                'summary': 'Mantiqiy mulohaza, va (AND), yoki (OR), emas (NOT) amallari hamda uning rostlik jadvallari.',
                 'duration': 15,
                 'lesson': [
                     {
@@ -31663,7 +31663,7 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': '(0 OR 1) AND (1 AND 1) ifodasining mantiqiy qiymatini yozing (1 yoki 0).',
                             'answer': '1',
-                            'hint': '1 AND 1 barobar 1 ekanligini unutmang.'
+                            'hint': '1 AND 1 = 1 ekanligini unutmang.'
                         },
                         {
                             'id': 't2',
@@ -31715,13 +31715,13 @@ SUBJECTS = [
                             'SSD'
                         ],
                         'answer': 2,
-                        'explain': "RAM vaqtinchalik (energiya bog'liq) xotiradir."
+                        'explain': "RAM vaqtinchalik (energiyaga bog'liq) xotiradir."
                     },
                     {
                         'type': 'tf',
                         'q': "Fon Neyman arxitekturasida ma'lumotlar va dastur buyruqlari alohida xotiralarda saqlanadi.",
                         'answer': False,
-                        'explain': "Fon Neyman prinshipiga ko'ra dastur va ma'lumotlar bitta xotira makonida saqlanadi."
+                        'explain': "Fon Neyman prinsipiga ko'ra dastur va ma'lumotlar bitta xotira makonida saqlanadi."
                     },
                     {
                         'type': 'mc',
@@ -31742,9 +31742,9 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Protsessor tezligi qaysi birlikda o'lchanadi (masalan: Ghz / Gts)?",
-                            'answer': 'Gts',
-                            'hint': 'Gerts (Hz) birligi asosida.'
+                            'prompt': "Protsessorning takt chastotasi qaysi birlikda o'lchanadi? (qisqartmasini yozing)",
+                            'answer': 'GGts',
+                            'hint': 'Gigagerts (GHz) — gerts birligining milliard karrasi.'
                         },
                         {
                             'id': 't2',
@@ -31924,7 +31924,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Web-sahifalarga kirganimizda brauzer Server bilan mijoz (Client-Server) modeli bo'yicha muloqot qiladi. Biz brauzerga yozadigan domeny nomi (masalan: google.com) kompyuterlarga tushunarsiz. DNS (Domain Name System) server bu domenni kompyuter tushunadigan IP-manzilga o'girib beradi."
+                        'body': "Web-sahifalarga kirganimizda brauzer Server bilan mijoz (Client-Server) modeli bo'yicha muloqot qiladi. Biz brauzerga yozadigan domen nomi (masalan: google.com) kompyuterlarga tushunarsiz. DNS (Domain Name System) server bu domenni kompyuter tushunadigan IP-manzilga o'girib beradi."
                     },
                     {
                         'type': 'example',
@@ -32011,7 +32011,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Blok-sxema figuralari',
-                        'body': "- Oval (Oval/Ellips) -> Boshlanishi va Tugashi\n- Parallelogramm -> Ma'lumotlarni kiritish va chiqarish\n- To'g'ri tortburchak -> Hisoblash va jarayon (Process)\n- Romb -> Shartni tekshirish (Tarmoqlanish)"
+                        'body': "- Oval (Oval/Ellips) -> Boshlanishi va Tugashi\n- Parallelogramm -> Ma'lumotlarni kiritish va chiqarish\n- To'g'ri to'rtburchak -> Hisoblash va jarayon (Process)\n- Romb -> Shartni tekshirish (Tarmoqlanish)"
                     },
                     {
                         'type': 'steps',
@@ -32038,7 +32038,7 @@ SUBJECTS = [
                             'Doira'
                         ],
                         'answer': 1,
-                        'explain': 'Romb figuri shart va tarmoqlanish uchun ishlatiladi.'
+                        'explain': 'Romb figurasi shart va tarmoqlanish uchun ishlatiladi.'
                     },
                     {
                         'type': 'tf',
@@ -32086,7 +32086,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Python — yuqori darajali, o'rganish oson va dunyoda keng tarqalgan dasturlash tili. Dasturda ma'lumotlarni saqlash uchun o'zgaruvchilardan foydalaniladi. Pythonda o'zgaruvchi turini ko'rsatish shart emas, u dinamik tiplangan dildir."
+                        'body': "Python — yuqori darajali, o'rganish oson va dunyoda keng tarqalgan dasturlash tili. Dasturda ma'lumotlarni saqlash uchun o'zgaruvchilardan foydalaniladi. Pythonda o'zgaruvchi turini ko'rsatish shart emas, u dinamik tiplangan tildir."
                     },
                     {
                         'type': 'example',
@@ -32104,7 +32104,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Pythonda o'zgaruvchi nomlari katta-kichik harflarga sezgandir (Masalan: 'Age' va 'age' har xil o'zgaruvchi)."
+                        'body': "Esda tuting: Pythonda o'zgaruvchi nomlari katta-kichik harflarga sezgirdir (Masalan: 'Age' va 'age' har xil o'zgaruvchi)."
                     }
                 ],
                 'quiz': [
@@ -32246,7 +32246,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Bir xil kod ko'p marta takrorlanishi kerak bo'lganda tsikllardan foydalaniladi. `for` tsikli ma'lum bir ketma-ketlik (masalan, range) bo meqdoricha takrorlanadi. `while` tsikli esa belgilangan mantiqiy shart `True` bo'lib turguncha takrorlanaveradi."
+                        'body': "Bir xil kod ko'p marta takrorlanishi kerak bo'lganda tsikllardan foydalaniladi. `for` tsikli ma'lum bir ketma-ketlik (masalan, range) uzunligicha takrorlanadi. `while` tsikli esa belgilangan mantiqiy shart `True` bo'lib turguncha takrorlanaveradi."
                     },
                     {
                         'type': 'example',
@@ -32354,7 +32354,7 @@ SUBJECTS = [
                         'options': [
                             'Hello',
                             'World',
-                            'Hello ',
+                            'Hello W',
                             'H'
                         ],
                         'answer': 0,
@@ -32392,7 +32392,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Kiritilgan so'z palidrom (o'ngdan ham, chapdan ham bir xil o'qiladigan) ekanligini aniqlovchi kod yozing."
+                            'prompt': "Kiritilgan so'z palindrom (o'ngdan ham, chapdan ham bir xil o'qiladigan) ekanligini aniqlovchi kod yozing."
                         }
                     ]
                 }
@@ -32420,7 +32420,7 @@ SUBJECTS = [
                             "append(x) — ro'yxat oxiriga element qo'shadi",
                             "insert(i, x) — ko'rsatilgan i-indeksga element qo'shadi",
                             "remove(x) — qiymati x ga teng bo'lgan birinchi elementni o'chiradi",
-                            "sort() — ro meqdor ro'yxatni o'sish tartibida saralaydi"
+                            "sort() — ro'yxatni o'sish tartibida saralaydi"
                         ]
                     },
                     {
@@ -32492,7 +32492,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Dict va Set misoli',
-                        'body': '# Lug\'at\nstudent = {"name": "Ali", "age": 16, "grade": 10}\nprint(student["name"]) # \'Ali\'\n\n# To\'plam (takroriy elementlar avtomati o\'chiriladi)\nnumbers = {1, 2, 2, 3, 3, 4}\nprint(numbers) # {1, 2, 3, 4}'
+                        'body': '# Lug\'at\nstudent = {"name": "Ali", "age": 16, "grade": 10}\nprint(student["name"]) # \'Ali\'\n\n# To\'plam (takroriy elementlar avtomatik o\'chiriladi)\nnumbers = {1, 2, 2, 3, 3, 4}\nprint(numbers) # {1, 2, 3, 4}'
                     },
                     {
                         'type': 'steps',
@@ -32538,7 +32538,7 @@ SUBJECTS = [
                             '<>'
                         ],
                         'answer': 2,
-                        'explain': "Lug'atlar Figurali qavslar `{}` orqali yaratiladi."
+                        'explain': "Lug'atlar figurali qavslar `{}` orqali yaratiladi."
                     }
                 ],
                 'homework': {
@@ -32739,7 +32739,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'steps',
-                        'title': 'Fayl rejimlar (Modes)',
+                        'title': 'Fayl rejimlari (Modes)',
                         'items': [
                             "'r' (Read) — faylni faqat o'qish uchun ochadi (standart)",
                             "'w' (Write) — faylga yozadi, mavjud fayl ustidan qayta yozib yuboradi",
@@ -32815,7 +32815,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Try-Except misoli',
-                        'body': 'try:\n    x = int(input("Son kirit: "))\n    print(10 / x)\nexcept ZeroDivisionError:\n    print("Sonni 0 ga bo\'lib bo\'lmaydi!")\nexcept ValueError:\n    print("Iltimos, faqat raqam kiritasiz!")'
+                        'body': 'try:\n    x = int(input("Son kirit: "))\n    print(10 / x)\nexcept ZeroDivisionError:\n    print("Sonni 0 ga bo\'lib bo\'lmaydi!")\nexcept ValueError:\n    print("Iltimos, faqat raqam kiriting!")'
                     },
                     {
                         'type': 'steps',
@@ -32823,7 +32823,7 @@ SUBJECTS = [
                         'items': [
                             "try — xatolik yuz berishi mumkin bo'lgan kod joylashtiriladi",
                             'except — xatolik yuz berganda bajariladigan kod',
-                            "finally — xatolik bo'lishi yoki bo meqdoridan qat'i nazar har doim bajariladigan kod"
+                            "finally — xatolik bo'lishi yoki bo'lmasligidan qat'i nazar har doim bajariladigan kod"
                         ]
                     },
                     {
@@ -32876,7 +32876,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Foydalanuvchidan son kiritishni so'raydigan va u to'g'ri son kiritmaguncha takrorlanadigan try-except tsikllini yozing."
+                            'prompt': "Foydalanuvchidan son kiritishni so'raydigan va u to'g'ri son kiritmaguncha takrorlanadigan try-except tsiklini yozing."
                         }
                     ]
                 }
@@ -32909,7 +32909,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Binar qidiruv algoritmi chiziqli qidiruvga qaraganda juda tez ishlaydi, lekin ro'yxat aldindan saralangan bo'lishi shart."
+                        'body': "Esda tuting: Binar qidiruv algoritmi chiziqli qidiruvga qaraganda juda tez ishlaydi, lekin ro'yxat oldindan saralangan bo'lishi shart."
                     }
                 ],
                 'quiz': [
@@ -32919,7 +32919,7 @@ SUBJECTS = [
                         'options': [
                             "Elementlar matn bo'lishi kerak",
                             "Ro'yxat saralangan bo'lishi kerak",
-                            "Ro meqdor juft bo'lishi kerak",
+                            "Elementlar soni juft bo'lishi kerak",
                             "Shart yo'q"
                         ],
                         'answer': 1,
@@ -32950,7 +32950,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "Bubble sort yordamida [3, 1, 2] massivini 1-qadamidan so'ng qanday holatga keladi?",
+                            'prompt': "Bubble sort yordamida [3, 1, 2] massivi 1-qadamdan so'ng qanday holatga keladi?",
                             'answer': '[1, 3, 2]',
                             'hint': "3 va 1 o'rni almashadi."
                         },
@@ -32971,7 +32971,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "OOP — dasturlash uslubi bo'lib, unda dastur real olamdagi ob'yektlar modellaridan tashkil topadi. Sinf (Class) — obyektning chizmasi (shabloni). Obyekt (Instance) esa shu sinf asosida yaratilgan aniq nusxadir."
+                        'body': "OOP — dasturlash uslubi bo'lib, unda dastur real olamdagi obyektlar modellaridan tashkil topadi. Sinf (Class) — obyektning chizmasi (shabloni). Obyekt (Instance) esa shu sinf asosida yaratilgan aniq nusxadir."
                     },
                     {
                         'type': 'example',
@@ -32982,7 +32982,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Sinf qismlari',
                         'items': [
-                            "class Kalit so'zi orqali sinf yaratiladi",
+                            "class kalit so'zi orqali sinf yaratiladi",
                             "__init__() — xususiyatlarni (atributlarni) boshlang'ich qiymatlash konstruktori",
                             "self — yaratilayotgan obyektning o'ziga ishora qiladi"
                         ]
@@ -33013,7 +33013,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Metod va funksiyaning birinchi parametri sifatida qaysi so'z ishlatiladi?",
+                        'q': "Sinf metodining birinchi parametri sifatida qaysi so'z ishlatiladi?",
                         'options': [
                             'this',
                             'self',
@@ -33130,7 +33130,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Stek va Navbat — ma'lumotlarni tartib bilan saqlash va ulardan foydalanish modellari. Stek LIFO (Eng oxirgi kirgan — birinchi chiqadi) prinsipi bo'yicha ishlaydi (masalan, likopchalar taxlami). Navbat esa FIFO (Birinchi kirgan — birinchi chiqadi) prinsipi bo'yicha ishlaydi (masalan, dokondagi navbat)."
+                        'body': "Stek va Navbat — ma'lumotlarni tartib bilan saqlash va ulardan foydalanish modellari. Stek LIFO (Eng oxirgi kirgan — birinchi chiqadi) prinsipi bo'yicha ishlaydi (masalan, likopchalar taxlami). Navbat esa FIFO (Birinchi kirgan — birinchi chiqadi) prinsipi bo'yicha ishlaydi (masalan, do'kondagi navbat)."
                     },
                     {
                         'type': 'example',
@@ -33168,7 +33168,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Navbat (Queue) tuzilmasida birinchi bo'lib qo'shilgan element birinchi bo'lib o'chiriladi.",
                         'answer': True,
-                        'explain': 'FIFO — First In First Out prinshipi.'
+                        'explain': 'FIFO — First In First Out prinsipi.'
                     },
                     {
                         'type': 'mc',
@@ -33215,7 +33215,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'HTML5 minimal kodi',
-                        'body': '<!DOCTYPE html>\n<html>\n<head>\n    <title>Mening sahifam</title>\n</head>\n<body>\n    <h1>Salom Dunyo!</h1>\n    <p>Bu matn abzatsi.</p>\n    <a href="https://google.com">Ssilka</a>\n</body>\n</html>'
+                        'body': '<!DOCTYPE html>\n<html>\n<head>\n    <title>Mening sahifam</title>\n</head>\n<body>\n    <h1>Salom Dunyo!</h1>\n    <p>Bu matn abzatsi.</p>\n    <a href="https://google.com">Havola</a>\n</body>\n</html>'
                     },
                     {
                         'type': 'steps',
@@ -33248,7 +33248,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "HTML bu ob'yektga yo'naltirilgan dasturlash tili hisoblanadi.",
+                        'q': "HTML bu obyektga yo'naltirilgan dasturlash tili hisoblanadi.",
                         'answer': False,
                         'explain': 'HTML dasturlash tili emas, gipermatnli belgilash tilidir.'
                     },
@@ -33271,7 +33271,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "HTMLda rasm qo'shuvchi teging nomini yozing.",
+                            'prompt': "HTMLda rasm qo'shuvchi teg nomini yozing.",
                             'answer': 'img',
                             'hint': "Image so'zining qisqartmasi."
                         },
@@ -33320,7 +33320,7 @@ SUBJECTS = [
                         'q': "CSS-da ID bo'yicha selektor qaysi belgi bilan yoziladi?",
                         'options': [
                             '. (nuqta)',
-                            '# (reshotka)',
+                            '# (panjara)',
                             '* (yulduzcha)',
                             '@ (at)'
                         ],
@@ -33386,7 +33386,7 @@ SUBJECTS = [
                         'items': [
                             'One-to-One (Birga-bir): Bitta qatorga bitta qator mos keladi',
                             "One-to-Many (Birga-ko'p): Bitta foydalanuvchida ko'p buyurtmalar bo'lishi mumkin",
-                            "Many-to-Many (Ko'pga-ko'p): Ko meqdor talabalar va ko'p fanlar o'rtasidagi bog'liqlik"
+                            "Many-to-Many (Ko'pga-ko'p): Ko'p talabalar va ko'p fanlar o'rtasidagi bog'liqlik"
                         ]
                     },
                     {
@@ -33415,7 +33415,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Ikki jadvalni bir-biri bilan bog meqdorlash uchun qaysi kalit ishlatiladi?',
+                        'q': "Ikki jadvalni bir-biri bilan bog'lash uchun qaysi kalit ishlatiladi?",
                         'options': [
                             'Primary Key',
                             'Foreign Key',
@@ -33520,7 +33520,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Bahosi 5 bo'lgan o'quvchilar ro meqdorini ism bo'yicha alfavit tartibida saralab beruvchi SQL so'rovini yozing."
+                            'prompt': "Bahosi 5 bo'lgan o'quvchilar ro'yxatini ism bo'yicha alfavit tartibida saralab beruvchi SQL so'rovini yozing."
                         }
                     ]
                 }
@@ -33580,7 +33580,7 @@ SUBJECTS = [
                         'options': [
                             'Asimmetrik',
                             'Simmetrik',
-                            'Xesh vaqtli',
+                            'Xeshlash',
                             'Raqamli'
                         ],
                         'answer': 1,
@@ -33614,7 +33614,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Kirish',
-                        'body': "Sun'iy intellekt (AI) — kompyuter tizimlarining inson intellektiga xos bo meqdorigan mantiqiy fikrlash, o'rganish va qaror qabul qilish qobiliyatidir. Mashinali o'rgatish (ML) esa AI ning bir qismi bo'lib, kompyuterga aniq ko'rsatma yozmasdan, ma'lumotlar (data) orqali o'rgatish texnologiyasidir."
+                        'body': "Sun'iy intellekt (AI) — kompyuter tizimlarining inson intellektiga xos bo'lgan mantiqiy fikrlash, o'rganish va qaror qabul qilish qobiliyatidir. Mashinali o'rgatish (ML) esa AI ning bir qismi bo'lib, kompyuterga aniq ko'rsatma yozmasdan, ma'lumotlar (data) orqali o'rgatish texnologiyasidir."
                     },
                     {
                         'type': 'example',
@@ -33657,7 +33657,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Elektron pochtadagi Xatlarni 'Spam' va 'Spam emas' ga ajratish ML ning qaysi masalasiga kiradi?",
+                        'q': "Elektron pochtadagi xatlarni 'Spam' va 'Spam emas' ga ajratish ML ning qaysi masalasiga kiradi?",
                         'options': [
                             'Klassifikatsiya',
                             'Regressiya',
@@ -33699,7 +33699,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': "Big-O darajalari tartibi (Zo'ridan yomoniga)",
+                        'title': 'Big-O darajalari tartibi (eng yaxshisidan yomoniga)',
                         'body': "1. O(1) — O'zgarmas vaqt (masalan, massiv elementiga indeks bo'yicha murojaat)\n2. O(log n) — Logarifmik (Binar qidiruv)\n3. O(n) — Chiziqli (Massiv bo'ylab bitta tsikl)\n4. O(n^2) — Kvadratik (Ichma-ich ikkita tsikl, masalan Bubble sort)"
                     },
                     {
@@ -33754,7 +33754,7 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': 'Chiziqli qidiruv (Linear search) ning Big-O notatsiyasini yozing (masalan O(n)).',
+                            'prompt': "Chiziqli qidiruv (Linear search) ning Big-O notatsiyasini yozing (masalan, O(1) ko'rinishida).",
                             'answer': 'O(n)',
                             'hint': "Chiziqli o'sish."
                         },
