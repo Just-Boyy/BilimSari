@@ -22577,7 +22577,7 @@ SUBJECTS = [
                         'title': 'Geterogen aralashmalarni ajratish bosqichlari',
                         'items': [
                             "Tindirish (cho'kishini kutish)",
-                            "Suzish (filtr xromatografiyasi yoki qog'oz yordamida)",
+                            "Suzish (filtr qog'ozi yordamida)",
                             "Magnit bilan ta'sir ettirish (temir va boshqa metall zarrachalarini ajratish)"
                         ]
                     },
@@ -22645,7 +22645,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Hodisalarning tasnifi',
-                        'body': "Moddaning tarkibi o'zgarmasdan, faqat shakli, agregat holati o'zgaradigan hodisalar fizik hodisalar deyiladi. Bir moddadan boshqa yangi modda hosil bo me'yoriy o'zgarishlar kimyoviy hodisalar (reaksiyalar) deyiladi."
+                        'body': "Moddaning tarkibi o'zgarmasdan, faqat shakli, agregat holati o'zgaradigan hodisalar fizik hodisalar deyiladi. Bir moddadan boshqa yangi modda hosil bo'ladigan o'zgarishlar kimyoviy hodisalar (reaksiyalar) deyiladi."
                     },
                     {
                         'type': 'example',
@@ -22676,7 +22676,7 @@ SUBJECTS = [
                             'Oyna sinishi',
                             'Sutning achishi',
                             'Muzning erishi',
-                            'M mumi erishi'
+                            'Sham mumining erishi'
                         ],
                         'answer': 1,
                         'explain': "Sut achiganda yangi moddalar (sut kislotasi) hosil bo'ladi, bu kimyoviy hodisadir."
@@ -22685,7 +22685,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': 'Qandning suvda erishi kimyoviy reaksiyadir.',
                         'answer': False,
-                        'explain': "Qand eriydiganda yangi modda hosil bo'lmaydi, faqat molekulalar suv bo'ylab tarqaladi (fizik hodisa)."
+                        'explain': "Qand eriganda yangi modda hosil bo'lmaydi, faqat molekulalar suv bo'ylab tarqaladi (fizik hodisa)."
                     },
                     {
                         'type': 'mc',
@@ -22754,7 +22754,7 @@ SUBJECTS = [
                         'q': 'Quyidagilardan qaysi biri oddiy modda hisoblanadi?',
                         'options': [
                             'Suv (H2O)',
-                            'Karbomat gaz (CO2)',
+                            'Karbonat angidrid (CO2)',
                             'Ozon (O3)',
                             'Osh tuzi (NaCl)'
                         ],
@@ -22874,7 +22874,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Silitsiy (IV) va alyuminiy (III) ning kislorodli birikmalari formulalarini tuzing.'
+                            'prompt': 'Kremniy (IV) va alyuminiy (III) ning kislorodli birikmalari formulalarini tuzing.'
                         }
                     ]
                 }
@@ -23062,7 +23062,7 @@ SUBJECTS = [
                         'items': [
                             'Moddaning kislorod bilan birikishi — Oksidlanish deyiladi.',
                             "Agar oksidlanish issiqlik va yorug'lik ajralishi bilan tez borsa — Yonish deyiladi.",
-                            'Elementlarning kislorodli ikkilanmagan birikmalari Oksidlar deyiladi (masalan, Na2O, CuO, CO2).'
+                            'Elementlarning kislorod bilan hosil qilgan ikki elementli birikmalari Oksidlar deyiladi (masalan, Na2O, CuO, CO2).'
                         ]
                     },
                     {
@@ -23085,7 +23085,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': "Ozon (O3) va kislorod (O2) bir-biriga allotropik shakl o'zgarishlardir.",
+                        'q': "Ozon (O3) va kislorod (O2) kislorodning allotropik shakl o'zgarishlaridir.",
                         'answer': True,
                         'explain': 'Bir elementning bir nechta oddiy modda hosil qilishi allotropiya deyiladi.'
                     },
@@ -23195,7 +23195,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Vodorod bog'lanish tabiatda va tirik organizmlarda qanday ro'l o'ynaydi?"
+                            'prompt': "Vodorod bog'lanish tabiatda va tirik organizmlarda qanday rol o'ynaydi?"
                         }
                     ]
                 }
@@ -23227,7 +23227,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Indikatorlar (lakmus, fenolftalein, meitloranj) muhitni (kislotali, ishqoriy, neytral) aniqlash uchun xizmat qiladi.'
+                        'body': 'Esda tuting: Indikatorlar (lakmus, fenolftalein, metiloranj) muhitni (kislotali, ishqoriy, neytral) aniqlash uchun xizmat qiladi.'
                     }
                 ],
                 'quiz': [
@@ -23241,7 +23241,7 @@ SUBJECTS = [
                             'Rangsiz'
                         ],
                         'answer': 1,
-                        'explain': "Fenolftalein faqat ishqorlarda to'q qizil (maloina) rangga kiradi."
+                        'explain': "Fenolftalein faqat ishqorlarda to'q qizil (malina) rangga kiradi."
                     },
                     {
                         'type': 'tf',
@@ -23354,7 +23354,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Mendeleyev davriy qonunni kashf etishda qanday belgilarsiz taxminiy elementlarni (masalan, eka-silitsiy) bashorat qilganini tushuntiring.'
+                            'prompt': 'Mendeleyev davriy qonunni kashf etishda qanday qilib hali kashf etilmagan elementlarni (masalan, eka-silitsiy) bashorat qilganini tushuntiring.'
                         }
                     ]
                 }
@@ -23442,7 +23442,7 @@ SUBJECTS = [
             {
                 'slug': 'kimyoviy-boglanish-turlari',
                 'title': "Kimyoviy bog'lanish turlari: Kovalent, Ion, Metall va Vodorod bog'lanish",
-                'summary': "Elektrostaik va kovalent o'zaro ta'sirlar, nisbiy elektromanfiylik va bog'lanish mexanizmlari.",
+                'summary': "Elektrostatik va kovalent o'zaro ta'sirlar, nisbiy elektromanfiylik va bog'lanish mexanizmlari.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -23499,7 +23499,7 @@ SUBJECTS = [
                             'Elektrostatik'
                         ],
                         'answer': 1,
-                        'explain': "Azot atomi o'zining bo'sh bo me'yoriy elektron juftini beradi (donor), H+ kationi bo'sh orbital beradi (atseptor)."
+                        'explain': "Azot atomi o'zining bo'linmagan elektron juftini beradi (donor), H+ kationi bo'sh orbital beradi (atseptor)."
                     }
                 ],
                 'homework': {
@@ -23542,7 +23542,7 @@ SUBJECTS = [
                         'items': [
                             'Reaksiyadagi barcha elementlarning oksidlanish darajasini aniqlash',
                             "Oksidlanish darajasi o'zgargan elementlarni alohida yozish",
-                            'Beringan va olingan elektronlar sonini tenglashtiruvchi koeffitsientlarni topish',
+                            'Berilgan va olingan elektronlar sonini tenglashtiruvchi koeffitsientlarni topish',
                             "Asosiy tenglamaga koeffitsientlarni qo'yish va qolgan atomlarni tenglashtirish"
                         ]
                     },
@@ -23596,7 +23596,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'Cu + HNO3(kuy) -> Cu(NO3)2 + NO2 + H2O reaksiyasini elektron balans usuli bilan tenglashtiring.'
+                            'prompt': 'Cu + HNO3(kons) -> Cu(NO3)2 + NO2 + H2O reaksiyasini elektron balans usuli bilan tenglashtiring.'
                         }
                     ]
                 }
@@ -23610,7 +23610,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Eritma tushunchasi',
-                        'body': "Eritma — bir necha komponentdan iborat bo'lgan gomogen gomogen dispers sistema. U erituvchi va erigan moddadan tashkil topgan."
+                        'body': "Eritma — bir necha komponentdan iborat bo'lgan gomogen dispers sistema. U erituvchi va erigan moddadan tashkil topgan."
                     },
                     {
                         'type': 'example',
@@ -23653,7 +23653,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "2 litr eritmoda 4 mol NaOH bo'lsa, uning molyarligi nechaga teng?",
+                        'q': "2 litr eritmada 4 mol NaOH bo'lsa, uning molyarligi nechaga teng?",
                         'options': [
                             '1 M',
                             '2 M',
@@ -23691,7 +23691,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Elektrolitlar',
-                        'body': "Suvda eritilganda yoki suyaklantirilganda elektr tokini o'tkazadigan moddalar elektrolitlar deyiladi. Bunga kislotalar, ishqorlar va tuzlar kiradi. Bu nazariyani S. Arrenius yaratgan."
+                        'body': "Suvda eritilganda yoki suyuqlantirilganda elektr tokini o'tkazadigan moddalar elektrolitlar deyiladi. Bunga kislotalar, ishqorlar va tuzlar kiradi. Bu nazariyani S. Arrenius yaratgan."
                     },
                     {
                         'type': 'example',
@@ -23771,7 +23771,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Ionli almashinish reaksiyalari',
-                        'body': "Elektrolitlar eritmalari o'rtasidagi reaksiyalar ionlar o'rtasida boradi. Reaksiya axirigacha borishi uchun 3 ta shartdan biri bajarilishi kerak: Cho'kma tushishi (v), Gaz ajralishi (^), Kam dissotsilanuvchi modda (masalan, H2O) hosil bo'lishi."
+                        'body': "Elektrolitlar eritmalari o'rtasidagi reaksiyalar ionlar o'rtasida boradi. Reaksiya oxirigacha borishi uchun 3 ta shartdan biri bajarilishi kerak: Cho'kma tushishi (v), Gaz ajralishi (^), Kam dissotsilanuvchi modda (masalan, H2O) hosil bo'lishi."
                     },
                     {
                         'type': 'example',
@@ -23928,7 +23928,7 @@ SUBJECTS = [
             {
                 'slug': 'kimyoviy-muvozanat-va-le-shatelye-prinsipi',
                 'title': 'Kimyoviy muvozanat va Le Shatelye prinsipi',
-                'summary': "Qaytardigan reaksiyalar, muvozanat konstantasi (K) va tashqi omillar (bosim, harorat, konsentratsiya) ta'siri.",
+                'summary': "Qaytar reaksiyalar, muvozanat konstantasi (K) va tashqi omillar (bosim, harorat, konsentratsiya) ta'siri.",
                 'duration': 30,
                 'lesson': [
                     {
@@ -24014,7 +24014,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Galogenlar guruhining tavsifi',
-                        'body': "VII-A guruh elementlari (Flüor, Xlor, Brom, Yod) Galogenlar ('tuz tug'diruvchilar') deyiladi. Ularning tashqi elektron qavatida 7 ta elektron bo'lib (ns2 np5), kuchli oksidlovchilardir."
+                        'body': "VII-A guruh elementlari (Ftor, Xlor, Brom, Yod) Galogenlar ('tuz tug'diruvchilar') deyiladi. Ularning tashqi elektron qavatida 7 ta elektron bo'lib (ns2 np5), kuchli oksidlovchilardir."
                     },
                     {
                         'type': 'example',
@@ -24040,7 +24040,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "Qaysi galogen oddiy sharoitda suyuq holatda bo'ladi?",
                         'options': [
-                            'Flüor',
+                            'Ftor',
                             'Xlor',
                             'Brom',
                             'Yod'
@@ -24050,9 +24050,9 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': 'Flüor barcha birikmalarida faqat -1 oksidlanish darajasini namoyon etadi.',
+                        'q': 'Ftor barcha birikmalarida faqat -1 oksidlanish darajasini namoyon etadi.',
                         'answer': True,
-                        'explain': "Flüor eng elektromanfiy element bo'lgani uchun uning mukammal va yagona O.D. si -1 dir."
+                        'explain': "Ftor eng elektromanfiy element bo'lgani uchun uning yagona oksidlanish darajasi -1 dir."
                     },
                     {
                         'type': 'mc',
@@ -24112,7 +24112,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': 'Esda tuting: Konsentrlangan kislotaga suv quyilmaydi! Har doim kislotani oz-ozdan suvga qushish kerak.'
+                        'body': "Esda tuting: Konsentrlangan kislotaga suv quyilmaydi! Har doim kislotani oz-ozdan suvga qo'shish kerak."
                     }
                 ],
                 'quiz': [
@@ -24121,7 +24121,7 @@ SUBJECTS = [
                         'q': "Vodorod sulfid (H2S) gazining hidi nimaga o'xshaydi?",
                         'options': [
                             "O'tkir, sarimsoq hidli",
-                            'Achiq bodom hidli',
+                            'Achchiq bodom hidli',
                             'Sasiq tuxum hidli',
                             "Xushbo'y meva hidli"
                         ],
@@ -24192,7 +24192,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Zar suv (Tsar ximiyasi) — 1 hajm HNO3(k) va 3 hajm HCl(k) aralashmasi bo'lib, u hattoki oltin va platinani ham eritadi."
+                        'body': "Esda tuting: Zar suvi (shoh arog'i) — 1 hajm HNO3(k) va 3 hajm HCl(k) aralashmasi bo'lib, u hattoki oltin va platinani ham eritadi."
                     }
                 ],
                 'quiz': [
@@ -24206,11 +24206,11 @@ SUBJECTS = [
                             'Tetraedrik'
                         ],
                         'answer': 2,
-                        'explain': "Azot atomidagi bo'sh elektron jufti va 3 ta H atomi trigonal piramida hosil qiladi."
+                        'explain': "Azot atomidagi bo'linmagan elektron jufti va 3 ta H atomi trigonal piramida hosil qiladi."
                     },
                     {
                         'type': 'tf',
-                        'q': 'Konsentralangan HNO3 temir (Fe) va alyuminiy (Al) metallarini xona haroratida passivlashtiradi.',
+                        'q': 'Konsentrlangan HNO3 temir (Fe) va alyuminiy (Al) metallarini xona haroratida passivlashtiradi.',
                         'answer': True,
                         'explain': "Yuza qismida zich oksid pardasi hosil bo'lgani uchun xona haroratida reaksiya bormaydi."
                     },
@@ -24254,12 +24254,12 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Uglerod va uning allotropik shakllari',
-                        'body': "Uglerod (C) — organik dunyoning binosini tashkil qiluvchi element. Allotropik shakllari: Olmos (eng qattiq), Grafit (elektr o'tkazuvchi), Fulleren, Grafen, Is."
+                        'body': "Uglerod (C) — organik dunyoning asosini tashkil qiluvchi element. Allotropik shakllari: Olmos (eng qattiq), Grafit (elektr o'tkazuvchi), Fulleren, Grafen, Is."
                     },
                     {
                         'type': 'example',
                         'title': 'Uglerod oksidlari',
-                        'body': "CO (Is gazi) — hidsiz, o'ta zaharli, tuz hosil qilmaydigan oksid. CO2 (Karbomat gazi) — kislotali oksid, yonishni tutib turmaydi."
+                        'body': "CO (Is gazi) — hidsiz, o'ta zaharli, tuz hosil qilmaydigan oksid. CO2 (karbonat angidrid) — kislotali oksid, yonishni tutib turmaydi."
                     },
                     {
                         'type': 'steps',
@@ -24272,7 +24272,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: SiO2 suvda erimaydi va kislotalar bilan ta'sirlashmaydi, bundan faqat Flüorid kislotasi (HF) mustasno."
+                        'body': "Esda tuting: SiO2 suvda erimaydi va kislotalar bilan ta'sirlashmaydi, bundan faqat Ftorid kislotasi (HF) mustasno."
                     }
                 ],
                 'quiz': [
@@ -24286,11 +24286,11 @@ SUBJECTS = [
                             'H2SO4'
                         ],
                         'answer': 2,
-                        'explain': "Flüorid kislotasi (HF) shishani o'yilishida qo'llaniladi (SiO2 + 4HF -> SiF4 + 2H2O)."
+                        'explain': "Ftorid kislotasi (HF) shishaga naqsh o'yishda qo'llaniladi (SiO2 + 4HF -> SiF4 + 2H2O)."
                     },
                     {
                         'type': 'tf',
-                        'q': "Olmos va grafit ikkalasi ham uglerod atomlaridan iborat bo'lsada, ularning qattiqligi kristall panjara tuzilishiga bog'liq.",
+                        'q': "Olmos va grafit ikkalasi ham uglerod atomlaridan iborat bo'lsa-da, ularning qattiqligi kristall panjara tuzilishiga bog'liq.",
                         'answer': True,
                         'explain': 'Olmosda sp3-tetraedrik, grafitda sp2-qatlamli tuzilish mavjud.'
                     },
@@ -24298,7 +24298,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "Is gazi (CO) odam organizmiga qanday salbiy ta'sir ko'rsatadi?",
                         'options': [
-                            "Opkaga suv yig'adi",
+                            "O'pkaga suv yig'adi",
                             'Gemoglobin bilan birikib kislorod tashishni bloklaydi',
                             'Suyaklarni yemiradi',
                             "Ko'zni ko'r qiladi"
@@ -24313,14 +24313,14 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "So'ngan ohak eritmalariga (Ca(OH)2) karbomat gazi o'tkazilganda nima hodisa kuzatiladi?",
+                            'prompt': "So'ndirilgan ohak eritmasiga (Ca(OH)2) karbonat angidrid o'tkazilganda nima hodisa kuzatiladi?",
                             'answer': "Eritma loyqalanadi (CaCO3 oq cho'kmasi hosil bo'ladi).",
                             'hint': 'Ca(OH)2 + CO2 -> CaCO3 v + H2O.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Adsorbsiya hodisasi nima va faollashtirilgan uglerodning (aktivlangan ko'mir) protivogazlardagi ro'li nimada?"
+                            'prompt': "Adsorbsiya hodisasi nima va faollashtirilgan uglerodning (aktivlangan ko'mir) protivogazlardagi roli nimada?"
                         }
                     ]
                 }
@@ -24338,7 +24338,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': 'Nernst metallar aktivligi qatori',
+                        'title': 'Metallarning elektrokimyoviy kuchlanish qatori',
                         'body': "Li, K, Ba, Ca, Na, Mg, Al, Zn, Fe, Ni, Sn, Pb, (H2), Cu, Hg, Ag, Pt, Au. Chapda turgan metall o'ngdagi metallni uning tuzi eritmasidan siqib chiqaradi."
                     },
                     {
@@ -24346,13 +24346,13 @@ SUBJECTS = [
                         'title': 'Elektroliz hodisasi (Katod va Anod reaksiyalari)',
                         'items': [
                             "O'zgarmas elektr toki ta'sirida eritmada yoki suyuqlanmada boradigan OQR Elektroliz deyiladi.",
-                            'Katod (manfiy kutb): Kationlar qaytariladi (Masalan: Cu2+ + 2e -> Cu0).',
-                            'Anod (musbat kutb): Anionlar oksidlanadi (Masalan: 2Cl- - 2e -> Cl2).'
+                            'Katod (manfiy qutb): Kationlar qaytariladi (Masalan: Cu2+ + 2e -> Cu0).',
+                            'Anod (musbat qutb): Anionlar oksidlanadi (Masalan: 2Cl- - 2e -> Cl2).'
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Suvli eritmada active metallar (Li dan Al gacha) katodda qaytarilmaydi, ularning o'rniga suv H2 ajratib qaytariladi."
+                        'body': "Esda tuting: Suvli eritmada aktiv metallar (Li dan Al gacha) katodda qaytarilmaydi, ularning o'rniga suv H2 ajratib qaytariladi."
                     }
                 ],
                 'quiz': [
@@ -24418,7 +24418,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': 'Alkanlarning gometriya va umumiy formulasi',
+                        'title': 'Alkanlarning geometriyasi va umumiy formulasi',
                         'body': "Alkanlar (parafinlar) — CnH2n+2. Uglerod atomlari sp3-gibridlangan, bog' burchagi 109°28', tetraedrik tuzilishga ega."
                     },
                     {
@@ -24459,7 +24459,7 @@ SUBJECTS = [
                         'type': 'mc',
                         'q': "Metan (CH4) nitrat kislota bilan reaksiyaga kirishganda (Konovalov reaksiyasi) nima hosil bo'ladi?",
                         'options': [
-                            'Meto kislota',
+                            'Chumoli kislota',
                             'Nitrometan (CH3NO2)',
                             'Metanol',
                             'Xlormetan'
@@ -24506,7 +24506,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': "Sifat reaksiyalari (To'yinmaganlikni aniqlash)",
                         'items': [
-                            "Bromli suvni (Br2/H2O) rangsizlantirish (dibrom hosil bo'ladi)",
+                            "Bromli suvni (Br2/H2O) rangsizlantirish (dibromalkan hosil bo'ladi)",
                             "Kaliy permanganat (KMnO4) eritmasini rangsizlantirish (Vagner reaksiyasi, glikol hosil bo'ladi)"
                         ]
                     },
@@ -24518,7 +24518,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Propen metallarga HBr birikkanda asosan qaysi mahsulot hosil bo'ladi?",
+                        'q': "Propenga HBr birikkanda asosan qaysi mahsulot hosil bo'ladi?",
                         'options': [
                             '1-brompropan',
                             '2-brompropan',
@@ -24568,7 +24568,7 @@ SUBJECTS = [
             {
                 'slug': 'aromatik-uglevodorodlar-benzol',
                 'title': 'Aromatik uglevodorodlar (Arenlar). Benzol va uning gomologlari',
-                'summary': 'Benzol yadrosining elektron tuzilishi (xukkel qoidasi), almashinish va birikish reaksiyalari.',
+                'summary': 'Benzol yadrosining elektron tuzilishi (Xyukkel qoidasi), almashinish va birikish reaksiyalari.',
                 'duration': 30,
                 'lesson': [
                     {
@@ -24587,7 +24587,7 @@ SUBJECTS = [
                         'items': [
                             'Nitrolash: C6H6 + HNO3 --(H2SO4k)--> C6H5NO2 (Nitrobenzol) + H2O',
                             'Bromlash: C6H6 + Br2 --(FeBr3)--> C6H5Br + HBr',
-                            'Gidrogenlash (birikish): C6H6 + 3H2 --(Ni, t)--> C6H12 (Tsiglogeksan)'
+                            'Gidrogenlash (birikish): C6H6 + 3H2 --(Ni, t)--> C6H12 (Siklogeksan)'
                         ]
                     },
                     {
@@ -24624,7 +24624,7 @@ SUBJECTS = [
                             'Toluol'
                         ],
                         'answer': 1,
-                        'explain': 'C6H6 + 3Cl2 --(hν)--> C6H6Cl6 (Geksaxloran - kuchli insektsid).'
+                        'explain': 'C6H6 + 3Cl2 --(hν)--> C6H6Cl6 (Geksaxloran - kuchli insektitsid).'
                     }
                 ],
                 'homework': {
@@ -24667,7 +24667,7 @@ SUBJECTS = [
                         'items': [
                             'Birlamchi spirt (R-CH2OH) --[O]--> Aldegid (R-CHO)',
                             'Aldegid (R-CHO) --[O]--> Karbon kislota (R-COOH)',
-                            "Ikklamchi spirt (R-CHOH-R') --[O]--> Keton (R-CO-R')"
+                            "Ikkilamchi spirt (R-CHOH-R') --[O]--> Keton (R-CO-R')"
                         ]
                     },
                     {
@@ -24696,7 +24696,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': 'Sirka kislotaning (CH3COOH) pKshtat yoki soda (NaHCO3) bilan reaksiyasida qaysi gaz ajraladi?',
+                        'q': 'Sirka kislotaning (CH3COOH) ichimlik sodasi (NaHCO3) bilan reaksiyasida qaysi gaz ajraladi?',
                         'options': [
                             'H2',
                             'O2',
@@ -24704,7 +24704,7 @@ SUBJECTS = [
                             'CH4'
                         ],
                         'answer': 2,
-                        'explain': "Kislota va gidrokarbonat ta'sirida CO2 (karbomat gazi) kopuklanib ajraladi."
+                        'explain': "Kislota va gidrokarbonat ta'sirida CO2 (karbonat angidrid) ko'piklanib ajraladi."
                     }
                 ],
                 'homework': {
@@ -24720,7 +24720,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Fenol va Benzol molekulalaridagi atomlarning o'zaro ta'sirini (p-pi sopryajeniye) tushuntiring."
+                            'prompt': "Fenol va Benzol molekulalaridagi atomlarning o'zaro ta'sirini (p-π tutashuv) tushuntiring."
                         }
                     ]
                 }
@@ -24745,7 +24745,7 @@ SUBJECTS = [
                         'type': 'steps',
                         'title': 'Glyukozaning kimyoviy xossalari',
                         'items': [
-                            "Aldegidospirt bo'lgani uchun aldegid ham, ko'p atomli spirt xossalarini beradi.",
+                            "Aldegidospirt bo'lgani uchun aldegid, ham ko'p atomli spirt xossalarini namoyon qiladi.",
                             "Sut kislotali bijg'ish: C6H12O6 -> 2CH3-CH(OH)-COOH",
                             "Spirtli bijg'ish: C6H12O6 -> 2C2H5OH + 2CO2^"
                         ]
@@ -24819,14 +24819,14 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Peptid bog' va Oqsillar",
-                        'body': "Aminokislotalar bir-biri bilan peptit bog' (-CO-NH-) orqali birikib polipeptidlar va oqsillarni hosil qiladi."
+                        'body': "Aminokislotalar bir-biri bilan peptid bog' (-CO-NH-) orqali birikib polipeptidlar va oqsillarni hosil qiladi."
                     },
                     {
                         'type': 'steps',
                         'title': 'Oqsillarning rangli reaksiyalari',
                         'items': [
-                            "Biuet reaksiyasi: Cu(OH)2 + ishqoriy ortam -> binafsha rang (peptid bog'larni aniqlash)",
-                            'Ksantoprotein reaksiyasi: HNO3(k) + issiqlik -> sariq rang (aromatik xalqali aminokislotalarni aniqlash)'
+                            "Biuret reaksiyasi: Cu(OH)2 + ishqoriy muhit -> binafsha rang (peptid bog'larni aniqlash)",
+                            'Ksantoprotein reaksiyasi: HNO3(k) + issiqlik -> sariq rang (aromatik halqali aminokislotalarni aniqlash)'
                         ]
                     },
                     {
@@ -24849,7 +24849,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'tf',
-                        'q': 'Glytsin (NH2-CH2-COOH) kislota va ishqorlar bilan tuzlar hosil qila oladi.',
+                        'q': 'Glitsin (NH2-CH2-COOH) kislota va ishqorlar bilan tuzlar hosil qila oladi.',
                         'answer': True,
                         'explain': "Aminokislotalar amfoter bo'lgani uchun ham kislotalar, ham ishqorlar bilan reaksiyaga kirishadi."
                     },
@@ -24872,9 +24872,9 @@ SUBJECTS = [
                         {
                             'id': 't1',
                             'type': 'text',
-                            'prompt': "75 g glytsin (NH2-CH2-COOH) NaOH bilan reaksiyaga kirishganda necha gramm natriyli tuz hosil bo'ladi?",
+                            'prompt': "75 g glitsin (NH2-CH2-COOH) NaOH bilan reaksiyaga kirishganda necha gramm natriyli tuz hosil bo'ladi?",
                             'answer': '97 g',
-                            'hint': 'M(glytsin)=75 g/mol, M(Na-tuz)=97 g/mol. 1:1 munosabat.'
+                            'hint': 'M(glitsin)=75 g/mol, M(Na-tuz)=97 g/mol. 1:1 munosabat.'
                         },
                         {
                             'id': 't2',
@@ -24893,20 +24893,20 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Heterotsiklik birikmalar tushunchasi',
-                        'body': "Heterotsiklik birikmalar — halqasida uglerod atomlaridan tashqari boshqa element (azot, kislorod, oltingugurt kabi geteroatom) atomlarini saqlagan organik moddalardir. Besh a'zoli (piroll, furon, tiofen) va olti a'zoli (piridin) geterotsikllar muhim biologik va sanoat ahamiyatiga ega."
+                        'body': "Heterotsiklik birikmalar — halqasida uglerod atomlaridan tashqari boshqa element (azot, kislorod, oltingugurt kabi geteroatom) atomlarini saqlagan organik moddalardir. Besh a'zoli (piroll, furan, tiofen) va olti a'zoli (piridin) geterotsikllar muhim biologik va sanoat ahamiyatiga ega."
                     },
                     {
                         'type': 'example',
                         'title': 'Pirimidin va Purin asoslari',
-                        'body': 'Nuklein kislotalar tarkibiga kiruvchi azotli asoslar piro- va purin unumlaridir. Pirimidin hosilalari: timin (T), sitozin (C), uratsil (U). Purin hosilalari: adenin (A), guanin (G).'
+                        'body': 'Nuklein kislotalar tarkibiga kiruvchi azotli asoslar pirimidin va purin unumlaridir. Pirimidin hosilalari: timin (T), sitozin (C), uratsil (U). Purin hosilalari: adenin (A), guanin (G).'
                     },
                     {
                         'type': 'steps',
                         'title': 'Nukleotid shakllanishi bosqichlari',
                         'items': [
-                            'Azotli asos monosa xariddagi (riboza yoki dezoksiriboza) 1-uglerodga birikib nukleozid hosil qiladi.',
+                            'Azotli asos monosaxariddagi (riboza yoki dezoksiriboza) 1-uglerodga birikib nukleozid hosil qiladi.',
                             "Nukleozidning 5-uglerodidagi OH guruhiga fosfat kislota qoldig'i birikib nukleotid hosil bo'ladi.",
-                            "Nukleotidlar phosphodiefir bog'lari orqali polimerlanib DNK va RNK zanjirini hosil qiladi."
+                            "Nukleotidlar fosfodiefir bog'lari orqali polimerlanib DNK va RNK zanjirini hosil qiladi."
                         ]
                     },
                     {
@@ -24939,7 +24939,7 @@ SUBJECTS = [
                         'options': [
                             'Piroll',
                             'Piridin',
-                            'Furon',
+                            'Furan',
                             'Tiofen'
                         ],
                         'answer': 1,
@@ -24973,7 +24973,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Izomeriya turlari klassifikatsiyasi',
-                        'body': "Izomeriya ikki asosiy turga bo'linadi: Tuzilish (struktura) izomeriyasi va Fazo (stereoisomeriya) izomeriyasi. Tuzilish izomeriyasiga uglerod zanjiri, holat va sinflararo izomeriyalar kiradi."
+                        'body': "Izomeriya ikki asosiy turga bo'linadi: Tuzilish (struktura) izomeriyasi va Fazo (stereoizomeriya) izomeriyasi. Tuzilish izomeriyasiga uglerod zanjiri, holat va sinflararo izomeriyalar kiradi."
                     },
                     {
                         'type': 'example',
@@ -25040,7 +25040,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Sut kislotasi (2-gidroksipropan kislota) molekulasining xiral markazini ko'rsating va uning D- va L- enantiomerlarining proyeksion formulalarini chizib beringsiz."
+                            'prompt': "Sut kislotasi (2-gidroksipropan kislota) molekulasining xiral markazini ko'rsating va uning D- va L- enantiomerlarining proyeksion formulalarini chizib bering."
                         }
                     ]
                 }
@@ -25059,20 +25059,20 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Kompleks birikma tuzilishi',
-                        'body': '[Co(NH3)6]Cl3 birikmasida: Co3+ — markaziy ion, NH3 — neutral ligand, koordinatsion son — 6, [Co(NH3)6]3+ — ichki sfera (kation), Cl- — tashqi sfera (anion).'
+                        'body': '[Co(NH3)6]Cl3 birikmasida: Co3+ — markaziy ion, NH3 — neytral ligand, koordinatsion son — 6, [Co(NH3)6]3+ — ichki sfera (kation), Cl- — tashqi sfera (anion).'
                     },
                     {
                         'type': 'steps',
                         'title': 'Kompleks birikmalarni nomlash tartibi',
                         'items': [
                             "Kation qism birinchi, anion qism ikkinchi o'qiladi.",
-                            "Kompleks kation yoki neytral kompleksda avval ligandlar alfabit bo'yicha, keyin metall nomi va uning valentligi (oksidlanish darajasi) ko'rsatiladi.",
+                            "Kompleks kation yoki neytral kompleksda avval ligandlar alifbo bo'yicha, keyin metall nomi va uning valentligi (oksidlanish darajasi) ko'rsatiladi.",
                             "Agar kompleks anion bo'lsa, metall nomiga '-at' qo'shimchasi qo'shiladi va oksidlanish darajasi qavsda ko'rsatiladi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Ligandlarning denta-ligi (koordinatsiyalanish imkoniyati) monodentat (NH3, H2O, Cl-), bidentat (etilendiamin) va polydentat (EDTA) bo'lishi mumkin."
+                        'body': "Ligandlarning dentatligi (koordinatsiyalanish imkoniyati) monodentat (NH3, H2O, Cl-), bidentat (etilendiamin) va polidentat (EDTA) bo'lishi mumkin."
                     }
                 ],
                 'quiz': [
@@ -25120,7 +25120,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Kaloniyalash va xelat hosil bo'lish hodisasini EDTA komplekslanishi misolida tushuntiring hamda tibbiyotdagi ahamiyatini ko'rsating."
+                            'prompt': "Xelat hosil bo'lish hodisasini EDTA komplekslanishi misolida tushuntiring hamda tibbiyotdagi ahamiyatini ko'rsating."
                         }
                     ]
                 }
@@ -25134,7 +25134,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Termodinamikaning birinchi va ikkinchi qonunlari',
-                        'body': "Termodinamika reaksiyalarning energiyaviy o'zgarishlarini va o'z-o me'yorda borish imkoniyatini o'rganadi. Entalpiya (ΔH) — issiqlik effekti, Entropiya (ΔS) — sistemaning tartibsizlik darajasi ko'rsatkichi."
+                        'body': "Termodinamika reaksiyalarning energiyaviy o'zgarishlarini va o'z-o'zidan borish imkoniyatini o'rganadi. Entalpiya (ΔH) — issiqlik effekti, Entropiya (ΔS) — sistemaning tartibsizlik darajasi ko'rsatkichi."
                     },
                     {
                         'type': 'example',
@@ -25147,7 +25147,7 @@ SUBJECTS = [
                         'items': [
                             'ΔG = ΔH - T*ΔS tenglamasi ishlatiladi.',
                             "Agar ΔG < 0 bo'lsa, reaksiya berilgan haroratda o'z-o'zidan (spontan) sodir bo'ladi.",
-                            "Agar ΔG > 0 bo'lsa, reaksiya o me'yorida o'z-o'zidan bormaydi (teskari reaksiya boradi).",
+                            "Agar ΔG > 0 bo'lsa, reaksiya o'z-o'zidan bormaydi (teskari reaksiya boradi).",
                             "Agar ΔG = 0 bo'lsa, sistema kimyoviy muvozanat holatida bo'ladi."
                         ]
                     },
@@ -25209,7 +25209,7 @@ SUBJECTS = [
             {
                 'slug': 'eritmalarning-kolligativ-xossalari-va-osmos',
                 'title': 'Eritmalarning kolligativ xossalari va osmos',
-                'summary': "Suyuq eritmalarning zarrachalar soniga bog'liq bo'lgan xossalari: Raul qonunlari, ebullioskopiya, krioskopiya va osmatik bosim.",
+                'summary': "Suyuq eritmalarning zarrachalar soniga bog'liq bo'lgan xossalari: Raul qonunlari, ebullioskopiya, krioskopiya va osmotik bosim.",
                 'duration': 20,
                 'lesson': [
                     {
@@ -25219,8 +25219,8 @@ SUBJECTS = [
                     },
                     {
                         'type': 'example',
-                        'title': 'Raul qonunlari va osmatik bosim',
-                        'body': "1-Raul qonuni: Eritma ustidagi erituvi bug' bosimining nisbiy pasayishi erigan moddaning molyar ulushiga teng. Vant-Goff tenglamasi bo'yicha osmatik bosim: Posm = C * R * T (noelektrolitlar uchun)."
+                        'title': 'Raul qonunlari va osmotik bosim',
+                        'body': "1-Raul qonuni: Eritma ustidagi erituvchi bug' bosimining nisbiy pasayishi erigan moddaning molyar ulushiga teng. Vant-Goff tenglamasi bo'yicha osmotik bosim: Posm = C * R * T (noelektrolitlar uchun)."
                     },
                     {
                         'type': 'steps',
@@ -25240,7 +25240,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Qaysi 0.1 M eritmaning osmatik bosimi eng yuqori bo'ladi?",
+                        'q': "Qaysi 0.1 M eritmaning osmotik bosimi eng yuqori bo'ladi?",
                         'options': [
                             'Glyukoza (C6H12O6)',
                             'Natriy xlorid (NaCl)',
@@ -25282,7 +25282,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Tibbiyotda qo me'yordagi fiziologik eritma (0.9% li NaCl) tushunchasi va gipotonik hamda gipertonik eritmalarning qon hujayralariga (eritrotsitlarga) ta'sirini izohlang."
+                            'prompt': "Tibbiyotda qo'llaniladigan fiziologik eritma (0.9% li NaCl) tushunchasi va gipotonik hamda gipertonik eritmalarning qon hujayralariga (eritrotsitlarga) ta'sirini izohlang."
                         }
                     ]
                 }
@@ -25309,7 +25309,7 @@ SUBJECTS = [
                         'items': [
                             "Turli haroratlarda (T) reaksiya tezlik konstantasi (k) tajribada o'lchanadi.",
                             "ln(k) ning 1/T ga bog'liqlik grafigi chiziladi (Arrenius grafigi).",
-                            "Tog'ri chiziqning og'ish burchagi tangensi (-Ea/R) ga teng bo'ladi.",
+                            "To'g'ri chiziqning og'ish burchagi tangensi (-Ea/R) ga teng bo'ladi.",
                             'Ushbu qiymatdan aktivlanish energiyasi Ea = - tg(alpha) * R topiladi.'
                         ]
                     },
@@ -25321,7 +25321,7 @@ SUBJECTS = [
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Aktivlanish energiyasi (Ea) qanchalik kichik bo'lsa, reaksiya tezligi qanday bo me'yorda bo'ladi?",
+                        'q': "Aktivlanish energiyasi (Ea) qanchalik kichik bo'lsa, reaksiya tezligi qanday bo'ladi?",
                         'options': [
                             'Shunchalik sekin boradi',
                             'Shunchalik tez boradi',
@@ -25339,7 +25339,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'mc',
-                        'q': "Vant-Goff qoidasiga ko'ra harorat har 10 gradusga oshirilganda reaksiya tezligi 2-4 marta ortadi. Harorat harorat koeffitsienti gamma=3 bo'lganda 30 gradusga oshsa, tezlik necha marta ortadi?",
+                        'q': "Vant-Goff qoidasiga ko'ra harorat har 10 gradusga oshirilganda reaksiya tezligi 2-4 marta ortadi. Harorat koeffitsienti gamma=3 bo'lganda 30 gradusga oshsa, tezlik necha marta ortadi?",
                         'options': [
                             '9',
                             '27',
@@ -25525,7 +25525,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "Arxeologiyada radiouglrodli tanishuv (C-14 metodi) tamoyilini va uning tirik va o'lik organizmlardagi uglerod muvozanatiga bog'liqligini tushuntiring."
+                            'prompt': "Arxeologiyada radiouglerodli sanalash (C-14 metodi) tamoyilini va uning tirik va o'lik organizmlardagi uglerod muvozanatiga bog'liqligini tushuntiring."
                         }
                     ]
                 }
@@ -25551,14 +25551,14 @@ SUBJECTS = [
                         'title': "Titrimetrik tahlilni o'tkazish tartibi",
                         'items': [
                             "Byuretkaga ma'lum konsentratsiyali standart eritma (titrant) quyiladi.",
-                            'Elenmeyyer kolbasiga tekshirilayotgan eritma va 2-3 tomchi indikator solinadi.',
+                            'Erlenmeyer kolbasiga tekshirilayotgan eritma va 2-3 tomchi indikator solinadi.',
                             "Titrant kolbaga tomchilab qo'shiladi va indikator rangi o'zgarguncha aralashtiriladi.",
                             "Sarflangan titrant hajmi byuretkadan aniq (0.05 ml aniqlikda) o'qib olinadi va konsentratsiya hisoblanadi."
                         ]
                     },
                     {
                         'type': 'note',
-                        'body': "Zamonaviy analitik kimyoda UB-Ko'rinadigan Spektrofotometriya va Yuqori Samcontentli Suyuqlik Xromatografiyasi (HPLC) aralashmalarni ajratish va miqdorini aniqlashda asosiy o'rin tutadi."
+                        'body': "Zamonaviy analitik kimyoda UB va ko'rinadigan spektrofotometriya hamda yuqori samarali suyuqlik xromatografiyasi (HPLC) aralashmalarni ajratish va miqdorini aniqlashda asosiy o'rin tutadi."
                     }
                 ],
                 'quiz': [
@@ -25625,7 +25625,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': "Bog'lovchi va Bo'shashtiruvchi orbitalar",
-                        'body': "Ikki atom orbitalining qo'shilishidan ikkita MO hosil bo me'yorda bo'ladi: energiyasi pastroq bo'lgan 'bog'lovchi MO' (sigma, pi) va energiyasi yuqoriroq bo'lgan 'bo'shashtiruvchi MO' (sigma*, pi*)."
+                        'body': "Ikki atom orbitalining qo'shilishidan ikkita MO hosil bo'ladi: energiyasi pastroq bo'lgan 'bog'lovchi MO' (sigma, pi) va energiyasi yuqoriroq bo'lgan 'bo'shashtiruvchi MO' (sigma*, pi*)."
                     },
                     {
                         'type': 'steps',
@@ -25639,13 +25639,13 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Kislorod molekulasi (O2) VBU bo'yicha diamagnit ko'rinsada, amalda paramagnitdir. Buni faqat MOU orqali pi* bo'shashtiruvchi orbitalardagi 2 ta toqlangan elektron mavjudligi bilan tushuntirish mumkin."
+                        'body': "Kislorod molekulasi (O2) VBU bo'yicha diamagnit ko'rinsa-da, amalda paramagnitdir. Buni faqat MOU orqali pi* bo'shashtiruvchi orbitalardagi 2 ta toqlangan elektron mavjudligi bilan tushuntirish mumkin."
                     }
                 ],
                 'quiz': [
                     {
                         'type': 'mc',
-                        'q': "Geli gipotetik molekulasi He2 uchun bog' karraligi nechaga teng va u mavjud bo'ladimi?",
+                        'q': "Geliy gipotetik molekulasi He2 uchun bog' karraligi nechaga teng va u mavjud bo'ladimi?",
                         'options': [
                             '1, mavjud',
                             '0.5, mavjud',
