@@ -254,7 +254,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Tengsizliklar va uning xossalari',
-                        'body': "Tengsizlikning ikkala qismini bir xil musbat songa ko'paytirsa yoki bo me xos tengsizlik ishorasi o'zgarmaydi. Manfiy songa ko'paytirilsa ishora qarama-qarshisiga o'zgaradi."
+                        'body': "Tengsizlikning ikkala qismini bir xil musbat songa ko'paytirsa yoki bo'lsa, tengsizlik ishorasi o'zgarmaydi. Manfiy songa ko'paytirilsa yoki bo'linsa, ishora qarama-qarshisiga o'zgaradi."
                     },
                     {
                         'type': 'example',
@@ -1692,7 +1692,7 @@ SUBJECTS = [
             },
             {
                 'slug': 'ketma-ketlik-va-funksiya-limiti',
-                'title': "Ketma-ketlik va funksiyaning me'yori (limiti)",
+                'title': 'Ketma-ketlik va funksiyaning limiti',
                 'summary': 'Sonli ketma-ketlik va funksiya limiti tushunchasi, limitlar ustida amallar va ajoyib limitlar.',
                 'duration': 30,
                 'lesson': [
@@ -2217,7 +2217,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Ikki nolga teng bo'lmagan vektorning skalyar ko'paytmasi 0 ga teng bo'lsa, ular o'zaro perpendikulyar.",
                         'answer': True,
-                        'explain': "cos(90°) = 0 bo'lgani uchun skalyar ko'paytma 0 bo me bo'ladi."
+                        'explain': "cos(90°) = 0 bo'lgani uchun skalyar ko'paytma 0 ga teng bo'ladi."
                     },
                     {
                         'type': 'mc',
@@ -2432,7 +2432,7 @@ SUBJECTS = [
                         'items': [
                             "Tenglamani y' + P(x)y = Q(x) ko'rinishiga keltirish.",
                             "Yechimni y = u(x) * v(x) ko'rinishida izlash.",
-                            "y' = u'v + uv' o'rniga qo'yib, u'(v) + u(v' + P(x)v) = Q(x) ko mezoniga keltirish.",
+                            "y' = u'v + uv' o'rniga qo'yib, u'v + u(v' + P(x)v) = Q(x) ko'rinishga keltirish.",
                             "v' + P(x)v = 0 tenglikdan v(x) funksiyani topish.",
                             "Topilgan v(x) ni o'rniga qo'yib, u(x) ni integrallash orqali topish va y = u*v yechimni yozish."
                         ]
@@ -2562,26 +2562,26 @@ SUBJECTS = [
                             'type': 'text',
                             'prompt': "y'' - 4y' + 4y = 0 tenglamaning umumiy yechimini toping.",
                             'answer': 'y = (C1 + C2*x) * e^(2x)',
-                            'hint': 'k² - 4k + 4 = 0 tenglama k1 = k2 = 2 karragali ildizga ega.'
+                            'hint': 'k² - 4k + 4 = 0 tenglama k1 = k2 = 2 karrali ildizga ega.'
                         },
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': "y'' + y = x tenglamaning bir jinsli bo'lmagan xususiy yechimini nomalum koeffitsientlar usulida toping va umumiy yechimni yozing."
+                            'prompt': "y'' + y = x tenglamaning bir jinsli bo'lmagan xususiy yechimini noma'lum koeffitsientlar usulida toping va umumiy yechimni yozing."
                         }
                     ]
                 }
             },
             {
                 'slug': 'kop-ozgaruvchili-funksiyalar-xususiy-hosilalar',
-                'title': "Ko'p o mezonli funksiyalar va xususiy hosilalar",
+                'title': "Ko'p o'zgaruvchili funksiyalar va xususiy hosilalar",
                 'summary': "Ikki va undan ortiq o'zgaruvchiga bog'liq funksiyalar, ularning xususiy hosilalari hamda to'liq differensiali.",
                 'duration': 20,
                 'lesson': [
                     {
                         'type': 'text',
                         'title': "Ko'p o'zgaruvchili funksiya va xususiy hosila tushunchasi",
-                        'body': "Agar D sohadagi har bir (x, y) juftlikka biror z son mos qo'yilgan bo'lsa, z = f(x, y) ikki o'zgaruvchili funksiya berilgan deyiladi. z funksiyadan x bo'yicha xususiy hosila (∂z/∂x yoki f'_x) olaganda y o'zgarmas (konstanta) deb qaraladi. Xuddi shunday, y bo'yicha hosilada x o'zgarmas deb olinadi."
+                        'body': "Agar D sohadagi har bir (x, y) juftlikka biror z son mos qo'yilgan bo'lsa, z = f(x, y) ikki o'zgaruvchili funksiya berilgan deyiladi. z funksiyadan x bo'yicha xususiy hosila (∂z/∂x yoki f'_x) olinganda y o'zgarmas (konstanta) deb qaraladi. Xuddi shunday, y bo'yicha hosilada x o'zgarmas deb olinadi."
                     },
                     {
                         'type': 'example',
@@ -2655,7 +2655,7 @@ SUBJECTS = [
             {
                 'slug': 'ikki-va-uch-karrali-integrallar',
                 'title': 'Ikki karrali va uch karrali integrallar',
-                'summary': "Tekis D soha va fazoviy V hajm bo'yicha integrallash, olchamlarni va hajmlarni hisoblash.",
+                'summary': "Tekis D soha va fazoviy V hajm bo'yicha integrallash, yuzalar va hajmlarni hisoblash.",
                 'duration': 25,
                 'lesson': [
                     {
@@ -2699,7 +2699,7 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Qutb koordinatalar sistemasiga o'tganda dx dy o'rniga r dr dφ yoziladi.",
                         'answer': True,
-                        'explain': "To'g'ri, r ko'paytuvchisi (Yakobi detreminanti) mavjud."
+                        'explain': "To'g'ri, r ko'paytuvchisi (Yakobi determinanti) mavjud."
                     },
                     {
                         'type': 'mc',
@@ -2721,8 +2721,8 @@ SUBJECTS = [
                             'id': 't1',
                             'type': 'text',
                             'prompt': 'D: 0 ≤ x ≤ 2, 0 ≤ y ≤ 3 soha uchun ∬_D 6x y² dx dy integralni hisoblang.',
-                            'answer': '36',
-                            'hint': "∫_0^2 2x dx * ∫_0^3 3y² dy ko'rinishida ko'paytmaga ajratib hisoblashingiz mumkin: [x²]_0^2 * [y³]_0^3 = 4 * 27 = 108? Qayta tekshiring: 6 * (∫ x dx)*(∫ y² dy) = 6 * (2) * (9) = 108 yoki 36."
+                            'answer': '108',
+                            'hint': "Integralni ko'paytmaga ajrating: 6 * (∫_0^2 x dx) * (∫_0^3 y² dy) = 6 * 2 * 9 = 108."
                         },
                         {
                             'id': 't2',
@@ -2741,7 +2741,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': 'Sonli qatorlar va ularning yaqinlashishi',
-                        'body': "a1 + a2 + a3 + ... + an + ... cheksiz yig'indi sonli qator deyiladi. Qatorning dastlabki n ta hadi yig'indisi S_n xususiy yig'indi deyiladi. Agar lim (n->∞) S_n = S (chekli son) bo mezon bajarilsa, qator yaqinlashuvchi deyiladi va S qatorning yig'indisi deyiladi."
+                        'body': "a1 + a2 + a3 + ... + an + ... cheksiz yig'indi sonli qator deyiladi. Qatorning dastlabki n ta hadi yig'indisi S_n xususiy yig'indi deyiladi. Agar lim (n->∞) S_n = S (chekli son) bo'lsa, qator yaqinlashuvchi deyiladi va S qatorning yig'indisi deyiladi."
                     },
                     {
                         'type': 'example',
@@ -2867,7 +2867,7 @@ SUBJECTS = [
                         'options': [
                             'Faqat juft darajalar',
                             'Faqat toq darajalar',
-                            'Barcha burchak darajalar',
+                            'Barcha natural darajalar',
                             'Faqat tub darajalar'
                         ],
                         'answer': 0,
@@ -2887,7 +2887,7 @@ SUBJECTS = [
                         {
                             'id': 't2',
                             'type': 'open',
-                            'prompt': 'ln(1 + x) funksiyasining Makloren qatoriga yoyilmasini va uning yaqinlashish radiosini toping.'
+                            'prompt': 'ln(1 + x) funksiyasining Makloren qatoriga yoyilmasini va uning yaqinlashish radiusini toping.'
                         }
                     ]
                 }
@@ -2981,7 +2981,7 @@ SUBJECTS = [
                     {
                         'type': 'text',
                         'title': "Xos qiymat va xos vektor ta'rifi",
-                        'body': "A kvadratchali matritsa berilgan bo'lsin. Agar noldan farqli v vektor va λ son uchun A v = λ v tenglik bajarilsa, λ soni A matritsaning xos qiymati, v esa ushbu xos qiymatga mos keluvchi xos vektori deyiladi."
+                        'body': "A kvadrat matritsa berilgan bo'lsin. Agar noldan farqli v vektor va λ son uchun A v = λ v tenglik bajarilsa, λ soni A matritsaning xos qiymati, v esa ushbu xos qiymatga mos keluvchi xos vektori deyiladi."
                     },
                     {
                         'type': 'example',
@@ -2999,7 +2999,7 @@ SUBJECTS = [
                     },
                     {
                         'type': 'note',
-                        'body': "Esda tuting: Matritsa xos qiymatlarining yig'indisi uning iziga (iz / trace - asosiy dioganal elementlar yig'indisiga), ko'paytmasi esa matritsa determinantiga teng."
+                        'body': "Esda tuting: Matritsa xos qiymatlarining yig'indisi uning iziga (iz / trace - bosh diagonal elementlari yig'indisiga), ko'paytmasi esa matritsa determinantiga teng."
                     }
                 ],
                 'quiz': [
@@ -3019,11 +3019,11 @@ SUBJECTS = [
                         'type': 'tf',
                         'q': "Xos vektor nol vektor bo'lishi mumkin.",
                         'answer': False,
-                        'explain': "Ta'rifga ko mezon xos vektor har doim nolmas (v ≠ 0) bo'lishi kerak."
+                        'explain': "Ta'rifga ko'ra xos vektor har doim nolmas (v ≠ 0) bo'lishi kerak."
                     },
                     {
                         'type': 'mc',
-                        'q': 'A = [2 0; 0 5] diogonal matritsaning xos qiymatlari qaysilar?',
+                        'q': 'A = [2 0; 0 5] diagonal matritsaning xos qiymatlari qaysilar?',
                         'options': [
                             '2 va 5',
                             '0 va 2',
@@ -3031,11 +3031,11 @@ SUBJECTS = [
                             '7 va 10'
                         ],
                         'answer': 0,
-                        'explain': "Diogonal matritsaning xos qiymatlari uning asosiy dioganalidagi elementlarining o'ziga teng: λ1 = 2, λ2 = 5."
+                        'explain': "Diagonal matritsaning xos qiymatlari uning bosh diagonalidagi elementlarning o'ziga teng: λ1 = 2, λ2 = 5."
                     }
                 ],
                 'homework': {
-                    'intro': 'Kvadratik matritsalarning xos qiymatlari va xos vektorlarini toping.',
+                    'intro': 'Kvadrat matritsalarning xos qiymatlari va xos vektorlarini toping.',
                     'tasks': [
                         {
                             'id': 't1',
@@ -3066,7 +3066,7 @@ SUBJECTS = [
                     {
                         'type': 'example',
                         'title': 'Asosiy sirtlarning kanonik tenglamalari',
-                        'body': '1) Ellipsoid: x²/a² + y²/b² + z²/c² = 1\n2) Bir pallali giperboloid: x²/a² + y²/b² - z²/c² = 1\n3) Ikki pallali giperboloid: x²/a² + y²/b² - z²/c² = -1\n4) Elliptik paraboloid: z = x²/a² + y²/b²\n5) Giperbolik paraboloid (egar simon sirt): z = x²/a² - y²/b²'
+                        'body': '1) Ellipsoid: x²/a² + y²/b² + z²/c² = 1\n2) Bir pallali giperboloid: x²/a² + y²/b² - z²/c² = 1\n3) Ikki pallali giperboloid: x²/a² + y²/b² - z²/c² = -1\n4) Elliptik paraboloid: z = x²/a² + y²/b²\n5) Giperbolik paraboloid (egarsimon sirt): z = x²/a² - y²/b²'
                     },
                     {
                         'type': 'steps',
@@ -3074,7 +3074,7 @@ SUBJECTS = [
                         'items': [
                             "Sirt tenglamasiga z = h (o'zgarmas) qiymatni qo'yish.",
                             "Hosil bo'lgan z=h tekislikdagi kesim chizig'i (ellips, giperbola yoki parabola) tenglamasini olish.",
-                            "Har xil h balandliklar uchun kesimlarni tahlil qilib, sirtning фазовий ko'rinishini tasavvur qilish."
+                            "Har xil h balandliklar uchun kesimlarni tahlil qilib, sirtning fazoviy ko'rinishini tasavvur qilish."
                         ]
                     },
                     {
