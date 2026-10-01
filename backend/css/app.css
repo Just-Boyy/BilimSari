@@ -2264,3 +2264,24 @@ a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
 .marafon-tarix-ichi .marafon-men.golib { margin: 0 0 10px; }
 .reyting-qator .ism.ism-ustun { flex-wrap: wrap; row-gap: 2px; }
 .reyting-qator .ism.ism-ustun .marafon-sovrin-kichik { flex-basis: 100%; }
+
+/* ── Avatar atrofidagi nishonlar (o'z profili va boshqa o'quvchi profili) ── */
+.avatar-orbita { position: relative; width: 84px; margin: 0 auto 12px; }
+.yutuq-belgi.orbita-nishon {
+  position: absolute; left: 50%; top: 50%;
+  width: var(--s); height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  padding: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 0 var(--d-soya, #b45309), 0 6px 14px rgba(15, 23, 42, .18);
+  cursor: pointer;
+  transform: translate(calc(var(--x) * var(--om, 1)), calc(var(--y) * var(--om, 1)));
+  animation: orbitaKir .45s cubic-bezier(.2, 1.4, .4, 1) var(--d) backwards,
+             orbitaSuz 3.4s ease-in-out calc(var(--d) + .45s) infinite alternate;
+}
+.yutuq-belgi.orbita-nishon svg { width: 56%; height: 56%; }
+@keyframes orbitaKir { from { opacity: 0; scale: .3; } }
+@keyframes orbitaSuz { to { transform: translate(calc(var(--x) * var(--om, 1)), calc(var(--y) * var(--om, 1) - 6px)); } }
+/* Ramka bo'lsa — nishonlar tikanlardan tashqariroqqa suriladi */
+.avatar-orbita.ramkali-orbita { --om: 1.12; margin-top: 8px; margin-bottom: 10px; }
+.avatar-orbita .ramkali { display: grid; }

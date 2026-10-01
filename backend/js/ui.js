@@ -377,6 +377,35 @@
       (havolasiz ? '</span>' : '</a>') + (amallar ? '<span class="dost-amal">' + amallar + '</span>' : '') + '</div>';
   }
 
+  // Avatar atrofidagi nishonlar (Telegram sovg'alari kabi suzib turadi): o'quvchi
+  // Sozlamalarda tanlaganlari, tanlanmagan bo'lsa — eng so'nggi olinganlari.
+  // Joylar avatar markaziga nisbatan: x, y, o'lcham — birinchi nishon eng katta joyda.
+  var ORBITA = [
+    [-72, -30, 36], [74, -26, 34], [-104, 8, 30], [104, 12, 30], [-78, 36, 24], [80, 38, 24],
+  ];
+  /** el — .avatar-orbita; items — nishonlar (olinganlari: unlocked yoki unlocked_ms); tanlangan — kalitlar. */
+  function orbita(el, items, tanlangan) {
+    if (!el) return;
+    el.querySelectorAll('.orbita-nishon').forEach(function (b) { b.remove(); });
+    var olinganmi = function (a) { return a.unlocked === undefined ? !!a.unlocked_ms : !!a.unlocked; };
+    var byKey = {};
+    (items || []).forEach(function (a) { if (olinganmi(a)) byKey[a.key] = a; });
+    var tanlov = (tanlangan || []).map(function (k) { return byKey[k]; }).filter(Boolean);
+    var olingan = tanlov.length ? tanlov
+      : (items || []).filter(olinganmi).sort(function (p, q) { return q.unlocked_ms - p.unlocked_ms; });
+    olingan.slice(0, ORBITA.length).forEach(function (a, i) {
+      var j = ORBITA[i];
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'yutuq-belgi orbita-nishon d-' + daraja(a.tier);
+      b.style.cssText = '--x:' + j[0] + 'px;--y:' + j[1] + 'px;--s:' + j[2] + 'px;--d:' + (i * 0.12).toFixed(2) + 's';
+      b.setAttribute('aria-label', 'Nishon: ' + a.title);
+      b.innerHTML = nishon(a.icon);
+      b.onclick = function () { xabar(a.title + ' — ' + a.desc); };
+      el.appendChild(b);
+    });
+  }
+
   /** Boshqa o'quvchi profili sahifasi (o'ziniki — profile.html). */
   function profilYoli(uid, men) {
     return men ? 'profile.html' : 'foydalanuvchi.html?id=' + encodeURIComponent(uid);
@@ -515,6 +544,7 @@
     ramkali: ramkali,
     profilYoli: profilYoli,
     oldin: oldin,
+    orbita: orbita,
     dostQator: dostQator,
     qatorTeg: qatorTeg,
     qatorYop: qatorYop,

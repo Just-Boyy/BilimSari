@@ -109,7 +109,8 @@
     document.getElementById('ustkiIzoh').textContent = p.rank ? p.rank + "-o'rin reytingda" : "O'quvchi profili";
     tana.innerHTML =
       '<section class="fp-bosh">' +
-        '<div class="fp-avatar">' + UI.ramkali(av, pr.active && pr.frame) + '</div>' +
+        '<div class="fp-avatar"><div class="avatar-orbita' + (pr.active && pr.frame ? ' ramkali-orbita' : '') + '" id="fpOrbita">' +
+          UI.ramkali(av, pr.active && pr.frame) + '</div></div>' +
         '<h1><span>' + UI.esc(p.name) + '</span>' + UI.emoji(pr.active && pr.emoji) + '</h1>' +
         (pr.active ? '<p style="margin:6px 0 2px"><span class="premium-pill">' + UI.nishon('crown') + '<span>Bilim Premium</span></span></p>' : '') +
         '<span class="fp-dostlar-soni">' + p.friends_count + ' ' + I18N.t("do'st") + '</span>' +
@@ -145,6 +146,8 @@
       '</section>' +
       '<button class="matn-tugma fp-shikoyat" type="button" id="shikoyatBtn">Shikoyat qilish</button>';
     dostChiz(p);
+    // O'quvchi avatar atrofiga tanlagan nishonlar (o'z profilidagi kabi)
+    UI.orbita(document.getElementById('fpOrbita'), (p.badges && p.badges.items) || [], (p.badges && p.badges.pinned) || []);
     document.getElementById('shikoyatBtn').onclick = function () { shikoyatOyna(p); };
   }
 

@@ -14,26 +14,6 @@
     width: 84px; height: 84px; font-size: 2rem; margin: 0 auto;
   }
 
-  /* Avatar atrofidagi nishonlar (Telegram profilidagi sovg'alar kabi) */
-  .avatar-orbita { position: relative; width: 84px; margin: 0 auto 12px; }
-  .yutuq-belgi.orbita-nishon {
-    position: absolute; left: 50%; top: 50%;
-    width: var(--s); height: var(--s);
-    margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
-    padding: 0;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 0 var(--d-soya, #b45309), 0 6px 14px rgba(15, 23, 42, .18);
-    cursor: pointer;
-    transform: translate(calc(var(--x) * var(--om, 1)), calc(var(--y) * var(--om, 1)));
-    animation: orbitaKir .45s cubic-bezier(.2, 1.4, .4, 1) var(--d) backwards,
-               orbitaSuz 3.4s ease-in-out calc(var(--d) + .45s) infinite alternate;
-  }
-  .yutuq-belgi.orbita-nishon svg { width: 56%; height: 56%; }
-  @keyframes orbitaKir { from { opacity: 0; scale: .3; } }
-  @keyframes orbitaSuz { to { transform: translate(calc(var(--x) * var(--om, 1)), calc(var(--y) * var(--om, 1) - 6px)); } }
-  /* Ramka bo'lsa — nishonlar tikanlardan tashqariroqqa suriladi */
-  .avatar-orbita.ramkali-orbita { --om: 1.12; margin-top: 8px; margin-bottom: 10px; }
-  .avatar-orbita .ramkali { display: grid; }
 
   /* Yuqori o'ng burchakdagi Sozlamalar tugmasi */
   .profil-shapka { position: relative; }
@@ -178,32 +158,8 @@
     orbitaChiz(y.items, y.pinned || []);
   });
 
-  // Avatar atrofidagi nishonlar (Telegram sovg'alari kabi suzib turadi): Sozlamalarda
-  // tanlanganlari, tanlanmagan bo'lsa — eng so'nggi olinganlari.
-  // Joylar avatar markaziga nisbatan: x, y, o'lcham — birinchi nishon eng katta joyda.
-  var ORBITA = [
-    [-72, -30, 36], [74, -26, 34], [-104, 8, 30], [104, 12, 30], [-78, 36, 24], [80, 38, 24],
-  ];
   function orbitaChiz(items, tanlangan) {
-    var byKey = {};
-    items.forEach(function (a) { byKey[a.key] = a; });
-    var olingan = tanlangan.length
-      ? tanlangan.map(function (k) { return byKey[k]; }).filter(Boolean)
-      : items.filter(function (a) { return a.unlocked; })
-          .sort(function (p, q) { return q.unlocked_ms - p.unlocked_ms; });
-    olingan = olingan.slice(0, ORBITA.length);
-    var orbita = document.getElementById('avatarOrbita');
-    olingan.forEach(function (a, i) {
-      var j = ORBITA[i];
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'yutuq-belgi orbita-nishon d-' + UI.daraja(a.tier);
-      b.style.cssText = '--x:' + j[0] + 'px;--y:' + j[1] + 'px;--s:' + j[2] + 'px;--d:' + (i * 0.12).toFixed(2) + 's';
-      b.setAttribute('aria-label', 'Nishon: ' + a.title);
-      b.innerHTML = UI.nishon(a.icon);
-      b.onclick = function () { UI.xabar(a.title + ' — ' + a.desc); };
-      orbita.appendChild(b);
-    });
+    UI.orbita(document.getElementById('avatarOrbita'), items, tanlangan);
   }
 
   // ── Do'stlar ──
