@@ -2,6 +2,7 @@
 """Production: do'stlar — qidiruv, so'rov, qabul, reyting, lenta, o'yinga chaqirish, shikoyat, admin.
 Ikki sinov o'quvchisi yaratiladi va oxirida o'chiriladi."""
 import os
+import re
 
 import sys
 
@@ -44,6 +45,8 @@ try:
                                                                   'count': 5, 'max_players': 2, 'public': False}, timeout=30).json()
     r = requests.post(B + '/api/friends/invite', headers=ha, json={'user_id': b, 'code': room['code']}, timeout=30).json()
     print('chaqiruv:', r.get('ok'), '| B da:', len(requests.get(B + '/api/friends/invites', headers=hb, timeout=30).json()['invites']))
+    lob = requests.get(B + '/api/games/lobby', headers=hb, timeout=30).json()
+    print("B lobbysida 'Sizni chaqirishdi':", [(i['from']['name'], i['game'], i['code'] == room['code']) for i in lob.get('invites') or []])
     requests.post(B + f"/api/games/rooms/{room['code']}/leave", headers=ha, timeout=30)
     r = requests.post(B + '/api/friends/report', headers=hb, json={'user_id': a, 'reason': 'boshqa', 'note': 'prod sinov'}, timeout=30).json()
     print('shikoyat:', r.get('ok'))
@@ -53,8 +56,8 @@ try:
     if mine:
         print('dismiss:', requests.post(B + f"/api/admin/reports/{mine[0]['id']}/dismiss", headers=H, timeout=30).json().get('ok'))
     print('sahifa:', requests.get(B + '/dostlar.html', timeout=30).status_code,
-          '| sw v38:', 'bilimsari-v38' in requests.get(B + '/sw.js', timeout=30).text,
-          '| G.V 14:', "G.V = '14'" in requests.get(B + '/js/games/core.js', timeout=30).text)
+          '| sw:', (re.search(r"bilimsari-v\d+", requests.get(B + '/sw.js', timeout=30).text) or [''])[0],
+          '| chaqiruv oynasi (ui.js):', 'chaqiruvKuzat' in requests.get(B + '/js/ui.js', timeout=30).text)
 finally:
     for u in ids:
         print("sinov o'quvchisi o'chirildi:", u, requests.delete(B + f'/api/admin/users/{u}', headers=H, timeout=30).status_code)
