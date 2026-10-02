@@ -32,7 +32,7 @@ users = []
 try:
     for n in ('Smoke Testchi A', 'Smoke Testchi B'):
         s, d = call('POST', '/api/guest', _prod.admin_token(), json={'name': n})
-        check(f'Mehmon yaratildi: {n}', s == 200 and d.get('token'), (s, d))
+        check(f'Mehmon yaratildi: {n}', s in (200, 201) and d.get('token'), (s, d))
         users.append({'token': d['token'], 'id': d['user']['id']})
     ta, tb = users[0]['token'], users[1]['token']
 

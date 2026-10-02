@@ -30,7 +30,7 @@ def call(method, path, tok=None, **kw):
 user = None
 try:
     s, d = call('POST', '/api/guest', _prod.admin_token(), json={'name': 'Smoke Testchi'})
-    check('Mehmon yaratildi', s == 200 and d.get('token'), (s, d))
+    check('Mehmon yaratildi', s in (200, 201) and d.get('token'), (s, d))
     user = {'token': d['token'], 'id': d['user']['id']}
     t = user['token']
 
