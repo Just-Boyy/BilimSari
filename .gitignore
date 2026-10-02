@@ -12,3 +12,5 @@ backend/tests/package-lock.json
 node_modules/
 dist/
 .vite/
+backend/tests/*.db
+backend/tests/*.json.gz

@@ -140,6 +140,7 @@
     'To\'g\'ridan-to\'g\'ri uy vazifasiga o\'tishingiz mumkin.': 'Можно сразу перейти к домашнему заданию.',
     'Bu mavzuda test yo\'q': 'В этой теме нет теста', 'Testni yakunlash': 'Завершить тест', 'Keyingi savol': 'Следующий вопрос',
     'Javobingizni yozing': 'Напишите ваш ответ', 'Bu savolga javob yozing.': 'Напишите ответ на этот вопрос.',
+    'Javob juda qisqa — fikringizni bir-ikki gap bilan yozing.': 'Ответ слишком короткий — изложите мысль в одном-двух предложениях.',
     'Javoblar tekshirilmoqda...': 'Ответы проверяются...', 'Javoblaringiz': 'Ваши ответы', 'Javob berilmagan': 'Нет ответа',
     'Javob berilmadi': 'Нет ответа', 'Sizning javobingiz:': 'Ваш ответ:', 'To\'g\'ri javob:': 'Правильный ответ:',
     'Hammasi to\'g\'ri!': 'Всё верно!', 'Ajoyib natija!': 'Отличный результат!', 'Ko\'proq mashq qilish kerak': 'Нужно больше практики',

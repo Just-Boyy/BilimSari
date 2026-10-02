@@ -931,14 +931,98 @@ def normalize(text) -> str:
     return text
 
 
-def answers_match(given, expected, accept=None) -> bool:
+_SUPERSCRIPT = str.maketrans('⁰¹²³⁴⁵⁶⁷⁸⁹', '0123456789')
+_OPS = str.maketrans({'×': '*', '·': '*', '∙': '*', '÷': '/', '−': '-', '–': '-', '—': '-', '：': ':'})
+
+
+def _compact(text) -> str:
+    """Formula/ifoda uchun: bo'sh joylar va belgilar yozilishidagi farq ahamiyatsiz
+    ("(x - 4)(x + 4)" = "(x-4)(x+4)", "x⁴" = "x^4", "3×4" = "3*4")."""
+    s = normalize(text).translate(_OPS)
+    s = re.sub(r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+', lambda m: '^' + m.group(0).translate(_SUPERSCRIPT), s)
+    return re.sub(r'\s+', '', s)
+
+
+# Mazmunli so'z hisoblanmaydigan bog'lovchi/yordamchi so'zlar (o'zbek, rus, ingliz)
+_STOPWORDS = set("""
+va bilan uchun bu u ular ham esa emas yoki lekin ammo biroq chunki agar shu shuning sababli kabi orqali
+bo'ladi bo'lib bo'lgan bo'lsa qiladi qilib etadi deb degan hamda yana eng juda har hech bir ikki uch
+ya'ni masalan qilinadi ishlatiladi hisoblanadi kerak mumkin
+и в во на с со к ко по из за от до для о об обо это как что а но или не же ли бы то так его её их он она есть
+они мы вы ты я при без под над через также который которая которые является это
+the a an of and or to in on at is are was were be been by for with that this it as from not but
+""".split())
+_TERM_RE = re.compile(r"\d+(?:[.,]\d+)?|[^\W\d_]+(?:'[^\W\d_]+)*")
+
+
+def _terms(text) -> list:
+    """Kutilgan javobdagi mazmunli so'zlar (takrorsiz, tartib saqlanadi): raqamlar va 3+ harfli so'zlar.
+    Ro'yxat raqamlari ("1.", "2)") va qavs ichidagi qo'shimcha izoh majburiy hisoblanmaydi."""
+    s = re.sub(r'(?:^|(?<=[\s;,]))\d{1,2}[.)](?=\s)', ' ', normalize(text))
+    bare = re.sub(r'\([^)]*\)', ' ', s)
+    if len(_TERM_RE.findall(bare)) >= 3:
+        s = bare
+    out = []
+    for w in _TERM_RE.findall(s):
+        if (w[0].isdigit() or len(w) >= 3) and w not in _STOPWORDS and w not in out:
+            out.append(w)
+    return out
+
+
+def _term_found(term, words) -> bool:
+    """So'z o'quvchi javobida bormi — qo'shimchalar farqi hisobga olinmaydi
+    ("hujayra" ~ "hujayralar", "клеточная" ~ "клеточной"). Raqamlar aniq mos kelishi kerak."""
+    if term[0].isdigit():
+        return term.replace(',', '.') in {w.replace(',', '.') for w in words}
+    req = len(term) if len(term) <= 4 else max(4, len(term) - 3)
+    stem = term[:req]
+    for w in words:
+        if w.startswith(stem) or (len(w) >= 3 and term.startswith(w) and len(w) >= req - 2):
+            return True
+    return False
+
+
+KEYWORD_PASS = 0.5   # gap ko'rinishidagi javobda yangi asosiy so'zlarning kamida yarmi bo'lsa — qabul
+
+
+def keyword_match(given, expected, prompt='') -> bool:
+    """Gap ko'rinishidagi javobni mazmuni bo'yicha tekshiradi (so'zma-so'z emas).
+
+    Faqat haqiqiy gap/ro'yxat javobga qo'llanadi: kutilgan javobda kamida 3 ta 4+ harfli so'z
+    bo'lishi kerak (formula, son, bitta atama — aniq tekshiriladi). Savolning o'zida bor so'zlar
+    hisobga olinmaydi — savolni ko'chirib yozgan o'quvchi o'tib ketmasin. Qolgan ("yangi")
+    asosiy so'zlarning kamida yarmi o'quvchi javobida bo'lsa — qabul."""
+    terms = _terms(expected)
+    if sum(1 for t in terms if not t[0].isdigit() and len(t) >= 4) < 3:
+        return False
+    prompt_words = _TERM_RE.findall(normalize(prompt))
+    new = [t for t in terms if not _term_found(t, prompt_words)]
+    if not new:
+        return False
+    words = _TERM_RE.findall(normalize(given))
+    found = sum(1 for t in new if _term_found(t, words))
+    return found >= max(1, -(-len(new) * KEYWORD_PASS // 1))
+
+
+def open_answer_ok(given) -> bool:
+    """Erkin javob: kamida 2 so'z va 8 ta harf/raqam (bitta harf yoki "ha" qabul qilinmaydi)."""
+    g = normalize(given)
+    return len(_TERM_RE.findall(g)) >= 2 and len(re.sub(r'[\W_]', '', g)) >= 8
+
+
+def answers_match(given, expected, accept=None, loose=False, prompt='') -> bool:
+    """Javob to'g'rimi. Har doim: aniq moslik, formula yozilishidagi farqsiz moslik va sonli tenglik.
+    loose=True (uyga vazifa) — gap ko'rinishidagi javob so'zma-so'z emas, mazmuni (asosiy so'zlari)
+    bo'yicha tekshiriladi; `prompt` — savol matni (undagi so'zlar javob belgisi hisoblanmaydi)."""
     g = normalize(given)
     if not g:
         return False
-    candidates = [expected] + list(accept or [])
+    candidates = [c for c in [expected] + list(accept or []) if c not in (None, '')]
     for c in candidates:
-        if normalize(c) == g:
+        if normalize(c) == g or _compact(c) == _compact(g):
             return True
+    if loose and any(keyword_match(g, c, prompt) for c in candidates):
+        return True
     # sonli javoblar: "5" va "5.0" bir xil
     try:
         if abs(float(g.replace(',', '.')) - float(normalize(expected).replace(',', '.'))) < 1e-9:
@@ -1049,15 +1133,17 @@ def submit_homework(cur, conn, user_id, topic_id, answers):
         given = answers.get(tid, '')
         expected = task.get('answer')
         if expected:
-            ok = answers_match(given, expected, task.get('accept'))
+            # Gap ko'rinishidagi javob mazmuni bo'yicha (asosiy so'zlar), qisqa javob — aniq tekshiriladi
+            ok = answers_match(given, expected, task.get('accept'), loose=True, prompt=task.get('prompt') or '')
             # Javob noto'g'ri bo'lsa — to'g'ri javob ko'rsatiladi (o'quvchi xatosidan o'rganadi)
             results.append({'id': tid, 'correct': ok, 'checked': True,
                             'correct_answer': expected if not ok else None})
         else:
-            # ochiq savol — javob yozilgan bo'lsa qabul qilinadi
-            ok = len(normalize(given)) >= 2
-            results.append({'id': tid, 'correct': ok, 'checked': False,
-                            'correct_answer': None})
+            # ochiq savol — mazmunli javob yozilgan bo'lsa qabul qilinadi (bitta harf emas)
+            ok = open_answer_ok(given)
+            results.append({'id': tid, 'correct': ok, 'checked': False, 'correct_answer': None,
+                            'hint': None if ok or not normalize(given) else
+                            "Javob juda qisqa — fikringizni bir-ikki gap bilan yozing."})
         if ok:
             ok_count += 1
 

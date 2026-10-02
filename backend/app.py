@@ -279,6 +279,12 @@ def guest():
     va progress serverda saqlanadi. Bunday hisobga boshqa qurilmadan kirib
     bo'lmaydi (email/parol yo'q) — Telegram orqali kirganlar bundan mustasno.
     """
+    # Ilova faqat Telegram orqali ishlaydi. Prod'da (Postgres) mehmon hisobini faqat admin ochadi
+    # (sinov skriptlari) — aks holda skript bilan Telegramsiz hisoblar ochib, reyting va sovrinli
+    # marafonga kirish mumkin edi. Lokal (SQLite) yoki ALLOW_GUEST=1 bo'lsa — ochiq.
+    if database_url() and os.environ.get('ALLOW_GUEST') != '1' \
+            and not admin_auth.verify_admin_token(admin_auth.admin_token_from_request()):
+        return jsonify({'ok': False, 'error': 'Ilovaga Telegram orqali kiring.', 'code': 'telegram_required'}), 403
     if not rate_limit.hit(f'guest:{_client_ip()}', 8, 3600):
         return jsonify({
             'ok': False,

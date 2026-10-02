@@ -534,6 +534,8 @@
         if (!r.correct && r.checked && berilgan && r.correct_answer) {
           quti.insertAdjacentHTML('beforeend',
             '<div class="tushuntirish xato"><b>To\'g\'ri javob: ' + UI.esc(r.correct_answer) + '</b></div>');
+        } else if (!r.correct && r.hint) {
+          quti.insertAdjacentHTML('beforeend', '<div class="tushuntirish xato">' + UI.esc(r.hint) + '</div>');
         } else if (!r.correct) {
           quti.insertAdjacentHTML('beforeend',
             '<div class="tushuntirish xato">Bu savolga javob yozing.</div>');

@@ -558,7 +558,8 @@ def submit_homework(cur, conn, user_id, pid, answers, now=None) -> dict:
     tasks = _load(r['homework'], {}).get('tasks', [])
     results, ok_count = [], 0
     for t in tasks:
-        ok = study.answers_match(answers.get(t['id'], ''), t.get('answer'), t.get('accept'))
+        ok = study.answers_match(answers.get(t['id'], ''), t.get('answer'), t.get('accept'), loose=True,
+                                 prompt=t.get('prompt') or '')
         ok_count += ok
         results.append({'id': t['id'], 'correct': ok, 'checked': True,
                         'correct_answer': t.get('answer') if not ok else None})

@@ -6,7 +6,7 @@ const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
 
 const BASE = 'http://127.0.0.1:5055';
-const DIR = 'C:/Users/ADMIN/Desktop/BilimSari/backend';
+const DIR = path.join(__dirname, '..');  // backend/
 
 const o_tdi = [];
 const yiqildi = [];
