@@ -477,6 +477,7 @@
       'Когда друзья завершат тему, получат значок или победят в игре — это появится здесь.',
     "bilim bellashuvida g'olib bo'ldi": 'победил(а) в игре знаний', "kun savoliga to'g'ri javob berdi": 'верно ответил(а) на вопрос дня',
     "Qo'shilish": 'Присоединиться', 'hozirgina': 'только что', 'kecha': 'вчера',
+    'Sizni chaqirishdi': 'Вас зовут в игру', 'Keyinroq': 'Позже',
     "do'stlik so'rovi": 'заявка в друзья', "Hali do'stingiz yo'q. Tanishlaringizni toping!": 'У вас пока нет друзей. Найдите знакомых!',
     "Do'stlar reytingi": 'Рейтинг друзей', "Yangi so'rovlar": 'Новые заявки',
     "Sizga do'stlik so'rovi yubordi": 'Отправил(а) вам заявку в друзья', "do'stlikdan chiqarilsinmi?": 'удалить из друзей?',

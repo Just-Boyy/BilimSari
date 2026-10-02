@@ -105,11 +105,13 @@ def lobby_view(cur, conn):
     conn.commit()
     if random.random() < CLEANUP_CHANCE:
         rooms.cleanup(cur, conn, now)
+    import dostlar   # noqa: PLC0415 — dostlar o'yin modullarini import qiladi (aylana importdan qochish)
     return {
         'online': rooms.online_count(cur, now),
         'rooms': rooms.public_rooms(cur, now),
         'my_room': rooms.my_room(cur, _uid()),
         'chances': chances.status(cur, _uid(), now),     # chaqmoqli o'yinlar: nechta qoldi, qachon yangilanadi
+        'invites': dostlar.invites(cur, _uid(), now),     # do'stlar chaqiruvi — lobbyda "Sizni chaqirishdi"
     }
 
 

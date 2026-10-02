@@ -39,6 +39,7 @@
           '<span class="oy-pill"><b id="roomSon">…</b>&nbsp;faol room</span>' +
         '</div>' +
       '</section>' +
+      '<section class="oy-faol" id="chaqiruvlar" hidden aria-live="polite"></section>' +
       '<section class="oy-imkon" id="imkonKarta" hidden></section>' +
       '<button class="tugma oy-yaratish" type="button" id="yaratishTugma">' + ic('plus') + "<span>O'yin yaratish</span></button>" +
       '<div class="oy-amallar">' +
@@ -56,7 +57,23 @@
     G.catalog();   // yaratish ekrani tez ochilishi uchun katalog oldindan yuklanadi
 
     var lastList = null;
+    var lastInv = null;
     var lastImkon = null;
+    // Do'stlar chaqiruvlari: "X sizni «O'yin» o'yiniga chaqirdi" + Qo'shilish
+    function chaqiruvlarChiz(list) {
+      var html = (list || []).map(function (i) {
+        return '<div class="dost-chaqiruv"><p>' + ic('gamepad') + ' ' + esc(i.from.name) + ' sizni «' + esc(i.game) +
+          '» o\'yiniga chaqirdi</p><button class="tugma" type="button" data-kod="' + esc(i.code) + '">Qo\'shilish</button></div>';
+      }).join('');
+      if (html === lastInv) return;
+      lastInv = html;
+      var box = document.getElementById('chaqiruvlar');
+      box.innerHTML = html ? '<div class="bo-lim-bosh"><h2>Sizni chaqirishdi</h2></div>' + html : '';
+      box.hidden = !html;
+      box.querySelectorAll('[data-kod]').forEach(function (b) {
+        scope.on(b, 'click', function () { joinCode(b.dataset.kod, b); });
+      });
+    }
     var imkon = null;
     function imkonTaymer() {
       var t = document.getElementById('imkonTaymer');
@@ -74,6 +91,7 @@
       onData: function (res) {
         if (!res.ok) return;
         G.banner(null);
+        chaqiruvlarChiz(res.invites);
         document.getElementById('onlaynSon').textContent = res.online;
         if (res.chances && JSON.stringify(res.chances) !== lastImkon) {
           lastImkon = JSON.stringify(res.chances);

@@ -195,8 +195,14 @@ check("Yo'q room — xato", s == 409, d)
 inv = get(vali, '/invites')['invites']
 check('Valida chaqiruv ko\'rinadi', len(inv) == 1 and inv[0]['code'] == code and inv[0]['from']['id'] == ali['id'], inv)
 check('Overview ichida ham', len(get(vali)['invites']) == 1)
+lob = c.get('/api/games/lobby', headers=vali['h']).get_json()
+check("O'yinlar lobbysida ham ('Sizni chaqirishdi')", lob.get('ok') and len(lob.get('invites') or []) == 1
+      and lob['invites'][0]['code'] == code and lob['invites'][0]['from']['name'], lob.get('invites'))
+check("Chaqirgan o'zining lobbysida chaqiruv ko'rmaydi",
+      not c.get('/api/games/lobby', headers=ali['h']).get_json().get('invites'))
 c.post('/api/games/rooms/join', headers=vali['h'], json={'code': code})
 check("Roomga kirgach chaqiruv yo'qoladi", not get(vali, '/invites')['invites'])
+check("Roomga kirgach lobbyda ham yo'q", not c.get('/api/games/lobby', headers=vali['h']).get_json().get('invites'))
 s, d = post(ali, 'invite', {'user_id': vali['id'], 'code': code})
 check("Roomdagi do'stni chaqirib bo'lmaydi", s == 400 and d['code'] in ('already', 'too_soon'), d)
 

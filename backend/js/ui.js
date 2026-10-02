@@ -517,6 +517,90 @@
     try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
   }
 
+  // ── Do'st o'yinga chaqirsa — ilova ochiq turgan bo'lsa ham ko'rsatish ──────
+  // Botdagi "Qo'shilish" tugmasi (web_app) ilova allaqachon ochiq bo'lsa, Telegram yangi manzilni
+  // ochmaydi — ilova shunchaki oldinga chiqadi va o'sha sahifada qoladi. Shuning uchun ilova qayta
+  // ko'ringanda (visibilitychange, Telegram "activated") va ochiq turganda har 30 soniyada yangi
+  // chaqiruvlar tekshiriladi; sahifa ochilgandagi mavjud chaqiruvlar "ko'rilgan" deb olinadi (ular
+  // Bosh sahifa va O'yinlar lobbysida ko'rinadi) — oyna faqat keyin kelganlariga chiqadi.
+  var CHAQIRUV_KORILDI = 'bilimsari_chaqiruv_korildi';
+  var chaqiruvHolat = { band: false, oxirgi: 0, boshlandi: false, kechiktirilgan: null };
+
+  function chaqiruvKorildi() {
+    try { return JSON.parse(localStorage.getItem(CHAQIRUV_KORILDI) || '[]'); } catch (e) { return []; }
+  }
+  function chaqiruvBelgila(ids) {
+    try {
+      var eski = chaqiruvKorildi().filter(function (x) { return ids.indexOf(x) < 0; });
+      localStorage.setItem(CHAQIRUV_KORILDI, JSON.stringify(eski.concat(ids).slice(-60)));
+    } catch (e) { /* xotira yopiq */ }
+  }
+
+  function chaqiruvgaOt(kod) {
+    if (/games\.html$/.test(location.pathname)) location.hash = '#room/' + kod;
+    else location.href = 'games.html?kod=' + encodeURIComponent(kod);
+  }
+
+  function chaqiruvOyna(i) {
+    var eski = document.getElementById('bsChaqiruv');
+    if (eski) eski.remove();
+    var oyna = document.createElement('div');
+    oyna.id = 'bsChaqiruv';
+    oyna.className = 'chaqiruv-oyna';
+    oyna.setAttribute('role', 'alertdialog');
+    oyna.setAttribute('aria-label', 'Sizni chaqirishdi');
+    oyna.innerHTML = '<div class="dost-chaqiruv"><p>' + nishon('gamepad') + ' ' + esc(i.from.name) + ' sizni «' +
+      esc(i.game) + '» o\'yiniga chaqirdi</p>' +
+      '<button class="tugma" type="button" data-amal="qoshil">Qo\'shilish</button>' +
+      '<button class="tugma tugma-ikkilamchi" type="button" data-amal="yop">Keyinroq</button></div>';
+    document.body.appendChild(oyna);
+    oyna.querySelector('[data-amal="qoshil"]').onclick = function () { oyna.remove(); chaqiruvgaOt(i.code); };
+    oyna.querySelector('[data-amal="yop"]').onclick = function () { oyna.remove(); };
+    try { Telegram.WebApp.HapticFeedback.notificationOccurred('success'); } catch (e) { /* brauzerda yo'q */ }
+  }
+
+  function chaqiruvTekshir(birinchi) {
+    if (document.hidden || !window.API || !API.kirganmi() || !API.dostChaqiruvlar) return;
+    // "activated" va "visibilitychange" birga kelishi mumkin — ketma-ket so'rov yubormaymiz, lekin
+    // tekshiruvni tashlab ham yubormaymiz: oraliq tugagach bajariladi
+    var kut = 1500 - (Date.now() - chaqiruvHolat.oxirgi);
+    if (chaqiruvHolat.band || (!birinchi && kut > 0)) {
+      if (!chaqiruvHolat.kechiktirilgan) {
+        chaqiruvHolat.kechiktirilgan = setTimeout(function () {
+          chaqiruvHolat.kechiktirilgan = null;
+          chaqiruvTekshir(false);
+        }, Math.max(kut, 400));
+      }
+      return;
+    }
+    chaqiruvHolat.band = true;
+    chaqiruvHolat.oxirgi = Date.now();
+    API.dostChaqiruvlar().then(function (r) {
+      chaqiruvHolat.band = false;
+      if (!r || !r.ok || !r.invites) return;
+      var korildi = chaqiruvKorildi();
+      var yangi = r.invites.filter(function (i) { return korildi.indexOf(i.id) < 0; });
+      if (!yangi.length) return;
+      chaqiruvBelgila(yangi.map(function (i) { return i.id; }));
+      if (birinchi) return;   // sahifa ochilgandagilar — sahifaning o'zida ko'rinadi
+      // O'yinlar lobbysi ro'yxatda ko'rsatadi, room ichida esa o'yinni bo'lmaymiz
+      var oyin = /games\.html$/.test(location.pathname);
+      if (oyin && (!location.hash || location.hash === '#lobby' || location.hash.indexOf('#room/') === 0)) return;
+      chaqiruvOyna(yangi[0]);
+    }, function () { chaqiruvHolat.band = false; });
+  }
+
+  function chaqiruvKuzat() {
+    if (chaqiruvHolat.boshlandi) return;
+    chaqiruvHolat.boshlandi = true;
+    chaqiruvTekshir(true);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) chaqiruvTekshir(false); });
+    try { Telegram.WebApp.onEvent('activated', function () { chaqiruvTekshir(false); }); } catch (e) { /* eski Telegram */ }
+    setInterval(function () { chaqiruvTekshir(false); }, 30000);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(chaqiruvKuzat, 1500); });
+  else setTimeout(chaqiruvKuzat, 1500);
+
   window.UI = {
     esc: esc,
     matnHtml: matnHtml,
