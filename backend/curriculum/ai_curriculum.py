@@ -31345,6 +31345,812 @@ SUBJECTS = [
                         }
                     ]
                 }
+            },
+            {
+                'slug': 'xalqaro-xususiy-huquq-transmilliy-munosabatlar',
+                'title': 'Xalqaro xususiy huquq va transmilliy yuridik munosabatlar',
+                'summary': "Chet el elementi bilan murakkablashgan fuqarolik-huquqiy munosabatlarni tartibga solish, kollizion normalar va milliy qonunchilikning qo'llanilishi asoslari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Xalqaro xususiy huquq tushunchasi va chet el elementi',
+                        'body': 'Xalqaro xususiy huquq (XXH) — turli davlatlarning jismoniy va yuridik shaxslari o\'rtasidagi xususiy-huquqiy (fuqarolik, oila, mehnat) munosabatlarni tartibga soluvchi huquqiy normalar tizimidir. XXHning asosiy xususiyati unda "chet el elementi"ning ishtirok etishidir. Chet el elementi uch ko\'rinishda namoyon bo\'ladi: 1) subyekt bo\'yicha (shartnoma taraflaridan biri chet el fuqarosi yoki kompaniyasi); 2) obyekt bo\'yicha (nizo predmeti bo\'lgan mulk chet elda joylashgan); 3) yuridik fakt bo\'yicha (huquqiy munosabatning vujudga kelishi, o\'zgarishi yoki bekor bo\'lishi chet elda sodir bo\'lgan, masalan, nikohning chet elda tuzilishi).'
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol',
+                        'body': "O'zbekiston Respublikasi fuqarosi Germaniya hududida vaqtinchalik yashayotgan davrida Fransiya fuqarosi bilan nikohdan o'tdi va keyinchalik mulkni bo'lishish bo'yicha nizo kelib chiqdi. Bu munosabatda chet el elementi mavjud bo'lgani sababli, nizo xalqaro xususiy huquq normalari asosida hal etiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kollizion masalani hal qilish bosqichlari',
+                        'items': [
+                            'Chet el elementi mavjudligini aniqlash va huquqiy munosabat turini kvalifikatsiya qilish (fuqarolik, oila yoki mehnat).',
+                            "Tegishli kollizion normani topish (qaysi davlat qonunchiligini qo'llashni ko'rsatuvchi milliy yoki xalqaro norma).",
+                            "Kollizion bog'lovchi (formula) yordamida tegishli huquq tizimini aniqlash (masalan, shaxsning fuqaroligi qonuni yoki shartnoma tuzilgan joy qonuni).",
+                            "Tanlangan davlatning moddiy huquq normalarini nizoni mazmunan hal qilish uchun qo'llash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Kollizion norma o'zi mustaqil ravishda nizoni mazmunan hal qilmaydi. U faqatgina ushbu munosabatga nisbatan qaysi davlatning qonunchiligi qo'llanilishi kerakligini ko'rsatuvchi yo'llanma (ko'rsatkich) vazifasini bajaradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Quyidagilardan qaysi biri xalqaro xususiy huquqdagi chet el elementining ko'rinishlariga kirmaydi?",
+                        'options': [
+                            'Munosabat ishtirokchilarining huquqiy layoqatga ega emasligi',
+                            'Huquqiy munosabat subyektining chet el fuqarosi ekanligi',
+                            'Huquqiy munosabat obyektining xorijda joylashganligi',
+                            "Yuridik faktning chet el hududida sodir bo'lganligi"
+                        ],
+                        'answer': 0,
+                        'explain': "Huquqiy layoqatga ega emaslik umumiy huquqiy tushuncha bo'lib, u chet el elementini ifodalamaydi. Qolgan uchta variant chet el elementining klassik ko'rinishlaridir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Kollizion norma nizoni mustaqil ravishda va yakuniy tarzda moddiy jihatdan hal qiladi.',
+                        'answer': False,
+                        'explain': "Noto'g'ri. Kollizion norma nizoni mazmunan hal qilmaydi, u faqat qaysi davlat qonunchiligi qo'llanilishini ko'rsatuvchi yo'llanma hisoblanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Xalqaro xususiy huquqda 'Lex domicilii' tamoyili nimani anglatadi?",
+                        'options': [
+                            'Shartnoma tuzilgan joy qonuni',
+                            'Sud binosi joylashgan davlat qonuni',
+                            'Shaxsning doimiy yashash joyi qonuni',
+                            'Ashyo (mulk) joylashgan yer qonuni'
+                        ],
+                        'answer': 2,
+                        'explain': "'Lex domicilii' lotinchadan tarjima qilinganda 'yashash joyi qonuni' degan ma'noni anglatadi va shaxsning doimiy istiqomat qiladigan davlati huquqini qo'llashni nazarda tutadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mavzu bo'yicha bilimlarni mustahkamlash uchun quyidagi vazifalarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Xalqaro ommaviy huquq va Xalqaro xususiy huquq o'rtasidagi asosiy farqlarni subyektlar va tartibga solish predmeti nuqtai nazaridan tushuntirib bering.",
+                            'answer': "Xalqaro ommaviy huquq davlatlar va xalqaro tashkilotlar o'rtasidagi munosabatlarni tartibga soladi. Xalqaro xususiy huquq esa turli davlatlarning jismoniy va yuridik shaxslari (xususiy subyektlar) o'rtasidagi fuqarolik-huquqiy munosabatlarni tartibga soladi.",
+                            'hint': "Subyektlarning suveren yoki suveren emasligiga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tasavvur qiling, O'zbekiston kompaniyasi va Turkiya kompaniyasi o'rtasida Toshkentda shartnoma imzolandi, lekin tovarlar Rossiya hududida yetkazib berilishi kerak. Shartnomada nizolarni hal qilish bo'yicha qaysi davlat qonunchiligi qo'llanilishi ko'rsatilmagan. Ushbu holatda qaysi davlat qonuni qo'llanilishini aniqlash uchun qanday qoidalar va kollizion prinsiplardan foydalanish mumkinligini tahlil qilib yozing."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'huquqiy-kolliziyalar-va-talqin-nazariyasi',
+                'title': 'Huquqiy kolliziyalar va ularni hal qilish usullari. Huquqiy interpretatsiya nazariyasi',
+                'summary': "Normativ-huquqiy hujjatlar o'rtasidagi ziddiyatlarni bartaraf etish qoidalari va qonun hujjatlarini to'g'ri talqin qilish usullari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Huquqiy kolliziyalar tushunchasi va turlari',
+                        'body': "Huquqiy kolliziya — bir xil ijtimoiy munosabatlarni tartibga soluvchi ikki yoki undan ortiq huquqiy normalar o'rtasidagi qarama-qarshilik yoki ziddiyatdir. Kolliziyalar quyidagi turlarga bo'linadi: 1) iyerarxik kolliziyalar (yuridik kuchi turlicha bo'lgan hujjatlar o'rtasida); 2) xronologik kolliziyalar (turli vaqtda qabul qilingan hujjatlar o'rtasida); 3) tizimli kolliziyalar (umumiy va maxsus normalar o'rtasida). Kolliziyalarni hal qilish huquqiy barqarorlikni ta'minlashning eng muhim shartidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kolliziyaga misol',
+                        'body': "Vazirlar Mahkamasining qaroridagi norma va O'zbekiston Respublikasining Qonunidagi norma bir masalada bir-biriga zid kelib qoldi. Bunday holatda iyerarxik kolliziya yuzaga keladi va yuqori yuridik kuchga ega bo'lgan Qonun normasi qo'llaniladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kolliziyalarni hal qilishning asosiy qoidalari',
+                        'items': [
+                            'Lex superior derogat legi inferiori — yuqori turuvchi qonun quyi turuvchi qonunni bekor qiladi (iyerarxik qoida).',
+                            'Lex posterior derogat legi priori — keyinroq qabul qilingan qonun oldingisini bekor qiladi (xronologik qoida).',
+                            'Lex specialis derogat legi generali — maxsus qonun umumiy qonunni bekor qiladi (tizimli qoida).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Huquqiy interpretatsiya (talqin) — huquq normalarining haqiqiy mazmunini aniqlash va tushuntirishga qaratilgan aqliy-huquqiy faoliyatdir. Rasmiy talqin faqat vakolatli davlat organlari (masalan, Konstitutsiyaviy sud) tomonidan beriladi va majburiy kuchga ega bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Agar bir masalada yangi qabul qilingan umumiy qonun va undan oldin qabul qilingan maxsus qonun o'rtasida ziddiyat yuzaga kelsa, qaysi qoida ustunlikka ega bo'ladi?",
+                        'options': [
+                            'Lex posterior (yangi qonun ustunligi)',
+                            'Lex specialis (maxsus qonun ustunligi)',
+                            'Lex superior (yuqori qonun ustunligi)',
+                            "Ikkalasi ham o'z kuchini yo'qotadi"
+                        ],
+                        'answer': 1,
+                        'explain': "Huquqiy doktrinaga ko'ra, maxsus norma (lex specialis) har doim umumiy normadan ustun turadi, hatto umumiy norma vaqt jihatidan yangiroq bo'lsa ham."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Konstitutsiyaviy sudning qonun normalariga bergan talqini rasmiy va barcha uchun majburiy hisoblanadi.',
+                        'answer': True,
+                        'explain': "To'g'ri. Konstitutsiyaviy sud qonunlarning rasmiy talqinini berish vakolatiga ega va bu talqin majburiy yuridik kuchga ega."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qonun matnidagi so'zlarning grammatik, morfologik va sintaktik tuzilishini tahlil qilish orqali normani tushunish qanday talqin usuli deyiladi?",
+                        'options': [
+                            'Lisoniy (filologik) talqin',
+                            'Tizimli (sistemali) talqin',
+                            'Tarixiy talqin',
+                            'Teleologik (maqsadli) talqin'
+                        ],
+                        'answer': 0,
+                        'explain': "Grammatika, so'zlar va gap tuzilishiga asoslangan talqin lisoniy (filologik yoki grammatik) talqin deb ataladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mavzu bo'yicha bilimlarni mustahkamlash uchun quyidagi topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "'Lex superior derogat legi inferiori' tamoyilining amaliy ahamiyatini tushuntiring va O'zbekiston qonunchilik tizimidan misol keltiring.",
+                            'answer': "Ushbu tamoyil quyi turuvchi normativ hujjat yuqori turuvchi hujjatga zid bo'la olmasligini anglatadi. Masalan, Vazirlik yo'riqnomasi Konstitutsiyaga yoki Qonunga zid kelsa, Qonun normalari qo'llaniladi.",
+                            'hint': 'Normativ-huquqiy hujjatlarning yuridik kuchi iyerarxiyasini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Huquqiy normalarni talqin qilishda tizimli (sistemali) talqin va tarixiy talqin usullari bir-biridan qanday farq qiladi? Sud amaliyotida ushbu usullarning qaysi biri ko'proq qo'llanilishi va nima sababdan ekanligini asoslab bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'qiyosiy-huquqshunoslik-va-huquqiy-tizimlar',
+                'title': 'Qiyosiy huquqshunoslik va dunyoning asosiy huquqiy tizimlari',
+                'summary': "Dunyo huquqiy xaritasining shakllanishi, qiyosiy-huquqiy metod va dunyodagi asosiy huquq oilalarining o'zaro farqlari hamda integratsiyalashuvi.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Qiyosiy huquqshunoslik (komparativistika) tushunchasi',
+                        'body': "Qiyosiy huquqshunoslik — bu turli davlatlarning huquqiy tizimlari, institutlari va normalarini qiyosiy tahlil qilish orqali ularning o'xshashliklari, farqlari va rivojlanish qonuniyatlarini o'rganuvchi fan va metodologiyadir. Dunyodagi huquqiy tizimlar tarixiy kelib chiqishi, manbalari tarkibi va huquqiy tafakkur uslubiga ko'ra guruhlanadi. Bular 'huquqiy oilalar' deb ataladi. Asosiy huquqiy oilalarga kontinental (roman-german) huquq tizimi, anglo-sakson (umumiy) huquq tizimi, diniy va an'anaviy huquq tizimlari kiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "Huquq oilalari o'rtasidagi farq",
+                        'body': "Kontinental huquq tizimida (masalan, Germaniya, Fransiya, O'zbekiston) yozma qonun (kodifikatsiyalashgan hujjat) asosiy huquq manbasi hisoblanadi, sudlar esa faqat qonunni tatbiq etadi. Anglo-sakson tizimida esa (masalan, Buyuk Britaniya, AQSh) sud presedenti (muqaddam xuddi shunday ish bo'yicha chiqarilgan sud qarori) majburiy huquq manbasi hisoblanadi va sudlar yangi huquq normalarini yaratishi mumkin."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Qiyosiy-huquqiy tahlil bosqichlari',
+                        'items': [
+                            "Taqqoslash ob'ektini aniqlash (mikro-taqqoslash darajasida aniq normalar yoki makro-taqqoslash darajasida huquqiy tizimlar).",
+                            "Taqqoslanayotgan tizimlarning ijtimoiy-tarixiy va madaniy kontekstini o'rganish.",
+                            'Funktsional taqqoslash (har bir huquqiy tizim muayyan ijtimoiy muammoni qanday usullar bilan hal qilishini tahlil qilish).',
+                            'Sintez va xulosalar chiqarish (umumiy qonuniyatlarni va eng samarali huquqiy modellarni aniqlash).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Globallashuv jarayonida huquqiy oilalar o'rtasidagi chegaralar yaqinlashib bormoqda. Masalan, kontinental tizimda sud amaliyotining roli oshsa, anglo-sakson tizimida yozma qonunlar (statutlar) ulushi ortib bormoqda."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Anglo-sakson huquq tizimida asosiy va o'ziga xos huquq manbasi qaysi javobda to'g'ri ko'rsatilgan?",
+                        'options': [
+                            'Sud presedenti',
+                            'Konstitutsiyaviy qonun',
+                            'Diniy kitoblar',
+                            'Huquqiy odat'
+                        ],
+                        'answer': 0,
+                        'explain': "Anglo-sakson (umumiy) huquq tizimining o'ziga xos xususiyati sudlar tomonidan qabul qilingan qarorlar (presedentlar)ning keyingi shunga o'xshash ishlar uchun majburiy manba bo'lib xizmat qilishidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbekiston Respublikasi o'zining huquqiy tabiati va manbalar tizimiga ko'ra kontinental (roman-german) huquq oilasiga mansub.",
+                        'answer': True,
+                        'explain': "O'zbekiston huquq tizimi yozma qonunlar ustuvorligi va tizimli kodifikatsiyaga asoslanganligi sababli kontinental huquq oilasiga kiradi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Qiyosiy huquqshunoslikda muayyan huquqiy institut yoki normani boshqa davlatdagi muqobili bilan solishtirish qanday nomlanadi?',
+                        'options': [
+                            'Makro-taqqoslash',
+                            'Sinxron tahlil',
+                            'Mikro-taqqoslash',
+                            'Diaxron tahlil'
+                        ],
+                        'answer': 2,
+                        'explain': "Alohida huquqiy normalar, institutlar yoki ularning elementlarini solishtirish 'mikro-taqqoslash' deb ataladi. Butun bir huquq tizimlarini solishtirish esa 'makro-taqqoslash' deyiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mavzuni chuqurroq o'zlashtirish uchun quyidagi topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Anglo-sakson huquq tizimida sud tomonidan ilgari chiqarilgan va keyingi ishlar uchun majburiy bo'lgan qaror qanday ataladi? (Bir so'z bilan javob bering)",
+                            'answer': 'Presedent',
+                            'hint': "Bu atama lotinchadan olingan bo'lib, 'oldingi voqea' degan ma'noni bildiradi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kontinental va Anglo-sakson huquq tizimlarining farqli va o'xshash jihatlarini kamida 3 ta mezon asosida qiyoslab bering va ularning jamiyat taraqqiyotidagi afzalliklarini tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'huquq-falsafasi-ontologiya-va-gnoseologiya',
+                'title': 'Huquq falsafasi: Huquqiy ontologiya va gnoseologiya',
+                'summary': "Huquqning mohiyati, uning mavjudlik shakllari (ontologiya), huquqni bilish nazariyasi (gnoseologiya) hamda tabiiy huquq va pozitivizm o'rtasidagi fundamental bahslar.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Huquq falsafasining predmeti va huquqiy ontologiya',
+                        'body': "Huquq falsafasi — huquqning mohiyati, uning inson hayotidagi oliy ma'nosi, adolat bilan bog'liqligi va fundamental asoslarini o'rganadigan fandir. Huquqiy ontologiya — huquq falsafasining bo'limi bo'lib, 'Huquq nima va u qanday mavjud?' degan savolga javob izlaydi. Ontologik jihatdan huquq uch xil shaklda namoyon bo'ladi: huquqiy g'oyalar (ongda), huquqiy normalar (matnlarda) va huquqiy munosabatlar (ijtimoiy hayotda). Ushbu sohadagi eng katta falsafiy bahs tabiiy huquq (jusnaturalizm) va huquqiy pozitivizm o'rtasida boradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Radbrux formulasi',
+                        'body': "Nemis huquqshunosi Gustav Radbrux Ikkinchi jahon urushidan keyin o'zining mashhur formulasini taklif qildi: 'Agar yozma qonun adolat prinsiplariga shu qadar zid bo'lsa, u qonuniy kuchini yo'qotadi va unga bo'ysunmaslik kerak'. Bu tabiiy huquqning pozitiv qonun ustidan g'alabasini ko'rsatuvchi yorqin falsafiy misoldir."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Huquqiy gnoseologiyaning bilish usullari',
+                        'items': [
+                            'Dogmatik usul (amaldagi huquq normalarini matn va mantiq jihatidan tahlil qilish).',
+                            "Sotsiologik usul (huquqning jamiyatdagi real ta'sirini va qonunlarning amalda ishlashini o'rganish).",
+                            'Aksiologik usul (huquq normalarini insonparvarlik, adolat va erkinlik kabi oliy qadriyatlar nuqtai nazaridan baholash).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Pozitiv huquq — davlat tomonidan o'rnatilgan va majburiy kuchga ega qonunlar yig'indisidir. Tabiiy huquq esa insonga tug'ilganidan tegishli bo'lgan, davlat irodasiga bog'liq bo'lmagan huquqlardir (yashash, erkinlik va h.k.)."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Inson huquqlari davlat ularni tan olishidan qat'i nazar, tabiatdan va inson mohiyatidan kelib chiqadi deb hisoblaydigan falsafiy oqim qaysi javobda ko'rsatilgan?",
+                        'options': [
+                            'Huquqiy pozitivizm',
+                            'Tabiiy huquq nazariyasi',
+                            'Huquqiy realizm',
+                            'Normativizm'
+                        ],
+                        'answer': 1,
+                        'explain': "Tabiiy huquq nazariyasi (jusnaturalizm) huquqni davlat irodasidan ustun qo'yadi va uni insonning tug'ma tabiati hamda adolat bilan bog'laydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Huquqiy pozitivizm tarafdorlari qonunning adolatliligidan qat'i nazar, agar u vakolatli davlat organi tomonidan qabul qilingan bo'lsa, uni majburiy deb hisoblaydilar.",
+                        'answer': True,
+                        'explain': "Pozitivizm falsafasiga ko'ra, qonunning huquqiyligi uning axloqiyligi bilan emas, balki rasmiy tartibda qabul qilinganligi va davlat majburlash kuchi bilan ta'minlanganligi bilan belgilanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Huquqni qadriyat, adolat va inson huquqlari nuqtai nazaridan baholovchi huquq falsafasining bo'limi qanday nomlanadi?",
+                        'options': [
+                            'Huquqiy gnoseologiya',
+                            'Huquqiy ontologiya',
+                            'Huquqiy aksiologiya',
+                            'Huquqiy dogmatika'
+                        ],
+                        'answer': 2,
+                        'explain': "Aksiologiya — qadriyatlar haqidagi ta'limotdir. Huquqiy aksiologiya huquq va qonunlarning adolat, erkinlik, tenglik kabi qadriyatlarga muvofiqligini o'rganadi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Huquq falsafasi bo'yicha bilimlaringizni sinash uchun quyidagi vazifalarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Davlat tomonidan qabul qilingan, yozma va rasmiy kuchga ega bo'lgan huquq tizimi falsafada qanday huquq deb ataladi? (Ikki so'z bilan javob bering)",
+                            'answer': 'Pozitiv huquq',
+                            'hint': "Bu huquq tabiiy huquqning aksi bo'lib, inson irodasi va davlat qarori bilan yaratiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Agar davlat o'ta adolatsiz qonun qabul qilsa, fuqaro unga bo'ysunishi kerakmi? Ushbu savolga huquqiy pozitivizm va tabiiy huquq maktablari nuqtai nazaridan javob bering va o'z falsafiy fikringizni asoslang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'huquqiy-sotsiologiya-va-samaradorlik',
+                'title': 'Huquqiy sotsiologiya va huquqning ijtimoiy samaradorligi',
+                'summary': "Huquqning jamiyatdagi real hayotini, uning ijtimoiy munosabatlarga ta'sirini va qonunlarning amaldagi samaradorligini o'rganuvchi fan sohasi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Huquqiy sotsiologiya predmeti va 'Tirik huquq' konsepsiyasi",
+                        'body': "Huquqiy sotsiologiya (huquq sotsiologiyasi) huquqni faqat qog'ozdagi normalar yig'indisi emas, balki jamiyatda real ishlaydigan ijtimoiy hodisa sifatida o'rganadi. Ushbu fanning asoschilaridan biri Evgen Erlix huquqni ikki qismga ajratgan: davlat tomonidan yaratilgan 'kitobdagi huquq' (law in books) va jamiyat a'zolarining kundalik hayotida amalda rioya qiladigan 'tirik huquq' (law in action). Huquqiy sotsiologiyaning asosiy maqsadi qonunlar qanchalik mukammal yozilganligini emas, balki ular real ijtimoiy munosabatlarni qanchalik tartibga sola olayotganini va jamiyat xulq-atvorini qanday o'zgartirayotganini (samaradorligini) empirik usullar bilan tadqiq qilishdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Amaliy misol: Ekologik taqiq qonuni',
+                        'body': "Tasavvur qiling, davlat plastik paketlardan foydalanishni butunlay taqiqlovchi qonun qabul qildi ('kitobdagi huquq'). Ammo do'konlarda va bozorlarda ushbu paketlar hamon yashirincha sotilmoqda va odamlar ulardan foydalanishda davom etmoqda. Bu yerda rasmiy huquqiy norma bilan real ijtimoiy xulq-atvor o'rtasida uzilish (gap) mavjud. Huquqiy sotsiologiya aynan mana shu uzilishning sabablarini (masalan, muqobil vositalarning yo'qligi, jazo muqarrarligining ta'minlanmaganligi, aholi ongining pastligi) o'rganadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Huquqiy normaning ijtimoiy samaradorligini o'lchash bosqichlari",
+                        'items': [
+                            "Normaning maqsadini aniqlash (qonun chiqaruvchi ushbu norma orqali qanday ijtimoiy natijaga erishmoqchi bo'lganini belgilash).",
+                            "Empirik ma'lumotlarni yig'ish (ijtimoiy so'rovnomalar o'tkazish, sud va huquqni muhofaza qiluvchi organlar statistikasini tahlil qilish).",
+                            'Faktik xulq-atvorni tahlil qilish (odamlarning qonun talablariga real rioya qilish darajasini baholash).',
+                            "Samaradorlik koeffitsiyentini aniqlash va qonunchilikni takomillashtirish bo'yicha tavsiyalar ishlab chiqish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': 'Esda tuting: Har qanday qonunning kuchi uning qattiq jazolarida emas, balki jamiyat tomonidan ixtiyoriy ravishda tan olinishi va ijtimoiy ong darajasiga mos kelishidadir.'
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Huquqiy sotsiologiyada 'tirik huquq' (living law) konsepsiyasini fanga kim kiritgan?",
+                        'options': [
+                            'Evgen Erlix',
+                            'Maks Veber',
+                            'Gans Kelzen',
+                            'Karl Marks'
+                        ],
+                        'answer': 0,
+                        'explain': "Avstriyalik huquqshunos Evgen Erlix rasmiy qonunlardan farqli o'laroq, jamiyatda real amal qiladigan ijtimoiy qoidalarni 'tirik huquq' deb atagan."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Huquqiy sotsiologiya nuqtai nazaridan 'kitobdagi huquq' va 'hayotdagi huquq' tushunchalari har doim bir-biriga to'liq mos keladi.",
+                        'answer': False,
+                        'explain': "Aksincha, ular o'rtasida tez-tez uzilishlar (gap) kuzatiladi, sotsiologiya aynan shu farqni o'rganadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Huquqiy sotsiologiyaning an'anaviy yuridik fanlardan asosiy farqi nimada?",
+                        'options': [
+                            'Faqat qonun matnlarini grammatik tahlil qilish bilan cheklanishi',
+                            "Huquqni empirik, ijtimoiy-tadqiqot usullari (so'rovnomalar, kuzatishlar) orqali o'rganishi",
+                            "Faqat tarixiy hujjatlarni o'rganishi",
+                            'Faqat jinoyatchilik muammolarini tahlil qilishi'
+                        ],
+                        'answer': 1,
+                        'explain': "Huquqiy sotsiologiya huquqning jamiyatdagi real ta'sirini empirik (tajriba, kuzatish, so'rovnoma) usullar bilan tadqiq qiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mavzuni chuqurroq o'zlashtirish uchun quyidagi topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Evgen Erlixning 'tirik huquq' tushunchasiga o'z so'zlaringiz bilan qisqacha ta'rif bering.",
+                            'answer': "Tirik huquq - bu davlat tomonidan rasman yozilmagan bo'lsa-da, jamiyat a'zolari o'rtasida kundalik hayotda amalda rioya qilinadigan, ijtimoiy munosabatlarni real tartibga soluvchi normalardir.",
+                            'hint': 'Rasmiy qonunlar va norasmiy ijtimoiy kelishuvlar farqini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "O'zbekistondagi biror-bir qonuniy taqiq yoki qoidani misol qilib oling (masalan, to'ylarni o'tkazish tartibi yoki piyodalar o'tish joyidagi qoidalar). Ushbu qonunning 'kitobdagi huquq' va 'hayotdagi huquq' o'rtasidagi farqini sotsiologik nuqtai nazardan tahlil qilib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'supramilliy-huquq-va-integratsiya',
+                'title': 'Supramilliy huquq va huquqiy tizimlar integratsiyasi',
+                'summary': "Milliy va xalqaro huquq chorrahasida paydo bo'lgan, a'zo davlatlar ustidan majburiy kuchga ega bo'lgan supramilliy huquqiy tartibotlar nazariyasi.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Supramilliy huquq tushunchasi va uning an'anaviy xalqaro huquqdan farqi",
+                        'body': "Supramilliy (davlatlarustu) huquq — bu davlatlar o'z suverenitetining bir qismini xalqaro tashkilot yoki ittifoqqa topshirishi natijasida yuzaga keladigan huquqiy tizimdir. Klassik xalqaro huquqdan farqli o'laroq (bu yerda qarorlar faqat konsensus bilan qabul qilinadi va davlatlar ratifikatsiyasidan keyin kuchga kiradi), supramilliy huquq normalari a'zo davlatlar hududida to'g'ridan-to'g'ri amal qiladi va milliy qonunlardan ustun turadi. Bunga eng yorqin misol Yevropa Ittifoqi (YI) huquqidir. Supramilliy huquqning ikkita fundamental asosi mavjud: 1) To'g'ridan-to'g'ri amal qilish prinsipi (Direct effect) — normalar milliy qonunchilikka o'tkazilmasdan turib fuqarolar uchun huquq va majburiyatlar yaratadi; 2) Ustuvorlik prinsipi (Primacy/Supremacy) — milliy qonunlar supramilliy normaga zid kelsa, supramilliy norma qo'llaniladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Pretsedent voqea: Van Gend en Loos va Costa v. ENEL ishlari',
+                        'body': "1963-yilda Yevropa Ittifoqi Adliya Sudi 'Van Gend en Loos' ishida YI shartnomalari a'zo davlatlar fuqarolariga milliy sudlarda to'g'ridan-to'g'ri tayanilishi mumkin bo'lgan huquqlarni berishini e'lon qildi. 1964-yilda esa 'Costa v. ENEL' ishida sud milliy qonunlar, hatto ular keyinroq qabul qilingan konstitutsiyaviy qonunlar bo'lsa ham, supramilliy ittifoq huquqiga zid bo'la olmasligini, ya'ni supramilliy huquq ustuvorligini qat'iy belgilab qo'ydi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Supramilliy normalarning milliy huquq bilan o'zaro aloqasi",
+                        'items': [
+                            'Suverenitetni topshirish (Davlat xalqaro shartnomani imzolash orqali muayyan sohalarda qonun chiqarish vakolatini ittifoq organlariga beradi).',
+                            "To'g'ridan-to'g'ri integratsiya (Ittifoq organi qabul qilgan reglament yoki direktiva milliy parlament tasdig'isiz kuchga kiradi).",
+                            "Kolliziyani hal qilish (Milliy sud qonunlarni qo'llashda supramilliy huquq ustunligini ta'minlaydi).",
+                            "Yagona interpretatsiya (Milliy sudlar normani tushunishda xatolikka yo'l qo'ymaslik uchun supramilliy sudga tushuntirish so'rab murojaat qiladi)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Supramilliy huquq davlatning mutloq suvereniteti tushunchasini cheklaydi, ammo bu globallashuv sharoitida iqtisodiy va siyosiy integratsiyani ta'minlashning eng samarali vositasidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Supramilliy huquqning milliy huquqdan ustunligini belgilaydigan printsip qanday nomlanadi?',
+                        'options': [
+                            'Suverenitet prinsipi',
+                            "To'g'ridan-to'g'ri amal qilish prinsipi",
+                            'Ustuvorlik (primacy) prinsipi',
+                            'Konsensus prinsipi'
+                        ],
+                        'answer': 2,
+                        'explain': "Ustuvorlik (primacy) prinsipi milliy qonunlar va supramilliy huquq o'rtasida ziddiyat yuzaga kelganda supramilliy huquqning ustun bo'lishini ta'minlaydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Supramilliy huquq normalari milliy parlament tomonidan majburiy ratifikatsiya qilinganidan keyingina kuchga kiradi.',
+                        'answer': False,
+                        'explain': "Noto'g'ri, supramilliy huquqning o'ziga xosligi shundaki, u ko'p hollarda milliy ratifikatsiyasiz, to'g'ridan-to'g'ri amal qiladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi mashhur sud ishi Yevropa Ittifoqi huquqining to'g'ridan-to'g'ri amal qilish (direct effect) prinsipini asoslab bergan?",
+                        'options': [
+                            'Marbury v. Madison',
+                            'Van Gend en Loos',
+                            'Costa v. ENEL',
+                            'Barcelona Traction'
+                        ],
+                        'answer': 1,
+                        'explain': "1963-yildagi Van Gend en Loos ishi ittifoq huquqiy normalarining fuqarolar uchun to'g'ridan-to'g'ri huquq va majburiyatlar yaratish kuchini tasdiqlagan."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Supramilliy huquq va davlat suvereniteti munosabatlarini tahlil qilish uchun quyidagi topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Supramilliy huquqning 'to'g'ridan-to'g'ri amal qilishi' va 'ustuvorligi' o'rtasidagi farqni bir jumla bilan tushuntiring.",
+                            'answer': "To'g'ridan-to'g'ri amal qilish normaning milliy qonun hujjatisiz fuqaroga huquq berishini anglatsa, ustuvorlik ziddiyat yuzaga kelganda shu normaning milliy qonundan ustun turishini bildiradi.",
+                            'hint': "Normaning kuchga kirishi va kolliziyani hal qilish jihatlariga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Davlatlar o'z suverenitetining bir qismini supramilliy tuzilmaga topshirishidan qanday ijobiy va salbiy oqibatlar kelib chiqishi mumkin? Huquqiy nuqtai nazardan muhokama qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'suniy-intellekt-va-neyrotexnologiyalar-huquqiy-tartibi',
+                'title': "Sun'iy intellekt va neyrotexnologiyalarni huquqiy tartibga solish",
+                'summary': "Sun'iy intellekt tizimlari va neyrotexnologiyalarning huquqiy maqomi, intellektual mulk, fuqarolik javobgarligi va inson huquqlarining trans-gumanistik jihatlarini huquqiy tahlil qilish.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Kirish: Sun'iy intellekt va huquqiy subyektlik muammosi",
+                        'body': "Texnologik taraqqiyot natijasida sun'iy intellekt (SI) va neyrotexnologiyalar hayotimizga chuqur kirib bormoqda. Huquqshunoslik oldida turgan eng murakkab savollardan biri — SI tizimlariga huquq subyektligini (elektron shaxs maqomini) berish masalasidir. Bugungi kunda SI mustaqil ravishda asarlar yaratmoqda, bitimlar tuzmoqda va hatto zarar yetkazmoqda. Amaldagi huquq tizimi esa javobgarlikni faqat jismoniy yoki yuridik shaxslarga yuklashga moslashgan. Neyrotexnologiyalar (masalan, neyrointerfeyslar) esa inson miyasiga to'g'ridan-to'g'ri ta'sir ko'rsatib, insonning iroda erkinligi va shaxsiy daxlsizlik huquqining (neyrohuquqlar) yangi qirralarini himoya qilishni talab etmoqda."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Huquqiy kolliziya misoli',
+                        'body': "Avtonom boshqariladigan haydovchisiz avtomobil (SI tizimi) piyodani urib ketdi. Avtomobil qaror qabul qilishda to'liq mustaqil bo'lgan. Ushbu holatda fuqarolik va jinoiy javobgarlik kimning zimmasiga yuklanadi: avtomobil ishlab chiqaruvchisimi, SI dasturchisimi, avtomobil egasimi yoki avtonom tizimning o'zimi? Hozircha xalqaro amaliyotda javobgarlik SI yaratuvchisi yoki egasiga (mahsulot sifatsizligi yoki xavf manbai egasi sifatida) yuklanadi, biroq SI o'ta murakkablashgani sari bu yondashuv yetarli bo'lmay qolmoqda."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'SI tomonidan yetkazilgan zararni huquqiy baholash bosqichlari',
+                        'items': [
+                            'Avtonomlik darajasini aniqlash: SI tizimi inson aralashuvisiz qaror qabul qildimi yoki inson nazorati ostidami?',
+                            "Dasturiy xatolikni tekshirish: Zarar dasturdagi nuqson yoki kutilmagan tashqi omillar ta'sirida yuz berganini aniqlash.",
+                            "Javobgarlik subyektini belgilash: Amaldagi qonunchilikka asosan ishlab chiqaruvchi, operator yoki mulkdor o'rtasida javobgarlik taqsimotini amalga oshirish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Neyrohuquqlar (Neuro-rights) — bu insonning miya faoliyati, fikrlari va neyro-ma'lumotlarini ruxsatsiz kirish, manipulyatsiya qilish hamda nazorat qilishdan himoya qiluvchi xalqaro huquqiy prinsiplar tizimidir."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Sun'iy intellekt tizimlariga huquqiy maqom berishdagi 'elektron shaxs' (electronic person) konsepsiyasi nimani anglatadi?",
+                        'options': [
+                            "SIni to'liq jismoniy shaxsga tenglashtirish",
+                            "SIga huquq va majburiyatlarga ega bo'lish hamda yetkazilgan zarar uchun maxsus fondlar orqali javob berish huquqini berish",
+                            'SIni faqat kompyuter dasturi sifatida mulk huquqi obyekti deb hisoblash',
+                            'SI tizimlarini soliqqa tortishni butunlay taqiqlash'
+                        ],
+                        'answer': 1,
+                        'explain': "Elektron shaxs konsepsiyasi SI tizimlariga ma'lum huquq va majburiyatlarni berish hamda ularning javobgarligini maxsus sug'urta yoki kompensatsiya fondlari orqali qoplashni nazarda tutadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Hozirgi kunda xalqaro huquqda inson neyro-ma'lumotlarini (miya to'lqinlari, fikrlari) himoya qilish uchun maxsus 'neyrohuquqlar' deklaratsiyasi BMT darajasida majburiy konvensiya sifatida qabul qilingan.",
+                        'answer': False,
+                        'explain': 'Neyrohuquqlar konsepsiyasi hozirda faqat ilmiy va ayrim davlatlar darajasida (masalan, Chili) qonunlashtirilmoqda, biroq global miqyosda majburiy xalqaro konvensiya hali qabul qilinmagan.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "SI tomonidan yaratilgan intellektual mulk obyektlariga (masalan, rasm yoki musiqa) nisbatan mualliflik huquqi kimga tegishli bo'ladi?",
+                        'options': [
+                            "Har doim SI tizimining o'ziga",
+                            "BMTning maxsus qo'mitasiga",
+                            "Dasturchi, foydalanuvchi yoki amaldagi qonunchilikka ko'ra jismoniy/yuridik shaxslarga (chunki SI huquqiy subyekt emas)",
+                            "Hech kimga tegishli bo'lmaydi va darhol umumdavlat mulkiga aylanadi"
+                        ],
+                        'answer': 2,
+                        'explain': "SI huquq subyekti bo'lmagani uchun mualliflik huquqi uni yaratgan dasturchiga yoki undan foydalanib asar yaratgan ijodkorga (inson omiliga qarab) tegishli bo'ladi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Mavzu yuzasidan quyidagi topshiriqlarni bajaring va tahliliy fikringizni yozing.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Neyrotexnologiyalar yordamida inson fikrlarini o'qish va ularni sud jarayonida dalil sifatida ishlatish inson huquqlarining qaysi prinsipiga zid keladi?",
+                            'answer': "Shaxsiy hayot daxlsizligi va o'ziga qarshi ko'rsatuv bermaslik huquqiga (nemo tenetur se ipsum accusare)",
+                            'hint': 'Insonning ichki dunyosi daxlsizligi va majburiy iqrorni taqiqlash prinsiplarini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Tasavvur qiling, siz qonun ijodkorisiz. SI tizimlari tomonidan yetkazilgan zararni qoplash uchun qanday qonun loyihasini taklif qilgan bo'lardingiz? (3-4 ta asosiy qoidani yozing)."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kosmik-huquq-va-samoviy-jismlar-huquqiy-maqomi',
+                'title': 'Kosmik huquq va samoviy jismlarning huquqiy rejimi',
+                'summary': "Koinot makonini tadqiq etish, samoviy jismlarni o'zlashtirish, xususiy kosmik faoliyat va kosmik subyektlarning xalqaro-huquqiy javobgarligi tizimini o'rganish.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish: Kosmik huquqning shakllanishi va asosiy prinsiplari',
+                        'body': "Kosmik huquq — xalqaro ommaviy huquqning nisbatan yosh, ammo o'ta muhim sohasi bo'lib, u Yer atmosferasidan tashqaridagi munosabatlarni tartibga soladi. Uning asosini 1967-yildagi 'Kosmos shartnomasi' (Outer Space Treaty) tashkil etadi. Ushbu shartnomaga ko'ra, kosmik makon va samoviy jismlar (shu jumladan Oy) barcha insoniyatning mulki (res communis) hisoblanadi. Ularni biron-bir davlat tomonidan o'zlashtirish, suverenitet ostiga olish yoki milliy mulkka aylantirish qat'iyan taqiqlanadi. Biroq, xususiy kompaniyalarning koinotga kirib borishi va asteroidlarda foydali qazilmalarni qazib olish istagi huquqda yangi bahslarni keltirib chiqarmoqda."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Xalqaro javobgarlik misoli',
+                        'body': "Agar biror davlatga tegishli sun'iy yo'ldosh yoki xususiy kosmik kema boshqa davlatning kosmik apparatiga to'qnashsa yoki Yerga qulab tushib zarar yetkazsa, 1972-yildagi Kosmik obyektlar tomonidan yetkazilgan zarar uchun xalqaro javobgarlik to'g'risidagi konvensiyaga asosan, ushbu obyekatni koinotga uchirgan davlat (Launching State) mutloq moliyaviy va huquqiy javobgarlikni zimmasiga oladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kosmik faoliyatning huquqiy maqomini aniqlash bosqichlari',
+                        'items': [
+                            "Obyektning ro'yxatdan o'tganligini tekshirish: BMTning kosmik obyektlar reyestridan davlat mansubligini aniqlash.",
+                            "Tinchlik maqsadida foydalanish prinsipini tekshirish: Kosmosga ommaviy qirg'in qurollari joylashtirilmaganligiga ishonch hosil qilish.",
+                            "Zarar yetkazilgan taqdirda uchiruvchi davlat (Launching State) yurisdiksiyasini aniqlash va xalqaro da'vo muddatlarini hisoblash."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Kosmos shartnomasiga ko'ra, xususiy kompaniyalarning koinotdagi har qanday faoliyati uchun ularni ro'yxatdan o'tkazgan va ruxsatnoma bergan tegishli davlat xalqaro miqyosda javobgar bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "1967-yildagi Kosmos shartnomasiga binoan, samoviy jismlarni (masalan, Mars yoki Oyni) biror davlat o'z suvereniteti ostiga olishi mumkinmi?",
+                        'options': [
+                            "Ha, agar u yerga birinchi bo'lib o'z bayrog'ini o'rnatsa",
+                            "Yo'q, samoviy jismlarni har qanday usul bilan milliy o'zlashtirish taqiqlanadi",
+                            'Faqat BMT Xavfsizlik Kengashining maxsus ruxsati bilan mumkin',
+                            'Ha, faqat ilmiy tadqiqot stansiyasi qurilgan hudud doirasida ruxsat etiladi'
+                        ],
+                        'answer': 1,
+                        'explain': "Kosmos shartnomasining II moddasiga ko'ra, koinot makonini, shu jumladan Oy va boshqa samoviy jismlarni suverenitet e'lon qilish, foydalanish yoki bosib olish yo'li bilan milliy o'zlashtirish mumkin emas."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Xususiy kompaniya koinotga uchirgan sun'iy yo'ldosh zarar yetkazgan taqdirda, ushbu xususiy kompaniya emas, balki uni uchirgan davlat xalqaro-huquqiy javobgarlikni zimmasiga oladi.",
+                        'answer': True,
+                        'explain': "Kosmik huquq normalariga ko'ra, nodavlat yuridik shaxslarning kosmik faoliyati uchun tegishli davlat xalqaro javobgarlikni (international liability) oladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Koinot makoniga qanday turdagi qurollarni joylashtirish xalqaro huquq bilan mutloq taqiqlangan?',
+                        'options': [
+                            "Har qanday turdagi sun'iy yo'ldoshlarni",
+                            'Faqat lazerli aloqa tizimlarini',
+                            "Yadro quroli va har qanday boshqa ommaviy qirg'in qurollarini",
+                            'Kosmik chiqindilarni tozalovchi mexanik qurilmalarni'
+                        ],
+                        'answer': 2,
+                        'explain': "Kosmos shartnomasining IV moddasiga ko'ra, Yer atrofidagi orbitaga yoki samoviy jismlarga har qanday yadro quroli yoki ommaviy qirg'in qurollarini joylashtirish taqiqlanadi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Mavzu yuzasidan quyidagi topshiriqlarni bajaring va tahliliy fikringizni shakllantiring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agar xususiy kosmik kompaniya asteroiddan oltin qazib olib Yerga olib kelsa, bu Kosmos shartnomasidagi 'o'zlashtirmaslik' prinsipini buzadimi? (Qisqa huquqiy yechim bering).",
+                            'answer': "Resurslarni qazib olish ularning ustidan suverenitet o'rnatishni anglatmaydi, ammo xalqaro miqyosda bu bo'yicha yakdil kelishuv yo'q va bahsli hisoblanadi.",
+                            'hint': "AQSHning 'Space Act' qonuni va xalqaro 'res communis' (umumiy mulk) prinsipi o'rtasidagi ziddiyatni o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kelajakda Oyda doimiy insonlar koloniyasi tashkil etilsa, u yerda qaysi davlatning jinoyat qonunchiligi amal qilishi kerak deb o'ylaysiz? O'z huquqiy model hisobingizni taklif qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'transmilliy-kiber-jinoyatchilik-va-virtual-aktivlar-huquqi',
+                'title': 'Transmilliy kiber-jinoyatchilik va virtual aktivlarni huquqiy tartibga solish',
+                'summary': "Ushbu mavzu global kiber-tahdidlar, kriptovalyutalar va blokcheyn texnologiyalarining huquqiy tabiati hamda kiber-jinoyatchilikka qarshi xalqaro hamkorlik mexanizmlarini o'rganadi.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kibermakon va transmilliy yurisdiksiya muammosi',
+                        'body': "Kibermakon (kiber-makon) o'zining chegarasiz tabiati bilan an'anaviy davlat suvereniteti va yurisdiksiya tushunchalariga chorlov tashlaydi. Transmilliy kiber-jinoyatlar bir davlat hududida rejalashtirilib, boshqa davlat serverlari orqali uchinchi davlat fuqarolariga zarar yetkazish shaklida sodir etiladi. Bu esa jinoyat qonunchiligini qo'llashda hududiy cheklovlarni yuzaga keltiradi. Kiber-jinoyatchilikka qarshi kurashda transmilliy hamkorlikni ta'minlovchi asosiy xalqaro hujjat 2001-yildagi Budapesht konvensiyasidir. Ushbu hujjat kiber-jinoyatlar turlarini unifikatsiya qiladi va elektron dalillarni to'plash tartibini belgilaydi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Virtual aktivlar va jinoiy daromadlarni legallashtirish',
+                        'body': "Kriptovalyutalar (masalan, Bitcoin, Ethereum) markazlashmagan blokcheyn tarmog'ida ishlagani sababli, ularning egalarini aniqlash murakkab hisoblanadi. Jinoyatchilar ko'pincha to'lovlarni kriptovalyutada qabul qilib, 'mikser' (mixer) xizmatlari orqali pullarning kelib chiqishini yashirishadi. Masalan, xakerlar guruhi shifrlagich-dastur (ransomware) yordamida yirik kompaniya tizimini bloklab, pul talab qiladi va uni kripto-hamyonlar orqali qabul qiladi. Bunday holatlarni tergov qilish uchun FATF (Financial Action Task Force) standartlari va virtual aktivlar provayderlari (VASP) ustidan qat'iy moliyaviy nazorat o'rnatish talab etiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kiber-dalillarni olish va xalqaro hamkorlik bosqichlari',
+                        'items': [
+                            'Kiber-hujum manbasini (IP-manzil, domen) va tranzaksiyalar zanjirini aniqlash.',
+                            "Xalqaro huquqiy yordam (MLAT) shartnomalari asosida xorijiy provayderlardan ma'lumotlarni saqlab turishni talab qilish.",
+                            'Interpol yoki tezkor aloqa tarmoqlari (24/7 aloqa nuqtalari) orqali elektron dalillarni rasmiylashtirish va olish.',
+                            "Kiber-jinoyatchini ekstraditsiya qilish yoki uning virtual aktivlarini muzlatish choralarini ko'rish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: O'zbekiston Respublikasida virtual aktivlar aylanmasi Istiqbolli loyihalar milliy agentligi (NAPP) tomonidan litsenziyalanadi va tartibga solinadi. Litsenziyasiz faoliyat jinoiy javobgarlikka sabab bo'ladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Kiber-jinoyatchilikka qarshi kurashish va elektron dalillarni to'plash bo'yicha asosiy xalqaro-huquqiy hujjat qaysi?",
+                        'options': [
+                            'Budapesht konvensiyasi',
+                            'Jeneva konvensiyasi',
+                            'Vena konvensiyasi',
+                            'Nyu-York shartnomasi'
+                        ],
+                        'answer': 0,
+                        'explain': "2001-yilda qabul qilingan Budapesht konvensiyasi kiber-jinoyatchilik sohasidagi birinchi va eng muhim xalqaro ko'p tomonlama shartnoma hisoblanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Virtual aktivlar (kriptovalyutalar) butunlay anonim bo'lganligi sababli, ularning tranzaksiyalar zanjirini huquqiy jihatdan kuzatishning umuman iloji yo'q.",
+                        'answer': False,
+                        'explain': "Blokcheyn ochiq reestr bo'lgani uchun tranzaksiyalar zanjirini kuzatish mumkin, garchi hamyon egalarining shaxsini aniqlash qo'shimcha maxsus tergov harakatlarini talab qilsa ham."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': 'Decentralized Autonomous Organization (DAO) tushunchasining huquqiy tabiati qanday?',
+                        'options': [
+                            'Bu faqat davlat tomonidan boshqariladigan bank tizimidir',
+                            'Bu smart-shartnomalar va ishtirokchilarning ovoz berishi asosida ishlovchi, markazlashmagan yuridik shakldir',
+                            "Bu an'anaviy aksiyadorlik jamiyatining to'liq analogidir",
+                            'Bu huquqiy tartibga solinmaydigan noqonuniy jinoiy uyushmadir'
+                        ],
+                        'answer': 1,
+                        'explain': "DAO — bu an'anaviy rahbariyatsiz, kod (smart-shartnoma) va a'zolarning ovozlari asosida ishlaydigan yangi turdagi raqamli tashkilot shaklidir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Mavzu bo'yicha bilimlaringizni mustahkamlash uchun quyidagi topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "FATF tashkilotining virtual aktivlar provayderlari (VASP) uchun ishlab chiqqan 'Travel Rule' (Sayohat qoidasi) talabining mohiyati nimadan iborat?",
+                            'answer': "Travel Rule provayderlardan virtual aktivlar o'tkazilganda jo'natuvchi va qabul qiluvchining shaxsiy ma'lumotlarini to'plash va uzatishni talab qiladi.",
+                            'hint': "Bu pul yuvishga qarshi kurashda tranzaksiyalar shaffofligini ta'minlash uchun xizmat qiladi."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "A davlatida o'tirgan xaker B davlatidagi serverni buzib kirib, C davlatidagi bank mijozlarining pullarini o'g'irladi. Ushbu jinoyat qaysi davlat yurisdiksiyasiga tegishli bo'lishi kerakligini xalqaro huquq normalari asosida tahlil qiling."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'bioetika-va-biotexnologiyalar-huquqi',
+                'title': 'Bioetika va biotexnologiyalar huquqi: genom tahrirlash va transhumanizmning huquqiy muammolari',
+                'summary': 'Mavzu zamonaviy tibbiyot va biotexnologiyalar yutuqlari (genom tahrirlash, klonlashtirish, neyrotexnologiyalar) keltirib chiqaradigan huquqiy va bioetik muammolarni tahlil qiladi.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Biotexnologiyalar asrida inson huquqlari va bioetika',
+                        'body': "Biotexnologiyalar rivojlanishi (CRISPR-Cas9 texnologiyasi, inson embrionini tahrirlash, sun'iy reproduktiv texnologiyalar) huquq tizimi oldiga yangi savollarni qo'ymoqda. Inson daxlsizligi va uning genetik kodi daxlsizligi huquq subyektligining asosi hisoblanadi. Bioetika huquqi inson hayoti va qadr-qimmatini biologiya va tibbiyot fanlari qo'llanilishidan himoya qilishni maqsad qiladi. Ushbu sohadagi eng muhim xalqaro hujjat 1997-yildagi Oviedo konvensiyasidir (Inson huquqlari va biotibbiyot to'g'risidagi konvensiya). U inson manfaatlarini fan yoki jamiyat manfaatlaridan ustun qo'yadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Inson genomini tahrirlash va klonlashtirishning huquqiy taqiqlari',
+                        'body': "Xitoylik olim Xe Szyankuy 2018-yilda dunyoda ilk bor genomi tahrirlangan egizak qizaloqlarning dunyoga kelganini e'lon qildi. Bu xalqaro huquqiy va etik normalarni buzish deb baholandi va u sud tomonidan ozodlikdan mahrum etildi. Ko'plab davlatlar qonunchiligida insonning nasliy chizig'ini (germline) tahrirlash va reproduktiv klonlashtirish qat'iyan taqiqlangan. Chunki bu kelajak avlodlar genofondiga qaytarib bo'lmaydigan ta'sir ko'rsatishi va inson qadr-qimmatini kamsitishi mumkin."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Biotibbiy tadqiqotlarni huquqiy baholash mezonlari',
+                        'items': [
+                            'Ixtiyoriylik va xabardor qilingan rozilik (informed consent) tamoyiliga rioya qilinishi.',
+                            "Tadqiqotning inson hayoti va sog'lig'i uchun xavf darajasini baholash (foyda va zarar mutanosibligi).",
+                            "Genetik ma'lumotlarning mutlaq konfidentsialligini ta'minlash va genetik kamsitishga (diskriminatsiya) yo'l qo'ymaslik.",
+                            "Etika qo'mitalari va davlat organlaridan maxsus ruxsatnoma va litsenziya olish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: O'zbekiston Respublikasining 'Fuqarolar sog'lig'ini saqlash to'g'risida'gi Qonuniga muvofiq, insonni klonlashtirish va uning genomini sun'iy o'zgartirish bilan bog'liq tajribalar taqiqlanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Inson huquqlari va biotibbiyot sohasidagi eng nufuzli xalqaro hujjat — Oviedo konvensiyasi qaysi tashkilot doirasida qabul qilingan?',
+                        'options': [
+                            'BMT (YUNESKO)',
+                            'Yevropa Ittifoqi',
+                            'Yevropa Kengashi',
+                            "Jahon sog'liqni saqlash tashkiloti (JSST)"
+                        ],
+                        'answer': 2,
+                        'explain': 'Oviedo konvensiyasi 1997-yilda Yevropa Kengashi doirasida qabul qilingan va bioetika sohasidagi asosiy xalqaro shartnoma hisoblanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "O'zbekiston qonunchiligiga ko'ra, har qanday tibbiy-biologik tajriba shaxsning yozma roziligisiz ham, agar u jamiyat manfaati uchun muhim bo'lsa, o'tkazilishi mumkin.",
+                        'answer': False,
+                        'explain': "Inson ustida yozma roziliksiz har qanday tibbiy yoki ilmiy tajribalar o'tkazish qonunan qat'iyan taqiqlanadi (Konstitutsiya va qonunlar bilan himoyalangan)."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Transhumanizm g'oyalari (kiborgizatsiya, miyani kompyuterga ulash) kontekstida paydo bo'lgan yangi huquqlar toifasi qanday nomlanadi?",
+                        'options': [
+                            'Neyro-huquqlar (neurorights)',
+                            'Kosmik huquqlar',
+                            'Ekologik huquqlar',
+                            'Raqamli mulk huquqlari'
+                        ],
+                        'answer': 0,
+                        'explain': 'Neyro-huquqlar (neurorights) — insonning miya faoliyati, fikrlash erkinligi va kognitiv daxlsizligini neyrotexnologik aralashuvlardan himoya qiluvchi yangi huquqlar guruhidir.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Mavzu bo'yicha bilimlaringizni sinash va ijodiy fikrlash uchun quyidagi topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Inson genomini tahrirlashda 'terapevtik' (kasallikni davolash) va 'yaxshilovchi' (enhancement - jismoniy yoki aqliy qobiliyatlarni sun'iy oshirish) tahrirlash o'rtasidagi huquqiy chegara nimadan iborat?",
+                            'answer': "Terapevtik tahrirlash og'ir genetik kasalliklarni davolashga qaratilgan bo'lsa, yaxshilovchi tahrirlash evolyutsion normalardan tashqariga chiqib, ijtimoiy tengsizlik va kamsitishni keltirib chiqarishi sababli huquqan taqiqlanadi.",
+                            'hint': 'Ijtimoiy adolat va genetik tengsizlik xavfini hisobga oling.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kelajakda sun'iy intellekt va biologik neyronlar birlashgan 'kiborg' shaklidagi mavjudotlar yaratilsa, ularning huquqiy maqomi qanday bo'lishi kerak? Ular to'liq huquq subyekti bo'la oladimi? Huquqiy nuqtai nazardan asoslang."
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -33762,6 +34568,814 @@ SUBJECTS = [
                             'id': 't2',
                             'type': 'open',
                             'prompt': "O(n) va O(n^2) algoritmlari o'rtasidagi farqni 10,000 ta ma'lumot misolida tushuntirib bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'dinamik-dasturlash-asoslari',
+                'title': 'Dinamik dasturlash asoslari',
+                'summary': "Murakkab muammolarni kichikroq va bir-birini takrorlovchi qism muammolarga bo'lish hamda oraliq natijalarni saqlash orqali yechish usuli.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Dinamik dasturlash nima?',
+                        'body': "Dinamik dasturlash (Dynamic Programming - DP) — bu murakkab masalalarni osonroq qism masalalarga ajratib yechish metodidir. Bo'lib tashla va hukmronlik qil (Divide and Conquer) usulidan farqli o'laroq, dinamik dasturlashda qism masalalar bir-biri bilan kesishadi (overlapping subproblems), ya'ni bir xil hisob-kitoblar ko'p marta takrorlanadi. Vaqtni tejash uchun ushbu takroriy hisob-kitoblar natijasi xotirada saqlab qolinadi (bunga memoizatsiya deyiladi)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Fibonachchi sonlarini hisoblash',
+                        'body': "Oddiy rekursiv usulda Fibonachchi sonini topish vaqti O(2^N) bo'lsa, dinamik dasturlash yordamida uni O(N) vaqtda bajarish mumkin:\n\ndef fib_dp(n):\n    if n <= 1:\n        return n\n    dp = [0] * (n + 1)\n    dp[1] = 1\n    for i in range(2, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]\n    return dp[n]"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Dinamik dasturlash masalalarini yechish bosqichlari',
+                        'items': [
+                            "Masala holatini (state) aniqlash va unga mos o'zgaruvchilarni belgilash.",
+                            "O'tish formulasini (transition relation) tuzish, ya'ni joriy holatni oldingi holatlar orqali ifodalash.",
+                            "Boshlang'ich shartlarni (base cases) aniqlash.",
+                            'Natijani hisoblash (Top-down memoization yoki Bottom-up tabulation yondashuvi orqali).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Dinamik dasturlash optimal yechimga ega bo'lish uchun masala 'optimal qism tuzilma' (optimal substructure) xossasiga ega bo'lishini talab qiladi. Ya'ni, butun masalaning optimal yechimi uning qism masalalari optimal yechimlaridan tashkil topishi kerak."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Dinamik dasturlash va 'Bo'lib tashla va hukmronlik qil' usullari orasidagi asosiy farq nimada?",
+                        'options': [
+                            'Dinamik dasturlash faqat satrlar bilan ishlaydi.',
+                            "Dinamik dasturlashda qism masalalar bir-biri bilan kesishadi (takrorlanadi), ikkinchisida esa mustaqil bo'ladi.",
+                            "Dinamik dasturlash har doim ko'proq xotira talab qiladi va sekinroq ishlaydi.",
+                            "Hech qanday farq yo'q, ikkalasi bir xil tushuncha."
+                        ],
+                        'answer': 1,
+                        'explain': 'Dinamik dasturlash takrorlanuvchi qism masalalar (overlapping subproblems) natijasini keshlab borishi bilan farqlanadi.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Memoizatsiya (Memoization) — bu Bottom-up (pastdan yuqoriga) yondashuv hisoblanadi.',
+                        'answer': False,
+                        'explain': "Memoizatsiya asosan rekursiv bo'lib, Top-down (yuqoridan pastga) yondashuvdir. Tabulyatsiya (Tabulation) esa Bottom-up hisoblanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "O'lchami N bo'lgan Fibonachchi ketma-ketligini tabulyatsiya usulida hisoblashning vaqt murakkabligi (time complexity) qanday?",
+                        'options': [
+                            'O(2^N)',
+                            'O(N^2)',
+                            'O(N)',
+                            'O(log N)'
+                        ],
+                        'answer': 2,
+                        'explain': 'Tabulyatsiya usulida har bir Fibonachchi soni massivda faqat bir marta hisoblanadi, bu esa O(N) vaqtni oladi.'
+                    }
+                ],
+                'homework': {
+                    'intro': 'Dinamik dasturlash mavzusini mustahkamlash uchun quyidagi topshiriqlarni bajaring.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Fibonachchi ketma-ketligining 10-hadini (n=10) dinamik dasturlash usulida hisoblaganda hosil bo'ladigan qiymatni yozing (f(0)=0, f(1)=1 deb hisoblang).",
+                            'answer': '55',
+                            'hint': 'Ketma-ketlik: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55...'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Hayotiy misol keltiring: Qaysi real muammoni dinamik dasturlash yordamida samarali yechish mumkin? Masalaning holatlari va o'tish qoidasini qisqacha tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'graflar-va-travers-algoritmlari',
+                'title': 'Graflar va ularni aylanib chiqish: BFS va DFS',
+                'summary': "Graflar ma'lumotlar tuzilmasi, ularni kompyuter xotirasida tasvirlash hamda BFS (eng birinchi kenglikka) va DFS (eng birinchi chuqurlikka) qidiruv algoritmlari.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Graf tushunchasi va tasvirlanishi',
+                        'body': "Graf — bu tugunlar (uchlar, vertices) va ularni bog'lovchi chiziqlar (qirralar, edges) to'plamidir. Graflar yo'naltirilgan (directed) va yo'naltirilmagan (undirected) bo'lishi mumkin. Kompyuterda graflarni tasvirlash uchun asosan ikki usuldan foydalaniladi: Qo'shnilik matritsasi (Adjacency Matrix — ikki o'lchamli massiv) va Qo'shnilik ro'yxati (Adjacency List — har bir tugunning qo'shnilari ro'yxati)."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "BFS (Kenglik bo'yicha qidiruv) algoritmi",
+                        'body': "BFS (Breadth-First Search) boshlang'ich tugundan boshlab qo'shni tugunlarni bosqichma-bosqich aylanib chiqadi. Bunda navbat (Queue) ma'lumotlar tuzilmasidan foydalaniladi:\n\nfrom collections import deque\n\ndef bfs(graph, start):\n    visited = set([start])\n    queue = deque([start])\n    while queue:\n        vertex = queue.popleft()\n        print(vertex, end=' ')\n        for neighbor in graph[vertex]:\n            if neighbor not in visited:\n                visited.add(neighbor)\n                queue.append(neighbor)"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "DFS (Chuqurlik bo'yicha qidiruv) qadamlari",
+                        'items': [
+                            "Boshlang'ich tugunni tanlash va uni 'tashrif buyurilgan' deb belgilash.",
+                            "Tugunning hali tashrif buyurilmagan birinchi qo'shnisiga o'tish va rekursiv ravishda jarayonni davom ettirish.",
+                            "Agar qo'shni tugunlar qolmagan bo'lsa, orqaga qaytish (backtracking).",
+                            'Barcha tugunlar aylanib chiqilguncha jarayonni takrorlash (bunda stek yoki rekursiyadan foydalaniladi).'
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: BFS eng qisqa yo'lni topish uchun (vaznsiz graflarda) juda qulay, DFS esa grafda sikllarni aniqlash, topologik saralash va labirintdan yo'l topish masalalarida keng qo'llaniladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "BFS (Kenglik bo'yicha qidiruv) algoritmini amalga oshirishda qaysi ma'lumotlar tuzilmasi asosiy rol o'ynaydi?",
+                        'options': [
+                            'Stek (Stack)',
+                            'Navbat (Queue)',
+                            "Lug'at (Dictionary)",
+                            'Daraxt (Tree)'
+                        ],
+                        'answer': 1,
+                        'explain': "BFS algoritmi birinchi darajali qo'shnilarni navbatma-navbat ko'rib chiqish uchun FIFO (Navbat) tuzilmasidan foydalanadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "DFS (Chuqurlik bo'yicha qidiruv) algoritmini rekursiyasiz, stek (Stack) yordamida ham amalga oshirish mumkin.",
+                        'answer': True,
+                        'explain': "To'g'ri. Rekursiyaning o'zi ham xotiradagi tizimli stekdan foydalanadi, shuning uchun biz uni oddiy stek ma'lumotlar tuzilmasi orqali iterativ shaklda yozishimiz mumkin."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Tugunlar soni V va qirralar soni E bo'lgan, qo'shnilik ro'yxati orqali tasvirlangan grafni to'liq aylanib chiqish (BFS/DFS) vaqt murakkabligi qanday?",
+                        'options': [
+                            'O(V^2)',
+                            'O(E^2)',
+                            'O(V + E)',
+                            'O(V * E)'
+                        ],
+                        'answer': 2,
+                        'explain': "Qo'shnilik ro'yxatida har bir tugun va har bir qirra cheklangan marta ko'rib chiqiladi, shuning uchun vaqt murakkabligi O(V + E) ga teng."
+                    }
+                ],
+                'homework': {
+                    'intro': "Graflar va ularni aylanib chiqish algoritmlari bo'yicha bilimlaringizni sinab ko'ring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agar yo'naltirilmagan to'liq grafda (barcha tugunlar bir-biri bilan bog'langan) 5 ta tugun bo'lsa, unda jami nechta qirra borligini hisoblang.",
+                            'answer': '10',
+                            'hint': "To'liq grafda qirralar soni formulasi: N * (N - 1) / 2"
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Ijtimoiy tarmoqlardagi do'stlik aloqalari (masalan, Facebook yoki LinkedIn) qanday graf turiga kiradi? Ikki foydalanuvchi orasidagi eng qisqa do'stlik masofasini topishda BFS yoki DFS dan qaysi biri mos keladi? Fikringizni asoslang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'daraxtlar-va-ularni-muvozanatlash-avl',
+                'title': 'Daraxtlar va ularni muvozanatlash: AVL daraxtlari',
+                'summary': "Ikkilik qidiruv daraxtlari (BST) samaradorligini oshirish va muvozanatlashgan AVL daraxtlarini yaratish usullarini o'rganish.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish: Nega muvozanatlash kerak?',
+                        'body': "Oddiy ikkilik qidiruv daraxtlarida (BST) elementlar tartib bilan qo'shilsa (masalan, 1, 2, 3, 4), daraxt chiziqli ro'yxatga aylanib qoladi va qidirish tezligi O(log N) dan O(N) ga tushib ketadi. Buning oldini olish uchun o'z-o'zini muvozanatlovchi daraxtlar ishlatiladi. AVL daraxti (Adelson-Velsky va Landis tomonidan yaratilgan) birinchi muvozanatlashgan ikkilik qidiruv daraxtidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Balans koeffitsiyenti',
+                        'body': "AVL daraxtida har bir tugun uchun uning chap va o'ng qism daraxtlari balandliklari farqi (balans koeffitsiyenti) hisoblanadi: BF = height(left) - height(right). Muvozanat saqlanishi uchun BF qiymati faqat -1, 0 yoki 1 bo'lishi kerak. Agar bu farq 2 yoki -2 bo'lsa, daraxtni rotatsiya (burish) yordamida muvozanatlash zarur."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Rotatsiya turlari',
+                        'items': [
+                            "Kichik chap (L) rotatsiya: o'ng qism daraxt juda og'irlashib ketganda qo'llaniladi.",
+                            "Kichik o'ng (R) rotatsiya: chap qism daraxt juda og'irlashib ketganda qo'llaniladi.",
+                            "Chap-o'ng (LR) qo'shaloq rotatsiyasi: chap qism daraxtning o'ng shoxi og'ir bo'lganda ishlatiladi.",
+                            "O'ng-chap (RL) qo'shaloq rotatsiyasi: o'ng qism daraxtning chap shoxi og'ir bo'lganda ishlatiladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: AVL daraxtida elementni qidirish, qo'shish va o'chirish amallarining eng yomon holatdagi vaqt murakkabligi har doim O(log N) ga teng bo'lishi kafolatlanadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "AVL daraxtida har bir tugunning chap va o'ng qism daraxtlari balandliklari farqi (balans koeffitsiyenti) qanday bo'lishi kerak?",
+                        'options': [
+                            "Faqat 0 bo'lishi shart",
+                            "-1, 0, yoki 1 bo'lishi mumkin",
+                            "-2 dan 2 gacha bo'lishi mumkin",
+                            "Istalgancha bo'lishi mumkin"
+                        ],
+                        'answer': 1,
+                        'explain': "AVL daraxti qoidasiga ko'ra, balans koeffitsiyenti mutloq qiymat bo'yicha 1 dan oshmasligi kerak, ya'ni -1, 0 yoki 1 bo'lishi mumkin."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': 'Muvozanatlanmagan oddiy ikkilik qidiruv daraxtida (BST) elementni qidirishning eng yomon holatdagi vaqt murakkabligi O(N) ga teng.',
+                        'answer': True,
+                        'explain': "Agar elementlar o'sib borish tartibida qo'shilsa, daraxt chiziqli zanjirga aylanadi va qidirish O(N) bo'ladi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Qaysi holatda chap-o'ng (LR) qo'shaloq rotatsiyasi amalga oshiriladi?",
+                        'options': [
+                            "Chap qism daraxtning chapiga element qo'shilganda",
+                            "O'ng qism daraxtning o'ngiga element qo'shilganda",
+                            "Chap qism daraxtning o'ngiga element qo'shilishi natijasida muvozanat buzilganda",
+                            "O'ng qism daraxtning chapiga element qo'shilishi natijasida muvozanat buzilganda"
+                        ],
+                        'answer': 2,
+                        'explain': "Chap qism daraxtning o'ngiga element qo'shilishi natijasida muvozanat buzilsa, avval chap shox o'ngga, keyin esa butun daraxt chapga buriladi (LR rotatsiyasi)."
+                    }
+                ],
+                'homework': {
+                    'intro': "AVL daraxtlarini muvozanatlash va ularning samaradorligini tahlil qilish bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Balandligi 3 bo'lgan minimal tugunlar soniga ega AVL daraxtida nechta tugun mavjud? (Balandlik ildizdan boshlab 0, 1, 2, 3 deb hisoblansin)",
+                            'answer': '7',
+                            'hint': 'N(h) = N(h-1) + N(h-2) + 1 formulasidan foydalaning. N(0)=1, N(1)=2 dan boshlab hisoblang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Berilgan [10, 20, 30] ketma-ketligini AVL daraxtiga qo'shish jarayonida qanday rotatsiya sodir bo'lishini chizib yoki matn ko'rinishida tushuntiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'blokcheyn-texnologiyasi-va-konsensus',
+                'title': 'Blokcheyn texnologiyasi va kriptografik konsensus algoritmlari',
+                'summary': "Taqsimlangan ma'lumotlar bazasi, kriptografik xesh-funksiyalar va konsensus (PoW, PoS) algoritmlarining ishlash mexanizmlari.",
+                'duration': 15,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish: Blokcheyn nima?',
+                        'body': "Blokcheyn — bu ma'lumotlarni markazlashtirilmagan, taqsimlangan va xavfsiz saqlash texnologiyasidir. U zanjir shaklida ulanadigan bloklardan iborat bo'lib, har bir yangi blok o'zidan oldingi blokning xesh-qiymatini (hash) saqlaydi. Bu tuzilma ma'lumotlarni o'zgartirish yoki soxtalashtirishni deyarli imkonsiz qiladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Blokning tarkibi',
+                        'body': "Sodda ko'rinishda har bir blok quyidagi ma'lumotlardan iborat bo'ladi: \n1. Blok indeksi (Index)\n2. Vaqt muhri (Timestamp)\n3. Tranzaksiyalar yoki ma'lumotlar (Data)\n4. Oldingi blokning xeshi (Previous Hash)\n5. Nonce (tasodifiy son)\n6. Blokning o'z xeshi (Hash)"
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Konsensus algoritmlari: PoW va PoS',
+                        'items': [
+                            "Proof of Work (PoW): Konchilar (miners) murakkab matematik jumboqni yechish (kerakli xeshni topish uchun Nonce sonini tanlash) orqali yangi blok qo'shish huquqini qo'lga kiritadilar. Ko'p energiya talab qiladi.",
+                            "Proof of Stake (PoS): Blok yaratuvchilar tarmoqdagi o'z ulushlariga (kriptovalyuta miqdoriga) qarab tanlanadi. Kamroq energiya sarflaydi va tezroq ishlaydi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Blokcheynda eski ma'lumotlarni o'zgartirish uchun tarmoqdagi barcha keyingi bloklarning xeshlarini qayta hisoblash va tarmoqning kamida 51% quvvatiga ega bo'lish talab etiladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Blokcheynda bloklar bir-biri bilan qanday bog'lanadi?",
+                        'options': [
+                            "IP-manzillar ro'yxati orqali",
+                            'Oldingi blokning xesh-qiymati (Previous Hash) orqali',
+                            'Oddiy tartib raqami va SQL kalitlari orqali',
+                            'Foydalanuvchilarning parollari yordamida'
+                        ],
+                        'answer': 1,
+                        'explain': "Har bir yangi blok tarkibida o'zidan oldingi blokning xesh-qiymati saqlanadi, bu esa zanjirning uzviyligini va xavfsizligini ta'minlaydi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Proof of Stake (PoS) konsensus algoritmi Proof of Work (PoW) ga qaraganda ko'proq elektr energiyasi va hisoblash quvvatini talab qiladi.",
+                        'answer': False,
+                        'explain': 'PoS tanga ulushiga asoslanadi va PoW kabi murakkab matematik jumboqlarni yechishni talab qilmagani uchun juda kam energiya sarflaydi.'
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Blokcheyndagi 'Nonce' nima vazifani bajaradi?",
+                        'options': [
+                            "Blok yaratilgan aniq vaqtni ko'rsatadi",
+                            'Tranzaksiyalar sonini hisoblaydi',
+                            "Kerakli xesh qiymatini topish uchun o'zgartiriladigan vaqtinchalik tasodifiy son",
+                            'Tarmoqdagi foydalanuvchilar sonini aniqlaydi'
+                        ],
+                        'answer': 2,
+                        'explain': "Nonce (number used once) - bu konchilar tomonidan maqsadli xesh qiymatiga erishish uchun tinimsiz o'zgartiriladigan vaqtinchalik sondir."
+                    }
+                ],
+                'homework': {
+                    'intro': "Blokcheyn arxitekturasi va kriptografik xavfsizlikni tahlil qilish bo'yicha topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agar blokcheyn tarmog'ida 51% hujumi (51% attack) muvaffaqiyatli sodir etilsa, tajovuzkor qanday zarar yetkazishi mumkin? (Qisqa javob)",
+                            'answer': 'Tranzaksiyalarni ikki marta sarflash',
+                            'hint': 'Double spending (ikki marta sarflash) muammosini eslang.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Proof of Work (PoW) va Proof of Stake (PoS) konsensus algoritmlarining farqlarini afzalliklari va kamchiliklari nuqtai nazaridan taqqoslab bering.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kvant-kompyuterlari-va-kvant-algoritmlari',
+                'title': 'Kvant kompyuterlari va kvant algoritmlari asoslari',
+                'summary': 'Kvant hisoblashlarining asosiy tushunchalari, kubitlar, superpozitsiya va kvant chalkashligi hodisalari hamda mashhur kvant algoritmlari haqida tushuncha.',
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kvant hisoblashlariga kirish',
+                        'body': "Klassik kompyuterlar ma'lumotlarni bitlar (0 va 1) ko'rinishida qayta ishlasa, kvant kompyuterlari kubitlar (quantum bits) bilan ishlaydi. Kubitlar kvant mexanikasi qonuniyatlariga bo'ysunadi. Klassik bit faqat bitta holatda (yoki 0, yoki 1) bo'lishi mumkin bo'lsa, kubit bir vaqtning o'zida ham 0, ham 1 holatida bo'lishi mumkin. Bu hodisa superpozitsiya deb ataladi va hisoblash quvvatini eksponensial ravishda oshiradi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kubit holatining ifodalanishi',
+                        'body': "Kubit holati matematik ravishda Dirac (bra-ket) notatsiyasida quyidagicha ifodalanadi:\n|ψ⟩ = α|0⟩ + β|1⟩\nBu yerda α va β - ehtimollik amplitudalari bo'lib, ularning kvadratlari yig'indisi (|α|² + |β|² = 1) kubitni o'lchaganda 0 yoki 1 chiqish ehtimolini belgilaydi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Kvant algoritmining ishlash bosqichlari',
+                        'items': [
+                            "Inisializatsiya: Kubitlar tizimini boshlang'ich holatga (odatda |00...0⟩) keltirish.",
+                            "Superpozitsiya yaratish: Hadamard (H) darvozasi yordamida kubitlarni superpozitsiya holatiga o'tkazish.",
+                            "Kvant manipulyatsiyasi: Kvant mantiqiy darvozalari (CNOT, Phase shift va b.) yordamida kubitlararo bog'liqlik va hisoblashlarni amalga oshirish.",
+                            "O'lchash (Measurement): Kvant holatlarini o'lchash orqali klassik ma'lumotga (0 va 1 lardan iborat natijaga) aylantirish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Kvant kompyuterlari an'anaviy kompyuterlarni butunlay almashtirmaydi. Ular faqat ma'lum bir turdagi o'ta murakkab masalalarni (masalan, Shor algoritmi yordamida katta sonlarni ko'paytuvchilarga ajratish yoki Grover algoritmi orqali qidiruv) tezkor yechish uchun mo'ljallangan."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Kubitning bir vaqtning o'zida ham 0, ham 1 holatida bo'la olish xususiyati nima deb ataladi?",
+                        'options': [
+                            'Kvant chalkashligi (Entanglement)',
+                            'Superpozitsiya (Superposition)',
+                            'Kvant teleportatsiyasi',
+                            'Kvant interferensiyasi'
+                        ],
+                        'answer': 1,
+                        'explain': "Superpozitsiya - bu kubitning bir vaqtning o'zida bir nechta holatda bo'lish qobiliyatidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Kvant chalkashligi (entanglement) holatidagi ikkita kubit bir-biridan har qancha uzoqlikda bo'lsa ham, ulardan birining holati o'zgarishi ikkinchisiga darhol ta'sir qiladi.",
+                        'answer': True,
+                        'explain': "Kvant chalkashligi zarralar orasidagi o'zaro bog'liqlik bo'lib, masofadan qat'i nazar, birining holati o'lchanganda ikkinchisining holati ham darhol aniqlanadi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "RSA shifrlash tizimlarining xavfsizligiga tahdid soluvchi, katta sonlarni tub ko'paytuvchilarga tez ajratuvchi kvant algoritmi qaysi?",
+                        'options': [
+                            'Grover algoritmi',
+                            'Deych-Joza algoritmi',
+                            'Shor algoritmi',
+                            'Bell algoritmi'
+                        ],
+                        'answer': 2,
+                        'explain': "Shor algoritmi klassik kompyuterlar uchun juda qiyin bo'lgan sonlarni faktoriallash (tub ko'paytuvchilarga ajratish) masalasini kvant kompyuterida tez yechib beradi."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Kvant hisoblashlari asoslarini mustahkamlash uchun topshiriqlar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Kvant darvozalaridan biri bo'lgan Hadamard (H) darvozasining vazifasini yozing.",
+                            'answer': "Hadamard darvozasi kubitni klassik holatdan (masalan, |0⟩) mukammal superpozitsiya holatiga o'tkazadi, ya'ni o'lchaganda 50% ehtimollik bilan 0 va 50% ehtimollik bilan 1 chiqadigan holatni yaratadi.",
+                            'hint': "Bu darvoza superpozitsiya yaratish uchun eng birinchi qo'llaniladigan vositadir."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Nima uchun kvant kompyuterlari rivojlanishi zamonaviy kriptografiya (masalan, HTTPS, bank xavfsizligi) uchun xavf tug'diradi? Fikringizni asoslab bering."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'taqsimlangan-tizimlar-va-cap-teoremasi',
+                'title': 'Taqsimlangan tizimlar arxitekturasi va CAP teoremasi',
+                'summary': "Tarmoq orqali bog'langan bir nechta tugunlardan iborat tizimlar, ularning barqarorligi va CAP teoremasining uchta asosiy ustuni.",
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Taqsimlangan tizimlar nima?',
+                        'body': "Taqsimlangan tizim (Distributed System) - bu foydalanuvchiga yagona yaxlit tizim bo'lib ko'rinadigan, lekin mustaqil ishlovchi va o'zaro tarmoq orqali ma'lumot almashuvchi kompyuterlar (tugunlar) majmuasidir. Zamonaviy yirik platformalar (Google, Amazon, Telegram) barchasi taqsimlangan tizimlardir. Bunday tizimlarda asosiy muammo - ma'lumotlarning barcha tugunlarda bir xil va yangi bo'lishini (sinxrronligini) ta'minlashdir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'CAP teoremasi',
+                        'body': "1998-yilda Eric Brewer tomonidan taqdim etilgan CAP teoremasiga ko'ra, taqsimlangan ma'lumotlar ombori quyidagi uchta xususiyatdan faqat ikkitasini bir vaqtda ta'minlay oladi:\n1. Consistency (Moslik) - har qanday tugundan o'qilganda eng oxirgi yozilgan ma'lumot qaytadi.\n2. Availability (Foydalana olishlik) - ishlayotgan har qanday tugun xatosiz javob qaytaradi.\n3. Partition tolerance (Bo'linishga bardoshlilik) - tarmoqda uzilishlar bo'lsa ham tizim ishlashda davom etadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Taqsimlangan tizimni loyihalash bosqichlari',
+                        'items': [
+                            "Masshtabni aniqlash: Tizim gorizontal (yangi serverlar qo'shish) yoki vertikal (server quvvatini oshirish) masshtablanishini tanlash.",
+                            "Replikatsiya strategiyasi: Ma'lumotlarni nusxalash (Master-Slave yoki Multi-Master) usulini belgilash.",
+                            "Muqarrar tarmoq uzilishini (Partition) hisobga olish: Tarmoq uzilganda tizim qanday yo'l tutishini (CP yoki AP) tanlash.",
+                            "Konsensus algoritmini joriy qilish: Tugunlar o'rtasida umumiy holat bo'yicha kelishuv (Raft yoki Paxos) mexanizmini o'rnatish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Real dunyoda tarmoq uzilishlari (Partition - P) muqarrar ravishda sodir bo'ladi. Shuning uchun muhandislar deyarli har doim CP (Moslik va Bo'linishga bardoshlilik) yoki AP (Foydalana olishlik va Bo'linishga bardoshlilik) modellaridan birini tanlashga majbur bo'ladilar."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "CAP teoremasidagi 'A' (Availability) harfi nimani anglatadi?",
+                        'options': [
+                            "Ma'lumotlarning barcha tugunlarda bir xilligi",
+                            "Tizimning har qanday ishlayotgan tuguni so'rovga muvaffaqiyatli javob qaytara olishi",
+                            'Tarmoqdagi uzilishlarga bardoshlilik',
+                            "Ma'lumotlar bazasining tezkorligi"
+                        ],
+                        'answer': 1,
+                        'explain': "Availability (Foydalana olishlik) - bu har qanday ishlayotgan tugunning so'rovga xatoliksiz javob bera olish xususiyatidir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "CAP teoremasiga ko'ra, tarmoq bo'linishi (Partition) sodir bo'lganda, tizim bir vaqtning o'zida ham to'liq Consistency (moslik), ham to'liq Availability (foydalana olishlik)ni ta'minlay oladi.",
+                        'answer': False,
+                        'explain': "Teoremaga ko'ra, tarmoq bo'linganida (P) biz yo Consistency (C) ni, yoki Availability (A) ni tanlashimiz kerak. Ikkalasini bir vaqtda 100% ta'minlab bo'lmaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Taqsimlangan tizimlarda tugunlar o'rtasida kelishuvni (konsensus) ta'minlash uchun keng qo'llaniladigan algoritm qaysi?",
+                        'options': [
+                            'Dijkstra algoritmi',
+                            'Kruskal algoritmi',
+                            'Raft algoritmi',
+                            'A* algoritmi'
+                        ],
+                        'answer': 2,
+                        'explain': "Raft (va Paxos) algoritmlari taqsimlangan tizimlarda tugunlar o'rtasida konsensus (kelishuv)ga erishish uchun ishlatiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Taqsimlangan tizimlar va CAP teoremasi bo'yicha bilimlarni sinash.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "CAP teoremasidagi 'C' (Consistency - Moslik) tushunchasini tushuntiring.",
+                            'answer': "Consistency (Moslik) - bu taqsimlangan tizimdagi barcha mijozlar (users) bir vaqtning o'zida qaysi tugunga murojaat qilishidan qat'i nazar, aynan bir xil va eng oxirgi yangilangan ma'lumotni ko'rishidir.",
+                            'hint': "Bu ma'lumotlar sinxronligi bilan bog'liq."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': 'Bank tizimlari va ijtimoiy tarmoqlar (masalan, Facebook sharhlari) uchun CAP teoremasining qaysi modellari (CP yoki AP) mos kelishini tushuntiring.'
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'neyron-tarmoqlari-va-chuqur-organish-arxitekturasi',
+                'title': "Neyron tarmoqlari va chuqur o'rganish (Deep Learning) arxitekturasi",
+                'summary': "Sun'iy neyron tarmoqlari, ko'p qatlamli perseptron, faollashtirish funksiyalari va teskari tarqalish (backpropagation) algoritmining matematik asoslari.",
+                'duration': 20,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Sun'iy neyron tarmoqlari (SNT) - bu inson miyasining ishlash prinsipiga taqlid qilib yaratilgan matematik modeldir. Tarmoqning eng kichik funksional birligi neyron (yoki perseptron) deb ataladi. Neyron o'ziga kiruvchi signallarni mos vazn koeffitsiyentlariga ko'paytiradi, ularni jamlaydi, og'ish (bias) qiymatini qo'shadi va hosil bo'lgan natijani chiziqli bo'lmagan faollashtirish funksiyasi orqali chiqishga uzatadi. Chuqur o'rganish (Deep Learning) esa ko'plab yashirin qatlamlardan tashkil topgan murakkab neyron tarmoqlarini o'rganish va qo'llash sohasidir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Neyron hisoblashiga misol',
+                        'body': "Faraz qilaylik, bizda ikkita kirish qiymatiga ega neyron bor: x1 = 0.5 va x2 = 0.8. Ularning vaznlari mos ravishda w1 = 0.4 va w2 = -0.2 bo'lsin. Og'ish qiymati b = 0.1. Yig'indi quyidagicha hisoblanadi: S = (x1 * w1) + (x2 * w2) + b = (0.5 * 0.4) + (0.8 * -0.2) + 0.1 = 0.2 - 0.16 + 0.1 = 0.14. Agar biz ReLU faollashtirish funksiyasini qo'llasak, chiqish qiymati f(0.14) = 0.14 bo'ladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Teskari tarqalish (Backpropagation) bosqichlari',
+                        'items': [
+                            "To'g'ri uzatish (Forward propagation): Kirish ma'lumotlari tarmoq qatlamlari orqali o'tib, yakuniy bashorat qiymatini hosil qiladi.",
+                            "Xatolikni hisoblash: Bashorat qilingan natija va haqiqiy maqsadli qiymat o'rtasidagi farq yo'qotish funksiyasi (Loss function) orqali hisoblanadi.",
+                            "Gradientlarni hisoblash: Zanjir qoidasi (Chain Rule) yordamida yo'qotish funksiyasining har bir vaznga nisbatan xususiy hosilalari (gradientlari) orqaga qarab hisoblab chiqiladi.",
+                            "Vaznlarni yangilash: Gradient tushishi (Gradient Descent) algoritmi yordamida vaznlar va og'ishlar xatolikni kamaytirish yo'nalishida o'zgartiriladi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Chiziqli bo'lmagan faollashtirish funksiyalari (masalan, ReLU, Sigmoid, Tanh) neyron tarmoqlariga murakkab, chiziqli bo'lmagan qonuniyatlarni va bog'liqliklarni o'rganish imkonini beradi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Qaysi faollashtirish funksiyasi f(x) = max(0, x) formula yordamida hisoblanadi?',
+                        'options': [
+                            'Sigmoid',
+                            'Tanh',
+                            'ReLU',
+                            'Softmax'
+                        ],
+                        'answer': 2,
+                        'explain': "ReLU (Rectified Linear Unit) funksiyasi manfiy qiymatlarni 0 ga tenglashtiradi, musbat qiymatlarni esa o'zgarishsiz qoldiradi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Teskari tarqalish (Backpropagation) algoritmi tarmoq xatoligini kamaytirish uchun tarmoq vaznlarini optimallashtirishda qo'llaniladi.",
+                        'answer': True,
+                        'explain': "To'g'ri. Backpropagation gradient tushishi usuli yordamida xatolikni kamaytirish uchun neyronlar vaznlarini orqaga qarab yangilaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Neyron tarmog'ini o'qitishda o'rganish tezligi (learning rate) juda katta qilib belgilansa nima sodir bo'ladi?",
+                        'options': [
+                            "Tarmoq juda tez va aniq o'rganadi",
+                            "Gradient minimal nuqtadan sakrab o'tib ketishi va tarmoq divergensiyaga uchrashi mumkin",
+                            'Vaznlar mutloq nolga aylanib qoladi',
+                            "Hech qanday salbiy ta'siri bo'lmaydi"
+                        ],
+                        'answer': 1,
+                        'explain': "O'rganish tezligi juda katta bo'lsa, qadamlar katta bo'lib ketadi va optimal nuqtadan o'tib ketib, model yaqinlashmaydi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Neyron tarmoqlari va chuqur o'rganish asoslari bo'yicha bilimlaringizni sinash uchun topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agar neyronga kiruvchi qiymatlar x1 = 1, x2 = 0, ularning vaznlari w1 = 0.5, w2 = 0.5 va og'ish (bias) b = -0.2 bo'lsa, faollashtirish funksiyasidan oldingi umumiy yig'indini (S) hisoblang.",
+                            'answer': '0.3',
+                            'hint': 'S = (x1 * w1) + (x2 * w2) + b formulasidan foydalaning.'
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Neyron tarmoqlarida o'ta moslashish (overfitting) muammosi nima va uni qanday usullar yordamida bartaraf etish mumkin? Kamida ikkita usulni tavsiflang."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'kompilyatorlar-qurilishi-leksik-va-sintaktik-tahlil',
+                'title': 'Kompilyatorlar qurilishi: Leksik va sintaktik tahlil, AST',
+                'summary': 'Dasturlash tillari qanday tarjima qilinadi? Leksik tahlil (tokenizatsiya), sintaktik tahlil (parsing) va Mavhum sintaktik daraxt (AST) tushunchalari.',
+                'duration': 25,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish',
+                        'body': "Kompilyator — bu yuqori darajadagi dasturlash tilida yozilgan manba kodini mashina tili yoki boshqa quyi darajadagi tilga tarjima qiluvchi murakkab dasturiy tizimdir. Kompilyatsiya jarayoni asosan ikki qismga bo'linadi: tahlil qilish (Frontend) va sintez qilish (Backend). Frontend qismida kod matni o'qib olinadi va uning mantiqiy tuzilishi tekshiriladi. Bu jarayonning dastlabki ikki muhim bosqichi leksik tahlil (lexical analysis) va sintaktik tahlil (syntax analysis) hisoblanadi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Kodni tokenizatsiya qilish va AST qurish',
+                        'body': "Faraz qilaylik, bizda 'x = 5 + 3' ifodasi bor. Leksik tahlilchi (Lexer) ushbu matnni quyidagi tokenlar oqimiga aylantiradi: [IDENTIFIER('x'), ASSIGN('='), NUMBER('5'), PLUS('+'), NUMBER('3')]. Keyin sintaktik tahlilchi (Parser) bu tokenlarni olib, grammatika qoidalari asosida Mavhum sintaktik daraxt (AST - Abstract Syntax Tree) hosil qiladi. ASTda '=' operatori ildiz (root) tugun bo'ladi, uning chap shoxi 'x', o'ng shoxi esa '+' operatori bo'ladi. '+' operatorining ostida esa '5' va '3' barg (leaf) tugunlari joylashadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': 'Frontend bosqichlari ketma-ketligi',
+                        'items': [
+                            "Leksik tahlil (Lexing): Manba kodidagi belgilar oqimini ma'noga ega bo'lgan eng kichik birliklar — tokenlarga (kalit so'zlar, o'zgaruvchilar, operatorlar) ajratish.",
+                            'Sintaktik tahlil (Parsing): Tokenlar ketma-ketligini tilning kontekstdan xoli grammatikasi (Context-Free Grammar) asosida tekshirish va AST daraxtini qurish.',
+                            "Semantik tahlil (Semantic Analysis): Tiplarning mosligi, o'zgaruvchilarning e'lon qilinganligi va doiraviy qoidalarni tekshirish.",
+                            "Oraliq kod yaratish (Intermediate Code Generation): Kodni mashinaga bog'liq bo'lmagan oraliq ko'rinishga (masalan, uch manzilli kod yoki baytkod) o'tkazish."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: AST (Mavhum sintaktik daraxt) o'zida dastur kodining barcha sintaktik detallarini (masalan, qavslar, nuqtali vergullar) saqlamaydi, u faqat dasturning mantiqiy va ierarxik tuzilishini ifodalaydi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': "Manba kodini alohida ma'noli birliklar — tokenlarga ajratuvchi kompilyator qismi nima deb ataladi?",
+                        'options': [
+                            'Parser (Sintaktik tahlilchi)',
+                            'Lexer (Leksik tahlilchi)',
+                            'Kompilyator backend qismi',
+                            'Kodni optimizator'
+                        ],
+                        'answer': 1,
+                        'explain': "Lexer (yoki skaner) kodni belgilar darajasida o'qib, ularni ma'noli guruhlar — tokenlarga ajratadi."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Mavhum sintaktik daraxtda (AST) dasturdagi barcha qavslar va tinish belgilari to'liq saqlanib qoladi.",
+                        'answer': False,
+                        'explain': "Noto'g'ri. AST mavhum strukturadir, unda qavslar kabi sintaktik yordamchi belgilar tashlab ketiladi, chunki daraxt ierarxiyasi amallar ketma-ketligini o'z-o'zidan belgilaydi."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Sintaktik tahlilchi (Parser) kiruvchi va chiquvchi ma'lumot sifatida mos ravishda nimalarni qabul qiladi va qaytaradi?",
+                        'options': [
+                            'Manba kodi matni -> Tokenlar oqimi',
+                            'Tokenlar oqimi -> Mashina kodi',
+                            'Tokenlar oqimi -> AST (Mavhum sintaktik daraxt)',
+                            'AST -> Mashina kodi'
+                        ],
+                        'answer': 2,
+                        'explain': 'Parser leksik tahlilchi bergan tokenlar oqimini qabul qilib, ulardan til grammatikasi asosida daraxtsimon tuzilma — AST yaratadi.'
+                    }
+                ],
+                'homework': {
+                    'intro': "Kompilyatorlarning ishlash prinsiplari va leksik/sintaktik tahlil mavzusi bo'yicha topshiriqlarni bajaring.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Agar bizda 'if (a > 0)' kod qismi bo'lsa, leksik tahlil natijasida nechta token hosil bo'ladi? (Qavslar va solishtirish belgilarini ham alohida token deb hisoblang)",
+                            'answer': '6',
+                            'hint': "Tokenlar: 'if', '(', 'a', '>', '0', ')'"
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Kompilyator (Compiler) va Interpretator (Interpreter) o'rtasidagi asosiy farqlarni tushuntiring. Har birining kamida bittadan afzalligi va kamchiligini keltiring."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'parallel-va-kop-tarmoqli-dasturlash',
+                'title': "Parallel va ko'p tarmoqli dasturlash: Sinxronizatsiya, poyga holati va o'lik qulflash",
+                'summary': "Ko'p yadroli protsessorlarda dasturlarning parallel ishlashi, umumiy xotiraga kirish muammolari, sinxronizatsiya mexanizmlari (Mutex, Semaphore) va Deadlock holatlarini o'rganish.",
+                'duration': 45,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': "Kirish: Ko'p oqimli (Multithreading) va parallel tizimlar",
+                        'body': "Zamonaviy kompyuterlar ko'p yadroli protsessorlarga ega bo'lib, bir vaqtning o'zida bir nechta vazifalarni bajarish qobiliyatiga ega. Dasturlashda bu jarayon ko'p oqimlilik (multithreading) va parallellik (parallelism) orqali amalga oshiriladi. Oqim (thread) - bu operatsion tizim tomonidan rejalashtirilishi mumkin bo'lgan eng kichik buyruqlar ketma-ketligidir. Parallel dasturlashda bir nechta oqimlar umumiy xotira maydonidan (shared memory) foydalanadi. Agar bir nechta oqim bir vaqtda bitta o'zgaruvchini o'zgartirishga harakat qilsa, ma'lumotlarning buzilishi yoki kutilmagan natijalarga olib keladigan 'Poyga holati' (Race Condition) yuzaga keladi. Buni bartaraf etish uchun sinxronizatsiya vositalaridan foydalaniladi."
+                    },
+                    {
+                        'type': 'example',
+                        'title': 'Poyga holatiga misol (Race Condition)',
+                        'body': "Tasavvur qiling, bank hisobida 100 dollar bor. Ikkita oqim bir vaqtda ushbu hisobdan 50 dollardan yechib olmoqchi. Har bir oqim hisob balandligini tekshiradi (100 > 50) va pulni yechadi. Sinxronizatsiyasiz ikkala oqim ham bir vaqtda tekshiruvdan o'tishi va hisob balansini manfiy holatga keltirib qo'yishi mumkin. Pythonda ushbu muammoni hal qilish uchun `threading.Lock` (Mutex) obyekti ishlatiladi. `lock.acquire()` orqali oqim resursni qulflaydi, ishini tugatgach `lock.release()` yordamida uni bo'shatadi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Sinxronizatsiyani ta'minlash va Deadlockdan qochish qadamlari",
+                        'items': [
+                            'Kritik sektsiyani (Critical Section) aniqlash: umumiy resurslarga murojaat qilinadigan kod qismini belgilash.',
+                            'Mutex (Mutual Exclusion) yoki Semaphore obyektini yaratish.',
+                            "Resursga kirishdan oldin blokirovka (lock) o'rnatish va foydalanib bo'lingach, uni albatta bo'shatish.",
+                            "Resurslarni qulflash tartibiga rioya qilish: agar bir nechta lock kerak bo'lsa, barcha oqimlar ularni bir xil ketma-ketlikda band qilishi shart (Deadlock oldini olish uchun)."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Sinxronizatsiya vositalarini noto'g'ri ishlatish 'Deadlock' (o'lik qulflash) holatiga olib keladi. Bu holatda Thread 1 resurs A ni qulflab, resurs B ni kutadi, Thread 2 esa resurs B ni qulflab, resurs A ni kutadi. Natijada dastur butunlay muzlab qoladi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'Poyga holati (Race Condition) deganda nima tushuniladi?',
+                        'options': [
+                            'Bir nechta oqimning umumiy resursga bir vaqtda tartibsiz murojaat qilishi natijasida kelib chiqadigan xatolik',
+                            "Dasturning xotira yetishmovchiligi tufayli to'xtab qolishi",
+                            'Protsessor yadrolarining qizib ketishi natijasida ish tezligining pasayishi',
+                            "Ma'lumotlar bazasiga noto'g'ri SQL so'rov yuborilishi"
+                        ],
+                        'answer': 0,
+                        'explain': "Race condition - bu bir nechta oqim umumiy ma'lumotlarni bir vaqtda o'zgartirishga harakat qilganda, yakuniy natija oqimlarning bajarilish tartibiga bog'liq bo'lib qoladigan va xatolikka olib keladigan holatdir."
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "Deadlock (o'lik qulflash) holatidan qutulish uchun oqimlar har doim resurslarni turli xil ixtiyoriy tartibda qulflashi kerak.",
+                        'answer': False,
+                        'explain': "Aksincha, Deadlockning oldini olish uchun barcha oqimlar resurslarni qulflashda bir xil qat'iy ketma-ketlikka amal qilishlari shart."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "Faqatgina bitta oqimning kritik sektsiyaga kirishini ta'minlovchi eng sodda sinxronizatsiya obyekti qanday nomlanadi?",
+                        'options': [
+                            'Semaphore',
+                            'Queue',
+                            'Mutex (Lock)',
+                            'Thread Pool'
+                        ],
+                        'answer': 2,
+                        'explain': "Mutex (Mutual Exclusion) - bu bir vaqtning o'zida faqat bitta oqimga resursdan foydalanishga ruxsat beruvchi o'zaro istisno qiluvchi obyektdir."
+                    }
+                ],
+                'homework': {
+                    'intro': 'Parallel dasturlash va sinxronizatsiya tushunchalarini mustahkamlash uchun amaliy vazifalar.',
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': "Sinxronizatsiya obyekti hisoblangan Mutex va Semaphore (Semafor) o'rtasidagi asosiy farqni tushuntirib bering.",
+                            'answer': "Mutex faqat bitta oqimga resursga kirish ruxsatini beradi (binary lock). Semaphore esa bir vaqtning o'zida belgilangan sondagi (N ta) oqimlarga resursdan foydalanish imkonini beradi.",
+                            'hint': "Ruxsat etilgan oqimlar soniga e'tibor bering."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "Pythonda `threading` modulidan foydalanib, ikkita oqim bitta umumiy o'zgaruvchini (masalan, hisoblagichni) 100000 marta oshiradigan dastur yozing. Avval sinxronizatsiyasiz (poyga holatini ko'rish uchun), so'ngra `Lock` yordamida to'g'rilangan variantini tahlil qiling va natijalarni yozma bayon eting."
+                        }
+                    ]
+                }
+            },
+            {
+                'slug': 'p-vs-np-muammosi-va-np-toliqlik',
+                'title': "P va NP sinflari, NP-to'liqlik va algoritmlarni keltirish (reduksiya)",
+                'summary': "Algoritmlar nazariyasining eng muhim muammolaridan biri bo'lgan P va NP murakkablik sinflari, NP-to'liq masalalar va ularni bir-biriga keltirish (reduksiya) asoslari.",
+                'duration': 50,
+                'lesson': [
+                    {
+                        'type': 'text',
+                        'title': 'Kirish: Murakkablik sinflari va P vs NP muammosi',
+                        'body': "Hisoblash murakkabligi nazariyasida masalalar ularni yechish uchun ketadigan vaqtga qarab sinflarga bo'linadi. P (Polynomial time) sinfiga deterministik Turing mashinasida (ya'ni oddiy kompyuterda) polinomial vaqtda, ya'ni tez yechiladigan masalalar kiradi (masalan, saralash, eng qisqa yo'lni topish). NP (Nondeterministic Polynomial time) sinfiga esa yechimini topish qiyin bo'lishi mumkin, lekin berilgan tayyor yechimning to'g'riligini polinomial vaqtda tekshirish (verifikatsiya qilish) oson bo'lgan masalalar kiradi. 'P vs NP' muammosi quyidagicha: 'Agar masalaning yechimini tezda tekshirish mumkin bo'lsa, uni tezda yechish ham mumkinmi?'. Bu savol kompyuter ilmlaridagi hali yechilmagan eng buyuk 7 ta 'Mingyillik muammolari'dan biridir."
+                    },
+                    {
+                        'type': 'example',
+                        'title': "NP-to'liq masalaga misol: Sayohatchi sotuvchi masalasi (TSP)",
+                        'body': "Sayohatchi sotuvchi masalasida (Traveling Salesperson Problem) N ta shahar va ularning orasidagi masofalar berilgan. Sotuvchi har bir shaharga faqat bir marta tashrif buyurib, eng qisqa umumiy masofani bosib o'tadigan aylanma yo'lni topishi kerak. Shaharlar soni ortishi bilan mumkin bo'lgan yo'llar soni faktorial (N!) tarzda o'sadi. Bu masalani polinomial vaqtda yechadigan algoritm hali topilmagan. Ammo tayyor taklif qilingan yo'lning umumiy uzunligi belgilangan limitdan kam yoki ko'pligini tekshirish juda oson va tez (polinomial vaqtda) bajariladi. Bu uni NP-to'liq (NP-complete) masala qiladi."
+                    },
+                    {
+                        'type': 'steps',
+                        'title': "Masalaning NP-to'liqligini isbotlash va Reduksiya (Keltirish)",
+                        'items': [
+                            "Yangi masalaning NP sinfiga tegishli ekanligini ko'rsatish (ya'ni, yechim taklif qilinsa, uni polinomial vaqtda tekshirish mumkinligini isbotlash).",
+                            "Ma'lum bo'lgan biror NP-to'liq masalani tanlash (masalan, SAT yoki 3-SAT).",
+                            "Polinomial vaqtli reduksiya (reduksiyalash): Tanlangan ma'lum NP-to'liq masalani yangi masalaga polinomial vaqt ichida o'zgartira olishni isbotlash.",
+                            "Agar bu reduksiya muvaffaqiyatli bajarilsa, yangi masala ham NP-to'liq ekanligi isbotlanadi."
+                        ]
+                    },
+                    {
+                        'type': 'note',
+                        'body': "Esda tuting: Agar kimdir bitta NP-to'liq masalani polinomial vaqtda yechish algoritmini topsa, u holda barcha NP sinfidagi masalalar polinomial vaqtda yechiladi va P = NP ekanligi isbotlanadi. Hozirda ko'pchilik olimlar P != NP deb hisoblashadi."
+                    }
+                ],
+                'quiz': [
+                    {
+                        'type': 'mc',
+                        'q': 'P sinfiga kiruvchi masalalarning asosiy xarakteristikasi nima?',
+                        'options': [
+                            'Ularni faqat kvant kompyuterlarida yechish mumkin',
+                            'Ularni polinomial vaqt ichida (tezkor) yechish imkonini beruvchi algoritm mavjud',
+                            'Ularning yechimi mavjud emasligi isbotlangan',
+                            'Ularni faqat tasodifiy sonlar yordamida yechish mumkin'
+                        ],
+                        'answer': 1,
+                        'explain': 'P sinfi (Polynomial) - bu oddiy kompyuterda polinomial vaqtda (masalan, O(N^2) yoki O(N log N)) yechiladigan masalalar sinfidir.'
+                    },
+                    {
+                        'type': 'tf',
+                        'q': "NP sinfidagi barcha masalalar hozirgi kunda polinomial vaqtda yechib bo'lmaydigan masalalardir.",
+                        'answer': False,
+                        'explain': "Xato. P sinfi NP sinfining qism-to'plamidir (P ⊆ NP). Demak, NP ichida polinomial vaqtda yechiladigan (P sinfiga kiruvchi) masalalar ham bor."
+                    },
+                    {
+                        'type': 'mc',
+                        'q': "NP-to'liq (NP-complete) masalalar qanday xususiyatga ega?",
+                        'options': [
+                            'Ular NP sinfidagi eng oson masalalardir',
+                            'Ularni faqat chiziqli vaqtda yechish mumkin',
+                            "Ular NP sinfidagi eng qiyin masalalar bo'lib, har qanday NP masalasini ularga polinomial vaqtda keltirish mumkin",
+                            'Ular faqat grafiklar nazariyasiga oid masalalardir'
+                        ],
+                        'answer': 2,
+                        'explain': "NP-to'liq masalalar NP sinfining eng qiyin masalalari hisoblanadi. Agar ulardan birortasi polinomial vaqtda yechilsa, barcha NP masalalari polinomial vaqtda yechiladi."
+                    }
+                ],
+                'homework': {
+                    'intro': "Hisoblash murakkabligi nazariyasi bo'yicha nazariy va tahliliy topshiriqlar.",
+                    'tasks': [
+                        {
+                            'id': 't1',
+                            'type': 'text',
+                            'prompt': 'Nima uchun kriptografiya va xavfsizlik protokollari (masalan, RSA) uchun P != NP farazi juda muhim hisoblanadi?',
+                            'answer': "Chunki agar P = NP bo'lsa, shifrlash kalitlarini tanlash va parollarni buzish (verifikatsiya qilish oson bo'lgani uchun) juda tez va oson yechiladigan masalaga aylanadi va barcha zamonaviy shifrlash tizimlari xavf ostida qoladi.",
+                            'hint': "Shifrlarni buzishning murakkabligi va yechimni tekshirish tezligi haqida o'ylang."
+                        },
+                        {
+                            'id': 't2',
+                            'type': 'open',
+                            'prompt': "NP-to'liq hisoblangan 'Knapsack Problem' (Xalta haqidagi masala) mohiyatini tushuntiring. Nima uchun bu masala amaliyotda (masalan, logistika yoki resurslarni taqsimlashda) muhim va uni yechish uchun qanday taqribiy (evristik) usullar qo'llanilishini yozing."
                         }
                     ]
                 }

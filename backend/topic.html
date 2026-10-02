@@ -498,7 +498,9 @@
           '<span>' + UI.matnHtml(t.prompt) +
             (t.type === 'open' ? '<span class="erkin-belgi">erkin javob</span>' : '') +
           '</span></div>' + rasm + maydon +
-          (t.hint ? '<p class="maslahat">' + UI.esc(t.hint) + '</p>' : '') +
+          // Maslahat ko'pincha to'liq yechim (javobi bilan) — yopiq turadi, o'quvchi qiynalsa o'zi ochadi
+          (t.hint ? '<details class="maslahat-quti"><summary>' + UI.nishon('info') + '<span>Maslahat</span></summary><p class="maslahat">' +
+            UI.esc(t.hint) + '</p></details>' : '') +
           '</div>';
       }).join('') +
       '<div class="qadam-yakun">' +

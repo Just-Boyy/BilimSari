@@ -41,7 +41,7 @@
     'Hisoblanmoqda...': 'Подсчёт...', 'Xatolik yuz berdi': 'Произошла ошибка', 'Hammasi': 'Все', 'Jami': 'Всего',
     'Boshqa': 'Другое', 'Siz': 'Вы', 'Bugun': 'Сегодня', 'Hafta': 'Неделя', 'Oy': 'Месяц', 'Umumiy': 'Общий',
     'Global': 'Общий', 'Davr': 'Период', 'Vaqt': 'Время', 'Ball': 'Очки', 'ball': 'очков', 'Fan': 'Предмет',
-    'Mavzu': 'Тема', 'Mavzular': 'Темы', 'Savol': 'Вопрос', 'Savollar': 'Вопросы', 'Javob': 'Ответ',
+    'Mavzu': 'Тема', 'Mavzular': 'Темы', 'Savol': 'Вопрос', 'Savollar': 'Вопросы', 'Javob': 'Ответ', 'Maslahat': 'Подсказка',
     'Javoblar': 'Ответы', 'Natijalar': 'Результаты', 'Raund': 'Раунд', 'Quiz': 'Тест', 'Mashq': 'Практика',
     'Takrorlash': 'Повторение', 'Chaqmoq': 'Молнии', 'Yutuqlar': 'Достижения', 'Darajasi': 'Уровень',
     'Daraja': 'Уровень', "O'quvchi": 'Ученик', "o'quvchi": 'учеников', 'Kutilmoqda': 'Ожидается',
