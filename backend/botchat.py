@@ -13,6 +13,7 @@ Buyruqlar (/start, /kun, ...) app.py'da; bu yerga faqat qolgan xabarlar keladi.
 
 import html
 import logging
+import re
 
 import partners
 import payments
@@ -34,21 +35,87 @@ BTN_DAILY = '❓ Kun savoli'
 BTN_SHOP = "🛒 Do'kon"
 BTN_ORDERS = "🧾 To'lovlarim"
 BTN_SUPPORT = "💬 Admin bilan bog'lanish"
+# Ruscha interfeysdagi o'quvchi menyusi — ikkala tildagi tugma ham taniladi
+BTN_RU = {BTN_APP: '📚 Открыть приложение', BTN_DAILY: '❓ Вопрос дня', BTN_SHOP: '🛒 Магазин',
+          BTN_ORDERS: '🧾 Мои платежи', BTN_SUPPORT: '💬 Связаться с админом'}
+BTN_OF = {v: k for k, v in BTN_RU.items()} | {k: k for k in BTN_RU}
 
 
-def menu_keyboard():
+def menu_keyboard(lang='uz'):
     """Tugmalar matn yuboradi, bot esa inline "Ochish" tugmasi bilan javob beradi.
     Pastki menyudagi web_app tugmasidan ochilgan Mini App'ga Telegram initData
     bermaydi — yangi o'quvchi kira olmasdi."""
+    t = (lambda b: BTN_RU[b]) if lang == 'ru' else (lambda b: b)
     return {
         'keyboard': [
-            [{'text': BTN_APP}],
-            [{'text': BTN_DAILY}, {'text': BTN_SHOP}],
-            [{'text': BTN_ORDERS}, {'text': BTN_SUPPORT}],
+            [{'text': t(BTN_APP)}],
+            [{'text': t(BTN_DAILY)}, {'text': t(BTN_SHOP)}],
+            [{'text': t(BTN_ORDERS)}, {'text': t(BTN_SUPPORT)}],
         ],
         'resize_keyboard': True,
         'is_persistent': True,
     }
+
+
+# O'quvchiga boradigan tayyor javoblar (to'lov moduli va bu fayldan) — ruscha interfeys uchun
+RU_TEXT = {
+    'Buyurtma topilmadi.': 'Заказ не найден.',
+    "Bu buyurtmaga endi promo-kod qo'llab bo'lmaydi.": 'К этому заказу уже нельзя применить промокод.',
+    'Bekor qilindi': 'Отменено',
+    "Bu buyurtmani bekor qilib bo'lmaydi.": 'Этот заказ нельзя отменить.',
+    'Yangi buyurtma yuborildi': 'Новый заказ отправлен',
+    "Xatolik yuz berdi, qayta urinib ko'ring.": 'Произошла ошибка, попробуйте ещё раз.',
+    "Bu buyurtmaning muddati tugagan. Ilovada qaytadan «Sotib olish»ni bosing.":
+        'Срок этого заказа истёк. Нажмите «Купить» в приложении ещё раз.',
+    "Bugun juda ko'p chek yuborildi. Ertaga qayta urinib ko'ring yoki adminga yozing.":
+        'Сегодня отправлено слишком много чеков. Попробуйте завтра или напишите админу.',
+    "Buyurtma holati o'zgargan. Qaytadan urinib ko'ring.": 'Статус заказа изменился. Попробуйте ещё раз.',
+    "💬 Savolingizni shu yerga yozing — admin javob beradi. Rasm yoki skrinshot ham yuborishingiz mumkin.":
+        '💬 Напишите свой вопрос сюда — админ ответит. Можно отправить и фото или скриншот.',
+    "Juda ko'p xabar yuborildi. Birozdan keyin yozing.": 'Отправлено слишком много сообщений. Напишите чуть позже.',
+    "Hozircha adminga faqat matn, rasm, video yoki ovozli xabar yuborish mumkin.":
+        'Пока админу можно отправлять только текст, фото, видео или голосовое сообщение.',
+    "✅ Xabaringiz adminga yuborildi. Javob shu chatga keladi.": '✅ Ваше сообщение отправлено админу. Ответ придёт в этот чат.',
+    "Sizda hali to'lovlar yo'q. Fan sotib olish: /sotib_olish": 'У вас ещё нет платежей. Купить предмет: /sotib_olish',
+    "📚 BilimSari'dan foydalanish uchun botga shaxsiy chatda yozing.": '📚 Чтобы пользоваться BilimSari, напишите боту в личном чате.',
+    # To'lov xatolari (PayError) — bot javobida
+    "Bunday promo-kod yo'q.": 'Такого промокода нет.',
+    'Promo-kod muddati tugagan.': 'Срок действия промокода истёк.',
+    'Promo-kod limiti tugagan.': 'Лимит промокода исчерпан.',
+    "O'zingizning hamkorlik kodingizdan foydalana olmaysiz — uni do'stlaringizga ulashing.":
+        'Нельзя использовать свой партнёрский код — поделитесь им с друзьями.',
+    "Siz bu promo-koddan allaqachon foydalangansiz.": 'Вы уже использовали этот промокод.',
+    "Premium hali faol — muddati tugagach qayta olish mumkin.": 'Premium ещё активен — его можно оформить снова после окончания срока.',
+    "Kamida bitta fan tanlang.": 'Выберите хотя бы один предмет.',
+    "Tanlangan fan allaqachon ochiq yoki mavjud emas.": 'Выбранный предмет уже открыт или недоступен.',
+    "Buyurtma yaratib bo'lmadi, qayta urinib ko'ring.": 'Не удалось создать заказ, попробуйте ещё раз.',
+    "To'lov vaqtincha ishlamayapti. Birozdan keyin urinib ko'ring.": 'Оплата временно не работает. Попробуйте чуть позже.',
+    "Bu buyurtmaga promo-kod qo'llab bo'lmaydi.": 'К этому заказу нельзя применить промокод.',
+    "Bu buyurtmani qayta ochib bo'lmaydi.": 'Этот заказ нельзя открыть заново.',
+}
+RU_PATTERNS = [
+    (re.compile(r"^🎟 Buyurtma (\w+) uchun promo-kodni yozing:$"), r'🎟 Напишите промокод для заказа \1:'),
+    (re.compile(r"^Buyurtma (\w+) bekor qilindi\.$"), r'Заказ \1 отменён.'),
+    (re.compile(r"^Chekingiz \((\w+)\) allaqachon tekshirilmoqda\. Natija shu yerga keladi\. Savolingiz bo'lsa, matn bilan yozing\.$"),
+     r'Ваш чек (\1) уже проверяется. Результат придёт сюда. Если есть вопрос, напишите текстом.'),
+    (re.compile(r"^⏳ Chekingiz \((\w+)\) tekshirilmoqda\. Natija shu yerga keladi\.$"),
+     r'⏳ Ваш чек (\1) проверяется. Результат придёт сюда.'),
+    (re.compile(r"^Oldingi chekingiz \((\w+)\) tekshirilmoqda\. Natijani kuting\.$"),
+     r'Ваш предыдущий чек (\1) проверяется. Дождитесь результата.'),
+    (re.compile(r"^✅ Chek qabul qilindi! Buyurtma <b>(\w+)</b> adminga yuborildi\.\nOdatda 5–30 daqiqada tekshiriladi — natija shu yerga keladi\.$"),
+     r'✅ Чек принят! Заказ <b>\1</b> отправлен админу.\nОбычно проверка занимает 5–30 минут — результат придёт сюда.'),
+    (re.compile(r"^👨‍💼 <b>Admin:</b>\n", re.S), '👨‍💼 <b>Админ:</b>\n'),
+]
+
+
+def ru_text(text) -> str:
+    """Tayyor javobning ruschasi (lug'atda yoki andozada bo'lsa), aks holda o'zi."""
+    if text in RU_TEXT:
+        return RU_TEXT[text]
+    for rx, repl in RU_PATTERNS:
+        if rx.search(text):
+            return rx.sub(repl, text, count=1)
+    return text
 
 
 def ensure_tables(cur, conn):
@@ -94,14 +161,23 @@ def handle_group(message):
     text = (message.get('text') or '').strip()
     if not text.startswith('/'):
         return
+    frm = message.get('from') or {}
+    ru = tgbot.lang_of(frm.get('id'), frm.get('language_code')) == 'ru'
+    text = "📚 BilimSari'dan foydalanish uchun botga shaxsiy chatda yozing."
     tgbot.tg_api('sendMessage', {
         'chat_id': (message.get('chat') or {}).get('id'),
-        'text': "📚 BilimSari'dan foydalanish uchun botga shaxsiy chatda yozing.",
-        'reply_markup': {'inline_keyboard': [[{'text': 'Botni ochish', 'url': f'https://t.me/{tgbot.BOT_USERNAME}'}]]},
+        'text': ru_text(text) if ru else text,
+        'reply_markup': {'inline_keyboard': [[{'text': 'Открыть бота' if ru else 'Botni ochish',
+                                               'url': f'https://t.me/{tgbot.BOT_USERNAME}'}]]},
     })
 
 
-def _send(chat_id, text, markup=None):
+def _send(chat_id, text, markup=None, lang=None):
+    """text — oddiy matn yoki tgbot.L(uz, ru). Ruscha interfeysdagi o'quvchiga tayyor javoblar ruschada."""
+    lang = lang or tgbot.lang_of(chat_id)
+    text = tgbot.pick(text, lang)
+    if lang == 'ru':
+        text = ru_text(text)
     payload = {'chat_id': chat_id, 'text': text, 'parse_mode': 'HTML'}
     if markup:
         payload['reply_markup'] = markup
@@ -165,6 +241,8 @@ def handle_callback(cq):
         answer = "Xatolik yuz berdi, qayta urinib ko'ring."
     finally:
         _close(conn, cur)
+    if answer and not data.startswith('pay:') and tgbot.lang_of(chat_id, frm.get('language_code')) == 'ru':
+        answer = ru_text(answer)
     tgbot.tg_api('answerCallbackQuery', {'callback_query_id': cq.get('id'), 'text': answer or ''})
 
 
@@ -235,21 +313,26 @@ def handle_message(message):
                 _admin_reply(cur, chat_id, message)
                 return
         text = (message.get('text') or '').strip()
-        # Pastki menyu tugmalari (matn yuboradi) — adminga savol sifatida ketmaydi
-        if text == BTN_ORDERS:
+        # Pastki menyu tugmalari (matn yuboradi) — adminga savol sifatida ketmaydi; ikkala tildagisi ham
+        btn = BTN_OF.get(text)
+        if btn == BTN_ORDERS:
             send_my_orders(chat_id)
             return
-        if text == BTN_APP:
-            tgbot.send(chat_id, "📚 BilimSari'ni ochish uchun tugmani bosing:", 'Ilovani ochish', 'dashboard.html')
+        if btn == BTN_APP:
+            tgbot.send(chat_id, tgbot.L("📚 BilimSari'ni ochish uchun tugmani bosing:",
+                                        '📚 Нажмите кнопку, чтобы открыть BilimSari:'),
+                       tgbot.L('Ilovani ochish', 'Открыть приложение'), 'dashboard.html')
             return
-        if text == BTN_DAILY:
-            tgbot.send(chat_id, "❓ <b>Kun savoli</b> — bugun hamma uchun bitta savol. To'g'ri va tez javob bering, "
-                                "kunlik reytingga chiqing!", 'Savolni ochish', 'daily.html')
+        if btn == BTN_DAILY:
+            tgbot.send(chat_id, tgbot.L(
+                "❓ <b>Kun savoli</b> — bugun hamma uchun bitta savol. To'g'ri va tez javob bering, kunlik reytingga chiqing!",
+                '❓ <b>Вопрос дня</b> — сегодня один вопрос для всех. Отвечайте правильно и быстро — и попадите в рейтинг дня!'),
+                tgbot.L('Savolni ochish', 'Открыть вопрос'), 'daily.html')
             return
-        if text == BTN_SHOP:
+        if btn == BTN_SHOP:
             send_shop(chat_id)
             return
-        if text == BTN_SUPPORT:
+        if btn == BTN_SUPPORT:
             _send(chat_id, "💬 Savolingizni shu yerga yozing — admin javob beradi. Rasm yoki skrinshot ham yuborishingiz mumkin.")
             return
         state = _get_state(cur, chat_id)
@@ -265,7 +348,7 @@ def handle_message(message):
                 return
         if payments.is_admin(frm.get('id')):
             _send(chat_id, "👨‍💼 Siz adminsiz. O'quvchiga javob berish uchun uning xabariga <b>Reply</b> qiling.\n"
-                           "/tolovlar — kutilayotgan cheklar")
+                           "/tolovlar — kutilayotgan cheklar", lang='uz')
             return
         _support(cur, conn, chat_id, frm, message, text)
     except Exception:  # noqa: BLE001
@@ -296,11 +379,14 @@ def _promo_input(cur, conn, chat_id, order_id, text):
     try:
         order = payments.apply_promo(cur, conn, order, text)
     except payments.PayError as exc:
-        _send(chat_id, f"❌ {html.escape(exc.message)}\nQayta urinish uchun «🎟 Promo-kod» tugmasini bosing.")
+        _send(chat_id, tgbot.L(f"❌ {html.escape(exc.message)}\nQayta urinish uchun «🎟 Promo-kod» tugmasini bosing.",
+                               f"❌ {html.escape(ru_text(exc.message))}\nЧтобы попробовать снова, нажмите «🎟 Промокод»."))
         return
     percent = int(order['promo_percent'] or 0)
-    _send(chat_id, f"✅ Promo-kod qo'llandi" + (f": −{percent}%" if percent else '') +
-          f". Summa: <b>{payments.som(order['amount'])}</b>")
+    _send(chat_id, tgbot.L(f"✅ Promo-kod qo'llandi" + (f": −{percent}%" if percent else '') +
+                           f". Summa: <b>{payments.som(order['amount'])}</b>",
+                           '✅ Промокод применён' + (f": −{percent}%" if percent else '') +
+                           f". Сумма: <b>{payments.som(order['amount'], 'ru')}</b>"))
     payments.send_instructions(cur, order)
 
 
@@ -316,7 +402,7 @@ def _support(cur, conn, chat_id, frm, message, text):
     delivered = False
     for admin in payments.admin_ids():
         if text:
-            res = _send(admin, f"{header}\n{html.escape(text)}")
+            res = _send(admin, f"{header}\n{html.escape(text)}", lang='uz')
         else:
             caption = header + ('\n' + html.escape(message['caption']) if message.get('caption') else '')
             res = tgbot.tg_api('copyMessage', {'chat_id': admin, 'from_chat_id': chat_id,
@@ -337,7 +423,7 @@ def _admin_reply(cur, chat_id, message):
                 (chat_id, replied))
     row = cur.fetchone()
     if not row:
-        _send(chat_id, "Bu xabarga javob yuborib bo'lmaydi — o'quvchi topilmadi. O'quvchi xabariga Reply qiling.")
+        _send(chat_id, "Bu xabarga javob yuborib bo'lmaydi — o'quvchi topilmadi. O'quvchi xabariga Reply qiling.", lang='uz')
         return
     user_chat = row['user_chat_id']
     text = (message.get('text') or '').strip()
@@ -386,14 +472,22 @@ def send_shop(chat_id):
             return
     finally:
         _close(conn, cur)
-    tgbot.send(chat_id, "🛒 <b>Fan sotib olish</b>\nFanlarni tanlang — 3 ta fan va barcha fanlar paketlari arzonroq.\n\n"
-                        "To'lov karta orqali: kartaga o'tkazasiz, chek rasmini shu chatga yuborasiz — "
-                        "admin tasdiqlagach fan ochiladi.", "Do'konni ochish", 'shop.html')
+    tgbot.send(chat_id, tgbot.L(
+        "🛒 <b>Fan sotib olish</b>\nFanlarni tanlang — 3 ta fan va barcha fanlar paketlari arzonroq.\n\n"
+        "To'lov karta orqali: kartaga o'tkazasiz, chek rasmini shu chatga yuborasiz — "
+        "admin tasdiqlagach fan ochiladi.",
+        '🛒 <b>Покупка предмета</b>\nВыберите предметы — пакеты из 3 предметов и всех предметов дешевле.\n\n'
+        'Оплата картой: переводите на карту, отправляете фото чека в этот чат — '
+        'после подтверждения админом предмет откроется.'), tgbot.L("Do'konni ochish", 'Открыть магазин'), 'shop.html')
 
 
 STATUS_LABELS = {
     payments.AWAITING: '🕐 Chek kutilmoqda', payments.PENDING: '⏳ Tekshirilmoqda',
     payments.APPROVED: '✅ Tasdiqlangan', payments.REJECTED: '❌ Rad etilgan', payments.EXPIRED: '⌛ Muddati tugagan',
+}
+STATUS_LABELS_RU = {
+    payments.AWAITING: '🕐 Ожидается чек', payments.PENDING: '⏳ На проверке',
+    payments.APPROVED: '✅ Подтверждён', payments.REJECTED: '❌ Отклонён', payments.EXPIRED: '⌛ Срок истёк',
 }
 
 
@@ -408,13 +502,16 @@ def send_my_orders(chat_id):
     if not orders:
         _send(chat_id, "Sizda hali to'lovlar yo'q. Fan sotib olish: /sotib_olish")
         return
-    lines = ["🧾 <b>To'lovlarim</b>"]
+    lang = tgbot.lang_of(chat_id)
+    ru = lang == 'ru'
+    lines = ['🧾 <b>Мои платежи</b>' if ru else "🧾 <b>To'lovlarim</b>"]
+    labels = STATUS_LABELS_RU if ru else STATUS_LABELS
     for o in orders:
-        names = ', '.join(i['name'] for i in o['items'])
-        lines.append(f"\n<b>{o['code']}</b> — {payments.som(o['amount'])}\n{html.escape(names)}\n"
-                     f"{STATUS_LABELS.get(o['status'], o['status'])} • {payments._date(o['created_ms'])}"
-                     + (f"\nSabab: {html.escape(o['reject_reason'])}" if o['reject_reason'] else ''))
-    _send(chat_id, '\n'.join(lines))
+        names = ', '.join(payments.item_name(i['key'], lang) for i in o['items'])
+        lines.append(f"\n<b>{o['code']}</b> — {payments.som(o['amount'], lang)}\n{html.escape(names)}\n"
+                     f"{labels.get(o['status'], o['status'])} • {payments._date(o['created_ms'])}"
+                     + (f"\n{'Причина' if ru else 'Sabab'}: {html.escape(o['reject_reason'])}" if o['reject_reason'] else ''))
+    _send(chat_id, '\n'.join(lines), lang=lang)
 
 
 def send_pending(chat_id):

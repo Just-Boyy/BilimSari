@@ -49,7 +49,9 @@
       wa.ready();
       wa.expand();
       const tgUser = getTelegramUser();
-      const res = await fetch('/api/telegram/auth', {
+      // Kirish — ilova ochilganda birinchi so'rov: uzilsa 2 marta qayta urinamiz (takroriy kirish zararsiz)
+      const f = (window.API && API.ishonchliFetch) ? function (u, o) { return API.ishonchliFetch(u, o, 2); } : fetch;
+      const res = await f('/api/telegram/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

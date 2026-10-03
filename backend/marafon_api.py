@@ -192,7 +192,7 @@ def admin_action(mid, action):
                 return jsonify({'ok': True, 'user': marafon.admin_user(cur, mid, uid)})
             extra['user_id'] = uid
         elif action == 'results':
-            return jsonify({'ok': True, 'results': marafon.results(cur, mid), 'marathon': marafon.public_info(
+            return jsonify({'ok': True, 'results': marafon.results(cur, mid, flags=True), 'marathon': marafon.public_info(
                 cur, marafon._row(cur, mid), clock.now_ms())})
         else:
             return jsonify({'ok': False, 'error': "Noma'lum amal"}), 404

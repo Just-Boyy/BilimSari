@@ -427,18 +427,25 @@ def build(pid, attempts=2):
                          now, pid, GENERATING))
             conn.commit()
             if row['telegram_id']:
-                tgbot.send(row['telegram_id'],
-                           f"✅ <b>Shaxsiy darsingiz tayyor!</b>\n«{html.escape(row['title'])}» ({html.escape(subject)}) "
-                           f"shaxsiy darslaringizga qo'shildi.", 'Darsni ochish', f'topic.html?shaxsiy={pid}')
+                t = html.escape(row['title'])
+                tgbot.send(row['telegram_id'], tgbot.L(
+                    f"✅ <b>Shaxsiy darsingiz tayyor!</b>\n«{t}» ({html.escape(subject)}) shaxsiy darslaringizga qo'shildi.",
+                    f"✅ <b>Ваш личный урок готов!</b>\n«{t}» ({html.escape(tgbot.fan_ru(subject))}) "
+                    f"добавлен в ваши личные уроки."),
+                    tgbot.L('Darsni ochish', 'Открыть урок'), f'topic.html?shaxsiy={pid}')
         else:
             logger.warning('Shaxsiy dars yaratilmadi (%s): %s', pid, last_error)
             cur.execute('UPDATE personal_topics SET status = %s, error = %s WHERE id = %s AND status = %s',
                         (FAILED, str(last_error or '')[:300], pid, GENERATING))
             conn.commit()
             if row['telegram_id']:
-                tgbot.send(row['telegram_id'],
-                           f"❌ «{html.escape(row['title'])}» darsini tayyorlab bo'lmadi. Qayta urinib ko'ring — "
-                           f"bu urinish 24 soatlik limitga hisoblanmadi.", 'Qayta urinish', 'shaxsiy.html')
+                t = html.escape(row['title'])
+                tgbot.send(row['telegram_id'], tgbot.L(
+                    f"❌ «{t}» darsini tayyorlab bo'lmadi. Qayta urinib ko'ring — "
+                    f"bu urinish 24 soatlik limitga hisoblanmadi.",
+                    f"❌ Не удалось подготовить урок «{t}». Попробуйте ещё раз — "
+                    f"эта попытка не засчитана в лимит на 24 часа."),
+                    tgbot.L('Qayta urinish', 'Повторить'), 'shaxsiy.html')
     except Exception:  # noqa: BLE001
         conn.rollback()
         logger.exception('Shaxsiy dars yaratishda xato (%s)', pid)

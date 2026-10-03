@@ -45,6 +45,10 @@ def ensure_tables(cur, conn):
     conn.commit()
 
 
+# Chaqmoq yozilganda oshadi — reyting keshi (study.leaderboard) shu ishchi jarayonda darhol eskiradi
+VERSION = [0]
+
+
 def add(cur, user_id, amount, source, ref, now=None) -> bool:
     """Yozuv qo'shadi (commit — chaqiruvchida). Bir ref ikki marta yozilmaydi."""
     amount = int(amount or 0)
@@ -55,6 +59,7 @@ def add(cur, user_id, amount, source, ref, now=None) -> bool:
     cur.execute('INSERT INTO chaqmoq_log (user_id, amount, source, ref, premium, created_ms) '
                 'VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (user_id, ref) DO NOTHING',
                 (int(user_id), amount, source, str(ref), int(bool(active)), now))
+    VERSION[0] += 1
     return cur.rowcount == 1
 
 

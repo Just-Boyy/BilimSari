@@ -155,7 +155,7 @@ check('Kunlik reytingda turnir yo\'q', d.get('tournament') is None)
 
 print('\n=== Eslatmalar ===')
 sent = []
-notify.send = lambda chat, text, button=None, path='': (sent.append((chat, text, path)) or (True, None))
+notify.send = lambda chat, text, button=None, path='', lang=None: (sent.append((chat, text, path)) or (True, None))
 notify.time = type('TezVaqt', (), {'sleep': staticmethod(lambda s: None)})()   # faqat notify ichidagi kutish
 
 zar = mk_user('Zarina Qodirova', tg=2001)                       # bugun ro'yxatdan o'tgan, hali o'qimagan
@@ -190,14 +190,14 @@ check('"Keyingi mavzu ochildi" — bir marta, fan nomi bilan', [x[0] for x in se
 
 sent.clear()
 blocked = mk_user('Bloklagan', tg=4001)
-notify.send = lambda chat, text, button=None, path='': (sent.append((chat, text, path)) or ((False, 403) if chat == 4001 else (True, None)))
+notify.send = lambda chat, text, button=None, path='', lang=None: (sent.append((chat, text, path)) or ((False, 403) if chat == 4001 else (True, None)))
 conn = get_connection(); cur = conn.cursor()
 notify.daily_reminders(cur, conn, T[0] + 1000)
 cur.close(); conn.close()
 check('Botni bloklagan (403) -> eslatmalar o\'chdi', db('SELECT notify FROM users WHERE id = %s', (blocked['id'],), True)[0]['notify'] == 0)
 
 sent.clear()
-notify.send = lambda chat, text, button=None, path='': (sent.append((chat, text, path)) or (True, None))
+notify.send = lambda chat, text, button=None, path='', lang=None: (sent.append((chat, text, path)) or (True, None))
 conn = get_connection(); cur = conn.cursor()
 winners = notify.weekly_awards(cur, conn, T[0] + stats.WEEK_MS)
 again = notify.weekly_awards(cur, conn, T[0] + stats.WEEK_MS)

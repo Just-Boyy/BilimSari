@@ -37,6 +37,47 @@
     return joriy;
   }
 
+  // ── Ishonchsiz tarmoq ────────────────────────────────────
+  // O'quvchidan serverga yo'lda vaqti-vaqti bilan uzilishlar bo'ladi (o'lchovda ~13% so'rov qotib
+  // qolgan). Shuning uchun: so'rov qotib qolsa — vaqt chegarasi; GET uzilsa yoki 502/503/504 bo'lsa —
+  // 2 marta qayta urinish. POST qayta yuborilmaydi (javob/to'lov ikki marta yozilib qolmasin).
+  var VAQT_GET_MS = 12000;           // oddiy so'rov 1–2 s da tugaydi; qotib qolsa — tezroq qayta urinish
+  var VAQT_POST_MS = 65000;          // server (gunicorn) chegarasi 60 s — undan uzunroq kutilmaydi
+  var QAYTA_KUTISH_MS = [700, 1800];
+
+  function kut(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  async function vaqtliFetch(yo_l, opts, ms) {
+    if (typeof AbortController === 'undefined') return fetch(yo_l, opts);
+    var ctl = new AbortController();
+    var taymer = setTimeout(function () { ctl.abort(); }, ms);
+    try {
+      return await fetch(yo_l, Object.assign({}, opts, { signal: ctl.signal }));
+    } finally {
+      clearTimeout(taymer);
+    }
+  }
+
+  /** fetch + vaqt chegarasi + qayta urinish. qayta — necha marta qayta urinish (GET uchun standart 2). */
+  async function ishonchliFetch(yo_l, opts, qayta) {
+    opts = opts || {};
+    var get = !opts.method || opts.method === 'GET';
+    var max = qayta != null ? qayta : (get ? QAYTA_KUTISH_MS.length : 0);
+    for (var i = 0; ; i++) {
+      try {
+        var javob = await vaqtliFetch(yo_l, opts, get ? VAQT_GET_MS : VAQT_POST_MS);
+        if (i < max && get && [502, 503, 504].indexOf(javob.status) >= 0) {
+          await kut(QAYTA_KUTISH_MS[i] || 1800);
+          continue;
+        }
+        return javob;
+      } catch (e) {
+        if (i >= max) throw e;
+        await kut(QAYTA_KUTISH_MS[i] || 1800);
+      }
+    }
+  }
+
   /** Asosiy so'rov funksiyasi. Xatoda {ok:false, error} qaytaradi, tashlamaydi. */
   async function so_rov(yo_l, sozlama) {
     sozlama = sozlama || {};
@@ -48,13 +89,15 @@
 
     var javob;
     try {
-      javob = await fetch(yo_l, {
+      javob = await ishonchliFetch(yo_l, {
         method: sozlama.method || 'GET',
         headers: bosh,
         body: sozlama.body ? JSON.stringify(sozlama.body) : undefined,
       });
     } catch (e) {
-      return { ok: false, error: 'Internet aloqasi yo\'q. Ulanishni tekshiring.', code: 'network' };
+      var err = { ok: false, error: 'Internet aloqasi yo\'q. Ulanishni tekshiring.', code: 'network' };
+      if (window.I18N) err.error = I18N.t(err.error);
+      return err;
     }
 
     var data = {};
@@ -77,6 +120,7 @@
 
   var API = {
     token: token,
+    ishonchliFetch: ishonchliFetch,
     user: user,
     sessiyaOchish: sessiyaOchish,
     sessiyaYopish: sessiyaYopish,

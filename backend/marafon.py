@@ -157,6 +157,17 @@ def money(n) -> str:
     return f"{int(n or 0):,}".replace(',', ' ') + " so'm"
 
 
+def money_ru(n) -> str:
+    return f"{int(n or 0):,}".replace(',', ' ') + " сум"
+
+
+def prize_text_ru(p) -> str:
+    parts = [money_ru(p['amount'])] if int(p['amount'] or 0) else []
+    if p.get('note'):
+        parts.append(p['note'])
+    return ' + '.join(parts) or 'Приз'
+
+
 def prize_text(p) -> str:
     parts = [money(p['amount'])] if int(p['amount'] or 0) else []
     if p.get('note'):
@@ -513,8 +524,10 @@ def admin_remove(cur, conn, mid, uid, reason, now=None):
     conn.commit()
     u = _user(cur, uid)
     if u and u['telegram_id']:
-        tgbot.send(u['telegram_id'], f"ℹ️ Siz «{html.escape(m['title'])}» marafonidan chiqarildingiz."
-                   + (f"\nSabab: {html.escape(reason)}" if reason else ''))
+        t = html.escape(m['title'])
+        tgbot.send(u['telegram_id'], tgbot.L(
+            f"ℹ️ Siz «{t}» marafonidan chiqarildingiz." + (f"\nSabab: {html.escape(reason)}" if reason else ''),
+            f"ℹ️ Вы исключены из марафона «{t}»." + (f"\nПричина: {html.escape(reason)}" if reason else '')))
 
 
 def adjust(cur, conn, mid, uid, amount, note, now=None):
@@ -750,27 +763,74 @@ def banner(cur, uid, now=None):
 
 # ───────────────────────── Admin ko'rinishi ─────────────────────────
 
-def _flags(cur, m, uid, u):
-    """Admin uchun shubhali belgilar."""
-    out = []
+FLAG_MIN_GAMES = 4        # shundan kam chaqmoqli o'yin bo'lsa raqiblar tahlil qilinmaydi
+FLAG_FARM_SHARE = 0.8     # raqib o'yinlarining shuncha qismi shu o'quvchi bilan — soxta akkaunt belgisi
+
+
+def _created_ms(u):
     try:
         created = as_utc(u.get('created_at')) if u else None
-        created_ms = int(created.timestamp() * 1000) if created else None
+        return int(created.timestamp() * 1000) if created else None
     except (TypeError, ValueError, OSError, AttributeError):
-        created_ms = None
-    if created_ms and created_ms >= int(m['start_ms']):
+        return None
+
+
+def _ids_text(ids, limit=5) -> str:
+    ids = sorted(ids)
+    return ', '.join(str(i) for i in ids[:limit]) + (f' va yana {len(ids) - limit} ta' if len(ids) > limit else '')
+
+
+def _flags(cur, m, uid, u):
+    """Admin uchun shubhali belgilar — ayniqsa ikkinchi (soxta) akkauntlar bilan o'ynab chaqmoq yig'ish."""
+    out = []
+    start, end = int(m['start_ms']), int(m['end_ms'])
+    created_ms = _created_ms(u)
+    if created_ms and created_ms >= start:
         out.append('Yangi akkaunt (marafon boshlangandan keyin ochilgan)')
-    # Chaqmoqli o'yinlarning ko'pchiligi bitta raqib bilan
-    cur.execute('''SELECT c.session_id FROM game_chances c WHERE c.user_id = %s AND c.used_ms >= %s AND c.used_ms < %s''',
-                (uid, int(m['start_ms']), int(m['end_ms'])))
+    # Marafon davomida chaqmoq olgan o'yinlar va ulardagi tirik raqiblar (kompyuterning ID'si manfiy)
+    cur.execute('''SELECT session_id FROM game_results WHERE user_id = %s AND chaqmoq > 0
+                   AND created_ms >= %s AND created_ms < %s''', (uid, start, end))
     sessions = [r['session_id'] for r in cur.fetchall()]
-    if len(sessions) >= 4:
-        marks = ', '.join(['%s'] * len(sessions))
-        cur.execute(f'SELECT user_id, COUNT(*) AS n FROM game_chances WHERE session_id IN ({marks}) AND user_id != %s '
-                    f'GROUP BY user_id ORDER BY n DESC LIMIT 1', sessions + [uid])
-        top = cur.fetchone()
-        if top and int(top['n']) * 10 >= len(sessions) * 7:
-            out.append(f"Chaqmoqli o'yinlarning {int(top['n'])}/{len(sessions)} tasi bitta raqib bilan (ID {top['user_id']})")
+    if len(sessions) < FLAG_MIN_GAMES:
+        return out
+    marks = ', '.join(['%s'] * len(sessions))
+    cur.execute(f'SELECT user_id, COUNT(*) AS n FROM game_results WHERE session_id IN ({marks}) '
+                f'AND user_id > 0 AND user_id != %s GROUP BY user_id', sessions + [uid])
+    opp = {int(r['user_id']): int(r['n']) for r in cur.fetchall()}
+    if not opp:
+        return out
+    ids = list(opp)
+    id_marks = ', '.join(['%s'] * len(ids))
+    cur.execute(f'SELECT id, created_at FROM users WHERE id IN ({id_marks})', ids)
+    created = {int(r['id']): _created_ms(r) for r in cur.fetchall()}
+    cur.execute(f'SELECT user_id FROM marathon_participants WHERE marathon_id = %s AND removed_ms IS NULL '
+                f'AND user_id IN ({id_marks})', [m['id']] + ids)
+    in_marathon = {int(r['user_id']) for r in cur.fetchall()}
+    cur.execute(f'SELECT user_id, COUNT(*) AS n FROM game_results WHERE user_id IN ({id_marks}) '
+                f'AND created_ms >= %s AND created_ms < %s GROUP BY user_id', ids + [start, end])
+    played = {int(r['user_id']): int(r['n']) for r in cur.fetchall()}
+    total = len(sessions)
+
+    # 1) O'yinlarning ko'pchiligi bitta raqib bilan
+    top_id, top_n = max(opp.items(), key=lambda kv: (kv[1], -kv[0]))
+    if top_n * 10 >= total * 7:
+        extra = []
+        if top_id in in_marathon:
+            extra.append('u ham marafonda')
+        if (created.get(top_id) or 0) >= start:
+            extra.append('raqib yangi akkaunt')
+        out.append(f"Chaqmoqli o'yinlarning {top_n}/{total} tasi bitta raqib bilan (ID {top_id})"
+                   + (f" — {', '.join(extra)}" if extra else ''))
+    # 2) Raqib deyarli faqat shu o'quvchi bilan o'ynaydi — ikkinchi akkaunt bo'lishi mumkin
+    farm = [i for i, n in opp.items() if n >= 3 and n >= FLAG_FARM_SHARE * played.get(i, n)]
+    if farm:
+        out.append(f"{len(farm)} ta raqib deyarli faqat shu o'quvchi bilan o'ynaydi (ID {_ids_text(farm)}) — "
+                   f"ikkinchi akkaunt bo'lishi mumkin")
+    # 3) O'yinlarning yarmidan ko'pi marafon paytida ochilgan akkauntlar bilan
+    fresh = [i for i in opp if (created.get(i) or 0) >= start]
+    if fresh and sum(opp[i] for i in fresh) * 2 > total:
+        out.append(f"Chaqmoqli o'yinlarning yarmidan ko'pi marafon paytida ochilgan akkauntlar bilan "
+                   f"(ID {_ids_text(fresh)})")
     return out
 
 
@@ -856,21 +916,33 @@ def mark_paid(cur, conn, mid, uid, note, now=None):
     conn.commit()
     u = _user(cur, uid)
     if u and u['telegram_id']:
-        tgbot.send(u['telegram_id'], f"✅ «{html.escape(m['title'])}» marafoni sovrini ({html.escape(prize_text(w))}) "
-                                     f"sizga o'tkazildi. Tabriklaymiz!", 'Ilovani ochish', 'leaderboard.html?tab=marafon')
+        t = html.escape(m['title'])
+        tgbot.send(u['telegram_id'], tgbot.L(
+            f"✅ «{t}» marafoni sovrini ({html.escape(prize_text(w))}) sizga o'tkazildi. Tabriklaymiz!",
+            f"✅ Приз марафона «{t}» ({html.escape(prize_text_ru(w))}) переведён вам. Поздравляем!"),
+            tgbot.L('Ilovani ochish', 'Открыть приложение'), 'leaderboard.html?tab=marafon')
 
 
-def results(cur, mid) -> list:
+def results(cur, mid, flags=False) -> list:
+    """G'oliblar. flags=True — admin uchun shubhali belgilar ham (sovrin to'lashdan oldin ko'rish uchun)."""
     cur.execute('SELECT * FROM marathon_winners WHERE marathon_id = %s ORDER BY place', (mid,))
-    return [{'place': int(w['place']), 'user_id': int(w['user_id']), 'name': w['name'], 'score': int(w['score']),
-             'amount': int(w['amount'] or 0), 'note': w['note'] or '', 'notified': bool(w['notified']),
-             'paid_ms': int(w['paid_ms']) if w['paid_ms'] else None, 'paid_note': w['paid_note']}
-            for w in cur.fetchall()]
+    out = [{'place': int(w['place']), 'user_id': int(w['user_id']), 'name': w['name'], 'score': int(w['score']),
+            'amount': int(w['amount'] or 0), 'note': w['note'] or '', 'notified': bool(w['notified']),
+            'paid_ms': int(w['paid_ms']) if w['paid_ms'] else None, 'paid_note': w['paid_note']}
+           for w in cur.fetchall()]
+    if flags and out:
+        m = _row(cur, mid)
+        for w in out:
+            w['flags'] = _flags(cur, m, w['user_id'], _user(cur, w['user_id']))
+    return out
 
 
 # ───────────────────────── Xabarlar ─────────────────────────
 
 def _send_url(chat_id, text, button_text, url) -> bool:
+    if isinstance(text, dict) or isinstance(button_text, dict):
+        lang = tgbot.lang_of(chat_id)
+        text, button_text = tgbot.pick(text, lang), tgbot.pick(button_text, lang)
     res = tgbot.tg_api('sendMessage', {'chat_id': chat_id, 'text': text, 'parse_mode': 'HTML',
                                        'reply_markup': {'inline_keyboard': [[{'text': button_text, 'url': url}]]}})
     return bool(res and res.get('ok'))
@@ -888,10 +960,15 @@ def _post_channel(cur, conn, m, text):
     conn.commit()
 
 
-def _prize_lines(pz, limit=10) -> str:
-    lines = [f"{p['place']}-o'rin — {html.escape(prize_text(p))}" for p in pz[:limit]]
-    if len(pz) > limit:
-        lines.append(f"… va yana {len(pz) - limit} ta sovrinli o'rin")
+def _prize_lines(pz, limit=10, ru=False) -> str:
+    if ru:
+        lines = [f"{p['place']}-е место — {html.escape(prize_text_ru(p))}" for p in pz[:limit]]
+        if len(pz) > limit:
+            lines.append(f"… и ещё {len(pz) - limit} призовых мест")
+    else:
+        lines = [f"{p['place']}-o'rin — {html.escape(prize_text(p))}" for p in pz[:limit]]
+        if len(pz) > limit:
+            lines.append(f"… va yana {len(pz) - limit} ta sovrinli o'rin")
     return '\n'.join(lines)
 
 
@@ -907,9 +984,18 @@ def announce_start(cur, conn, m, now):
             f"👥 Qatnashadi: {who}\n\n"
             "Darslar, o'yinlar va kun savolidan olgan chaqmoqlaringiz sanaladi. "
             "Qatnashish: Reyting → Marafon → «Qatnashish».")
+    who_ru = 'только участники Bilim Premium' if m['audience'] == 'premium' else 'все'
+    text_ru = (f"🏁 <b>Начался призовой марафон «{html.escape(m['title'])}»!</b>\n\n"
+               + (f"💰 Призовой фонд: <b>{money_ru(fund)}</b>\n" if fund else '')
+               + f"🏆 Призы получат топ-{m['top_n']}:\n{_prize_lines(pz, ru=True)}\n\n"
+               f"⏳ {days} {tgbot.kun_ru(days)} — до {local_text(m['end_ms'])} (время Ташкента)\n"
+               f"👥 Участвуют: {who_ru}\n\n"
+               "Засчитываются молнии за уроки, игры и вопрос дня. "
+               "Как участвовать: Рейтинг → Марафон → «Участвовать».")
     try:
         broadcast.start(cur, conn, text, now, html=True, button='Marafonga qatnashish',
-                        path='leaderboard.html?tab=marafon', everyone=True, queue=True)
+                        path='leaderboard.html?tab=marafon', everyone=True, queue=True,
+                        text_ru=text_ru, button_ru='Участвовать в марафоне')
     except broadcast.BroadcastError:
         logger.warning('Marafon e\'loni navbatga qo\'yilmadi', exc_info=True)
     _post_channel(cur, conn, m, text)
@@ -942,9 +1028,15 @@ def finalize(cur, conn, m, now) -> list:
             + ("🏆 G'oliblar:\n" + '\n'.join(lines) if lines else "Bu safar g'olib bo'lmadi.")
             + ("\n…" if len(winners) > 10 else '')
             + "\n\nHammaga rahmat! Keyingi marafonda omad!")
+    lines_ru = [f"{w['rank']}. {html.escape((cards.get(w['user_id']) or {}).get('name') or 'Ученик')} — "
+                f"{w['score']} молний" for w in winners[:10]]
+    text_ru = (f"🏁 <b>Марафон «{html.escape(m['title'])}» завершён!</b>\n\n"
+               + ("🏆 Победители:\n" + '\n'.join(lines_ru) if lines_ru else "В этот раз победителей нет.")
+               + ("\n…" if len(winners) > 10 else '')
+               + "\n\nСпасибо всем! Удачи в следующем марафоне!")
     try:
         broadcast.start(cur, conn, text, now, html=True, button='Natijalar', path='leaderboard.html?tab=marafon',
-                        everyone=True, queue=True)
+                        everyone=True, queue=True, text_ru=text_ru, button_ru='Результаты')
     except broadcast.BroadcastError:
         logger.warning('Marafon natijasi navbatga qo\'yilmadi', exc_info=True)
     _post_channel(cur, conn, m, text)
@@ -962,10 +1054,16 @@ def _notify_winners(mid):
             u = _user(cur, w['user_id'])
             if not u or not u['telegram_id']:
                 continue
-            text = (f"🏆 <b>Tabriklaymiz!</b> Siz «{html.escape(m['title'])}» marafonida <b>{w['place']}-o'rinni</b> "
-                    f"egalladingiz ({w['score']} chaqmoq)!\n\nSovrin: <b>{html.escape(prize_text(w))}</b>\n\n"
-                    f"Pulingizni kartaga olish uchun @{html.escape(m['contact'])} ga yozing.")
-            if _send_url(u['telegram_id'], text, f"@{m['contact']} ga yozish", f"https://t.me/{m['contact']}"):
+            t, kontakt = html.escape(m['title']), html.escape(m['contact'])
+            text = tgbot.L(
+                f"🏆 <b>Tabriklaymiz!</b> Siz «{t}» marafonida <b>{w['place']}-o'rinni</b> "
+                f"egalladingiz ({w['score']} chaqmoq)!\n\nSovrin: <b>{html.escape(prize_text(w))}</b>\n\n"
+                f"Pulingizni kartaga olish uchun @{kontakt} ga yozing.",
+                f"🏆 <b>Поздравляем!</b> Вы заняли <b>{w['place']}-е место</b> в марафоне «{t}» "
+                f"({w['score']} молний)!\n\nПриз: <b>{html.escape(prize_text_ru(w))}</b>\n\n"
+                f"Чтобы получить деньги на карту, напишите @{kontakt}.")
+            if _send_url(u['telegram_id'], text, tgbot.L(f"@{m['contact']} ga yozish", f"Написать @{m['contact']}"),
+                         f"https://t.me/{m['contact']}"):
                 cur.execute('UPDATE marathon_winners SET notified = 1 WHERE marathon_id = %s AND place = %s',
                             (mid, w['place']))
                 conn.commit()
@@ -978,19 +1076,20 @@ def _notify_winners(mid):
         conn.close()
 
 
-def _to_participants(cur, m, make_text, only_notify=True, button='Marafon', path='leaderboard.html?tab=marafon'):
+def _to_participants(cur, m, make_text, only_notify=True, button=None, path='leaderboard.html?tab=marafon'):
+    button = button or tgbot.L('Marafon', 'Марафон')
     """Qatnashchilarga shaxsiy xabar — fonda (ko'p bo'lsa so'rovni ushlab turmasin)."""
     st = {p['user_id']: p for p in standings(cur, m, fresh=True)}
-    cur.execute('''SELECT u.id, u.telegram_id, u.notify FROM marathon_participants p JOIN users u ON u.id = p.user_id
+    cur.execute('''SELECT u.id, u.telegram_id, u.notify, u.lang FROM marathon_participants p JOIN users u ON u.id = p.user_id
                    WHERE p.marathon_id = %s AND p.removed_ms IS NULL AND u.telegram_id IS NOT NULL''', (m['id'],))
-    targets = [(r['telegram_id'], make_text(st.get(int(r['id']))))
+    targets = [(r['telegram_id'], make_text(st.get(int(r['id']))), 'ru' if r['lang'] == 'ru' else 'uz')
                for r in cur.fetchall() if not only_notify or int(r['notify'] if r['notify'] is not None else 1)]
     targets = [t for t in targets if t[1]]
 
     def run():
-        for chat, text in targets:
+        for chat, text, lang in targets:
             try:
-                tgbot.send(chat, text, button, path)
+                tgbot.send(chat, text, button, path, lang=lang)
             except Exception:  # noqa: BLE001
                 logger.warning('Marafon xabari yuborilmadi', exc_info=True)
             time.sleep(0.05)
@@ -999,17 +1098,22 @@ def _to_participants(cur, m, make_text, only_notify=True, button='Marafon', path
     return len(targets)
 
 
-def _place_text(m, p) -> str:
-    return f"Siz hozir <b>{p['rank']}-o'rindasiz</b> ({p['score']} chaqmoq)." if p else ''
+def _place_text(m, p, ru=False) -> str:
+    if not p:
+        return ''
+    if ru:
+        return f"Сейчас вы на <b>{p['rank']}-м месте</b> ({p['score']} молний)."
+    return f"Siz hozir <b>{p['rank']}-o'rindasiz</b> ({p['score']} chaqmoq)."
 
 
-def _gap_text(m, st_list, p) -> str:
+def _gap_text(m, st_list, p, ru=False) -> str:
     top_n = int(m['top_n'])
     if p['rank'] <= top_n:
-        return " Sovrinli o'rindasiz — shunday davom eting!"
+        return " Вы на призовом месте — так держать!" if ru else " Sovrinli o'rindasiz — shunday davom eting!"
     if len(st_list) >= top_n:
         need = st_list[top_n - 1]['score'] - p['score'] + 1
-        return f" Top-{top_n} ga kirish uchun yana {need} chaqmoq kerak."
+        return (f" Чтобы войти в топ-{top_n}, нужно ещё {need} молний." if ru
+                else f" Top-{top_n} ga kirish uchun yana {need} chaqmoq kerak.")
     return ''
 
 
@@ -1019,23 +1123,25 @@ def reminders(cur, conn, m, now):
     local = datetime.fromtimestamp(now / 1000, TASHKENT_TZ)
     title = html.escape(m['title'])
 
-    def text_for(extra):
+    def text_for(extra, extra_ru):
         st_list = standings(cur, m, now, fresh=True)       # faqat xabar yuboriladigan paytda hisoblanadi
 
         def make(p):
             if not p:
                 return None
-            return f"🏃 «{title}» marafoni: {_place_text(m, p)}{_gap_text(m, st_list, p)}{extra}"
+            return tgbot.L(f"🏃 «{title}» marafoni: {_place_text(m, p)}{_gap_text(m, st_list, p)}{extra}",
+                           f"🏃 Марафон «{title}»: {_place_text(m, p, True)}{_gap_text(m, st_list, p, True)}{extra_ru}")
         return make
 
     if end - HOUR_MS <= now < end and _claim(cur, conn, m['id'], 'end1', now):
-        _to_participants(cur, m, text_for(' ⏰ Marafon tugashiga 1 soat qoldi!'))
+        _to_participants(cur, m, text_for(' ⏰ Marafon tugashiga 1 soat qoldi!', ' ⏰ До конца марафона остался 1 час!'))
     elif end - DAY_MS <= now < end - HOUR_MS and _claim(cur, conn, m['id'], 'end24', now):
-        _to_participants(cur, m, text_for(' ⏳ Marafon tugashiga 24 soat qoldi.'))
+        _to_participants(cur, m, text_for(' ⏳ Marafon tugashiga 24 soat qoldi.', ' ⏳ До конца марафона осталось 24 часа.'))
     elif (local.hour >= REMIND_HOUR and now < end - DAY_MS and now - int(m['start_ms']) > 6 * HOUR_MS
           and _claim(cur, conn, m['id'], 'daily:' + local.date().isoformat(), now)):
         days_left = max(1, round((end - now) / DAY_MS))
-        _to_participants(cur, m, text_for(f' Marafon tugashiga {days_left} kun qoldi.'))
+        _to_participants(cur, m, text_for(f' Marafon tugashiga {days_left} kun qoldi.',
+                                          f' До конца марафона: {days_left} {tgbot.kun_ru(days_left)}.'))
     if m['audience'] == 'premium':
         cur.execute('''SELECT u.id, u.telegram_id, u.premium_until FROM marathon_participants p JOIN users u ON u.id = p.user_id
                        WHERE p.marathon_id = %s AND p.removed_ms IS NULL AND p.waived = 0 AND u.telegram_id IS NOT NULL
@@ -1043,9 +1149,13 @@ def reminders(cur, conn, m, now):
                          AND u.premium_until < %s''', (m['id'], now, now + PREMIUM_WARN_MS, end))
         for r in cur.fetchall():
             if _claim(cur, conn, m['id'], f"prem:{r['id']}:{r['premium_until']}", now):
-                tgbot.send(r['telegram_id'], f"⚠️ Bilim Premium'ingiz {local_text(r['premium_until'])} da tugaydi. "
-                                             f"Premium tugasa, «{title}» marafonida yangi chaqmoqlar sanalmay qoladi.",
-                           'Premiumni uzaytirish', 'premium.html')
+                tugash = local_text(r['premium_until'])
+                tgbot.send(r['telegram_id'], tgbot.L(
+                    f"⚠️ Bilim Premium'ingiz {tugash} da tugaydi. "
+                    f"Premium tugasa, «{title}» marafonida yangi chaqmoqlar sanalmay qoladi.",
+                    f"⚠️ Ваш Bilim Premium заканчивается {tugash}. "
+                    f"После окончания Premium новые молнии в марафоне «{title}» засчитываться не будут."),
+                    tgbot.L('Premiumni uzaytirish', 'Продлить Premium'), 'premium.html')
 
 
 def tick(cur, conn, now=None):

@@ -7,7 +7,7 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v48';
+const CACHE = 'bilimsari-v49';
 
 const ASSETS = [
   '/',
@@ -88,11 +88,12 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Statik fayllar — avval tarmoq (aktiv rivojlanishda eskirgan JS/CSS xizmat
-  // qilinib qolmasligi uchun), ulanish yo'q bo'lsagina keshdan
+  // Statik fayllar — avval tarmoq (?v=<xesh> bo'lsa brauzer HTTP keshidan darhol keladi),
+  // ulanish yo'q bo'lsagina keshdan. Keshda ?v=siz bitta nusxa — har deployda yangisi ustiga yoziladi.
+  const kalit = url.origin + url.pathname;
   e.respondWith(
     fetch(e.request)
-      .then((res) => saqlash(e.request, res))
-      .catch(() => caches.match(e.request))
+      .then((res) => saqlash(kalit, res))
+      .catch(() => caches.match(kalit))
   );
 });

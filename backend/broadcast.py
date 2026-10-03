@@ -56,6 +56,9 @@ def ensure_tables(cur, conn):
     add_column_if_missing(cur, conn, 'broadcasts', 'button_text', 'TEXT')
     add_column_if_missing(cur, conn, 'broadcasts', 'button_path', 'TEXT')
     add_column_if_missing(cur, conn, 'broadcasts', 'everyone', 'INTEGER NOT NULL DEFAULT 0')
+    # Tizim xabarlari (marafon e'loni) ruscha interfeysdagi o'quvchilarga ruscha ketadi
+    add_column_if_missing(cur, conn, 'broadcasts', 'text_ru', 'TEXT')
+    add_column_if_missing(cur, conn, 'broadcasts', 'button_ru', 'TEXT')
 
 
 class BroadcastError(Exception):
@@ -80,8 +83,10 @@ def _recipients_sql(everyone) -> str:
     return 'telegram_id IS NOT NULL' + ('' if everyone else ' AND notify = 1')
 
 
-def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=False, queue=False) -> dict:
-    """Tarqatishni yaratadi va fonda boshlaydi. queue=True — boshqasi ketayotgan bo'lsa navbatga qo'yiladi."""
+def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=False, queue=False,
+          text_ru=None, button_ru=None) -> dict:
+    """Tarqatishni yaratadi va fonda boshlaydi. queue=True — boshqasi ketayotgan bo'lsa navbatga qo'yiladi.
+    text_ru / button_ru — ruscha interfeysdagi o'quvchilar uchun (berilmasa hammaga text)."""
     now = now or clock.now_ms()
     text = str(text or '').strip()
     if not text:
@@ -94,10 +99,11 @@ def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=
         raise BroadcastError("Oldingi xabar hali yuborilmoqda. U tugashini kuting.", 409)
     cur.execute(f'SELECT COUNT(*) AS n FROM users WHERE {_recipients_sql(everyone)}')
     total = int(cur.fetchone()['n'])
-    cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms, html, button_text, button_path, everyone)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
+    cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms, html, button_text, button_path,
+                                           everyone, text_ru, button_ru)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
                 (text, 'queued' if busy else 'running', total, now, now, int(bool(html)), button, path or None,
-                 int(bool(everyone))))
+                 int(bool(everyone)), (str(text_ru).strip() or None) if text_ru else None, button_ru))
     bid = cur.fetchone()['id']
     conn.commit()
     if not busy:
@@ -109,14 +115,15 @@ def _spawn(bid):
     threading.Thread(target=run, args=(bid,), name=f'bilimsari-broadcast-{bid}', daemon=True).start()
 
 
-def _send(chat_id, text, b=None):
-    """(natija, retry_after): 'ok' | 'blocked' | 'failed'."""
+def _send(chat_id, text, b=None, ru=False):
+    """(natija, retry_after): 'ok' | 'blocked' | 'failed'. ru=True — ruscha tugma (bo'lsa)."""
     payload = {'chat_id': chat_id, 'text': text}
     if b and b['html']:
         payload['parse_mode'] = 'HTML'
     if b and b['button_text']:
+        label = (b.get('button_ru') if ru else None) or b['button_text']
         payload['reply_markup'] = {'inline_keyboard': [[
-            {'text': b['button_text'], 'web_app': {'url': tgbot.app_url(b['button_path'] or '')}}]]}
+            {'text': label, 'web_app': {'url': tgbot.app_url(b['button_path'] or '')}}]]}
     res = tgbot.tg_api('sendMessage', payload)
     if res and res.get('ok'):
         return 'ok', 0
@@ -140,17 +147,19 @@ def run(bid):
         text, last = b['text'], int(b['last_user_id'])
         sent, failed, blocked = int(b['sent']), int(b['failed']), int(b['blocked'])
         while True:
-            cur.execute(f'''SELECT id, telegram_id FROM users
+            cur.execute(f'''SELECT id, telegram_id, lang FROM users
                             WHERE {_recipients_sql(b['everyone'])} AND id > %s
                             ORDER BY id LIMIT %s''', (last, BATCH))
             batch = cur.fetchall()
             if not batch:
                 break
             for u in batch:
-                result, wait = _send(u['telegram_id'], text, b)
+                ru = u.get('lang') == 'ru' and bool(b.get('text_ru'))
+                matn = b['text_ru'] if ru else text
+                result, wait = _send(u['telegram_id'], matn, b, ru)
                 if wait:                                   # 429 — kutib, bir marta qayta urinamiz
                     time.sleep(min(wait, 30))
-                    result, _ = _send(u['telegram_id'], text, b)
+                    result, _ = _send(u['telegram_id'], matn, b, ru)
                 if result == 'ok':
                     sent += 1
                 elif result == 'blocked':

@@ -85,6 +85,10 @@ def som(n) -> str:
     return f'{int(n or 0):,}'.replace(',', ' ') + " so'm"
 
 
+def som_ru(n) -> str:
+    return f'{int(n or 0):,}'.replace(',', ' ') + ' сум'
+
+
 def _date(ms) -> str:
     return datetime.fromtimestamp(int(ms) / 1000, TASHKENT_TZ).strftime('%d.%m.%Y')
 
@@ -327,9 +331,19 @@ def notify_sale(cur, earning):
     ]
     before = effective_percent(earning['base'], earning['sales_before'], t)
     after = effective_percent(earning['base'], tot['sales'], t)
+    label_ru = ', '.join(tgbot.fan_ru(x.strip()) for x in _items_label(earning['items']).split(','))
+    lines_ru = [
+        "🎉 <b>Новая покупка по вашему коду!</b>",
+        f"📦 {html.escape(label_ru)} — {som_ru(earning['paid'])}",
+        f"💰 Вам: <b>+{som_ru(earning['amount'])}</b> ({earning['percent']}%)",
+        '',
+        f"Всего продаж: {tot['sales']} • К выплате: <b>{som_ru(tot['due'])}</b>",
+    ]
     if after > before:
         lines += ['', f"🚀 Tabriklaymiz! {tot['sales']} ta sotuvdan o'tdingiz — endi komissiyangiz <b>{after}%</b>."]
-    tgbot.send(u['telegram_id'], '\n'.join(lines), 'Hamkorlik', 'hamkor.html')
+        lines_ru += ['', f"🚀 Поздравляем! Вы прошли отметку {tot['sales']} продаж — теперь ваша комиссия <b>{after}%</b>."]
+    tgbot.send(u['telegram_id'], tgbot.L('\n'.join(lines), '\n'.join(lines_ru)), tgbot.L('Hamkorlik', 'Партнёрство'),
+               'hamkor.html')
 
 
 def record_payout(cur, conn, user_id, amount, note, by, now=None) -> dict:
@@ -349,10 +363,13 @@ def record_payout(cur, conn, user_id, amount, note, by, now=None) -> dict:
     u = cur.fetchone()
     if u and u['telegram_id']:
         left = _totals(cur, user_id)['due']
-        tgbot.send(u['telegram_id'],
-                   f"💸 <b>Hamkorlik mukofoti to'landi: {som(amount)}</b>\n"
-                   + (f"Izoh: {html.escape(note)}\n" if note else '')
-                   + f"Qolgan hisob: {som(left)}. Rahmat!", 'Hamkorlik', 'hamkor.html')
+        tgbot.send(u['telegram_id'], tgbot.L(
+            f"💸 <b>Hamkorlik mukofoti to'landi: {som(amount)}</b>\n"
+            + (f"Izoh: {html.escape(note)}\n" if note else '')
+            + f"Qolgan hisob: {som(left)}. Rahmat!",
+            f"💸 <b>Партнёрское вознаграждение выплачено: {som_ru(amount)}</b>\n"
+            + (f"Комментарий: {html.escape(note)}\n" if note else '')
+            + f"Остаток: {som_ru(left)}. Спасибо!"), tgbot.L('Hamkorlik', 'Партнёрство'), 'hamkor.html')
     return {'amount': amount}
 
 
@@ -465,13 +482,21 @@ def start_link(cur, conn, chat_id, code_row):
     me = cur.fetchone()
     code = code_row['code']
     if me and int(me['id']) == int(code_row['partner_user_id']):
-        tgbot.send(chat_id, f"🤝 <b>{code}</b> — bu sizning hamkorlik kodingiz. Uni do'stlaringizga yuboring: "
-                            f"ular xarid qilganda sizga foiz tushadi.", 'Hamkorlik', 'hamkor.html')
+        tgbot.send(chat_id, tgbot.L(
+            f"🤝 <b>{code}</b> — bu sizning hamkorlik kodingiz. Uni do'stlaringizga yuboring: "
+            f"ular xarid qilganda sizga foiz tushadi.",
+            f"🤝 <b>{code}</b> — это ваш партнёрский код. Отправьте его друзьям: "
+            f"когда они сделают покупку, вы получите процент."), tgbot.L('Hamkorlik', 'Партнёрство'), 'hamkor.html')
         return
     remember(cur, conn, chat_id, code)
     percent = int(code_row['percent'])
-    tgbot.send(chat_id, f"🎟 <b>{code}</b> promo-kodi saqlandi!\n"
-                        + (f"Fan yoki Bilim Premium sotib olayotganingizda u avtomatik qo'llanadi — "
-                           f"<b>−{percent}%</b> chegirma." if percent else
-                           "Fan yoki Bilim Premium sotib olayotganingizda u avtomatik qo'llanadi."),
-               "Do'konni ochish", 'shop.html')
+    tgbot.send(chat_id, tgbot.L(
+        f"🎟 <b>{code}</b> promo-kodi saqlandi!\n"
+        + (f"Fan yoki Bilim Premium sotib olayotganingizda u avtomatik qo'llanadi — "
+           f"<b>−{percent}%</b> chegirma." if percent else
+           "Fan yoki Bilim Premium sotib olayotganingizda u avtomatik qo'llanadi."),
+        f"🎟 Промокод <b>{code}</b> сохранён!\n"
+        + (f"Он применится автоматически при покупке предмета или Bilim Premium — "
+           f"скидка <b>−{percent}%</b>." if percent else
+           "Он применится автоматически при покупке предмета или Bilim Premium.")),
+        tgbot.L("Do'konni ochish", 'Открыть магазин'), 'shop.html')

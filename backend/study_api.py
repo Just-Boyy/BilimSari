@@ -15,7 +15,7 @@ import profil
 import study
 from auth_core import auth_required
 from db import get_connection
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, g, jsonify, request
 from games import clock
 from games.errors import GameError
 from tgbot import BOT_USERNAME
@@ -73,6 +73,8 @@ def subjects():
 @auth_required
 def dashboard():
     conn, cur = _conn()
+    # Bosh sahifa jami chaqmoqni 3 joyda (dashboard, o'rin, yutuqlar) so'raydi — so'rov ichida bir marta hisoblanadi
+    g.chaqmoq_kesh = {}
     try:
         data = study.dashboard(cur, request.user['id'])
         payments.annotate_subjects(cur, request.user['id'], data.get('subjects'))

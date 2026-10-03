@@ -2406,7 +2406,8 @@ function mrNatija(mid, res) {
   if (!res.length) return '<p class="izoh-kichik">G\'olib bo\'lmagan.</p>';
   return '<table class="adm-jadval" style="margin-top:8px"><thead><tr><th>O\'rin</th><th>O\'quvchi</th><th>Chaqmoq</th><th>Sovrin</th>' +
     '<th>Xabar</th><th>To\'lov</th></tr></thead><tbody>' + res.map(function (w) {
-      return '<tr><td>' + w.place + '</td><td>' + esc(w.name || '—') + ' <span class="kichik">ID ' + w.user_id + '</span></td><td>' + w.score +
+      return '<tr><td>' + w.place + '</td><td>' + esc(w.name || '—') + ' <span class="kichik">ID ' + w.user_id + '</span>' +
+        (w.flags || []).map(function (f) { return '<span class="adm-mr-bayroq">⚠ ' + esc(f) + '</span>'; }).join('') + '</td><td>' + w.score +
         '</td><td>' + esc(mrSovrin(w)) + '</td><td>' + (w.notified ? '<span class="adm-badge yashil">yuborildi</span>' : '<span class="adm-badge qizil">bormadi</span>') +
         '</td><td>' + (w.paid_ms ? '<span class="adm-badge yashil">' + msVaqt(w.paid_ms) + '</span>' + (w.paid_note ? ' ' + esc(w.paid_note) : '')
           : '<button class="adm-mini-tugma yashil" data-mr-tolov="' + mid + ':' + w.user_id + '">To\'landi</button>') + '</td></tr>';

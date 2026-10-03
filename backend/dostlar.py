@@ -159,7 +159,7 @@ def _cards(cur, ids, now=None) -> dict:
 
 
 def _user(cur, uid):
-    cur.execute('SELECT id, name, telegram_id, notify, friends_blocked FROM users WHERE id = %s', (uid,))
+    cur.execute('SELECT id, name, telegram_id, notify, friends_blocked, lang FROM users WHERE id = %s', (uid,))
     return cur.fetchone()
 
 
@@ -172,7 +172,8 @@ def _bot(row, text, button, path) -> bool:
     if not row or not row['telegram_id'] or not int(row['notify'] if row['notify'] is not None else 1):
         return False
     try:
-        return bool(tgbot.send(row['telegram_id'], text, button, path)[0])
+        lang = 'ru' if row.get('lang') == 'ru' else 'uz'
+        return bool(tgbot.send(row['telegram_id'], text, button, path, lang=lang)[0])
     except Exception:  # noqa: BLE001
         logger.warning("Do'stlar xabari yuborilmadi", exc_info=True)
         return False
@@ -250,7 +251,8 @@ def send_request(cur, conn, me, to, now=None) -> dict:
     conn.commit()
     req = _pending(cur, me, to)
     kim = _ism(mine, "O'quvchi")
-    _bot(target, f"👋 <b>{kim}</b> sizga do'stlik so'rovi yubordi.", "Ko'rish", 'dostlar.html?tab=sorovlar')
+    _bot(target, tgbot.L(f"👋 <b>{kim}</b> sizga do'stlik so'rovi yubordi.", f"👋 <b>{kim}</b> отправил(а) вам заявку в друзья."),
+         tgbot.L("Ko'rish", 'Посмотреть'), 'dostlar.html?tab=sorovlar')
     return {'state': 'outgoing', 'request_id': req['id'] if req else None}
 
 
@@ -275,8 +277,10 @@ def respond(cur, conn, me, request_id, accept, now=None) -> dict:
                     "WHERE from_id = %s AND to_id = %s AND status = 'pending'", (now, me, req['from_id']))
     conn.commit()
     if accept:
-        _bot(_user(cur, req['from_id']), f"🤝 <b>{_ism(_user(cur, me))}</b> do'stlik so'rovingizni qabul qildi!",
-             "Do'stlar", 'dostlar.html')
+        kim = _ism(_user(cur, me))
+        _bot(_user(cur, req['from_id']), tgbot.L(f"🤝 <b>{kim}</b> do'stlik so'rovingizni qabul qildi!",
+                                                 f"🤝 <b>{kim}</b> принял(а) вашу заявку в друзья!"),
+             tgbot.L("Do'stlar", 'Друзья'), 'dostlar.html')
     return {'state': 'friend' if accept else 'none'}
 
 
@@ -409,9 +413,12 @@ def invite(cur, conn, me, friend, code, now=None) -> dict:
     from games import catalog
     game = catalog.GAMES.get(room['game_type'], {}).get('name', "O'yin")
     subject = catalog.subject_info(room['subject'])['name'] if room['subject'] else ''
-    text = (f"🎮 <b>{_ism(_user(cur, me))}</b> sizni o'yinga chaqirdi: <b>{html.escape(game)}"
-            + (f" • {html.escape(subject)}" if subject else '') + f"</b>\nRoom kodi: <b>{code}</b>")
-    return {'sent': _bot(_user(cur, friend), text, "Qo'shilish", f'games.html?kod={code}')}
+    kim = _ism(_user(cur, me))
+    text = tgbot.L(f"🎮 <b>{kim}</b> sizni o'yinga chaqirdi: <b>{html.escape(game)}"
+                   + (f" • {html.escape(subject)}" if subject else '') + f"</b>\nRoom kodi: <b>{code}</b>",
+                   f"🎮 <b>{kim}</b> зовёт вас в игру: <b>{html.escape(game)}"
+                   + (f" • {html.escape(tgbot.fan_ru(subject))}" if subject else '') + f"</b>\nКод комнаты: <b>{code}</b>")
+    return {'sent': _bot(_user(cur, friend), text, tgbot.L("Qo'shilish", 'Присоединиться'), f'games.html?kod={code}')}
 
 
 def invites(cur, me, now=None) -> list:

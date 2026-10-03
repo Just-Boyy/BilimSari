@@ -140,8 +140,8 @@ def ensure_tables(cur, conn):
 
 # ───────────────────────── Yordamchilar ─────────────────────────
 
-def som(n) -> str:
-    return f'{int(n or 0):,}'.replace(',', ' ') + " so'm"
+def som(n, lang='uz') -> str:
+    return f'{int(n or 0):,}'.replace(',', ' ') + (' сум' if lang == 'ru' else " so'm")
 
 
 def _hhmm(ms) -> str:
@@ -159,8 +159,11 @@ def _items(order) -> list:
         return []
 
 
-def item_name(key) -> str:
-    return premium.NAME if key == premium.ITEM else cur_mod.subject_meta(key)['name']
+def item_name(key, lang='uz') -> str:
+    if key == premium.ITEM:
+        return 'Bilim Premium (1 месяц)' if lang == 'ru' else premium.NAME
+    name = cur_mod.subject_meta(key)['name']
+    return tgbot.fan_ru(name) if lang == 'ru' else name
 
 
 def is_premium(order_or_keys) -> bool:
@@ -168,8 +171,8 @@ def is_premium(order_or_keys) -> bool:
     return keys == [premium.ITEM]
 
 
-def subject_names(keys) -> str:
-    return ', '.join(item_name(k) for k in keys)
+def subject_names(keys, lang='uz') -> str:
+    return ', '.join(item_name(k, lang) for k in keys)
 
 
 def _tg_result(res):
@@ -353,7 +356,9 @@ def active_order(cur, user_id):
     return cur.fetchone()
 
 
-def instructions_text(order, settings) -> str:
+def instructions_text(order, settings, lang='uz') -> str:
+    if lang == 'ru':
+        return _instructions_ru(order, settings)
     keys = _items(order)
     lines = [f"🧾 <b>Buyurtma {order['code']}</b>", f"📚 {html.escape(subject_names(keys))}"]
     if int(order['promo_percent'] or 0):
@@ -379,18 +384,45 @@ def instructions_text(order, settings) -> str:
     return '\n'.join(lines)
 
 
-def _order_keyboard(order):
+def _instructions_ru(order, settings) -> str:
+    keys = _items(order)
+    lines = [f"🧾 <b>Заказ {order['code']}</b>", f"📚 {html.escape(subject_names(keys, 'ru'))}"]
+    if int(order['promo_percent'] or 0):
+        lines.append(f"🎟 Промокод {html.escape(order['promo_code'])}: −{order['promo_percent']}%")
+    elif order['promo_code']:
+        lines.append(f"🎟 Промокод {html.escape(order['promo_code'])}")
+    lines.append(f"💰 Сумма оплаты: <b>{som(order['amount'], 'ru')}</b>")
+    lines += [
+        '',
+        '<b>Как оплатить:</b>',
+        f"1. Переведите <b>{som(order['amount'], 'ru')}</b> на эту карту через Click, Payme или банковское приложение:",
+        f"💳 <code>{html.escape(settings['card_number'])}</code>",
+    ]
+    if settings['card_holder']:
+        lines.append(f"👤 {html.escape(settings['card_holder'])}")
+    lines += [
+        f"2. Если возможно, укажите в комментарии к платежу <code>{order['code']}</code>.",
+        '3. Отправьте в этот чат фото (скриншот) чека об оплате.',
+        '',
+        ('Админ проверит чек и активирует Premium. Заказ действует 24 часа.' if is_premium(keys)
+         else 'Админ проверит чек и откроет предмет. Заказ действует 24 часа.'),
+    ]
+    return '\n'.join(lines)
+
+
+def _order_keyboard(order, lang='uz'):
     row = []
     if not order['promo_code']:
-        row.append({'text': '🎟 Promo-kod', 'callback_data': f"ord:promo:{order['id']}"})
-    row.append({'text': '❌ Bekor qilish', 'callback_data': f"ord:cancel:{order['id']}"})
+        row.append({'text': '🎟 Промокод' if lang == 'ru' else '🎟 Promo-kod', 'callback_data': f"ord:promo:{order['id']}"})
+    row.append({'text': '❌ Отменить' if lang == 'ru' else '❌ Bekor qilish', 'callback_data': f"ord:cancel:{order['id']}"})
     return {'inline_keyboard': [row]}
 
 
 def send_instructions(cur, order) -> bool:
+    lang = tgbot.lang_of(order['chat_id'])
     res = tgbot.tg_api('sendMessage', {
-        'chat_id': order['chat_id'], 'text': instructions_text(order, get_settings(cur)),
-        'parse_mode': 'HTML', 'reply_markup': _order_keyboard(order),
+        'chat_id': order['chat_id'], 'text': instructions_text(order, get_settings(cur), lang),
+        'parse_mode': 'HTML', 'reply_markup': _order_keyboard(order, lang),
     })
     return bool(_tg_result(res))
 
@@ -610,14 +642,18 @@ def decide(cur, conn, order_id, approve, by, reason_key=None, now=None) -> tuple
     order = _order(cur, order_id)
 
     if approve:
-        _notify_paid(cur, order['chat_id'], order, keys, "To'lov tasdiqlandi!")
+        _notify_paid(cur, order['chat_id'], order, keys, tgbot.L("To'lov tasdiqlandi!", 'Оплата подтверждена!'))
         partners.notify_sale(cur, earning)
     else:
+        ru = tgbot.lang_of(order['chat_id']) == 'ru'
         tgbot.tg_api('sendMessage', {
             'chat_id': order['chat_id'], 'parse_mode': 'HTML',
-            'text': (f"❌ <b>To'lov tasdiqlanmadi</b> ({order['code']})\nSabab: {html.escape(reason)}\n\n"
+            'text': (f"❌ <b>Оплата не подтверждена</b> ({order['code']})\nПричина: {html.escape(reason)}\n\n"
+                     "Попробуйте снова с правильным чеком. Если есть вопрос, напишите сюда — админ ответит." if ru else
+                     f"❌ <b>To'lov tasdiqlanmadi</b> ({order['code']})\nSabab: {html.escape(reason)}\n\n"
                      "To'g'ri chek bilan qayta urinib ko'ring. Savolingiz bo'lsa, shu yerga yozing — admin javob beradi."),
-            'reply_markup': {'inline_keyboard': [[{'text': '🔄 Qayta urinish', 'callback_data': f'ord:retry:{order_id}'}]]},
+            'reply_markup': {'inline_keyboard': [[{'text': '🔄 Повторить' if ru else '🔄 Qayta urinish',
+                                                   'callback_data': f'ord:retry:{order_id}'}]]},
         })
     status = (f"✅ <b>Tasdiqlandi</b> — {html.escape(by)}, {_hhmm(now)}" if approve
               else f"❌ <b>Rad etildi</b> ({html.escape(reason)}) — {html.escape(by)}, {_hhmm(now)}")
@@ -643,17 +679,23 @@ def _deliver_items(cur, order, keys, now):
 
 
 def _notify_paid(cur, chat_id, order, keys, head):
+    lang = tgbot.lang_of(chat_id)
+    head = tgbot.pick(head, lang)
     if is_premium(keys):
         u = premium.until(cur, order['user_id'])
         till = datetime.fromtimestamp(u / 1000, TASHKENT_TZ).strftime('%d.%m.%Y') if u else ''
-        tgbot.send(chat_id, f"🎉 <b>{head}</b> ({order['code']})\n"
-                            f"💎 <b>Bilim Premium</b> faollashdi — {till} gacha.\n"
-                            f"AI tushuntirish, shaxsiy darslar, emoji va chaqmoqli avatar ramkasi endi sizniki!",
-                   'Shaxsiy darslarim', 'shaxsiy.html')
+        tgbot.send(chat_id, tgbot.L(
+            f"🎉 <b>{head}</b> ({order['code']})\n💎 <b>Bilim Premium</b> faollashdi — {till} gacha.\n"
+            f"AI tushuntirish, shaxsiy darslar, emoji va chaqmoqli avatar ramkasi endi sizniki!",
+            f"🎉 <b>{head}</b> ({order['code']})\n💎 <b>Bilim Premium</b> активирован — до {till}.\n"
+            f"Объяснения ИИ, личные уроки, эмодзи и рамка аватара с молниями теперь ваши!"),
+            tgbot.L('Shaxsiy darslarim', 'Мои личные уроки'), 'shaxsiy.html', lang=lang)
     else:
-        tgbot.send(chat_id, f"🎉 <b>{head}</b> ({order['code']})\n"
-                            f"{html.escape(subject_names(keys))} — ochildi. Omad!",
-                   'Darsni boshlash', f'topics.html?fan={keys[0]}' if keys else 'dashboard.html')
+        tgbot.send(chat_id, tgbot.L(
+            f"🎉 <b>{head}</b> ({order['code']})\n{html.escape(subject_names(keys))} — ochildi. Omad!",
+            f"🎉 <b>{head}</b> ({order['code']})\n{html.escape(subject_names(keys, 'ru'))} — открыт. Удачи!"),
+            tgbot.L('Darsni boshlash', 'Начать урок'), f'topics.html?fan={keys[0]}' if keys else 'dashboard.html',
+            lang=lang)
 
 
 def still_available(cur, user_id, keys, now=None) -> bool:

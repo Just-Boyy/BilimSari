@@ -19,6 +19,7 @@ import logging
 import os
 import random
 import re
+import time
 from datetime import datetime, timedelta, timezone
 
 import curriculum as cur_mod
@@ -514,14 +515,27 @@ def lesson_chaqmoq_by_user(cur) -> dict:
     return out
 
 
+def _so_rov_keshi():
+    """Bitta so'rov ichidagi chaqmoq keshi — faqat chaqiruvchi (masalan, bosh sahifa) yoqqan bo'lsa.
+    Boshqa joylarda hisob o'rtasida chaqmoq o'zgarishi mumkin, shuning uchun standart holatda yo'q."""
+    from flask import g, has_request_context
+    return getattr(g, 'chaqmoq_kesh', None) if has_request_context() else None
+
+
 def chaqmoq_parts(cur, user_id) -> dict:
     """Chaqmoq qayerdan kelgani: darslar (oddiy + shaxsiy), o'yinlar, kun savoli."""
+    kesh = _so_rov_keshi()
+    if kesh is not None and user_id in kesh:
+        return dict(kesh[user_id])
     topics = 0
     for table in ('user_progress', 'personal_topics'):
         cur.execute(f'SELECT COALESCE(SUM({LESSON_CHAQMOQ_SQL}), 0) AS c FROM {table} WHERE user_id = %s', (user_id,))
         topics += int(cur.fetchone()['c'] or 0)
-    return {'topics': topics, 'games': game_stats.chaqmoq_from_games(cur, user_id),
-            'daily': daily.chaqmoq_total(cur, user_id)}
+    parts = {'topics': topics, 'games': game_stats.chaqmoq_from_games(cur, user_id),
+             'daily': daily.chaqmoq_total(cur, user_id)}
+    if kesh is not None:
+        kesh[user_id] = dict(parts)
+    return parts
 
 
 def compute_chaqmoq(cur, user_id) -> int:
@@ -542,8 +556,8 @@ def today_plan(cur, user_id, daily_answered, now_ms) -> dict:
     return dict(tasks, done=sum(tasks.values()), total=len(tasks))
 
 
-def leaderboard(cur, user_id, limit=20):
-    """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar + kun savoli)."""
+def _all_chaqmoq(cur) -> dict:
+    """{user_id: jami chaqmoq} — butun jadvallar bo'yicha yig'indi (og'ir so'rov)."""
     chaqmoq_by_user = {uid: c for uid, c in lesson_chaqmoq_by_user(cur).items() if c}
     for uid, bonus in game_stats.chaqmoq_by_user(cur).items():
         if bonus:
@@ -551,16 +565,48 @@ def leaderboard(cur, user_id, limit=20):
     for uid, bonus in daily.chaqmoq_by_user(cur).items():
         if bonus:
             chaqmoq_by_user[uid] = chaqmoq_by_user.get(uid, 0) + bonus
+    return chaqmoq_by_user
+
+
+# Bosh sahifadagi o'rin (limit=1) uchun umumiy yig'indi keshlanadi: har ochilishda butun jadvallarni
+# yig'ish foydalanuvchi ko'paygan sari sekinlashadi. Chaqmoq yozilsa (jurnal.VERSION) yoki 30 s o'tsa —
+# qayta hisoblanadi; o'quvchining o'z chaqmog'i esa har doim yangi.
+RANK_CACHE_S = 30
+_rank_cache = {'t': 0.0, 'v': None, 'data': None}
+
+
+def _all_chaqmoq_cached(cur) -> dict:
+    now = time.monotonic()
+    if (_rank_cache['data'] is not None and _rank_cache['v'] == jurnal.VERSION[0]
+            and now - _rank_cache['t'] < RANK_CACHE_S):
+        return dict(_rank_cache['data'])
+    data = _all_chaqmoq(cur)
+    _rank_cache.update(t=now, v=jurnal.VERSION[0], data=dict(data))
+    return data
+
+
+def leaderboard(cur, user_id, limit=20):
+    """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar + kun savoli)."""
+    if limit == 1:
+        chaqmoq_by_user = _all_chaqmoq_cached(cur)
+        mine = compute_chaqmoq(cur, user_id)
+        if mine:
+            chaqmoq_by_user[user_id] = mine
+        else:
+            chaqmoq_by_user.pop(user_id, None)
+    else:
+        chaqmoq_by_user = _all_chaqmoq(cur)
 
     if not chaqmoq_by_user:
         return {'top': [], 'me': None, 'total_players': 0}
 
-    ids = list(chaqmoq_by_user.keys())
+    ranked = sorted(chaqmoq_by_user.items(), key=lambda kv: (-kv[1], kv[0]))
+    # Ism va rasm faqat ko'rsatiladiganlarga (top + o'zi) — hamma foydalanuvchini yuklamaymiz
+    ids = [uid for uid, _ in ranked[:limit]] + ([user_id] if user_id in chaqmoq_by_user else [])
+    ids = list(dict.fromkeys(ids))
     placeholders = ', '.join(['%s'] * len(ids))
     cur.execute(f'SELECT id, name, photo_url FROM users WHERE id IN ({placeholders})', ids)
     info = {row['id']: row for row in cur.fetchall()}
-
-    ranked = sorted(chaqmoq_by_user.items(), key=lambda kv: (-kv[1], kv[0]))
 
     top = []
     me = None

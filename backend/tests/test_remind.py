@@ -66,7 +66,7 @@ check('/api/me: tanlangan soat', c.get('/api/me', headers=u17['h']).get_json()['
 
 print('\n=== Rejalashtiruvchi (har soat) ===')
 sent = []
-notify.send = lambda chat, text, button=None, path='': (sent.append((chat, text, path)) or (True, None))
+notify.send = lambda chat, text, button=None, path='', lang=None: (sent.append((chat, text, path)) or (True, None))
 notify.time = type('TezVaqt', (), {'sleep': staticmethod(lambda s: None)})()
 day = clock.period_start_ms('day', int(time.time() * 1000))
 at = lambda h, m=5: day + h * 3600 * 1000 + m * 60 * 1000   # noqa: E731

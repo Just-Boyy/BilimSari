@@ -2,10 +2,11 @@
 BilimSari Backend — Flask + PostgreSQL
 """
 
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, make_response, send_from_directory
 from flask_cors import CORS
 from flask_compress import Compress
 import hashlib
+import re
 import html
 import json
 import logging
@@ -40,6 +41,7 @@ import rate_limit
 import site_settings
 import study
 import study_api
+import tgbot
 from auth_core import SECRET, auth_required, create_token, token_from_request
 from db import add_column_if_missing, database_url, get_connection, utc_now
 from games import api as games_api
@@ -602,15 +604,62 @@ PAGES = {
 }
 
 
+# ── Statik fayllar keshi ──────────────────────────────────
+# HTML har doim yangi tekshiriladi, undagi js/ va css/ havolalariga esa fayl mazmunining xeshi
+# qo'shiladi (app.css?v=a1b2c3d4e5). Shu xeshli so'rov 1 yilga "o'zgarmas" keshlanadi: sahifadan
+# sahifaga o'tishda fayllar serverdan qayta so'ralmaydi. Fayl o'zgarsa — xesh o'zgaradi, brauzer
+# yangisini oladi (qo'lda ?v= oshirish shart emas).
+_ASSET_REF = re.compile(r'''((?:src|href)=["'])((?:js|css)/[^"'?#]+)(?:\?v=[^"']*)?(["'])''')
+_asset_hashes = {}
+
+
+def _asset_hash(rel):
+    path = os.path.join(BASE_DIR, *rel.split('/'))
+    try:
+        st = os.stat(path)
+    except OSError:
+        return None
+    key = (rel, st.st_mtime_ns, st.st_size)
+    h = _asset_hashes.get(key)
+    if h is None:
+        with open(path, 'rb') as f:
+            h = hashlib.md5(f.read()).hexdigest()[:10]
+        _asset_hashes[key] = h
+    return h
+
+
+def _versioned_page(name):
+    with open(os.path.join(BASE_DIR, name), encoding='utf-8') as f:
+        html = f.read()
+
+    def sub(m):
+        h = _asset_hash(m.group(2))
+        return m.group(1) + m.group(2) + (f'?v={h}' if h else '') + m.group(3)
+
+    resp = make_response(_ASSET_REF.sub(sub, html))
+    resp.mimetype = 'text/html'
+    resp.headers['Cache-Control'] = 'no-cache'
+    resp.add_etag()
+    return resp.make_conditional(request)
+
+
+def _static_file(folder, filename):
+    resp = send_from_directory(os.path.join(BASE_DIR, folder), filename)
+    v = request.args.get('v')
+    if v and v == _asset_hash(f'{folder}/{filename}'):
+        resp.headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+    return resp
+
+
 @app.route('/')
 def home():
-    return send_from_directory(BASE_DIR, 'index.html')
+    return _versioned_page('index.html')
 
 
 @app.route('/<page>')
 def serve_page(page):
     if page in PAGES:
-        return send_from_directory(BASE_DIR, page)
+        return _versioned_page(page)
     return jsonify({'ok': False, 'error': 'Sahifa topilmadi'}), 404
 
 
@@ -623,12 +672,12 @@ def assets(filename):
 
 @app.route('/js/<path:filename>')
 def js_files(filename):
-    return send_from_directory(os.path.join(BASE_DIR, 'js'), filename)
+    return _static_file('js', filename)
 
 
 @app.route('/css/<path:filename>')
 def css_files(filename):
-    return send_from_directory(os.path.join(BASE_DIR, 'css'), filename)
+    return _static_file('css', filename)
 
 
 @app.route('/manifest.json')
@@ -655,33 +704,61 @@ BOT_DESCRIPTION = (
     "«Start» tugmasini bosing va o'rganishni boshlang!"
 )
 BOT_SHORT_DESCRIPTION = "Maktab fanlari: darslar, kun savoli, bilim o'yinlari va chaqmoq ⚡"
+# Telegram ilovasi ruscha bo'lgan foydalanuvchilarga (language_code=ru)
+BOT_DESCRIPTION_RU = (
+    "BilimSari — платформа для изучения школьных предметов: каждый день новая тема, тест и домашнее задание, "
+    "вопрос дня, игры на знания с друзьями и компьютером, молнии и награды. "
+    "Нажмите «Старт» и начните учиться!"
+)
+BOT_SHORT_DESCRIPTION_RU = "Школьные предметы: уроки, вопрос дня, игры на знания и молнии ⚡"
+BOT_COMMANDS_RU = [
+    {'command': 'start', 'description': 'Главное меню'},
+    {'command': 'kun', 'description': 'Вопрос дня'},
+    {'command': 'sotib_olish', 'description': 'Купить предмет'},
+    {'command': 'tolovlarim', 'description': 'Мои платежи'},
+    {'command': 'help', 'description': 'Помощь'},
+]
 
 
-def send_start_message(chat_id, first_name):
+def send_start_message(chat_id, first_name, tg_lang=None):
     # parse_mode=HTML — ismdagi <, & kabi belgilar xabarni buzmasligi uchun escape
-    name = html.escape(first_name or 'do‘st')
+    lang = tgbot.lang_of(chat_id, tg_lang)
+    if lang == 'ru':
+        name = html.escape(first_name or 'друг')
+        text = (f'Привет, {name}!\n\n'
+                f'<b>BilimSari</b> — платформа для изучения школьных предметов.\n\n'
+                f'📚 Каждый день новая тема, тест и домашнее задание\n'
+                f'❓ Вопрос дня — каждый день один вопрос и рейтинг дня\n'
+                f'🎮 Соревнования на знания с друзьями и компьютером\n'
+                f'⚡ Собирайте молнии и награды\n\n'
+                f'Выберите в меню ниже 👇 Если есть вопрос, напишите сюда — админ ответит.')
+    else:
+        name = html.escape(first_name or 'do‘st')
+        text = (f'Salom, {name}!\n\n'
+                f'<b>BilimSari</b> — maktab fanlarini o‘rganish platformasi.\n\n'
+                f'📚 Har kuni yangi mavzu, test va uy vazifasi\n'
+                f'❓ Kun savoli — har kuni bitta savol va kunlik reyting\n'
+                f'🎮 Do‘stlar va kompyuter bilan bilim bellashuvi\n'
+                f'⚡ Chaqmoq to‘plang, nishonlar yig‘ing\n\n'
+                f'Pastdagi menyudan tanlang 👇 Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.')
     tg_api('sendMessage', {
         'chat_id': chat_id,
-        'text': (
-            f'Salom, {name}!\n\n'
-            f'<b>BilimSari</b> — maktab fanlarini o‘rganish platformasi.\n\n'
-            f'📚 Har kuni yangi mavzu, test va uy vazifasi\n'
-            f'❓ Kun savoli — har kuni bitta savol va kunlik reyting\n'
-            f'🎮 Do‘stlar va kompyuter bilan bilim bellashuvi\n'
-            f'⚡ Chaqmoq to‘plang, nishonlar yig‘ing\n\n'
-            f'Pastdagi menyudan tanlang 👇 Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'
-        ),
+        'text': text,
         'parse_mode': 'HTML',
-        'reply_markup': botchat.menu_keyboard(),
+        'reply_markup': botchat.menu_keyboard(lang),
     })
 
 
-def send_room_invite(chat_id, first_name, code):
+def send_room_invite(chat_id, first_name, code, tg_lang=None):
     """Do'st yuborgan taklif havolasi orqali kelganda — roomga to'g'ridan-to'g'ri kirish."""
-    name = html.escape(first_name or 'do‘st')
+    ru = tgbot.lang_of(chat_id, tg_lang) == 'ru'
+    name = html.escape(first_name or ('друг' if ru else 'do‘st'))
     tg_api('sendMessage', {
         'chat_id': chat_id,
         'text': (
+            f'Привет, {name}!\n\nВас пригласили на соревнование знаний в <b>BilimSari</b>.\n'
+            f'Код комнаты: <b>{code}</b>\n\nПрисоединяйтесь к комнате кнопкой ниже.'
+        ) if ru else (
             f'Salom, {name}!\n\n'
             f'Sizni <b>BilimSari</b>da bilim bellashuviga taklif qilishdi.\n'
             f'Room kodi: <b>{code}</b>\n\n'
@@ -691,7 +768,7 @@ def send_room_invite(chat_id, first_name, code):
         'reply_markup': {
             'inline_keyboard': [[
                 {
-                    'text': 'Roomga qo‘shilish',
+                    'text': 'Войти в комнату' if ru else 'Roomga qo‘shilish',
                     'web_app': {'url': f"{WEBAPP_URL.rstrip('/')}/games.html?kod={code}"},
                 }
             ]]
@@ -699,12 +776,16 @@ def send_room_invite(chat_id, first_name, code):
     })
 
 
-def send_daily_invite(chat_id, first_name):
+def send_daily_invite(chat_id, first_name, tg_lang=None):
     """Kun savoli havolasi (t.me/<bot>?start=kun) yoki /kun buyrug'i."""
-    name = html.escape(first_name or 'do‘st')
+    ru = tgbot.lang_of(chat_id, tg_lang) == 'ru'
+    name = html.escape(first_name or ('друг' if ru else 'do‘st'))
     tg_api('sendMessage', {
         'chat_id': chat_id,
         'text': (
+            f'Привет, {name}!\n\n<b>Вопрос дня</b> — сегодня один вопрос для всех. '
+            f'Отвечайте правильно и быстро — и попадите в рейтинг дня!'
+        ) if ru else (
             f'Salom, {name}!\n\n'
             f'<b>Kun savoli</b> — bugun hamma uchun bitta savol. '
             f'To‘g‘ri va tez javob bering, kunlik reytingga chiqing!'
@@ -721,7 +802,22 @@ def send_daily_invite(chat_id, first_name):
     })
 
 
-def send_help_message(chat_id):
+def send_help_message(chat_id, tg_lang=None):
+    lang = tgbot.lang_of(chat_id, tg_lang)
+    if lang == 'ru':
+        tg_api('sendMessage', {
+            'chat_id': chat_id,
+            'text': ('Команды:\n'
+                     '/start — главное меню\n'
+                     '/kun — вопрос дня\n'
+                     '/sotib_olish — купить предмет\n'
+                     '/tolovlarim — мои платежи\n'
+                     '/help — помощь\n\n'
+                     'Можно пользоваться и кнопками меню внизу. '
+                     'Если есть вопрос, напишите сюда — админ ответит.'),
+            'reply_markup': botchat.menu_keyboard('ru'),
+        })
+        return
     tg_api('sendMessage', {
         'chat_id': chat_id,
         'text': (
@@ -758,6 +854,7 @@ def setup_telegram_bot():
         return
     webhook_url = WEBAPP_URL.rstrip('/') + '/telegram/webhook'
     config = json.dumps([webhook_url, WEBHOOK_UPDATES, BOT_COMMANDS, BOT_DESCRIPTION, BOT_SHORT_DESCRIPTION,
+                         BOT_COMMANDS_RU, BOT_DESCRIPTION_RU, BOT_SHORT_DESCRIPTION_RU,
                          WEBAPP_URL, hashlib.sha256(WEBHOOK_SECRET.encode()).hexdigest()], sort_keys=True)
     slot = hashlib.sha256(config.encode()).hexdigest()[:16] + ':' + utc_now().date().isoformat()
     conn = get_connection()
@@ -778,6 +875,9 @@ def setup_telegram_bot():
     tg_api('setMyCommands', {'commands': BOT_COMMANDS})
     tg_api('setMyDescription', {'description': BOT_DESCRIPTION})
     tg_api('setMyShortDescription', {'short_description': BOT_SHORT_DESCRIPTION})
+    tg_api('setMyCommands', {'commands': BOT_COMMANDS_RU, 'language_code': 'ru'})
+    tg_api('setMyDescription', {'description': BOT_DESCRIPTION_RU, 'language_code': 'ru'})
+    tg_api('setMyShortDescription', {'short_description': BOT_SHORT_DESCRIPTION_RU, 'language_code': 'ru'})
     tg_api('setChatMenuButton', {
         'menu_button': {
             'type': 'web_app',
@@ -813,6 +913,7 @@ def telegram_webhook():
         return jsonify({'ok': True})
 
     first_name = (message.get('from') or {}).get('first_name') or chat.get('first_name') or ''
+    tg_lang = (message.get('from') or {}).get('language_code')
     cmd = text.split()[0].split('@')[0] if text.startswith('/') else ''
 
     if cmd in ('/start', '/boshlash'):
@@ -820,17 +921,17 @@ def telegram_webhook():
         payload = text.split()[1] if len(text.split()) > 1 else ''
         room_code = game_rooms.normalize_code(payload[5:]) if payload.lower().startswith('room_') else ''
         if game_rooms.CODE_RE.match(room_code):
-            send_room_invite(chat_id, first_name, room_code)
+            send_room_invite(chat_id, first_name, room_code, tg_lang)
         elif payload.lower() == 'kun':
-            send_daily_invite(chat_id, first_name)
+            send_daily_invite(chat_id, first_name, tg_lang)
         elif payload.lower() == 'pay':
             botchat.send_shop(chat_id)
         else:
-            send_start_message(chat_id, first_name)
+            send_start_message(chat_id, first_name, tg_lang)
             if payload:
                 botchat.partner_start(chat_id, payload)   # t.me/<bot>?start=<hamkor kodi>
     elif cmd == '/kun':
-        send_daily_invite(chat_id, first_name)
+        send_daily_invite(chat_id, first_name, tg_lang)
     elif cmd in ('/sotib_olish', '/tolov'):
         botchat.send_shop(chat_id)
     elif cmd == '/tolovlarim':
@@ -838,9 +939,9 @@ def telegram_webhook():
     elif cmd == '/tolovlar' and admin_auth.is_admin_telegram((message.get('from') or {}).get('id')):
         botchat.send_pending(chat_id)
     elif cmd == '/help':
-        send_help_message(chat_id)
+        send_help_message(chat_id, tg_lang)
     elif cmd:
-        send_start_message(chat_id, first_name)
+        send_start_message(chat_id, first_name, tg_lang)
     else:
         # Chek rasmi, promo-kod, admin javobi yoki adminga yozilgan savol (jonli chat)
         botchat.handle_message(message)

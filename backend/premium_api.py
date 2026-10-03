@@ -278,9 +278,12 @@ def admin_grant():
         until = premium.grant(cur, row['id'], days, 'admin', note=body.get('note'))
         conn.commit()
         if row['telegram_id']:
-            tgbot.send(row['telegram_id'], f"🎁 Sizga <b>Bilim Premium</b> {days} kunga berildi!\n"
-                                           "AI tushuntirish, shaxsiy darslar, emoji va avatar ramkasi ochildi.",
-                       'Shaxsiy darslarim', 'shaxsiy.html')
+            tgbot.send(row['telegram_id'], tgbot.L(
+                f"🎁 Sizga <b>Bilim Premium</b> {days} kunga berildi!\n"
+                "AI tushuntirish, shaxsiy darslar, emoji va avatar ramkasi ochildi.",
+                f"🎁 Вам подарен <b>Bilim Premium</b> на {days} {tgbot.kun_ru(days)}!\n"
+                "Объяснения ИИ, личные уроки, эмодзи и рамка аватара открыты."),
+                tgbot.L('Shaxsiy darslarim', 'Мои личные уроки'), 'shaxsiy.html')
         admin_audit.log('premium_grant', detail=f'user_id={row["id"]} days={days} name={html.escape(row["name"])}')
         return _overview(cur, until_ms=until)
     finally:

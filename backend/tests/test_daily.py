@@ -253,7 +253,7 @@ check('Room tozalangach ham "Kompyuter ustasi" aniqlanadi', 'bot_qiyin' in [n['k
 
 print('\n=== Ertalabki xabar (09:00) ===')
 sent = []
-notify.send = lambda chat, text, button=None, path='': (sent.append((chat, text, path)) or (True, None))
+notify.send = lambda chat, text, button=None, path='', lang=None: (sent.append((chat, text, path)) or (True, None))
 notify.time = type('TezVaqt', (), {'sleep': staticmethod(lambda s: None)})()
 adv(24 * 3600 * 1000)       # yangi kun, hali hech kim ochmagan
 new_user = mk_user('Yangi', 1005)

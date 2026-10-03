@@ -102,7 +102,7 @@ check('Matematika 2-mavzusini ochib bo\'lmaydi (403, fanga oid xabar)', s == 403
 
 print('\n=== Eslatmalar ===')
 sent = []
-notify.send = lambda chat, text, button=None, path='': (sent.append((chat, text, path)) or (True, None))
+notify.send = lambda chat, text, button=None, path='', lang=None: (sent.append((chat, text, path)) or (True, None))
 notify.time = type('TezVaqt', (), {'sleep': staticmethod(lambda s: None)})()
 now = utc_now()
 complete(uid, MATH[0], now - timedelta(hours=24, minutes=10))

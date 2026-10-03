@@ -45,7 +45,7 @@ import study
 from db import TASHKENT_TZ, add_column_if_missing, as_utc, get_connection
 from games import clock
 from games import stats as game_stats
-from tgbot import BOT_TOKEN, send
+from tgbot import BOT_TOKEN, L, fan_ru, kun_ru, pick, send
 
 logger = logging.getLogger('bilimsari.notify')
 
@@ -61,7 +61,8 @@ MAX_INVITES = 10
 TICK_SECONDS = 60
 PAY_SUMMARY_HOUR = 21        # adminga kunlik to'lov hisoboti (Toshkent)
 JOB_KEEP_MS = 30 * 24 * 3600 * 1000   # job_runs qatorlari shuncha saqlanadi
-FOOTER = "\n\n<i>Eslatmalarni Profil → Sozlamalar bo'limida o'chirishingiz mumkin.</i>"
+FOOTER = L("\n\n<i>Eslatmalarni Profil → Sozlamalar bo'limida o'chirishingiz mumkin.</i>",
+           "\n\n<i>Напоминания можно отключить в разделе Профиль → Настройки.</i>")
 
 
 def ensure_tables(cur, conn):
@@ -102,6 +103,10 @@ def _utc(ms):
     return datetime.fromtimestamp(int(ms) / 1000, timezone.utc).replace(tzinfo=None)
 
 
+_kun_ru = kun_ru
+_fan_ru = fan_ru
+
+
 def _first_name(name):
     parts = str(name or '').split()
     return html.escape(parts[0] if parts else 'do‘st')
@@ -125,7 +130,8 @@ def _deliver(cur, conn, user, kind, ref, text, button, path) -> bool:
     conn.commit()
     if not fresh:
         return False
-    ok, error_code = send(user['telegram_id'], text + FOOTER, button, path)
+    lang = 'ru' if user.get('lang') == 'ru' else 'uz'
+    ok, error_code = send(user['telegram_id'], pick(text, lang) + pick(FOOTER, lang), pick(button, lang), path, lang=lang)
     if not ok and error_code == 403:
         cur.execute('UPDATE users SET notify = 0 WHERE id = %s', (user['id'],))
         conn.commit()
@@ -134,7 +140,8 @@ def _deliver(cur, conn, user, kind, ref, text, button, path) -> bool:
 
 
 def _recipients(cur, ids=None):
-    sql = 'SELECT id, name, telegram_id, created_at, remind_hour FROM users WHERE telegram_id IS NOT NULL AND notify = 1'
+    sql = ('SELECT id, name, telegram_id, created_at, remind_hour, lang FROM users '
+           'WHERE telegram_id IS NOT NULL AND notify = 1')
     params = []
     if ids is not None:
         if not ids:
@@ -190,13 +197,19 @@ def daily_reminders(cur, conn, now_ms, hour=None) -> int:
         if mine and mine <= waiting.get(u['id'], set()):
             continue                                  # barcha fanlari kutishda — "ochildi" xabari keladi
         streak = study.compute_streak(cur, u['id'])
+        ism = _first_name(u["name"])
         if own < 12:                                  # ertalabki eslatma boshqacha ohangda
-            text = f'Xayrli tong, {_first_name(u["name"])}! Bugungi darsni boshlaymizmi?\n'
+            uz, ru = f'Xayrli tong, {ism}! Bugungi darsni boshlaymizmi?\n', f'Доброе утро, {ism}! Начнём сегодняшний урок?\n'
         else:
-            text = f'{_first_name(u["name"])}, bugun hali dars qilmadingiz.\n'
-        text += (f'Streak: <b>{streak} kun</b> — uzilib qolmasin!' if streak
-                 else 'Bitta mavzu atigi 10–15 daqiqa oladi — boshlaymizmi?')
-        if _deliver(cur, conn, u, 'daily', today.isoformat(), text, 'Darsni boshlash', 'dashboard.html'):
+            uz, ru = f'{ism}, bugun hali dars qilmadingiz.\n', f'{ism}, сегодня вы ещё не занимались.\n'
+        if streak:
+            uz += f'Streak: <b>{streak} kun</b> — uzilib qolmasin!'
+            ru += f'Серия: <b>{streak} {_kun_ru(streak)}</b> — не прерывайте её!'
+        else:
+            uz += 'Bitta mavzu atigi 10–15 daqiqa oladi — boshlaymizmi?'
+            ru += 'Одна тема занимает всего 10–15 минут — начнём?'
+        if _deliver(cur, conn, u, 'daily', today.isoformat(), L(uz, ru), L('Darsni boshlash', 'Начать урок'),
+                    'dashboard.html'):
             sent += 1
     return sent
 
@@ -224,11 +237,15 @@ def question_ready(cur, conn, now_ms) -> int:
         if u['id'] in opened or not (u['id'] in active or (created and created >= since)):
             continue
         streak = daily.streak(cur, u['id'], now_ms)
-        text = (f'{_first_name(u["name"])}, <b>bugungi savol tayyor!</b>\n'
-                f'Bugun — {html.escape(subject)}. To\'g\'ri va tez javob berib, kunlik reytingga chiqing.')
+        ism = _first_name(u["name"])
+        uz = (f'{ism}, <b>bugungi savol tayyor!</b>\n'
+              f'Bugun — {html.escape(subject)}. To\'g\'ri va tez javob berib, kunlik reytingga chiqing.')
+        ru = (f'{ism}, <b>вопрос дня готов!</b>\n'
+              f'Сегодня — {html.escape(_fan_ru(subject))}. Отвечайте правильно и быстро — и попадите в рейтинг дня.')
         if streak:
-            text += f'\nKun savoli streak: <b>{streak} kun</b>.'
-        if _deliver(cur, conn, u, 'question', day, text, 'Savolni ochish', 'daily.html'):
+            uz += f'\nKun savoli streak: <b>{streak} kun</b>.'
+            ru += f'\nСерия вопроса дня: <b>{streak} {_kun_ru(streak)}</b>.'
+        if _deliver(cur, conn, u, 'question', day, L(uz, ru), L('Savolni ochish', 'Открыть вопрос'), 'daily.html'):
             sent += 1
     return sent
 
@@ -258,10 +275,13 @@ def cooldown_ready(cur, conn, now_ms) -> int:
     sent = 0
     for u in _recipients(cur, list(due)):
         for subject, last in due[u['id']]:
-            name = html.escape(cur_mod.subject_meta(subject)['name'])
-            text = (f'{_first_name(u["name"])}, kutish tugadi — <b>{name}</b> fanida '
-                    f'<b>keyingi mavzu ochildi!</b>\nDavom etamizmi?')
-            if _deliver(cur, conn, u, 'cooldown', f'{subject}:{last.isoformat()}', text, 'Davom etish',
+            name = cur_mod.subject_meta(subject)['name']
+            ism = _first_name(u["name"])
+            text = L(f'{ism}, kutish tugadi — <b>{html.escape(name)}</b> fanida '
+                     f'<b>keyingi mavzu ochildi!</b>\nDavom etamizmi?',
+                     f'{ism}, ожидание закончилось — по предмету <b>{html.escape(_fan_ru(name))}</b> '
+                     f'<b>открылась следующая тема!</b>\nПродолжим?')
+            if _deliver(cur, conn, u, 'cooldown', f'{subject}:{last.isoformat()}', text, L('Davom etish', 'Продолжить'),
                         f'topics.html?fan={subject}'):
                 sent += 1
     return sent
@@ -274,7 +294,7 @@ PREMIUM_HOURS = range(9, 22)        # eslatmalar kunduzi yuboriladi
 def premium_reminders(cur, conn, now_ms) -> int:
     """Premium tugashiga 3 kun qolganda va tugagan kuni — bir martadan (muddat bo'yicha)."""
     day = premium.DAY_MS
-    cur.execute('''SELECT id, name, telegram_id, premium_until FROM users
+    cur.execute('''SELECT id, name, telegram_id, premium_until, lang FROM users
                    WHERE telegram_id IS NOT NULL AND notify = 1 AND premium_until IS NOT NULL
                      AND premium_until > %s AND premium_until <= %s''',
                 (now_ms - 2 * day, now_ms + PREMIUM_SOON_DAYS * day))
@@ -282,14 +302,20 @@ def premium_reminders(cur, conn, now_ms) -> int:
     for u in cur.fetchall():
         until = int(u['premium_until'])
         till = datetime.fromtimestamp(until / 1000, TASHKENT_TZ).strftime('%d.%m.%Y')
+        ism = _first_name(u["name"])
         if until > now_ms:
-            text = (f'{_first_name(u["name"])}, <b>Bilim Premium</b> {till} kuni tugaydi. '
-                    'Muddati tugagach, Premium sahifasidan yana 1 oyga olishingiz mumkin.')
+            text = L(f'{ism}, <b>Bilim Premium</b> {till} kuni tugaydi. '
+                     'Muddati tugagach, Premium sahifasidan yana 1 oyga olishingiz mumkin.',
+                     f'{ism}, <b>Bilim Premium</b> заканчивается {till}. '
+                     'После окончания срока его можно снова оформить на 1 месяц на странице Premium.')
             ok = _deliver(cur, conn, u, 'premium_soon', str(until), text, 'Premium', 'premium.html')
         else:
-            text = (f'{_first_name(u["name"])}, <b>Bilim Premium</b> muddati tugadi. AI tushuntirish va yangi '
-                    "shaxsiy darslar yopildi — yaratgan darslaringiz o'zingizda qoladi. Qayta olasizmi?")
-            ok = _deliver(cur, conn, u, 'premium_end', str(until), text, 'Premium olish', 'premium.html')
+            text = L(f'{ism}, <b>Bilim Premium</b> muddati tugadi. AI tushuntirish va yangi '
+                     "shaxsiy darslar yopildi — yaratgan darslaringiz o'zingizda qoladi. Qayta olasizmi?",
+                     f'{ism}, срок <b>Bilim Premium</b> закончился. Объяснения ИИ и новые личные уроки '
+                     'закрыты — созданные уроки остаются у вас. Оформите снова?')
+            ok = _deliver(cur, conn, u, 'premium_end', str(until), text, L('Premium olish', 'Оформить Premium'),
+                          'premium.html')
         sent += int(bool(ok))
     return sent
 
@@ -301,9 +327,12 @@ def weekly_awards(cur, conn, now_ms) -> list:
     by_id = {w['user_id']: w for w in winners}
     for u in _recipients(cur, list(by_id)):
         w = by_id[u['id']]
-        text = (f'Tabriklaymiz, {_first_name(u["name"])}! Haftalik o\'yin turnirida '
-                f'<b>{w["place"]}-o\'rin</b> ({w["xp"]} ball). Medal profilingizga qo\'shildi.')
-        _deliver(cur, conn, u, 'award', str(week_start), text, 'Profilni ochish', 'profile.html')
+        ism = _first_name(u["name"])
+        text = L(f'Tabriklaymiz, {ism}! Haftalik o\'yin turnirida '
+                 f'<b>{w["place"]}-o\'rin</b> ({w["xp"]} ball). Medal profilingizga qo\'shildi.',
+                 f'Поздравляем, {ism}! В еженедельном игровом турнире у вас '
+                 f'<b>{w["place"]}-е место</b> ({w["xp"]} очков). Медаль добавлена в профиль.')
+        _deliver(cur, conn, u, 'award', str(week_start), text, L('Profilni ochish', 'Открыть профиль'), 'profile.html')
     return winners
 
 
@@ -332,10 +361,13 @@ def invite_co_players(host_id, host_name, code, game_name, subject_name):
             for u in _recipients(cur, [i for i in ids if i not in online]):
                 if sent >= MAX_INVITES:
                     break
-                text = (f'{_first_name(host_name)} yangi o\'yin ochdi: <b>{html.escape(game_name)} • '
-                        f'{html.escape(subject_name)}</b>.\nRoom kodi: <b>{code}</b>. Qo\'shilasizmi?')
+                host = _first_name(host_name)
+                text = L(f'{host} yangi o\'yin ochdi: <b>{html.escape(game_name)} • '
+                         f'{html.escape(subject_name)}</b>.\nRoom kodi: <b>{code}</b>. Qo\'shilasizmi?',
+                         f'{host} открыл(а) новую игру: <b>{html.escape(game_name)} • '
+                         f'{html.escape(_fan_ru(subject_name))}</b>.\nКод комнаты: <b>{code}</b>. Присоединитесь?')
                 if _deliver(cur, conn, u, 'invite', str(now // INVITE_WINDOW_MS), text,
-                            "Qo'shilish", f'games.html?kod={code}'):
+                            L("Qo'shilish", 'Присоединиться'), f'games.html?kod={code}'):
                     sent += 1
         except Exception:  # noqa: BLE001
             logger.exception("O'yin taklifi yuborilmadi")

@@ -933,7 +933,8 @@ def message_user(user_id):
         return jsonify({'ok': False, 'error': 'Foydalanuvchi topilmadi'}), 404
     if not u['telegram_id']:
         return jsonify({'ok': False, 'error': "Bu o'quvchi Telegram orqali kirmagan — unga yozib bo'lmaydi."}), 400
-    ok, code = tgbot.send(u['telegram_id'], "👨‍💼 <b>Admin:</b>\n" + html.escape(text))
+    ok, code = tgbot.send(u['telegram_id'], tgbot.L("👨‍💼 <b>Admin:</b>\n" + html.escape(text),
+                                                    "👨‍💼 <b>Админ:</b>\n" + html.escape(text)))
     if not ok:
         return jsonify({'ok': False, 'error': "Yuborilmadi — o'quvchi botni bloklagan yoki ishga tushirmagan."
                         if code == 403 else 'Telegram xatosi, qayta urinib ko\'ring.'}), 502
