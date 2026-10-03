@@ -196,8 +196,10 @@ def sync_curriculum(cur, conn, force=False):
     Mazmun oldingi restart'dan beri o'zgarmagan bo'lsa (fingerprint bir xil),
     359+ qatorni qayta yozish shart emas — o'tkazib yuboriladi.
     """
+    import mavzu_qosh   # noqa: PLC0415 — admin qo'shgan mavzular (ai_tutor orqali study'ga aylanib kelmasin)
     ensure_tables(cur, conn)
     lesson_edit.ensure_tables(cur, conn)
+    mavzu_qosh.ensure_tables(cur, conn)
 
     fingerprint = _curriculum_fingerprint()
     if not force:
@@ -272,6 +274,7 @@ def sync_curriculum(cur, conn, force=False):
     # bazadan yo'qolib ketardi (topic_id'da FK yo'q, shuning uchun bu
     # "yetim" qatorlar xatoga sabab bo'lmaydi — ular shunchaki keyingi
     # JOIN'larda hisobga olinmaydi).
+    expected_topic_ids |= mavzu_qosh.ids(cur)            # admin qo'shgan mavzular kodda yo'q — o'chirilmasin
     cur.execute('SELECT id FROM topics')
     stale_topic_ids = {r['id'] for r in cur.fetchall()} - expected_topic_ids
     for tid in stale_topic_ids:
@@ -282,7 +285,8 @@ def sync_curriculum(cur, conn, force=False):
     for sid in stale_subject_ids:
         cur.execute('DELETE FROM subjects WHERE id = %s', (sid,))
 
-    # Admin paneldagi tahrirlar kod'dagi matn ustidan qayta qo'yiladi
+    # Admin qo'shgan mavzular, keyin admin tahrirlari kod'dagi matn ustidan qayta qo'yiladi
+    mavzu_qosh.apply(cur)
     lesson_edit.apply_overrides(cur)
 
     cur.execute(

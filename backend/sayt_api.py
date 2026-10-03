@@ -15,6 +15,7 @@ import broadcast
 import curriculum as cur_mod
 import daily
 import dostlar
+import mavzu_qosh
 import notify
 import payments
 import personal
@@ -441,6 +442,61 @@ def jobs_run(key):
         _close(conn, cur)
     admin_audit.log('job_run', detail=f'{key}: {result}', ip=_ip())
     return jsonify({'ok': True, 'result': result})
+
+
+# ───────────────────────── Yangi mavzular (admin qo'shgan) ─────────────────────────
+
+@bp.route('/subjects/<key>/admin-topics', methods=['GET'])
+@admin_required
+def admin_topics(key):
+    conn, cur = _conn()
+    try:
+        return jsonify({'ok': True, 'items': mavzu_qosh.listing(cur, key)})
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/subjects/<key>/admin-topics', methods=['POST'])
+@admin_required
+def admin_topics_create(key):
+    b = _body()
+    conn, cur = _conn()
+    try:
+        item = mavzu_qosh.create(cur, conn, key, b.get('title'), 'manual' if b.get('mode') == 'manual' else 'ai', b.get('note'))
+        admin_audit.log('topic_add', detail=f"{key}: {item['title']} ({b.get('mode') or 'ai'})", ip=_ip())
+        return jsonify({'ok': True, 'item': item, 'items': mavzu_qosh.listing(cur, key)})
+    except mavzu_qosh.TopicError as exc:
+        return _err(exc.message, exc.http_status)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/admin-topics/<tid>/retry', methods=['POST'])
+@admin_required
+def admin_topics_retry(tid):
+    conn, cur = _conn()
+    try:
+        item = mavzu_qosh.retry(cur, conn, tid)
+        return jsonify({'ok': True, 'item': item, 'items': mavzu_qosh.listing(cur, item['subject_key'])})
+    except mavzu_qosh.TopicError as exc:
+        return _err(exc.message, exc.http_status)
+    finally:
+        _close(conn, cur)
+
+
+@bp.route('/admin-topics/<tid>', methods=['DELETE'])
+@admin_required
+def admin_topics_delete(tid):
+    conn, cur = _conn()
+    try:
+        item = mavzu_qosh.get(cur, tid)
+        mavzu_qosh.delete(cur, conn, tid)
+        admin_audit.log('topic_delete', detail=f"{tid}: {(item or {}).get('title')}", ip=_ip())
+        return jsonify({'ok': True, 'items': mavzu_qosh.listing(cur, (item or {}).get('subject_key'))})
+    except mavzu_qosh.TopicError as exc:
+        return _err(exc.message, exc.http_status)
+    finally:
+        _close(conn, cur)
 
 
 # ───────────────────────── Kun savoli rejasi ─────────────────────────

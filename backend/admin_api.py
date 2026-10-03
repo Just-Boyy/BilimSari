@@ -27,6 +27,7 @@ import dostlar
 import jurnal
 import marafon
 import lesson_edit
+import mavzu_qosh
 import payments
 import rate_limit
 import site_settings
@@ -601,9 +602,10 @@ def subject_topics(subject_key):
         )
         rows = cur.fetchall()
         edited = lesson_edit.overrides(cur)
+        added = mavzu_qosh.ids(cur)
         topics = [{
             'id': r['id'], 'seq': i,          # fan bo'yicha ketma-ket raqam (o'quvchi ko'radigandek)
-            'title': r['title'], 'duration': r['duration'], 'edited': r['id'] in edited,
+            'title': r['title'], 'duration': r['duration'], 'edited': r['id'] in edited, 'admin': r['id'] in added,
         } for i, r in enumerate(rows, start=1)]
         return jsonify({'ok': True, 'topics': topics, 'subject_name': cur_mod.subject_meta(subject_key)['name']})
     finally:

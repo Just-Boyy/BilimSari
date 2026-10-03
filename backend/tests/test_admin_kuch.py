@@ -333,6 +333,97 @@ r = c.post(f'/api/admin/topics/{tid}/reset', headers=ADM)
 hw = json.loads(db('SELECT homework FROM topics WHERE id = %s', (tid,), True)[0]['homework'])
 check('Asl holiga qaytarilganda uy vazifasi ham tiklanadi', r.status_code == 200 and hw['intro'] != 'Yangi kirish', hw)
 
+print("\n=== Yangi mavzu qo'shish ===")
+import ai_tutor  # noqa: E402
+import mavzu_qosh  # noqa: E402
+AI = {'fail': False}
+
+
+def fake_ai(prompt, **kw):
+    if AI['fail']:
+        return None, 'AI ishlamadi'
+    if 'rus tiliga tarjima' in prompt:
+        return {'title': 'Сравнение дробей', 'summary': 'Как сравнивать дроби.',
+                'lesson': [{'type': 'text', 'title': 'Правило', 'body': 'Приводим к общему знаменателю.'},
+                           {'type': 'example', 'title': 'Пример', 'body': '1/2 > 1/3'},
+                           {'type': 'note', 'body': 'Запомните.'}, {'type': 'text', 'body': 'Итог.'}],
+                'quiz': [{'type': 'mc', 'q': 'Что больше?', 'options': ['1/2', '1/3', '1/4', '1/5']},
+                         {'type': 'tf', 'q': '1/2 больше 1/3'}, {'type': 'mc', 'q': 'Общий знаменатель 1/2 и 1/3?',
+                                                                'options': ['6', '5', '3', '2']}],
+                'homework': {'intro': 'Выполните.', 'tasks': [{'id': 't1', 'prompt': 'Сравните 2/3 и 3/4', 'answer': '3/4'},
+                                                             {'id': 't2', 'prompt': 'Объясните правило'}]}}, None
+    return {'title': 'Kasrlarni taqqoslash', 'summary': 'Kasrlarni qanday taqqoslash.', 'duration': 15,
+            'lesson': [{'type': 'text', 'title': 'Qoida', 'body': 'Umumiy maxrajga keltiramiz.'},
+                       {'type': 'example', 'title': 'Misol', 'body': '1/2 > 1/3'},
+                       {'type': 'note', 'body': 'Esda tuting.'}, {'type': 'text', 'body': 'Xulosa.'}],
+            'quiz': [{'type': 'mc', 'q': 'Qaysi katta?', 'options': ['1/2', '1/3', '1/4', '1/5'], 'answer': 0},
+                     {'type': 'tf', 'q': '1/2 > 1/3', 'answer': True},
+                     {'type': 'mc', 'q': '1/2 va 1/3 umumiy maxraji?', 'options': ['6', '5', '3', '2'], 'answer': 0}],
+            'homework': {'intro': 'Bajaring.', 'tasks': [{'id': 't1', 'type': 'text', 'prompt': '2/3 va 3/4 ni taqqoslang',
+                                                         'answer': '3/4', 'hint': 'Maxraj 12'},
+                                                        {'id': 't2', 'type': 'open', 'prompt': 'Qoidani tushuntiring'}]}}, None
+
+
+ai_tutor.call_gemini_json = fake_ai
+before = c.get('/api/admin/subjects/math/topics', headers=ADM).get_json()['topics']
+s, r = post('/api/admin/subjects/math/admin-topics', {'title': 'Mening mavzum', 'mode': 'manual'})
+man = r['item']
+lst = c.get('/api/admin/subjects/math/topics', headers=ADM).get_json()['topics']
+check("Qo'lda: fan oxiriga qo'shildi", s == 200 and lst[-1]['id'] == man['id'] and lst[-1]['admin'] and len(lst) == len(before) + 1, lst[-2:])
+s, r = post('/api/admin/subjects/math/admin-topics', {'title': 'Kasrlarni taqqoslash', 'mode': 'ai', 'note': '6-sinf'})
+ai_id = r['item']['id']
+for _ in range(60):
+    st = mavzu_qosh.get(get_connection().cursor(), ai_id)['status']
+    if st != 'generating':
+        break
+    time.sleep(0.1)
+row = db('SELECT * FROM topics WHERE id = %s', (ai_id,), True)
+check("AI: dars yozildi va fan oxiriga qo'shildi", st == 'ready' and row and json.loads(row[0]['quiz'])[0]['q'] == 'Qaysi katta?'
+      and len(json.loads(row[0]['homework'])['tasks']) == 2, (st, row[:1]))
+check('AI: ruscha tarjimasi ham', row and row[0]['title_ru'] == 'Сравнение дробей' and 'quiz' in json.loads(row[0]['ru']), row[:1])
+lst = c.get('/api/admin/subjects/math/topics', headers=ADM).get_json()['topics']
+check("Tartib: qo'lda → AI (ikkalasi oxirida)", [t['id'] for t in lst[-2:]] == [man['id'], ai_id], [t['id'] for t in lst[-3:]])
+import til  # noqa: E402
+tv = til.topic(db('SELECT * FROM topics WHERE id = %s', (ai_id,), True)[0], 'ru')
+check("Ruscha interfeysda: nom, savol (javob o'sha), uy vazifasi ruscha", tv['title'] == 'Сравнение дробей'
+      and tv['quiz'][0]['q'] == 'Что больше?' and tv['quiz'][0]['answer'] == 0 and tv['quiz'][1]['answer'] is True
+      and tv['homework']['tasks'][0]['prompt'] == 'Сравните 2/3 и 3/4', tv)
+# Kod sinxronlanganda (deploy) admin mavzulari va ularning tahriri saqlanib qoladi
+t = c.get(f"/api/admin/topics/{man['id']}", headers=ADM).get_json()['topic']
+body = {k: t[k] for k in ('title', 'summary', 'duration', 'lesson', 'quiz', 'homework')}
+body['lesson'] = [{'type': 'text', 'body': 'Admin yozgan dars matni.'}]
+c.put(f"/api/admin/topics/{man['id']}", headers=ADM, json=body)
+conn = get_connection(); cur = conn.cursor()
+study.sync_curriculum(cur, conn, force=True)
+cur.close(); conn.close()
+rows = db('SELECT id, lesson FROM topics WHERE id IN (%s, %s)', (man['id'], ai_id), True)
+check("Sinxronlashdan keyin ham bor (tahriri bilan)", len(rows) == 2 and any('Admin yozgan dars' in r['lesson'] for r in rows), rows)
+r = c.post(f"/api/admin/topics/{man['id']}/reset", headers=ADM)
+check("Asl holiga qaytarish (dastlabki matn)", r.status_code == 200 and 'Dars matnini shu yerga yozing' in json.dumps(r.get_json(), ensure_ascii=False))
+AI['fail'] = True
+s, r = post('/api/admin/subjects/history/admin-topics', {'title': 'Yangi tarix mavzusi'})
+fid = r['item']['id']
+for _ in range(60):
+    st = mavzu_qosh.get(get_connection().cursor(), fid)['status']
+    if st != 'generating':
+        break
+    time.sleep(0.1)
+check("AI ishlamasa — «yaratilmadi», o'quvchiga ko'rinmaydi", st == 'failed' and not db('SELECT id FROM topics WHERE id = %s', (fid,), True))
+AI['fail'] = False
+s, r = post(f'/api/admin/admin-topics/{fid}/retry')
+for _ in range(60):
+    st = mavzu_qosh.get(get_connection().cursor(), fid)['status']
+    if st != 'generating':
+        break
+    time.sleep(0.1)
+check('Qayta urinish', s == 200 and st == 'ready', st)
+r = c.delete(f'/api/admin/admin-topics/{fid}', headers=ADM)
+check("O'chirish", r.status_code == 200 and not db('SELECT id FROM admin_topics WHERE id = %s', (fid,), True)
+      and not db('SELECT id FROM topics WHERE id = %s', (fid,), True))
+code_topic = db("SELECT id FROM topics WHERE subject_key = 'math' ORDER BY seq LIMIT 1", fetch=True)[0]['id']
+check("Kod'dagi mavzuni o'chirib bo'lmaydi", c.delete(f'/api/admin/admin-topics/{code_topic}', headers=ADM).status_code == 404)
+check("Qisqa nom — 400", post('/api/admin/subjects/math/admin-topics', {'title': 'ab'})[0] == 400)
+
 print('\n=== Admin panel sahifasi ===')
 html = open(os.path.join(BACKEND, 'admin.html'), encoding='utf-8').read()
 check("Yangi bo'limlar", all(f'id="bolim-{b}"' in html for b in ('qoidalar', 'matnlar', 'dizayn', 'baza', 'xabar'))

@@ -308,6 +308,9 @@ def reset(cur, conn, topic_id):
         raise EditError('Mavzu topilmadi.')
     original = _code_topic(row)
     if not original:
+        import mavzu_qosh   # noqa: PLC0415 — admin qo'shgan mavzu: asl matni — dastlab yozilgani
+        original = mavzu_qosh.original(cur, topic_id)
+    if not original:
         raise EditError("Mavzuning asl matni kodda topilmadi.")
     cur.execute('DELETE FROM topic_overrides WHERE topic_id = %s', (topic_id,))
     _write_topic(cur, topic_id, {

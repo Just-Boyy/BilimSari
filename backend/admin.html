@@ -543,6 +543,9 @@
   .adm-tanlov-royxat label { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--chiziq);
     border-radius: 10px; cursor: pointer; font-size: 13px; }
   .adm-tanlov-royxat label:hover { border-color: var(--yashil); }
+  .adm-yangi-mavzu { border: 1px dashed var(--yashil); border-radius: var(--r); padding: 8px 12px; margin: 4px 0 6px; }
+  .adm-yangi-mavzu summary { cursor: pointer; font-weight: 700; color: var(--yashil-quyuq); font-size: 14px; }
+  .adm-yangi-mavzu .adm-forma { margin-top: 10px; }
 </style>
 </head>
 <body class="no-nav">
@@ -1127,6 +1130,7 @@ var AUDIT_NOMLARI = {
   design_blocks: 'Bloklar ko\'rinishi o\'zgartirildi', db_update: 'Bazada qator tahrirlandi', db_delete: 'Bazadan qator o\'chirildi',
   db_export: 'Jadval yuklab olindi (CSV)', broadcast_cancel: 'Ommaviy xabar bekor qilindi', job_run: 'Ish qo\'lda bajarildi',
   daily_set: 'Kun savoli tanlandi', daily_reset: 'Kun savoli avtomatikka qaytarildi',
+  topic_add: 'Yangi mavzu qo\'shildi', topic_delete: 'Qo\'shilgan mavzu o\'chirildi',
 };
 
 var SUBJECT_NAMES = {
@@ -1673,10 +1677,23 @@ async function fanMavzulariniKorsat(subjectKey, subjectName) {
       '<h2>' + esc(res.subject_name) + ' — mavzular</h2>' +
       '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button>' +
     '</div>' +
-    '<p class="izoh-kichik" style="margin-bottom:6px">Mavzuni bosing — dars matni va test savollarini tahrirlash mumkin.</p>' +
+    '<details class="adm-yangi-mavzu"' + (yangiMavzuOchiq ? ' open' : '') + '><summary>+ Yangi mavzu qo\'shish</summary>' +
+      '<form class="adm-forma" id="yangiMavzuForma">' +
+        '<p class="izoh-kichik">Mavzu fan oxiriga qo\'shiladi (o\'quvchilarning progressi buzilmaydi). AI dars matni, 3 ta test savoli, ' +
+          'uy vazifasi va ruscha tarjimasini 1–3 daqiqada yozadi; keyin uni odatdagidek tahrirlashingiz mumkin.</p>' +
+        '<label>Mavzu nomi<input id="yangiMavzuNom" maxlength="120" required placeholder="Masalan: Kasrlarni taqqoslash"></label>' +
+        '<label>AI uchun izoh (ixtiyoriy)<textarea id="yangiMavzuIzoh" rows="2" maxlength="500" ' +
+          'placeholder="Masalan: 6-sinf darajasida, kundalik hayotdan misollar bilan"></textarea></label>' +
+        '<div class="adm-checkbox-qator"><label class="adm-belgi"><input type="radio" name="yangiMavzuTur" value="ai" checked> AI yozsin</label>' +
+          '<label class="adm-belgi"><input type="radio" name="yangiMavzuTur" value="manual"> O\'zim yozaman</label></div>' +
+        '<button class="adm-mini-tugma yashil" type="submit">Qo\'shish</button>' +
+        '<span class="adm-forma-xabar" id="yangiMavzuXabar" role="status"></span>' +
+      '</form><div id="adminMavzular"></div></details>' +
+    '<p class="izoh-kichik" style="margin:10px 0 6px">Mavzuni bosing — dars matni, test savollari va uy vazifasini tahrirlash mumkin.</p>' +
     (res.topics || []).map(function (t) {
       return '<div class="adm-qator adm-mavzu-qator" data-mavzu="' + esc(t.id) + '"><span class="yorliq">' + t.seq + '. ' + esc(t.title) + '</span>' +
-        '<span class="ong">' + (t.edited ? '<span class="adm-badge kok">Tahrirlangan</span>' : '') +
+        '<span class="ong">' + (t.admin ? '<span class="adm-badge yashil">siz qo\'shgan</span>' : '') +
+        (t.edited ? '<span class="adm-badge kok">Tahrirlangan</span>' : '') +
         t.duration + ' daq. ' + BSIcons.icon('pencil') + '</span></div>';
     }).join('');
 
@@ -1684,6 +1701,60 @@ async function fanMavzulariniKorsat(subjectKey, subjectName) {
   modal.querySelectorAll('[data-mavzu]').forEach(function (el) {
     el.addEventListener('click', function () { mavzuTahrirla(el.dataset.mavzu, subjectKey, subjectName); });
   });
+  modal.querySelector('.adm-yangi-mavzu').addEventListener('toggle', function () { yangiMavzuOchiq = this.open; });
+  document.getElementById('yangiMavzuForma').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var tur = modal.querySelector('input[name="yangiMavzuTur"]:checked').value;
+    var r = await AdminAPI.adminMavzuQosh(subjectKey, { title: document.getElementById('yangiMavzuNom').value,
+      note: document.getElementById('yangiMavzuIzoh').value, mode: tur });
+    if (!r.ok) { formaXabar('yangiMavzuXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+    if (tur === 'manual') { fanMavzulariniKorsat(subjectKey, subjectName); mavzuTahrirla(r.item.id, subjectKey, subjectName); return; }
+    formaXabar('yangiMavzuXabar', '✅ AI yozmoqda — tayyor bo\'lgach ro\'yxatga qo\'shiladi', true);
+    this.reset();
+    adminMavzularChiz(subjectKey, subjectName, r.items);
+  });
+  var am = await AdminAPI.adminMavzular(subjectKey);
+  if (am.ok) adminMavzularChiz(subjectKey, subjectName, am.items);
+}
+
+var yangiMavzuOchiq = false;
+var adminMavzuTaymer = null;
+var ADMIN_MAVZU_HOLAT = { generating: ['AI yozmoqda...', 'sariq'], ready: ['Tayyor', 'yashil'], failed: ['Yaratilmadi', 'qizil'] };
+
+function adminMavzularChiz(subjectKey, subjectName, items) {
+  var box = document.getElementById('adminMavzular');
+  if (!box) return;
+  box.innerHTML = items.length ? '<h3 style="font-size:13px;margin:12px 0 4px">Siz qo\'shgan mavzular</h3>' + items.map(function (m) {
+    var h = ADMIN_MAVZU_HOLAT[m.status] || [m.status, 'kulrang'];
+    return '<div class="adm-holat-qator"><b style="min-width:0">' + esc(m.title) + '</b><span class="adm-badge ' + h[1] + '">' + h[0] + '</span>' +
+      (m.status === 'ready' && !m.ru ? '<span class="adm-badge kulrang">ruschasi yo\'q</span>' : '') +
+      (m.status === 'failed' ? '<button class="adm-mini-tugma" type="button" data-am-qayta="' + esc(m.id) + '">Qayta urinish</button>' : '') +
+      (m.status !== 'generating' ? '<button class="adm-mini-tugma qizil" type="button" data-am-ochir="' + esc(m.id) + '">O\'chirish</button>' : '') +
+      (m.error ? '<p class="izoh-kichik">Xato: ' + esc(m.error) + '</p>' : '') + '</div>';
+  }).join('') : '';
+  box.onclick = async function (e) {
+    var q = e.target.closest('[data-am-qayta]'), o = e.target.closest('[data-am-ochir]');
+    if (q) {
+      var r = await AdminAPI.adminMavzuQayta(q.dataset.amQayta);
+      if (r.ok) adminMavzularChiz(subjectKey, subjectName, r.items); else ogohlantir(r.error || 'Xatolik');
+    } else if (o) {
+      if (!(await tasdiqSora('Mavzu butunlay o\'chirilsinmi? O\'quvchilarning shu mavzudagi natijalari hisobga olinmay qoladi.'))) return;
+      var r2 = await AdminAPI.adminMavzuOchir(o.dataset.amOchir);
+      if (r2.ok) fanMavzulariniKorsat(subjectKey, subjectName); else ogohlantir(r2.error || 'Xatolik');
+    }
+  };
+  clearTimeout(adminMavzuTaymer);
+  if (items.some(function (m) { return m.status === 'generating'; })) {
+    adminMavzuTaymer = setTimeout(async function () {
+      if (!document.getElementById('adminMavzular')) return;
+      var am = await AdminAPI.adminMavzular(subjectKey);
+      if (!am.ok) return;
+      var oldin = items.filter(function (m) { return m.status === 'generating'; }).length;
+      var hozir = am.items.filter(function (m) { return m.status === 'generating'; }).length;
+      if (hozir < oldin) fanMavzulariniKorsat(subjectKey, subjectName);     // tayyor bo'ldi — ro'yxatga qo'shildi
+      else adminMavzularChiz(subjectKey, subjectName, am.items);
+    }, 5000);
+  }
 }
 
 // ─────────────────────── Mavzu tahrirlagichi ───────────────────────

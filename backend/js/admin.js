@@ -250,6 +250,10 @@
     ishlar: function () { return so_rov('/api/admin/jobs'); },
     ishBajar: function (kalit) { return so_rov('/api/admin/jobs/' + kalit + '/run', { method: 'POST' }); },
     kunReja: function () { return so_rov('/api/admin/daily-plan'); },
+    adminMavzular: function (fan) { return so_rov('/api/admin/subjects/' + fan + '/admin-topics'); },
+    adminMavzuQosh: function (fan, tana) { return so_rov('/api/admin/subjects/' + fan + '/admin-topics', { method: 'POST', body: tana }); },
+    adminMavzuQayta: function (id) { return so_rov('/api/admin/admin-topics/' + encodeURIComponent(id) + '/retry', { method: 'POST' }); },
+    adminMavzuOchir: function (id) { return so_rov('/api/admin/admin-topics/' + encodeURIComponent(id), { method: 'DELETE' }); },
     kunSavollari: function (topicId) { return so_rov('/api/admin/daily-plan/questions?topic_id=' + encodeURIComponent(topicId)); },
     kunRejaSaqla: function (tana) { return so_rov('/api/admin/daily-plan', { method: 'POST', body: tana }); },
 
