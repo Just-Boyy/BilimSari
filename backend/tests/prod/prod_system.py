@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Production: Stars balansi, zaxira nusxa, xatolar jurnali (faqat o'qish)."""
+"""Production: Stars olib tashlangani, zaxira nusxa, xatolar jurnali (faqat o'qish)."""
 import os
 import time
 
@@ -29,9 +29,7 @@ at = d.get('token')
 check('Admin kirish', s == 200 and at, s)
 
 s, d = call('GET', '/api/admin/pay/stars', at)
-check('Stars balansi (Telegram)', s == 200 and d.get('ok') and 'ready' in d, (s, d))
-print('     balans:', d.get('balance'), '| tayyor:', d.get('ready'), '| kutilmoqda:', d.get('held'),
-      '| jami tushgan:', d.get('received'))
+check("Stars to'lovi olib tashlangan (2026-09-29) — 404", s == 404, (s, d))
 
 for _ in range(12):
     s, d = call('GET', '/api/admin/system', at)

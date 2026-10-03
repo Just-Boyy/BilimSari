@@ -51,6 +51,6 @@ r = requests.get(B + '/hamkor.html', timeout=30)
 check('hamkor.html beriladi', r.status_code == 200 and 'Hamkorlik' in r.text, r.status_code)
 ui = requests.get(B + '/js/ui.js', timeout=30).text
 check("ui.js: Menyu va 'Biz haqimizda'", 'navMenyuTugma' in ui and 'Biz haqimizda' in ui and "matn: 'Profil' }," in ui)
-check('sw.js v23', "bilimsari-v23" in requests.get(B + '/sw.js', timeout=30).text)
+check('sw.js', "bilimsari-v" in requests.get(B + '/sw.js', timeout=30).text)
 check('i18n.js: Меню', "'Menyu': 'Меню'" in requests.get(B + '/js/i18n.js', timeout=30).text)
 print('\n' + ('HAMMASI OK' if not fails else f'{len(fails)} ta XATO: {fails}'))

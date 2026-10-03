@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Production: ramkalar — fayllar, katalog, tanlash (sinov o'quvchisiga 1 kunlik Premium, keyin o'chiriladi)."""
 import os
+import re
 
 import sys
 
@@ -33,7 +34,7 @@ finally:
 s = requests.get(B + '/api/admin/system', headers=H, timeout=30).json()
 print('xatolar:', s.get('error_counts'))
 css = requests.get(B + '/css/app.css', timeout=30).text
-print('css ramkalar:', all('.ramka.r-%s {' % k in css for k in KEYS), '| sw v46:', 'bilimsari-v46' in requests.get(B + '/sw.js', timeout=30).text)
+print('css ramkalar:', all('.ramka.r-%s {' % k in css for k in KEYS), '| sw:', re.search(r'bilimsari-v\d+', requests.get(B + '/sw.js', timeout=30).text).group(0))
 ui = requests.get(B + '/js/ui.js', timeout=30).text
 i18n = requests.get(B + '/js/i18n.js', timeout=30).text
 print('ui.js kalitlar:', all("'%s': 1" % k in ui for k in KEYS), '| ruscha nomlar:', all(n in i18n for n in ('Фиолетовая молния', 'Красная молния', 'Белая молния')),

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Production: chaqmoqli o'yinlar — imkoniyatlar, chiqib ketish, +30. Ikki sinov o'quvchisi, oxirida o'chiriladi."""
 import os
+import re
 import time
 
 import sys
@@ -53,4 +54,4 @@ lb = requests.get(B + '/api/study/leaderboard', headers=H, timeout=30)
 print('umumiy reyting ishlaydi:', lb.status_code)
 s = requests.get(B + '/api/admin/system', headers=H, timeout=30).json()
 print('xatolar:', s.get('error_counts'))
-print('sw v41:', 'bilimsari-v41' in requests.get(B + '/sw.js', timeout=30).text)
+print('sw:', re.search(r'bilimsari-v\d+', requests.get(B + '/sw.js', timeout=30).text).group(0))

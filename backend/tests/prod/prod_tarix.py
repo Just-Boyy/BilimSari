@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Production: tugagan marafon tepada yo'q, tarixda bor (sinov o'quvchisi bilan, oxirida o'chiriladi)."""
 import os
+import re
 
 import sys
 
@@ -22,6 +23,6 @@ try:
         print('tarix ichi:', h['ok'], h['marathon']['title'], '| g\'oliblar:', len(h['winners']))
 finally:
     print("sinov o'quvchisi o'chirildi:", requests.delete(B + f"/api/admin/users/{g['user']['id']}", headers=H, timeout=30).status_code)
-print('sw v43:', 'bilimsari-v43' in requests.get(B + '/sw.js', timeout=30).text,
+print('sw:', re.search(r'bilimsari-v\d+', requests.get(B + '/sw.js', timeout=30).text).group(0),
       '| sahifa:', 'tarixJoy' in requests.get(B + '/leaderboard.html', timeout=30).text)
 print('xatolar:', requests.get(B + '/api/admin/system', headers=H, timeout=30).json().get('error_counts'))

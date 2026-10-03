@@ -37,7 +37,10 @@ s, d = call('POST', '/api/admin/login', json={'password': os.environ.get('ADMIN_
 at = d.get('token')
 check('Admin kirish', s == 200 and at, s)
 s, d = call('GET', '/api/admin/premium', at)
-check("Admin: Premium bo'limi, narx 34 900 / 250", s == 200 and d['settings'] == {'premium_price': 34900, 'premium_stars': 250}, (s, d))
+# Narxni admin o'zgartiradi; Stars narxi 2026-09-29 dan beri yo'q
+check("Admin: Premium bo'limi, narx so'mda", s == 200 and (d['settings'].get('premium_price') or 0) >= 1000
+      and 'premium_stars' not in d['settings'], (s, d.get('settings')))
+print('     premium narxi:', d['settings'].get('premium_price'))
 
 s, d = call('POST', '/api/guest', _prod.admin_token(), json={'name': 'Premium Sinov'})
 tok, uid = d.get('token'), (d.get('user') or {}).get('id')
