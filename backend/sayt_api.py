@@ -58,6 +58,29 @@ def _err(message, status=400):
 
 # ───────────────────────── Ochiq: o'quvchi sahifalari uchun ─────────────────────────
 
+@public_bp.route('/live', methods=['GET'])
+def site_live():
+    """Jonli yangilanish: ochiq sahifa ~8 s da so'raydi; versiya o'zgarsa — o'sha qismni qayta yuklaydi.
+    Kirgan o'quvchi bloklangan yoki ilova to'xtatilgan bo'lsa — 403/423 (sahifada darhol oyna chiqadi)."""
+    from auth_core import get_user_by_token, token_from_request   # noqa: PLC0415
+    import boshqaruv   # noqa: PLC0415
+    conn, cur = _conn()
+    try:
+        user = get_user_by_token(token_from_request())
+        if user:
+            blocked = boshqaruv.check_request(user, 'GET', request.path)
+            if blocked:
+                return jsonify(blocked[0]), blocked[1]
+        v = {'site': sayt.config(cur)['v'], 'control': boshqaruv.version(), 'content': sayt.content_version(cur)}
+        if user:
+            v['me'] = sayt.me_version(cur, user['id'])
+        resp = jsonify({'ok': True, 'v': v})
+    finally:
+        _close(conn, cur)
+    resp.headers['Cache-Control'] = 'no-store'
+    return resp
+
+
 @public_bp.route('/config', methods=['GET'])
 def site_config():
     conn, cur = _conn()

@@ -234,6 +234,8 @@
           '<span>' + s.accuracy + '%</span></div>';
       }).join('');
   });
+  // Jonli: admin ismni/Premiumni o'zgartirsa — sahifa yangilanadi (yozayotgan bo'lsa kutadi)
+  UI.jonli(function (d) { if ((d.me || d.control) && !UI.yozyapti()) location.reload(); });
 })();
 </script>
 </body>

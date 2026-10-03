@@ -362,6 +362,8 @@
 
   tabChiz();
   yukla();
+  // Jonli: reyting har 30 s da (boshqalar ball to'playapti) va o'zgarish bo'lsa darhol
+  UI.jonli(function () { yukla(); if (marafonYuklandi) marafonYukla(); }, 30000);
 })();
 </script>
 </body>

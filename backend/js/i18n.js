@@ -870,17 +870,21 @@
   if (sayt) saytQoy(sayt);
 
   function saytYangila() {
-    if (typeof fetch !== 'function') return;
-    fetch('/api/site/config', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (d) {
-      if (!d || !d.ok || (sayt && sayt.v === d.v)) return;
+    if (typeof fetch !== 'function') return Promise.resolve(false);
+    return fetch('/api/site/config', { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.ok || (sayt && sayt.v === d.v)) return false;
       sayt = d;
       try { localStorage.setItem(SAYT_KALIT, JSON.stringify(d)); } catch (e) { /* xotira yopiq */ }
+      var oldin = ovrBor;
       saytQoy(d);
-      if (til === 'ru' || ovrBor) {
+      // Jonli: ochiq sahifadagi matnlar asl nusxasidan qayta hisoblanadi (yangi almashtirish qo'llanadi,
+      // olib tashlangani asliga qaytadi)
+      if (til === 'ru' || ovrBor || oldin) {
         if (!ishlayapti) ishgaTushir();
         else { aylan(document.documentElement); sarlavha(); }
       }
-    }).catch(function () { /* tarmoq yo'q — keshdagisi qoladi */ });
+      return true;
+    }).catch(function () { return false; /* tarmoq yo'q — keshdagisi qoladi */ });
   }
 
   // ───────────────────────── Sahifa ─────────────────────────
@@ -890,14 +894,37 @@
     return !el || (el.closest && el.closest('script,style,noscript,textarea,[translate="no"],.notranslate'));
   }
 
+  // Tugun → {asl matn, biz qo'ygan matn}: sozlamalar o'zgarsa, matn aslidan qayta hisoblanadi
+  var ASL = typeof WeakMap === 'function' ? new WeakMap() : null;
+
   function matnTugun(n) {
-    var v = n.nodeValue;
+    var joriy = n.nodeValue;
+    var a = ASL && ASL.get(n);
+    if (a && a.qoyilgan !== joriy) { ASL.delete(n); a = null; }      // matnni sahifa kodi o'zgartirgan — yangi asl
+    var v = a ? a.asl : joriy;
     if (!v || !/[A-Za-z]/.test(v) || tashla(n.parentElement)) return;
-    var yangi = t(v);
+    var yangi = t(v), kerak = v;
     if (yangi !== v) {
       var bosh = v.match(/^\s*/)[0], oxir = v.match(/\s*$/)[0];
-      n.nodeValue = bosh + yangi + oxir;
+      kerak = bosh + yangi + oxir;
     }
+    if (kerak === joriy) return;
+    if (ASL) { if (kerak !== v) ASL.set(n, { asl: v, qoyilgan: kerak }); else ASL.delete(n); }
+    n.nodeValue = kerak;
+  }
+
+  function atribut(el, nom, joriy, qoy) {
+    var xarita = ASL && ASL.get(el);
+    var a = xarita && xarita[nom];
+    if (a && a.qoyilgan !== joriy) a = null;
+    var v = a ? a.asl : joriy, y = t(v);
+    if (y === joriy) return;
+    if (ASL) {
+      xarita = xarita || {};
+      if (y !== v) xarita[nom] = { asl: v, qoyilgan: y }; else delete xarita[nom];
+      ASL.set(el, xarita);
+    }
+    qoy(y);
   }
 
   function element(el) {
@@ -907,16 +934,11 @@
       if (el.textContent !== aniq) el.textContent = aniq;
       return;
     }
-    for (var i = 0; i < ATTR.length; i++) {
-      var a = ATTR[i];
-      if (el.hasAttribute(a)) {
-        var v = el.getAttribute(a), y = t(v);
-        if (y !== v) el.setAttribute(a, y);
-      }
-    }
+    ATTR.forEach(function (a) {
+      if (el.hasAttribute(a)) atribut(el, a, el.getAttribute(a), function (y) { el.setAttribute(a, y); });
+    });
     if (el.tagName === 'INPUT' && /^(button|submit)$/i.test(el.type) && el.value) {
-      var yv = t(el.value);
-      if (yv !== el.value) el.value = yv;
+      atribut(el, '#value', el.value, function (y) { el.value = y; });
     }
   }
 
@@ -937,8 +959,11 @@
     }
   }
 
+  var sarlavhaAsl = null, sarlavhaQoyilgan = null;
   function sarlavha() {
-    var y = t(document.title);
+    if (document.title !== sarlavhaQoyilgan) sarlavhaAsl = document.title;
+    var y = t(sarlavhaAsl);
+    sarlavhaQoyilgan = y;
     if (y !== document.title) document.title = y;
   }
 
@@ -1001,6 +1026,8 @@
   window.I18N = {
     get til() { return til; },
     t: t,
+    /** Admin sozlamalarini (matnlar, ranglar, bloklar) serverdan qayta olib, ochiq sahifaga qo'llaydi. */
+    saytYangila: saytYangila,
     ornat: tilOrnat,
     ko: ko,
     /** Serverdagi til (users.lang) bilan moslash (boshqa qurilmada tanlangan bo'lsa):

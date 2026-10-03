@@ -258,6 +258,47 @@ def config(cur) -> dict:
     return out
 
 
+# ───────────────────────── Jonli yangilanish versiyalari ─────────────────────────
+
+_content = {'t': 0.0, 'v': None}
+
+
+def content_version(cur) -> str:
+    """Hamma uchun umumiy kontent: tahrirlangan/yangi mavzular, marafon, bugungi kun savoli (CACHE_S/2 keshlanadi)."""
+    now = time.monotonic()
+    if _content['v'] is not None and now - _content['t'] < CACHE_S / 2:
+        return _content['v']
+    day = clock.tashkent_date(clock.now_ms()).isoformat()
+    cur.execute('''SELECT (SELECT MAX(updated_ms) FROM topic_overrides) AS a,
+                          (SELECT COUNT(*) FROM admin_topics WHERE status = 'ready') AS b,
+                          (SELECT MAX(created_ms) FROM admin_topics) AS c,
+                          (SELECT CAST(id AS TEXT) || ':' || status || ':' || CAST(rev AS TEXT) FROM marathons
+                             ORDER BY id DESC LIMIT 1) AS d,
+                          (SELECT topic_id || ':' || CAST(q_index AS TEXT) FROM daily_questions WHERE day = %s) AS e''', (day,))
+    row = cur.fetchone() or {}
+    v = hashlib.md5(json.dumps([str(row.get(k)) for k in 'abcde']).encode()).hexdigest()[:12]
+    _content.update(t=now, v=v)
+    return v
+
+
+def me_version(cur, uid) -> str:
+    """O'quvchining admin yoki boshqalar o'zgartiradigan ma'lumotlari: ism, rasm, Premium, blok, ochilgan fanlar,
+    bonus chaqmoq, do'stlik so'rovlari, to'lov qarorlari, tayyor shaxsiy darslar."""
+    cur.execute('''SELECT u.name, u.photo_url, u.premium_until, u.banned_until, u.lang, u.chosen_subject_key,
+                          u.avatar_frame, u.emoji_status,
+                          (SELECT COUNT(*) FROM subject_purchases s WHERE s.user_id = u.id) AS sp,
+                          (SELECT COALESCE(SUM(amount), 0) FROM chaqmoq_bonus b WHERE b.user_id = u.id) AS bo,
+                          (SELECT COUNT(*) FROM friend_requests f WHERE f.to_id = u.id AND f.status = 'pending') AS fr,
+                          (SELECT COUNT(*) FROM friendships x WHERE x.user_a = u.id OR x.user_b = u.id) AS fs,
+                          (SELECT MAX(id) FROM pay_orders o WHERE o.user_id = u.id) AS po,
+                          (SELECT COUNT(*) FROM pay_orders o WHERE o.user_id = u.id
+                             AND o.status IN ('approved', 'rejected', 'expired')) AS pd,
+                          (SELECT COUNT(*) FROM personal_topics p WHERE p.user_id = u.id AND p.status = 'ready') AS pt
+                   FROM users u WHERE u.id = %s''', (uid,))
+    row = cur.fetchone() or {}
+    return hashlib.md5(json.dumps({k: str(v) for k, v in dict(row).items()}, sort_keys=True).encode()).hexdigest()[:12]
+
+
 # ───────────────────────── Matnlar katalogi (admin qidiruvi uchun) ─────────────────────────
 
 _catalog = {'items': None}

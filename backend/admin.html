@@ -4045,6 +4045,32 @@ function topshiriqHtml(t, i, n) {
     '</div>' + ichi + '</div>';
 }
 
+// ─────────────────────── Jonli yangilanish ───────────────────────
+// Panel ochiq va ko'rinib turganda har 15 s da: cheklar va shikoyatlar belgisi, tanaffus ogohlantirishi va faol
+// bo'limdagi ma'lumotlar yangilanadi. Biror maydonga yozayotgan yoki oyna ochiq bo'lsa — kutadi.
+var JONLI_BOLIMLAR = {
+  statistika: function () { yuklaStatistika(); },
+  tolovlar: function () { yuklaTolovUmumiy(); yuklaCheklar(); },
+  faoliyat: function () { yuklaFaoliyat(); },
+  jurnal: function () { yuklaJurnal(); },
+  shikoyatlar: function () { yuklaShikoyatlar(); },
+  premium: function () { yuklaPremium(); },
+  boshqaruv: function () { AdminAPI.boshqaruv().then(function (r) { if (r.ok) boshqaruvChiz(r); }); },
+  fanlar: function () { yuklaKunReja(); },
+  tizim: function () { yuklaIshlar(); },
+};
+setInterval(function () {
+  if (document.hidden || !document.getElementById('admPanel').classList.contains('faol')) return;
+  tolovBelgisi();
+  AdminAPI.shikoyatlar().then(function (r) { if (r.ok) shikoyatBelgisi(r.open); });
+  AdminAPI.boshqaruv().then(function (r) { if (r.ok) pauzaOgohChiz(r); });
+  var a = document.activeElement;
+  if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+  if (document.querySelector('.adm-modal-fon.ochiq, .adm-tahrir-fon.ochiq')) return;
+  var faol = document.querySelector('.adm-tab.faol');
+  var fn = faol && JONLI_BOLIMLAR[faol.dataset.bolim];
+  if (fn) fn();
+}, 15000);
 </script>
 </body>
 </html>

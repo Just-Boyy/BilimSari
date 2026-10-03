@@ -279,6 +279,7 @@
   }
 
   yukla();
+  UI.jonli(function (d) { if ((d.me || d.content || d.control) && !UI.yozyapti()) yukla(); });   // jonli: to'lov tasdig'i
   // Botdan qaytganda holatni yangilash (chek yuborilgan yoki tasdiqlangan bo'lishi mumkin)
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden && dokon && dokon.active_order) yukla();

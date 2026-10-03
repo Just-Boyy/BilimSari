@@ -462,6 +462,8 @@
     else if (navigator.share) navigator.share({ title: 'BilimSari', text: matn, url: link }).catch(function () {});
     else window.open(url, '_blank', 'noopener');
   };
+  // Jonli: admin ismni/Premiumni o'zgartirsa — sahifa yangilanadi (yozayotgan bo'lsa kutadi)
+  UI.jonli(function (d) { if ((d.me || d.control) && !UI.yozyapti()) location.reload(); });
 })();
 </script>
 </body>

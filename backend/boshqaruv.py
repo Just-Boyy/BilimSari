@@ -142,6 +142,12 @@ def state(fresh=False) -> dict:
     return value
 
 
+def version() -> str:
+    """Boshqaruv holatining versiyasi (tanaffus, kalitlar, e'lon) — jonli yangilanish uchun."""
+    import hashlib   # noqa: PLC0415
+    return hashlib.md5(json.dumps(state(), sort_keys=True, default=str).encode()).hexdigest()[:12]
+
+
 def _save(cur, conn, data):
     cur.execute('DELETE FROM pay_settings WHERE key = %s', (KEY,))
     cur.execute('INSERT INTO pay_settings (key, value) VALUES (%s, %s)', (KEY, json.dumps(data, ensure_ascii=False)))

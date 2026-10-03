@@ -287,6 +287,7 @@
   }
 
   yukla();
+  UI.jonli(function (d) { if ((d.me || d.control) && !UI.yozyapti()) yukla(); });   // jonli: tayyor darslar, Premium
   document.addEventListener('visibilitychange', function () { if (!document.hidden) yukla(); });
 })();
 </script>

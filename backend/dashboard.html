@@ -400,6 +400,7 @@
   }
 
   yukla();
+  UI.jonli(function () { if (!UI.yozyapti()) yukla(); });   // jonli: e'lon, chaqmoq, fanlar, Premium
 
   // Sahifaga qaytganda yangilash (kutish vaqti o'tgan bo'lishi mumkin)
   document.addEventListener('visibilitychange', function () {

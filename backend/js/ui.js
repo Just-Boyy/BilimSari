@@ -411,6 +411,53 @@
     return men ? 'profile.html' : 'foydalanuvchi.html?id=' + encodeURIComponent(uid);
   }
   /** Ro'yxat qatori uchun ochuvchi teg: foydalanuvchi ID bo'lsa — profilga havola, aks holda div. */
+  // ── Jonli yangilanish: admin (yoki boshqa o'quvchi) o'zgartirgan narsa ochiq sahifada ham darhol ko'rinadi ──
+  // Sahifa ko'rinib turganda har ~8 s da /api/site/live dan versiyalar so'raladi; o'zgargan qism qayta yuklanadi:
+  // site — matnlar/ranglar/bloklar (i18n.js joyida qo'llaydi), control — tanaffus/e'lon/bo'limlar,
+  // content — mavzular/marafon/kun savoli, me — o'quvchining o'z ma'lumotlari (Premium, fanlar, bonus, so'rovlar...).
+  var JONLI_MS = 8000;
+  var jonliV = null, jonliBand = false, jonliRoyxat = [];
+
+  /** Sahifa o'z ma'lumotini qayta yuklash uchun: fn({site, control, content, me}).
+   * davriy (ms) — o'zgarish bo'lmasa ham shuncha vaqtda bir marta (masalan, reyting). */
+  function jonli(fn, davriy) {
+    jonliRoyxat.push({ fn: fn, davriy: davriy || 0, oxirgi: Date.now() });
+  }
+
+  /** Foydalanuvchi hozir nimadir yozyaptimi — yozayotgan maydonni qayta chizib yubormaslik uchun. */
+  function yozyapti() {
+    var a = document.activeElement;
+    return !!(a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable));
+  }
+
+  async function jonliTekshir() {
+    if (jonliBand || document.hidden || !window.API) return;
+    jonliBand = true;
+    try {
+      var r = await API.get('/api/site/live');
+      if (!r.ok) return;                                          // 403/423 — api.js oynani o'zi ko'rsatadi
+      if (document.getElementById('holatOyna')) { location.reload(); return; }   // tanaffus tugadi / blok olindi
+      var v = r.v || {}, d = null;
+      if (jonliV) {
+        d = {};
+        ['site', 'control', 'content', 'me'].forEach(function (k) { d[k] = v[k] !== jonliV[k]; });
+      }
+      jonliV = v;
+      if (d && d.site && window.I18N && I18N.saytYangila) I18N.saytYangila();
+      var ozgardi = !!(d && (d.site || d.control || d.content || d.me)), hozir = Date.now();
+      jonliRoyxat.forEach(function (x) {
+        if (!ozgardi && !(x.davriy && hozir - x.oxirgi >= x.davriy)) return;
+        x.oxirgi = hozir;
+        try { x.fn(d || {}); } catch (e) { /* sahifa xatosi jonli tekshiruvni to'xtatmasin */ }
+      });
+    } finally {
+      jonliBand = false;
+    }
+  }
+  setInterval(jonliTekshir, JONLI_MS);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) jonliTekshir(); });
+  setTimeout(jonliTekshir, 1500);
+
   /** Admin panel: Telegram ichida — tashqi brauzerda (Chrome), bir martalik kod bilan parolsiz;
    * oddiy brauzerda — shu oynaning o'zida. bolim — ochiladigan bo'lim (masalan, 'tolovlar'). */
   async function adminOch(bolim) {
@@ -651,6 +698,8 @@
     dostQator: dostQator,
     qatorTeg: qatorTeg,
     adminOch: adminOch,
+    jonli: jonli,
+    yozyapti: yozyapti,
     qatorYop: qatorYop,
     profilOyna: profilOyna,
     darajaNomi: darajaNomi,

@@ -31,6 +31,14 @@ def get(path, auth=True):
 s, d = get('/api/site/config', auth=False)
 check("Ochiq sayt sozlamalari", s == 200 and d['ok'] and 'texts' in d and 'theme' in d and 'hide' in d, d)
 print("     o'zgartirilgan matnlar:", len(d['texts']['uz']), '/', len(d['texts']['ru']), '| ranglar:', d['theme'], '| yashirin:', d['hide'])
+import time  # noqa: E402
+vaqtlar = []
+for _ in range(5):
+    t0 = time.time()
+    s, d = get('/api/site/live', auth=False)
+    vaqtlar.append(time.time() - t0)
+check("Jonli yangilanish: versiyalar", s == 200 and set(d['v']) >= {'site', 'control', 'content'}, d)
+print('     /api/site/live javob vaqti (s):', [round(x, 2) for x in vaqtlar])
 s, d = get('/api/admin/rules')
 check('Qoidalar', s == 200 and len(d['rules']) >= 20, d)
 print("     standartdan farqli:", [(r['key'], r['value']) for r in d['rules'] if r['value'] != r['default']])
