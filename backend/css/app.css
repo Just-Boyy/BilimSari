@@ -2288,6 +2288,8 @@ a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
 .marafon-tarix-ichi { padding: 0 12px 12px; }
 .marafon-tarix-ichi .marafon-men.golib { margin: 0 0 10px; }
 .reyting-qator .ism.ism-ustun { flex-wrap: wrap; row-gap: 2px; }
+/* Uzun ism emojini keyingi qatorga surmasin — emoji (1.4em + 5px) uchun joy qoldirib "..." bilan qisqaradi */
+.reyting-qator .ism.ism-ustun > span:first-child { max-width: calc(100% - 1.4em - 6px); }
 .reyting-qator .ism.ism-ustun .marafon-sovrin-kichik { flex-basis: 100%; }
 
 /* ── Avatar atrofidagi nishonlar (o'z profili va boshqa o'quvchi profili) ── */

@@ -15,6 +15,7 @@ chaqmoq — o'quvchilar oldin olgan chaqmoqni yo'qotmaydi.
 from datetime import timedelta
 
 import curriculum as cur_mod
+import premium
 from games import catalog, clock, schema
 from games.rooms import level_for_xp
 
@@ -93,6 +94,7 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
             top.append(entry(rank, r))
         if r['user_id'] == user_id:
             me = entry(rank, r)
+    premium.decorate(cur, top + ([me] if me else []))      # ramka va emoji — boshqa reytinglardagidek
     return {'top': top, 'me': me, 'total_players': len(rows), 'period': period, 'scope': scope,
             'subject': subject if scope == 'subject' else None,
             'tournament': tournament(cur, now) if period == 'week' else None}

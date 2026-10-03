@@ -325,11 +325,11 @@
     var place = u.rank <= 3
       ? '<span class="o-rin ' + MEDAL[u.rank] + '" aria-label="' + u.rank + '-o\'rin">' + ic('medal') + '</span>'
       : '<span class="o-rin">' + u.rank + '</span>';
-    var avatar = u.photo_url
+    var avatar = UI.ramkali(u.photo_url
       ? '<img class="avatar" alt="" src="' + esc(u.photo_url) + '">'
-      : '<div class="avatar" aria-hidden="true">' + esc(G.initial(u.name)) + '</div>';
+      : '<div class="avatar" aria-hidden="true">' + esc(G.initial(u.name)) + '</div>', u.premium && u.frame);
     return UI.qatorTeg('reyting-qator' + (u.me ? ' men' : ''), u.user_id, u.me) + place + avatar +
-      '<span class="ism">' + esc(u.name) + (u.me ? ' (siz)' : '') +
+      '<span class="ism ism-ustun"><span>' + esc(u.name) + (u.me ? ' (siz)' : '') + '</span>' + UI.emoji(u.emoji) +
         '<small>' + u.games + " o'yin • " + u.wins + " g'alaba • " + u.accuracy + '%</small></span>' +
       '<span class="oy-ball">' + u.xp + '<small>ball</small></span>' + UI.qatorYop(u.user_id);
   }

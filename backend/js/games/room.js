@@ -853,12 +853,14 @@
       var r = sess.results || {};
       var me = r.me;
       var rows = (r.rows || []).map(function (x) {
-        var uid = (oyinchi(x.name) || {}).uid;
+        var p = oyinchi(x.name) || x;
+        var uid = p.uid;
         return '<li class="reyting-qator' + (x.me ? ' men' : '') + '"' + (uid ? ' data-profil="' + uid + '"' : '') + '>' +
           '<span class="o-rin' + (x.rank <= 3 ? ' medal-' + x.rank : '') + '" aria-label="' + x.rank + '-o\'rin">' +
             (x.rank <= 3 ? ic('medal') : x.rank) + '</span>' +
-          avatarHtml(oyinchi(x.name) || x) +
-          '<span class="ism">' + esc(x.name) + (x.me ? ' (siz)' : '') +
+          (window.UI && UI.ramkali ? UI.ramkali(avatarHtml(p), p.premium && p.frame) : avatarHtml(p)) +
+          '<span class="ism ism-ustun"><span>' + esc(x.name) + (x.me ? ' (siz)' : '') + '</span>' +
+            (p.premium && p.emoji ? '<img class="nik-emoji" src="assets/emoji/' + esc(p.emoji) + '.png" alt="" aria-hidden="true">' : '') +
             '<small>' + x.correct + " to'g'ri • " + x.accuracy + '%</small></span>' +
           '<span class="oy-ball">' + x.score + '<small>ball</small></span></li>';
       }).join('');

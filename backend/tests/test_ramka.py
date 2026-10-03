@@ -76,11 +76,24 @@ conn = get_connection(); cur = conn.cursor()
 b = premium.badges(cur, [p['id'], o['id']])
 cur.close(); conn.close()
 check('badges: ramka faqat premiumlida', b.get(p['id'], {}).get('frame') == 'yashil-chaqmoq' and o['id'] not in b, b)
-lb = c.get('/api/study/leaderboard', headers=o['h'])
-if lb.status_code == 200:
-    rows = lb.get_json().get('items') or lb.get_json().get('leaderboard') or lb.get_json().get('rows') or []
-    me = [x for x in rows if x.get('user_id') == p['id'] or x.get('id') == p['id']]
-    check('Reytingda ramka', not me or me[0].get('frame') == 'yashil-chaqmoq', me[:1])
+# Premiumli o'yinchi o'yinda ball to'plagan — umumiy va o'yin reytinglarida ramka + emoji bilan chiqishi kerak
+from games import clock  # noqa: E402
+conn = get_connection(); cur = conn.cursor()
+cur.execute('''INSERT INTO game_results (session_id, room_id, user_id, game_type, subject, difficulty, score, earned, xp,
+               correct, wrong, total, accuracy, rank, players, created_ms, chaqmoq)
+               VALUES (880001, 1, %s, 'quiz_battle', 'math', 'orta', 60, 60, 60, 6, 0, 6, 100, 1, 2, %s, 30)''',
+            (p['id'], clock.now_ms()))
+conn.commit(); cur.close(); conn.close()
+lb = c.get('/api/study/leaderboard', headers=o['h']).get_json()
+me = [x for x in lb.get('top') or [] if x.get('user_id') == p['id']]
+check('Umumiy reytingda ramka', me and me[0].get('premium') and me[0].get('frame') == 'yashil-chaqmoq', lb)
+for period in ('day', 'month', 'all'):
+    g = c.get(f'/api/games/leaderboard?period={period}', headers=o['h']).get_json()
+    me = [x for x in g.get('top') or [] if x.get('user_id') == p['id']]
+    check(f"O'yin reytingida ({period}) ramka", me and me[0].get('premium') and me[0].get('frame') == 'yashil-chaqmoq'
+          and 'emoji' in me[0], g)
+hub = open(os.path.join(BACKEND, 'js', 'games', 'hub.js'), encoding='utf-8').read()
+check("hub.js: o'yin reytingida UI.ramkali va UI.emoji", 'UI.ramkali(u.photo_url' in hub and 'UI.emoji(u.emoji)' in hub)
 
 c.post('/api/admin/premium/revoke', headers=ADM, json={'user_id': p['id']})
 st = c.get('/api/me', headers=p['h']).get_json()['user']['premium']

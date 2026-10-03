@@ -508,7 +508,9 @@
 .oy-ogoh svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .oy-podium { list-style: none; margin-bottom: 14px; }
 .reyting-qator .ism small { display: block; font-size: 12px; font-weight: 600; color: var(--matn-2); }
-.oy-ball { display: flex; flex-direction: column; align-items: flex-end; font-family: var(--sarlavha); font-size: 18px; font-weight: 800; color: var(--yashil-quyuq); line-height: 1.1; }
+/* Ism (+emoji) bir qatorda, statistika — ostida; tor ekranda "..." bilan qisqaradi, ball ustiga chiqmaydi */
+.reyting-qator .ism.ism-ustun > small { flex-basis: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oy-ball { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; font-family: var(--sarlavha); font-size: 18px; font-weight: 800; color: var(--yashil-quyuq); line-height: 1.1; }
 .oy-ball small { font-family: var(--tana); font-size: 11px; font-weight: 700; color: var(--matn-3); }
 .oy-natija-stat { grid-template-columns: repeat(3, 1fr); }
 .oy-xp-izoh { text-align: center; margin: 10px 0 16px; }
