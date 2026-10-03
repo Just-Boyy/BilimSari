@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _prod  # noqa: E402
 from psycopg2.extras import RealDictCursor
 
-B = 'https://backend-production-ec58b.up.railway.app'
+B = 'https://backend-production-3ac9d.up.railway.app'
 DB = json.load(open(r'C:\Users\ADMIN\Desktop\BilimSari-zaxira\supabase-baza.json'))['database_url']
 
 at = requests.post(B + '/api/admin/login', json={'password': os.environ['ADMIN_PW']}, timeout=30).json()['token']

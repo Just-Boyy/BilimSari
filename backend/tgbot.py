@@ -14,7 +14,7 @@ import requests
 logger = logging.getLogger('bilimsari.tgbot')
 
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
-WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://bilimsari-production.up.railway.app')
+WEBAPP_URL = os.environ.get('WEBAPP_URL', 'https://backend-production-3ac9d.up.railway.app')
 BOT_USERNAME = os.environ.get('BOT_USERNAME', 'bilimsaribot').lstrip('@')
 
 

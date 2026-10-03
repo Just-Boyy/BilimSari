@@ -5,7 +5,7 @@ import time
 
 import requests
 
-B = 'https://backend-production-ec58b.up.railway.app'
+B = 'https://backend-production-3ac9d.up.railway.app'
 fails = []
 
 

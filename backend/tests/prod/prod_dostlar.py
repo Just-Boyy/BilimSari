@@ -11,7 +11,7 @@ import requests
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _prod  # noqa: E402
 
-B = 'https://backend-production-ec58b.up.railway.app'
+B = 'https://backend-production-3ac9d.up.railway.app'
 at = requests.post(B + '/api/admin/login', json={'password': os.environ['ADMIN_PW']}, timeout=30).json()['token']
 H = {'Authorization': 'Bearer ' + at}
 

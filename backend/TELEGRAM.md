@@ -9,10 +9,10 @@
    - Title: `BilimSari`
    - Description: `Bilim olish platformasi`
    - Photo: logo (ixtiyoriy)
-   - Web App URL: `https://bilimsari-production.up.railway.app`
+   - Web App URL: `https://backend-production-3ac9d.up.railway.app`
    - Short name: `app`
 5. `/setmenubutton` — xuddi shu URL
-6. `/setdomain` — `bilimsari-production.up.railway.app`
+6. `/setdomain` — `backend-production-3ac9d.up.railway.app`
 
 Havola: `https://t.me/YourBotUsername/app`
 
@@ -23,7 +23,7 @@ BilimSari servisida:
 | Variable | Qiymat |
 |----------|--------|
 | `BOT_TOKEN` | BotFather tokeni |
-| `WEBAPP_URL` | `https://bilimsari-production.up.railway.app` |
+| `WEBAPP_URL` | `https://backend-production-3ac9d.up.railway.app` |
 | `DATABASE_URL` | (allaqachon bor) |
 
 ## 3. Worker (bot polling)

@@ -8,7 +8,7 @@ import requests
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _prod  # noqa: E402
 
-B = 'https://backend-production-ec58b.up.railway.app'
+B = 'https://backend-production-3ac9d.up.railway.app'
 fails = []
 
 

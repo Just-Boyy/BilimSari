@@ -10,7 +10,7 @@ import os
 
 import requests
 
-B = os.environ.get('BILIMSARI_URL', 'https://backend-production-ec58b.up.railway.app')
+B = os.environ.get('BILIMSARI_URL', 'https://backend-production-3ac9d.up.railway.app')
 _token = []
 
 
