@@ -3,52 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#58A700">
+<meta name="theme-color" content="#14532d">
 <title>Bilim Premium — BilimSari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/logo-icon-64.png">
 <link rel="stylesheet" href="css/app.css">
 <style>
+  /* ── Bilim Premium: sotuv sahifasi (sayt uslubida, oltin + to'q yashil) ── */
+  .pr-sahifa { padding-top: 14px; padding-bottom: calc(var(--nav-balandlik) + 96px); }
+  .pr-oltin { color: #fde68a; }
+
+  /* Kirish: hero */
   .pr-hero {
-    position: relative; overflow: hidden; border-radius: var(--r-katta); padding: 22px 18px 20px; color: #fff;
-    background: radial-gradient(120% 90% at 100% 0%, rgba(245, 179, 1, .55) 0%, rgba(245, 179, 1, 0) 55%),
-                linear-gradient(135deg, #0c2417 0%, #14532d 55%, #166534 100%);
-    box-shadow: 0 14px 30px rgba(12, 36, 23, .25);
+    position: relative; overflow: hidden; isolation: isolate; border-radius: 24px; padding: 26px 20px 22px; color: #fff;
+    text-align: center;
+    background: radial-gradient(130% 90% at 50% 0%, rgba(245, 179, 1, .45) 0%, rgba(245, 179, 1, 0) 60%),
+                linear-gradient(160deg, #0b1f14 0%, #14532d 55%, #166534 100%);
+    box-shadow: 0 18px 40px rgba(12, 36, 23, .32);
   }
-  .pr-hero .toj {
-    width: 58px; height: 58px; border-radius: 18px; display: grid; place-items: center;
-    background: linear-gradient(135deg, #fde68a, #f5b301); color: #7c4a03; box-shadow: 0 6px 16px rgba(245, 179, 1, .45);
-    margin-bottom: 12px;
+  .pr-nur {
+    position: absolute; left: 50%; top: -120px; width: 420px; height: 420px; margin-left: -210px; z-index: -1; opacity: .5;
+    background: conic-gradient(from 0deg, transparent 0 20deg, rgba(253, 230, 138, .35) 30deg, transparent 45deg 110deg,
+      rgba(253, 230, 138, .25) 125deg, transparent 140deg 200deg, rgba(253, 230, 138, .3) 215deg, transparent 230deg 290deg,
+      rgba(253, 230, 138, .25) 305deg, transparent 320deg);
+    border-radius: 50%; animation: prAylan 18s linear infinite;
   }
-  .pr-hero .toj svg { width: 30px; height: 30px; }
-  .pr-hero h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
-  .pr-hero p { color: rgba(255, 255, 255, .85); font-size: 14px; }
-  .pr-hero .narx { margin-top: 14px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .pr-hero .narx b { font-family: var(--sarlavha); font-size: 28px; color: #fde68a; }
-  .pr-hero .narx span { font-size: 13px; color: rgba(255, 255, 255, .8); }
+  .pr-uchqunlar i {
+    position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #fde68a; opacity: 0; z-index: -1;
+    box-shadow: 0 0 8px rgba(253, 230, 138, .9); animation: prUchqun 4s ease-in-out infinite;
+  }
+  .pr-uchqunlar i:nth-child(1) { left: 12%; top: 70%; animation-delay: .2s; }
+  .pr-uchqunlar i:nth-child(2) { left: 26%; top: 30%; animation-delay: 1.4s; }
+  .pr-uchqunlar i:nth-child(3) { left: 44%; top: 82%; animation-delay: 2.3s; }
+  .pr-uchqunlar i:nth-child(4) { left: 66%; top: 24%; animation-delay: .8s; }
+  .pr-uchqunlar i:nth-child(5) { left: 80%; top: 64%; animation-delay: 3s; }
+  .pr-uchqunlar i:nth-child(6) { left: 90%; top: 36%; animation-delay: 1.9s; }
+  .pr-toj {
+    width: 84px; height: 84px; border-radius: 26px; display: grid; place-items: center; margin: 4px auto 14px; color: #7c4a03;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 35%, #f5b301 100%);
+    box-shadow: 0 0 0 6px rgba(253, 230, 138, .14), 0 12px 30px rgba(245, 179, 1, .55);
+    animation: prTojKir .8s cubic-bezier(.2, 1.6, .4, 1) both, prTojSuz 3.2s ease-in-out .8s infinite;
+  }
+  .pr-toj svg { width: 44px; height: 44px; }
+  .pr-yorliq {
+    display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .14em;
+    color: #422006; background: linear-gradient(135deg, #fde68a, #f5b301);
+  }
+  .pr-hero h2 { color: #fff; font-size: 27px; line-height: 1.15; margin: 12px 0 8px; }
+  .pr-hero h2 .pr-oltin { display: block; }
+  .pr-hero > p { color: rgba(255, 255, 255, .86); font-size: 14.5px; line-height: 1.5; max-width: 360px; margin: 0 auto; }
+  .pr-chiplar { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 16px 0 4px; }
+  .pr-chiplar span {
+    display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    background: rgba(255, 255, 255, .1); border: 1px solid rgba(253, 230, 138, .35); color: #fff;
+  }
+  .pr-chiplar svg { width: 14px; height: 14px; color: #fde68a; }
+  .pr-dan { margin-top: 14px; font-size: 14px; color: rgba(255, 255, 255, .9); }
+  .pr-dan b { font-family: var(--sarlavha); font-size: 22px; color: #fde68a; }
+  .pr-azo { margin-top: 6px; font-size: 12px; color: rgba(255, 255, 255, .75); }
+  .pr-past { margin-top: 16px; display: inline-flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px;
+    color: rgba(255, 255, 255, .75); background: none; border: 0; cursor: pointer; font-family: inherit; }
+  .pr-past svg { width: 18px; height: 18px; transform: rotate(90deg); animation: prSakra 1.6s ease-in-out infinite; }
   .pr-faol {
-    margin-top: 14px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px;
-    background: rgba(255, 255, 255, .12); border: 1px solid rgba(253, 230, 138, .5); font-size: 14px;
+    margin: 16px auto 0; max-width: 360px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px;
+    background: rgba(255, 255, 255, .12); border: 1px solid rgba(253, 230, 138, .5); font-size: 14px; text-align: left;
   }
   .pr-faol svg { width: 22px; height: 22px; color: #fde68a; flex: 0 0 auto; }
-  .pr-afzallik { display: grid; gap: 10px; margin-top: 18px; }
-  .pr-band { display: flex; gap: 12px; align-items: flex-start; }
-  .pr-band .belgi {
-    width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: 0 0 auto;
-    background: var(--yashil-fon); color: var(--yashil-quyuq);
+  .pr-hero > * { animation: prKir .6s ease-out both; }
+  .pr-hero > .pr-yorliq { animation-delay: .25s; }
+  .pr-hero > h2 { animation-delay: .35s; }
+  .pr-hero > p { animation-delay: .45s; }
+  .pr-hero > .pr-chiplar { animation-delay: .55s; }
+  .pr-hero > .pr-dan, .pr-hero > .pr-faol { animation-delay: .65s; }
+  .pr-hero > .pr-past { animation-delay: .9s; }
+
+  /* Bo'limlar */
+  .pr-bolim { margin-top: 26px; }
+  .pr-bolim > h2 { font-size: 20px; text-align: center; margin-bottom: 4px; }
+  .pr-bolim > .izoh { text-align: center; margin-bottom: 14px; }
+  .pr-kor { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+  .pr-kor.kor { opacity: 1; transform: none; }
+
+  .pr-imkon { position: relative; overflow: hidden; padding: 16px; margin-bottom: 12px; }
+  .pr-imkon-bosh { display: flex; gap: 12px; align-items: flex-start; }
+  .pr-imkon-belgi {
+    width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; flex: 0 0 auto; color: #7c4a03;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
   }
-  .pr-band .belgi svg { width: 22px; height: 22px; }
-  .pr-band h3 { font-size: 15px; margin-bottom: 3px; }
-  .pr-band p { font-size: 13px; color: var(--matn-2); line-height: 1.5; }
-  .pr-emojilar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .pr-emojilar img { width: 28px; height: 28px; object-fit: contain; }
-  .pr-halqa-namuna { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin: 12px 0 6px 6px; }
-  .pr-halqa-namuna .avatar { width: 44px; height: 44px; font-size: 16px; }
-  .pr-eslatma { margin-top: 14px; font-size: 12px; color: var(--matn-2); text-align: center; }
-  .pr-tolov { margin-top: 18px; }
-  .pr-tolov h2 { font-size: 17px; margin-bottom: 10px; }
-  .pr-promo { display: flex; gap: 8px; margin: 12px 0; }
-  .pr-promo .kiritish { flex: 1; min-width: 0; }
+  .pr-imkon-belgi svg { width: 24px; height: 24px; }
+  .pr-imkon h3 { font-size: 16px; margin-bottom: 3px; }
+  .pr-imkon p { font-size: 13.5px; color: var(--matn-2); line-height: 1.5; }
+  .pr-teg { display: inline-block; margin-top: 8px; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 800;
+    color: var(--yashil-quyuq); background: var(--yashil-fon); border: 1px solid var(--yashil-chegara); }
+
+  .pr-suhbat { display: grid; gap: 8px; margin-top: 12px; }
+  .pr-xabar { max-width: 86%; padding: 9px 12px; border-radius: 16px; font-size: 13px; line-height: 1.45; }
+  .pr-xabar.men { justify-self: end; background: var(--yashil); color: #fff; border-bottom-right-radius: 4px; }
+  .pr-xabar.ai { justify-self: start; background: #f1f5f9; color: var(--matn); border-bottom-left-radius: 4px; }
+  .pr-xabar.ai b { color: var(--yashil-quyuq); }
+  .pr-kor .pr-xabar { opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .4s ease; }
+  .pr-kor.kor .pr-xabar { opacity: 1; transform: none; }
+  .pr-kor.kor .pr-xabar.ai { transition-delay: .7s; }
+
+  .pr-dars-namuna { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .pr-dars-namuna span { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 12px; font-size: 12.5px;
+    font-weight: 700; background: var(--oq); border: 1px dashed var(--chiziq-quyuq); }
+  .pr-dars-namuna svg { width: 16px; height: 16px; color: var(--yashil); }
+
+  .pr-emojilar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pr-emojilar img { width: 34px; height: 34px; object-fit: contain; filter: drop-shadow(0 0 3px rgba(255, 214, 90, .8)); }
+  .pr-kor .pr-emojilar img { opacity: 0; transform: scale(.4); transition: opacity .3s ease, transform .35s cubic-bezier(.2, 1.6, .4, 1); }
+  .pr-kor.kor .pr-emojilar img { opacity: 1; transform: none; }
+
+  .pr-ramka-namuna { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
+  .pr-ramka-namuna .avatar { width: 58px; height: 58px; font-size: 20px; }
+  .pr-ramka-namuna .ramkali { --rk: 1.3; margin: 8px; }
+  .pr-ramka-nomi { font-size: 13px; font-weight: 800; color: var(--matn); }
+  .pr-ramka-nomi small { display: block; font-weight: 600; color: var(--matn-2); }
+
+  /* Solishtirish */
+  .pr-jadval { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; overflow: hidden; }
+  .pr-jadval th, .pr-jadval td { padding: 11px 10px; border-bottom: 1px solid var(--chiziq); text-align: center; }
+  .pr-jadval th:first-child, .pr-jadval td:first-child { text-align: left; }
+  .pr-jadval tr:last-child td { border-bottom: 0; }
+  .pr-jadval th { font-size: 12px; color: var(--matn-2); font-weight: 800; }
+  .pr-jadval .pr-ust { background: linear-gradient(180deg, #fffbeb, #fef3c7); color: #92400e; }
+  .pr-jadval svg { display: inline-block; width: 20px; height: 20px; vertical-align: middle; }
+  .pr-ha { color: var(--yashil); }
+  .pr-yoq { color: var(--matn-3); }
+
+  /* Tariflar */
+  .pr-tarif-royxat { display: grid; gap: 10px; }
+  .pr-tarif {
+    position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; width: 100%;
+    padding: 16px 14px; border-radius: 18px; border: 2px solid var(--chiziq); background: var(--oq); text-align: left;
+    font: inherit; color: var(--matn); cursor: pointer; transition: border-color .15s, box-shadow .15s, transform .15s;
+  }
+  .pr-tarif:active { transform: scale(.985); }
+  .pr-tarif .doira { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--chiziq-quyuq); display: grid; place-items: center; }
+  .pr-tarif.tanlangan { border-color: #f5b301; box-shadow: 0 0 0 4px rgba(245, 179, 1, .18), 0 10px 22px rgba(245, 179, 1, .18);
+    background: linear-gradient(180deg, #fffdf5, #fffbeb); }
+  .pr-tarif.tanlangan .doira { border-color: #f5b301; background: #f5b301; box-shadow: inset 0 0 0 4px #fff; }
+  .pr-tarif-nom { font-family: var(--sarlavha); font-size: 18px; font-weight: 800; line-height: 1.1; }
+  .pr-tarif-nom small { display: block; font-family: var(--tana); font-size: 12.5px; font-weight: 600; color: var(--matn-2); margin-top: 3px; }
+  .pr-tarif-narx { text-align: right; }
+  .pr-tarif-narx b { display: block; font-family: var(--sarlavha); font-size: 20px; line-height: 1.1; }
+  .pr-tejash { display: inline-block; margin-top: 4px; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 800;
+    color: #fff; background: var(--yashil); }
+  .pr-eng { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); padding: 3px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 800; letter-spacing: .04em; white-space: nowrap; color: #422006;
+    background: linear-gradient(135deg, #fde68a, #f5b301); box-shadow: 0 4px 10px rgba(245, 179, 1, .35); }
+  .pr-promo { margin-top: 12px; }
+  .pr-promo summary { cursor: pointer; font-size: 13.5px; font-weight: 700; color: var(--matn-2); text-align: center; }
+  .pr-promo .kiritish { margin-top: 10px; }
+  .pr-olish {
+    width: 100%; margin-top: 16px; padding: 17px 18px; border: 0; border-radius: 18px; cursor: pointer; font: inherit;
+    font-family: var(--sarlavha); font-size: 18px; font-weight: 800; color: #422006; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #fde68a 0%, #f5b301 60%, #eab308 100%); box-shadow: 0 5px 0 #b45309, 0 14px 28px rgba(245, 179, 1, .35);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .pr-olish svg { width: 22px; height: 22px; }
+  .pr-olish::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%);
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .55) 45%, transparent 60%); animation: prYaltira 2.8s ease-in-out infinite; }
+  .pr-olish:active { transform: translateY(3px); box-shadow: 0 2px 0 #b45309; }
+  .pr-olish:disabled { opacity: .6; }
+  .pr-ishonch { display: grid; gap: 8px; margin-top: 14px; }
+  .pr-ishonch div { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--matn-2); line-height: 1.45; }
+  .pr-ishonch svg { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 1px; color: var(--yashil); }
+
+  /* Savollar */
+  .pr-savol { padding: 0; margin-bottom: 8px; }
+  .pr-savol summary { cursor: pointer; padding: 14px 16px; font-weight: 800; font-size: 14px; list-style: none; display: flex;
+    justify-content: space-between; gap: 10px; }
+  .pr-savol summary::-webkit-details-marker { display: none; }
+  .pr-savol summary::after { content: '+'; color: var(--yashil); font-size: 18px; line-height: 1; }
+  .pr-savol[open] summary::after { content: '−'; }
+  .pr-savol p { padding: 0 16px 14px; font-size: 13.5px; color: var(--matn-2); line-height: 1.5; }
+
+  /* Pastda yopishqoq tugma */
+  .pr-pastki {
+    position: fixed; left: 50%; transform: translate(-50%, 140%); z-index: 40; width: min(560px, calc(100% - 24px));
+    bottom: calc(var(--nav-balandlik) + env(safe-area-inset-bottom, 0px) + 10px);
+    display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; border-radius: 18px;
+    background: linear-gradient(135deg, #0b1f14, #14532d); color: #fff; box-shadow: 0 12px 30px rgba(12, 36, 23, .35);
+    transition: transform .35s cubic-bezier(.2, 1.2, .4, 1);
+  }
+  .pr-pastki.kor { transform: translate(-50%, 0); }
+  .pr-pastki span { flex: 1; min-width: 0; font-size: 13px; line-height: 1.3; }
+  .pr-pastki b { display: block; font-family: var(--sarlavha); font-size: 16px; color: #fde68a; }
+  .pr-pastki button { flex: 0 0 auto; padding: 11px 18px; border: 0; border-radius: 14px; font: inherit; font-weight: 800; font-size: 14px;
+    color: #422006; background: linear-gradient(135deg, #fde68a, #f5b301); cursor: pointer; }
+
+  @keyframes prKir { from { opacity: 0; transform: translateY(14px); } }
+  @keyframes prTojKir { from { opacity: 0; transform: scale(.3) rotate(-25deg); } }
+  @keyframes prTojSuz { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-6px) rotate(3deg); } }
+  @keyframes prAylan { to { transform: rotate(360deg); } }
+  @keyframes prUchqun { 0% { opacity: 0; transform: translateY(0) scale(.5); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px) scale(1.3); } }
+  @keyframes prSakra { 0%, 100% { transform: rotate(90deg) translateX(0); } 50% { transform: rotate(90deg) translateX(5px); } }
+  @keyframes prYaltira { 0%, 55% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .pr-nur, .pr-uchqunlar i, .pr-toj, .pr-hero > *, .pr-past svg, .pr-olish::after { animation: none !important; }
+    .pr-kor, .pr-kor .pr-xabar, .pr-kor .pr-emojilar img { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
 </style>
 <script src="js/i18n.js"></script>
 </head>
@@ -56,15 +212,20 @@
 
 <div class="ustki">
   <a class="orqaga" href="dashboard.html" aria-label="Orqaga">←</a>
-  <h1>Bilim Premium<small>AI, shaxsiy darslar, emoji va avatar ramkasi</small></h1>
+  <h1>Bilim Premium<small>AI ustoz, shaxsiy darslar, emoji va ramka</small></h1>
 </div>
 
-<main class="sahifa" style="padding-top:18px">
+<main class="sahifa pr-sahifa">
   <div id="tana">
-    <div class="skelet" style="height:200px;margin-bottom:14px"></div>
-    <div class="skelet" style="height:320px"></div>
+    <div class="skelet" style="height:340px;border-radius:24px;margin-bottom:14px"></div>
+    <div class="skelet" style="height:160px;margin-bottom:12px"></div>
+    <div class="skelet" style="height:160px"></div>
   </div>
 </main>
+<div class="pr-pastki" id="prPastki" aria-hidden="true">
+  <span>Tanlangan:<b id="prPastkiNarx"></b></span>
+  <button type="button" id="prPastkiTugma">Olish</button>
+</div>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="js/icons.js"></script>
@@ -77,72 +238,152 @@
   UI.navChiz('premium.html');
 
   var tana = document.getElementById('tana');
+  var pastki = document.getElementById('prPastki');
   var P = null;
   var promo = '';
   var avtoPromo = false;   // hamkor havolasidan saqlangan kod
+  var tanlangan = null;    // tanlangan tarif kaliti
+  var ramkaTaymer = null;
   var som = UI.pul;
+  var MUDDAT = { 1: '1 oy', 3: '3 oy', 12: '1 yil' };
 
   function sana(ms) {
     var d = new Date(ms);
     return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
   }
+  function soni(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 
   async function yukla() {
     var r = await API.premium();
     if (!r.ok) { tana.innerHTML = UI.xatoHolat(r.error, yukla); return; }
     P = r;
     if (!promo && r.saved_promo) { promo = r.saved_promo.code; avtoPromo = true; }
+    var tariflar = r.plans || [];
+    if (!tanlangan || !tariflar.some(function (t) { return t.key === tanlangan; })) {
+      var eng = engFoydali();
+      tanlangan = eng ? eng.key : (tariflar[0] || {}).key;
+    }
     chiz();
   }
 
+  /** Eng ko'p tejaladigan tarif (kamida 5%) — «Eng foydali» belgisi shunga. */
+  function engFoydali() {
+    var t = (P.plans || []).filter(function (x) { return x.saving >= 5; });
+    return t.sort(function (a, b) { return b.saving - a.saving; })[0] || null;
+  }
+  function tarif() { return (P.plans || []).filter(function (t) { return t.key === tanlangan; })[0] || (P.plans || [])[0]; }
+
+  /** Havoladan kelgan chegirmali kod qo'yilgan bo'lsa — chegirmali narx (server bilan bir xil yaxlitlash). */
+  function narx() {
+    var t = tarif();
+    var base = t ? t.price : P.price;
+    var s = P.saved_promo;
+    if (!avtoPromo || !s || !s.percent || promo !== s.code) return base;
+    return Math.round(base * (100 - s.percent) / 100 / 100) * 100;
+  }
+
+  // ───────────────────────── Bo'limlar ─────────────────────────
+
   function heroHtml() {
-    var st = P.premium;
+    var st = P.premium, tariflar = P.plans || [];
+    var engArzon = tariflar.reduce(function (m, t) { return Math.min(m, t.per_month); }, Infinity);
     return '<section class="pr-hero">' +
-      '<div class="toj" aria-hidden="true">' + UI.nishon('crown') + '</div>' +
-      '<h2>Bilim Premium</h2>' +
-      '<p>O\'qishni yanada qiziqarli va samarali qiladigan imkoniyatlar.</p>' +
+      '<div class="pr-nur" aria-hidden="true"></div>' +
+      '<div class="pr-uchqunlar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>' +
+      '<div class="pr-toj" aria-hidden="true">' + UI.nishon('crown') + '</div>' +
+      '<span class="pr-yorliq">BILIM PREMIUM</span>' +
+      '<h2>O\'qishning eng kuchli <span class="pr-oltin">darajasi</span></h2>' +
+      '<p>Shaxsiy AI ustoz, faqat siz uchun yaratiladigan darslar va hamma ko\'radigan Premium belgilari.</p>' +
+      '<div class="pr-chiplar">' +
+        '<span>' + UI.nishon('brain') + 'AI ustoz</span>' +
+        '<span>' + UI.nishon('sparkle') + 'Shaxsiy darslar</span>' +
+        '<span>' + UI.nishon('star') + 'Maxsus emoji</span>' +
+        '<span>' + UI.nishon('chaqmoq') + 'Chaqmoqli ramka</span>' +
+      '</div>' +
       (st.active
         ? '<div class="pr-faol">' + UI.nishon('checkCircle') + '<span>Premium faol — <b>' + sana(st.until_ms) +
             '</b> gacha (' + st.days_left + ' kun qoldi)</span></div>'
-        : '<div class="narx"><b>' + som(P.price) + '</b><span>1 oyga</span></div>') +
+        : (isFinite(engArzon) ? '<div class="pr-dan">Oyiga ' + soni(engArzon) + ' so\'mdan boshlab</div>' : '') +
+          (P.members >= 10 ? '<div class="pr-azo">' + P.members + ' o\'quvchi allaqachon Premium\'da</div>' : '') +
+          '<button class="pr-past" type="button" data-tariflarga><span>Pastga suring</span>' + UI.nishon('chevronRight') + '</button>') +
     '</section>';
   }
 
-  function afzalliklarHtml() {
-    var emojilar = (P.emoji || []).slice(0, 12).map(function (k) {
-      return '<img src="assets/emoji/' + UI.esc(k) + '.png" alt="" loading="lazy">';
-    }).join('');
+  function avatar(ramka) {
     var u = API.user() || {};
-    var avatar = function (ramka) {
-      return UI.ramkali(u.photo_url
-        ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
-        : '<span class="avatar">' + UI.esc(UI.harfAvatar(u.name || '')) + '</span>', ramka);
+    return UI.ramkali(u.photo_url
+      ? '<img class="avatar" alt="" src="' + UI.esc(u.photo_url) + '">'
+      : '<span class="avatar">' + UI.esc(UI.harfAvatar(u.name || '')) + '</span>', ramka);
+  }
+
+  function imkoniyatlarHtml() {
+    var emojilar = (P.emoji || []).slice(0, 14).map(function (k, i) {
+      return '<img src="assets/emoji/' + UI.esc(k) + '.png" alt="" loading="lazy" style="transition-delay:' + (i * 60) + 'ms">';
+    }).join('');
+    var birinchiRamka = (P.frames || [])[0] || {};
+    var imkon = function (ikon, sarlavha, matn, ichi) {
+      return '<div class="karta pr-imkon pr-kor"><div class="pr-imkon-bosh"><span class="pr-imkon-belgi" aria-hidden="true">' +
+        UI.nishon(ikon) + '</span><div><h3>' + sarlavha + '</h3><p>' + matn + '</p></div></div>' + (ichi || '') + '</div>';
     };
-    var ramkalar = (P.frames || []).map(function (f) { return avatar(f.key); }).join('');
-    var band = function (ikon, sarlavha, matn, qoshimcha) {
-      return '<div class="karta pr-band"><span class="belgi" aria-hidden="true">' + UI.nishon(ikon) + '</span>' +
-        '<div><h3>' + sarlavha + '</h3><p>' + matn + '</p>' + (qoshimcha || '') + '</div></div>';
+    return '<section class="pr-bolim">' +
+      '<h2 class="pr-kor">Premium bilan nimalar ochiladi</h2>' +
+      '<p class="izoh pr-kor">Har biri — o\'qishingizni tezlashtiradigan yoki sizni boshqalardan ajratib turadigan imkoniyat.</p>' +
+      imkon('brain', 'AI ustoz',
+        'Har bir darsda tushunmagan joyingizni so\'rang — AI mavzuni boshqacha, sodda misollar bilan qadam-baqadam tushuntiradi.',
+        '<div class="pr-suhbat" aria-hidden="true">' +
+          '<div class="pr-xabar men">Kasrlarni qo\'shishni tushunmadim 😕</div>' +
+          '<div class="pr-xabar ai"><b>AI ustoz:</b> Keling, pitsa misolida ko\'ramiz: ½ — yarim pitsa, ¼ — chorak pitsa. ' +
+            'Yarimni ikkita chorakka bo\'lsak: 2/4 + 1/4 = 3/4 🍕</div>' +
+        '</div>') +
+      imkon('sparkle', 'Shaxsiy darslar',
+        'Istalgan mavzuni yozing — AI siz uchun dars, test va uy vazifasini tayyorlaydi. Darslar Premium tugasa ham o\'zingizda qoladi.',
+        '<div class="pr-dars-namuna" aria-hidden="true"><span>' + UI.nishon('bookOpen') + 'Dars</span><span>' +
+          UI.nishon('checkCircle') + 'Test</span><span>' + UI.nishon('pencil') + 'Uy vazifasi</span></div>' +
+        '<span class="pr-teg">Har ' + (P.personal_hours || 24) + ' soatda yangi dars</span>') +
+      imkon('star', 'Ism yonida emoji',
+        'Reyting, o\'yinlar va kun savolida ismingiz yonida yaltiroq emoji turadi — hamma sizni darhol taniydi.',
+        emojilar ? '<div class="pr-emojilar" aria-hidden="true">' + emojilar + '</div>' : '') +
+      imkon('medal', 'Avatar ramkasi',
+        'Avataringiz atrofida chaqmoqli ramka — Premium o\'quvchi ekaningiz hammaga ko\'rinadi.',
+        '<div class="pr-ramka-namuna" aria-hidden="true"><span id="ramkaNamuna">' + avatar(birinchiRamka.key) + '</span>' +
+          '<span class="pr-ramka-nomi" id="ramkaNomi">' + UI.esc(birinchiRamka.name || '') +
+          '<small>' + (P.frames || []).length + ' xil ramka</small></span></div>') +
+    '</section>';
+  }
+
+  function solishtirishHtml() {
+    var ha = '<span class="pr-ha">' + UI.nishon('checkCircle') + '</span>';
+    var yoq = '<span class="pr-yoq">—</span>';
+    var qator = function (nom, oddiy) {
+      return '<tr><td>' + nom + '</td><td>' + (oddiy ? ha : yoq) + '</td><td class="pr-ust">' + ha + '</td></tr>';
     };
-    return '<div class="pr-afzallik">' +
-      band('brain', 'AI tushuntirish',
-        'Har bir darsda AI mavzuni to\'liqroq tushuntiradi va yangi misollar bilan qadam-baqadam yechib beradi.') +
-      band('sparkle', 'Shaxsiy darslar',
-        'O\'zingizda ochiq fanlardan istalgan mavzuni yozing — AI siz uchun dars, 3 savolli test va uy vazifasini ' +
-        'tayyorlaydi. Har 24 soatda bitta yangi dars yaratiladi, o\'qish esa cheksiz. Darslar faqat sizga ko\'rinadi ' +
-        'va Premium tugasa ham o\'zingizda qoladi.') +
-      band('star', 'Ism yonida emoji',
-        (P.emoji || []).length + ' ta maxsus emoji\'dan birini tanlang — u reyting, o\'yinlar va kun savolida ismingiz ' +
-        'yonida ko\'rinadi.', emojilar ? '<div class="pr-emojilar" aria-hidden="true">' + emojilar + '</div>' : '') +
-      band('medal', 'Avatar ramkasi',
-        'Avataringiz atrofida chaqmoqli ramka paydo bo\'ladi — ' + (P.frames || []).length + ' xil ramkadan birini tanlaysiz. Hamma sizni ' +
-        'Premium o\'quvchi ekaningizni ko\'radi.',
-        '<div class="pr-halqa-namuna" aria-hidden="true">' + ramkalar + '</div>') +
-    '</div>' +
-    '<p class="pr-eslatma">Premium fanlarni ochmaydi — fanlar Do\'konda alohida sotiladi. ' +
-      'Muddat 1 oy; tugagach, qayta olish mumkin.</p>';
+    return '<section class="pr-bolim pr-kor">' +
+      '<h2>Oddiy va Premium</h2>' +
+      '<div class="karta" style="padding:4px 6px"><table class="pr-jadval">' +
+        '<thead><tr><th></th><th>Oddiy</th><th class="pr-ust">Premium</th></tr></thead><tbody>' +
+        qator('Darslar, testlar va o\'yinlar', true) +
+        qator('AI tushuntirish', false) +
+        qator('Shaxsiy darslar', false) +
+        qator('Ism yonida emoji', false) +
+        qator('Avatar ramkasi', false) +
+      '</tbody></table></div>' +
+    '</section>';
+  }
+
+  function tarifHtml(t, eng) {
+    var on = t.key === tanlangan;
+    return '<button type="button" class="pr-tarif' + (on ? ' tanlangan' : '') + '" role="radio" aria-checked="' + on + '" data-tarif="' + t.key + '">' +
+      (eng && eng.key === t.key ? '<span class="pr-eng">Eng foydali</span>' : '') +
+      '<span class="doira" aria-hidden="true"></span>' +
+      '<span class="pr-tarif-nom">' + (MUDDAT[t.months] || t.name) +
+        (t.months > 1 ? '<small>oyiga ' + soni(t.per_month) + ' so\'m</small>' : '<small>Sinab ko\'rish uchun</small>') + '</span>' +
+      '<span class="pr-tarif-narx"><b>' + soni(t.price) + '</b><span class="izoh-kichik">so\'m</span>' +
+        (t.saving > 0 ? '<br><span class="pr-tejash">−' + t.saving + '% tejaysiz</span>' : '') + '</span>' +
+    '</button>';
   }
 
   function buyurtmaHtml(o) {
+    var nomi = (o.items && o.items[0] && o.items[0].name) || 'Bilim Premium';
     if (o.status === 'pending') {
       return '<div class="karta dokon-buyurtma kutilmoqda">' +
         '<h2>Chekingiz tekshirilmoqda ⏳</h2>' +
@@ -153,7 +394,7 @@
     }
     return '<div class="karta dokon-buyurtma">' +
       '<h2>Buyurtma ' + UI.esc(o.code) + ' — chek kutilmoqda</h2>' +
-      '<p>Bilim Premium (1 oy) • <b>' + som(o.amount) + '</b>.<br>' +
+      '<p>' + UI.esc(nomi) + ' • <b>' + som(o.amount) + '</b>.<br>' +
         'Karta raqami botga yuborilgan. To\'lab, chek rasmini botga yuboring.</p>' +
       '<div class="dokon-tugmalar">' +
         '<button class="tugma tugma-mayda" type="button" data-bot>' + UI.nishon('send') + '<span>Botni ochish</span></button>' +
@@ -161,62 +402,93 @@
       '</div></div>';
   }
 
-  /** Havoladan kelgan chegirmali kod qo'yilgan bo'lsa — chegirmali narx (server bilan bir xil yaxlitlash). */
-  function narx() {
-    var s = P.saved_promo;
-    if (!avtoPromo || !s || !s.percent || promo !== s.code) return P.price;
-    return Math.round(P.price * (100 - s.percent) / 100 / 100) * 100;
-  }
-
   function tolovHtml() {
     var st = P.premium;
     if (st.active) {
-      return '<div class="pr-tolov"><div class="tugmalar">' +
-        '<a class="tugma" href="shaxsiy.html">' + UI.nishon('sparkle') + '<span>Shaxsiy darslarim</span></a>' +
-        '<a class="tugma tugma-ikkilamchi" href="settings.html#emoji">' + UI.nishon('star') + '<span>Emoji tanlash</span></a>' +
-      '</div><p class="pr-eslatma">Muddati tugagach, shu yerdan yana 1 oyga olishingiz mumkin.</p></div>';
+      return '<section class="pr-bolim pr-kor"><h2>Imkoniyatlaringiz</h2>' +
+        '<div class="tugmalar" style="justify-content:center;margin-top:12px">' +
+          '<a class="tugma" href="shaxsiy.html">' + UI.nishon('sparkle') + '<span>Shaxsiy darslarim</span></a>' +
+          '<a class="tugma tugma-ikkilamchi" href="settings.html#emoji">' + UI.nishon('star') + '<span>Emoji va ramka tanlash</span></a>' +
+        '</div><p class="izoh-kichik" style="text-align:center;margin-top:10px">Muddati tugagach, shu yerdan yana olishingiz mumkin.</p></section>';
     }
-    if (P.active_order) return '<div class="pr-tolov">' + buyurtmaHtml(P.active_order) + '</div>';
+    if (P.active_order) return '<section class="pr-bolim" id="tariflar">' + buyurtmaHtml(P.active_order) + '</section>';
     if (!P.telegram) {
-      return '<div class="pr-tolov">' + UI.holat({
+      return '<section class="pr-bolim" id="tariflar">' + UI.holat({
         belgi: 'send', sarlavha: "To'lov Telegram orqali",
         matn: "Premium olish uchun BilimSari'ni Telegram botdan oching — to'lov bot chatida amalga oshiriladi.",
-      }) + '<button class="tugma" type="button" style="margin-top:12px" data-bot>Botni ochish</button></div>';
+      }) + '<button class="tugma" type="button" style="margin-top:12px" data-bot>Botni ochish</button></section>';
     }
     if (!P.configured) {
-      return '<div class="pr-tolov">' + UI.holat({
+      return '<section class="pr-bolim" id="tariflar">' + UI.holat({
         belgi: 'clock', sarlavha: "To'lov vaqtincha ishlamayapti",
         matn: "Birozdan keyin qayta urinib ko'ring yoki savolingizni botga yozing.",
-      }) + '</div>';
+      }) + '</section>';
     }
-    return '<section class="pr-tolov karta">' +
-      '<h2>Premium olish</h2>' +
-      '<p class="izoh-kichik">Kartaga o\'tkazasiz, chek rasmini botga yuborasiz — admin tasdiqlagach Premium faollashadi.</p>' +
-      '<div class="pr-promo">' +
-        '<input class="kiritish" id="promoInput" placeholder="Promo-kod (ixtiyoriy)" maxlength="20" autocomplete="off" value="' + UI.esc(promo) + '">' +
+    var eng = engFoydali();
+    return '<section class="pr-bolim pr-kor" id="tariflar">' +
+      '<h2>Muddatni tanlang</h2>' +
+      '<p class="izoh">Qancha uzoq muddat — oyiga shuncha arzon.</p>' +
+      '<div class="pr-tarif-royxat" role="radiogroup" aria-label="Premium muddati">' +
+        (P.plans || []).map(function (t) { return tarifHtml(t, eng); }).join('') +
       '</div>' +
-      (promo && avtoPromo
-        ? '<p class="izoh-kichik" id="avtoIzoh" style="margin:-4px 0 10px">Havola orqali kelgan promo-kod avtomatik qo\'yildi' +
-            (P.saved_promo && P.saved_promo.percent ? ' (−' + P.saved_promo.percent + '%)' : '') + '.</p>'
-        : '') +
-      '<button class="tugma" type="button" id="tolashTugma">' + UI.nishon('send') +
-        '<span>Karta orqali to\'lash — ' + som(narx()) + '</span></button>' +
-      (P.other_order ? '<p class="izoh-kichik" style="margin-top:8px">Fan uchun ochiq buyurtmangiz bor — Premium olsangiz, u bekor qilinadi.</p>' : '') +
+      '<details class="pr-promo"' + (promo ? ' open' : '') + '><summary>Promo-kodingiz bormi?</summary>' +
+        '<input class="kiritish" id="promoInput" placeholder="Promo-kod" maxlength="20" autocomplete="off" value="' + UI.esc(promo) + '">' +
+        (promo && avtoPromo
+          ? '<p class="izoh-kichik" id="avtoIzoh" style="margin-top:6px">Havola orqali kelgan promo-kod avtomatik qo\'yildi' +
+              (P.saved_promo && P.saved_promo.percent ? ' (−' + P.saved_promo.percent + '%)' : '') + '.</p>'
+          : '') +
+      '</details>' +
+      '<button class="pr-olish" type="button" id="tolashTugma">' + UI.nishon('crown') + '<span id="olishMatn"></span></button>' +
+      '<div class="pr-ishonch">' +
+        '<div>' + UI.nishon('lock') + '<span>To\'lov karta orqali: botda karta raqami chiqadi, chek rasmini yuborasiz — admin odatda 5–30 daqiqada faollashtiradi.</span></div>' +
+        '<div>' + UI.nishon('checkCircle') + '<span>Obuna emas — pul avtomatik yechilmaydi.</span></div>' +
+      '</div>' +
+      (P.other_order ? '<p class="izoh-kichik" style="margin-top:10px;text-align:center">Fan uchun ochiq buyurtmangiz bor — Premium olsangiz, u bekor qilinadi.</p>' : '') +
     '</section>';
   }
 
+  function savollarHtml() {
+    var s = function (q, a) { return '<details class="karta pr-savol"><summary>' + q + '</summary><p>' + a + '</p></details>'; };
+    return '<section class="pr-bolim pr-kor"><h2>Ko\'p so\'raladigan savollar</h2><div style="margin-top:12px">' +
+      s('Premium fanlarni ochadimi?', 'Yo\'q — fanlar Do\'konda alohida sotiladi. Premium o\'qishni qulayroq va qiziqarliroq qiladi.') +
+      s('Muddat tugasa nima bo\'ladi?', 'Premium imkoniyatlari yopiladi, lekin shaxsiy darslaringiz o\'zingizda qoladi. Xohlasangiz, yana olasiz.') +
+      s('Qancha vaqtda faollashadi?', 'Chekni botga yuborganingizdan keyin admin tekshiradi — odatda 5–30 daqiqa. Faollashganda botga xabar keladi.') +
+    '</div></section>';
+  }
+
+  // ───────────────────────── Chizish va harakatlar ─────────────────────────
+
+  function narxYangila() {
+    var t = tarif();
+    var matn = document.getElementById('olishMatn');
+    if (matn) matn.textContent = 'Premium olish — ' + soni(narx()) + ' so\'m';
+    document.getElementById('prPastkiNarx').textContent = t ? (MUDDAT[t.months] || t.name) + ' — ' + soni(narx()) + ' so\'m' : '';
+  }
+
   function chiz() {
-    tana.innerHTML = heroHtml() + tolovHtml() + afzalliklarHtml();
+    tana.innerHTML = heroHtml() + imkoniyatlarHtml() + solishtirishHtml() + tolovHtml() + savollarHtml();
     tana.querySelectorAll('[data-bot]').forEach(function (b) { b.onclick = function () { UI.botniOch(); }; });
+    tana.querySelectorAll('[data-tariflarga]').forEach(function (b) { b.onclick = tariflarga; });
+    tana.querySelectorAll('[data-tarif]').forEach(function (b) {
+      b.onclick = function () {
+        tanlangan = b.dataset.tarif;
+        tana.querySelectorAll('[data-tarif]').forEach(function (x) {
+          var on = x.dataset.tarif === tanlangan;
+          x.classList.toggle('tanlangan', on);
+          x.setAttribute('aria-checked', on);
+        });
+        narxYangila();
+      };
+    });
     var promoInput = document.getElementById('promoInput');
-    var tugma = document.getElementById('tolashTugma');
     if (promoInput) promoInput.oninput = function () {
       promo = promoInput.value.trim().toUpperCase();
       avtoPromo = false;
       var izoh = document.getElementById('avtoIzoh');
       if (izoh) izoh.remove();
-      if (tugma) tugma.lastChild.textContent = 'Karta orqali to\'lash — ' + som(narx());
+      narxYangila();
     };
+    var tugma = document.getElementById('tolashTugma');
     if (tugma) tugma.onclick = kartaTolov;
     var bekor = document.getElementById('bekorTugma');
     if (bekor) bekor.onclick = async function () {
@@ -226,14 +498,73 @@
       UI.xabar('Buyurtma bekor qilindi', 'muvaffaqiyat');
       yukla();
     };
+    narxYangila();
+    korinish();
+    ramkaAylantir();
   }
+
+  function tariflarga() {
+    var t = document.getElementById('tariflar');
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /** Bo'limlar ekranga kirganda paydo bo'ladi; yopishqoq tugma — hero ko'rinmay, tariflar hali pastda bo'lganda. */
+  function korinish() {
+    var elementlar = tana.querySelectorAll('.pr-kor');
+    var hero = tana.querySelector('.pr-hero'), tariflar = document.getElementById('tariflar');
+    var sotiladi = !!document.getElementById('tolashTugma');
+    if (!('IntersectionObserver' in window)) {
+      elementlar.forEach(function (el) { el.classList.add('kor'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (yozuvlar) {
+      yozuvlar.forEach(function (y) { if (y.isIntersecting) { y.target.classList.add('kor'); io.unobserve(y.target); } });
+    }, { threshold: 0.15 });
+    elementlar.forEach(function (el) { io.observe(el); });
+    var heroKor = true, tarifKor = false;
+    var yangila = function () {
+      var ko = sotiladi && !heroKor && !tarifKor;
+      pastki.classList.toggle('kor', ko);
+      pastki.setAttribute('aria-hidden', ko ? 'false' : 'true');
+    };
+    var kuzat = new IntersectionObserver(function (yozuvlar) {
+      yozuvlar.forEach(function (y) {
+        if (y.target === hero) heroKor = y.isIntersecting;
+        if (y.target === tariflar) tarifKor = y.isIntersecting;
+      });
+      yangila();
+    });
+    if (hero) kuzat.observe(hero);
+    if (tariflar) kuzat.observe(tariflar);
+  }
+
+  /** Ramka namunasi: avataringiz ramkadan ramkaga o'tib turadi. */
+  function ramkaAylantir() {
+    clearInterval(ramkaTaymer);
+    var ramkalar = P.frames || [], i = 0;
+    if (ramkalar.length < 2) return;
+    ramkaTaymer = setInterval(function () {
+      var joy = document.getElementById('ramkaNamuna'), nomi = document.getElementById('ramkaNomi');
+      if (!joy) { clearInterval(ramkaTaymer); return; }
+      i = (i + 1) % ramkalar.length;
+      joy.innerHTML = avatar(ramkalar[i].key);
+      nomi.firstChild.textContent = ramkalar[i].name;
+    }, 1600);
+  }
+
+  document.getElementById('prPastkiTugma').onclick = function () {
+    tariflarga();
+    var t = document.getElementById('tolashTugma');
+    if (t) setTimeout(function () { t.focus({ preventScroll: true }); }, 600);
+  };
 
   async function kartaTolov() {
     var btn = document.getElementById('tolashTugma');
     btn.disabled = true;
-    var r = await API.premiumBuyurtma(promo);
-    if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; if (r.code === 'premium_active') yukla(); return; }
+    var r = await API.premiumBuyurtma(promo, tanlangan);
+    if (!r.ok) { UI.xabar(r.error, 'xato'); btn.disabled = false; if (r.code === 'premium_active' || r.code === 'plan_off') yukla(); return; }
     var o = r.order;
+    pastki.classList.remove('kor');
     tana.innerHTML =
       '<div class="karta dokon-yuborildi">' +
         '<span class="belgi">' + UI.nishon('checkCircle') + '</span>' +

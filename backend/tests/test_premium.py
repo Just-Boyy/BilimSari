@@ -271,6 +271,10 @@ for _ in range(50):
         break
     time.sleep(0.1)
 check('AI yomon javob — failed', db('SELECT status FROM personal_topics WHERE id = %s', (pid2,), True)[0]['status'] == 'failed')
+for _ in range(50):          # bot xabari holat yozilgandan keyin (o'quvchi tili aniqlangach) yuboriladi
+    if any("tayyorlab bo'lmadi" in p.get('text', '') for m, p in CALLS if m == 'sendMessage'):
+        break
+    time.sleep(0.1)
 check('Botga "tayyorlab bo\'lmadi"', any("tayyorlab bo'lmadi" in p.get('text', '') for m, p in CALLS if m == 'sendMessage'))
 check('Xato urinish limitga hisoblanmaydi', c.get('/api/personal', headers=u['h']).get_json()['limit']['can'])
 AI['mode'] = 'ok'

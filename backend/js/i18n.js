@@ -491,6 +491,51 @@
     "Hozircha yangi o'quvchilar qabul qilinmayapti. Birozdan keyin qayta urinib ko'ring.":
       'Сейчас новые ученики не принимаются. Попробуйте чуть позже.',
     "Bu bo'lim vaqtincha yopilgan. Birozdan keyin qayta urinib ko'ring.": 'Этот раздел временно закрыт. Попробуйте чуть позже.',
+    // Bilim Premium sahifasi va bosh sahifa kartasi
+    'AI ustoz, shaxsiy darslar, emoji va ramka': 'ИИ-наставник, личные уроки, эмодзи и рамка', "Ko'rish": 'Смотреть',
+    'Ochish': 'Открыть', 'kun qoldi': 'дн. осталось', 'BILIM PREMIUM': 'BILIM PREMIUM',
+    "O'qishning eng kuchli": 'Самый сильный уровень', 'darajasi': 'учёбы',
+    "Shaxsiy AI ustoz, faqat siz uchun yaratiladigan darslar va hamma ko'radigan Premium belgilari.":
+      'Личный ИИ-наставник, уроки, созданные только для вас, и знаки Premium, которые видят все.',
+    'AI ustoz': 'ИИ-наставник', 'Maxsus emoji': 'Особые эмодзи', 'Chaqmoqli ramka': 'Рамка с молниями', 'Pastga suring': 'Листайте вниз',
+    'Premium bilan nimalar ochiladi': 'Что открывает Premium',
+    "Har biri — o'qishingizni tezlashtiradigan yoki sizni boshqalardan ajratib turadigan imkoniyat.":
+      'Каждая возможность ускоряет вашу учёбу или выделяет вас среди других.',
+    "Har bir darsda tushunmagan joyingizni so'rang — AI mavzuni boshqacha, sodda misollar bilan qadam-baqadam tushuntiradi.":
+      'Спросите о непонятном в любом уроке — ИИ объяснит тему по-другому, шаг за шагом и на простых примерах.',
+    "Kasrlarni qo'shishni tushunmadim 😕": 'Не понял сложение дробей 😕', 'AI ustoz:': 'ИИ-наставник:',
+    "Keling, pitsa misolida ko'ramiz: ½ — yarim pitsa, ¼ — chorak pitsa. Yarimni ikkita chorakka bo'lsak: 2/4 + 1/4 = 3/4 🍕":
+      'Давайте на примере пиццы: ½ — половина пиццы, ¼ — четверть. Разделим половину на две четверти: 2/4 + 1/4 = 3/4 🍕',
+    "Istalgan mavzuni yozing — AI siz uchun dars, test va uy vazifasini tayyorlaydi. Darslar Premium tugasa ham o'zingizda qoladi.":
+      'Напишите любую тему — ИИ подготовит для вас урок, тест и домашнее задание. Уроки останутся у вас даже после окончания Premium.',
+    'Dars': 'Урок', 'Test': 'Тест',
+    "Reyting, o'yinlar va kun savolida ismingiz yonida yaltiroq emoji turadi — hamma sizni darhol taniydi.":
+      'В рейтинге, играх и вопросе дня рядом с вашим именем сияет эмодзи — вас сразу узнают.',
+    "Avataringiz atrofida chaqmoqli ramka — Premium o'quvchi ekaningiz hammaga ko'rinadi.":
+      'Рамка с молниями вокруг аватара — все видят, что вы ученик Premium.',
+    'Oddiy va Premium': 'Обычный и Premium', 'Oddiy': 'Обычный', 'Premium': 'Premium',
+    "Darslar, testlar va o'yinlar": 'Уроки, тесты и игры', 'Muddatni tanlang': 'Выберите срок',
+    "Qancha uzoq muddat — oyiga shuncha arzon.": 'Чем дольше срок — тем дешевле в месяц.', 'Eng foydali': 'Самый выгодный',
+    '1 oy': '1 месяц', '3 oy': '3 месяца', '1 yil': '1 год', "Sinab ko'rish uchun": 'Чтобы попробовать', "so'm": 'сум',
+    'Promo-kodingiz bormi?': 'Есть промокод?',
+    "To'lov karta orqali: botda karta raqami chiqadi, chek rasmini yuborasiz — admin odatda 5–30 daqiqada faollashtiradi.":
+      'Оплата картой: в боте появится номер карты, вы отправите фото чека — админ обычно активирует за 5–30 минут.',
+    'Obuna emas — pul avtomatik yechilmaydi.': 'Это не подписка — деньги не списываются автоматически.',
+    "Ko'p so'raladigan savollar": 'Частые вопросы', 'Premium fanlarni ochadimi?': 'Открывает ли Premium предметы?',
+    "Yo'q — fanlar Do'konda alohida sotiladi. Premium o'qishni qulayroq va qiziqarliroq qiladi.":
+      'Нет — предметы продаются отдельно в Магазине. Premium делает учёбу удобнее и интереснее.',
+    "Muddat tugasa nima bo'ladi?": 'Что будет, когда срок закончится?',
+    "Premium imkoniyatlari yopiladi, lekin shaxsiy darslaringiz o'zingizda qoladi. Xohlasangiz, yana olasiz.":
+      'Возможности Premium закроются, но ваши личные уроки останутся. Если захотите — оформите снова.',
+    'Qancha vaqtda faollashadi?': 'Как быстро активируется?',
+    "Chekni botga yuborganingizdan keyin admin tekshiradi — odatda 5–30 daqiqa. Faollashganda botga xabar keladi.":
+      'После того как вы отправите чек в бот, админ его проверит — обычно 5–30 минут. Когда активируется, придёт сообщение в бот.',
+    'Tanlangan:': 'Выбрано:', 'Olish': 'Получить', 'Imkoniyatlaringiz': 'Ваши возможности',
+    'Emoji va ramka tanlash': 'Выбрать эмодзи и рамку', 'Muddati tugagach, shu yerdan yana olishingiz mumkin.':
+      'Когда срок закончится, здесь же можно оформить снова.',
+    'Bilim Premium (3 oy)': 'Bilim Premium (3 месяца)', 'Bilim Premium (1 yil)': 'Bilim Premium (1 год)',
+    'Bu tarif hozircha sotilmaydi.': 'Этот тариф пока не продаётся.', "Tarif noto'g'ri.": 'Неверный тариф.',
+    'Premium muddati': 'Срок Premium',
     'Admin bonusi': 'Бонус от админа', 'Admin tomonidan berilgan': 'Начислено админом',
     "Admin panelni ochib bo'lmadi": 'Не удалось открыть админ-панель',
     "do'stlik so'rovi":'заявка в друзья', "Hali do'stingiz yo'q. Tanishlaringizni toping!": 'У вас пока нет друзей. Найдите знакомых!',
@@ -593,6 +638,15 @@
       .replace(/(\d+)\s*daqiqa/g, '$1 мин').replace(/(\d+)\s*soniya/g, '$1 с');
   };
   var RE = [
+    // Bilim Premium: narxlar va muddatlar
+    [/^Oyiga ([\d ]+) so'mdan boshlab$/, 'От $1 сум в месяц'],
+    [/^(\d+) o'quvchi allaqachon Premium'da$/, function (m, n) { return n + ' ' + ko(n, 'ученик', 'ученика', 'учеников') + ' уже в Premium'; }],
+    [/^Har (\d+) soatda yangi dars$/, function (m, n) { return 'Новый урок каждые ' + n + ' ' + ko(n, 'час', 'часа', 'часов'); }],
+    [/^oyiga ([\d ]+) so'm$/, '$1 сум в месяц'],
+    [/^−(\d+)% tejaysiz$/, 'экономия $1%'],
+    [/^Premium olish — ([\d ]+) so'm$/, 'Получить Premium — $1 сум'],
+    [/^(1 oy|3 oy|1 yil) — ([\d ]+) so'm$/, function (m, t, n) { return ({ '1 oy': '1 месяц', '3 oy': '3 месяца', '1 yil': '1 год' })[t] + ' — ' + n + ' сум'; }],
+    [/^(\d+) xil ramka$/, function (m, n) { return n + ' ' + ko(n, 'рамка', 'рамки', 'рамок'); }],
     // Yutuqli marafon
     [/^Top-(\d+) sovrin oladi$/, 'Призы получат топ-$1'],
     [/^(\d+) qatnashchi$/, function (m, n) { return n + ' ' + ko(n, 'участник', 'участника', 'участников'); }],

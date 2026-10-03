@@ -56,10 +56,12 @@ DEFAULT_SETTINGS = {
     'price_single': study.SUBJECT_PRICE,
     'price_three': 30000,
     'price_all': 80000,
-    # Bilim Premium (1 oy)
+    # Bilim Premium: 1 oy; 3 oy va 1 yil — admin narx qo'ymaguncha (0) sotilmaydi
     'premium_price': 34900,
+    'premium_price_3': 0,
+    'premium_price_12': 0,
 }
-_INT_SETTINGS = ('price_single', 'price_three', 'price_all', 'premium_price')
+_INT_SETTINGS = ('price_single', 'price_three', 'price_all', 'premium_price', 'premium_price_3', 'premium_price_12')
 
 
 class PayError(Exception):
@@ -160,15 +162,15 @@ def _items(order) -> list:
 
 
 def item_name(key, lang='uz') -> str:
-    if key == premium.ITEM:
-        return 'Bilim Premium (1 месяц)' if lang == 'ru' else premium.NAME
+    if key in premium.PLANS:
+        return premium.PLANS[key][3] if lang == 'ru' else premium.PLANS[key][2]
     name = cur_mod.subject_meta(key)['name']
     return tgbot.fan_ru(name) if lang == 'ru' else name
 
 
 def is_premium(order_or_keys) -> bool:
     keys = order_or_keys if isinstance(order_or_keys, list) else _items(order_or_keys)
-    return keys == [premium.ITEM]
+    return premium.plan_of(keys) is not None
 
 
 def subject_names(keys, lang='uz') -> str:
@@ -215,6 +217,9 @@ def save_settings(cur, conn, body) -> dict:
         if key == 'premium_price':
             if value < 1000 or value > 10_000_000:
                 raise PayError("Premium narxi kamida 1 000 so'm bo'lishi kerak.")
+        elif key in ('premium_price_3', 'premium_price_12'):
+            if value and (value < 1000 or value > 50_000_000):
+                raise PayError("Premium 3 oy / 1 yil narxi 0 (sotilmaydi) yoki kamida 1 000 so'm bo'lsin.")
         elif value < 0 or value > 10_000_000 or (key == 'price_single' and value < 1000):
             raise PayError("Narx noto'g'ri (bitta fan kamida 1 000 so'm).")
         new[key] = value
@@ -272,18 +277,21 @@ def _promo_row(cur, code, user_id, now):
     return row
 
 
-def premium_quote(cur, user_id, promo_code=None, now=None) -> dict:
-    """Bilim Premium narxi. Faol bo'lsa — sotib olinmaydi (tugagach yana ochiladi)."""
+def premium_quote(cur, user_id, promo_code=None, now=None, plan=None) -> dict:
+    """Bilim Premium narxi (tarif bo'yicha). Faol bo'lsa — sotib olinmaydi (tugagach yana ochiladi)."""
     now = now or clock.now_ms()
+    plan = plan if plan in premium.PLANS else premium.ITEM
     if premium.is_active(premium.until(cur, user_id), now):
         raise PayError("Premium hali faol — muddati tugagach qayta olish mumkin.", 'premium_active', 409)
     settings = get_settings(cur)
-    base = settings['premium_price']
+    base = int(settings.get(premium.PLANS[plan][4]) or 0)
+    if base <= 0:
+        raise PayError("Bu tarif hozircha sotilmaydi.", 'plan_off')
     promo = _promo_row(cur, promo_code, user_id, now)
     percent = int(promo['percent']) if promo else 0
     amount = int(round(base * (100 - percent) / 100 / 100.0)) * 100 if percent else base
     return {
-        'items': [{'key': premium.ITEM, 'name': premium.NAME}], 'keys': [premium.ITEM],
+        'items': [{'key': plan, 'name': premium.PLANS[plan][2]}], 'keys': [plan],
         'base': base, 'bundle': None, 'bundled': base,
         'promo': {'code': promo['code'], 'percent': percent} if promo else None,
         'discount': base - amount, 'amount': amount, 'saving': base - amount,
@@ -292,8 +300,8 @@ def premium_quote(cur, user_id, promo_code=None, now=None) -> dict:
 
 def quote(cur, user_id, keys, promo_code=None, now=None) -> dict:
     now = now or clock.now_ms()
-    if keys == [premium.ITEM]:
-        return premium_quote(cur, user_id, promo_code, now)
+    if premium.plan_of(keys):
+        return premium_quote(cur, user_id, promo_code, now, premium.plan_of(keys))
     if not isinstance(keys, list) or not keys or not all(isinstance(k, str) for k in keys):
         raise PayError("Kamida bitta fan tanlang.", 'no_items')
     locked = locked_subjects(cur, user_id)
@@ -669,7 +677,7 @@ def decide(cur, conn, order_id, approve, by, reason_key=None, now=None) -> tuple
 def _deliver_items(cur, order, keys, now):
     """To'lov tasdiqlandi: fanlar ochiladi yoki Premium beriladi (commit — chaqiruvchida)."""
     if is_premium(keys):
-        premium.grant(cur, order['user_id'], premium.DAYS, 'card', now, note=order['code'])
+        premium.grant(cur, order['user_id'], premium.PLANS[premium.plan_of(keys)][0], 'card', now, note=order['code'])
     else:
         for k in keys:
             cur.execute('INSERT INTO subject_purchases (user_id, subject_key) VALUES (%s, %s) '

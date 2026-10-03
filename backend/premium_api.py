@@ -64,10 +64,13 @@ def premium_info():
             'premium': premium.status(cur, uid),   # 'status' emas — api.js uni HTTP kodi bilan almashtiradi
             'price': settings['premium_price'],
             'days': premium.DAYS,
+            'plans': _plans(settings),
+            'personal_hours': int(personal.GENERATE_EVERY_MS // (3600 * 1000)),
+            'members': _members(cur),
             'active_order': payments.order_public(active) if active and payments.is_premium(active) else None,
             'other_order': bool(active) and not payments.is_premium(active),
             'saved_promo': partners.saved_promo(cur, request.user),
-            'last': payments.subject_statuses(cur, uid).get(premium.ITEM),
+            'last': next((v for k, v in payments.subject_statuses(cur, uid).items() if k in premium.PLANS), None),
             'emoji': premium.emoji_catalog(),
             'frames': [{'key': k, 'name': n} for k, n in premium.FRAMES],
             'telegram': bool(request.user.get('telegram_id')),
@@ -77,6 +80,27 @@ def premium_info():
         _close(conn, cur)
 
 
+def _members(cur) -> int:
+    """Hozir Premium'i faol o'quvchilar soni (sahifada 10 tadan oshsa ko'rsatiladi)."""
+    cur.execute('SELECT COUNT(*) AS n FROM users WHERE premium_until > %s', (clock.now_ms(),))
+    return int(cur.fetchone()['n'])
+
+
+def _plans(settings) -> list:
+    """Sotuvdagi tariflar: narxi, oyiga necha so'm va 1 oylikka nisbatan tejash foizi."""
+    base = int(settings.get('premium_price') or 0)
+    out = []
+    for key, (days, months, name, name_ru, setting) in premium.PLANS.items():
+        price = int(settings.get(setting) or 0)
+        if price <= 0:
+            continue
+        full = base * months
+        out.append({'key': key, 'days': days, 'months': months, 'name': name, 'price': price,
+                    'per_month': int(round(price / months / 100.0)) * 100,
+                    'saving': max(0, int(round((full - price) * 100 / full))) if full and months > 1 else 0})
+    return out
+
+
 @bp.route('/premium/order', methods=['POST'])
 @auth_required
 def premium_order():
@@ -84,7 +108,10 @@ def premium_order():
         return jsonify({'ok': False, 'error': "Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring."}), 429
     conn, cur = _conn()
     try:
-        order, sent = payments.create_order(cur, conn, request.user, [premium.ITEM], _body().get('promo'))
+        plan = _body().get('plan') or premium.ITEM
+        if plan not in premium.PLANS:
+            return jsonify({'ok': False, 'error': "Tarif noto'g'ri.", 'code': 'bad_plan'}), 400
+        order, sent = payments.create_order(cur, conn, request.user, [plan], _body().get('promo'))
         return jsonify({'ok': True, 'order': payments.order_public(order), 'bot_sent': sent, 'bot': tgbot.BOT_USERNAME})
     except payments.PayError as exc:
         return _fail(exc)
@@ -247,7 +274,7 @@ def _find_user(cur, who):
 def _overview(cur, **extra):
     settings = payments.get_settings(cur)
     return jsonify(dict(premium.admin_overview(cur), ok=True, **extra,
-                        settings={'premium_price': settings['premium_price']}))
+                        settings={k: settings[k] for k in ('premium_price', 'premium_price_3', 'premium_price_12')}))
 
 
 @admin_bp.route('', methods=['GET'])

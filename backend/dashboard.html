@@ -33,10 +33,13 @@
   <!-- Yutuqli marafon (bo'lsa) -->
   <div id="marafonBanner"></div>
 
-  <!-- Tezkor tugmalar -->
-  <section class="bo-lim">
-    <nav class="tezkor" aria-label="Tezkor o'tish" id="tezkor"></nav>
-  </section>
+  <!-- Bilim Premium — bitta bosishda Premium sahifasi (tezkor tugmalar o'rnida) -->
+  <a class="premium-karta" id="premiumKarta" href="premium.html">
+    <span class="pk-uchqun" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="pk-toj" aria-hidden="true"></span>
+    <span class="pk-matn"><b id="pkSarlavha">Bilim Premium</b><small id="pkIzoh">AI ustoz, shaxsiy darslar, emoji va ramka</small></span>
+    <span class="pk-tugma" id="pkTugma">Ko'rish</span>
+  </a>
 
   <section class="bo-lim" id="kunBo-lim" hidden></section>
 
@@ -121,6 +124,7 @@
 
     oxirgi = res;
     elonChiz(res.announcement);
+    premiumKartaChiz((res.user || {}).premium);
     sarlavhaChiz(res);
     kunChiz(res.daily);
     rejaChiz(res.plan, res.today, res.daily && res.daily.day);
@@ -227,16 +231,18 @@
     oyna.querySelector('[data-yop]').focus();
   }
 
-  // ── Tezkor tugmalar ──
-  document.getElementById('tezkor').innerHTML = [
-    ['daily.html', 'sparkle', 'Kun savoli', '#fff7ed', '#ea580c'],
-    ['games.html', 'gamepad', 'O\'yin', '#f5f3ff', '#7c3aed'],
-    ['game.html', 'dumbbell', 'Mashq', '#e0f2fe', '#0284c7'],
-    ['leaderboard.html', 'trophy', 'Reyting', '#fefce8', '#ca8a04'],
-  ].map(function (t) {
-    return '<a href="' + t[0] + '"><span class="doira" style="--doira-fon:' + t[3] + ';--doira-rang:' + t[4] + '">' +
-      UI.nishon(t[1]) + '</span>' + t[2] + '</a>';
-  }).join('');
+  // ── Bilim Premium kartasi: Premium yo'q — taklif, bor — holati ──
+  document.querySelector('#premiumKarta .pk-toj').innerHTML = UI.nishon('crown');
+  function premiumKartaChiz(pr) {
+    pr = pr || {};
+    var k = document.getElementById('premiumKarta');
+    k.classList.toggle('faol', !!pr.active);
+    document.getElementById('pkSarlavha').textContent = pr.active ? 'Premium faol' : 'Bilim Premium';
+    document.getElementById('pkIzoh').innerHTML = pr.active
+      ? '<span>' + (pr.days_left || 0) + '</span> <span>kun qoldi</span>'
+      : '<span>AI ustoz, shaxsiy darslar, emoji va ramka</span>';
+    document.getElementById('pkTugma').textContent = pr.active ? 'Ochish' : 'Ko\'rish';
+  }
 
   function vaqt(s) {
     s = Math.max(0, s);

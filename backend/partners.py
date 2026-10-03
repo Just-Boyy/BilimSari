@@ -132,7 +132,7 @@ def _items_label(items_json) -> str:
         keys = [k for k in json.loads(items_json or '[]') if isinstance(k, str)]
     except (TypeError, ValueError):
         keys = []
-    if keys == [PREMIUM_ITEM]:
+    if len(keys) == 1 and keys[0].startswith(PREMIUM_ITEM):     # premium, premium3, premium12
         return 'Bilim Premium'
     if len(keys) == 1:
         return cur_mod.subject_meta(keys[0])['name']

@@ -2337,3 +2337,45 @@ a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
 .elon-banner-yop { flex: 0 0 auto; width: 28px; height: 28px; margin: -4px -4px 0 0; border: 0; border-radius: 8px;
   background: transparent; color: var(--matn-2); cursor: pointer; display: grid; place-items: center; }
 .elon-banner-yop svg { width: 16px; height: 16px; }
+
+/* ── Bosh sahifa: Bilim Premium kartasi (tezkor tugmalar o'rnida) ── */
+.premium-karta {
+  position: relative; overflow: hidden; isolation: isolate; display: flex; align-items: center; gap: 12px; margin-top: 18px;
+  padding: 14px 12px 14px 14px; border-radius: var(--r-katta); color: #fff; text-decoration: none;
+  background: radial-gradient(120% 150% at 100% 0%, rgba(245, 179, 1, .55) 0%, rgba(245, 179, 1, 0) 55%),
+              linear-gradient(135deg, #0b1f14 0%, #14532d 60%, #166534 100%);
+  box-shadow: 0 10px 24px rgba(12, 36, 23, .28); animation: pkKir .5s ease-out both; transition: transform .15s;
+}
+.premium-karta::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; transform: translateX(-100%);
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .2) 45%, transparent 60%);
+  animation: pkYaltira 3.6s ease-in-out 1s infinite;
+}
+.premium-karta:active { transform: scale(.98); }
+.pk-toj {
+  width: 50px; height: 50px; flex: 0 0 auto; border-radius: 16px; display: grid; place-items: center; color: #7c4a03;
+  background: linear-gradient(135deg, #fef3c7, #fde68a 40%, #f5b301); box-shadow: 0 6px 16px rgba(245, 179, 1, .45);
+  animation: pkToj 3s ease-in-out infinite;
+}
+.pk-toj svg { width: 28px; height: 28px; }
+.pk-matn { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.pk-matn b { font-family: var(--sarlavha); font-size: 18px; line-height: 1.2; color: #fde68a; }
+.pk-matn small { font-size: 12.5px; line-height: 1.35; color: rgba(255, 255, 255, .86); }
+.pk-tugma {
+  flex: 0 0 auto; padding: 9px 14px; border-radius: 999px; font-weight: 800; font-size: 13px; color: #422006;
+  background: linear-gradient(135deg, #fde68a, #f5b301); box-shadow: 0 3px 0 #b45309;
+}
+.premium-karta.faol .pk-tugma { background: rgba(255, 255, 255, .16); color: #fff; box-shadow: none; }
+.pk-uchqun i {
+  position: absolute; z-index: -1; width: 4px; height: 4px; border-radius: 50%; background: #fde68a; opacity: 0;
+  box-shadow: 0 0 6px rgba(253, 230, 138, .9); animation: pkUchqun 3.4s ease-in-out infinite;
+}
+.pk-uchqun i:nth-child(1) { left: 30%; top: 75%; }
+.pk-uchqun i:nth-child(2) { left: 52%; top: 60%; animation-delay: .9s; }
+.pk-uchqun i:nth-child(3) { left: 68%; top: 80%; animation-delay: 1.8s; }
+.pk-uchqun i:nth-child(4) { left: 84%; top: 55%; animation-delay: 2.6s; }
+@keyframes pkKir { from { opacity: 0; transform: translateY(8px); } }
+@keyframes pkYaltira { 0%, 60% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@keyframes pkToj { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg) scale(1.06); } }
+@keyframes pkUchqun { 0% { opacity: 0; transform: translateY(0) scale(.6); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-26px) scale(1.2); } }
+@media (prefers-reduced-motion: reduce) { .premium-karta, .premium-karta::after, .pk-toj, .pk-uchqun i { animation: none; } }

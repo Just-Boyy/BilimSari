@@ -21,9 +21,20 @@ import re
 from db import add_column_if_missing
 from games import clock
 
-ITEM = 'premium'                     # pay_orders.items dagi kalit
+ITEM = 'premium'                     # pay_orders.items dagi kalit (1 oy; eski buyurtmalar ham shu kalitda)
 NAME = 'Bilim Premium (1 oy)'
 DAYS = 30
+# Tariflar: kalit → (kun, oy, o'zbekcha nomi, ruscha nomi, narx sozlamasi). Narx 0 bo'lsa — o'sha tarif sotilmaydi.
+PLANS = {
+    'premium': (30, 1, 'Bilim Premium (1 oy)', 'Bilim Premium (1 месяц)', 'premium_price'),
+    'premium3': (90, 3, 'Bilim Premium (3 oy)', 'Bilim Premium (3 месяца)', 'premium_price_3'),
+    'premium12': (365, 12, 'Bilim Premium (1 yil)', 'Bilim Premium (1 год)', 'premium_price_12'),
+}
+
+
+def plan_of(keys):
+    """Buyurtma kalitlari Premium tarifi bo'lsa — uning kaliti, aks holda None."""
+    return keys[0] if isinstance(keys, list) and len(keys) == 1 and keys[0] in PLANS else None
 DAY_MS = 24 * 3600 * 1000
 EMOJI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'emoji')
 _KEY_RE = re.compile(r'^[a-z0-9_-]{1,40}$')

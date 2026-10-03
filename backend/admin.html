@@ -648,7 +648,11 @@
             </div>
             <div class="qator3">
               <label>Bilim Premium (1 oy), so'm<input id="sPremium" type="number" min="1000" step="100"></label>
+              <label>Premium (3 oy), so'm<input id="sPremium3" type="number" min="0" step="100" placeholder="0 — sotilmaydi"></label>
+              <label>Premium (1 yil), so'm<input id="sPremium12" type="number" min="0" step="100" placeholder="0 — sotilmaydi"></label>
             </div>
+            <p class="izoh-kichik" style="margin:-4px 0 4px">3 oy va 1 yillik narxni 0 qoldirsangiz — o'quvchiga faqat 1 oylik
+              ko'rsatiladi. Premium sahifasida har tarifning oyiga narxi va 1 oylikka nisbatan tejash foizi o'zi hisoblanadi.</p>
             <button class="tugma" type="submit">Saqlash</button>
             <p class="adm-forma-xabar" id="sXabar" role="status"></p>
           </form>
@@ -2099,6 +2103,8 @@ async function yuklaTolovUmumiy() {
   document.getElementById('sUchta').value = st.price_three;
   document.getElementById('sHammasi').value = st.price_all;
   document.getElementById('sPremium').value = st.premium_price;
+  document.getElementById('sPremium3').value = st.premium_price_3 || 0;
+  document.getElementById('sPremium12').value = st.premium_price_12 || 0;
   if (!st.card_number) {
     quti.innerHTML += '<p class="izoh-kichik" style="color:var(--qizil);margin:-10px 0 16px">' +
       "Karta raqami kiritilmagan — o'quvchilar to'lov qila olmaydi. Pastdagi «Karta va narxlar» bo'limini to'ldiring.</p>";
@@ -2237,6 +2243,8 @@ document.getElementById('tolovSozlamaForma').addEventListener('submit', async fu
     price_three: document.getElementById('sUchta').value,
     price_all: document.getElementById('sHammasi').value,
     premium_price: document.getElementById('sPremium').value,
+    premium_price_3: document.getElementById('sPremium3').value || 0,
+    premium_price_12: document.getElementById('sPremium12').value || 0,
   });
   if (!r.ok) { formaXabar('sXabar', '❌ ' + (r.error || 'Xatolik')); return; }
   formaXabar('sXabar', '✅ Saqlandi', true);
@@ -2411,7 +2419,8 @@ function premiumChiz(r) {
     ['Faol premiumlar', r.active_count, 'hozir'],
     ['Shu oy sotildi', m.count + ' ta', pul(m.sum)],
     ['Shaxsiy darslar', r.lessons, 'jami yaratilgan'],
-    ['Narx', pul(r.settings.premium_price), '1 oy'],
+    ['Narx (1 oy)', pul(r.settings.premium_price), (r.settings.premium_price_3 ? '3 oy: ' + pul(r.settings.premium_price_3) : '3 oy sotilmaydi') +
+      ' • ' + (r.settings.premium_price_12 ? '1 yil: ' + pul(r.settings.premium_price_12) : '1 yil sotilmaydi')],
   ].map(function (k) {
     return '<div class="adm-stat"><div class="izoh">' + esc(k[0]) + '</div><div class="son">' + esc(k[1]) +
       '</div><div class="izoh">' + esc(k[2]) + '</div></div>';
