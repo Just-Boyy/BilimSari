@@ -220,7 +220,11 @@ for _ in range(50):
 row = db('SELECT * FROM personal_topics WHERE id = %s', (pid,), True)[0]
 check('Dars tayyor: 3 savol, 3 topshiriq', row['status'] == 'ready' and len(json.loads(row['quiz'])) == 3
       and len(json.loads(row['homework'])['tasks']) == 3, (row['status'], row['error']))
-bot = [p for m, p in CALLS if m == 'sendMessage' and p['chat_id'] == 70001]
+for _ in range(50):          # xabar holat "ready" bo'lgandan keyin (o'quvchi tili aniqlangach) yuboriladi
+    bot = [p for m, p in CALLS if m == 'sendMessage' and p['chat_id'] == 70001]
+    if bot:
+        break
+    time.sleep(0.1)
 check('Botga "Shaxsiy darsingiz tayyor" + tugma', bot and 'Shaxsiy darsingiz tayyor' in bot[-1]['text']
       and 'topic.html?shaxsiy=' in json.dumps(bot[-1]['reply_markup']), bot)
 d = c.get('/api/study/dashboard', headers=u['h']).get_json()

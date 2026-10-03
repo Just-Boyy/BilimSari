@@ -59,7 +59,8 @@ def main(argv):
             code, out = -1, 'VAQT TUGADI (15 daqiqa)'
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
-        ok = code == 0
+        # Ko'p testlar FAIL bo'lsa ham 0 kod bilan chiqadi — chiqishdagi FAIL qatori ham yiqilish
+        ok = code == 0 and not any(ln.lstrip().startswith('FAIL ') for ln in out.splitlines())
         print(f"{'OK  ' if ok else 'XATO'} {name:28s} {time.time() - t0:5.1f} s")
         if not ok:
             failed.append(name)

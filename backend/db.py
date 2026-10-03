@@ -48,7 +48,14 @@ _SQLITE_RULES = [
 ]
 
 
+_EMPTY_IN = re.compile(r'\bIN\s*\(\s*\)', re.I)
+
+
 def _to_sqlite(sql: str) -> str:
+    # Postgres "IN ()" ni sintaksis xatosi deb rad etadi, SQLite esa jim o'tkazadi —
+    # lokal testlarda ham xato bo'lsin, aks holda bunday bug faqat prod'da chiqadi
+    if _EMPTY_IN.search(sql):
+        raise sqlite3.OperationalError("IN () — bo'sh ro'yxat (Postgres buni sintaksis xatosi deb rad etadi)")
     for pattern, repl in _SQLITE_RULES:
         sql = pattern.sub(repl, sql)
     # %s → ?  (lekin LIKE '%s%' kabi holatlarga tegmaymiz: bizda bunday yo'q)

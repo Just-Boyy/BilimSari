@@ -45,6 +45,8 @@ for t in backup.table_names(cur):
     cur.execute(f'SELECT COUNT(*) AS n FROM {t}')
     src[t] = int(cur.fetchone()['n'])
 cur.close(); conn.close()
+# Yuklab olish zaxira tayyor bo'lgandan keyin admin jurnaliga "backup_download" yozadi — o'sha qator zaxirada yo'q
+src['admin_audit_log'] -= 1
 check("Hech bir jadval tashlab ketilmagan (topics, tokens ham bor)", set(data['tables']) == set(src) and data['skipped'] == []
       and 'topics' in data['tables'] and 'tokens' in data['tables'], (set(src) - set(data['tables']), data['skipped']))
 check("Har bir jadvaldagi qatorlar soni mos", all(len(data['tables'][t]['rows']) == n for t, n in src.items()),

@@ -68,4 +68,13 @@ c.get(f"/api/study/profile/{vali['id']}", headers=ali['h'])
 n1 = db('SELECT COUNT(*) AS n FROM user_achievements WHERE user_id = %s', (vali['id'],), True)[0]['n']
 check("Profilni ko'rish boshqaning nishonlarini o'zgartirmaydi", n0 == n1, (n0, n1))
 check("Sahifa beriladi", c.get('/foydalanuvchi.html').status_code == 200)
+
+# Boshqalarda chaqmoq bor, profil egasida 0 — reyting so'rovi bo'sh ro'yxat bilan yiqilmasin (prod'da 500 edi)
+db('''INSERT INTO game_results (session_id, room_id, user_id, game_type, subject, difficulty, score, earned, xp,
+      correct, wrong, total, accuracy, rank, players, created_ms, chaqmoq)
+      VALUES (990001, 1, %s, 'quiz_battle', 'math', 'orta', 50, 50, 50, 5, 0, 5, 100, 1, 2, 1, 30)''', (ali['id'],))
+nol =mk('Nol Chaqmoq', 70000099, 'nolchaqmoq')
+r = c.get(f"/api/study/profile/{nol['id']}", headers=ali['h'])
+check("Chaqmoqsiz o'quvchi profili — 200", r.status_code == 200 and r.get_json()['profile']['chaqmoq'] == 0,
+      (r.status_code, r.get_data(as_text=True)[:200]))
 print('\n' + ('HAMMASI OK' if not fails else f'{len(fails)} ta XATO: {fails}'))

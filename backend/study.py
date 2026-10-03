@@ -587,7 +587,7 @@ def _all_chaqmoq_cached(cur) -> dict:
 
 def leaderboard(cur, user_id, limit=20):
     """Barcha foydalanuvchilar orasida chaqmoq bo'yicha reyting (mavzular + o'yinlar + kun savoli)."""
-    if limit == 1:
+    if limit <= 1:                          # bosh sahifa va profil: faqat o'rin kerak — 30 s kesh
         chaqmoq_by_user = _all_chaqmoq_cached(cur)
         mine = compute_chaqmoq(cur, user_id)
         if mine:
@@ -604,9 +604,11 @@ def leaderboard(cur, user_id, limit=20):
     # Ism va rasm faqat ko'rsatiladiganlarga (top + o'zi) — hamma foydalanuvchini yuklamaymiz
     ids = [uid for uid, _ in ranked[:limit]] + ([user_id] if user_id in chaqmoq_by_user else [])
     ids = list(dict.fromkeys(ids))
-    placeholders = ', '.join(['%s'] * len(ids))
-    cur.execute(f'SELECT id, name, photo_url FROM users WHERE id IN ({placeholders})', ids)
-    info = {row['id']: row for row in cur.fetchall()}
+    info = {}
+    if ids:
+        placeholders = ', '.join(['%s'] * len(ids))
+        cur.execute(f'SELECT id, name, photo_url FROM users WHERE id IN ({placeholders})', ids)
+        info = {row['id']: row for row in cur.fetchall()}
 
     top = []
     me = None
