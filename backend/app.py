@@ -284,10 +284,10 @@ def guest():
     # Ilova faqat Telegram orqali ishlaydi. Prod'da (Postgres) mehmon hisobini faqat admin ochadi
     # (sinov skriptlari) — aks holda skript bilan Telegramsiz hisoblar ochib, reyting va sovrinli
     # marafonga kirish mumkin edi. Lokal (SQLite) yoki ALLOW_GUEST=1 bo'lsa — ochiq.
-    if database_url() and os.environ.get('ALLOW_GUEST') != '1' \
-            and not admin_auth.verify_admin_token(admin_auth.admin_token_from_request()):
+    by_admin = admin_auth.verify_admin_token(admin_auth.admin_token_from_request())
+    if database_url() and os.environ.get('ALLOW_GUEST') != '1' and not by_admin:
         return jsonify({'ok': False, 'error': 'Ilovaga Telegram orqali kiring.', 'code': 'telegram_required'}), 403
-    if not rate_limit.hit(f'guest:{_client_ip()}', 8, 3600):
+    if not by_admin and not rate_limit.hit(f'guest:{_client_ip()}', 8, 3600):
         return jsonify({
             'ok': False,
             'error': "Juda ko'p urinish. Birozdan so'ng qayta urinib ko'ring.",

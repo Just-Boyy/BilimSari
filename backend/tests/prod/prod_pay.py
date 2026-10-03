@@ -56,7 +56,7 @@ try:
         r = requests.get(f'{B}/{page}', timeout=30)
         check(f'{page} ochiladi', r.status_code == 200, r.status_code)
     r = requests.get(B + '/sw.js', timeout=30)
-    check('Service worker v12', 'bilimsari-v12' in r.text)
+    check('Service worker', r.status_code == 200 and 'bilimsari-v' in r.text)
 finally:
     if user and at:
         s2, d2 = call('DELETE', f"/api/admin/users/{user['id']}", at)

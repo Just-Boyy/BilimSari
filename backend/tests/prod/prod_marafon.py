@@ -28,7 +28,7 @@ try:
     r = requests.post(B + '/api/admin/marathon', headers=H, json=body, timeout=30).json()
     mid = r['marathon']['id']
     print('qoralama:', r['marathon']['status'], '| fond:', r['marathon']['prize_fund'])
-    png = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uitest', 'sovrin.png'), 'rb').read()
+    png = open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'assets', 'icon-192.png'), 'rb').read()
     r = requests.post(B + f'/api/admin/marathon/{mid}/image', headers=H,
                       json={'place': 1, 'image': 'data:image/png;base64,' + base64.b64encode(png).decode()}, timeout=30).json()
     img = r.get('image_url')
@@ -43,6 +43,14 @@ finally:
     print("sinov o'quvchisi o'chirildi:", requests.delete(B + f"/api/admin/users/{g['user']['id']}", headers=H, timeout=30).status_code)
 lb = requests.get(B + '/leaderboard.html', timeout=30).text
 ad = requests.get(B + '/admin.html', timeout=30).text
-print('sahifalar:', 'reyting-tablar' in lb, 'bolim-marafon' in ad, '| sw v42:', 'bilimsari-v42' in requests.get(B + '/sw.js', timeout=30).text)
+print('sahifalar:', 'reyting-tablar' in lb, 'bolim-marafon' in ad, "| g'oliblar jadvalida belgilar:", 'w.flags' in ad)
+# Tugagan marafon g'oliblari: shubhali akkaunt belgilari (faqat o'qish)
+done = [x for x in d.get('history') or [] if x['status'] == 'finished']
+if done:
+    rr = requests.post(B + f"/api/admin/marathon/{done[0]['id']}/results", headers=H, timeout=60).json()
+    print("g'oliblar:", len(rr.get('results') or []), '| hammasida flags:', all('flags' in w for w in rr.get('results') or []),
+          '| belgilanganlar:', [(w['place'], w['flags']) for w in rr.get('results') or [] if w.get('flags')])
+else:
+    print("tugagan marafon yo'q — g'oliblar belgisi tekshirilmadi")
 s = requests.get(B + '/api/admin/system', headers=H, timeout=30).json()
 print('xatolar:', s.get('error_counts'))

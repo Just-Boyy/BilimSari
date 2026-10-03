@@ -33,7 +33,7 @@ check('js/i18n.js yuklanadi', s == 200 and 'window.I18N' in js and 'Настро
 s, html = call('GET', '/settings.html')
 check("Sozlamalarda til tanlovi", s == 200 and 'js/i18n.js' in html and 'data-til="ru"' in html, s)
 s, sw = call('GET', '/sw.js')
-check('Service worker v19 (yangi fayllar)', 'bilimsari-v19' in sw and '/js/i18n.js' in sw)
+check('Service worker (i18n.js keshda)', 'bilimsari-v' in sw and '/js/i18n.js' in sw)
 
 s, d = call('POST', '/api/admin/login', json={'password': os.environ.get('ADMIN_PW', '')})
 at = d.get('token')

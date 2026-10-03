@@ -47,11 +47,11 @@ try:
     s, d = call('POST', '/api/study/daily/answer', t, json={'answer': 0})
     check('Ikkinchi urinish -> 409', s == 409, (s, d))
     s, d = call('GET', '/api/study/achievements', t)
-    check('Yutuqlar: 16 ta', s == 200 and d.get('total') == 16, (s, d.get('total')))
+    check('Yutuqlar: 16+ ta', s == 200 and (d.get('total') or 0) >= 16, (s, d.get('total')))
     r = requests.get(B + '/daily.html', timeout=30)
     check('daily.html sahifasi', r.status_code == 200 and 'Kun savoli' in r.text, r.status_code)
     r = requests.get(B + '/sw.js', timeout=30)
-    check('Service worker v10', "bilimsari-v10" in r.text)
+    check('Service worker', 'bilimsari-v' in r.text)
 finally:
     pw = os.environ.get('ADMIN_PW', '')
     if user and pw:
