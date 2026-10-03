@@ -112,6 +112,8 @@ check("Bosh sahifa: tezkor tugmalar o'rnida Premium kartasi", 'id="premiumKarta"
 pr = open(os.path.join(BACKEND, 'premium.html'), encoding='utf-8').read()
 check('Premium sahifasi: tariflar, sotib olish tugmasi, animatsiya', 'data-tarif' in pr and 'id="tolashTugma"' in pr
       and 'API.premiumBuyurtma(promo, tanlangan)' in pr and '@keyframes prTojKir' in pr)
+check("Premium faol: tugmalar ustma-ust, yuklanishga o'xshamaydigan ikonka", 'class="pr-faol-tugmalar"' in pr
+      and "UI.nishon('bookOpen') + '<span>Shaxsiy darslarim" in pr)
 i18n = open(os.path.join(BACKEND, 'js', 'i18n.js'), encoding='utf-8').read()
 check('Ruscha tarjimalar', "'Muddatni tanlang': 'Выберите срок'" in i18n and "tejaysiz$/" in i18n)
 

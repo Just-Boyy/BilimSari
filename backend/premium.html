@@ -96,6 +96,13 @@
   .pr-teg { display: inline-block; margin-top: 8px; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 800;
     color: var(--yashil-quyuq); background: var(--yashil-fon); border: 1px solid var(--yashil-chegara); }
 
+  /* Premium faol: tugmalar ustma-ust, har biri bir qatorda */
+  .pr-faol-tugmalar { display: grid; gap: 12px; margin-top: 14px; }
+  .pr-faol-tugmalar .tugma { justify-content: flex-start; padding-left: 20px; white-space: nowrap; }
+  .pr-faol-tugmalar .tugma-ikkilamchi { padding-left: 16px; }
+  .pr-faol-tugmalar .tugma svg { width: 22px; height: 22px; flex: 0 0 auto; }
+  .pr-faol-tugmalar .tugma span { overflow: hidden; text-overflow: ellipsis; }
+
   .pr-suhbat { display: grid; gap: 8px; margin-top: 12px; }
   .pr-xabar { max-width: 86%; padding: 9px 12px; border-radius: 16px; font-size: 13px; line-height: 1.45; }
   .pr-xabar.men { justify-self: end; background: var(--yashil); color: #fff; border-bottom-right-radius: 4px; }
@@ -406,8 +413,8 @@
     var st = P.premium;
     if (st.active) {
       return '<section class="pr-bolim pr-kor"><h2>Imkoniyatlaringiz</h2>' +
-        '<div class="tugmalar" style="justify-content:center;margin-top:12px">' +
-          '<a class="tugma" href="shaxsiy.html">' + UI.nishon('sparkle') + '<span>Shaxsiy darslarim</span></a>' +
+        '<div class="pr-faol-tugmalar">' +
+          '<a class="tugma" href="shaxsiy.html">' + UI.nishon('bookOpen') + '<span>Shaxsiy darslarim</span></a>' +
           '<a class="tugma tugma-ikkilamchi" href="settings.html#emoji">' + UI.nishon('star') + '<span>Emoji va ramka tanlash</span></a>' +
         '</div><p class="izoh-kichik" style="text-align:center;margin-top:10px">Muddati tugagach, shu yerdan yana olishingiz mumkin.</p></section>';
     }
