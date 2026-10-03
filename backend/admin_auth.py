@@ -9,6 +9,7 @@ yuboriladi — students tokenlari bilan aralashmaydi.
 """
 
 import os
+import secrets
 import time
 from functools import wraps
 
@@ -129,6 +130,39 @@ def revoke_all_sessions():
 
 def make_admin_token() -> str:
     return _serializer.dumps({'admin': True, 'iat': _now_ms()})
+
+
+# Ilovadagi «Admin panel» tugmasi panelni tashqi brauzerda ochadi. Telegram'ning initData'si
+# brauzerga o'tmaydi — shuning uchun ilova ichida imzolangan, 2 daqiqa amal qiladigan bir martalik
+# kod olinadi va havolaning # qismida (serverga yuborilmaydi) brauzerga uzatiladi.
+HANDOFF_MAX_AGE = 120
+
+
+def make_handoff_code(tg_id) -> str:
+    return _serializer.dumps({'h': secrets.token_hex(8), 'tg': int(tg_id)}, salt='admin-handoff')
+
+
+def redeem_handoff_code(code) -> bool:
+    """Kod yaroqli, muddati o'tmagan, hali ishlatilmagan va egasi hali admin bo'lsa — True (bir marta)."""
+    try:
+        data = _serializer.loads(str(code or ''), max_age=HANDOFF_MAX_AGE, salt='admin-handoff')
+    except (BadSignature, SignatureExpired):
+        return False
+    if not isinstance(data, dict) or not data.get('h') or not is_admin_telegram(data.get('tg')):
+        return False
+    conn = get_connection()
+    cur = conn.cursor()
+    try:
+        now = _now_ms()
+        cur.execute("INSERT INTO admin_settings (key, value) VALUES (%s, %s) ON CONFLICT (key) DO NOTHING",
+                    ('handoff:' + data['h'], str(now)))
+        fresh = cur.rowcount == 1
+        cur.execute("DELETE FROM admin_settings WHERE key LIKE 'handoff:%%' AND value < %s", (str(now - 86400000),))
+        conn.commit()
+        return fresh
+    finally:
+        cur.close()
+        conn.close()
 
 
 def verify_admin_token(token: str) -> bool:

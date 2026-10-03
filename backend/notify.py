@@ -388,6 +388,9 @@ def tick(now_ms=None):
     conn = get_connection()
     cur = conn.cursor()
     try:
+        import qoidalar   # noqa: PLC0415 — qoidalar bu modulni import qiladi
+        qoidalar.refresh(cur)                          # admin o'zgartirgan qoidalar (eslatma soatlari va h.k.)
+        broadcast.start_due(cur, conn, now_ms)         # vaqti kelgan rejalashtirilgan ommaviy xabarlar
         if _claim(cur, conn, 'cooldown', str(now_ms // (5 * 60 * 1000))):
             cooldown_ready(cur, conn, now_ms)
             payments.housekeeping(cur, conn, now_ms)

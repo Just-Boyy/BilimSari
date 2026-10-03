@@ -411,6 +411,25 @@
     return men ? 'profile.html' : 'foydalanuvchi.html?id=' + encodeURIComponent(uid);
   }
   /** Ro'yxat qatori uchun ochuvchi teg: foydalanuvchi ID bo'lsa — profilga havola, aks holda div. */
+  /** Admin panel: Telegram ichida — tashqi brauzerda (Chrome), bir martalik kod bilan parolsiz;
+   * oddiy brauzerda — shu oynaning o'zida. bolim — ochiladigan bo'lim (masalan, 'tolovlar'). */
+  async function adminOch(bolim) {
+    var tg = window.Telegram && window.Telegram.WebApp;
+    var yol = 'admin.html' + (bolim ? '#' + bolim : '');
+    if (!tg || !tg.initData || typeof tg.openLink !== 'function') { location.href = yol; return; }
+    var r = await API.post('/api/admin/handoff', { initData: tg.initData });
+    if (!r.ok || !r.code) { xabar(r.error || 'Admin panelni ochib bo\'lmadi', 'xato'); return; }
+    var url = location.origin + '/admin.html#kod=' + encodeURIComponent(r.code) + (bolim ? '&bolim=' + encodeURIComponent(bolim) : '');
+    try { tg.openLink(url, { try_instant_view: false }); } catch (e) { location.href = url; }
+  }
+  // admin.html ga olib boradigan har qanday havola (Sozlamalar, do'kon) — adminOch orqali
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="admin.html"]');
+    if (!a || e.defaultPrevented) return;
+    e.preventDefault();
+    adminOch((a.getAttribute('href').split('#')[1] || '').replace(/^bolim=/, ''));
+  });
+
   function qatorTeg(cls, uid, men) {
     return uid
       ? '<a class="' + cls + '" href="' + profilYoli(uid, men) + '">'
@@ -631,6 +650,7 @@
     orbita: orbita,
     dostQator: dostQator,
     qatorTeg: qatorTeg,
+    adminOch: adminOch,
     qatorYop: qatorYop,
     profilOyna: profilOyna,
     darajaNomi: darajaNomi,

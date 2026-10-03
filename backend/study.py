@@ -494,12 +494,16 @@ def compute_streak(cur, user_id):
 QUIZ_CHAQMOQ_PER_CORRECT = 5
 QUIZ_CHAQMOQ_MAX = 15
 HOMEWORK_CHAQMOQ = 15
-LESSON_CHAQMOQ_SQL = (
-    '(CASE WHEN quiz_first_correct IS NULL THEN 0 '
-    f'WHEN quiz_first_correct * {QUIZ_CHAQMOQ_PER_CORRECT} >= {QUIZ_CHAQMOQ_MAX} THEN {QUIZ_CHAQMOQ_MAX} '
-    f'ELSE quiz_first_correct * {QUIZ_CHAQMOQ_PER_CORRECT} END'
-    f" + CASE WHEN homework_status = 'passed' THEN {HOMEWORK_CHAQMOQ} ELSE 0 END)"
-)
+def build_lesson_chaqmoq_sql() -> str:
+    """Dars chaqmoqi (SQL ifoda) — admin «Qoidalar»da qiymatlarni o'zgartirsa, qoidalar.py qayta quradi."""
+    per, top, hw = int(QUIZ_CHAQMOQ_PER_CORRECT), int(QUIZ_CHAQMOQ_MAX), int(HOMEWORK_CHAQMOQ)
+    return ('(CASE WHEN quiz_first_correct IS NULL THEN 0 '
+            f'WHEN quiz_first_correct * {per} >= {top} THEN {top} '
+            f'ELSE quiz_first_correct * {per} END'
+            f" + CASE WHEN homework_status = 'passed' THEN {hw} ELSE 0 END)")
+
+
+LESSON_CHAQMOQ_SQL = build_lesson_chaqmoq_sql()
 
 
 def quiz_chaqmoq(correct) -> int:

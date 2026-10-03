@@ -8,7 +8,11 @@
    belgisi bor joylarga tegilmaydi.
 
    Til localStorage'da (bilimsari_lang) va serverda (users.lang) saqlanadi.
-   I18N.t(matn) — JS ichidan tarjima; I18N.til — 'uz' yoki 'ru'. */
+   I18N.t(matn) — JS ichidan tarjima; I18N.til — 'uz' yoki 'ru'.
+
+   Admin panelda o'zgartirilgan matnlar (o'zbekcha va ruscha), ranglar va yashirilgan bloklar ham shu yerda
+   qo'llanadi: /api/site/config dan olinadi va localStorage'da saqlanadi — keyingi ochilishda sahifa
+   chizilishidan oldin ishlaydi. */
 (function () {
   var KALIT = 'bilimsari_lang';
   var til = 'uz';
@@ -488,6 +492,7 @@
       'Сейчас новые ученики не принимаются. Попробуйте чуть позже.',
     "Bu bo'lim vaqtincha yopilgan. Birozdan keyin qayta urinib ko'ring.": 'Этот раздел временно закрыт. Попробуйте чуть позже.',
     'Admin bonusi': 'Бонус от админа', 'Admin tomonidan berilgan': 'Начислено админом',
+    "Admin panelni ochib bo'lmadi": 'Не удалось открыть админ-панель',
     "do'stlik so'rovi":'заявка в друзья', "Hali do'stingiz yo'q. Tanishlaringizni toping!": 'У вас пока нет друзей. Найдите знакомых!',
     "Do'stlar reytingi": 'Рейтинг друзей', "Yangi so'rovlar": 'Новые заявки',
     "Sizga do'stlik so'rovi yubordi": 'Отправил(а) вам заявку в друзья', "do'stlikdan chiqarilsinmi?": 'удалить из друзей?',
@@ -816,12 +821,66 @@
   }
 
   function t(s) {
-    if (til !== 'ru' || s === null || s === undefined) return s;
+    if (s === null || s === undefined) return s;
+    if (til !== 'ru') {
+      if (!ovrBor) return s;
+      var uk = norm(s);
+      return Object.prototype.hasOwnProperty.call(OVR.uz, uk) ? OVR.uz[uk] : s;
+    }
     var matn = String(s);
     var k = norm(matn);
     if (!k || !/[A-Za-z]/.test(k)) return matn;
+    if (Object.prototype.hasOwnProperty.call(OVR.ru, k)) return OVR.ru[k];
     var r = asosiy(k, 0);
     return r === null ? matn : r;
+  }
+
+  // ───────────────────────── Admin sozlamalari ─────────────────────────
+  var SAYT_KALIT = 'bilimsari_sayt';
+  var OVR = { uz: {}, ru: {} };
+  var ovrBor = false;            // o'zbekcha almashtirish bormi (yo'q bo'lsa o'zbekcha sahifada kuzatuvchi ishlamaydi)
+  var ishlayapti = false;
+
+  function saytQoy(d) {
+    OVR = { uz: {}, ru: {} };
+    ['uz', 'ru'].forEach(function (l) {
+      var x = (d && d.texts && d.texts[l]) || {};
+      Object.keys(x).forEach(function (k) { OVR[l][norm(k)] = x[k]; });
+    });
+    ovrBor = Object.keys(OVR.uz).length > 0;
+    // Ranglar va yashirilgan bloklar — server tekshirgan CSS o'zgaruvchilari va selektorlar
+    var css = '';
+    var th = (d && d.theme) || {};
+    var v = Object.keys(th).filter(function (k) { return /^--[a-z-]+$/.test(k) && /^#[0-9a-fA-F]{6}$/.test(th[k]); })
+      .map(function (k) { return k + ':' + th[k]; });
+    if (v.length) css += ':root{' + v.join(';') + '}';
+    var hide = (d && d.hide) || [];
+    if (hide.length) css += hide.join(',') + '{display:none!important}';
+    var el = document.getElementById('saytUslub');
+    if (!el && css) {
+      el = document.createElement('style');
+      el.id = 'saytUslub';
+      (document.head || document.documentElement).appendChild(el);
+    }
+    if (el) el.textContent = css;
+  }
+
+  var sayt = null;
+  try { sayt = JSON.parse(localStorage.getItem(SAYT_KALIT) || 'null'); } catch (e) { sayt = null; }
+  if (sayt) saytQoy(sayt);
+
+  function saytYangila() {
+    if (typeof fetch !== 'function') return;
+    fetch('/api/site/config', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.ok || (sayt && sayt.v === d.v)) return;
+      sayt = d;
+      try { localStorage.setItem(SAYT_KALIT, JSON.stringify(d)); } catch (e) { /* xotira yopiq */ }
+      saytQoy(d);
+      if (til === 'ru' || ovrBor) {
+        if (!ishlayapti) ishgaTushir();
+        else { aylan(document.documentElement); sarlavha(); }
+      }
+    }).catch(function () { /* tarmoq yo'q — keshdagisi qoladi */ });
   }
 
   // ───────────────────────── Sahifa ─────────────────────────
@@ -843,7 +902,7 @@
 
   function element(el) {
     if (tashla(el)) return;
-    if (el.hasAttribute('data-ru')) {           // bir xil so'z turli joyda turlicha tarjima qilinsa
+    if (til === 'ru' && el.hasAttribute('data-ru')) {   // bir xil so'z turli joyda turlicha tarjima qilinsa
       var aniq = el.getAttribute('data-ru');
       if (el.textContent !== aniq) el.textContent = aniq;
       return;
@@ -914,7 +973,8 @@
   }
 
   function ishgaTushir() {
-    document.documentElement.lang = 'ru';
+    ishlayapti = true;
+    document.documentElement.lang = til === 'ru' ? 'ru' : 'uz';
     dialoglar();
     aylan(document.documentElement);
     sarlavha();
@@ -955,5 +1015,6 @@
     },
   };
 
-  if (til === 'ru') ishgaTushir();
+  if (til === 'ru' || ovrBor) ishgaTushir();
+  saytYangila();
 })();

@@ -20,6 +20,7 @@ import ai_tutor
 import alerts
 import analytics
 import backup
+import baza
 import boshqaruv
 import boshqaruv_api
 import botchat
@@ -39,7 +40,10 @@ import personal
 import photos
 import premium
 import premium_api
+import qoidalar
 import rate_limit
+import sayt
+import sayt_api
 import site_settings
 import study
 import study_api
@@ -77,6 +81,13 @@ app.register_blueprint(marafon_api.bp)
 app.register_blueprint(marafon_api.admin_bp)
 app.register_blueprint(partners_api.admin_bp)
 app.register_blueprint(boshqaruv_api.bp)
+app.register_blueprint(sayt_api.bp)
+app.register_blueprint(sayt_api.public_bp)
+
+
+@app.before_request
+def _qoidalar():
+    qoidalar.refresh()          # admin «Qoidalar»da o'zgartirgan qiymatlar (worker'da 10 s da bir marta tekshiriladi)
 
 
 @app.after_request
@@ -734,27 +745,48 @@ BOT_COMMANDS_RU = [
 ]
 
 
+# Bot matnlari — admin «Matnlar» bo'limida o'zgartirsa, sayt.bot_text() shulardan ustun turadi. {ism} — o'quvchi ismi.
+START_TEXT = {
+    'uz': ('Salom, {ism}!\n\n'
+           '<b>BilimSari</b> — maktab fanlarini o‘rganish platformasi.\n\n'
+           '📚 Har kuni yangi mavzu, test va uy vazifasi\n'
+           '❓ Kun savoli — har kuni bitta savol va kunlik reyting\n'
+           '🎮 Do‘stlar va kompyuter bilan bilim bellashuvi\n'
+           '⚡ Chaqmoq to‘plang, nishonlar yig‘ing\n\n'
+           'Pastdagi menyudan tanlang 👇 Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'),
+    'ru': ('Привет, {ism}!\n\n'
+           '<b>BilimSari</b> — платформа для изучения школьных предметов.\n\n'
+           '📚 Каждый день новая тема, тест и домашнее задание\n'
+           '❓ Вопрос дня — каждый день один вопрос и рейтинг дня\n'
+           '🎮 Соревнования на знания с друзьями и компьютером\n'
+           '⚡ Собирайте молнии и награды\n\n'
+           'Выберите в меню ниже 👇 Если есть вопрос, напишите сюда — админ ответит.'),
+}
+HELP_TEXT = {
+    'uz': ('Buyruqlar:\n'
+           '/start — asosiy menyu\n'
+           '/kun — kun savoli\n'
+           '/sotib_olish — fan sotib olish\n'
+           '/tolovlarim — to‘lovlarim\n'
+           '/help — yordam\n\n'
+           'Pastdagi menyu tugmalaridan ham foydalanishingiz mumkin. '
+           'Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'),
+    'ru': ('Команды:\n'
+           '/start — главное меню\n'
+           '/kun — вопрос дня\n'
+           '/sotib_olish — купить предмет\n'
+           '/tolovlarim — мои платежи\n'
+           '/help — помощь\n\n'
+           'Можно пользоваться и кнопками меню внизу. '
+           'Если есть вопрос, напишите сюда — админ ответит.'),
+}
+
+
 def send_start_message(chat_id, first_name, tg_lang=None):
     # parse_mode=HTML — ismdagi <, & kabi belgilar xabarni buzmasligi uchun escape
     lang = tgbot.lang_of(chat_id, tg_lang)
-    if lang == 'ru':
-        name = html.escape(first_name or 'друг')
-        text = (f'Привет, {name}!\n\n'
-                f'<b>BilimSari</b> — платформа для изучения школьных предметов.\n\n'
-                f'📚 Каждый день новая тема, тест и домашнее задание\n'
-                f'❓ Вопрос дня — каждый день один вопрос и рейтинг дня\n'
-                f'🎮 Соревнования на знания с друзьями и компьютером\n'
-                f'⚡ Собирайте молнии и награды\n\n'
-                f'Выберите в меню ниже 👇 Если есть вопрос, напишите сюда — админ ответит.')
-    else:
-        name = html.escape(first_name or 'do‘st')
-        text = (f'Salom, {name}!\n\n'
-                f'<b>BilimSari</b> — maktab fanlarini o‘rganish platformasi.\n\n'
-                f'📚 Har kuni yangi mavzu, test va uy vazifasi\n'
-                f'❓ Kun savoli — har kuni bitta savol va kunlik reyting\n'
-                f'🎮 Do‘stlar va kompyuter bilan bilim bellashuvi\n'
-                f'⚡ Chaqmoq to‘plang, nishonlar yig‘ing\n\n'
-                f'Pastdagi menyudan tanlang 👇 Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.')
+    name = html.escape(first_name or ('друг' if lang == 'ru' else 'do‘st'))
+    text = (sayt.bot_text('start', lang) or START_TEXT[lang]).replace('{ism}', name)
     tg_api('sendMessage', {
         'chat_id': chat_id,
         'text': text,
@@ -818,33 +850,11 @@ def send_daily_invite(chat_id, first_name, tg_lang=None):
 
 def send_help_message(chat_id, tg_lang=None):
     lang = tgbot.lang_of(chat_id, tg_lang)
-    if lang == 'ru':
-        tg_api('sendMessage', {
-            'chat_id': chat_id,
-            'text': ('Команды:\n'
-                     '/start — главное меню\n'
-                     '/kun — вопрос дня\n'
-                     '/sotib_olish — купить предмет\n'
-                     '/tolovlarim — мои платежи\n'
-                     '/help — помощь\n\n'
-                     'Можно пользоваться и кнопками меню внизу. '
-                     'Если есть вопрос, напишите сюда — админ ответит.'),
-            'reply_markup': botchat.menu_keyboard('ru'),
-        })
-        return
     tg_api('sendMessage', {
         'chat_id': chat_id,
-        'text': (
-            'Buyruqlar:\n'
-            '/start — asosiy menyu\n'
-            '/kun — kun savoli\n'
-            '/sotib_olish — fan sotib olish\n'
-            '/tolovlarim — to‘lovlarim\n'
-            '/help — yordam\n\n'
-            'Pastdagi menyu tugmalaridan ham foydalanishingiz mumkin. '
-            'Savolingiz bo‘lsa, shu yerga yozing — admin javob beradi.'
-        ),
-        'reply_markup': botchat.menu_keyboard(),
+        'text': sayt.bot_text('help', lang) or HELP_TEXT[lang],
+        'parse_mode': 'HTML',
+        'reply_markup': botchat.menu_keyboard(lang),
     })
 
 
@@ -868,8 +878,12 @@ def setup_telegram_bot(force=False):
         logger.warning('BOT_TOKEN yo‘q — Telegram webhook o‘rnatilmadi')
         return
     webhook_url = WEBAPP_URL.rstrip('/') + '/telegram/webhook'
-    config = json.dumps([webhook_url, WEBHOOK_UPDATES, BOT_COMMANDS, BOT_DESCRIPTION, BOT_SHORT_DESCRIPTION,
-                         BOT_COMMANDS_RU, BOT_DESCRIPTION_RU, BOT_SHORT_DESCRIPTION_RU,
+    desc = {lang: sayt.bot_text('description', lang) or (BOT_DESCRIPTION_RU if lang == 'ru' else BOT_DESCRIPTION)
+            for lang in ('uz', 'ru')}
+    short = {lang: sayt.bot_text('short_description', lang)
+             or (BOT_SHORT_DESCRIPTION_RU if lang == 'ru' else BOT_SHORT_DESCRIPTION) for lang in ('uz', 'ru')}
+    config = json.dumps([webhook_url, WEBHOOK_UPDATES, BOT_COMMANDS, desc['uz'], short['uz'],
+                         BOT_COMMANDS_RU, desc['ru'], short['ru'],
                          WEBAPP_URL, hashlib.sha256(WEBHOOK_SECRET.encode()).hexdigest()], sort_keys=True)
     slot = hashlib.sha256(config.encode()).hexdigest()[:16] + ':' + utc_now().date().isoformat()
     conn = get_connection()
@@ -888,11 +902,11 @@ def setup_telegram_bot(force=False):
     })
     logger.info('setWebhook: %s', r)
     tg_api('setMyCommands', {'commands': BOT_COMMANDS})
-    tg_api('setMyDescription', {'description': BOT_DESCRIPTION})
-    tg_api('setMyShortDescription', {'short_description': BOT_SHORT_DESCRIPTION})
+    tg_api('setMyDescription', {'description': desc['uz']})
+    tg_api('setMyShortDescription', {'short_description': short['uz']})
     tg_api('setMyCommands', {'commands': BOT_COMMANDS_RU, 'language_code': 'ru'})
-    tg_api('setMyDescription', {'description': BOT_DESCRIPTION_RU, 'language_code': 'ru'})
-    tg_api('setMyShortDescription', {'short_description': BOT_SHORT_DESCRIPTION_RU, 'language_code': 'ru'})
+    tg_api('setMyDescription', {'description': desc['ru'], 'language_code': 'ru'})
+    tg_api('setMyShortDescription', {'short_description': short['ru'], 'language_code': 'ru'})
     tg_api('setChatMenuButton', {
         'menu_button': {
             'type': 'web_app',

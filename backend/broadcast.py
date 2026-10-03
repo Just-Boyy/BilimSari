@@ -60,6 +60,9 @@ def ensure_tables(cur, conn):
     # Tizim xabarlari (marafon e'loni) ruscha interfeysdagi o'quvchilarga ruscha ketadi
     add_column_if_missing(cur, conn, 'broadcasts', 'text_ru', 'TEXT')
     add_column_if_missing(cur, conn, 'broadcasts', 'button_ru', 'TEXT')
+    # Admin: kimga (segment) va qachon (start_ms — rejalashtirilgan vaqt)
+    add_column_if_missing(cur, conn, 'broadcasts', 'segment', 'TEXT')
+    add_column_if_missing(cur, conn, 'broadcasts', 'start_ms', 'BIGINT')
 
 
 class BroadcastError(Exception):
@@ -80,15 +83,48 @@ def get(cur, bid):
     return _public(row) if row else None
 
 
-def _recipients_sql(everyone) -> str:
-    return 'telegram_id IS NOT NULL' + ('' if everyone else ' AND notify = 1')
+DAY_MS = 24 * 3600 * 1000
+# kalit: (nomi, SQL sharti, parametrlar(vaqt) ) — vaqtga bog'liq shartlar tarqatish boshlangan paytga nisbatan
+SEGMENTS = {
+    'all': ('Hamma', '', lambda t: []),
+    'premium': ('Premium obunachilar', 'premium_until > %s', lambda t: [t]),
+    'free': ('Premiumi yo\'qlar', '(premium_until IS NULL OR premium_until <= %s)', lambda t: [t]),
+    'buyers': ('Fan sotib olganlar', 'id IN (SELECT user_id FROM subject_purchases)', lambda t: []),
+    'nobuyers': ('Hech narsa sotib olmaganlar',
+                 'id NOT IN (SELECT user_id FROM subject_purchases) AND (premium_until IS NULL OR premium_until <= %s)',
+                 lambda t: [t]),
+    'active7': ('Oxirgi 7 kunda kirganlar', 'last_seen_ms >= %s', lambda t: [t - 7 * DAY_MS]),
+    'inactive7': ('7 kundan beri kirmaganlar', '(last_seen_ms IS NULL OR last_seen_ms < %s)', lambda t: [t - 7 * DAY_MS]),
+    'inactive30': ('30 kundan beri kirmaganlar', '(last_seen_ms IS NULL OR last_seen_ms < %s)', lambda t: [t - 30 * DAY_MS]),
+    'uz': ("O'zbekcha interfeys", "(lang IS NULL OR lang != 'ru')", lambda t: []),
+    'ru': ('Ruscha interfeys', "lang = 'ru'", lambda t: []),
+}
+
+
+def _recipients(everyone, segment=None, anchor_ms=None) -> tuple:
+    """(SQL sharti, parametrlar) — kimga yuboriladi."""
+    sql = 'telegram_id IS NOT NULL' + ('' if everyone else ' AND notify = 1')
+    seg = SEGMENTS.get(segment or 'all') or SEGMENTS['all']
+    if seg[1]:
+        sql += ' AND ' + seg[1]
+    return sql, seg[2](int(anchor_ms or clock.now_ms()))
+
+
+def count(cur, segment='all', everyone=False, now=None) -> int:
+    sql, params = _recipients(everyone, segment, now)
+    cur.execute(f'SELECT COUNT(*) AS n FROM users WHERE {sql}', params)
+    return int(cur.fetchone()['n'])
 
 
 def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=False, queue=False,
-          text_ru=None, button_ru=None) -> dict:
+          text_ru=None, button_ru=None, segment='all', start_ms=None) -> dict:
     """Tarqatishni yaratadi va fonda boshlaydi. queue=True — boshqasi ketayotgan bo'lsa navbatga qo'yiladi.
-    text_ru / button_ru — ruscha interfeysdagi o'quvchilar uchun (berilmasa hammaga text)."""
+    text_ru / button_ru — ruscha interfeysdagi o'quvchilar uchun (berilmasa hammaga text).
+    segment — kimga (SEGMENTS); start_ms — kelajakdagi vaqt bo'lsa, o'sha paytda boshlanadi."""
     now = now or clock.now_ms()
+    if segment not in SEGMENTS:
+        raise BroadcastError("Qabul qiluvchilar guruhi noto'g'ri")
+    scheduled = bool(start_ms) and int(start_ms) > now + 60 * 1000
     text = str(text or '').strip()
     if not text:
         raise BroadcastError("Xabar matni bo'sh")
@@ -96,20 +132,52 @@ def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=
         raise BroadcastError('Xabar juda uzun (3500 belgigacha)')
     cur.execute("SELECT id FROM broadcasts WHERE status IN ('running', 'queued')")
     busy = cur.fetchone() is not None
-    if busy and not queue:
+    if busy and not queue and not scheduled:
         raise BroadcastError("Oldingi xabar hali yuborilmoqda. U tugashini kuting.", 409)
-    cur.execute(f'SELECT COUNT(*) AS n FROM users WHERE {_recipients_sql(everyone)}')
-    total = int(cur.fetchone()['n'])
+    total = count(cur, segment, everyone, int(start_ms) if scheduled else now)
+    status = 'scheduled' if scheduled else ('queued' if busy else 'running')
     cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms, html, button_text, button_path,
-                                           everyone, text_ru, button_ru)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
-                (text, 'queued' if busy else 'running', total, now, now, int(bool(html)), button, path or None,
-                 int(bool(everyone)), (str(text_ru).strip() or None) if text_ru else None, button_ru))
+                                           everyone, text_ru, button_ru, segment, start_ms)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
+                (text, status, total, now, now, int(bool(html)), button, path or None,
+                 int(bool(everyone)), (str(text_ru).strip() or None) if text_ru else None, button_ru,
+                 segment, int(start_ms) if scheduled else None))
     bid = cur.fetchone()['id']
     conn.commit()
-    if not busy:
+    if status == 'running':
         _spawn(bid)
     return get(cur, bid)
+
+
+def start_due(cur, conn, now=None) -> list:
+    """Rejalashtiruvchi: vaqti kelgan tarqatishlarni navbatga qo'yadi va bo'sh bo'lsa boshlaydi."""
+    now = now or clock.now_ms()
+    cur.execute("UPDATE broadcasts SET status = 'queued', heartbeat_ms = %s WHERE status = 'scheduled' AND start_ms <= %s",
+                (now, now))
+    moved = cur.rowcount
+    conn.commit()
+    return [_next_queued(cur, conn, now)] if moved else []
+
+
+def cancel(cur, conn, bid) -> bool:
+    """Hali boshlanmagan (rejalashtirilgan yoki navbatdagi) tarqatishni bekor qiladi."""
+    cur.execute("UPDATE broadcasts SET status = 'cancelled', finished_ms = %s WHERE id = %s AND status IN ('scheduled', 'queued')",
+                (clock.now_ms(), bid))
+    ok = cur.rowcount == 1
+    conn.commit()
+    return ok
+
+
+def recent(cur, limit=20) -> list:
+    cur.execute('SELECT * FROM broadcasts ORDER BY id DESC LIMIT %s', (limit,))
+    out = []
+    for r in cur.fetchall():
+        seg = r.get('segment') or 'all'
+        out.append(dict(_public(r), text=r['text'][:300], segment=seg,
+                        segment_name=(SEGMENTS.get(seg) or SEGMENTS['all'])[0], created_ms=int(r['created_ms']),
+                        start_ms=int(r['start_ms']) if r.get('start_ms') else None,
+                        finished_ms=int(r['finished_ms']) if r.get('finished_ms') else None, system=bool(r['everyone'])))
+    return out
 
 
 def _spawn(bid):
@@ -152,9 +220,10 @@ def run(bid):
                 # Admin botni to'xtatgan — tarqatish to'xtab turadi; resume_stale keyinroq shu joydan davom ettiradi
                 conn.commit()
                 return
+            cond, cparams = _recipients(b['everyone'], b.get('segment'), b.get('start_ms') or b['created_ms'])
             cur.execute(f'''SELECT id, telegram_id, lang FROM users
-                            WHERE {_recipients_sql(b['everyone'])} AND id > %s
-                            ORDER BY id LIMIT %s''', (last, BATCH))
+                            WHERE {cond} AND id > %s
+                            ORDER BY id LIMIT %s''', cparams + [last, BATCH])
             batch = cur.fetchall()
             if not batch:
                 break

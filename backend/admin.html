@@ -465,6 +465,84 @@
     border-radius: 10px; font: inherit; font-size: 14px; background: var(--oq); }
   .adm-bonus-tarix { margin: 8px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--matn-2); }
   .adm-bonus-tarix li { padding: 3px 0; overflow-wrap: anywhere; }
+
+  /* ── Qoidalar, Matnlar, Dizayn, Baza, Xabar, Ishlar, Kun savoli ── */
+  [hidden] { display: none !important; }      /* .adm-forma label {display:grid} hidden atributini bosib ketmasin */
+  .adm-forma input[type=checkbox], .adm-forma input[type=radio] { width: auto; flex: 0 0 auto; }
+  .adm-forma label.adm-belgi { display: flex; align-items: center; gap: 8px; justify-content: flex-start; font-size: 13px; }
+  .adm-keng { max-width: none !important; }
+  .adm-qoida-guruh { font-size: 15px; margin: 18px 0 2px; padding-bottom: 6px; border-bottom: 2px solid var(--chiziq); }
+  .adm-qoida { display: grid; grid-template-columns: 1fr auto auto; gap: 8px 14px; align-items: center; padding: 10px 6px;
+    border-bottom: 1px solid var(--chiziq); border-radius: 8px; }
+  .adm-qoida.ozgargan .adm-qoida-matn b::after { content: '  •  o\'zgartirilgan'; color: var(--kok); font-size: 11px; }
+  .adm-qoida.tahrirda { background: #fffbeb; }
+  .adm-qoida-matn { display: grid; gap: 2px; font-size: 14px; min-width: 0; }
+  .adm-qoida-matn small { color: var(--matn-2); font-size: 12px; }
+  .adm-qoida-matn small.ogoh { color: #b45309; font-weight: 700; }
+  .adm-qoida-qiymat { display: flex; align-items: center; gap: 6px; }
+  .adm-qoida-qiymat input { width: 92px; padding: 7px 9px; border: 2px solid var(--chiziq); border-radius: 10px; font: inherit;
+    font-size: 15px; font-weight: 700; }
+  .adm-qoida-qiymat span { font-size: 12px; color: var(--matn-2); }
+  .adm-qoida-standart { font-size: 12px; color: var(--matn-3); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  @media (max-width: 560px) { .adm-qoida { grid-template-columns: 1fr auto; } .adm-qoida-standart { grid-column: 1 / -1; } }
+  .adm-matn-topildi { display: grid; gap: 6px; margin-top: 8px; max-height: 300px; overflow-y: auto; }
+  .adm-matn-topilgan { text-align: left; border: 1px solid var(--chiziq); background: var(--oq); border-radius: 10px; padding: 8px 10px;
+    cursor: pointer; display: grid; gap: 2px; font: inherit; font-size: 13px; color: var(--matn); }
+  .adm-matn-topilgan:hover { border-color: var(--yashil); background: var(--yashil-fon); }
+  .adm-matn-topilgan small { color: var(--matn-2); }
+  .adm-matn-qator { padding: 10px 0; border-bottom: 1px solid var(--chiziq); font-size: 13px; display: grid; gap: 4px; overflow-wrap: anywhere; }
+  .adm-matn-qator .asl { color: var(--matn-2); text-decoration: line-through; }
+  .adm-rang { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--chiziq); font-size: 14px; }
+  .adm-rang span { flex: 1; min-width: 0; }
+  .adm-rang input[type=color] { width: 44px; height: 34px; padding: 0; border: 1px solid var(--chiziq); border-radius: 8px; background: none;
+    cursor: pointer; flex: 0 0 auto; }
+  .adm-rang input[type=text] { width: 90px; padding: 6px 8px; border: 2px solid var(--chiziq); border-radius: 8px; font-family: monospace; }
+  .adm-ogoh-quti { padding: 12px 14px; border-radius: var(--r-katta); background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+    font-size: 13px; margin-bottom: 14px; }
+  .adm-baza { display: grid; grid-template-columns: 240px 1fr; gap: 14px; align-items: start; }
+  @media (max-width: 760px) { .adm-baza { grid-template-columns: 1fr; } .adm-baza-jadvallar { max-height: 230px; } }
+  .adm-baza-jadvallar { background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r-katta); padding: 6px; max-height: 72vh; overflow-y: auto; }
+  .adm-baza-jadval { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; width: 100%; padding: 8px 10px; border: 0;
+    background: none; border-radius: 8px; font: inherit; font-size: 13px; text-align: left; cursor: pointer; color: var(--matn); }
+  .adm-baza-jadval:hover { background: var(--fon); }
+  .adm-baza-jadval.faol { background: var(--yashil-fon); color: var(--yashil-quyuq); font-weight: 700; }
+  .adm-baza-jadval small { color: var(--matn-3); font-weight: 400; }
+  .adm-baza-jadval i { display: block; font-style: normal; font-size: 11px; color: var(--matn-3); font-weight: 400; }
+  .adm-baza-ichi { min-width: 0; }
+  @media (max-width: 760px) { .adm-baza-jadvallar { max-height: 230px; } }
+  .adm-baza-o { overflow: auto; max-height: 68vh; background: var(--oq); border: 1px solid var(--chiziq); border-radius: var(--r-katta); }
+  .adm-baza-o table { border-collapse: collapse; font-size: 12px; min-width: 100%; }
+  .adm-baza-o th { position: sticky; top: 0; z-index: 1; background: #f9fafb; text-align: left; padding: 8px; border-bottom: 1px solid var(--chiziq);
+    cursor: pointer; white-space: nowrap; }
+  .adm-baza-o th.pk::before { content: '🔑 '; }
+  .adm-baza-o td { padding: 7px 8px; border-bottom: 1px solid var(--chiziq); max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .adm-baza-o tbody tr { cursor: pointer; }
+  .adm-baza-o tbody tr:hover { background: var(--yashil-fon); }
+  .adm-baza-o td.null { color: var(--matn-3); font-style: italic; }
+  .adm-baza-maydon { display: grid; gap: 4px; margin-bottom: 10px; }
+  .adm-baza-maydon > span { font-size: 12px; font-weight: 700; color: var(--matn-2); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .adm-baza-maydon > span small { font-weight: 400; color: var(--matn-3); }
+  .adm-baza-maydon textarea { width: 100%; padding: 8px 10px; border: 2px solid var(--chiziq); border-radius: 10px;
+    font-family: ui-monospace, Consolas, monospace; font-size: 13px; resize: vertical; }
+  .adm-baza-maydon textarea[readonly] { background: #f3f4f6; color: var(--matn-2); }
+  .adm-baza-maydon.ozgargan textarea { border-color: var(--zarg); background: #fffbeb; }
+  .adm-xabar-qator { padding: 10px 0; border-bottom: 1px solid var(--chiziq); display: grid; gap: 4px; font-size: 13px; }
+  .adm-xabar-qator .matn { white-space: pre-line; overflow-wrap: anywhere; max-height: 4.4em; overflow: hidden; color: var(--matn); }
+  .adm-xabar-qator .meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; color: var(--matn-2); }
+  .adm-kun { display: grid; grid-template-columns: 120px 1fr auto; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--chiziq);
+    align-items: start; font-size: 13px; }
+  @media (max-width: 640px) { .adm-kun { grid-template-columns: 1fr; } }
+  .adm-kun .sana b { display: block; font-size: 14px; }
+  .adm-kun .savol { display: grid; gap: 3px; min-width: 0; overflow-wrap: anywhere; }
+  .adm-kun .adm-variant.togri { color: var(--yashil-quyuq); font-weight: 700; }
+  .adm-kun .amallar { display: flex; gap: 6px; flex-wrap: wrap; }
+  .adm-ish { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--chiziq); font-size: 14px; }
+  .adm-ish .matn { flex: 1; min-width: 220px; display: grid; gap: 2px; }
+  .adm-ish small { color: var(--matn-2); font-size: 12px; }
+  .adm-tanlov-royxat { display: grid; gap: 6px; max-height: 50vh; overflow-y: auto; margin: 8px 0; }
+  .adm-tanlov-royxat label { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--chiziq);
+    border-radius: 10px; cursor: pointer; font-size: 13px; }
+  .adm-tanlov-royxat label:hover { border-color: var(--yashil); }
 </style>
 </head>
 <body class="no-nav">
@@ -498,6 +576,10 @@
     <div class="adm-tab" data-bolim="foydalanuvchilar"><span class="nishon" data-ikon="user"></span> Foydalanuvchilar</div>
     <div class="adm-tab" data-bolim="tolovlar"><span class="nishon" data-ikon="gem"></span> To'lovlar</div>
     <div class="adm-tab" data-bolim="fanlar"><span class="nishon" data-ikon="book"></span> Fanlar</div>
+    <div class="adm-tab" data-bolim="qoidalar"><span class="nishon" data-ikon="target"></span> Qoidalar</div>
+    <div class="adm-tab" data-bolim="matnlar"><span class="nishon" data-ikon="pencil"></span> Matnlar</div>
+    <div class="adm-tab" data-bolim="dizayn"><span class="nishon" data-ikon="sparkle"></span> Dizayn</div>
+    <div class="adm-tab" data-bolim="baza"><span class="nishon" data-ikon="library"></span> Baza</div>
     <div class="adm-tab" data-bolim="faoliyat"><span class="nishon" data-ikon="clock"></span> Faoliyat</div>
     <div class="adm-tab" data-bolim="xabar"><span class="nishon" data-ikon="send"></span> Xabar</div>
     <div class="adm-tab" data-bolim="adminlar"><span class="nishon" data-ikon="users"></span> Adminlar</div>
@@ -596,7 +678,96 @@
     </section>
 
     <section class="adm-bolim" id="bolim-fanlar">
+      <div class="adm-xabar-karta adm-keng" style="margin-bottom:16px">
+        <h2 style="margin-bottom:6px">Kun savoli — keyingi 7 kun</h2>
+        <p class="izoh-kichik">Har kuni hamma uchun bitta savol. Odatda avtomatik tanlanadi; istalgan kunga o'zingiz savol
+          tanlashingiz mumkin (o'quvchilar javob bera boshlaguncha).</p>
+        <div id="kunRejaQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+      </div>
       <div id="fanlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-qoidalar">
+      <div class="adm-xabar-karta adm-keng">
+        <h2 style="margin-bottom:6px">Ilova qoidalari</h2>
+        <p class="izoh-kichik">Dasturchi kodda yozadigan raqamlar — chaqmoq mukofotlari, o'yin imkoniyatlari, kutish vaqtlari,
+          eslatma soatlari. O'zgarish o'quvchilarga 10 soniya ichida ta'sir qiladi. Ilovadagi tushuntirish matnlari
+          (masalan, «+5 chaqmoq», «24 soatda 3 ta o'yin») ham avtomatik yangilanadi.</p>
+        <div id="qoidalarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+        <div class="adm-boshqa-qator" style="margin-top:14px">
+          <button class="tugma" id="qoidalarSaqla" type="button" style="width:auto">O'zgarishlarni saqlash</button>
+          <p class="adm-forma-xabar" id="qoidaXabar" role="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-matnlar">
+      <div class="adm-ikki" style="margin-top:0">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Ilovadagi yozuvlar</h2>
+          <p class="izoh-kichik">Saytdagi istalgan yozuvni — tugma, sarlavha, izoh, xato xabari — o'zgartiring. Avval qidiring
+            yoki asl matnni saytda qanday ko'rsangiz, aynan shunday yozing. O'zbekchasini bo'sh qoldirsangiz — o'zgarmaydi;
+            ruschasini bo'sh qoldirsangiz — odatiy tarjima qoladi.</p>
+          <input class="adm-qidir" id="matnQidir" placeholder="Saytdagi matnni qidiring (o'zbekcha yoki ruscha)..." style="margin-top:10px;width:100%">
+          <div id="matnTopildi" class="adm-matn-topildi"></div>
+          <form class="adm-forma" id="matnForma" style="margin-top:12px">
+            <label>Asl matn (saytda hozir shunday)<textarea id="matnAsl" rows="2" maxlength="2000" required></textarea></label>
+            <label>Yangi o'zbekcha matn<textarea id="matnUz" rows="2" maxlength="2000"></textarea></label>
+            <label>Yangi ruscha matn<textarea id="matnRu" rows="2" maxlength="2000"></textarea></label>
+            <button class="tugma" type="submit">Saqlash</button>
+            <p class="adm-forma-xabar" id="matnXabar" role="status"></p>
+          </form>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">O'zgartirilgan yozuvlar</h2>
+          <div id="matnlarRoyxat" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+          <div id="matnlarAvto"></div>
+        </div>
+      </div>
+      <h2 class="adm-sarlavha">Bot matnlari</h2>
+      <p class="izoh-kichik" style="margin-bottom:10px">Formatlash: &lt;b&gt;qalin&lt;/b&gt;, &lt;i&gt;kursiv&lt;/i&gt;,
+        &lt;u&gt;tagiga chizilgan&lt;/u&gt;, &lt;a href="https://..."&gt;havola&lt;/a&gt;. «Standartga qaytarish» — dasturdagi asl matn.</p>
+      <div id="botMatnlarQuti" class="adm-ikki" style="margin-top:0"></div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-dizayn">
+      <div class="adm-ikki" style="margin-top:0">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Ranglar</h2>
+          <p class="izoh-kichik">Ilovaning asosiy ranglari. Saqlangach o'quvchilar keyingi sahifani ochganda ko'radi.</p>
+          <div id="ranglarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+          <div class="adm-boshqa-qator">
+            <button class="tugma" id="ranglarSaqla" type="button" style="width:auto">Ranglarni saqlash</button>
+            <button class="adm-mini-tugma" id="ranglarAsl" type="button">Hammasini standartga qaytarish</button>
+          </div>
+          <p class="adm-forma-xabar" id="rangXabar" role="status"></p>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Menyu va bosh sahifa bloklari</h2>
+          <p class="izoh-kichik">O'chirilgan blok o'quvchilarga ko'rinmaydi. Bo'limni butunlay yopish uchun — «Boshqaruv» →
+            «Bo'limlarni yoqish / o'chirish».</p>
+          <div id="bloklarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+          <p class="adm-forma-xabar" id="blokXabar" role="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="adm-bolim" id="bolim-baza">
+      <div class="adm-ogoh-quti">⚠ Bu — dasturchi darajasidagi vosita: bazadagi istalgan qatorni ko'rish, o'zgartirish va o'chirish
+        mumkin. Har bir o'zgarish eski va yangi qiymati bilan «Jurnal»ga yoziladi. Ishonchingiz komil bo'lmasa — o'zgartirmang;
+        har kuni olinadigan zaxira nusxadan tiklash mumkin.</div>
+      <div class="adm-baza">
+        <aside class="adm-baza-jadvallar" id="bazaJadvallar">Yuklanmoqda...</aside>
+        <div class="adm-baza-ichi">
+          <div class="adm-filtrlar">
+            <select class="adm-select" id="bazaUstun" aria-label="Qidiriladigan ustun"><option value="">Barcha ustunlar</option></select>
+            <input class="adm-qidir" id="bazaQidir" placeholder="Qidirish...">
+            <button class="adm-mini-tugma" id="bazaCsv" type="button">CSV yuklab olish</button>
+          </div>
+          <div id="bazaQatorlar" class="adm-bosh">Chapdan jadvalni tanlang.</div>
+          <div class="adm-sahifalash" id="bazaSahifalash" hidden></div>
+        </div>
+      </div>
     </section>
 
     <section class="adm-bolim" id="bolim-faoliyat">
@@ -604,16 +775,42 @@
     </section>
 
     <section class="adm-bolim" id="bolim-xabar">
-      <div class="adm-xabar-karta">
-        <h2 style="margin-bottom:6px">Telegram orqali xabar yuborish</h2>
-        <p class="izoh-kichik" style="margin-bottom:14px">
-          Telegram orqali kirgan va eslatmalarni o'chirmagan barcha foydalanuvchilarga yuboriladi. Yuborish fonda
-          boradi — sahifani yopsangiz ham davom etadi. Bu amalni ortga qaytarib bo'lmaydi.
-        </p>
-        <textarea id="xabarMatn" rows="5" placeholder="Xabar matnini yozing..."
-          style="width:100%;padding:12px 14px;border:2px solid var(--chiziq);border-radius:var(--r);font-family:var(--tana);font-size:14px;resize:vertical"></textarea>
-        <button class="tugma" id="xabarYuborTugma" style="margin-top:12px">Yuborish</button>
-        <p id="xabarNatija" style="margin-top:12px;font-size:13px"></p>
+      <div class="adm-ikki" style="margin-top:0">
+        <form class="adm-xabar-karta adm-forma" id="xabarForma">
+          <h2 style="margin:0">Telegram orqali xabar yuborish</h2>
+          <p class="izoh-kichik">Yuborish fonda boradi — sahifani yopsangiz ham davom etadi. Eslatmalarni o'chirgan
+            o'quvchilarga yuborilmaydi. Yuborilgan xabarni ortga qaytarib bo'lmaydi.</p>
+          <label>Kimga<select id="xabarKimga"></select></label>
+          <label>Xabar (o'zbekcha)<textarea id="xabarMatn" rows="5" maxlength="3500" placeholder="Xabar matni..."></textarea></label>
+          <label>Xabar (ruscha, ixtiyoriy — ruscha interfeysdagilarga)<textarea id="xabarMatnRu" rows="3" maxlength="3500"></textarea></label>
+          <label class="adm-belgi"><input type="checkbox" id="xabarHtml"> <span>Formatlash: &lt;b&gt;qalin&lt;/b&gt;, &lt;i&gt;kursiv&lt;/i&gt;</span></label>
+          <label>Tugma — ilovaning qaysi sahifasini ochadi
+            <select id="xabarSahifa">
+              <option value="">Tugmasiz</option>
+              <option value="dashboard.html">Bosh sahifa</option>
+              <option value="daily.html">Kun savoli</option>
+              <option value="games.html">O'yinlar</option>
+              <option value="subjects.html">Fanlarim</option>
+              <option value="shop.html">Do'kon</option>
+              <option value="premium.html">Bilim Premium</option>
+              <option value="shaxsiy.html">Shaxsiy darslar</option>
+              <option value="leaderboard.html">Reyting</option>
+              <option value="leaderboard.html?tab=marafon">Marafon</option>
+              <option value="dostlar.html">Do'stlar</option>
+            </select>
+          </label>
+          <label id="xabarTugmaQator" hidden>Tugma matni<input id="xabarTugma" maxlength="40" placeholder="Masalan: Ochish"></label>
+          <label>Qachon
+            <select id="xabarQachon"><option value="">Hozir</option><option value="vaqt">Belgilangan vaqtda</option></select>
+          </label>
+          <label id="xabarVaqtQator" hidden>Vaqt (Toshkent)<input type="datetime-local" id="xabarVaqt"></label>
+          <button class="tugma" type="submit" id="xabarYubor">Yuborish</button>
+          <p class="adm-forma-xabar" id="xabarNatija" role="status"></p>
+        </form>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Xabarlar tarixi</h2>
+          <div id="xabarlarTarix" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+        </div>
       </div>
     </section>
 
@@ -839,6 +1036,13 @@
           <p class="adm-forma-xabar" id="kanalXabar" role="status"></p>
         </form>
       </div>
+      <div class="adm-xabar-karta adm-keng" style="margin-top:16px">
+        <h2 style="margin-bottom:6px">Rejalashtirilgan ishlar</h2>
+        <p class="izoh-kichik">Server o'zi bajaradigan ishlar va oxirgi bajarilgan vaqti. Kerak bo'lsa — hozir bajarish mumkin
+          (bir xil xabarni ikki marta yubormaydi).</p>
+        <div id="ishlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+        <p class="adm-forma-xabar" id="ishXabar" role="status"></p>
+      </div>
       <h2 class="adm-sarlavha">So'nggi xatolar</h2>
       <div id="xatolarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
     </section>
@@ -918,6 +1122,11 @@ var AUDIT_NOMLARI = {
   user_ban: 'O\'quvchi bloklandi', user_unban: 'O\'quvchi blokdan chiqarildi', user_rename: 'O\'quvchi ismi o\'zgartirildi',
   user_bonus: 'Bonus chaqmoq yozildi', user_reset_chances: 'O\'yin imkoniyatlari tiklandi',
   user_reset_cooldown: 'Dars kutishi bekor qilindi', user_logout: 'O\'quvchi hamma qurilmadan chiqarildi',
+  login_browser: 'Brauzer orqali kirish (ilovadan)', rules_save: 'Qoidalar o\'zgartirildi', text_save: 'Yozuv o\'zgartirildi',
+  text_delete: 'Yozuv asliga qaytarildi', bot_text: 'Bot matni o\'zgartirildi', design_colors: 'Ranglar o\'zgartirildi',
+  design_blocks: 'Bloklar ko\'rinishi o\'zgartirildi', db_update: 'Bazada qator tahrirlandi', db_delete: 'Bazadan qator o\'chirildi',
+  db_export: 'Jadval yuklab olindi (CSV)', broadcast_cancel: 'Ommaviy xabar bekor qilindi', job_run: 'Ish qo\'lda bajarildi',
+  daily_set: 'Kun savoli tanlandi', daily_reset: 'Kun savoli avtomatikka qaytarildi',
 };
 
 var SUBJECT_NAMES = {
@@ -1001,6 +1210,17 @@ document.getElementById('seanslarniTugatTugma').addEventListener('click', async 
 });
 
 (async function boshlash() {
+  // Ilovadan kelgan bir martalik kod (admin.html#kod=...&bolim=...) — panel tashqi brauzerda ochilgan
+  var hash = new URLSearchParams(location.hash.slice(1));
+  var kod = hash.get('kod');
+  var bolim = hash.get('bolim') || (location.hash === '#tolovlar' ? 'tolovlar' : '');
+  if (kod) {
+    history.replaceState(null, '', location.pathname + (bolim ? '#' + bolim : ''));   // kod manzilda qolmasin
+    var kr = await AdminAPI.kodBilanKirish(kod);
+    if (kr.ok || AdminAPI.kirganmi()) { panelniKorsat(); return; }
+    document.getElementById('kirishXato').textContent = kr.error || '';
+    return;
+  }
   if (TG) {
     try { TG.ready(); TG.expand(); } catch (e) {}
     var forma = document.getElementById('kirishForma');
@@ -1042,10 +1262,16 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
       else { yuklaTolovUmumiy(); yuklaCheklar(); }
     }
     if (nomi === 'fanlar' && !yuklandi.fanlar) { yuklandi.fanlar = true; yuklaFanlar(); }
+    if (nomi === 'fanlar') yuklaKunReja();
+    if (nomi === 'qoidalar') yuklaQoidalar();
+    if (nomi === 'matnlar') yuklaMatnlar();
+    if (nomi === 'dizayn') yuklaDizayn();
+    if (nomi === 'baza') yuklaBaza();
+    if (nomi === 'xabar') yuklaXabarlar();
     if (nomi === 'faoliyat' && !yuklandi.faoliyat) { yuklandi.faoliyat = true; yuklaFaoliyat(); }
     if (nomi === 'jurnal' && !yuklandi.jurnal) { yuklandi.jurnal = true; yuklaJurnal(); }
     if (nomi === 'adminlar') yuklaAdminlar();
-    if (nomi === 'tizim') yuklaTizim();
+    if (nomi === 'tizim') { yuklaTizim(); yuklaIshlar(); }
     if (nomi === 'premium') yuklaPremium();
     if (nomi === 'hamkorlar') yuklaHamkorlar();
     if (nomi === 'shikoyatlar') yuklaShikoyatlar();
@@ -1480,6 +1706,7 @@ async function mavzuTahrirla(id, fanKey, fanNomi) {
     m: {
       title: t.title, summary: t.summary, duration: t.duration,
       lesson: JSON.parse(JSON.stringify(t.lesson)), quiz: JSON.parse(JSON.stringify(t.quiz)),
+      homework: JSON.parse(JSON.stringify(t.homework || { intro: '', tasks: [] })),
     },
   };
   document.getElementById('foydalanuvchiModalFon').classList.remove('ochiq');
@@ -1577,8 +1804,13 @@ function tahrirChiz() {
     '<h3>Test savollari <span class="adm-badge kulrang">' + m.quiz.length + ' savol</span></h3>' +
     m.quiz.map(function (q, i) { return savolHtml(q, i, m.quiz.length); }).join('') +
     '<div class="t-qosh"><button type="button" class="adm-mini-tugma yashil" data-amal="q-qosh">+ Savol qo\'shish</button></div>' +
+    '<h3>Uy vazifasi <span class="adm-badge kulrang">' + m.homework.tasks.length + ' topshiriq</span></h3>' +
+    '<div class="adm-forma"><label>Kirish matni (ixtiyoriy)<textarea data-hw="intro" rows="2" maxlength="500">' +
+      esc(tahrirMatn(m.homework.intro)) + '</textarea></label></div>' +
+    m.homework.tasks.map(function (tk, i) { return topshiriqHtml(tk, i, m.homework.tasks.length); }).join('') +
+    (m.homework.tasks.length < 6 ? '<div class="t-qosh"><button type="button" class="adm-mini-tugma yashil" data-amal="t-qosh">+ Topshiriq qo\'shish</button></div>' : '') +
     '<p class="izoh-kichik" style="margin-top:18px">O\'zgarishlar saqlangandan keyin darhol barcha o\'quvchilarga ko\'rinadi. ' +
-    'Kod yangilansa ham tahrir saqlanib qoladi; «Asl holiga qaytarish» — birinchi matnni tiklaydi. Uy vazifasi o\'zgarmaydi.<br>' +
+    'Kod yangilansa ham tahrir saqlanib qoladi; «Asl holiga qaytarish» — birinchi matnni tiklaydi. Uy vazifasi o\'zgartirilsa, ruscha interfeysda o\'zbekcha ko\'rinadi.<br>' +
     'Tahrir faqat o\'zbekcha matnga tegishli: nom va dars matnining ruschasi eski tarjimada qoladi. ' +
     'Yangi qo\'shilgan yoki matni/variantlari o\'zgartirilgan savol ruscha interfeysda o\'zbekcha ko\'rinadi; ' +
     'faqat to\'g\'ri javobni almashtirish tarjimaga ta\'sir qilmaydi.</p>';
@@ -1620,6 +1852,10 @@ document.getElementById('tahrirQuti').addEventListener('input', function (e) {
     else if (f === 'rows') b.rows = el.value.split('\n').filter(function (x) { return x.trim(); })
       .map(function (r) { return r.split('|').map(function (x) { return x.trim(); }); });
     else b[f] = el.value;
+  } else if (el.dataset.hw === 'intro') {
+    m.homework.intro = el.value;
+  } else if (el.dataset.hwf && el.closest('[data-hwt]')) {
+    m.homework.tasks[Number(el.closest('[data-hwt]').dataset.hwt)][el.dataset.hwf] = el.value;
   } else if (qk) {
     var q = m.quiz[Number(qk.dataset.q)];
     if (el.dataset.qf === 'accept') q.accept = el.value.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
@@ -1635,6 +1871,10 @@ document.getElementById('tahrirQuti').addEventListener('change', function (e) {
   var bk = el.closest('[data-b]'), qk = el.closest('[data-q]');
   if (bk && el.hasAttribute('data-bturi')) {
     m.lesson[Number(bk.dataset.b)] = blokTuriniAlmashtir(m.lesson[Number(bk.dataset.b)], el.value);
+  } else if (el.hasAttribute('data-hwturi')) {
+    var tk = m.homework.tasks[Number(el.closest('[data-hwt]').dataset.hwt)];
+    tk.type = el.value;
+    if (el.value === 'open') { delete tk.answer; delete tk.hint; } else if (!tk.answer) { tk.answer = ''; }
   } else if (qk && el.hasAttribute('data-qturi')) {
     m.quiz[Number(qk.dataset.q)] = savolTuriniAlmashtir(m.quiz[Number(qk.dataset.q)], el.value);
   } else if (qk && el.dataset.togri !== undefined) {
@@ -1656,7 +1896,11 @@ document.getElementById('tahrirQuti').addEventListener('click', async function (
   var m = tahrir.m, amal = btn.dataset.amal;
   var bk = btn.closest('[data-b]'), qk = btn.closest('[data-q]');
   var bi = bk ? Number(bk.dataset.b) : -1, qi = qk ? Number(qk.dataset.q) : -1;
-  if (amal === 'b-yuqori') almashtir(m.lesson, bi, bi - 1);
+  if (amal === 't-qosh') m.homework.tasks.push({ type: 'text', prompt: '', answer: '' });
+  else if (amal === 't-ochir') {
+    if (!(await tasdiqSora('Topshiriq o\'chirilsinmi?'))) return;
+    m.homework.tasks.splice(Number(btn.closest('[data-hwt]').dataset.hwt), 1);
+  } else if (amal === 'b-yuqori') almashtir(m.lesson, bi, bi - 1);
   else if (amal === 'b-past') almashtir(m.lesson, bi, bi + 1);
   else if (amal === 'b-ochir') {
     if (m.lesson.length <= 1) { formaXabar('tahrirXabar', '❌ Darsda kamida bitta blok bo\'lishi kerak'); return; }
@@ -1709,7 +1953,8 @@ document.getElementById('tahrirSaqla').addEventListener('click', async function 
   tugma.disabled = false;
   if (!r.ok) { formaXabar('tahrirXabar', '❌ ' + (r.error || 'Xatolik')); return; }
   tahrir.topic = r.topic;
-  tahrir.m = { title: r.topic.title, summary: r.topic.summary, duration: r.topic.duration, lesson: r.topic.lesson, quiz: r.topic.quiz };
+  tahrir.m = { title: r.topic.title, summary: r.topic.summary, duration: r.topic.duration, lesson: r.topic.lesson, quiz: r.topic.quiz,
+    homework: r.topic.homework || { intro: '', tasks: [] } };
   tahrir.ozgardi = false;
   tahrirChiz();
   formaXabar('tahrirXabar', '✅ Saqlandi — o\'quvchilar yangi matnni ko\'radi', true);
@@ -1721,7 +1966,8 @@ document.getElementById('tahrirAsliga').addEventListener('click', async function
   var r = await AdminAPI.mavzuAsliga(tahrir.id);
   if (!r.ok) { formaXabar('tahrirXabar', '❌ ' + (r.error || 'Xatolik')); return; }
   tahrir.topic = r.topic;
-  tahrir.m = { title: r.topic.title, summary: r.topic.summary, duration: r.topic.duration, lesson: r.topic.lesson, quiz: r.topic.quiz };
+  tahrir.m = { title: r.topic.title, summary: r.topic.summary, duration: r.topic.duration, lesson: r.topic.lesson, quiz: r.topic.quiz,
+    homework: r.topic.homework || { intro: '', tasks: [] } };
   tahrir.ozgardi = false;
   tahrirChiz();
   formaXabar('tahrirXabar', '✅ Asl matn tiklandi', true);
@@ -3170,43 +3416,564 @@ document.getElementById('adminForma').addEventListener('submit', async function 
     : "✅ Admin qo'shildi, lekin bot unga yoza olmadi — u botda /start bosishi kerak", true);
 });
 
-document.getElementById('xabarYuborTugma').addEventListener('click', async function () {
-  var matn = document.getElementById('xabarMatn').value.trim();
-  var natija = document.getElementById('xabarNatija');
-  natija.textContent = '';
-  natija.style.color = '';
+// ─────────────────────── Qoidalar ───────────────────────
 
-  if (!matn) { natija.style.color = 'var(--qizil)'; natija.textContent = "Xabar matnini yozing."; return; }
-  if (!(await tasdiqSora("Bu xabar Telegram orqali kirgan BARCHA foydalanuvchilarga yuboriladi. Davom etilsinmi?"))) return;
+var QOIDA = { ozgardi: {}, royxat: [] };
 
-  var tugma = this;
-  tugma.disabled = true;
-  natija.textContent = 'Boshlanmoqda...';
+async function yuklaQoidalar() { qoidalarChiz(await AdminAPI.qoidalar()); }
 
-  var res = await AdminAPI.xabarYuborish(matn);
-  if (!res.ok) {
-    tugma.disabled = false;
-    natija.style.color = 'var(--qizil)';
-    natija.textContent = res.error || 'Xatolik';
+function qoidalarChiz(r) {
+  var quti = document.getElementById('qoidalarQuti');
+  if (!r.ok) { quti.textContent = r.error || 'Xatolik'; return; }
+  quti.classList.remove('adm-yuklanmoqda');
+  QOIDA = { ozgardi: {}, royxat: r.rules };
+  var guruhlar = [];
+  r.rules.forEach(function (q) { if (guruhlar.indexOf(q.group) < 0) guruhlar.push(q.group); });
+  quti.innerHTML = guruhlar.map(function (g) {
+    return '<h3 class="adm-qoida-guruh">' + esc(g) + '</h3>' + r.rules.filter(function (q) { return q.group === g; }).map(function (q) {
+      var ozgargan = q.value !== q.default;
+      return '<div class="adm-qoida' + (ozgargan ? ' ozgargan' : '') + '">' +
+        '<div class="adm-qoida-matn"><b>' + esc(q.label) + '</b>' + (q.hint ? '<small>' + esc(q.hint) + '</small>' : '') +
+          (q.retro ? '<small class="ogoh">⚠ O\'zgartirilsa, barcha o\'quvchilarning avvalgi chaqmoqlari ham qayta hisoblanadi</small>' : '') +
+        '</div>' +
+        '<div class="adm-qoida-qiymat"><input type="number" data-qoida="' + q.key + '" value="' + q.value + '" min="' + q.min +
+          '" max="' + q.max + '" step="1" aria-label="' + esc(q.label) + '"><span>' + esc(q.unit) + '</span></div>' +
+        '<div class="adm-qoida-standart">standart: ' + q.default +
+          (ozgargan ? ' <button type="button" class="adm-mini-tugma" data-qoida-asl="' + q.key + '" title="Standartga qaytarish">↺</button>' : '') +
+        '</div></div>';
+    }).join('');
+  }).join('');
+}
+
+document.getElementById('qoidalarQuti').addEventListener('input', function (e) {
+  var el = e.target.closest('[data-qoida]');
+  if (!el) return;
+  QOIDA.ozgardi[el.dataset.qoida] = el.value === '' ? null : Number(el.value);
+  el.closest('.adm-qoida').classList.add('tahrirda');
+});
+document.getElementById('qoidalarQuti').addEventListener('click', async function (e) {
+  var b = e.target.closest('[data-qoida-asl]');
+  if (!b) return;
+  QOIDA.ozgardi = {};
+  QOIDA.ozgardi[b.dataset.qoidaAsl] = null;
+  await qoidalarSaqla();
+});
+document.getElementById('qoidalarSaqla').addEventListener('click', qoidalarSaqla);
+
+async function qoidalarSaqla() {
+  var keys = Object.keys(QOIDA.ozgardi);
+  if (!keys.length) { formaXabar('qoidaXabar', 'O\'zgarish yo\'q'); return; }
+  var retro = QOIDA.royxat.filter(function (q) { return q.retro && keys.indexOf(q.key) >= 0; });
+  if (retro.length && !(await tasdiqSora('Dars chaqmoqi qoidasi o\'zgaradi — barcha o\'quvchilarning chaqmoqlari va reyting qayta hisoblanadi. Davom etilsinmi?'))) return;
+  var r = await AdminAPI.qoidalarSaqla(QOIDA.ozgardi);
+  if (!r.ok) { formaXabar('qoidaXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  qoidalarChiz(r);
+  formaXabar('qoidaXabar', '✅ Saqlandi — o\'quvchilarga 10 soniyada ta\'sir qiladi', true);
+}
+
+// ─────────────────────── Matnlar ───────────────────────
+
+async function yuklaMatnlar() { matnlarChiz(await AdminAPI.matnlar()); }
+
+function matnlarChiz(r) {
+  var quti = document.getElementById('matnlarRoyxat');
+  if (!r.ok) { quti.textContent = r.error || 'Xatolik'; return; }
+  quti.classList.remove('adm-yuklanmoqda');
+  quti.innerHTML = r.texts.length ? r.texts.map(function (x) {
+    return '<div class="adm-matn-qator"><div class="asl">' + esc(x.orig) + '</div>' +
+      (x.uz ? '<div><span class="adm-badge yashil">UZ</span> ' + esc(x.uz) + '</div>' : '') +
+      (x.ru ? '<div><span class="adm-badge kok">RU</span> ' + esc(x.ru) + '</div>' : '') +
+      '<div class="adm-boshqa-qator" style="margin-top:2px">' +
+        '<button class="adm-mini-tugma" type="button" data-matn-tahrir="' + esc(x.orig) + '" data-uz="' + esc(x.uz || '') +
+          '" data-ru="' + esc(x.ru || '') + '">Tahrirlash</button>' +
+        '<button class="adm-mini-tugma qizil" type="button" data-matn-ochir="' + esc(x.orig) + '">Asliga qaytarish</button></div></div>';
+  }).join('') : '<p class="izoh-kichik">Hali o\'zgartirilgan yozuv yo\'q.</p>';
+  document.getElementById('matnlarAvto').innerHTML = r.auto.length
+    ? '<h3 style="font-size:14px;margin:18px 0 4px">«Qoidalar» bo\'yicha avtomatik yangilangan</h3>' + r.auto.map(function (x) {
+        return '<div class="adm-matn-qator"><div class="asl">' + esc(x.orig) + '</div><div><span class="adm-badge yashil">UZ</span> ' +
+          esc(x.uz) + '</div><div><span class="adm-badge kok">RU</span> ' + esc(x.ru || '') + '</div></div>';
+      }).join('')
+    : '';
+  botMatnlarChiz(r.bot);
+}
+
+function matnFormaToldir(asl, uz, ru) {
+  document.getElementById('matnAsl').value = asl || '';
+  document.getElementById('matnUz').value = uz || '';
+  document.getElementById('matnRu').value = ru || '';
+  document.getElementById('matnForma').scrollIntoView({ block: 'center' });
+  document.getElementById('matnUz').focus();
+}
+
+var matnQidirTaymer = null;
+document.getElementById('matnQidir').addEventListener('input', function () {
+  clearTimeout(matnQidirTaymer);
+  var q = this.value.trim();
+  matnQidirTaymer = setTimeout(async function () {
+    var box = document.getElementById('matnTopildi');
+    if (q.length < 2) { box.innerHTML = ''; return; }
+    var r = await AdminAPI.matnQidir(q);
+    box.innerHTML = (r.items || []).length ? r.items.map(function (x) {
+      return '<button type="button" class="adm-matn-topilgan" data-uz="' + esc(x.uz) + '"><b>' + esc(x.uz) + '</b>' +
+        '<small>RU: ' + esc(x.ru) + '</small></button>';
+    }).join('') : '<p class="izoh-kichik">Topilmadi — asl matnni o\'zingiz yozing.</p>';
+  }, 250);
+});
+document.getElementById('matnTopildi').addEventListener('click', function (e) {
+  var b = e.target.closest('.adm-matn-topilgan');
+  if (b) matnFormaToldir(b.dataset.uz, '', '');
+});
+document.getElementById('matnForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var r = await AdminAPI.matnSaqla({ orig: document.getElementById('matnAsl').value,
+    uz: document.getElementById('matnUz').value, ru: document.getElementById('matnRu').value });
+  if (!r.ok) { formaXabar('matnXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  matnlarChiz(r);
+  this.reset();
+  formaXabar('matnXabar', '✅ Saqlandi — o\'quvchilar sahifani qayta ochganda ko\'radi', true);
+});
+document.getElementById('matnlarRoyxat').addEventListener('click', async function (e) {
+  var t = e.target.closest('[data-matn-tahrir]');
+  if (t) { matnFormaToldir(t.dataset.matnTahrir, t.dataset.uz, t.dataset.ru); return; }
+  var o = e.target.closest('[data-matn-ochir]');
+  if (!o || !(await tasdiqSora('Bu yozuv asl holiga qaytarilsinmi?'))) return;
+  var r = await AdminAPI.matnSaqla({ orig: o.dataset.matnOchir, delete: true });
+  if (r.ok) matnlarChiz(r); else ogohlantir(r.error || 'Xatolik');
+});
+
+function botMatnlarChiz(list) {
+  document.getElementById('botMatnlarQuti').innerHTML = list.map(function (b) {
+    var c = b.custom || {}, qator = b.limit > 200 ? 7 : 2;
+    return '<form class="adm-xabar-karta adm-forma" data-bot-matn="' + b.key + '">' +
+      '<h3 style="margin:0">' + esc(b.label) + (b.custom ? ' <span class="adm-badge kok">o\'zgartirilgan</span>' : '') + '</h3>' +
+      '<p class="izoh-kichik">' + esc(b.hint) + '</p>' +
+      '<label>O\'zbekcha<textarea name="uz" rows="' + qator + '" maxlength="' + b.limit + '">' + esc(c.uz || b.default.uz) + '</textarea></label>' +
+      '<label>Ruscha<textarea name="ru" rows="' + qator + '" maxlength="' + b.limit + '">' + esc(c.ru || b.default.ru) + '</textarea></label>' +
+      '<div class="adm-boshqa-qator"><button class="adm-mini-tugma yashil" type="submit">Saqlash</button>' +
+        (b.custom ? '<button class="adm-mini-tugma" type="button" data-bot-asl>Standartga qaytarish</button>' : '') +
+        '<span class="adm-forma-xabar" role="status"></span></div></form>';
+  }).join('');
+}
+
+async function botMatnSaqla(forma, uz, ru) {
+  var holat = forma.querySelector('.adm-forma-xabar');
+  holat.textContent = 'Saqlanmoqda...';
+  var r = await AdminAPI.botMatnSaqla({ key: forma.dataset.botMatn, uz: uz, ru: ru });
+  if (!r.ok) { holat.className = 'adm-forma-xabar xato'; holat.textContent = '❌ ' + (r.error || 'Xatolik'); return; }
+  matnlarChiz(r);
+}
+document.getElementById('botMatnlarQuti').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var f = e.target.closest('[data-bot-matn]');
+  botMatnSaqla(f, f.elements.uz.value, f.elements.ru.value);
+});
+document.getElementById('botMatnlarQuti').addEventListener('click', async function (e) {
+  var b = e.target.closest('[data-bot-asl]');
+  if (!b || !(await tasdiqSora('Standart matnga qaytarilsinmi?'))) return;
+  botMatnSaqla(b.closest('[data-bot-matn]'), '', '');
+});
+
+// ─────────────────────── Dizayn ───────────────────────
+
+async function yuklaDizayn() { dizaynChiz(await AdminAPI.dizayn()); }
+
+function dizaynChiz(r) {
+  if (!r.ok) { document.getElementById('ranglarQuti').textContent = r.error || 'Xatolik'; return; }
+  var rq = document.getElementById('ranglarQuti');
+  rq.classList.remove('adm-yuklanmoqda');
+  rq.innerHTML = r.colors.map(function (c) {
+    return '<div class="adm-rang"><span>' + esc(c.label) + '</span>' +
+      '<input type="color" data-rang="' + c.key + '" value="' + esc(c.value) + '" aria-label="' + esc(c.label) + '">' +
+      '<input type="text" data-rang-hex="' + c.key + '" value="' + esc(c.value) + '" maxlength="7" data-asl="' + esc(c.default) + '"></div>';
+  }).join('');
+  var bq = document.getElementById('bloklarQuti');
+  bq.classList.remove('adm-yuklanmoqda');
+  var guruh = '';
+  bq.innerHTML = r.blocks.map(function (b) {
+    var sar = b.group !== guruh ? '<h3 class="adm-qoida-guruh">' + esc(b.group) + '</h3>' : '';
+    guruh = b.group;
+    return sar + '<label class="adm-kalit"><span>' + esc(b.label) + (b.hidden ? ' <span class="adm-badge qizil">yashirin</span>' : '') + '</span>' +
+      '<span class="adm-switch"><input type="checkbox" role="switch" data-blok="' + b.key + '"' + (b.hidden ? '' : ' checked') +
+      ' aria-label="' + esc(b.label) + '"><span></span></span></label>';
+  }).join('');
+}
+
+document.getElementById('ranglarQuti').addEventListener('input', function (e) {
+  var c = e.target.closest('[data-rang]'), h = e.target.closest('[data-rang-hex]');
+  if (c) document.querySelector('[data-rang-hex="' + c.dataset.rang + '"]').value = c.value;
+  if (h && /^#[0-9a-fA-F]{6}$/.test(h.value)) document.querySelector('[data-rang="' + h.dataset.rangHex + '"]').value = h.value;
+});
+document.getElementById('ranglarSaqla').addEventListener('click', async function () {
+  var ranglar = {};
+  document.querySelectorAll('[data-rang-hex]').forEach(function (el) { ranglar[el.dataset.rangHex] = el.value.trim(); });
+  var r = await AdminAPI.dizaynSaqla({ colors: ranglar });
+  if (!r.ok) { formaXabar('rangXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  dizaynChiz(r);
+  formaXabar('rangXabar', '✅ Ranglar saqlandi', true);
+});
+document.getElementById('ranglarAsl').addEventListener('click', async function () {
+  if (!(await tasdiqSora('Barcha ranglar standartga qaytarilsinmi?'))) return;
+  var r = await AdminAPI.dizaynSaqla({ colors: {} });
+  if (r.ok) { dizaynChiz(r); formaXabar('rangXabar', '✅ Standart ranglar', true); }
+});
+document.getElementById('bloklarQuti').addEventListener('change', async function () {
+  var hide = [];
+  document.querySelectorAll('[data-blok]').forEach(function (el) { if (!el.checked) hide.push(el.dataset.blok); });
+  var r = await AdminAPI.dizaynSaqla({ hide: hide });
+  if (!r.ok) { formaXabar('blokXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  dizaynChiz(r);
+  formaXabar('blokXabar', '✅ Saqlandi', true);
+});
+
+// ─────────────────────── Baza ───────────────────────
+
+var JADVAL_NOMI = {
+  users: 'O\'quvchilar', topics: 'Mavzular', user_progress: 'Mavzular bo\'yicha progress', subject_purchases: 'Sotib olingan fanlar',
+  pay_orders: 'To\'lov buyurtmalari', pay_settings: 'Sozlamalar (karta, narx, qoidalar...)', promo_codes: 'Promo-kodlar',
+  daily_questions: 'Kun savollari', daily_answers: 'Kun savoli javoblari', game_results: 'O\'yin natijalari', game_rooms: 'O\'yin xonalari',
+  game_chances: 'Chaqmoqli o\'yin imkoniyatlari', chaqmoq_log: 'Chaqmoq jurnali', chaqmoq_bonus: 'Admin bonuslari',
+  personal_topics: 'Shaxsiy darslar', premium_log: 'Premium tarixi', broadcasts: 'Ommaviy xabarlar', notify_log: 'Yuborilgan eslatmalar',
+  friendships: 'Do\'stliklar', friend_requests: 'Do\'stlik so\'rovlari', marathons: 'Marafonlar', marathon_participants: 'Marafon qatnashchilari',
+  marathon_winners: 'Marafon g\'oliblari', admin_audit_log: 'Admin jurnali', user_achievements: 'Nishonlar', topic_overrides: 'Mavzu tahrirlari',
+  partner_earnings: 'Hamkor daromadlari', partner_payouts: 'Hamkorlarga to\'lovlar', job_runs: 'Rejalashtirilgan ishlar',
+};
+var BAZA = { jadval: '', sahifa: 1, order: '', desc: true, q: '', col: '', data: null };
+
+async function yuklaBaza() {
+  var r = await AdminAPI.bazaJadvallar();
+  var box = document.getElementById('bazaJadvallar');
+  if (!r.ok) { box.textContent = r.error || 'Xatolik'; return; }
+  box.innerHTML = r.tables.map(function (t) {
+    return '<button type="button" class="adm-baza-jadval' + (t.name === BAZA.jadval ? ' faol' : '') + '" data-jadval="' + esc(t.name) + '">' +
+      '<span>' + esc(t.name) + (JADVAL_NOMI[t.name] ? '<i>' + esc(JADVAL_NOMI[t.name]) + '</i>' : '') + '</span><small>' + t.rows + '</small></button>';
+  }).join('');
+}
+
+async function bazaQatorlar() {
+  var box = document.getElementById('bazaQatorlar');
+  if (!BAZA.jadval) return;
+  box.className = 'adm-yuklanmoqda';
+  box.textContent = 'Yuklanmoqda...';
+  var r = await AdminAPI.bazaQatorlar(BAZA);
+  if (!r.ok) { box.className = 'adm-bosh'; box.textContent = r.error || 'Xatolik'; return; }
+  BAZA.data = r;
+  var ustun = document.getElementById('bazaUstun');
+  var tanlangan = ustun.value;
+  ustun.innerHTML = '<option value="">Barcha ustunlar</option>' + r.columns.map(function (c) {
+    return '<option value="' + esc(c.name) + '"' + (c.name === tanlangan ? ' selected' : '') + '>' + esc(c.name) + '</option>';
+  }).join('');
+  box.className = '';
+  box.innerHTML = (r.editable ? '' : '<p class="izoh-kichik" style="margin-bottom:8px">Bu jadvalda birlamchi kalit yo\'q — faqat ko\'rish mumkin.</p>') +
+    '<div class="adm-baza-o"><table><thead><tr>' + r.columns.map(function (c) {
+      return '<th class="' + (c.pk ? 'pk' : '') + '" data-saralash="' + esc(c.name) + '" title="' + esc(c.type) + '">' + esc(c.name) +
+        (r.order === c.name ? (r.desc ? ' ↓' : ' ↑') : '') + '</th>';
+    }).join('') + '</tr></thead><tbody>' + (r.rows.length ? r.rows.map(function (row, i) {
+      return '<tr data-i="' + i + '">' + r.columns.map(function (c) {
+        var v = row[c.name];
+        return v === null || v === undefined ? '<td class="null">null</td>' : '<td>' + esc(String(v)) + '</td>';
+      }).join('') + '</tr>';
+    }).join('') : '<tr><td colspan="' + r.columns.length + '" class="null">Qator yo\'q</td></tr>') + '</tbody></table></div>';
+  var sahifalar = Math.max(1, Math.ceil(r.total / r.per));
+  var sh = document.getElementById('bazaSahifalash');
+  sh.hidden = false;
+  sh.innerHTML = '<button class="adm-mini-tugma" type="button" data-baza-sahifa="' + (r.page - 1) + '"' + (r.page <= 1 ? ' disabled' : '') + '>‹</button>' +
+    '<span>' + r.page + ' / ' + sahifalar + ' (' + r.total + ' ta qator)</span>' +
+    '<button class="adm-mini-tugma" type="button" data-baza-sahifa="' + (r.page + 1) + '"' + (r.page >= sahifalar ? ' disabled' : '') + '>›</button>';
+}
+
+document.getElementById('bazaJadvallar').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-jadval]');
+  if (!b) return;
+  BAZA = { jadval: b.dataset.jadval, sahifa: 1, order: '', desc: true, q: '', col: '', data: null };
+  document.getElementById('bazaQidir').value = '';
+  document.getElementById('bazaUstun').value = '';
+  document.querySelectorAll('.adm-baza-jadval').forEach(function (x) { x.classList.toggle('faol', x === b); });
+  bazaQatorlar();
+});
+var bazaQidirTaymer = null;
+document.getElementById('bazaQidir').addEventListener('input', function () {
+  clearTimeout(bazaQidirTaymer);
+  var v = this.value;
+  bazaQidirTaymer = setTimeout(function () { BAZA.q = v; BAZA.sahifa = 1; bazaQatorlar(); }, 350);
+});
+document.getElementById('bazaUstun').addEventListener('change', function () { BAZA.col = this.value; BAZA.sahifa = 1; if (BAZA.q) bazaQatorlar(); });
+document.getElementById('bazaSahifalash').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-baza-sahifa]');
+  if (b && !b.disabled) { BAZA.sahifa = Number(b.dataset.bazaSahifa); bazaQatorlar(); }
+});
+document.getElementById('bazaCsv').addEventListener('click', function () {
+  if (BAZA.jadval) AdminAPI.bazaCsv(BAZA.jadval); else ogohlantir('Avval jadvalni tanlang.');
+});
+document.getElementById('bazaQatorlar').addEventListener('click', function (e) {
+  var th = e.target.closest('[data-saralash]');
+  if (th) {
+    BAZA.desc = BAZA.order === th.dataset.saralash ? !BAZA.desc : true;
+    BAZA.order = th.dataset.saralash;
+    bazaQatorlar();
     return;
   }
-  document.getElementById('xabarMatn').value = '';
-  // Xabar fonda yuboriladi — jarayonni kuzatamiz (sahifani yopsangiz ham yuborish davom etadi)
-  var chiz = function (b) {
-    natija.style.color = b.state === 'done' ? 'var(--yashil-quyuq)' : '';
-    natija.textContent = (b.state === 'done' ? 'Tugadi: ' : 'Yuborilmoqda: ' + b.done + ' / ' + b.total + ' — ') +
-      b.sent + ' ta yuborildi' +
-      (b.failed ? ', ' + b.failed + ' ta xato' : '') +
-      (b.blocked ? ', ' + b.blocked + ' ta botni bloklagan' : '') + '.';
-  };
-  chiz(res);
-  (async function kuzat() {
-    var b = await AdminAPI.xabarHolati(res.id);
-    if (b.ok) chiz(b);
-    if (b.ok && b.state === 'running') { setTimeout(kuzat, 1500); return; }
-    tugma.disabled = false;
-  })();
+  var tr = e.target.closest('tr[data-i]');
+  if (tr && BAZA.data) bazaQatorOch(BAZA.data.rows[Number(tr.dataset.i)]);
 });
+
+async function bazaQatorOch(qisqa) {
+  var d = BAZA.data;
+  if (!d.editable) { ogohlantir('Bu jadvalni faqat ko\'rish mumkin.'); return; }
+  var kalit = {};
+  d.columns.forEach(function (c) { if (c.pk) kalit[c.name] = qisqa[c.name]; });
+  var fon = document.getElementById('foydalanuvchiModalFon');
+  var modal = document.getElementById('foydalanuvchiModal');
+  modal.innerHTML = '<p class="adm-bosh">Yuklanmoqda...</p>';
+  fon.classList.add('ochiq');
+  var r = await AdminAPI.bazaQator(BAZA.jadval, kalit);
+  if (!r.ok) { modal.innerHTML = '<p class="adm-bosh">' + esc(r.error || 'Xatolik') + '</p>'; return; }
+  var asl = r.row;
+  modal.innerHTML = '<div class="adm-modal-bosh"><h2>' + esc(BAZA.jadval) + ' — ' + esc(JSON.stringify(kalit)) + '</h2>' +
+    '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button></div>' +
+    r.columns.map(function (c) {
+      var v = asl[c.name], bosh = v === null || v === undefined;
+      var matn = bosh ? '' : (typeof v === 'string' ? v : String(v));
+      var qator = Math.min(10, Math.max(1, Math.ceil(matn.length / 60)));
+      return '<div class="adm-baza-maydon" data-maydon="' + esc(c.name) + '">' +
+        '<span>' + (c.pk ? '🔑 ' : '') + esc(c.name) + ' <small>' + esc(c.type) + (c.nullable ? '' : ', majburiy') + '</small>' +
+          (c.nullable && !c.pk ? '<label style="font-weight:400"><input type="checkbox" data-null' + (bosh ? ' checked' : '') + '> null</label>' : '') +
+        '</span><textarea rows="' + qator + '"' + (c.pk ? ' readonly' : '') + '>' + esc(matn) + '</textarea></div>';
+    }).join('') +
+    '<div class="adm-boshqa-qator" style="position:sticky;bottom:-1px;background:var(--oq);padding:10px 0">' +
+      '<button class="adm-mini-tugma yashil" id="bazaSaqla" type="button">O\'zgarishlarni saqlash</button>' +
+      '<button class="adm-mini-tugma qizil" id="bazaOchir" type="button">Qatorni o\'chirish</button>' +
+      '<span class="adm-forma-xabar" id="bazaXabar" role="status"></span></div>';
+  document.getElementById('modalYop').onclick = function () { fon.classList.remove('ochiq'); };
+  modal.querySelectorAll('.adm-baza-maydon').forEach(function (m) {
+    var belgila = function () { m.classList.add('ozgargan'); };
+    m.querySelector('textarea').addEventListener('input', belgila);
+    var n = m.querySelector('[data-null]');
+    if (n) n.addEventListener('change', belgila);
+  });
+  document.getElementById('bazaSaqla').onclick = async function () {
+    var ozgarish = {};
+    modal.querySelectorAll('.adm-baza-maydon.ozgargan').forEach(function (m) {
+      var n = m.querySelector('[data-null]');
+      ozgarish[m.dataset.maydon] = n && n.checked ? null : m.querySelector('textarea').value;
+    });
+    if (!Object.keys(ozgarish).length) { formaXabar('bazaXabar', 'O\'zgarish yo\'q'); return; }
+    if (!(await tasdiqSora(Object.keys(ozgarish).length + ' ta ustun o\'zgartirilsinmi?'))) return;
+    var s = await AdminAPI.bazaSaqla(BAZA.jadval, kalit, ozgarish);
+    if (!s.ok) { formaXabar('bazaXabar', '❌ ' + (s.error || 'Xatolik')); return; }
+    fon.classList.remove('ochiq');
+    bazaQatorlar();
+  };
+  document.getElementById('bazaOchir').onclick = async function () {
+    if (!(await tasdiqSora('Bu qator butunlay o\'chirilsinmi? Qaytarib bo\'lmaydi (faqat zaxira nusxadan).'))) return;
+    var s = await AdminAPI.bazaOchir(BAZA.jadval, kalit);
+    if (!s.ok) { formaXabar('bazaXabar', '❌ ' + (s.error || 'Xatolik')); return; }
+    fon.classList.remove('ochiq');
+    bazaQatorlar();
+    yuklaBaza();
+  };
+}
+
+// ─────────────────────── Xabar (ommaviy) ───────────────────────
+
+var XABAR_HOLAT = { running: ['Yuborilmoqda', 'kok'], queued: ['Navbatda', 'sariq'], scheduled: ['Rejalashtirilgan', 'sariq'],
+  done: ['Yuborildi', 'yashil'], cancelled: ['Bekor qilingan', 'kulrang'] };
+var xabarTaymer = null;
+
+async function yuklaXabarlar() { xabarlarChiz(await AdminAPI.xabarlar()); }
+
+function xabarlarChiz(r) {
+  var tarix = document.getElementById('xabarlarTarix');
+  if (!r.ok) { tarix.textContent = r.error || 'Xatolik'; return; }
+  var kimga = document.getElementById('xabarKimga');
+  var tanlangan = kimga.value || 'all';
+  kimga.innerHTML = r.segments.map(function (s) {
+    return '<option value="' + s.key + '"' + (s.key === tanlangan ? ' selected' : '') + '>' + esc(s.label) + ' — ' + s.count + ' kishi</option>';
+  }).join('');
+  tarix.classList.remove('adm-yuklanmoqda');
+  tarix.innerHTML = r.items.length ? r.items.map(function (b) {
+    var h = XABAR_HOLAT[b.state] || [b.state, 'kulrang'];
+    var jarayon = b.state === 'running' || b.state === 'done'
+      ? ' • ' + b.sent + ' ta yetdi' + (b.failed ? ', ' + b.failed + ' xato' : '') + (b.blocked ? ', ' + b.blocked + ' bloklagan' : '') +
+        (b.state === 'running' ? ' (' + b.done + '/' + b.total + ')' : '')
+      : ' • ' + b.total + ' kishiga';
+    return '<div class="adm-xabar-qator"><div class="meta"><span class="adm-badge ' + h[1] + '">' + h[0] + '</span>' +
+      '<span>' + esc(b.system ? 'Tizim xabari' : b.segment_name) + jarayon + '</span>' +
+      '<span>• ' + msVaqt(b.start_ms || b.created_ms) + '</span>' +
+      (b.state === 'scheduled' || b.state === 'queued'
+        ? '<button class="adm-mini-tugma qizil" type="button" data-xabar-bekor="' + b.id + '">Bekor qilish</button>' : '') +
+      '</div><div class="matn">' + esc(b.text) + '</div></div>';
+  }).join('') : '<p class="izoh-kichik">Hali xabar yuborilmagan.</p>';
+  clearTimeout(xabarTaymer);
+  if (r.items.some(function (b) { return b.state === 'running' || b.state === 'queued'; })) {
+    xabarTaymer = setTimeout(function () {
+      if (document.getElementById('bolim-xabar').classList.contains('faol')) yuklaXabarlar();
+    }, 2000);
+  }
+}
+
+document.getElementById('xabarSahifa').addEventListener('change', function () {
+  document.getElementById('xabarTugmaQator').hidden = !this.value;
+  if (this.value && !document.getElementById('xabarTugma').value) {
+    document.getElementById('xabarTugma').value = this.options[this.selectedIndex].text;
+  }
+});
+document.getElementById('xabarQachon').addEventListener('change', function () {
+  document.getElementById('xabarVaqtQator').hidden = this.value !== 'vaqt';
+});
+document.getElementById('xabarlarTarix').addEventListener('click', async function (e) {
+  var b = e.target.closest('[data-xabar-bekor]');
+  if (!b || !(await tasdiqSora('Bu xabar bekor qilinsinmi?'))) return;
+  var r = await AdminAPI.xabarBekor(Number(b.dataset.xabarBekor));
+  if (r.ok) xabarlarChiz(r); else ogohlantir(r.error || 'Xatolik');
+});
+document.getElementById('xabarForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var matn = document.getElementById('xabarMatn').value.trim();
+  if (!matn) { formaXabar('xabarNatija', '❌ Xabar matnini yozing'); return; }
+  var kimga = document.getElementById('xabarKimga');
+  var vaqtli = document.getElementById('xabarQachon').value === 'vaqt';
+  var vaqt = document.getElementById('xabarVaqt').value;
+  if (vaqtli && !vaqt) { formaXabar('xabarNatija', '❌ Vaqtni tanlang'); return; }
+  var kimgaMatn = kimga.options[kimga.selectedIndex].text;
+  if (!(await tasdiqSora('Xabar ' + (vaqtli ? vaqt.replace('T', ' ') + ' da ' : 'hozir ') + kimgaMatn + 'ga yuborilsinmi?'))) return;
+  var sahifa = document.getElementById('xabarSahifa').value;
+  var r = await AdminAPI.xabarYarat({
+    text: matn, text_ru: document.getElementById('xabarMatnRu').value.trim(), html: document.getElementById('xabarHtml').checked,
+    segment: kimga.value, button_text: sahifa ? document.getElementById('xabarTugma').value.trim() || 'Ochish' : '',
+    button_path: sahifa, start_at: vaqtli ? vaqt : '',
+  });
+  if (!r.ok) { formaXabar('xabarNatija', '❌ ' + (r.error || 'Xatolik')); return; }
+  this.reset();
+  document.getElementById('xabarTugmaQator').hidden = true;
+  document.getElementById('xabarVaqtQator').hidden = true;
+  formaXabar('xabarNatija', vaqtli ? '✅ Rejalashtirildi' : '✅ Yuborish boshlandi — tarixda kuzating', true);
+  xabarlarChiz(r);
+});
+
+// ─────────────────────── Rejalashtirilgan ishlar ───────────────────────
+
+async function yuklaIshlar() {
+  var r = await AdminAPI.ishlar();
+  var box = document.getElementById('ishlarQuti');
+  if (!r.ok) { box.textContent = r.error || 'Xatolik'; return; }
+  box.classList.remove('adm-yuklanmoqda');
+  box.innerHTML = r.jobs.map(function (j) {
+    return '<div class="adm-ish"><div class="matn"><b>' + esc(j.label) + '</b>' + (j.hint ? '<small>' + esc(j.hint) + '</small>' : '') +
+      '<small>Oxirgi marta: ' + (j.last_ms ? msVaqt(j.last_ms) : '—') + '</small></div>' +
+      (j.runnable ? '<button class="adm-mini-tugma" type="button" data-ish="' + j.key + '">Hozir bajarish</button>' : '') + '</div>';
+  }).join('');
+}
+document.getElementById('ishlarQuti').addEventListener('click', async function (e) {
+  var b = e.target.closest('[data-ish]');
+  if (!b || !(await tasdiqSora('«' + b.closest('.adm-ish').querySelector('b').textContent + '» hozir bajarilsinmi?'))) return;
+  b.disabled = true;
+  formaXabar('ishXabar', 'Bajarilmoqda...', true);
+  var r = await AdminAPI.ishBajar(b.dataset.ish);
+  b.disabled = false;
+  formaXabar('ishXabar', r.ok ? '✅ ' + r.result : '❌ ' + (r.error || 'Xatolik'), r.ok);
+  yuklaIshlar();
+});
+
+// ─────────────────────── Kun savoli rejasi ───────────────────────
+
+var HAFTA_KUNI = ['Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'];
+
+async function yuklaKunReja() { kunRejaChiz(await AdminAPI.kunReja()); }
+
+function kunRejaChiz(r) {
+  var box = document.getElementById('kunRejaQuti');
+  if (!r.ok) { box.textContent = r.error || 'Xatolik'; return; }
+  box.classList.remove('adm-yuklanmoqda');
+  box.innerHTML = r.days.map(function (d, i) {
+    var sana = new Date(d.day + 'T00:00:00');
+    var bosh = '<div class="sana"><b>' + (i === 0 ? 'Bugun' : i === 1 ? 'Ertaga' : HAFTA_KUNI[sana.getDay()]) + '</b>' + esc(d.day) + '</div>';
+    if (!d.question) return '<div class="adm-kun">' + bosh + '<div class="savol">Savol topilmadi</div><div></div></div>';
+    var variantlar = (d.options || []).map(function (o, j) {
+      var togri = d.type === 'tf' ? (j === 0) === !!d.answer : j === d.answer;
+      return '<div class="adm-variant' + (togri ? ' togri' : '') + '">' + (togri ? '✓ ' : '• ') + esc(o) + '</div>';
+    }).join('');
+    return '<div class="adm-kun">' + bosh +
+      '<div class="savol"><div><span class="adm-badge ' + (d.admin ? 'kok' : 'kulrang') + '">' + (d.admin ? 'siz tanlagan' : 'avtomatik') +
+        '</span> ' + esc(d.subject) + ' • ' + esc(d.topic_title) + (d.answers ? ' • <b>' + d.answers + ' ta javob</b>' : '') + '</div>' +
+        '<div><b>' + esc(d.question) + '</b></div>' + variantlar + '</div>' +
+      '<div class="amallar">' + (d.answers ? '' :
+        '<button class="adm-mini-tugma" type="button" data-kun-tanla="' + d.day + '">Almashtirish</button>' +
+        (d.admin ? '<button class="adm-mini-tugma" type="button" data-kun-asl="' + d.day + '">Avtomatik</button>' : '')) +
+      '</div></div>';
+  }).join('');
+}
+
+document.getElementById('kunRejaQuti').addEventListener('click', async function (e) {
+  var asl = e.target.closest('[data-kun-asl]');
+  if (asl) {
+    var r = await AdminAPI.kunRejaSaqla({ day: asl.dataset.kunAsl, reset: true });
+    if (r.ok) kunRejaChiz(r); else ogohlantir(r.error || 'Xatolik');
+    return;
+  }
+  var t = e.target.closest('[data-kun-tanla]');
+  if (t) kunSavolTanla(t.dataset.kunTanla);
+});
+
+async function kunSavolTanla(kun) {
+  var fon = document.getElementById('foydalanuvchiModalFon');
+  var modal = document.getElementById('foydalanuvchiModal');
+  fon.classList.add('ochiq');
+  modal.innerHTML = '<div class="adm-modal-bosh"><h2>' + esc(kun) + ' — kun savoli</h2>' +
+    '<button class="adm-modal-yop" id="modalYop">' + BSIcons.icon('x') + '</button></div>' +
+    '<div class="adm-forma"><label>Fan<select id="kunFan">' + Object.keys(SUBJECT_NAMES).map(function (k) {
+      return '<option value="' + k + '">' + esc(SUBJECT_NAMES[k]) + '</option>'; }).join('') + '</select></label>' +
+    '<label>Mavzu<select id="kunMavzu"><option>Yuklanmoqda...</option></select></label></div>' +
+    '<div class="adm-tanlov-royxat" id="kunSavollar"></div>' +
+    '<div class="adm-boshqa-qator"><button class="adm-mini-tugma yashil" type="button" id="kunTanla">Shu savolni tanlash</button>' +
+    '<span class="adm-forma-xabar" id="kunXabar" role="status"></span></div>';
+  document.getElementById('modalYop').onclick = function () { fon.classList.remove('ochiq'); };
+  var fanSel = document.getElementById('kunFan'), mavzuSel = document.getElementById('kunMavzu');
+  async function mavzular() {
+    var r = await AdminAPI.fanMavzulari(fanSel.value);
+    mavzuSel.innerHTML = (r.topics || []).map(function (t) {
+      return '<option value="' + esc(t.id) + '">' + t.seq + '. ' + esc(t.title) + '</option>'; }).join('');
+    savollar();
+  }
+  async function savollar() {
+    var r = await AdminAPI.kunSavollari(mavzuSel.value);
+    document.getElementById('kunSavollar').innerHTML = (r.items || []).length ? r.items.map(function (q, i) {
+      return '<label><input type="radio" name="kunSavol" value="' + q.q_index + '"' + (i === 0 ? ' checked' : '') + '>' +
+        '<span>' + esc(q.question) + ' <small class="izoh-kichik">(' + (q.type === 'tf' ? 'to\'g\'ri/noto\'g\'ri' : 'variantli') + ')</small></span></label>';
+    }).join('') : '<p class="izoh-kichik">Bu mavzuda mos savol yo\'q.</p>';
+  }
+  fanSel.onchange = mavzular;
+  mavzuSel.onchange = savollar;
+  mavzular();
+  document.getElementById('kunTanla').onclick = async function () {
+    var tanlov = modal.querySelector('input[name="kunSavol"]:checked');
+    if (!tanlov) { formaXabar('kunXabar', '❌ Savolni tanlang'); return; }
+    var r = await AdminAPI.kunRejaSaqla({ day: kun, topic_id: mavzuSel.value, q_index: Number(tanlov.value) });
+    if (!r.ok) { formaXabar('kunXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+    fon.classList.remove('ochiq');
+    kunRejaChiz(r);
+  };
+}
+
+// ─────────────────────── Uy vazifasi (mavzu muharriri) ───────────────────────
+
+var TOPSHIRIQ_TURLARI = { text: 'Aniq javobli', open: 'Erkin javob (ma\'nosi tekshiriladi)' };
+
+function topshiriqHtml(t, i, n) {
+  var turlar = Object.keys(TOPSHIRIQ_TURLARI).map(function (k) {
+    return '<option value="' + k + '"' + (k === t.type ? ' selected' : '') + '>' + TOPSHIRIQ_TURLARI[k] + '</option>';
+  }).join('');
+  var ichi = '<label>Topshiriq<textarea data-hwf="prompt" rows="2">' + esc(tahrirMatn(t.prompt)) + '</textarea></label>';
+  if (t.type === 'text') {
+    ichi += '<label>To\'g\'ri javob<input data-hwf="answer" value="' + esc(tahrirMatn(t.answer)) + '" maxlength="300"></label>' +
+      '<label>Maslahat (ixtiyoriy — o\'quvchi ochib ko\'radi)<textarea data-hwf="hint" rows="2">' + esc(tahrirMatn(t.hint)) + '</textarea></label>';
+  }
+  return '<div class="t-karta adm-forma" data-hwt="' + i + '">' +
+    '<div class="t-karta-bosh"><span class="raqam">' + (i + 1) + '.</span>' +
+      '<select class="t-tur" data-hwturi aria-label="Topshiriq turi">' + turlar + '</select>' +
+      '<button type="button" class="t-ikon qizil" data-amal="t-ochir" title="O\'chirish"' + (n <= 1 ? ' disabled' : '') + '>' + BSIcons.icon('x') + '</button>' +
+    '</div>' + ichi + '</div>';
+}
+
 </script>
 </body>
 </html>

@@ -70,6 +70,15 @@
     },
 
     /** Telegram Mini App ichida parolsiz kirish (faqat admin Telegram ID'lari uchun). */
+    /** Ilovadagi «Admin panel» havolasidagi bir martalik kod bilan kirish (tashqi brauzerda). */
+    kodBilanKirish: function (kod) {
+      return so_rov('/api/admin/handoff/redeem', { method: 'POST', body: { code: kod } })
+        .then(function (res) {
+          if (res.ok && res.token) saqlash(res.token);
+          return res;
+        });
+    },
+
     telegramKirish: function (initData) {
       return so_rov('/api/admin/telegram-login', { method: 'POST', body: { initData: initData } })
         .then(function (res) {
@@ -207,6 +216,42 @@
     userAmal: function (id, amal, tana) {
       return so_rov('/api/admin/users/' + id + '/' + amal, { method: 'POST', body: tana || {} });
     },
+
+    // — Qoidalar, matnlar, dizayn —
+    qoidalar: function () { return so_rov('/api/admin/rules'); },
+    qoidalarSaqla: function (qiymatlar) { return so_rov('/api/admin/rules', { method: 'POST', body: { values: qiymatlar } }); },
+    matnlar: function () { return so_rov('/api/admin/texts'); },
+    matnQidir: function (q) { return so_rov('/api/admin/texts/search?q=' + encodeURIComponent(q)); },
+    matnSaqla: function (tana) { return so_rov('/api/admin/texts', { method: 'POST', body: tana }); },
+    botMatnSaqla: function (tana) { return so_rov('/api/admin/bot-texts', { method: 'POST', body: tana }); },
+    dizayn: function () { return so_rov('/api/admin/design'); },
+    dizaynSaqla: function (tana) { return so_rov('/api/admin/design', { method: 'POST', body: tana }); },
+
+    // — Ma'lumotlar bazasi —
+    bazaJadvallar: function () { return so_rov('/api/admin/db/tables'); },
+    bazaQatorlar: function (b) {
+      return so_rov('/api/admin/db/rows?table=' + encodeURIComponent(b.jadval) + '&page=' + (b.sahifa || 1) +
+        '&q=' + encodeURIComponent(b.q || '') + '&col=' + encodeURIComponent(b.col || '') +
+        '&order=' + encodeURIComponent(b.order || '') + '&desc=' + (b.desc === false ? '0' : '1'));
+    },
+    bazaQator: function (jadval, kalit) {
+      return so_rov('/api/admin/db/row?table=' + encodeURIComponent(jadval) + '&key=' + encodeURIComponent(JSON.stringify(kalit)));
+    },
+    bazaSaqla: function (jadval, kalit, ozgarish) {
+      return so_rov('/api/admin/db/update', { method: 'POST', body: { table: jadval, key: kalit, changes: ozgarish } });
+    },
+    bazaOchir: function (jadval, kalit) { return so_rov('/api/admin/db/delete', { method: 'POST', body: { table: jadval, key: kalit } }); },
+    bazaCsv: function (jadval) { return faylYukla('/api/admin/db/export?table=' + encodeURIComponent(jadval), jadval + '.csv'); },
+
+    // — Ommaviy xabarlar, ishlar, kun savoli —
+    xabarlar: function () { return so_rov('/api/admin/broadcasts'); },
+    xabarYarat: function (tana) { return so_rov('/api/admin/broadcasts', { method: 'POST', body: tana }); },
+    xabarBekor: function (id) { return so_rov('/api/admin/broadcasts/' + id + '/cancel', { method: 'POST' }); },
+    ishlar: function () { return so_rov('/api/admin/jobs'); },
+    ishBajar: function (kalit) { return so_rov('/api/admin/jobs/' + kalit + '/run', { method: 'POST' }); },
+    kunReja: function () { return so_rov('/api/admin/daily-plan'); },
+    kunSavollari: function (topicId) { return so_rov('/api/admin/daily-plan/questions?topic_id=' + encodeURIComponent(topicId)); },
+    kunRejaSaqla: function (tana) { return so_rov('/api/admin/daily-plan', { method: 'POST', body: tana }); },
 
     auditJurnali: function (limit) { return so_rov('/api/admin/audit?limit=' + (limit || 100)); },
 

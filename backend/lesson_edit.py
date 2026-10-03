@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 Admin paneldan mavzuni tahrirlash: sarlavha, qisqa tavsif, davomiylik,
-dars matni (bloklar) va test savollari.
+dars matni (bloklar), test savollari va uy vazifasi.
 
 Darslarning asl manbasi — curriculum/ paketidagi kod; baza (topics) uning
 ishchi nusxasi va kod o'zgarganda qayta yoziladi. Shuning uchun admin
 tahriri alohida topic_overrides jadvalida saqlanadi va har sinxronlashdan
 keyin topics ustiga qayta qo'yiladi — kod yangilansa ham tahrir yo'qolmaydi.
 "Asl holiga qaytarish" tahrirni o'chiradi va kod'dagi matnni tiklaydi.
-Uy vazifasi tahrirlanmaydi (koddagisi qoladi).
+Uy vazifasi tahrirlansa, uning ruschasi olib tashlanadi (ruscha interfeysda o'zbekcha ko'rinadi).
 """
 
 import json
@@ -18,6 +18,7 @@ from games import clock
 
 BLOCK_TYPES = ('text', 'example', 'steps', 'formula', 'note', 'life', 'table')
 QUIZ_TYPES = ('mc', 'tf', 'fill')
+HOMEWORK_TYPES = ('text', 'open')       # text — aniq javobli, open — erkin javob (ma'nosi tekshiriladi)
 EDITABLE = ('title', 'summary', 'duration', 'lesson', 'quiz')
 MAX_BLOCKS, MAX_QUESTIONS = 40, 30
 MAX_TEXT = 4000
@@ -120,6 +121,27 @@ def _question(q, n) -> dict:
     return out
 
 
+def _homework(hw) -> dict:
+    if not isinstance(hw, dict):
+        raise EditError("Uy vazifasi noto'g'ri.")
+    tasks = hw.get('tasks')
+    if not isinstance(tasks, list) or not 1 <= len(tasks) <= 6:
+        raise EditError("Uy vazifasida 1–6 ta topshiriq bo'lsin.")
+    out = []
+    for i, t in enumerate(tasks, start=1):
+        where = f'{i}-topshiriq'
+        if not isinstance(t, dict) or t.get('type') not in HOMEWORK_TYPES:
+            raise EditError(f"{where}: turi noto'g'ri.")
+        task = {'id': f't{i}', 'type': t['type'], 'prompt': _text(t.get('prompt'), where, limit=1000)}
+        if t['type'] == 'text':
+            task['answer'] = _text(t.get('answer'), f'{where} javobi', limit=300)
+            hint = str(t.get('hint') or '').strip()
+            if hint:
+                task['hint'] = _text(hint, f'{where} maslahati', limit=500)
+        out.append(task)
+    return {'intro': _text(hw.get('intro'), 'Uy vazifasi kirish matni', required=False, limit=500), 'tasks': out}
+
+
 def validate(body) -> dict:
     """Admin yuborgan ma'lumotni tekshiradi va toza nusxasini qaytaradi."""
     if not isinstance(body, dict):
@@ -139,11 +161,14 @@ def validate(body) -> dict:
         raise EditError(f"Dars matnida 1–{MAX_BLOCKS} ta blok bo'lsin.")
     if not isinstance(quiz, list) or not 1 <= len(quiz) <= MAX_QUESTIONS:
         raise EditError(f"Testda 1–{MAX_QUESTIONS} ta savol bo'lsin.")
-    return {
+    out = {
         'title': title, 'summary': summary, 'duration': duration,
         'lesson': [_block(b, i) for i, b in enumerate(lesson, start=1)],
         'quiz': [_question(q, i) for i, q in enumerate(quiz, start=1)],
     }
+    if body.get('homework') is not None:              # yuborilmasa — uy vazifasi o'zgarmaydi
+        out['homework'] = _homework(body['homework'])
+    return out
 
 
 # ───────────────────────── Saqlash ─────────────────────────
@@ -164,7 +189,7 @@ def _quiz_key(q) -> tuple:
     return key
 
 
-def _ru_column(cur, topic_id, quiz):
+def _ru_column(cur, topic_id, quiz, homework=None):
     """Tahrirlangan test uchun topics.ru: ruscha savol faqat kod'dagi asl savolga
     (matni, variantlari) to'liq teng savolga qo'yiladi — savol qo'shilsa, o'chirilsa
     yoki o'zgartirilsa, o'sha savol ruschada o'zbekcha ko'rinadi (indeks surilib,
@@ -181,6 +206,8 @@ def _ru_column(cur, topic_id, quiz):
     for q, r in zip(original.get('quiz') or [], ru.get('quiz') or []):
         by_key.setdefault(_quiz_key(q), r)
     data = {k: ru[k] for k in ('lesson', 'homework') if ru.get(k)}
+    if homework is not None and homework != original.get('homework'):
+        data.pop('homework', None)        # uy vazifasi o'zgargan — eski ruschasi endi mos emas
     aligned = [by_key.get(_quiz_key(q), {}) for q in quiz]
     if any(aligned):
         data['quiz'] = aligned
@@ -188,11 +215,14 @@ def _ru_column(cur, topic_id, quiz):
 
 
 def _write_topic(cur, topic_id, data):
-    ru = _ru_column(cur, topic_id, data['quiz'])
+    ru = _ru_column(cur, topic_id, data['quiz'], data.get('homework'))
     cur.execute('UPDATE topics SET title = %s, summary = %s, duration = %s, lesson = %s, quiz = %s WHERE id = %s',
                 (data['title'], data['summary'], int(data['duration']),
                  json.dumps(data['lesson'], ensure_ascii=False), json.dumps(data['quiz'], ensure_ascii=False),
                  topic_id))
+    if data.get('homework') is not None:
+        cur.execute('UPDATE topics SET homework = %s WHERE id = %s',
+                    (json.dumps(data['homework'], ensure_ascii=False), topic_id))
     if ru is not None:
         cur.execute('UPDATE topics SET ru = %s WHERE id = %s', (ru, topic_id))
 
@@ -240,6 +270,7 @@ def get(cur, topic_id):
         'seq': _position(cur, row), 'title': row['title'], 'summary': row['summary'] or '',
         'duration': int(row['duration'] or 15),
         'lesson': _load(row['lesson'], []), 'quiz': _load(row['quiz'], []),
+        'homework': _load(row['homework'], {}) or {'intro': '', 'tasks': []},
         'edited': bool(o), 'edited_ms': int(o['updated_ms']) if o else None,
     }
 
@@ -283,6 +314,7 @@ def reset(cur, conn, topic_id):
         'title': original['title'], 'summary': original.get('summary') or '',
         'duration': int(original.get('duration') or 15),
         'lesson': original.get('lesson') or [], 'quiz': original.get('quiz') or [],
+        'homework': original.get('homework') or None,
     })
     _clear_ai_cache(cur, topic_id)
     conn.commit()

@@ -19,6 +19,7 @@ import curriculum as cur_mod
 import jurnal
 import premium
 import til
+from db import add_column_if_missing
 from games import clock
 from games.errors import GameError
 
@@ -51,6 +52,8 @@ def ensure_tables(cur, conn):
     conn.commit()
     cur.execute('CREATE INDEX IF NOT EXISTS idx_daily_answers_user ON daily_answers (user_id)')
     conn.commit()
+    # admin «Kun savoli rejasi»da tanlagan savol (1) yoki avtomatik tanlov (0)
+    add_column_if_missing(cur, conn, 'daily_questions', 'admin', 'INTEGER NOT NULL DEFAULT 0')
 
 
 def today(now_ms) -> str:

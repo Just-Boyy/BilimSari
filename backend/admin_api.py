@@ -33,7 +33,8 @@ import site_settings
 import study
 import tgbot
 from admin_auth import (
-    ADMIN_PASSWORD, admin_required, is_admin_telegram, make_admin_token, revoke_all_sessions,
+    ADMIN_PASSWORD, admin_required, is_admin_telegram, make_admin_token, make_handoff_code, redeem_handoff_code,
+    revoke_all_sessions,
 )
 from db import as_utc, get_connection, iso_utc, to_tashkent, utc_now
 from games import clock
@@ -121,6 +122,33 @@ def admin_telegram_login():
         }), 403
 
     admin_audit.log('login_telegram', detail=f"telegram_id={tg_user['telegram_id']}", ip=_client_ip())
+    return jsonify({'ok': True, 'token': make_admin_token()})
+
+
+@bp.route('/handoff', methods=['POST'])
+def admin_handoff():
+    """Ilova ichidan: admin panelni tashqi brauzerda (Chrome) ochish uchun bir martalik kod.
+    Telegram-login kabi initData imzosi tekshiriladi — kodni faqat haqiqiy admin oladi."""
+    if not BOT_TOKEN:
+        return jsonify({'ok': False, 'error': "BOT_TOKEN sozlanmagan", 'code': 'no_bot'}), 503
+    body = request.get_json(silent=True) or {}
+    tg_user = validate_init_data(body.get('initData') or '', BOT_TOKEN, ADMIN_INITDATA_MAX_AGE)
+    if not tg_user:
+        return jsonify({'ok': False, 'error': "Telegram sessiyasi eskirgan. Ilovani yopib, qayta oching.",
+                        'code': 'bad_init_data'}), 403
+    if not is_admin_telegram(tg_user.get('telegram_id')):
+        return jsonify({'ok': False, 'error': "Bu Telegram hisobida admin huquqi yo'q.", 'code': 'not_admin'}), 403
+    return jsonify({'ok': True, 'code': make_handoff_code(tg_user['telegram_id'])})
+
+
+@bp.route('/handoff/redeem', methods=['POST'])
+def admin_handoff_redeem():
+    """Brauzerda: bir martalik kod → admin token. 403 (401 emas) — admin.js mavjud tokenni o'chirmasin."""
+    body = request.get_json(silent=True) or {}
+    if not redeem_handoff_code(body.get('code')):
+        return jsonify({'ok': False, 'error': "Havola eskirgan yoki allaqachon ishlatilgan. "
+                                              "Ilovada «Admin panel»ni qayta bosing.", 'code': 'bad_code'}), 403
+    admin_audit.log('login_browser', detail='ilovadan brauzerga', ip=_client_ip())
     return jsonify({'ok': True, 'token': make_admin_token()})
 
 
