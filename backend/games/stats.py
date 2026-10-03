@@ -14,6 +14,7 @@ chaqmoq — o'quvchilar oldin olgan chaqmoqni yo'qotmaydi.
 
 from datetime import timedelta
 
+import boshqaruv
 import curriculum as cur_mod
 import premium
 from games import catalog, clock, schema
@@ -67,7 +68,9 @@ def leaderboard(cur, user_id, period='week', scope='global', subject=None, limit
             GROUP BY r.user_id''',
         params,
     )
-    rows = [r for r in cur.fetchall() if int(r['xp'] or 0) > 0]
+    rows = cur.fetchall()
+    banned = boshqaruv.banned_ids(cur)       # natija olingandan keyin (shu cursor'da yangi so'rov); bloklanganlar ko'rinmaydi
+    rows = [r for r in rows if int(r['xp'] or 0) > 0 and int(r['user_id']) not in banned]
     rows.sort(key=lambda r: (-int(r['xp'] or 0), -int(r['wins'] or 0), r['user_id']))
 
     wanted = {r['user_id'] for r in rows[:limit]} | {user_id}
@@ -192,7 +195,9 @@ def week_top(cur, start_ms, end_ms, limit=3) -> list:
            GROUP BY user_id''',
         (start_ms, end_ms),
     )
-    rows = [r for r in cur.fetchall() if int(r['xp'] or 0) > 0]
+    rows = cur.fetchall()
+    banned = boshqaruv.banned_ids(cur)       # natija olingandan keyin (shu cursor'da yangi so'rov); bloklanganlar ko'rinmaydi
+    rows = [r for r in rows if int(r['xp'] or 0) > 0 and int(r['user_id']) not in banned]
     rows.sort(key=lambda r: (-int(r['xp']), -int(r['wins'] or 0), r['user_id']))
     return [{'user_id': r['user_id'], 'xp': int(r['xp'])} for r in rows[:limit]]
 

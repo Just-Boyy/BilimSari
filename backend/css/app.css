@@ -2312,3 +2312,28 @@ a.reyting-qator:active, [data-profil]:active { transform: scale(.99); }
 /* Ramka bo'lsa — nishonlar tikanlardan tashqariroqqa suriladi */
 .avatar-orbita.ramkali-orbita { --om: 1.12; margin-top: 8px; margin-bottom: 10px; }
 .avatar-orbita .ramkali { display: grid; }
+
+/* ── Admin boshqaruvi: texnik tanaffus / blok oynasi va bosh sahifadagi e'lon ── */
+.holat-oyna { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;
+  padding: 24px 16px; background: var(--fon); overflow-y: auto; }
+.holat-oyna-karta { width: 100%; max-width: 420px; text-align: center; background: var(--oq); border: 1px solid var(--chiziq);
+  border-radius: 22px; padding: 28px 20px 22px; box-shadow: 0 10px 30px rgba(0, 0, 0, .08); }
+.holat-oyna-belgi { font-size: 48px; line-height: 1; }
+.holat-oyna h2 { margin: 14px 0 8px; font-family: var(--sarlavha); font-size: 22px; color: var(--matn-quyuq); }
+.holat-oyna p { margin: 6px 0; color: var(--matn-2); font-size: 15px; line-height: 1.45; }
+.holat-oyna p.izoh { white-space: pre-line; overflow-wrap: anywhere; margin: 12px 0; padding: 10px 12px; border-radius: 12px;
+  background: var(--zarg-fon); color: var(--matn); text-align: left; }
+.holat-oyna .tugma { margin-top: 18px; }
+
+.elon-banner { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 14px; padding: 12px 12px 12px 14px;
+  border-radius: var(--r-katta); border: 1px solid var(--kok); background: var(--kok-och); color: var(--matn); }
+.elon-banner.warn { border-color: var(--zarg); background: var(--zarg-fon); }
+.elon-banner.success { border-color: var(--yashil-chegara); background: var(--yashil-fon); }
+.elon-banner-belgi { flex: 0 0 auto; width: 22px; height: 22px; color: var(--kok); }
+.elon-banner.warn .elon-banner-belgi { color: var(--zarg); }
+.elon-banner.success .elon-banner-belgi { color: var(--yashil); }
+.elon-banner-belgi svg { width: 22px; height: 22px; }
+.elon-banner-matn { flex: 1; min-width: 0; font-size: 14px; line-height: 1.45; white-space: pre-line; overflow-wrap: anywhere; }
+.elon-banner-yop { flex: 0 0 auto; width: 28px; height: 28px; margin: -4px -4px 0 0; border: 0; border-radius: 8px;
+  background: transparent; color: var(--matn-2); cursor: pointer; display: grid; place-items: center; }
+.elon-banner-yop svg { width: 16px; height: 16px; }

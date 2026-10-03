@@ -297,6 +297,6 @@ k = d['daily']
 check('Kun savoli: taymer, mini reyting, hafta', 0 < k['next_in_s'] <= 86400 and len(k['week']) == 7
       and sum(1 for w in k['week'] if w['today']) == 1 and isinstance(k['top'], list), k)
 check('Bugungi reja maydonlari', set(d['plan']) >= {'daily', 'topic', 'game', 'done', 'total'} and d['plan']['total'] == 3, d['plan'])
-check('Reyting o\'rni va chaqmoq manbalari', 'rank' in d['rank'] and set(d['chaqmoq_parts']) == {'topics', 'games', 'daily'}
+check('Reyting o\'rni va chaqmoq manbalari', 'rank' in d['rank'] and set(d['chaqmoq_parts']) == {'topics', 'games', 'daily', 'bonus'}
       and sum(d['chaqmoq_parts'].values()) == d['chaqmoq'], (d['rank'], d['chaqmoq_parts'], d['chaqmoq']))
 print('\n' + ('HAMMASI OK (2)' if not fails else f'{len(fails)} ta XATO: {fails}'))

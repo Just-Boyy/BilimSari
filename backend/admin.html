@@ -433,6 +433,38 @@
   .adm-xato .matn { white-space: pre-wrap; word-break: break-word; }
   .adm-xato pre { margin: 0; padding: 10px 12px; border-top: 1px solid var(--chiziq); background: #0f172a; color: #e2e8f0;
     font-size: 11px; overflow-x: auto; border-radius: 0 0 12px 12px; max-height: 320px; }
+
+  /* ── Boshqaruv: tanaffus, kalitlar, e'lon, o'quvchi amallari ── */
+  .adm-pauza-ogoh { display: none; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 14px; padding: 12px 14px;
+    border-radius: var(--r-katta); background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; font-weight: 700; font-size: 14px; }
+  .adm-pauza-ogoh.faol { display: flex; }
+  .adm-pauza-ogoh svg { width: 20px; height: 20px; flex: 0 0 auto; }
+  .adm-pauza-ogoh span { flex: 1; min-width: 0; }
+  .adm-holat-qator { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--chiziq); font-size: 14px; }
+  .adm-holat-qator:last-child { border-bottom: 0; }
+  .adm-holat-qator > b { min-width: 52px; }
+  .adm-holat-qator .adm-mini-tugma { margin-left: auto; }
+  .adm-holat-qator p.izoh-kichik { flex-basis: 100%; margin: 0; overflow-wrap: anywhere; }
+  .adm-kalit { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--chiziq); font-size: 14px; cursor: pointer; }
+  .adm-kalit:last-child { border-bottom: 0; }
+  .adm-switch { position: relative; width: 44px; height: 26px; flex: 0 0 auto; }
+  .adm-switch input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; z-index: 1; }
+  .adm-switch span { position: absolute; inset: 0; border-radius: 99px; background: var(--chiziq-quyuq); transition: background .15s; }
+  .adm-switch span::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+    background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .2); transition: transform .15s; }
+  .adm-switch input:checked + span { background: var(--yashil); }
+  .adm-switch input:checked + span::after { transform: translateX(18px); }
+  .adm-switch input:focus-visible + span { outline: 2px solid var(--kok); outline-offset: 2px; }
+  .adm-checkbox-qator { display: flex; gap: 18px; flex-wrap: wrap; }
+  .adm-forma .adm-checkbox-qator label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--matn); cursor: pointer; }
+  .adm-boshqa-blok { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--chiziq); }
+  .adm-boshqa-blok h3 { font-size: 15px; margin: 0 0 4px; }
+  .adm-boshqa-qator { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+  .adm-boshqa-qator input, .adm-boshqa-qator select { flex: 1 1 140px; min-width: 0; padding: 8px 10px; border: 2px solid var(--chiziq);
+    border-radius: 10px; font: inherit; font-size: 14px; background: var(--oq); }
+  .adm-bonus-tarix { margin: 8px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--matn-2); }
+  .adm-bonus-tarix li { padding: 3px 0; overflow-wrap: anywhere; }
 </style>
 </head>
 <body class="no-nav">
@@ -462,6 +494,7 @@
 
   <nav class="adm-tablar">
     <div class="adm-tab faol" data-bolim="statistika"><span class="nishon" data-ikon="chart"></span> Statistika</div>
+    <div class="adm-tab" data-bolim="boshqaruv"><span class="nishon" data-ikon="tools"></span> Boshqaruv</div>
     <div class="adm-tab" data-bolim="foydalanuvchilar"><span class="nishon" data-ikon="user"></span> Foydalanuvchilar</div>
     <div class="adm-tab" data-bolim="tolovlar"><span class="nishon" data-ikon="gem"></span> To'lovlar</div>
     <div class="adm-tab" data-bolim="fanlar"><span class="nishon" data-ikon="book"></span> Fanlar</div>
@@ -477,6 +510,8 @@
   </nav>
 
   <main class="adm-ichi">
+    <!-- Bot yoki ilova to'xtatilgan bo'lsa — har bo'limda ko'rinadi -->
+    <div class="adm-pauza-ogoh" id="pauzaOgoh" role="status"></div>
 
     <section class="adm-bolim faol" id="bolim-statistika">
       <div id="statlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
@@ -680,6 +715,93 @@
       <div id="yopilganlarQuti"></div>
     </section>
 
+    <section class="adm-bolim" id="bolim-boshqaruv">
+      <div class="adm-ikki" style="margin-top:0">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Bot va ilovani to'xtatish</h2>
+          <p class="izoh-kichik">Texnik ishlar paytida o'quvchilar uchun to'xtatiladi: bot yozganlarga bir marta «texnik ishlar»
+            deb javob beradi, eslatmalar va ommaviy xabarlar kutib turadi; ilova ochilsa — «Texnik ishlar» oynasi chiqadi.
+            Siz (adminlar) odatdagidek foydalanasiz. Muddat tugasa — o'zi yoqiladi.</p>
+          <div id="pauzaHolat" style="margin-top:8px"></div>
+          <form class="adm-forma" id="pauzaForma" style="margin-top:12px">
+            <div class="adm-checkbox-qator">
+              <label class="adm-checkbox"><input type="checkbox" id="pauzaBot" checked> Bot</label>
+              <label class="adm-checkbox"><input type="checkbox" id="pauzaIlova" checked> Ilova</label>
+            </div>
+            <label>Qancha vaqtga
+              <select id="pauzaMuddat">
+                <option value="15">15 daqiqa</option>
+                <option value="30" selected>30 daqiqa</option>
+                <option value="60">1 soat</option>
+                <option value="120">2 soat</option>
+                <option value="360">6 soat</option>
+                <option value="1440">1 kun</option>
+                <option value="0">O'zim yoqmagunimcha</option>
+              </select>
+            </label>
+            <label>O'quvchilarga izoh (ixtiyoriy)
+              <textarea id="pauzaIzoh" rows="2" maxlength="500" placeholder="Masalan: yangi fanlar qo'shilmoqda"></textarea>
+            </label>
+            <button class="tugma tugma-qizil" type="submit">To'xtatish</button>
+            <p class="adm-forma-xabar" id="pauzaXabar" role="status"></p>
+          </form>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Bo'limlarni yoqish / o'chirish</h2>
+          <p class="izoh-kichik">O'chirilgan bo'lim o'quvchilar uchun yopiladi («vaqtincha yopilgan» xabari). Boshlangan o'yin
+            oxirigacha davom etadi, tarix va reytinglar ko'rinib turadi. Adminlar uchun hammasi ochiq.</p>
+          <div id="kalitlarQuti" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+          <p class="adm-forma-xabar" id="kalitXabar" role="status"></p>
+        </div>
+      </div>
+      <div class="adm-ikki">
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Ilova ichidagi e'lon</h2>
+          <p class="izoh-kichik">Bosh sahifa tepasida chiqadi. O'quvchi yopsa, shu e'lon unga qayta ko'rinmaydi.
+            Ruschasini yozmasangiz, rus tilidagilar o'zbekchasini ko'radi.</p>
+          <div id="elonHolat" style="margin-top:8px"></div>
+          <form class="adm-forma" id="elonForma" style="margin-top:12px">
+            <label>Matn (o'zbekcha)<textarea id="elonMatn" rows="3" maxlength="600" required></textarea></label>
+            <label>Matn (ruscha, ixtiyoriy)<textarea id="elonMatnRu" rows="3" maxlength="600"></textarea></label>
+            <label>Turi
+              <select id="elonTur">
+                <option value="info">Ma'lumot (ko'k)</option>
+                <option value="warn">Diqqat (sariq)</option>
+                <option value="success">Yaxshi xabar (yashil)</option>
+              </select>
+            </label>
+            <label>Qancha vaqt ko'rinadi
+              <select id="elonMuddat">
+                <option value="60">1 soat</option>
+                <option value="360">6 soat</option>
+                <option value="1440" selected>1 kun</option>
+                <option value="4320">3 kun</option>
+                <option value="10080">1 hafta</option>
+                <option value="0">O'zim olib tashlagunimcha</option>
+              </select>
+            </label>
+            <button class="tugma" type="submit">E'lon qilish</button>
+            <p class="adm-forma-xabar" id="elonXabar" role="status"></p>
+          </form>
+        </div>
+        <div class="adm-xabar-karta">
+          <h2 style="margin-bottom:6px">Bot holati</h2>
+          <p class="izoh-kichik">Telegram webhook — bot xabarlarni qabul qilayotganini ko'rsatadi. Bot javob bermay qolsa,
+            «Webhookni qayta o'rnatish»ni bosing.</p>
+          <div id="botHolat" class="adm-yuklanmoqda">Yuklanmoqda...</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <button class="adm-mini-tugma" id="botYangila" type="button">Yangilash</button>
+            <button class="adm-mini-tugma yashil" id="botWebhook" type="button">Webhookni qayta o'rnatish</button>
+          </div>
+          <p class="adm-forma-xabar" id="botXabar" role="status"></p>
+          <h2 style="margin:20px 0 6px">Bloklangan o'quvchilar</h2>
+          <p class="izoh-kichik">Bloklash — «Foydalanuvchilar» bo'limida o'quvchini ochib. Bloklangan o'quvchi ilova va botdan
+            foydalana olmaydi va reytinglarda ko'rinmaydi.</p>
+          <div id="bloklanganlarQuti"></div>
+        </div>
+      </div>
+    </section>
+
     <section class="adm-bolim" id="bolim-tizim">
       <div class="adm-ikki" style="margin-top:0">
         <div class="adm-xabar-karta">
@@ -790,6 +912,12 @@ var AUDIT_NOMLARI = {
   marathon_paid: 'Marafon sovrini to\'landi',
   report_dismiss: 'Shikoyat ko\'rib chiqildi', report_block: 'Do\'stlik imkoni yopildi (shikoyat)',
   friends_unblock: 'Do\'stlik imkoni qayta ochildi',
+  control_pause: 'Bot/ilova to\'xtatildi', control_resume: 'Bot/ilova qayta yoqildi',
+  control_features: 'Bo\'limlar yoqildi/o\'chirildi', announcement_set: 'E\'lon qo\'yildi',
+  announcement_clear: 'E\'lon olib tashlandi', bot_webhook: 'Webhook qayta o\'rnatildi',
+  user_ban: 'O\'quvchi bloklandi', user_unban: 'O\'quvchi blokdan chiqarildi', user_rename: 'O\'quvchi ismi o\'zgartirildi',
+  user_bonus: 'Bonus chaqmoq yozildi', user_reset_chances: 'O\'yin imkoniyatlari tiklandi',
+  user_reset_cooldown: 'Dars kutishi bekor qilindi', user_logout: 'O\'quvchi hamma qurilmadan chiqarildi',
 };
 
 var SUBJECT_NAMES = {
@@ -806,6 +934,7 @@ function panelniKorsat() {
   yuklaStatistika();
   tolovBelgisi();
   AdminAPI.shikoyatlar().then(function (r) { if (r.ok) shikoyatBelgisi(r.open); });
+  AdminAPI.boshqaruv().then(function (r) { if (r.ok) pauzaOgohChiz(r); });
   // admin.html#tolovlar — do'kondagi "Kartani kiritish" tugmasidan kelinganda
   if (location.hash === '#tolovlar') {
     setTimeout(function () { document.querySelector('.adm-tab[data-bolim="tolovlar"]').click(); }, 0);
@@ -921,6 +1050,7 @@ document.querySelectorAll('.adm-tab').forEach(function (tab) {
     if (nomi === 'hamkorlar') yuklaHamkorlar();
     if (nomi === 'shikoyatlar') yuklaShikoyatlar();
     if (nomi === 'marafon') yuklaMarafon();
+    if (nomi === 'boshqaruv') yuklaBoshqaruv();
   });
 });
 
@@ -1208,9 +1338,12 @@ async function foydalanuvchiModalniOch(id) {
         '</div>'
       : '<p class="izoh-kichik" style="margin-top:14px">Bu o\'quvchi Telegram orqali kirmagan — unga botdan yozib bo\'lmaydi.</p>') +
 
+    '<div class="adm-boshqa-blok" id="userBoshqaruv"><p class="izoh-kichik">Yuklanmoqda...</p></div>' +
+
     '<div style="margin-top:20px;display:flex;gap:8px">' +
       '<button class="adm-mini-tugma qizil" id="foydalanuvchiO_chir" style="flex:1">Foydalanuvchini o\'chirish</button>' +
     '</div>';
+  userBoshqaruvYukla(id);
 
   var shaxsiyTugma = document.getElementById('shaxsiyYubor');
   if (shaxsiyTugma) {
@@ -2680,6 +2813,250 @@ document.getElementById('kanalForma').addEventListener('submit', async function 
 });
 
 function hajm(n) { return n >= 1048576 ? (n / 1048576).toFixed(2) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
+
+// ─────────────────────── Boshqaruv ───────────────────────
+
+var NARSA_NOMI = { bot: 'Bot', app: 'Ilova' };
+
+function muddatMatn(ms) { return ms ? msVaqt(ms) + ' gacha' : 'o\'zingiz yoqmaguningizcha'; }
+
+/** Har bo'limda ko'rinadigan qizil ogohlantirish: bot yoki ilova to'xtatilgan. */
+function pauzaOgohChiz(r) {
+  var el = document.getElementById('pauzaOgoh');
+  var faol = ['bot', 'app'].filter(function (k) { return r.pause[k] && r.pause[k].active; });
+  if (!faol.length) { el.classList.remove('faol'); el.innerHTML = ''; return; }
+  el.innerHTML = BSIcons.icon('tools') + '<span>' + faol.map(function (k) { return NARSA_NOMI[k]; }).join(' va ') +
+    ' o\'quvchilar uchun to\'xtatilgan — ' + esc(muddatMatn(r.pause[faol[0]].until_ms)) + '</span>' +
+    '<button class="adm-mini-tugma yashil" type="button" id="pauzaOgohYoq">Hozir yoqish</button>';
+  el.classList.add('faol');
+  document.getElementById('pauzaOgohYoq').onclick = function () { pauzaYoq(faol); };
+}
+
+async function pauzaYoq(targets) {
+  var r = await AdminAPI.boshqaruvAmal('resume', { targets: targets });
+  if (!r.ok) { ogohlantir(r.error || 'Xatolik'); return; }
+  boshqaruvChiz(r);
+}
+
+async function yuklaBoshqaruv() {
+  var r = await AdminAPI.boshqaruv(true);
+  if (!r.ok) { document.getElementById('kalitlarQuti').textContent = r.error || 'Xatolik'; return; }
+  boshqaruvChiz(r);
+}
+
+function botHolatChiz(b) {
+  var el = document.getElementById('botHolat');
+  el.classList.remove('adm-yuklanmoqda');
+  if (!b) { el.innerHTML = '<p class="izoh-kichik">Telegram javob bermadi (yoki BOT_TOKEN sozlanmagan).</p>'; return; }
+  el.innerHTML =
+    '<div class="adm-qator"><span class="yorliq">Bot</span><span>@' + esc(b.username) + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Webhook</span><span>' +
+      (b.url ? '<span class="adm-badge yashil">ulangan</span>' : '<span class="adm-badge qizil">ulanmagan</span>') + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Navbatdagi xabarlar</span><span>' + b.pending + ' ta</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Oxirgi xato</span><span>' +
+      (b.last_error ? esc(b.last_error) + ' (' + msVaqt(b.last_error_ms) + ')' : 'yo\'q') + '</span></div>';
+}
+
+function boshqaruvChiz(r) {
+  pauzaOgohChiz(r);
+  document.getElementById('pauzaHolat').innerHTML = ['bot', 'app'].map(function (k) {
+    var p = r.pause[k], faol = p && p.active;
+    return '<div class="adm-holat-qator"><b>' + NARSA_NOMI[k] + '</b>' +
+      (faol
+        ? '<span class="adm-badge qizil">To\'xtatilgan</span><span class="izoh-kichik">' + esc(muddatMatn(p.until_ms)) + '</span>' +
+          '<button class="adm-mini-tugma yashil" type="button" data-pauza-yoq="' + k + '">Hozir yoqish</button>' +
+          (p.message ? '<p class="izoh-kichik">Izoh: ' + esc(p.message) + '</p>' : '')
+        : '<span class="adm-badge yashil">Ishlayapti</span>') + '</div>';
+  }).join('');
+
+  var kalitlar = document.getElementById('kalitlarQuti');
+  kalitlar.classList.remove('adm-yuklanmoqda');
+  kalitlar.innerHTML = r.features.map(function (f) {
+    return '<label class="adm-kalit"><span>' + esc(f.label) + (f.on ? '' : ' <span class="adm-badge qizil">o\'chiq</span>') + '</span>' +
+      '<span class="adm-switch"><input type="checkbox" role="switch" data-kalit="' + f.key + '"' + (f.on ? ' checked' : '') +
+      ' aria-label="' + esc(f.label) + '"><span></span></span></label>';
+  }).join('');
+
+  var e = r.announcement;
+  var elonFaol = e && (!e.until_ms || e.until_ms > r.now);
+  document.getElementById('elonHolat').innerHTML = elonFaol
+    ? '<div class="adm-holat-qator"><span class="adm-badge yashil">Ko\'rinmoqda</span>' +
+        '<span class="izoh-kichik">' + esc(muddatMatn(e.until_ms)) + '</span>' +
+        '<button class="adm-mini-tugma qizil" type="button" id="elonOlib">Olib tashlash</button>' +
+        '<p class="izoh-kichik" style="white-space:pre-line">' + esc(e.text) + '</p></div>'
+    : '<p class="izoh-kichik">Hozir e\'lon yo\'q.</p>';
+
+  if (r.bot !== undefined) botHolatChiz(r.bot);
+
+  document.getElementById('bloklanganlarQuti').innerHTML = r.banned.length
+    ? r.banned.map(function (b) {
+        return '<div class="adm-holat-qator"><b style="min-width:0">' + esc(b.name || '—') + '</b>' +
+          '<span class="kichik">ID ' + b.id + (b.username ? ' • @' + esc(b.username) : '') + '</span>' +
+          '<button class="adm-mini-tugma" type="button" data-blokdan="' + b.id + '">Blokdan chiqarish</button>' +
+          '<p class="izoh-kichik">' + esc(b.until_ms ? msVaqt(b.until_ms) + ' gacha' : 'Muddatsiz') +
+            (b.reason ? ' • ' + esc(b.reason) : '') + '</p></div>';
+      }).join('')
+    : '<p class="izoh-kichik">Bloklangan o\'quvchi yo\'q.</p>';
+}
+
+document.getElementById('bolim-boshqaruv').addEventListener('click', async function (e) {
+  var yoq = e.target.closest('[data-pauza-yoq]');
+  if (yoq) { pauzaYoq([yoq.dataset.pauzaYoq]); return; }
+  if (e.target.closest('#elonOlib')) {
+    if (!(await tasdiqSora('E\'lon olib tashlansinmi?'))) return;
+    var r = await AdminAPI.boshqaruvAmal('announcement-clear');
+    if (r.ok) boshqaruvChiz(r); else ogohlantir(r.error || 'Xatolik');
+    return;
+  }
+  var blok = e.target.closest('[data-blokdan]');
+  if (blok) {
+    if (!(await tasdiqSora('O\'quvchi blokdan chiqarilsinmi?'))) return;
+    var r2 = await AdminAPI.userAmal(Number(blok.dataset.blokdan), 'unban');
+    if (!r2.ok) { ogohlantir(r2.error || 'Xatolik'); return; }
+    yuklaBoshqaruv();
+  }
+});
+
+document.getElementById('kalitlarQuti').addEventListener('change', async function (e) {
+  var el = e.target.closest('[data-kalit]');
+  if (!el) return;
+  var o = {};
+  o[el.dataset.kalit] = el.checked;
+  el.disabled = true;
+  var r = await AdminAPI.boshqaruvAmal('features', { features: o });
+  el.disabled = false;
+  if (!r.ok) { el.checked = !el.checked; formaXabar('kalitXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  boshqaruvChiz(r);
+  formaXabar('kalitXabar', '✅ Saqlandi — o\'quvchilarga bir necha soniyada ta\'sir qiladi', true);
+});
+
+document.getElementById('pauzaForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var targets = [];
+  if (document.getElementById('pauzaBot').checked) targets.push('bot');
+  if (document.getElementById('pauzaIlova').checked) targets.push('app');
+  if (!targets.length) { formaXabar('pauzaXabar', '❌ Bot yoki ilovani tanlang'); return; }
+  var nom = targets.map(function (k) { return NARSA_NOMI[k]; }).join(' va ');
+  if (!(await tasdiqSora(nom + ' o\'quvchilar uchun to\'xtatilsinmi?'))) return;
+  var r = await AdminAPI.boshqaruvAmal('pause', {
+    targets: targets, minutes: Number(document.getElementById('pauzaMuddat').value),
+    message: document.getElementById('pauzaIzoh').value,
+  });
+  if (!r.ok) { formaXabar('pauzaXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  formaXabar('pauzaXabar', '✅ ' + nom + ' to\'xtatildi', true);
+  boshqaruvChiz(r);
+});
+
+document.getElementById('elonForma').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var r = await AdminAPI.boshqaruvAmal('announcement', {
+    text: document.getElementById('elonMatn').value, text_ru: document.getElementById('elonMatnRu').value,
+    kind: document.getElementById('elonTur').value, minutes: Number(document.getElementById('elonMuddat').value),
+  });
+  if (!r.ok) { formaXabar('elonXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  document.getElementById('elonMatn').value = '';
+  document.getElementById('elonMatnRu').value = '';
+  formaXabar('elonXabar', '✅ E\'lon qo\'yildi — o\'quvchilar bosh sahifada ko\'radi', true);
+  boshqaruvChiz(r);
+});
+
+document.getElementById('botYangila').addEventListener('click', yuklaBoshqaruv);
+document.getElementById('botWebhook').addEventListener('click', async function () {
+  if (!(await tasdiqSora('Bot webhooki qayta o\'rnatilsinmi?'))) return;
+  var r = await AdminAPI.boshqaruvAmal('webhook');
+  if (!r.ok) { formaXabar('botXabar', '❌ ' + (r.error || 'Xatolik')); return; }
+  boshqaruvChiz(r);
+  formaXabar('botXabar', '✅ Webhook qayta o\'rnatildi', true);
+});
+
+// ── Foydalanuvchi kartasi: bloklash, ism, bonus chaqmoq, imkoniyatlar, kutish, seanslar ──
+
+var UB_TASDIQ = {
+  ban: 'O\'quvchi bloklansinmi? U ilova va botdan foydalana olmaydi, reytinglardan chiqadi.',
+  'reset-cooldown': 'Dars kutishi bekor qilinsinmi? O\'quvchi keyingi mavzuni darhol ocha oladi.',
+  logout: 'O\'quvchi barcha qurilmalardan chiqarilsinmi? Telegram orqali qayta kirishi mumkin.',
+};
+var UB_OK = {
+  ban: 'Bloklandi', unban: 'Blokdan chiqarildi', rename: 'Ism saqlandi', bonus: 'Chaqmoq yozildi',
+  'reset-chances': 'O\'yin imkoniyatlari tiklandi', 'reset-cooldown': 'Dars kutishi bekor qilindi', logout: 'Barcha seanslar yopildi',
+};
+
+async function userBoshqaruvYukla(id) {
+  userBoshqaruvChiz(id, await AdminAPI.userBoshqaruv(id));
+}
+
+function userBoshqaruvChiz(id, r) {
+  var joy = document.getElementById('userBoshqaruv');
+  if (!joy) return;
+  if (!r.ok) { joy.innerHTML = '<p class="izoh-kichik">' + esc(r.error || 'Xatolik') + '</p>'; return; }
+  var p = r.parts || {}, ch = r.chances || {};
+  joy.innerHTML =
+    '<h3>Boshqaruv</h3>' +
+    '<div class="adm-qator"><span class="yorliq">Chaqmoq</span><span><b>' + r.chaqmoq + '</b> (darslar ' + (p.topics || 0) +
+      ', o\'yinlar ' + (p.games || 0) + ', kun savoli ' + (p.daily || 0) + (p.bonus ? ', bonus ' + p.bonus : '') + ')</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Oxirgi faollik</span><span>' + (r.last_seen_ms ? msVaqt(r.last_seen_ms) : '—') + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Premium</span><span>' + (r.premium_until ? msVaqt(r.premium_until) + ' gacha' : 'yo\'q') + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Til • seanslar</span><span>' + (r.lang === 'ru' ? 'Ruscha' : 'O\'zbekcha') +
+      ' • ' + r.sessions + ' ta ochiq seans</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Chaqmoqli o\'yin</span><span>' + (ch.left != null ? ch.left + '/' + ch.max + ' qoldi' : '—') + '</span></div>' +
+    '<div class="adm-qator"><span class="yorliq">Dars kutishi</span><span>' +
+      (r.cooldown && r.cooldown.active ? esc(r.cooldown.text || 'bor') : 'yo\'q') + '</span></div>' +
+    (r.ban
+      ? '<div class="adm-boshqa-qator"><span class="adm-badge qizil">Bloklangan</span>' +
+          '<span class="izoh-kichik" style="flex:1">' + esc(r.ban.until_ms ? msVaqt(r.ban.until_ms) + ' gacha' : 'Muddatsiz') +
+          (r.ban.reason ? ' • ' + esc(r.ban.reason) : '') + '</span>' +
+          '<button class="adm-mini-tugma yashil" type="button" data-ub="unban">Blokdan chiqarish</button></div>'
+      : '<div class="adm-boshqa-qator">' +
+          '<select id="ubBlokMuddat" aria-label="Blok muddati"><option value="1440">1 kun</option><option value="10080">7 kun</option>' +
+            '<option value="43200">30 kun</option><option value="0">Muddatsiz</option></select>' +
+          '<input id="ubBlokSabab" maxlength="300" placeholder="Sabab (o\'quvchiga ko\'rinadi)">' +
+          '<button class="adm-mini-tugma qizil" type="button" data-ub="ban">Bloklash</button></div>') +
+    '<div class="adm-boshqa-qator"><input id="ubIsm" maxlength="60" aria-label="Ism" value="' + esc(r.name || '') + '">' +
+      '<button class="adm-mini-tugma" type="button" data-ub="rename">Ismni saqlash</button></div>' +
+    '<div class="adm-boshqa-qator"><input id="ubBonus" type="number" step="1" placeholder="Chaqmoq: 50 yoki -20" style="flex:0 1 170px">' +
+      '<input id="ubBonusIzoh" maxlength="200" placeholder="Izoh (masalan, tanlov g\'olibi)">' +
+      '<button class="adm-mini-tugma yashil" type="button" data-ub="bonus">Chaqmoq yozish</button></div>' +
+    (r.bonus && r.bonus.length
+      ? '<ul class="adm-bonus-tarix">' + r.bonus.map(function (b) {
+          return '<li><b>' + (b.amount > 0 ? '+' : '') + b.amount + '</b> • ' + msVaqt(b.created_ms) + (b.note ? ' • ' + esc(b.note) : '') + '</li>';
+        }).join('') + '</ul>'
+      : '') +
+    '<div class="adm-boshqa-qator">' +
+      '<button class="adm-mini-tugma" type="button" data-ub="reset-chances">O\'yin imkoniyatlarini tiklash</button>' +
+      '<button class="adm-mini-tugma" type="button" data-ub="reset-cooldown">Dars kutishini bekor qilish</button>' +
+      '<button class="adm-mini-tugma" type="button" data-ub="logout">Hamma qurilmadan chiqarish</button>' +
+    '</div>' +
+    '<p class="adm-forma-xabar" id="ubXabar" role="status"></p>';
+
+  joy.querySelectorAll('[data-ub]').forEach(function (btn) {
+    btn.onclick = async function () {
+      var amal = btn.dataset.ub, tana = {};
+      if (amal === 'ban') {
+        tana.minutes = Number(document.getElementById('ubBlokMuddat').value);
+        tana.reason = document.getElementById('ubBlokSabab').value;
+      } else if (amal === 'rename') {
+        tana.name = document.getElementById('ubIsm').value;
+      } else if (amal === 'bonus') {
+        tana.amount = Number(document.getElementById('ubBonus').value);
+        tana.note = document.getElementById('ubBonusIzoh').value;
+        if (!tana.amount) { formaXabar('ubXabar', '❌ Chaqmoq sonini yozing (ayirish uchun minus bilan)'); return; }
+        if (!(await tasdiqSora((tana.amount > 0 ? '+' : '') + tana.amount + ' chaqmoq yozilsinmi?'))) return;
+      }
+      if (UB_TASDIQ[amal] && !(await tasdiqSora(UB_TASDIQ[amal]))) return;
+      btn.disabled = true;
+      var res = await AdminAPI.userAmal(id, amal, tana);
+      btn.disabled = false;
+      if (!res.ok) { formaXabar('ubXabar', '❌ ' + (res.error || 'Xatolik')); return; }
+      userBoshqaruvChiz(id, res);
+      formaXabar('ubXabar', '✅ ' + UB_OK[amal], true);
+      if (amal === 'rename') {
+        var h = document.querySelector('#foydalanuvchiModal .adm-modal-bosh h2');
+        if (h) h.textContent = res.name;
+        yuklaFoydalanuvchilar();
+      }
+    };
+  });
+}
 
 async function yuklaTizim() {
   var r = await AdminAPI.tizim();

@@ -16,6 +16,7 @@ from functools import wraps
 from flask import jsonify, request
 
 import analytics
+import boshqaruv
 import onlayn
 from db import get_connection, utc_now
 
@@ -77,7 +78,7 @@ def get_user_by_token(token: str):
     cur = conn.cursor()
     cur.execute(
         '''SELECT u.id, u.name, u.email, u.grade, u.photo_url, u.telegram_id, u.onboarded,
-                  u.chosen_subject_key
+                  u.chosen_subject_key, u.banned_until, u.ban_reason
            FROM tokens t
            JOIN users u ON u.id = t.user_id
            WHERE t.token = %s AND t.expires_at > NOW()''',
@@ -106,6 +107,10 @@ def auth_required(fn):
                 'error': 'Avtorizatsiya talab qilinadi',
                 'code': 'unauthorized',
             }), 401
+        # Admin boshqaruvi: bloklangan o'quvchi, ilova texnik tanaffusda yoki bo'lim yopilgan
+        blocked = boshqaruv.check_request(user, request.method, request.path)
+        if blocked:
+            return jsonify(blocked[0]), blocked[1]
         request.user = user
         analytics.touch(user['id'])     # "bugun faol" — kuniga bir marta yoziladi
         onlayn.touch(user['id'])        # do'stlar ro'yxatidagi "onlayn" — daqiqasiga bir marta

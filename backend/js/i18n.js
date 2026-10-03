@@ -479,7 +479,16 @@
     "Qo'shilish": 'Присоединиться', 'hozirgina': 'только что', 'kecha': 'вчера',
     'Sizni chaqirishdi': 'Вас зовут в игру', 'Keyinroq': 'Позже',
     "Internet aloqasi yo'q. Ulanishni tekshiring.": 'Нет подключения к интернету. Проверьте соединение.',
-    "do'stlik so'rovi": 'заявка в друзья', "Hali do'stingiz yo'q. Tanishlaringizni toping!": 'У вас пока нет друзей. Найдите знакомых!',
+    // Admin boshqaruvi: texnik tanaffus, blok, yopiq bo'limlar, bonus
+    'Texnik ishlar': 'Технические работы', 'Ilovada texnik ishlar olib borilmoqda.': 'В приложении идут технические работы.',
+    'Qayta ishga tushadi:': 'Снова заработает:', 'Tez orada qayta ishga tushadi.': 'Скоро снова заработает.',
+    'Akkauntingiz bloklangan.': 'Ваш аккаунт заблокирован.', 'Sabab:': 'Причина:', 'Blok tugaydi:': 'Блокировка до:',
+    'Muddat: muddatsiz.': 'Срок: бессрочно.', "Ro'yxatdan o'tish vaqtincha yopiq": 'Регистрация временно закрыта',
+    "Hozircha yangi o'quvchilar qabul qilinmayapti. Birozdan keyin qayta urinib ko'ring.":
+      'Сейчас новые ученики не принимаются. Попробуйте чуть позже.',
+    "Bu bo'lim vaqtincha yopilgan. Birozdan keyin qayta urinib ko'ring.": 'Этот раздел временно закрыт. Попробуйте чуть позже.',
+    'Admin bonusi': 'Бонус от админа', 'Admin tomonidan berilgan': 'Начислено админом',
+    "do'stlik so'rovi":'заявка в друзья', "Hali do'stingiz yo'q. Tanishlaringizni toping!": 'У вас пока нет друзей. Найдите знакомых!',
     "Do'stlar reytingi": 'Рейтинг друзей', "Yangi so'rovlar": 'Новые заявки',
     "Sizga do'stlik so'rovi yubordi": 'Отправил(а) вам заявку в друзья', "do'stlikdan chiqarilsinmi?": 'удалить из друзей?',
     'Shikoyat qilish': 'Пожаловаться', "sababni tanlang. Admin ko'rib chiqadi.": 'выберите причину. Администратор рассмотрит жалобу.',

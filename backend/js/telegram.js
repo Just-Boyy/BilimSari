@@ -60,6 +60,8 @@
         })
       });
       const data = await res.json();
+      // Admin yangi o'quvchilar qabulini yopgan — tushunarli oyna
+      if (data && data.code === 'registration_closed' && window.API && API.holatOyna) API.holatOyna(data);
       if (data.ok && data.token && data.user) {
         // Prefer server photo, else Telegram client photo
         if (!data.user.photo_url && !data.user.custom_photo && tgUser && tgUser.photo_url) {

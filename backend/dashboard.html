@@ -26,6 +26,8 @@
 </header>
 
 <main class="sahifa sahifa-keng bosh-sahifa">
+  <!-- Admin e'loni (bo'lsa) -->
+  <div id="elonBanner"></div>
   <!-- Do'stlarning o'yinga chaqiruvlari -->
   <div id="dostChaqiruv"></div>
   <!-- Yutuqli marafon (bo'lsa) -->
@@ -118,12 +120,31 @@
     if (res.needs_onboarding) { location.href = 'onboarding.html'; return; }
 
     oxirgi = res;
+    elonChiz(res.announcement);
     sarlavhaChiz(res);
     kunChiz(res.daily);
     rejaChiz(res.plan, res.today, res.daily && res.daily.day);
     fanChiz(res.subjects);
     UI.yutuqTabrik(res.new_achievements);
     shaxsiyXabar(res.personal_news);
+  }
+
+  // Admin e'loni: o'quvchi yopsa, shu e'lon qayta ko'rsatilmaydi (yangi e'lon — yangi id)
+  var ELON_KALIT = 'bilimsari_elon_yopildi';
+  function elonChiz(e) {
+    var joy = document.getElementById('elonBanner');
+    var yopilgan = null;
+    try { yopilgan = localStorage.getItem(ELON_KALIT); } catch (x) {}
+    if (!e || !e.text || String(e.id) === yopilgan) { joy.innerHTML = ''; return; }
+    var ikon = e.kind === 'warn' ? 'alert' : e.kind === 'success' ? 'checkCircle' : 'info';
+    joy.innerHTML = '<div class="elon-banner ' + UI.esc(e.kind || 'info') + '" role="status">' +
+      '<span class="elon-banner-belgi">' + UI.nishon(ikon) + '</span>' +
+      '<div class="elon-banner-matn" translate="no">' + UI.esc(e.text) + '</div>' +
+      '<button class="elon-banner-yop" type="button" aria-label="Yopish">' + UI.nishon('x') + '</button></div>';
+    joy.querySelector('.elon-banner-yop').onclick = function () {
+      try { localStorage.setItem(ELON_KALIT, String(e.id)); } catch (x) {}
+      joy.innerHTML = '';
+    };
   }
 
   // Tayyor bo'lgan (yoki yaratilmay qolgan) shaxsiy darslar — bir martalik xabar
@@ -171,7 +192,7 @@
   function chaqmoqOyna() {
     var res = oxirgi;
     if (!res || document.getElementById('chaqmoqOyna')) return;
-    var q = res.chaqmoq_parts || { topics: 0, games: 0, daily: 0 };
+    var q = res.chaqmoq_parts || { topics: 0, games: 0, daily: 0, bonus: 0 };
     var manba = function (ikon, nom, izoh, son) {
       return '<div><span class="nishon-doira">' + UI.nishon(ikon) + '</span>' +
         '<span>' + nom + '<small>' + izoh + '</small></span><b>+' + son + '</b></div>';
@@ -190,6 +211,7 @@
           manba('bookOpen', 'Darslar', 'Testda har to\'g\'ri javob +5 (1-urinish), uy vazifasi +15', q.topics) +
           manba('gamepad', 'O\'yinlar', 'O\'yinda har 10 ball +1', q.games) +
           manba('sparkle', 'Kun savoli', 'To\'g\'ri javob +5', q.daily) +
+          (q.bonus ? manba('award', 'Admin bonusi', 'Admin tomonidan berilgan', q.bonus).replace('<b>+-', '<b>-') : '') +
         '</div>' +
         '<a class="tugma" href="leaderboard.html">Reytingni ochish</a>' +
         '<button class="matn-tugma" type="button" data-yop style="display:block;margin:10px auto 0">Yopish</button>' +

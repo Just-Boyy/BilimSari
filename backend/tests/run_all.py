@@ -31,6 +31,10 @@ PER_TEST_ENV = {'test_admin_tg.py': {'BOT_TOKEN': '000000:SINOV-SOXTA-TOKEN'}}
 
 
 def main(argv):
+    try:                      # Windows konsoli (cp1252) — test chiqishidagi o'zbekcha/ruscha belgilar yiqitmasin
+        sys.stdout.reconfigure(errors='replace')
+    except (AttributeError, ValueError):
+        pass
     verbose = '-v' in argv
     words = [a for a in argv if not a.startswith('-')]
     files = sorted(glob.glob(os.path.join(HERE, 'test_*.py')))

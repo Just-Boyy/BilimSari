@@ -32,6 +32,7 @@ from datetime import datetime, timedelta, timezone
 
 import alerts
 import backup
+import boshqaruv
 import botchat
 import broadcast
 import curriculum as cur_mod
@@ -124,6 +125,8 @@ def _claim(cur, conn, job, slot) -> bool:
 def _deliver(cur, conn, user, kind, ref, text, button, path) -> bool:
     """Xabarni bir marta yuboradi (notify_log). Bot bloklangan bo'lsa (403) —
     shu foydalanuvchiga eslatmalar o'chiriladi."""
+    if boshqaruv.notifications_off():
+        return False                   # admin botni yoki eslatmalarni to'xtatgan
     cur.execute('INSERT INTO notify_log (user_id, kind, ref, sent_ms) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING',
                 (user['id'], kind, ref, clock.now_ms()))
     fresh = cur.rowcount == 1

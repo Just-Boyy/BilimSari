@@ -78,6 +78,72 @@
     }
   }
 
+  // ── Admin boshqaruvi: texnik tanaffus, bloklangan akkaunt, ro'yxat yopiq — butun ekran oynasi ──
+  var HOLAT_KODLARI = { maintenance: 1, banned: 1, registration_closed: 1 };
+
+  function tr(s) { return window.I18N ? I18N.t(s) : s; }
+
+  function vaqtMatn(ms) {
+    var d = new Date(ms), bugun = new Date();
+    var ikki = function (n) { return ('0' + n).slice(-2); };
+    var soat = ikki(d.getHours()) + ':' + ikki(d.getMinutes());
+    return d.toDateString() === bugun.toDateString() ? soat
+      : ikki(d.getDate()) + '.' + ikki(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + soat;
+  }
+
+  function holatOyna(d) {
+    if (!d || !HOLAT_KODLARI[d.code] || !document.body) return;
+    var eski = document.getElementById('holatOyna');
+    if (eski) eski.remove();
+    var belgi, sarlavha, qatorlar = [];
+    if (d.code === 'maintenance') {
+      belgi = '🛠';
+      sarlavha = tr('Texnik ishlar');
+      qatorlar.push(tr('Ilovada texnik ishlar olib borilmoqda.'));
+      if (d.message) qatorlar.push({ izoh: d.message });
+      qatorlar.push(d.until_ms ? tr('Qayta ishga tushadi:') + ' ' + vaqtMatn(d.until_ms) : tr('Tez orada qayta ishga tushadi.'));
+    } else if (d.code === 'banned') {
+      belgi = '⛔';
+      sarlavha = tr('Akkauntingiz bloklangan.');
+      if (d.reason) qatorlar.push({ izoh: tr('Sabab:') + ' ' + d.reason });
+      qatorlar.push(d.until_ms ? tr('Blok tugaydi:') + ' ' + vaqtMatn(d.until_ms) : tr('Muddat: muddatsiz.'));
+    } else {
+      belgi = '⏳';
+      sarlavha = tr("Ro'yxatdan o'tish vaqtincha yopiq");
+      qatorlar.push(tr("Hozircha yangi o'quvchilar qabul qilinmayapti. Birozdan keyin qayta urinib ko'ring."));
+    }
+    // Admin yozgan matn (izoh, sabab) innerHTML'siz — textContent bilan qo'yiladi
+    var oyna = document.createElement('div');
+    oyna.id = 'holatOyna';
+    oyna.className = 'holat-oyna';
+    oyna.setAttribute('role', 'alertdialog');
+    oyna.setAttribute('aria-modal', 'true');
+    var karta = document.createElement('div');
+    karta.className = 'holat-oyna-karta';
+    var b = document.createElement('div');
+    b.className = 'holat-oyna-belgi';
+    b.setAttribute('aria-hidden', 'true');
+    b.textContent = belgi;
+    var h = document.createElement('h2');
+    h.textContent = sarlavha;
+    karta.appendChild(b);
+    karta.appendChild(h);
+    qatorlar.forEach(function (q) {
+      var p = document.createElement('p');
+      if (q.izoh) { p.className = 'izoh'; p.setAttribute('translate', 'no'); p.textContent = q.izoh; }
+      else p.textContent = q;
+      karta.appendChild(p);
+    });
+    var tugma = document.createElement('button');
+    tugma.type = 'button';
+    tugma.className = 'tugma';
+    tugma.textContent = tr('Qayta urinish');
+    tugma.onclick = function () { location.reload(); };
+    karta.appendChild(tugma);
+    oyna.appendChild(karta);
+    document.body.appendChild(oyna);
+  }
+
   /** Asosiy so'rov funksiyasi. Xatoda {ok:false, error} qaytaradi, tashlamaydi. */
   async function so_rov(yo_l, sozlama) {
     sozlama = sozlama || {};
@@ -115,12 +181,14 @@
     data.status = javob.status;
     if (!data.ok && !data.error) data.error = 'Xatolik yuz berdi (' + javob.status + ')';
     if (data.error && window.I18N) data.error = I18N.t(data.error);   // ruscha interfeysda — xato ham ruscha
+    if (HOLAT_KODLARI[data.code]) holatOyna(data);
     return data;
   }
 
   var API = {
     token: token,
     ishonchliFetch: ishonchliFetch,
+    holatOyna: holatOyna,
     user: user,
     sessiyaOchish: sessiyaOchish,
     sessiyaYopish: sessiyaYopish,

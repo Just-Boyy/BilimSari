@@ -22,6 +22,7 @@ import re
 import time
 from datetime import datetime, timedelta, timezone
 
+import boshqaruv
 import curriculum as cur_mod
 import lesson_edit
 import premium
@@ -532,7 +533,7 @@ def chaqmoq_parts(cur, user_id) -> dict:
         cur.execute(f'SELECT COALESCE(SUM({LESSON_CHAQMOQ_SQL}), 0) AS c FROM {table} WHERE user_id = %s', (user_id,))
         topics += int(cur.fetchone()['c'] or 0)
     parts = {'topics': topics, 'games': game_stats.chaqmoq_from_games(cur, user_id),
-             'daily': daily.chaqmoq_total(cur, user_id)}
+             'daily': daily.chaqmoq_total(cur, user_id), 'bonus': boshqaruv.bonus_total(cur, user_id)}
     if kesh is not None:
         kesh[user_id] = dict(parts)
     return parts
@@ -565,7 +566,10 @@ def _all_chaqmoq(cur) -> dict:
     for uid, bonus in daily.chaqmoq_by_user(cur).items():
         if bonus:
             chaqmoq_by_user[uid] = chaqmoq_by_user.get(uid, 0) + bonus
-    return chaqmoq_by_user
+    for uid, bonus in boshqaruv.bonus_by_user(cur).items():      # admin bonusi (manfiy ham bo'lishi mumkin)
+        if bonus:
+            chaqmoq_by_user[uid] = chaqmoq_by_user.get(uid, 0) + bonus
+    return {uid: c for uid, c in chaqmoq_by_user.items() if c}
 
 
 # Bosh sahifadagi o'rin (limit=1) uchun umumiy yig'indi keshlanadi: har ochilishda butun jadvallarni
@@ -597,6 +601,9 @@ def leaderboard(cur, user_id, limit=20):
     else:
         chaqmoq_by_user = _all_chaqmoq(cur)
 
+    banned = boshqaruv.banned_ids(cur)                 # bloklanganlar reytingda ko'rinmaydi
+    if banned:
+        chaqmoq_by_user = {uid: c for uid, c in chaqmoq_by_user.items() if uid not in banned}
     if not chaqmoq_by_user:
         return {'top': [], 'me': None, 'total_players': 0}
 

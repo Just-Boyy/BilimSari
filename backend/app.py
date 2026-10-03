@@ -20,6 +20,8 @@ import ai_tutor
 import alerts
 import analytics
 import backup
+import boshqaruv
+import boshqaruv_api
 import botchat
 import broadcast
 import daily
@@ -74,6 +76,7 @@ app.register_blueprint(dostlar_api.admin_bp)
 app.register_blueprint(marafon_api.bp)
 app.register_blueprint(marafon_api.admin_bp)
 app.register_blueprint(partners_api.admin_bp)
+app.register_blueprint(boshqaruv_api.bp)
 
 
 @app.after_request
@@ -245,6 +248,13 @@ def _init_db():
         notify.ensure_tables(cur, conn)
     except Exception:
         logger.exception('Eslatma jadvallari xatosi')
+        conn.rollback()
+
+    # Admin boshqaruvi: bloklash ustunlari va bonus chaqmoq jadvali
+    try:
+        boshqaruv.ensure_tables(cur, conn)
+    except Exception:
+        logger.exception('Boshqaruv jadvallari xatosi')
         conn.rollback()
 
     conn.commit()
@@ -562,6 +572,10 @@ def telegram_auth():
         conn.commit()
         name, photo = saved['name'], saved['photo_url']
     else:
+        if not boshqaruv.feature_on('registration') and not admin_auth.is_admin_telegram(tg_id):
+            cur.close()
+            conn.close()
+            return jsonify({'ok': False, 'error': boshqaruv.MSG_REGISTRATION, 'code': 'registration_closed'}), 423
         cur.execute(
             'INSERT INTO users (name, email, password_hash, telegram_id, username, photo_url, tg_photo_url) '
             'VALUES (%s, NULL, NULL, %s, %s, %s, %s) RETURNING id',
@@ -844,11 +858,12 @@ BOT_COMMANDS = [
 WEBHOOK_UPDATES = ['message', 'callback_query']
 
 
-def setup_telegram_bot():
+def setup_telegram_bot(force=False):
     """Webhook, buyruqlar, tavsif va menyu tugmasi. Har bir gunicorn worker
     ishga tushganda chaqiriladi, lekin sozlama o'zgarmagan bo'lsa Telegram'ga
     qayta yuborilmaydi (job_runs'da sozlama xeshi + sana bilan egallanadi) —
-    oldin ikkala worker bir vaqtda yuborib, 429 xatosi chiqardi."""
+    oldin ikkala worker bir vaqtda yuborib, 429 xatosi chiqardi.
+    force=True — admin paneldan «Webhookni qayta o'rnatish» (egallash tekshirilmaydi)."""
     if not BOT_TOKEN:
         logger.warning('BOT_TOKEN yo‘q — Telegram webhook o‘rnatilmadi')
         return
@@ -860,7 +875,7 @@ def setup_telegram_bot():
     conn = get_connection()
     cur = conn.cursor()
     try:
-        if not notify._claim(cur, conn, 'bot_setup', slot):
+        if not force and not notify._claim(cur, conn, 'bot_setup', slot):
             return                     # boshqa worker allaqachon sozlagan
     finally:
         cur.close()
@@ -887,6 +902,31 @@ def setup_telegram_bot():
     })
 
 
+def _bot_gate(data) -> bool:
+    """True — yangilanish to'xtatildi (texnik tanaffus yoki bloklangan o'quvchi). Adminlar har doim o'tadi."""
+    cq = data.get('callback_query') or {}
+    message = data.get('message') or {}
+    frm = cq.get('from') or message.get('from') or {}
+    gate = boshqaruv.bot_gate(frm.get('id'))
+    if not gate:
+        return False
+    kind, info = gate
+    lang = tgbot.lang_of(frm.get('id'), frm.get('language_code'))
+    if cq:
+        short = {'pause': {'uz': "Botda texnik ishlar. Birozdan keyin urinib ko'ring.",
+                           'ru': 'В боте технические работы. Попробуйте чуть позже.'},
+                 'banned': {'uz': 'Akkauntingiz bloklangan.', 'ru': 'Ваш аккаунт заблокирован.'}}[kind][lang]
+        tg_api('answerCallbackQuery', {'callback_query_id': cq.get('id'), 'text': short})
+        return True
+    chat = message.get('chat') or {}
+    # Izoh har o'quvchiga bir marta (tanaffus/blok davomida) — har xabarga javob yozib, chatni to'ldirmaymiz
+    key = f"gate:{kind}:{info.get('since_ms') or info.get('until_ms') or 0}:{frm.get('id')}"
+    if chat.get('type', 'private') == 'private' and rate_limit.hit(key, 1, 12 * 3600):
+        text = boshqaruv.pause_text(info, lang) if kind == 'pause' else boshqaruv.banned_text(info, lang)
+        tg_api('sendMessage', {'chat_id': chat.get('id'), 'text': text, 'parse_mode': 'HTML'})
+    return True
+
+
 @app.route('/telegram/webhook', methods=['POST'])
 def telegram_webhook():
     if request.headers.get('X-Telegram-Bot-Api-Secret-Token') != WEBHOOK_SECRET:
@@ -895,6 +935,9 @@ def telegram_webhook():
     data = request.get_json(silent=True) or {}
     # Telegram bir yangilanishni qayta yuborgan bo'lsa — ikkinchi marta ishlamaymiz
     if not botchat.first_time(data.get('update_id')):
+        return jsonify({'ok': True})
+    # Admin botni to'xtatgan yoki yozuvchi bloklangan — o'quvchiga bir marta izoh, xabar ishlanmaydi
+    if _bot_gate(data):
         return jsonify({'ok': True})
     # Inline tugmalar: admin "Tasdiqlash / Rad etish", o'quvchi "Promo-kod / Bekor qilish"
     if data.get('callback_query'):

@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 
 import admin_auth
 import achievements
+import boshqaruv
 import premium
 import study
 import tgbot
@@ -171,6 +172,8 @@ def _bot(row, text, button, path) -> bool:
     """Bot orqali xabar (eslatmalar yoqilgan bo'lsa). Yuborilmasa ham asosiy amal buzilmaydi."""
     if not row or not row['telegram_id'] or not int(row['notify'] if row['notify'] is not None else 1):
         return False
+    if boshqaruv.bot_paused():
+        return False                   # admin botni vaqtincha to'xtatgan
     try:
         lang = 'ru' if row.get('lang') == 'ru' else 'uz'
         return bool(tgbot.send(row['telegram_id'], text, button, path, lang=lang)[0])

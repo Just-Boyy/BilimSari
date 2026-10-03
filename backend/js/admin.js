@@ -198,6 +198,16 @@
       return so_rov('/api/admin/users/' + id + '/message', { method: 'POST', body: { text: matn } });
     },
 
+    // — Boshqaruv: tanaffus, kalitlar, e'lon, bot holati; o'quvchi ustidan amallar —
+    boshqaruv: function (bot) { return so_rov('/api/admin/control' + (bot ? '?bot=1' : '')); },
+    boshqaruvAmal: function (amal, tana) {
+      return so_rov('/api/admin/control/' + amal, { method: 'POST', body: tana || {} });
+    },
+    userBoshqaruv: function (id) { return so_rov('/api/admin/users/' + id + '/control'); },
+    userAmal: function (id, amal, tana) {
+      return so_rov('/api/admin/users/' + id + '/' + amal, { method: 'POST', body: tana || {} });
+    },
+
     auditJurnali: function (limit) { return so_rov('/api/admin/audit?limit=' + (limit || 100)); },
 
     barchaSeanslarniTugat: function () {

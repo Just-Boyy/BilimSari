@@ -24,6 +24,7 @@ import logging
 import threading
 import time
 
+import boshqaruv
 import tgbot
 from db import add_column_if_missing, get_connection
 from games import clock
@@ -147,6 +148,10 @@ def run(bid):
         text, last = b['text'], int(b['last_user_id'])
         sent, failed, blocked = int(b['sent']), int(b['failed']), int(b['blocked'])
         while True:
+            if boshqaruv.notifications_off():
+                # Admin botni to'xtatgan — tarqatish to'xtab turadi; resume_stale keyinroq shu joydan davom ettiradi
+                conn.commit()
+                return
             cur.execute(f'''SELECT id, telegram_id, lang FROM users
                             WHERE {_recipients_sql(b['everyone'])} AND id > %s
                             ORDER BY id LIMIT %s''', (last, BATCH))

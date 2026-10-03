@@ -20,6 +20,7 @@ import admin_auth
 import alerts
 import analytics
 import backup
+import boshqaruv
 import broadcast
 import curriculum as cur_mod
 import dostlar
@@ -500,6 +501,7 @@ def delete_user(user_id):
         cur.execute('UPDATE promo_codes SET active = 0 WHERE partner_user_id = %s', (user_id,))
         dostlar.cleanup_user(cur, user_id)
         jurnal.cleanup_user(cur, user_id)
+        boshqaruv.cleanup_user(cur, user_id)
         marafon.cleanup_user(cur, user_id)
         cur.execute('DELETE FROM game_chances WHERE user_id = %s', (user_id,))
         cur.execute('DELETE FROM game_chance_state WHERE user_id = %s', (user_id,))

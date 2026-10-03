@@ -7,12 +7,14 @@ qulf, 24 soatlik kutish va javoblarni baholash serverda hal qilinadi.
 """
 
 import achievements
+import boshqaruv
 import curriculum as cur_mod
 import daily
 import payments
 import premium
 import profil
 import study
+import til
 from auth_core import auth_required
 from db import get_connection
 from flask import Blueprint, g, jsonify, request
@@ -78,6 +80,7 @@ def dashboard():
     try:
         data = study.dashboard(cur, request.user['id'])
         payments.annotate_subjects(cur, request.user['id'], data.get('subjects'))
+        data['announcement'] = boshqaruv.announcement(til.req_lang())     # admin e'loni (bo'lsa)
         data['ok'] = True
         data['needs_onboarding'] = (
             not bool(request.user.get('onboarded')) or not request.user.get('chosen_subject_key')
