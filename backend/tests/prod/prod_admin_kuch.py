@@ -50,6 +50,10 @@ check('Xabarlar: guruhlar va tarix', s == 200 and any(x['key'] == 'ru' for x in 
 print('     guruhlar:', {x['key']: x['count'] for x in d['segments']})
 s, d = get('/api/admin/jobs')
 check('Rejalashtirilgan ishlar', s == 200 and any(j['key'] == 'question' and j['last_ms'] for j in d['jobs']), d)
+s, d = get('/api/admin/subjects/math/admin-topics')
+check("Yangi mavzular ro'yxati (faqat o'qish)", s == 200 and isinstance(d.get('items'), list), d)
+s, d = get('/api/admin/subjects/math/topics')
+check("Fan mavzulari «siz qo'shgan» belgisi bilan", s == 200 and d['topics'] and all('admin' in t for t in d['topics']), str(d)[:300])
 s, d = get('/api/admin/daily-plan')
 check('Kun savoli rejasi (7 kun)', s == 200 and len(d['days']) == 7 and all(x.get('question') for x in d['days']), d)
 
