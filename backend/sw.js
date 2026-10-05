@@ -7,7 +7,7 @@
      (shu tarzda deploy qilingan yangilanish darhol ko'rinadi).
 */
 
-const CACHE = 'bilimsari-v54';
+const CACHE = 'bilimsari-v55';
 
 const ASSETS = [
   '/',
@@ -37,6 +37,7 @@ const ASSETS = [
   '/js/api.js',
   '/js/ui.js',
   '/js/telegram.js',
+  '/js/telegram-web-app.js',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/apple-touch-icon.png',

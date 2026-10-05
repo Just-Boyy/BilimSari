@@ -4,6 +4,43 @@
     return !!(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData);
   }
 
+  /** Telegram ichida ochilganmizmi — skript yuklanmagan bo'lsa ham (URL, iOS proksi, oldingi sahifa xotirasi). */
+  function telegramBelgisi() {
+    try {
+      if (/tgWebApp(Data|Platform|Version)=/.test(location.hash || '')) return true;
+      if (window.TelegramWebviewProxy) return true;
+      if (/tgWebAppData/.test(sessionStorage.getItem('__telegram__initParams') || '')) return true;
+    } catch (e) {}
+    return false;
+  }
+
+  // telegram.org skripti kelmasa (iPhone'da birinchi ochilishda sekin/uzilgan internet) — o'zimizdagi nusxa
+  var zaxiraYuklandi = false;
+  function zaxiraYukla() {
+    if (zaxiraYuklandi || (window.Telegram && window.Telegram.WebApp)) return;
+    zaxiraYuklandi = true;
+    var s = document.createElement('script');
+    s.src = '/js/telegram-web-app.js';
+    document.head.appendChild(s);
+  }
+
+  /** Telegram ma'lumoti (initData) tayyor bo'lguncha kutadi. Telegram belgisi bo'lmasa — qisqa kutish. */
+  function tayyor(maxMs) {
+    maxMs = maxMs || 8000;
+    return new Promise(function (resolve) {
+      if (isTelegram()) return resolve(true);
+      if (!telegramBelgisi()) maxMs = Math.min(maxMs, 1500);
+      var t0 = Date.now();
+      (function tekshir() {
+        if (isTelegram()) return resolve(true);
+        var o_tdi = Date.now() - t0;
+        if (o_tdi >= 300) zaxiraYukla();
+        if (o_tdi >= maxMs) return resolve(false);
+        setTimeout(tekshir, 100);
+      })();
+    });
+  }
+
   function getWebApp() {
     return window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
   }
@@ -80,7 +117,7 @@
 
   /** Sahifa yuklanganda: TG ichida bo‘lsa avtomatik login + rasm yangilash */
   async function autoAuthIfTelegram() {
-    if (!isTelegram()) return false;
+    if (!(await tayyor())) return false;
     const wa = getWebApp();
     if (wa) {
       try { wa.ready(); wa.expand(); } catch (e) {}
@@ -106,6 +143,8 @@
 
   window.BilimSariTG = {
     isTelegram: isTelegram,
+    telegramBelgisi: telegramBelgisi,
+    tayyor: tayyor,
     getWebApp: getWebApp,
     getTelegramUser: getTelegramUser,
     loginWithTelegram: loginWithTelegram,

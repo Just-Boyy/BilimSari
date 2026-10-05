@@ -110,7 +110,7 @@ document.querySelectorAll('.til-kichik [data-til]').forEach(function (b) {
 <script>
 (async function () {
   // Faqat Telegram Mini App ichida yoki mavjud sessiya bilan ochiladi.
-  if (!API.kirganmi() && !(window.BilimSariTG && BilimSariTG.isTelegram())) {
+  if (!API.kirganmi() && !(window.BilimSariTG && await BilimSariTG.tayyor())) {
     location.href = 'telegram-kerak.html';
     return;
   }

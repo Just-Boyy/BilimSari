@@ -141,9 +141,21 @@ document.querySelectorAll('[data-ikon]').forEach(function (el) {
 });
 
 (async function () {
-  // Faqat Telegram Mini App ichida ishlaydi — boshqa joydan kirgan bo'lsa
-  // botga yo'naltiramiz.
-  if (!(window.BilimSariTG && BilimSariTG.isTelegram())) {
+  // O'zimizning skriptlar yuklanmay qolgan bo'lsa (sekin internet) — bir marta qayta yuklaymiz
+  // (URL dagi Telegram ma'lumoti saqlanadi), darhol «faqat Telegram» sahifasiga yubormaymiz.
+  if (!window.BilimSariTG || !window.API) {
+    var qayta = 0;
+    try { qayta = +sessionStorage.getItem('bs_qayta_yuklash') || 0; } catch (e) {}
+    if (Date.now() - qayta > 30000) {
+      try { sessionStorage.setItem('bs_qayta_yuklash', String(Date.now())); } catch (e) {}
+      location.reload();
+      return;
+    }
+  }
+
+  // Faqat Telegram Mini App ichida ishlaydi — Telegram ma'lumoti kelishini kutamiz
+  // (iPhone'da birinchi ochilishda kechikishi mumkin), kelmasa botga yo'naltiramiz.
+  if (!(window.BilimSariTG && await BilimSariTG.tayyor())) {
     location.href = 'telegram-kerak.html';
     return;
   }

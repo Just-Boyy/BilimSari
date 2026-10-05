@@ -172,7 +172,16 @@
     if (javob.status === 401) {
       sessiyaYopish();
       if (!/\/(telegram-kerak|index)\.html$|\/$/.test(location.pathname)) {
-        location.href = 'telegram-kerak.html';
+        // Telegram ichida — sahifani yangilaymiz, u Telegram orqali avtomatik qayta kiradi
+        // (daqiqasiga ko'pi bilan bir marta, aks holda «faqat Telegram» sahifasi)
+        var oxirgi = 0;
+        try { oxirgi = +sessionStorage.getItem('bs_401_qayta') || 0; } catch (e) {}
+        if (window.BilimSariTG && BilimSariTG.telegramBelgisi() && Date.now() - oxirgi > 60000) {
+          try { sessionStorage.setItem('bs_401_qayta', String(Date.now())); } catch (e) {}
+          location.reload();
+        } else {
+          location.href = 'telegram-kerak.html';
+        }
         return { ok: false, error: 'Sessiya tugadi', code: 'unauthorized' };
       }
     }

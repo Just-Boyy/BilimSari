@@ -40,8 +40,30 @@
   <div class="nishon-katta"><img src="assets/logo-green.png" alt="Bilim Sari"></div>
   <h1>Faqat Telegram orqali ishlaydi</h1>
   <p>BilimSari — Telegram Mini App. Undan foydalanish uchun botni Telegram orqali oching.</p>
-  <a class="tugma" href="https://t.me/bilimsaribot">Botni ochish</a>
+  <a class="tugma" href="https://t.me/bilimsaribot" id="botTugma">Botni ochish</a>
 </main>
+
+<script>
+// Aslida Telegram ichidamiz (masalan, birinchi ochilishda internet sekin bo'lib shu sahifaga tushib qolgan
+// bo'lsak) — ilovaga o'zi qaytadi; qayta-qayta aylanmasligi uchun 20 soniyada ko'pi bilan bir marta.
+(function () {
+  var tg = false;
+  try {
+    tg = !!window.TelegramWebviewProxy || /tgWebApp/.test(location.hash) ||
+      /tgWebAppData/.test(sessionStorage.getItem('__telegram__initParams') || '');
+  } catch (e) {}
+  if (!tg) return;
+  var t = document.getElementById('botTugma');
+  t.textContent = window.I18N ? I18N.t('Qayta urinish') : 'Qayta urinish';
+  t.href = 'index.html' + location.hash;
+  var oxirgi = 0;
+  try { oxirgi = +sessionStorage.getItem('bs_kerak_qaytish') || 0; } catch (e) {}
+  if (Date.now() - oxirgi > 20000) {
+    try { sessionStorage.setItem('bs_kerak_qaytish', String(Date.now())); } catch (e) {}
+    location.replace('index.html' + location.hash);
+  }
+})();
+</script>
 
 </body>
 </html>
