@@ -12,6 +12,7 @@ SQLite uchun quyidagi shim so'rovni tarjima qiladi.
 import os
 import re
 import sqlite3
+import threading
 import time
 from datetime import datetime, timezone, timedelta
 
@@ -128,11 +129,25 @@ def sqlite_path():
 # so'rovda yaratadi (fork qilingandan keyin, shuning uchun xavfsiz).
 
 _pg_pool = None
+# Bir vaqtda nechta oqim bazadan ulanish olishi mumkin (gthread rejimi). Hovuz bo'sh qolmasa ThreadedConnectionPool
+# darhol xato beradi — semafor esa oqimni bo'sh ulanish chiqquncha kutdiradi.
+_pg_sem = None
+_pool_lock = threading.Lock()
+# Oqim allaqachon ulanish ushlab turib yana olsa (ichma-ich, masalan onlayn belgisi) — asosiy semaforni
+# kutmaydi (aks holda hamma oqim bir-birini kutib qotib qolardi), NESTED_EXTRA o'rinli alohida semaforni kutadi:
+# ichma-ich ulanish qisqa va undan keyin boshqa narsa so'ralmaydi — qotib qolish bo'lmaydi.
+NESTED_EXTRA = 2
+_pg_sem_ichki = None
+_ushlagan = {}     # oqim ident → hozir ushlab turgan ulanishlar soni
 
 
 def _get_pg_pool():
-    global _pg_pool
-    if _pg_pool is None:
+    global _pg_pool, _pg_sem, _pg_sem_ichki
+    if _pg_pool is not None:
+        return _pg_pool
+    with _pool_lock:
+        if _pg_pool is not None:
+            return _pg_pool
         from psycopg2.extras import RealDictCursor
         from psycopg2.pool import ThreadedConnectionPool
         max_conn = int(os.environ.get('DB_POOL_MAX', '5'))
@@ -140,8 +155,10 @@ def _get_pg_pool():
         # band bo'lib, butun sayt qotib qolardi); 10 soniyada xato qaytadi va keyingi so'rov qayta uradi
         # keepalives — baza internet orqali (tashqi xizmatda) bo'lganda, jim turgan ulanish
         # tarmoq yoki pooler tomonidan sezdirmasdan uzilib qolmasligi uchun
+        _pg_sem = threading.BoundedSemaphore(max_conn)
+        _pg_sem_ichki = threading.BoundedSemaphore(NESTED_EXTRA)
         _pg_pool = ThreadedConnectionPool(
-            1, max_conn, database_url(), cursor_factory=RealDictCursor,
+            1, max_conn + NESTED_EXTRA + 1, database_url(), cursor_factory=RealDictCursor,
             connect_timeout=int(os.environ.get('DB_CONNECT_TIMEOUT', '10')),
             keepalives=1, keepalives_idle=30, keepalives_interval=10, keepalives_count=3,
         )
@@ -180,9 +197,13 @@ class _PooledPgConnection:
     tranzaksiya qolib ketsa, keyingi so'rov shu "buzilgan" ulanishni olib,
     "current transaction is aborted" xatosiga uchraydi."""
 
-    def __init__(self, pool, raw):
+    def __init__(self, pool, raw, sem=None):
         self._pool = pool
         self._raw = raw
+        self._yopiq = False
+        self._sem = sem                        # qaysi semafor o'rnini egallagan (asosiy yoki ichma-ich)
+        self._oqim = threading.get_ident()
+        _ushlagan[self._oqim] = _ushlagan.get(self._oqim, 0) + 1
 
     def cursor(self, *args, **kwargs):
         return self._raw.cursor(*args, **kwargs)
@@ -194,6 +215,9 @@ class _PooledPgConnection:
         self._raw.rollback()
 
     def close(self):
+        if self._yopiq:          # ikki marta yopilsa — hovuz va semafor buzilmasin
+            return
+        self._yopiq = True
         try:
             self._raw.rollback()
         except Exception:
@@ -203,7 +227,23 @@ class _PooledPgConnection:
             _last_used.pop(id(self._raw), None)
         else:
             _last_used[id(self._raw)] = time.time()
-        self._pool.putconn(self._raw, close=broken)
+        try:
+            self._pool.putconn(self._raw, close=broken)
+        finally:
+            n = _ushlagan.get(self._oqim, 1) - 1
+            if n > 0:
+                _ushlagan[self._oqim] = n
+            else:
+                _ushlagan.pop(self._oqim, None)
+            if self._sem is not None:
+                self._sem.release()
+
+    def __del__(self):
+        # Yopilmay qolgan ulanish (kod xatosi) — semafor o'rni abadiy band bo'lib qolmasin
+        try:
+            self.close()
+        except Exception:  # noqa: BLE001
+            pass
 
 
 # ───────────────────────── Ulanish ─────────────────────────
@@ -213,7 +253,17 @@ def get_connection():
     url = database_url()
     if url:
         pool = _get_pg_pool()
-        return _PooledPgConnection(pool, _pg_getconn(pool))
+        ushlagan = _ushlagan.get(threading.get_ident(), 0)
+        # 0 — asosiy navbat; 1 — ichma-ich navbat; undan chuqur (juda kam) — navbatsiz
+        sem = _pg_sem if ushlagan == 0 else (_pg_sem_ichki if ushlagan == 1 else None)
+        if sem is not None and not sem.acquire(timeout=int(os.environ.get('DB_WAIT_S', '25'))):
+            raise RuntimeError("Baza band — barcha ulanishlar ishlatilmoqda")
+        try:
+            return _PooledPgConnection(pool, _pg_getconn(pool), sem)
+        except BaseException:
+            if sem is not None:
+                sem.release()
+            raise
 
     raw = sqlite3.connect(sqlite_path(), timeout=15)
     raw.row_factory = sqlite3.Row

@@ -412,10 +412,11 @@
   }
   /** Ro'yxat qatori uchun ochuvchi teg: foydalanuvchi ID bo'lsa — profilga havola, aks holda div. */
   // ── Jonli yangilanish: admin (yoki boshqa o'quvchi) o'zgartirgan narsa ochiq sahifada ham darhol ko'rinadi ──
-  // Sahifa ko'rinib turganda har ~8 s da /api/site/live dan versiyalar so'raladi; o'zgargan qism qayta yuklanadi:
+  // Sahifa ko'rinib turganda har ~15 s da /api/site/live dan versiyalar so'raladi; o'zgargan qism qayta yuklanadi:
   // site — matnlar/ranglar/bloklar (i18n.js joyida qo'llaydi), control — tanaffus/e'lon/bo'limlar,
   // content — mavzular/marafon/kun savoli, me — o'quvchining o'z ma'lumotlari (Premium, fanlar, bonus, so'rovlar...).
-  var JONLI_MS = 8000;
+  // Ko'p o'quvchi bir vaqtda ochiq turganda server yuklamasi oshmasin: 15 s + tasodifiy 0–3 s (hamma bir zumda so'ramasin)
+  var JONLI_MS = 15000;
   var jonliV = null, jonliBand = false, jonliRoyxat = [];
 
   /** Sahifa o'z ma'lumotini qayta yuklash uchun: fn({site, control, content, me}).
@@ -454,7 +455,7 @@
       jonliBand = false;
     }
   }
-  setInterval(jonliTekshir, JONLI_MS);
+  (function navbat() { setTimeout(function () { jonliTekshir(); navbat(); }, JONLI_MS + Math.random() * 3000); })();
   document.addEventListener('visibilitychange', function () { if (!document.hidden) jonliTekshir(); });
   setTimeout(jonliTekshir, 1500);
 
