@@ -20,7 +20,10 @@ tugma bilan, "hammaga" (everyone — eslatmani o'chirganlarga ham) yuborilishi m
 Bir tarqatish ketayotganda yangisi navbatga (queued) qo'yiladi va keyin boshlanadi.
 """
 
+import base64
+import json
 import logging
+import re
 import threading
 import time
 
@@ -63,12 +66,36 @@ def ensure_tables(cur, conn):
     # Admin: kimga (segment) va qachon (start_ms — rejalashtirilgan vaqt)
     add_column_if_missing(cur, conn, 'broadcasts', 'segment', 'TEXT')
     add_column_if_missing(cur, conn, 'broadcasts', 'start_ms', 'BIGINT')
+    # Rasm: base64 (admin yuklagani) va birinchi yuborishdan keyin Telegram bergan file_id (qolganlarga qayta yuklanmaydi)
+    add_column_if_missing(cur, conn, 'broadcasts', 'photo', 'TEXT')
+    add_column_if_missing(cur, conn, 'broadcasts', 'photo_id', 'TEXT')
 
 
 class BroadcastError(Exception):
     def __init__(self, message, http_status=400):
         super().__init__(message)
         self.message, self.http_status = message, http_status
+
+
+CAPTION_MAX = 1024           # Telegram: rasm ostidagi matn chegarasi
+PHOTO_MAX = 1536 * 1024      # yuklanadigan rasm hajmi chegarasi
+_DATA_URL = re.compile(r'^data:image/(jpeg|png|webp);base64,([A-Za-z0-9+/=\s]+)$')
+
+
+def parse_photo(data_url):
+    """Admin yuborgan rasm (data URL) → base64 matn; noto'g'ri bo'lsa BroadcastError."""
+    m = _DATA_URL.match(str(data_url or '').strip())
+    if not m:
+        raise BroadcastError("Rasm formati noto'g'ri (JPG, PNG yoki WEBP bo'lsin)")
+    try:
+        raw = base64.b64decode(m.group(2))
+    except (ValueError, TypeError):
+        raise BroadcastError("Rasmni o'qib bo'lmadi") from None
+    if not raw:
+        raise BroadcastError("Rasmni o'qib bo'lmadi")
+    if len(raw) > PHOTO_MAX:
+        raise BroadcastError('Rasm juda katta (1.5 MB gacha)')
+    return base64.b64encode(raw).decode()
 
 
 def _public(row) -> dict:
@@ -117,19 +144,23 @@ def count(cur, segment='all', everyone=False, now=None) -> int:
 
 
 def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=False, queue=False,
-          text_ru=None, button_ru=None, segment='all', start_ms=None) -> dict:
+          text_ru=None, button_ru=None, segment='all', start_ms=None, photo=None) -> dict:
     """Tarqatishni yaratadi va fonda boshlaydi. queue=True — boshqasi ketayotgan bo'lsa navbatga qo'yiladi.
     text_ru / button_ru — ruscha interfeysdagi o'quvchilar uchun (berilmasa hammaga text).
-    segment — kimga (SEGMENTS); start_ms — kelajakdagi vaqt bo'lsa, o'sha paytda boshlanadi."""
+    segment — kimga (SEGMENTS); start_ms — kelajakdagi vaqt bo'lsa, o'sha paytda boshlanadi.
+    photo — rasm (data URL); bo'lsa xabar rasm + izoh (matn 1024 belgigacha) bo'lib ketadi."""
     now = now or clock.now_ms()
     if segment not in SEGMENTS:
         raise BroadcastError("Qabul qiluvchilar guruhi noto'g'ri")
     scheduled = bool(start_ms) and int(start_ms) > now + 60 * 1000
     text = str(text or '').strip()
-    if not text:
+    photo_b64 = parse_photo(photo) if photo else None
+    if not text and not photo_b64:
         raise BroadcastError("Xabar matni bo'sh")
     if len(text) > 3500:
         raise BroadcastError('Xabar juda uzun (3500 belgigacha)')
+    if photo_b64 and max(len(text), len(str(text_ru or '').strip())) > CAPTION_MAX:
+        raise BroadcastError(f"Rasm bilan yuborilganda matn {CAPTION_MAX} belgigacha bo'ladi (Telegram chegarasi)")
     cur.execute("SELECT id FROM broadcasts WHERE status IN ('running', 'queued')")
     busy = cur.fetchone() is not None
     if busy and not queue and not scheduled:
@@ -137,11 +168,11 @@ def start(cur, conn, text, now=None, html=False, button=None, path='', everyone=
     total = count(cur, segment, everyone, int(start_ms) if scheduled else now)
     status = 'scheduled' if scheduled else ('queued' if busy else 'running')
     cur.execute('''INSERT INTO broadcasts (text, status, total, created_ms, heartbeat_ms, html, button_text, button_path,
-                                           everyone, text_ru, button_ru, segment, start_ms)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
+                                           everyone, text_ru, button_ru, segment, start_ms, photo)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id''',
                 (text, status, total, now, now, int(bool(html)), button, path or None,
                  int(bool(everyone)), (str(text_ru).strip() or None) if text_ru else None, button_ru,
-                 segment, int(start_ms) if scheduled else None))
+                 segment, int(start_ms) if scheduled else None, photo_b64))
     bid = cur.fetchone()['id']
     conn.commit()
     if status == 'running':
@@ -176,7 +207,8 @@ def recent(cur, limit=20) -> list:
         out.append(dict(_public(r), text=r['text'][:300], segment=seg,
                         segment_name=(SEGMENTS.get(seg) or SEGMENTS['all'])[0], created_ms=int(r['created_ms']),
                         start_ms=int(r['start_ms']) if r.get('start_ms') else None,
-                        finished_ms=int(r['finished_ms']) if r.get('finished_ms') else None, system=bool(r['everyone'])))
+                        finished_ms=int(r['finished_ms']) if r.get('finished_ms') else None, system=bool(r['everyone']),
+                        photo=bool(r.get('photo'))))
     return out
 
 
@@ -185,15 +217,27 @@ def _spawn(bid):
 
 
 def _send(chat_id, text, b=None, ru=False):
-    """(natija, retry_after): 'ok' | 'blocked' | 'failed'. ru=True — ruscha tugma (bo'lsa)."""
-    payload = {'chat_id': chat_id, 'text': text}
+    """(natija, retry_after): 'ok' | 'blocked' | 'failed'. ru=True — ruscha tugma (bo'lsa).
+    Rasmli xabar: birinchi marta rasm Telegram'ga yuklanadi, keyin b['photo_id'] (file_id) qayta ishlatiladi."""
+    rasm = bool(b and b.get('photo'))
+    payload = {'chat_id': chat_id}
+    payload['caption' if rasm else 'text'] = text
     if b and b['html']:
         payload['parse_mode'] = 'HTML'
     if b and b['button_text']:
         label = (b.get('button_ru') if ru else None) or b['button_text']
         payload['reply_markup'] = {'inline_keyboard': [[
             {'text': label, 'web_app': {'url': tgbot.app_url(b['button_path'] or '')}}]]}
-    res = tgbot.tg_api('sendMessage', payload)
+    if not rasm:
+        res = tgbot.tg_api('sendMessage', payload)
+    elif b.get('photo_id'):
+        res = tgbot.tg_api('sendPhoto', dict(payload, photo=b['photo_id']))
+    else:
+        data = {k: (json.dumps(v) if isinstance(v, dict) else v) for k, v in payload.items()}
+        res = tgbot.tg_upload('sendPhoto', data, {'photo': ('rasm.jpg', base64.b64decode(b['photo']), 'image/jpeg')})
+        sizes = ((res or {}).get('result') or {}).get('photo') or [] if (res or {}).get('ok') else []
+        if sizes:
+            b['photo_id'] = sizes[-1].get('file_id')
     if res and res.get('ok'):
         return 'ok', 0
     code = (res or {}).get('error_code')
@@ -213,6 +257,7 @@ def run(bid):
         b = cur.fetchone()
         if not b or b['status'] != 'running':
             return
+        b = dict(b)                  # _send rasm file_id sini shu yerga yozadi
         text, last = b['text'], int(b['last_user_id'])
         sent, failed, blocked = int(b['sent']), int(b['failed']), int(b['blocked'])
         while True:
@@ -244,8 +289,8 @@ def run(bid):
                 last = u['id']
                 time.sleep(PAUSE_S)
             cur.execute('''UPDATE broadcasts SET sent = %s, failed = %s, blocked = %s, last_user_id = %s,
-                                                 heartbeat_ms = %s WHERE id = %s''',
-                        (sent, failed, blocked, last, clock.now_ms(), bid))
+                                                 heartbeat_ms = %s, photo_id = %s WHERE id = %s''',
+                        (sent, failed, blocked, last, clock.now_ms(), b.get('photo_id'), bid))
             conn.commit()
         now = clock.now_ms()
         cur.execute('''UPDATE broadcasts SET status = 'done', sent = %s, failed = %s, blocked = %s,

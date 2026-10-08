@@ -382,9 +382,10 @@ def broadcasts_create():
     try:
         info = broadcast.start(cur, conn, b.get('text'), html=bool(b.get('html')), button=button, path=path,
                                queue=True, text_ru=b.get('text_ru'), button_ru=str(b.get('button_ru') or '').strip()[:40] or None,
-                               segment=b.get('segment') or 'all', start_ms=start_ms)
+                               segment=b.get('segment') or 'all', start_ms=start_ms, photo=b.get('photo') or None)
         admin_audit.log('broadcast', detail=f"id={info['id']} total={info['total']} segment={b.get('segment') or 'all'} "
-                                            f"start={b.get('start_at') or 'hozir'} text={str(b.get('text'))[:100]!r}", ip=_ip())
+                                            f"start={b.get('start_at') or 'hozir'} rasm={'bor' if b.get('photo') else 'yoq'} "
+                                            f"text={str(b.get('text'))[:100]!r}", ip=_ip())
         return jsonify(_broadcasts_payload(cur))
     except broadcast.BroadcastError as exc:
         return _err(exc.message, exc.http_status)
